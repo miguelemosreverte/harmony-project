@@ -7,6 +7,8 @@ import harmonia.bindings.inspect.SourceIdentity
 import harmonia.ledger.CantonSandbox
 import harmonia.ledger.network.CantonNetwork
 import harmonia.stories.Story
+import harmonia.stories.financing.model.FinancingStory
+import harmonia.stories.purchase.model.PurchaseStory
 import harmonia.stories.run.process.RunProcessStory
 import harmonia.stories.run.purchase.RunPurchaseStory
 import harmonia.stories.compare.CompareResults
@@ -66,9 +68,13 @@ object CheckStories:
             artifacts,
             dar,
             (story, output) =>
-              if story.workflow.exists(Set("sequential-approval", "branching-approval")) then
-                new RunProcessStory(root, ledger, dar).run(story, output)
-              else new RunStory(root, ledger, dar).run(story, output),
+              story match
+                case financing: FinancingStory =>
+                  if financing.workflow.exists(Set("sequential-approval", "branching-approval"))
+                  then new RunProcessStory(root, ledger, dar).run(financing, output)
+                  else new RunStory(root, ledger, dar).run(financing, output)
+                case _ =>
+                  IO.raiseError(RuntimeException("Expected a financing story in the local runner")),
             "one participant, one synchronizer, separate party identities"
           )
         }
@@ -81,7 +87,11 @@ object CheckStories:
             privateStories,
             artifacts,
             dar,
-            new RunPrivateStory(root, network, dar).run,
+            (story, output) =>
+              story match
+                case financing: FinancingStory =>
+                  new RunPrivateStory(root, network, dar).run(financing, output)
+                case _ => IO.raiseError(RuntimeException("Expected a private financing story")),
             "three independent participant nodes, one local JVM, one common synchronizer"
           )
         }
@@ -101,7 +111,11 @@ object CheckStories:
               purchases,
               artifacts,
               dar,
-              new RunPurchaseStory(root, network, dar).run,
+              (story, output) =>
+                story match
+                  case purchase: PurchaseStory =>
+                    new RunPurchaseStory(root, network, dar).run(purchase, output)
+                  case _ => IO.raiseError(RuntimeException("Expected a purchase story")),
               "four independent participant nodes, one local JVM, one common synchronizer"
             )
           }

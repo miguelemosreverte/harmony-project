@@ -1,5 +1,7 @@
 module Purchase.Types where
 
+import qualified Story as S
+
 data Setup = Setup with
     buyerAgentName : Text
     sellerAgentName : Text
@@ -7,4 +9,7 @@ data Setup = Setup with
     documents : Text
     decision : Text
     evidence : Text
+  deriving (Eq, Show)
+
+data Input = Input with namespace : Text; bankName : Text; buyerName : Text; setup : Setup; actions : [S.Attempt]
   deriving (Eq, Show)

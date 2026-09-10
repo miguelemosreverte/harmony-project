@@ -2,7 +2,7 @@ package harmonia.stories.read.purchase
 
 import cats.syntax.all.*
 import harmonia.stories.{Story, StoryAction}
-import harmonia.stories.purchase.model.PurchaseSetup
+import harmonia.stories.purchase.model.{PurchaseSetup, PurchaseStory}
 import harmonia.stories.read.StoryFormat.{fields, text}
 import io.circe.Json
 
@@ -80,12 +80,10 @@ object PurchaseFormat:
       (),
       "Action IDs must be unique"
     )
-  yield Story(
+  yield PurchaseStory(
     id,
     bank,
     buyer,
-    status,
     actions,
-    workflow = Some("property-purchase"),
-    purchase = Some(PurchaseSetup(buyerAgent, sellerAgent, property, documents, decision, evidence))
+    PurchaseSetup(buyerAgent, sellerAgent, property, documents, decision, evidence)
   )

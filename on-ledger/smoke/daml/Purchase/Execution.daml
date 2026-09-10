@@ -75,7 +75,7 @@ command context state attempt actor = case attempt.action of
 
 refresh : Context -> State -> Text -> Script State
 refresh context state action = case action of
-  "assess-financing" -> if context.setup.evidence /= "financing" then pure state else do
+  "assess-financing" -> if context.input.setup.evidence /= "financing" then pure state else do
     let matching = queryFilter @VerifiedResult context.actors.buyer (\proof -> proof.issuer == context.actors.bank && proof.consumer == context.actors.buyer && proof.subject == context.applicationRef && proof.continuation == context.offerRef)
     Privacy.await 80 do values <- matching; pure (not (null values))
     results <- matching

@@ -1,7 +1,7 @@
 module Purchase.Setup where
 
 import Daml.Script
-import qualified Story as S
+import qualified Purchase.Types as P
 import qualified Privacy
 import qualified PropertyFinancing as F
 import qualified PropertyOffer as O
@@ -11,9 +11,9 @@ import Harmonia.Process.Model
 import Harmonia.Process.Engine
 import Purchase.Model
 
-initialize : S.Input -> Script (Context, State)
+initialize : P.Input -> Script (Context, State)
 initialize input = script do
-  setup <- optional (abort "Purchase setup required") pure input.purchase
+  let setup = input.setup
   bank <- allocatePartyOn (input.namespace <> "-" <> input.bankName) (ParticipantName "bank")
   buyer <- allocatePartyOn (input.namespace <> "-" <> input.buyerName) (ParticipantName "buyer")
   buyerAgent <- allocatePartyOn (input.namespace <> "-" <> setup.buyerAgentName) (ParticipantName "buyeragent")
@@ -45,7 +45,7 @@ initialize input = script do
         subject = if setup.evidence == "wrong-subject" then applicationRef <> "-other" else applicationRef
         decision = "approved"
         continuation = if setup.evidence == "wrong-continuation" then offerRef <> "-other" else offerRef
-  let context = Context with input; setup; actors; definitions; invitation; applicationRef; offerRef
+  let context = Context with input; actors; definitions; invitation; applicationRef; offerRef
   let state = State with finance; offer = None; relay = None; receipt = None; proposal = None; proof; offerCount = 0
   pure (context, state)
 

@@ -11,7 +11,7 @@ data Actors = Actors with bank : Party; buyer : Party; buyerAgent : Party; selle
 data Definitions = Definitions with financing : ContractId PublishedDefinition; proposal : ContractId PublishedDefinition; relay : ContractId PublishedDefinition; receipt : ContractId PublishedDefinition
   deriving (Eq, Show)
 data Context = Context with
-    input : S.Input; setup : P.Setup; actors : Actors; definitions : Definitions
+    input : P.Input; actors : Actors; definitions : Definitions
     invitation : ContractId O.Invitation; applicationRef : Text; offerRef : Text
   deriving (Eq, Show)
 data State = State with
@@ -37,4 +37,4 @@ data Observation = Observation with actors : Actors; steps : [Step]; views : [Pa
   deriving (Eq, Show)
 
 parties : Context -> [(Text, Party)]
-parties context = [(context.input.bankName, context.actors.bank), (context.input.buyerName, context.actors.buyer), (context.setup.buyerAgentName, context.actors.buyerAgent), (context.setup.sellerAgentName, context.actors.sellerAgent)]
+parties context = [(context.input.bankName, context.actors.bank), (context.input.buyerName, context.actors.buyer), (context.input.setup.buyerAgentName, context.actors.buyerAgent), (context.input.setup.sellerAgentName, context.actors.sellerAgent)]

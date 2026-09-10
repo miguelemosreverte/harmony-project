@@ -412,6 +412,12 @@ The first three actual Git commits have a fixed acceptance sequence: **document 
 
 ### Commit 12 — `feat: demonstrate bounded atomic four-party transfer`
 
+This item is split into consecutive subcommits: **12a** separates the reference input models; **12b** implements and proves the atomic transfer. The first step prevents custody-specific data from accumulating in the financing model.
+
+- [x] **12a — `refactor: separate reference story models and script inputs`**
+  - [x] Give financing and purchase their own typed input models and Daml Script inputs behind the common runner contract.
+  - [x] Preserve all nineteen existing golden results without changing their expectations.
+
 - [ ] Deliver the second full reference workflow.
   - [ ] Model Buyer, Seller, source custodian, and destination custodian explicitly.
   - [ ] Bind the Settler role to one of those four parties, with the required authority and disclosure.

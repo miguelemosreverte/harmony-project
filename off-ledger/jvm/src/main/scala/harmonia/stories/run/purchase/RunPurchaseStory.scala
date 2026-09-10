@@ -5,15 +5,14 @@ import cats.syntax.all.*
 import harmonia.files.ArtifactFiles
 import harmonia.ledger.DamlScript
 import harmonia.ledger.network.CantonNetwork
-import harmonia.stories.Story
+import harmonia.stories.purchase.model.PurchaseStory
 import harmonia.stories.run.NormalizeAction
 import harmonia.stories.run.evidence.{ObserveParties, ObservingParty, ObservationScope}
 import io.circe.Json
 import java.nio.file.Path
 
 final class RunPurchaseStory(root: Path, network: CantonNetwork, dar: Path):
-  def run(story: Story, artifacts: Path): IO[Json] = for
-    setup <- IO.fromOption(story.purchase)(RuntimeException("Missing purchase setup"))
+  def run(story: PurchaseStory, artifacts: Path): IO[Json] = for
     _ <- ArtifactFiles.write(artifacts.resolve("input.json"), story.scriptInput.spaces2)
     output <- DamlScript.runNetwork(
       root,
@@ -51,10 +50,10 @@ final class RunPurchaseStory(root: Path, network: CantonNetwork, dar: Path):
       Vector(
         ObservingParty("bank", "bank", story.bank),
         ObservingParty("buyer", "buyer", story.buyer),
-        ObservingParty("buyeragent", "buyerAgent", setup.buyerAgent),
-        ObservingParty("selleragent", "sellerAgent", setup.sellerAgent)
+        ObservingParty("buyeragent", "buyerAgent", story.setup.buyerAgent),
+        ObservingParty("selleragent", "sellerAgent", story.setup.sellerAgent)
       ),
-      ObservationScope("PropertyFinancing", "PropertyOffer", "Offer", setup.documents, false)
+      ObservationScope("PropertyFinancing", "PropertyOffer", "Offer", story.setup.documents, false)
     )
     _ <- ArtifactFiles.write(
       output,

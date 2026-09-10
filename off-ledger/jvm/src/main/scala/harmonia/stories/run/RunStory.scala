@@ -3,12 +3,12 @@ package harmonia.stories.run
 import cats.effect.IO
 import harmonia.files.ArtifactFiles
 import harmonia.ledger.{CantonSandbox, DamlScript}
-import harmonia.stories.Story
+import harmonia.stories.financing.model.FinancingStory
 import io.circe.Json
 import java.nio.file.Path
 
 final class RunStory(root: Path, ledger: CantonSandbox, dar: Path):
-  def run(story: Story, artifacts: Path): IO[Json] = for
+  def run(story: FinancingStory, artifacts: Path): IO[Json] = for
     _ <- ArtifactFiles.write(artifacts.resolve("input.json"), story.scriptInput.spaces2)
     path <- DamlScript.run(
       root,

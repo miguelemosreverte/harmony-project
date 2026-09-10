@@ -1,6 +1,7 @@
 package harmonia.stories.read
 
 import harmonia.stories.{Story, StoryAction}
+import harmonia.stories.financing.model.FinancingStory
 import io.circe.{Json, JsonObject}
 
 object StoryFormat:
@@ -112,7 +113,17 @@ object StoryFormat:
           _ <- Either.cond(!preceding.exists(_.id == name), (), s"Duplicate action id '$name'")
         yield preceding :+ StoryAction(name, actor, choice, request)
     }
-  yield Story(id, bank, buyer, status, actions, workflow, integration, reviewer, privateDetails)
+  yield FinancingStory(
+    id,
+    bank,
+    buyer,
+    status,
+    actions,
+    workflow,
+    integration,
+    reviewer,
+    privateDetails
+  )
 
   def result(markdown: String): Either[String, Json] = for
     json <- MarkdownYaml.read(markdown, "Result")
