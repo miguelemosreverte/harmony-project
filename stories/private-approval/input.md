@@ -16,6 +16,9 @@ setup:
     status: pending
     private_details: "Synthetic income: 90000; internal rating: B"
 actions:
+  - id: cannot-forge-completion
+    actor: Alice
+    action: forge-completion
   - id: buyer-cannot-read-or-approve
     actor: Alice
     action: approve-financing

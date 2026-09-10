@@ -6,6 +6,7 @@ This book grows with the working implementation. Chapters link to the actual sto
 2. [A story the ledger can prove](01-first-story.md)
 3. [Two ways an application can participate](02-two-integration-paths.md)
 4. [A private application and a shared next step](03-participant-views.md)
+5. [Progress survives the client](04-progression.md)
 
 Use the [recorded playback guide](playback.md) to open the browser edition.
 

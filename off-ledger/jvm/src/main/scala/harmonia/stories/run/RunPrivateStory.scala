@@ -55,12 +55,11 @@ final class RunPrivateStory(root: Path, network: CantonNetwork, dar: Path):
         privateEvents = created.count(
           _.hcursor.downField("templateId").get[String]("moduleName").contains("PrivateFinancing")
         )
-        sharedEvents = created.count(
-          _.hcursor
-            .downField("templateId")
-            .get[String]("moduleName")
-            .contains("Harmonia.SharedProgress")
-        )
+        sharedEvents = created.count { event =>
+          val template = event.hcursor.downField("templateId")
+          template.get[String]("moduleName").contains("Harmonia.SharedProgress") &&
+          template.get[String]("entityName").contains("SharedProgress")
+        }
         _ <- IO.raiseUnless(sharedEvents > 0)(
           RuntimeException(
             s"No positive control in $name's event stream; privacy evidence is incomplete"

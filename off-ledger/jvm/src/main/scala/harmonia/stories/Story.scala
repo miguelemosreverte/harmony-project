@@ -2,7 +2,18 @@ package harmonia.stories
 
 import io.circe.Json
 
-final case class StoryAction(id: String, actor: String, action: String)
+final case class StoryAction(
+    id: String,
+    actor: String,
+    action: String,
+    request: Option[String] = None
+):
+  def json: Json = Json.obj(
+    "id" -> Json.fromString(id),
+    "actor" -> Json.fromString(actor),
+    "action" -> Json.fromString(action),
+    "request" -> request.fold(Json.Null)(Json.fromString)
+  )
 
 final case class Story(
     id: String,
@@ -24,11 +35,5 @@ final case class Story(
     "integration" -> integration.fold(Json.Null)(Json.fromString),
     "reviewerName" -> reviewer.fold(Json.Null)(Json.fromString),
     "privateDetails" -> privateDetails.fold(Json.Null)(Json.fromString),
-    "actions" -> Json.arr(actions.map { action =>
-      Json.obj(
-        "id" -> Json.fromString(action.id),
-        "actor" -> Json.fromString(action.actor),
-        "action" -> Json.fromString(action.action)
-      )
-    }*)
+    "actions" -> Json.fromValues(actions.map(_.json))
   )

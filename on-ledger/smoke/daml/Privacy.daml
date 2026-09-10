@@ -33,8 +33,10 @@ run input = script do
     pure (all (\party -> elem party (map (.party) known)) [bank, buyer, reviewer]))
   application <- submit bank do
     createCmd Private.Application with bank; buyer; reviewers = [reviewer]; subject = "application"; status = input.initialStatus; privateDetails
-  progress <- submit buyer do
-    createCmd SharedProgress with owner = buyer; issuer = bank; readers = [reviewer]; subject = "application"; status = "waiting"
+  proposal <- submit bank do
+    createCmd ProgressProposal with owner = buyer; issuer = bank; readers = [reviewer]; subject = "application"
+  await 60 do visible <- queryContractId buyer proposal; pure (visible /= None)
+  progress <- submit buyer do exerciseCmd proposal Accept
   let initial = State with application; progress; result = None
   awaitProgress actors progress
   (steps, final) <- execute input actors reviewerName initial input.actions
@@ -53,6 +55,11 @@ execute input actors reviewerName current attempts = case attempts of
       else if attempt.actor == reviewerName then pure actors.reviewer
       else abort "Unknown actor"
     commands <- case attempt.action of
+      "forge-completion" -> do
+        progress <- queryContractId actors.buyer current.progress
+        case progress of
+          Some value -> pure ((\cid -> current with progress = cid) <$> createCmd value with status = "complete")
+          None -> abort "Shared progress is not observable"
       "approve-financing" -> pure ((\(application, proof) -> current with application; result = Some proof) <$> exerciseCmd current.application Private.Approve)
       "publish-approval" -> pure ((\progress -> current with progress; result = None) <$> exerciseCmd current.progress (Continue current.result))
       _ -> abort "Unsupported private workflow action"

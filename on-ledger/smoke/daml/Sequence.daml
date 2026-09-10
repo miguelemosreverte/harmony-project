@@ -1,0 +1,115 @@
+module Sequence where
+
+import Daml.Script
+import qualified Story as S
+import qualified Story.Errors as Errors
+import qualified Financing
+import qualified Review
+import Harmonia.Action
+import Harmonia.Process.Model
+import Harmonia.Process.Engine
+
+data Context = Context with
+    bank : Party
+    buyer : Party
+    engine : Party
+    bankName : Text
+    buyerName : Text
+    reference : Text
+    published : ContractId PublishedDefinition
+  deriving (Eq, Show)
+data Request = Request with context : Context; attempt : S.Attempt
+  deriving (Eq, Show)
+data DefinitionVersion = DefinitionVersion with name : Text; version : Int
+  deriving (Eq, Show)
+data Observation = Observation with
+    step : S.Step
+    review : Text
+    completed : [Text]
+    enabled : [Text]
+    definition : DefinitionVersion
+    processContract : Text
+  deriving (Eq, Show)
+
+setup : S.Input -> Script Context
+setup input = script do
+  bank <- allocateParty (input.namespace <> "-" <> input.bankName)
+  buyer <- allocateParty (input.namespace <> "-" <> input.buyerName)
+  engine <- allocateParty (input.namespace <> "-DefinitionPublisher")
+  financing <- submit bank do
+    createCmd Financing.Application with bank; buyer; reference = input.namespace; status = input.initialStatus
+  review <- submit buyer do
+    createCmd Review.Review with owner = buyer; reader = bank; subject = input.namespace; status = "pending"
+  let definition = Definition with
+        name = "approval-review"
+        version = 1
+        steps = [StepSpec "financing" "bank" [], StepSpec "review" "buyer" ["financing"]]
+  published <- submit engine do createCmd PublishedDefinition with publisher = engine; readers = [bank, buyer]; definition
+  submit bank do
+    exerciseCmd published Start with
+      owner = bank; reference = input.namespace; subject = input.namespace
+      roles = [Role "bank" bank, Role "buyer" buyer]
+      bindings = [ActionBinding "financing" (toInterfaceContractId @StepAction financing), ActionBinding "review" (toInterfaceContractId @StepAction review)]
+  pure Context with bank; buyer; engine; bankName = input.bankName; buyerName = input.buyerName; reference = input.namespace; published
+
+-- Each invocation discovers current state from the ledger in a fresh client process.
+act : Request -> Script Observation
+act Request{context, attempt} = script do
+  (currentId, current) <- discover context
+  previousApplication <- applicationId current
+  actor <- if attempt.actor == context.bankName then pure context.bank
+    else if attempt.actor == context.buyerName then pure context.buyer
+    else abort "Unknown sequence actor"
+  (nextId, outcome, reason, rawError) <- if elem attempt.action ["wait", "reconnect"] then
+    pure (currentId, "observed", None, None)
+    else do
+      commands <- case attempt.action of
+        "forge-completion" -> pure (createCmd current with completed = map (.id) current.definition.steps)
+        action -> do
+          step <- case action of
+            "approve-financing" -> pure "financing"
+            "confirm-review" -> pure "review"
+            _ -> abort "Unsupported sequence action"
+          pure (exerciseCmd currentId AdvanceStep with step; actor; request = optional attempt.id identity attempt.request)
+      result <- trySubmit actor commands
+      case result of
+        Right cid -> pure (cid, if cid == currentId then "duplicate" else "committed", None, None)
+        Left error -> do
+          reason <- Errors.reason error
+          pure (currentId, "rejected", Some reason, Some (show error))
+  (observedId, observed) <- discover context
+  assertMsg "Returned instance must match the active ledger instance" (observedId == nextId)
+  currentApplication <- applicationId observed
+  currentReview <- binding observed "review"
+  application <- queryContractId context.bank currentApplication
+  buyerView <- queryContractId context.buyer currentApplication
+  review <- queryContractId context.buyer (fromInterfaceContractId @Review.Review currentReview)
+  previous <- queryContractId context.bank previousApplication
+  applications <- query @Financing.Application context.bank
+  reviews <- query @Review.Review context.buyer
+  let step = S.Step with
+        id = attempt.id; outcome; reason
+        application = optional "missing" (.status) application
+        workflow = Some (if length observed.completed == length observed.definition.steps then "complete" else "waiting")
+        consumed = previous == None; activeContracts = length applications + length reviews
+        visibleTo = (if application /= None then [context.bankName] else []) <> (if buyerView /= None then [context.buyerName] else [])
+        inputContract = show previousApplication; outputContract = show currentApplication; rawError
+  pure Observation with step; review = optional "missing" (.status) review
+                        completed = observed.completed; enabled = enabledSteps observed.definition observed.completed
+                        definition = DefinitionVersion observed.definition.name observed.definition.version
+                        processContract = show observedId
+
+discover : Context -> Script (ContractId ProcessInstance, ProcessInstance)
+discover context = do
+  candidates <- queryFilter @ProcessInstance context.bank (\value -> value.reference == context.reference && value.engine == context.engine && value.published == context.published)
+  case candidates of
+    [found] -> pure found
+    _ -> abort "Expected exactly one active instance for this published definition and reference"
+
+binding : ProcessInstance -> Text -> Script (ContractId StepAction)
+binding process step = case find (\item -> item.step == step) process.bindings of
+  Some item -> pure item.action
+  None -> abort "Required application binding missing"
+
+applicationId : ProcessInstance -> Script (ContractId Financing.Application)
+applicationId process = fromInterfaceContractId @Financing.Application <$> binding process "financing"

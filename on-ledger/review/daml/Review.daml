@@ -1,0 +1,24 @@
+module Review where
+
+import Harmonia.Action
+
+template Review with
+    owner : Party
+    reader : Party
+    subject : Text
+    status : Text
+  where
+    signatory owner
+    observer reader
+
+    interface instance StepAction for Review where
+      view = StepView with actor = owner; subject
+      performAction actionId = do
+        next <- exercise (fromInterfaceContractId @Review actionId) Confirm
+        pure (toInterfaceContractId @StepAction next)
+
+    choice Confirm : ContractId Review
+      controller owner
+      do
+        assertMsg "Review must be pending" (status == "pending")
+        create this with status = "confirmed"

@@ -14,7 +14,7 @@ flowchart LR
   buyer --> progress[Shared progress completes]
 ```
 
-Northbank's approval changes its private application and creates a signed result in one transaction. The result contains the issuer, consumer, subject, and decision; it contains no private application payload or private contract identifier. Alice then consumes that result in a separate transaction to complete shared progress.
+A bank-signed proposal first authorizes a waiting shared instance, which Alice accepts. Northbank's approval changes its private application and creates a signed result in one transaction. The result contains the issuer, consumer, subject, and decision; it contains no private application payload or private contract identifier. Alice then consumes that result in a separate transaction to complete shared progress.
 
 These are two committed stages. A wait between them is an intentional part of the workflow. The shared transition accepts only an approval from the configured issuer, for the configured subject and consumer. Consuming the result prevents another use of that contract.
 
@@ -24,13 +24,14 @@ These are two committed stages. A wait between them is an intentional part of th
 scripts/harmonia check stories/private-approval
 ```
 
-The five attempts demonstrate the roles:
+The six attempts demonstrate the roles:
 
-1. Alice cannot exercise the private application she cannot observe.
-2. Alice cannot complete shared progress before an approval result exists.
-3. Northbank approves its application and issues the result; shared progress remains waiting.
-4. Olivia can observe shared progress but cannot perform Alice's continuation.
-5. Alice consumes the signed approval and completes the shared step.
+1. Alice cannot create a forged completed shared instance without the bank's signature.
+2. Alice cannot exercise the private application she cannot observe.
+3. Alice cannot complete shared progress before an approval result exists.
+4. Northbank approves its application and issues the result; shared progress remains waiting.
+5. Olivia can observe shared progress but cannot perform Alice's continuation.
+6. Alice consumes the signed approval and completes the shared step.
 
 After execution, the script queries private application and shared progress visibility for all three parties. The Scala runner also reads each party's event history from its own participant, including events for contracts that are now archived.
 

@@ -58,6 +58,7 @@ final class BookView(
         val chapter = element("article", "chapter")
         // The exporter escapes raw HTML and sanitizes URLs before this content reaches the browser.
         chapter.innerHTML = text(chapters(index), "html")
+        harmonia.book.diagram.ChapterDiagram.render(chapter)
         append(main, chapter)
       case None => laboratory(main, state)
     append(
@@ -151,6 +152,9 @@ final class BookView(
           "Typed adapter"
         else if story.input.hcursor.get[String]("workflow").toOption.contains("private-approval")
         then "Signed result handoff"
+        else if story.input.hcursor.get[String]("workflow").toOption.contains("sequential-approval")
+        then
+          s"${story.actual.hcursor.downField("definition").get[String]("name").getOrElse("Workflow")} · version ${story.actual.hcursor.downField("definition").get[Int]("version").getOrElse(0)}"
         else if story.input.hcursor.get[String]("workflow").isRight then "Direct interface"
         else "Application action"
       )
@@ -365,6 +369,9 @@ final class BookView(
         .getOrElse(json.noSpaces)
   private def label(field: String): String = Map(
     "application" -> "Application",
+    "review" -> "Review",
+    "completed" -> "Completed steps",
+    "enabled" -> "Enabled steps",
     "workflow" -> "Workflow",
     "outcome" -> "Outcome",
     "reason" -> "Rejection reason",

@@ -373,13 +373,14 @@ The first three actual Git commits have a fixed acceptance sequence: **document 
 
 ### Commit 08 — `feat: persist sequential progression and explicit wait states`
 
-- [ ] Extend the core beyond a single transition.
-  - [ ] Persist versioned definitions, current/completed steps, enabled actions, and relevant outputs.
-  - [ ] Add sequential steps, explicit waiting, and human/system submitter examples.
-  - [ ] Define retry and command-deduplication behavior without double-advancing state.
-  - [ ] Reconnect the client after a handoff and recover the current state from the ledger.
-  - [ ] Add stories for premature execution, repeated submission, waiting, and resumed progression; extend Chapter 4.
-  - [ ] **Acceptance:** restarting the client loses no workflow progress, and both interrupted and uninterrupted runs have the expected application effects.
+- [x] Extend the core beyond a single transition.
+  - [x] Persist versioned definitions, current/completed steps, enabled actions, and relevant outputs.
+  - [x] Add sequential steps, explicit waiting, and human/system submitter examples.
+  - [x] Require trusted publisher authority for instance creation; reject direct forged completion of process and shared state.
+  - [x] Define retry and command-deduplication behavior without double-advancing state.
+  - [x] Reconnect the client after a handoff and recover the current state from the ledger.
+  - [x] Add stories for premature execution, repeated submission, waiting, and resumed progression; extend Chapter 4.
+  - [x] **Acceptance:** restarting the client loses no workflow progress, and both interrupted and uninterrupted runs have the expected application effects.
 
 ### Commit 09 — `feat: add exclusive branches and bounded joins`
 

@@ -30,7 +30,8 @@ object ExportBook:
     chapters <- Vector(
       "01-first-story.md",
       "02-two-integration-paths.md",
-      "03-participant-views.md"
+      "03-participant-views.md",
+      "04-progression.md"
     ).traverse { name =>
       ArtifactFiles.read(root.resolve("book").resolve(name)).map { markdown =>
         val document = Parser.builder().build().parse(markdown)

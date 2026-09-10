@@ -4,7 +4,7 @@ Status: implemented for the three-party financing handoff.
 
 A shared workflow exercise can make nested application actions visible to additional witnesses. A shared parent contract is therefore not used as a privacy barrier around private application operations.
 
-The bank instead approves its private application and creates a narrowly scoped `VerifiedResult`. The buyer's `SharedProgress.Continue` consumes that result in a later transaction. The core checks the issuer, consumer, subject, approved decision, and waiting state on the ledger. The reviewer observes shared progress and the result without being a controller.
+The bank first signs a proposal authorizing an initially waiting shared instance. The buyer accepts it; shared state requires both issuer and owner signatures. The bank then approves its private application and creates a narrowly scoped `VerifiedResult`. The buyer's `SharedProgress.Continue` consumes that result in a later transaction. The core checks the issuer, consumer, subject, approved decision, and waiting state on the ledger. The reviewer observes shared progress and the result without being a controller.
 
 The application and result issuance are atomic. Result consumption and shared continuation are atomic. The interval between these transactions is a persisted wait, and the two transactions are not described as one atomic operation.
 

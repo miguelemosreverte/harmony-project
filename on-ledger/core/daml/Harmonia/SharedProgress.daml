@@ -9,7 +9,7 @@ template SharedProgress with
     subject : Text
     status : Text
   where
-    signatory owner
+    signatory owner, issuer
     observer issuer, readers
     ensure status == "waiting" || status == "complete"
 
@@ -26,3 +26,17 @@ template SharedProgress with
           (evidence.issuer == issuer && evidence.consumer == owner && evidence.subject == subject && evidence.decision == "approved")
         exercise proof Consume
         create this with status = "complete"
+
+-- The issuer authorizes a narrowly scoped, initially waiting shared instance.
+template ProgressProposal with
+    issuer : Party
+    owner : Party
+    readers : [Party]
+    subject : Text
+  where
+    signatory issuer
+    observer owner, readers
+
+    choice Accept : ContractId SharedProgress
+      controller owner
+      do create SharedProgress with owner; issuer; readers; subject; status = "waiting"

@@ -61,6 +61,7 @@ object DamlScript:
           output.toString
         ) ++ connection ++ input.toList.flatMap(path => List("--input-file", path.toString)),
         root,
-        artifacts.resolve("script.log")
+        artifacts.resolve("script.log"),
+        Some(artifacts.resolve("client.pid"))
       )
       .as(output)

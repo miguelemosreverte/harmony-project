@@ -581,3 +581,5 @@ tr:last-child td {
 }
 
 .participant-evidence { margin-top: 22px; }
+
+.chapter-diagram { overflow-x: auto; margin: 24px 0; border: 1px solid var(--line); border-radius: 6px; background: var(--white); }

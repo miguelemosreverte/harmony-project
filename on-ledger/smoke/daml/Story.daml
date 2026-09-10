@@ -8,6 +8,7 @@ data Attempt = Attempt with
     id : Text
     actor : Text
     action : Text
+    request : Optional Text
   deriving (Eq, Show)
 
 data Input = Input with

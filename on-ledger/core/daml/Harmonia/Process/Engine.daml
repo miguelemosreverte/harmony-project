@@ -1,0 +1,86 @@
+module Harmonia.Process.Engine where
+
+import DA.List
+import Harmonia.Action
+import Harmonia.Process.Model
+
+template PublishedDefinition with
+    publisher : Party
+    readers : [Party]
+    definition : Definition
+  where
+    signatory publisher
+    observer readers
+    ensure validDefinition definition
+
+    nonconsuming choice Start : ContractId ProcessInstance
+      with
+        owner : Party
+        reference : Text
+        subject : Text
+        roles : [Role]
+        bindings : [ActionBinding]
+      controller owner
+      do
+        assertMsg "Bind exactly the roles required by the definition" (sort (map (.name) roles) == sort (dedup (map (.role) definition.steps)))
+        assertMsg "Each step must be bound once" (sort (map (.step) bindings) == sort (map (.id) definition.steps))
+        forA definition.steps (\step -> do
+          role <- requireRole roles step.role
+          binding <- requireBinding bindings step.id
+          action <- view <$> fetch binding.action
+          assertMsg "Application actor and subject must match the bound role" (action.actor == role.party && action.subject == subject))
+        create ProcessInstance with owner; engine = publisher; reference; subject; published = self; definition; roles; bindings; completed = []; receipts = []
+
+template ProcessInstance with
+    engine : Party
+    owner : Party
+    reference : Text
+    subject : Text
+    published : ContractId PublishedDefinition
+    definition : Definition
+    roles : [Role]
+    bindings : [ActionBinding]
+    completed : [Text]
+    receipts : [Receipt]
+  where
+    signatory engine, owner
+    observer map (.party) roles
+    ensure validDefinition definition && reference /= "" && length receipts <= 16
+
+    nonconsuming choice AdvanceStep : ContractId ProcessInstance
+      with step : Text; actor : Party; request : Text
+      controller actor
+      do
+        origin <- fetch published
+        assertMsg "Instance definition must match its published version" (origin.publisher == engine && origin.definition == definition)
+        spec <- case find (\item -> item.id == step) definition.steps of
+          Some value -> pure value
+          None -> abort "Unknown process step"
+        role <- requireRole roles spec.role
+        assertMsg "Only the assigned actor can perform this step" (role.party == actor)
+        assertMsg "Request identifier required" (request /= "")
+        case find (\receipt -> receipt.request == request) receipts of
+          Some receipt -> do
+            assertMsg "Request identifier belongs to another action" (receipt.step == step && receipt.actor == actor)
+            pure self
+          None -> do
+            assertMsg "Step must be enabled" (elem step (enabledSteps definition completed))
+            binding <- requireBinding bindings step
+            actionView <- view <$> fetch binding.action
+            assertMsg "Application authority and subject must match" (actionView.actor == actor && actionView.subject == subject)
+            nextAction <- exercise binding.action ExecuteAction
+            archive self
+            create this with
+              bindings = map (\item -> if item.step == step then item with action = nextAction else item) bindings
+              completed = completed <> [step]
+              receipts = receipts <> [Receipt with request; step; actor]
+
+requireRole : [Role] -> Text -> Update Role
+requireRole roles name = case find (\role -> role.name == name) roles of
+  Some role -> pure role
+  None -> abort ("Unbound role: " <> name)
+
+requireBinding : [ActionBinding] -> Text -> Update ActionBinding
+requireBinding bindings step = case find (\binding -> binding.step == step) bindings of
+  Some binding -> pure binding
+  None -> abort ("Unbound step: " <> step)

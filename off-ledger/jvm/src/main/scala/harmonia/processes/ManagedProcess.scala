@@ -15,11 +15,19 @@ object ManagedProcess:
         .start()
     })(stop)
 
-  def run(command: List[String], directory: Path, log: Path): IO[Unit] =
+  def run(
+      command: List[String],
+      directory: Path,
+      log: Path,
+      pidFile: Option[Path] = None
+  ): IO[Unit] =
     start(command, directory, log).use { process =>
-      IO.interruptible(process.waitFor()).flatMap { exit =>
-        IO.raiseWhen(exit != 0)(RuntimeException(s"Command failed ($exit). See $log"))
-      }
+      IO.blocking {
+        pidFile.foreach(path => Files.writeString(path, process.pid().toString)); ()
+      } *>
+        IO.interruptible(process.waitFor()).flatMap { exit =>
+          IO.raiseWhen(exit != 0)(RuntimeException(s"Command failed ($exit). See $log"))
+        }
     }
 
   private def stop(process: Process): IO[Unit] = IO.blocking {

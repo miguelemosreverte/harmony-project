@@ -9,6 +9,14 @@ must agree about the private boundary.
 
 ```yaml
 actions:
+  - id: cannot-forge-completion
+    outcome: rejected
+    reason: unauthorized
+    application: pending
+    workflow: waiting
+    consumed: false
+    active_contracts: 1
+    visible_to: [Northbank]
   - id: buyer-cannot-read-or-approve
     outcome: rejected
     reason: not-visible

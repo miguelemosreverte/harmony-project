@@ -4,7 +4,7 @@ The [PRD](../PRD.md) defines the ordered work. This record reports actual commit
 
 ## Current step
 
-Commit 07 proves the private approval and shared continuation across three participant nodes, with party-specific contract queries and full event observations. Chapter 3 renders those perspectives. Next: persisted multi-step progression, waiting, retry, and client reconnection.
+Commit 08 proves persisted sequential progression, safe retries, waits, and recovery by fresh clients. The uninterrupted and resumed paths produce equal business observations. Next: exclusive decisions and bounded joins.
 
 ## Commit evidence
 
@@ -18,7 +18,8 @@ Actual commit identifiers are recorded in the next commit after they are created
 | 04 | `af521b7` | [Direct workflow proof](verification/04-direct-workflow.md): four live goldens and an intentional workflow mismatch |
 | 05 | `b0559cb` | [Unchanged-source proof](verification/05-adapter.md): six live goldens and source identity checked before and after execution |
 | 06 | `dabea08` | [Recorded book verification](verification/06-book.md): browser walkthrough, narrow layout, artifact integrity, and the regular suite |
-| 07 | This increment | [Authority and privacy proof](verification/07-privacy.md): seven live goldens, participant event controls, and browser perspective views |
+| 07 | `8c42b3e` | [Authority and privacy proof](verification/07-privacy.md): seven live goldens, participant event controls, and browser perspective views |
+| 08 | This increment | [Progression proof](verification/08-progression.md): nine live goldens, distinct client processes, equal final effects, and rejected forged completion |
 
 ## External decisions
 

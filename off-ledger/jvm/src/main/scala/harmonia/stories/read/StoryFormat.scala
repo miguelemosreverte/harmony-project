@@ -10,7 +10,7 @@ object StoryFormat:
     workflow <- root("workflow").fold[Either[String, Option[String]]](Right(None)) { value =>
       text(value, "workflow").flatMap { name =>
         Either.cond(
-          Set("approval", "private-approval")(name),
+          Set("approval", "private-approval", "sequential-approval")(name),
           Some(name),
           "Unsupported workflow: " + name
         )
@@ -64,7 +64,13 @@ object StoryFormat:
       (acc, value) =>
         for
           preceding <- acc
-          action <- fields(value, "action", Set("id", "actor", "action"))
+          action <- fields(
+            value,
+            "action",
+            Set("id", "actor", "action"),
+            if workflow.contains("sequential-approval") then Set("request") else Set.empty
+          )
+          request <- optionalText(action, "request")
           name <- text(action("id").get, "action.id")
           actor <- text(action("actor").get, s"$name.actor")
           choice <- text(action("action").get, s"$name.action")
@@ -76,19 +82,36 @@ object StoryFormat:
           _ <- Either.cond(
             choice == "approve-financing" || (workflow.contains(
               "private-approval"
-            ) && choice == "publish-approval"),
+            ) && Set("publish-approval", "forge-completion")(choice)) || (workflow.contains(
+              "sequential-approval"
+            ) && Set(
+              "confirm-review",
+              "wait",
+              "reconnect",
+              "forge-completion"
+            )(choice)),
             (),
             s"$name: unsupported action '$choice'"
           )
           _ <- Either.cond(!preceding.exists(_.id == name), (), s"Duplicate action id '$name'")
-        yield preceding :+ StoryAction(name, actor, choice)
+        yield preceding :+ StoryAction(name, actor, choice, request)
     }
   yield Story(id, bank, buyer, status, actions, workflow, integration, reviewer, privateDetails)
 
   def result(markdown: String): Either[String, Json] = for
     json <- MarkdownYaml.read(markdown, "Result")
-    root <- fields(json, "result", Set("actions"), Set("visibility"))
+    root <- fields(json, "result", Set("actions"), Set("visibility", "definition"))
     _ <- validateVisibility(root("visibility"))
+    _ <- root("definition").fold[Either[String, Unit]](Right(())) { value =>
+      for
+        definition <- fields(value, "definition", Set("name", "version"))
+        _ <- text(definition("name").get, "definition.name")
+        _ <- definition("version").get.asNumber
+          .flatMap(_.toInt)
+          .filter(_ > 0)
+          .toRight("Definition version must be positive")
+      yield ()
+    }
     values <- root("actions").get.asArray.toRight("result.actions must be a list")
     _ <- values.foldLeft[Either[String, Unit]](Right(())) { (acc, value) =>
       for
@@ -97,14 +120,14 @@ object StoryFormat:
           value,
           "result action",
           Set("id", "outcome", "application", "consumed", "active_contracts", "visible_to"),
-          Set("reason", "workflow")
+          Set("reason", "workflow", "review", "completed", "enabled")
         )
         _ <- text(action("id").get, "result action.id")
         outcome <- text(action("outcome").get, "result action.outcome")
         _ <- Either.cond(
-          Set("committed", "rejected")(outcome),
+          Set("committed", "rejected", "observed", "duplicate")(outcome),
           (),
-          "Outcome must be committed or rejected"
+          "Outcome must be committed, rejected, observed, or duplicate"
         )
         _ <- text(action("application").get, "result action.application")
         _ <- action("workflow").fold[Either[String, Unit]](Right(())) { value =>
@@ -112,6 +135,24 @@ object StoryFormat:
             Either.cond(Set("waiting", "complete")(status), (), "Unknown workflow status")
           }
         }
+        _ <- Vector("completed", "enabled").foldLeft[Either[String, Unit]](Right(())) {
+          (acc, name) =>
+            acc.flatMap(_ =>
+              action(name).fold[Either[String, Unit]](Right(())) { value =>
+                value.asArray
+                  .filter(values =>
+                    values.forall(
+                      _.asString.exists(_.nonEmpty)
+                    ) && values.distinct.size == values.size
+                  )
+                  .toRight(s"$name must contain unique step names")
+                  .map(_ => ())
+              }
+            )
+        }
+        _ <- action("review").fold[Either[String, Unit]](Right(()))(value =>
+          text(value, "review").map(_ => ())
+        )
         _ <- action("consumed").get.asBoolean.toRight("consumed must be true or false")
         count <- action("active_contracts").get.asNumber
           .flatMap(_.toInt)
@@ -134,9 +175,9 @@ object StoryFormat:
           "A rejected result requires a reason"
         )
         _ <- Either.cond(
-          outcome != "committed" || !action.contains("reason"),
+          outcome == "rejected" || !action.contains("reason"),
           (),
-          "A committed result cannot have a rejection reason"
+          "Only a rejected result can have a rejection reason"
         )
       yield ()
     }

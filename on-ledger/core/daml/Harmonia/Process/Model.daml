@@ -1,0 +1,33 @@
+module Harmonia.Process.Model where
+
+import DA.List
+import Harmonia.Action
+
+data StepSpec = StepSpec with id : Text; role : Text; prerequisites : [Text]
+  deriving (Eq, Show)
+data Definition = Definition with name : Text; version : Int; steps : [StepSpec]
+  deriving (Eq, Show)
+data Role = Role with name : Text; party : Party
+  deriving (Eq, Show)
+data ActionBinding = ActionBinding with step : Text; action : ContractId StepAction
+  deriving (Eq, Show)
+data Receipt = Receipt with request : Text; step : Text; actor : Party
+  deriving (Eq, Show)
+
+validDefinition : Definition -> Bool
+validDefinition definition =
+  definition.name /= "" && definition.version > 0 &&
+  not (null definition.steps) && length definition.steps <= 16 &&
+  length (dedup (map (.id) definition.steps)) == length definition.steps &&
+  orderedSteps [] definition.steps
+
+orderedSteps : [Text] -> [StepSpec] -> Bool
+orderedSteps seen remaining = case remaining of
+  [] -> True
+  step :: rest -> step.id /= "" && step.role /= "" &&
+    length (dedup step.prerequisites) == length step.prerequisites &&
+    all (\required -> elem required seen) step.prerequisites &&
+    orderedSteps (step.id :: seen) rest
+
+enabledSteps : Definition -> [Text] -> [Text]
+enabledSteps definition completed = map (.id) (filter (\step -> not (elem step.id completed) && all (\required -> elem required completed) step.prerequisites) definition.steps)
