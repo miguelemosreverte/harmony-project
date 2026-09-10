@@ -17,6 +17,7 @@ From the repository root:
 ```sh
 scripts/build
 scripts/harmonia smoke
+scripts/harmonia check
 ```
 
 The Scala program starts an isolated Canton sandbox on dynamically assigned ports, uploads the sample DAR, runs Daml Script against its real Ledger API, and prints the queried result. It owns and stops the sandbox when the run ends. Run it again to start a fresh local ledger.
@@ -27,4 +28,4 @@ Each run retains `canton.log`, `script.log`, and `observation.json` in its print
 
 This is a real local Canton transaction with an application authorization check. Both parties are hosted by one local participant. It is not yet the reusable Harmonia core, a cross-application workflow, or evidence of privacy between separately operated participants. Those capabilities have their own later acceptance gates.
 
-The next increment will supply this execution from a readable Markdown story and compare its observed result with a committed golden.
+The [first story chapter](01-first-story.md) supplies execution from readable Markdown and compares its observed result with a committed golden. Run `scripts/check` to build, run focused tests, and execute the complete current story collection.

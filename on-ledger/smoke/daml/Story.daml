@@ -1,0 +1,78 @@
+module Story where
+
+import Daml.Script
+import Financing
+
+data Attempt = Attempt with
+    id : Text
+    actor : Text
+    action : Text
+  deriving (Eq, Show)
+
+data Input = Input with
+    namespace : Text
+    bankName : Text
+    buyerName : Text
+    initialStatus : Text
+    actions : [Attempt]
+  deriving (Eq, Show)
+
+data Step = Step with
+    id : Text
+    outcome : Text
+    reason : Optional Text
+    application : Text
+    consumed : Bool
+    activeContracts : Int
+    visibleTo : [Text]
+    inputContract : Text
+    outputContract : Text
+    rawError : Optional Text
+  deriving (Eq, Show)
+
+run : Input -> Script [Step]
+run input = script do
+  bank <- allocateParty (input.namespace <> "-" <> input.bankName)
+  buyer <- allocateParty (input.namespace <> "-" <> input.buyerName)
+  original <- submit bank do
+    createCmd Application with bank; buyer; reference = "application"; status = input.initialStatus
+  execute input bank buyer original input.actions
+
+execute : Input -> Party -> Party -> ContractId Application -> [Attempt] -> Script [Step]
+execute input bank buyer current remaining = case remaining of
+  [] -> pure []
+  attempt :: rest -> do
+    assertMsg "Unsupported action" (attempt.action == "approve-financing")
+    actor <- if attempt.actor == input.bankName then pure bank
+      else if attempt.actor == input.buyerName then pure buyer
+      else abort "Unknown actor"
+    result <- trySubmit actor do exerciseCmd current Approve
+    (next, outcome, reason, rawError) <- case result of
+      Right cid -> pure (cid, "committed", None, None)
+      Left error@AuthorizationError{} -> pure (current, "rejected", Some "unauthorized", Some (show error))
+      Left error@UnhandledException{} -> pure (current, "rejected", Some "application-rejected", Some (show error))
+      Left error@UserError{} -> pure (current, "rejected", Some "application-rejected", Some (show error))
+      Left error@(FailureStatusError failure)
+        | failure.errorId == "UNHANDLED_EXCEPTION/DA.Exception.AssertionFailed:AssertionFailed" ->
+          pure (current, "rejected", Some "application-rejected", Some (show error))
+        | failure.errorId == "DAML_AUTHORIZATION_ERROR" ->
+          pure (current, "rejected", Some "unauthorized", Some (show error))
+      Left error -> abort ("Unexpected ledger error: " <> show error)
+    previous <- queryContractId bank current
+    bankView <- queryContractId bank next
+    buyerView <- queryContractId buyer next
+    allActive <- query @Application bank
+    let observed = Step with
+          id = attempt.id
+          outcome
+          reason
+          application = optional "missing" (.status) bankView
+          consumed = previous == None
+          activeContracts = length allActive
+          visibleTo = (if buyerView /= None then [input.buyerName] else []) <>
+            (if bankView /= None then [input.bankName] else [])
+          inputContract = show current
+          outputContract = show next
+          rawError
+    later <- execute input bank buyer next rest
+    pure (observed :: later)

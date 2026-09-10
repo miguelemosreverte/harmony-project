@@ -213,61 +213,17 @@ Committed story inputs and expectations are human-reviewed product specification
 - Error messages identify the file, field, and business action with a useful explanation.
 - Before adding fields to the format, show how they read in a small real story. Readability is reviewed alongside correctness.
 
-### Illustrative input
+### Canonical examples
 
-This example describes the intended artifact shape. Its fixture and action names are draft vocabulary to be implemented and validated in the early commits.
+The executable examples are maintained in one place:
 
-````markdown
-# Financing approved
+- [Financing approval input](stories/financing-approved/input.md) and [its committed expectation](stories/financing-approved/expected.md).
+- [Already-approved input](stories/already-approved/input.md) and [its committed expectation](stories/already-approved/expected.md).
+- [Current format and observation scope](stories/README.md).
 
-An approval lets the buyer enter a separate offer workflow.
-This story checks that the bank can issue that approval.
+These files are the reader-facing specification used by the runner. They replace the initial inline schema sketches to avoid duplicating examples that could drift apart. As later commits extend the supported actions, update the format documentation and affected stories together.
 
-## Scenario
-
-```yaml
-setup:
-  application:
-    type: financing-request
-    buyer: Alice
-    bank: Northbank
-actions:
-  - id: approve
-    actor: Northbank
-    action: approve-financing
-    application: application
-```
-````
-
-### Illustrative result
-
-````markdown
-# Expected financing approval
-
-The buyer needs the approval to continue, but should not receive
-the bank's internal assessment.
-
-## Result
-
-```yaml
-actions:
-  - id: approve
-    outcome: committed
-    workflow: approved
-    created:
-      approval:
-        type: financing-approval
-        buyer: Alice
-    visible_to:
-      application: [Alice, Northbank]
-      assessment: [Northbank]
-      approval: [Alice, Northbank]
-```
-````
-
-The named `financing-request` setup creates the application and the bank's internal assessment through documented authorized setup actions. The input assigns business roles; the runner resolves the readable party names to real party identities. The expected result records observed visibility once per contract, from which the viewer can present each party's perspective.
-
-The final schema must define the observation scope: the contracts and events belonging to this story, including relevant fixture contracts, excluding unrelated infrastructure state. Unexpected application effects within that scope must fail comparison. Expected rejection stories identify the attempted action, stable failure category, and unchanged ledger effects. The simplified example above is a candidate to validate, not a claim that the schema or fixture is already implemented.
+The first observation scope includes the financing application's queried state, contract consumption, active application count, and the two parties' observed visibility. It is deliberately narrower than the final cross-application release. Unexpected effects inside the declared scope must fail comparison. Expected rejection stories record the actual rejected attempt and verify its unchanged effects.
 
 ### Comparison and determinism
 
@@ -365,15 +321,15 @@ The first three actual Git commits have a fixed acceptance sequence: **document 
 
 ### Commit 03 — `feat: prove a Markdown golden story against the local ledger`
 
-- [ ] Implement the first versioned story/result contract.
-  - [ ] Add schemas, designated-block parsing, validation, and deterministic serialization.
-  - [ ] Implement reading and comparison as Scala feature slices, keeping pure comparison separate from `IO` file access.
-  - [ ] Add a small authored story/result pair that exercises the real Daml sample from Commit 02, plus focused comparator checks.
-  - [ ] Review the pair for plain names, shallow nesting, non-repetitive prose, and metadata recorded only where needed.
-  - [ ] Produce `actual.md`, `diff.md`, and run provenance without modifying `expected.md`.
-  - [ ] Verify malformed input fails clearly, prose-only edits are harmless, and a meaningful data mismatch fails the check.
-  - [ ] Drive the action from the parsed input using Scala `IO`, capture the ledger's response and queried state, and compare that observed result independently of the expected file.
-  - [ ] **Acceptance:** before creating the third Git commit, one documented command runs a real passing ledger story, and a deliberately changed expectation fails with a retained readable diff. The book explains exactly which behavior this small example proves.
+- [x] Implement the first versioned story/result contract.
+  - [x] Add schemas, designated-block parsing, validation, and deterministic serialization.
+  - [x] Implement reading and comparison as Scala feature slices, keeping pure comparison separate from `IO` file access.
+  - [x] Add a small authored story/result pair that exercises the real Daml sample from Commit 02, plus focused comparator checks.
+  - [x] Review the pair for plain names, shallow nesting, non-repetitive prose, and metadata recorded only where needed.
+  - [x] Produce `actual.md`, `diff.md`, and run provenance without modifying `expected.md`.
+  - [x] Verify malformed input fails clearly, prose-only edits are harmless, and a meaningful data mismatch fails the check.
+  - [x] Drive the action from the parsed input using Scala `IO`, capture the ledger's response and queried state, and compare that observed result independently of the expected file.
+  - [x] **Acceptance:** before creating the third Git commit, one documented command runs a real passing ledger story, and a deliberately changed expectation fails with a retained readable diff. The book explains exactly which behavior this small example proves.
 
 ### Commit 04 — `feat: execute the first direct-interface workflow story`
 
