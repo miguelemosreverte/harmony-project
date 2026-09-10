@@ -31,6 +31,7 @@ object RunProvenance:
     inputHash <- digest(input)
     expectedHash <- digest(expected)
     darHash <- digest(dar)
+    actualHash <- digest(artifacts.resolve("actual.md"))
     observationHash <- digest(artifacts.resolve("observation.json"))
     timestamp <- IO.realTimeInstant
     _ <- ArtifactFiles.write(
@@ -50,6 +51,7 @@ object RunProvenance:
           "input_sha256" -> Json.fromString(inputHash),
           "expected_sha256" -> Json.fromString(expectedHash),
           "dar_sha256" -> Json.fromString(darHash),
+          "actual_sha256" -> Json.fromString(actualHash),
           "observation_sha256" -> Json.fromString(observationHash),
           "matched" -> Json.fromBoolean(matched)
         )

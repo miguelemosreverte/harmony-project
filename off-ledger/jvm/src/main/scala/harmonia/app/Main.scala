@@ -2,6 +2,7 @@ package harmonia.app
 
 import cats.effect.{ExitCode, IO, IOApp}
 import harmonia.files.ArtifactFiles
+import harmonia.book.{ExportBook, ServeBook}
 import harmonia.ledger.{CantonSandbox, DamlScript}
 import harmonia.stories.run.CheckStories
 import java.nio.file.Path
@@ -10,6 +11,16 @@ object Main extends IOApp:
   def run(args: List[String]): IO[ExitCode] =
     val root = Path.of(sys.env.getOrElse("HARMONIA_ROOT", "..")).toAbsolutePath.normalize()
     args match
+      case List("export-book", run, output) =>
+        ExportBook.write(root, root.resolve(run), root.resolve(output)).as(ExitCode.Success)
+      case List("book", run) =>
+        for
+          output <- ArtifactFiles.createRun(root, "book")
+          _ <- ExportBook.write(root, root.resolve(run), output)
+          _ <- ServeBook.serve(output)
+        yield ExitCode.Success
+      case List("serve-book", directory) =>
+        ServeBook.serve(root.resolve(directory)).as(ExitCode.Success)
       case "check" :: stories => CheckStories.run(root, stories)
       case List("smoke") =>
         val dar = root.resolve("on-ledger/smoke/.daml/dist/harmonia-smoke-0.1.0.dar")
@@ -23,4 +34,6 @@ object Main extends IOApp:
           _ <- IO.println(s"Observed from the ledger:\n$observed")
         yield ExitCode.Success
       case _ =>
-        IO.println("Usage: scripts/harmonia smoke | check [story-directory ...]").as(ExitCode.Error)
+        IO.println(
+          "Usage: scripts/harmonia smoke | check [story-directory ...] | book run-directory | export-book run-directory output-directory | serve-book directory"
+        ).as(ExitCode.Error)

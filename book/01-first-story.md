@@ -53,7 +53,7 @@ Editing only the explanatory prose leaves the scenario unchanged. Adding an unsu
 - [Financing application](../on-ledger/financing/daml/Financing.daml): its signatory, observer, controller, and transition condition.
 - [Ledger-driving script](../on-ledger/smoke/daml/Story.daml): submits actions and queries their effects.
 - [Scala execution slice](../off-ledger/jvm/src/main/scala/harmonia/stories/run/RunStory.scala): translates input and retains observations without receiving the expectation.
-- [Pure comparison](../off-ledger/jvm/src/main/scala/harmonia/stories/compare/CompareResults.scala): checks complete result structures and reports differences.
+- [Pure comparison](../off-ledger/shared/src/main/scala/harmonia/stories/compare/CompareResults.scala): checks complete result structures and reports differences.
 
 ## Let the workflow advance with the application
 

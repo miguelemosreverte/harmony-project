@@ -125,7 +125,7 @@ The proposal establishes the intended release scope. The illustration supplies a
 | Off-ledger language | Scala for the runner, builder, services, book tooling, and interactive application code; Daml remains on-ledger | User requirement |
 | Effect style | Cats Effect with concrete `IO` for effects; pure functions for deterministic work; `Resource[IO, A]` for owned resources | User direction, with Cats Effect as the interpretation of the spoken library name |
 | Code organization | Vertical feature slices, cohesive objects/functions, immutable models, explicit dependencies, and mirrored test packages | User requirement; concrete layout proposed |
-| Runtime targets | JVM for tools/services and Scala.js for browser interactions; Scala 3 is the starting proposal | Proposed; pin compatible versions and verify browser dependencies |
+| Runtime targets | JVM for tools/services and Scala.js for browser interactions; Scala 3 is the starting proposal | Implemented and pinned for both targets; see ADR 002 |
 
 ### Logical components
 
@@ -353,13 +353,13 @@ The first three actual Git commits have a fixed acceptance sequence: **document 
 
 ### Commit 06 — `feat: render the first recorded stories in the book`
 
-- [ ] Deliver the first readable, interactive working edition.
-  - [ ] Validate the Scala.js browser target and choose compatible UI dependencies; share only the models needed by both targets.
-  - [ ] Add the book shell and Chapters 1–2 using the real artifacts from the preceding commits.
-  - [ ] Render a workflow graph, action stepper, contract details, and expected/actual differences.
-  - [ ] Link each demonstration to its input, expectation, source, and execution provenance.
-  - [ ] Label recorded observations and committed expectations distinctly.
-  - [ ] **Acceptance:** a reader can inspect a passing story and a deliberately divergent result without running a ledger; a walkthrough verifies the rendered differences.
+- [x] Deliver the first readable, interactive working edition.
+  - [x] Validate the Scala.js browser target and choose compatible UI dependencies; share only the models needed by both targets.
+  - [x] Add the book shell and Chapters 1–2 using the real artifacts from the preceding commits.
+  - [x] Render a workflow graph, action stepper, contract details, and expected/actual differences.
+  - [x] Link each demonstration to its input, expectation, source, and execution provenance.
+  - [x] Label recorded observations and committed expectations distinctly.
+  - [x] **Acceptance:** a reader can inspect a passing story and a deliberately divergent result without running a ledger; a walkthrough verifies the rendered differences.
 
 ### Commit 07 — `feat: enforce and demonstrate multi-party authority and privacy`
 

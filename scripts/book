@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+source "$(dirname "${BASH_SOURCE[0]}")/environment"
+if [ "$#" -ne 1 ]; then
+  echo 'Usage: scripts/book .artifacts/check-RUN'
+  exit 1
+fi
+exec "$HARMONIA_ROOT/scripts/harmonia" book "$1"

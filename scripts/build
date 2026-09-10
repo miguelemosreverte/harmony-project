@@ -7,4 +7,4 @@ for harmonia_package in interfaces core financing legacy-financing bindings smok
   "$harmonia_root/scripts/daml" build
 done
 cd "$harmonia_root/off-ledger"
-sbt --batch 'scalafmtCheckAll' 'jvm/compile'
+sbt --batch 'scalafmtCheckAll' 'jvm/compile' 'browser/fastLinkJS'

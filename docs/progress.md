@@ -4,7 +4,7 @@ The [PRD](../PRD.md) defines the ordered work. This record reports actual commit
 
 ## Current step
 
-Commit 05 proves the typed adapter against a pinned source DAR. Both participation paths pass equivalent authorization, success, and application-failure stories. Next: render these recorded observations in the interactive book.
+Commit 06 delivers the first interactive book: recorded action playback, Chapters 1–2, contract details, evidence links, and expected/actual differences. The next proof is multi-party authority and privacy on separate participants.
 
 ## Commit evidence
 
@@ -16,7 +16,8 @@ Actual commit identifiers are recorded in the next commit after they are created
 | 02 | `04bb37f` | [Runtime verification](verification/02-runtime.md): compiled Scala/Daml and real Canton create/reject/approve/query execution |
 | 03 | `39d2143` | [Golden proof](verification/03-golden-proof.md): real observed results match, and a changed expectation fails |
 | 04 | `af521b7` | [Direct workflow proof](verification/04-direct-workflow.md): four live goldens and an intentional workflow mismatch |
-| 05 | This increment | [Unchanged-source proof](verification/05-adapter.md): six live goldens and source identity checked before and after execution |
+| 05 | `b0559cb` | [Unchanged-source proof](verification/05-adapter.md): six live goldens and source identity checked before and after execution |
+| 06 | This increment | [Recorded book verification](verification/06-book.md): browser walkthrough, narrow layout, artifact integrity, and the regular suite |
 
 ## External decisions
 

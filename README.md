@@ -21,6 +21,8 @@ scripts/harmonia smoke
 scripts/harmonia check
 ```
 
+To explore the printed run directory in the interactive book, use `scripts/book .artifacts/check-RUN`. See the [playback guide](book/03-recorded-playback.md) for exporting, opening, and inspecting recorded evidence.
+
 ## Delivery principles
 
 Each capability ships with readable code, a concrete story, committed expectations, and an explanation. The same execution artifacts power regression checks and interactive demonstrations.

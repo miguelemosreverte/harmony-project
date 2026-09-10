@@ -13,7 +13,13 @@ import java.nio.file.{Files, Path}
 import scala.jdk.CollectionConverters.*
 
 object CheckStories:
-  private final case class Prepared(directory: Path, story: Story, expected: Json)
+  private final case class Prepared(
+      directory: Path,
+      story: Story,
+      expected: Json,
+      inputMarkdown: String,
+      expectedMarkdown: String
+  )
 
   def run(root: Path, requested: List[String]): IO[ExitCode] = for
     format <- ArtifactFiles.read(root.resolve("stories/format.yaml"))
@@ -48,6 +54,8 @@ object CheckStories:
       prepared.traverse { item =>
         val output = artifacts.resolve(item.story.id)
         for
+          _ <- ArtifactFiles.write(output.resolve("input.md"), item.inputMarkdown)
+          _ <- ArtifactFiles.write(output.resolve("expected.md"), item.expectedMarkdown)
           actual <- runner.run(item.story, output)
           _ <- IO.fromEither(
             StoryFormat
@@ -63,8 +71,8 @@ object CheckStories:
           _ <- ArtifactFiles.write(output.resolve("diff.md"), CompareResults.markdown(differences))
           _ <- RunProvenance.write(
             root,
-            item.directory.resolve("input.md"),
-            item.directory.resolve("expected.md"),
+            output.resolve("input.md"),
+            output.resolve("expected.md"),
             dar,
             output,
             differences.isEmpty
@@ -96,4 +104,4 @@ object CheckStories:
         .left
         .map(message => RuntimeException(s"$directory/expected.md: $message"))
     )
-  yield Prepared(directory, story, result)
+  yield Prepared(directory, story, result, input, expected)

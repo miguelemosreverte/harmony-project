@@ -4,6 +4,7 @@ ThisBuild / version := "0.1.0"
 
 lazy val jvm = project.in(file("jvm")).settings(
   name := "harmonia-tools",
+  Compile / unmanagedSourceDirectories += baseDirectory.value.getParentFile / "shared" / "src" / "main" / "scala",
   libraryDependencies ++= Seq(
     "org.typelevel" %% "cats-effect" % "3.6.3",
     "io.circe" %% "circe-core" % "0.14.10",
@@ -17,7 +18,19 @@ lazy val jvm = project.in(file("jvm")).settings(
   Compile / run / connectInput := false
 )
 
-lazy val root = project.in(file(".")).aggregate(jvm).settings(
+lazy val browser = project.in(file("browser")).enablePlugins(ScalaJSPlugin).settings(
+  name := "harmonia-book",
+  scalaJSUseMainModuleInitializer := true,
+  Compile / unmanagedSourceDirectories += baseDirectory.value.getParentFile / "shared" / "src" / "main" / "scala",
+  libraryDependencies ++= Seq(
+    "org.typelevel" %%% "cats-effect" % "3.6.3",
+    "io.circe" %%% "circe-core" % "0.14.10",
+    "io.circe" %%% "circe-parser" % "0.14.10",
+    "org.scala-js" %%% "scalajs-dom" % "2.8.1"
+  )
+)
+
+lazy val root = project.in(file(".")).aggregate(jvm, browser).settings(
   name := "harmonia-off-ledger",
   publish / skip := true
 )
