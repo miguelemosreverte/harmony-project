@@ -62,24 +62,28 @@ object ExportBook:
       root.resolve("off-ledger/browser/target/scala-3.3.6/harmonia-book-fastopt/main.js"),
       output.resolve("main.js")
     )
-    _ <- Vector("book", "docs", "stories", "on-ledger", "off-ledger").traverse_ { directory =>
-      IO.blocking {
-        val stream = Files.walk(root.resolve(directory))
-        try
-          stream
-            .iterator()
-            .asScala
-            .filter { path =>
-              Files.isRegularFile(path) && Set("md", "scala", "daml", "yaml", "json", "sbt")(
-                path.getFileName.toString.split('.').last
-              ) &&
-              !path.iterator().asScala.exists(part => Set(".daml", "target", ".bsp")(part.toString))
-            }
-            .toVector
-        finally stream.close()
-      }.flatMap(
-        _.traverse_(path => copy(path, output.resolve("source").resolve(root.relativize(path))))
-      )
+    _ <- Vector("book", "docs", "stories", "on-ledger", "off-ledger", "packages").traverse_ {
+      directory =>
+        IO.blocking {
+          val stream = Files.walk(root.resolve(directory))
+          try
+            stream
+              .iterator()
+              .asScala
+              .filter { path =>
+                Files.isRegularFile(path) && Set("md", "scala", "daml", "yaml", "json", "sbt")(
+                  path.getFileName.toString.split('.').last
+                ) &&
+                !path
+                  .iterator()
+                  .asScala
+                  .exists(part => Set(".daml", "target", ".bsp")(part.toString))
+              }
+              .toVector
+          finally stream.close()
+        }.flatMap(
+          _.traverse_(path => copy(path, output.resolve("source").resolve(root.relativize(path))))
+        )
     }
     _ <- Vector("README.md", "PRD.md", "harmonia.md", "harmonia-architecture.html").traverse_(
       name => copy(root.resolve(name), output.resolve("source").resolve(name))

@@ -17,3 +17,7 @@ The proposal references four local assets that were not part of the download:
 The implementation and book will contain their own diagrams grounded in executable stories. Missing original assets are not represented as recovered or available.
 
 Public-repository destination and licensing are open publication decisions. The local repository does not assert a new license over the imported documents or third-party packages.
+
+## Pinned package input
+
+The Splice metadata DAR is a build-time input with explicit upstream revision, archive digest, package ID, compiler compatibility, and Apache-2.0 attribution in [the package manifest](../packages/inputs.md). It is fetched into ignored build artifacts; the package guide describes reproduction and the administrator retrieval boundary.

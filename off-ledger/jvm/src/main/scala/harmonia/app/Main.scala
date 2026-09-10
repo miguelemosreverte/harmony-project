@@ -12,6 +12,16 @@ object Main extends IOApp:
   def run(args: List[String]): IO[ExitCode] =
     val root = Path.of(sys.env.getOrElse("HARMONIA_ROOT", "..")).toAbsolutePath.normalize()
     args match
+      case List("packages-check") =>
+        harmonia.packages.verify.CheckPackages.run(root).as(ExitCode.Success)
+      case List("resolve-packages") =>
+        harmonia.packages.resolve.ResolvePackages
+          .run(root, root.resolve("packages/inputs.md"))
+          .as(ExitCode.Success)
+      case List("resolve-packages", manifest) =>
+        harmonia.packages.resolve.ResolvePackages
+          .run(root, root.resolve(manifest))
+          .as(ExitCode.Success)
       case List("export-book", run, output) =>
         ExportBook.write(root, root.resolve(run), root.resolve(output)).as(ExitCode.Success)
       case List("book", run) =>
@@ -48,5 +58,5 @@ object Main extends IOApp:
         yield ExitCode.Success
       case _ =>
         IO.println(
-          "Usage: scripts/harmonia smoke | network-smoke | check [story-directory ...] | book run-directory | export-book run-directory output-directory | serve-book directory"
+          "Usage: scripts/harmonia smoke | network-smoke | resolve-packages [manifest] | packages-check | check [story-directory ...] | book run-directory | export-book run-directory output-directory | serve-book directory"
         ).as(ExitCode.Error)

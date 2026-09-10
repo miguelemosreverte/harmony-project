@@ -13,6 +13,7 @@ harmony-project/
     progress.md               Delivered commits and verification evidence
     sources.md                Provenance of imported documents
   book/                       Chapters and presentation assets
+  packages/                   Pinned DAR input manifest and provenance
   stories/                    Committed input.md and expected.md examples
   on-ledger/                  Daml contracts, interfaces, bindings, and references
   off-ledger/

@@ -393,12 +393,12 @@ The first three actual Git commits have a fixed acceptance sequence: **document 
 
 ### Commit 10 — `feat: resolve and record reproducible application DAR inputs`
 
-- [ ] Establish the package-source boundary needed by examples and the builder.
-  - [ ] Support a local DAR and one selected external package source with explicit artifact identities.
-  - [ ] Record dependencies, required compatibility, digests, and source provenance.
-  - [ ] Demonstrate build-time retrieval for a reference project and repeat execution using the recorded inputs.
-  - [ ] Verify what package/DAR retrieval the chosen participant APIs actually support; document any reconstruction or administrative-access boundary.
-  - [ ] **Acceptance:** an unavailable or incompatible package gives an actionable failure; successful reproduction does not silently select a newer artifact.
+- [x] Establish the package-source boundary needed by examples and the builder.
+  - [x] Support a local DAR and one selected external package source with explicit artifact identities.
+  - [x] Record dependencies, required compatibility, digests, and source provenance.
+  - [x] Demonstrate build-time retrieval for a reference project and repeat execution using the recorded inputs.
+  - [x] Verify what package/DAR retrieval the chosen participant APIs actually support; document any reconstruction or administrative-access boundary.
+  - [x] **Acceptance:** an unavailable or incompatible package gives an actionable failure; successful reproduction does not silently select a newer artifact.
 
 ### Commit 11 — `feat: compose financing and offer workflows through verified results`
 

@@ -1,0 +1,11 @@
+module MetadataReceipt where
+
+import Splice.Api.Token.MetadataV1 (Metadata)
+
+template Receipt with
+    bank : Party
+    buyer : Party
+    metadata : Metadata
+  where
+    signatory bank
+    observer buyer

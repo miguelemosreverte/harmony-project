@@ -7,4 +7,8 @@ for harmonia_package in interfaces core financing legacy-financing bindings priv
   "$harmonia_root/scripts/daml" build
 done
 cd "$harmonia_root/off-ledger"
-sbt --batch 'scalafmtCheckAll' 'jvm/compile' 'browser/fastLinkJS'
+sbt --batch 'scalafmtCheckAll' 'jvm/compile' 'browser/fastLinkJS' 'jvm/run resolve-packages'
+
+for harmonia_package in metadata-receipts package-example; do
+  "$harmonia_root/scripts/daml" build --package-root "$harmonia_root/on-ledger/$harmonia_package"
+done

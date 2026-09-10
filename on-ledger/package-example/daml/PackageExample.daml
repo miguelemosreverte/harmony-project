@@ -1,0 +1,23 @@
+module PackageExample where
+
+import Daml.Script
+import qualified DA.TextMap as TextMap
+import qualified LegacyFinancing
+import Splice.Api.Token.MetadataV1 (Metadata(..))
+
+import MetadataReceipt
+
+data Observation = Observation with status : Text; receiptNote : Optional Text
+  deriving (Eq, Show)
+
+run : Text -> Script Observation
+run reference = script do
+  bank <- allocateParty (reference <> "-Northbank")
+  buyer <- allocateParty (reference <> "-Alice")
+  application <- submit bank do createCmd LegacyFinancing.Application with bank; buyer; reference; status = "pending"
+  approved <- submit bank do exerciseCmd application LegacyFinancing.Approve
+  receipt <- submit bank do createCmd Receipt with bank; buyer; metadata = Metadata (TextMap.fromList [("harmonia.example/approval", "approved")])
+  observed <- queryContractId bank approved
+  received <- queryContractId buyer receipt
+  pure Observation with status = optional "missing" (.status) observed
+                        receiptNote = received >>= (TextMap.lookup "harmonia.example/approval" . (.values) . (.metadata))

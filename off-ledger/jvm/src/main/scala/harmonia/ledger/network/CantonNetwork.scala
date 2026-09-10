@@ -14,7 +14,12 @@ final case class CantonNetwork(participants: Map[String, Int], configuration: Pa
 object CantonNetwork:
   private val names = Vector("bank", "buyer", "reviewer")
 
-  def resource(root: Path, artifacts: Path, dar: Path): Resource[IO, CantonNetwork] =
+  def resource(
+      root: Path,
+      artifacts: Path,
+      dar: Path,
+      inspectDars: Vector[Path] = Vector.empty
+  ): Resource[IO, CantonNetwork] =
     val freePorts = List
       .fill(12)(Resource.fromAutoCloseable(IO.blocking(new ServerSocket(0))))
       .sequence
@@ -47,6 +52,13 @@ object CantonNetwork:
           | }
           | mediators.mediator1 { storage.type = memory, admin-api.port = ${ports(11)} }
           |}""".stripMargin
+        val retrieval = inspectDars.zipWithIndex
+          .map { (source, index) =>
+            s"""val inputDar$index = bank.dars.upload(${quote(source.toString)})
+             |bank.dars.download(inputDar$index, ${quote(artifacts.resolve("downloaded").toString)})
+             |""".stripMargin
+          }
+          .mkString("\n")
         val script = s"""import com.digitalasset.canton.config.RequireTypes.PositiveInt
           |import com.digitalasset.canton.version.ProtocolVersion
           |val parameters = StaticSynchronizerParameters.defaults(sequencer1.config.crypto, ProtocolVersion.forSynchronizer, topologyChangeDelay = NonNegativeFiniteDuration.Zero)
@@ -57,6 +69,7 @@ object CantonNetwork:
           |}
           |bank.health.ping(buyer)
           |bank.health.ping(reviewer)
+          |$retrieval
           |java.nio.file.Files.writeString(java.nio.file.Path.of(${quote(
                          ready.toString
                        )}), participants.local.map(p => p.id.toString).mkString("\\n"))
@@ -68,7 +81,8 @@ object CantonNetwork:
           ),
           "party_participants" -> Json.obj()
         )
-        ArtifactFiles.write(config, configuration) *> ArtifactFiles.write(bootstrap, script) *>
+        IO.blocking(java.nio.file.Files.createDirectories(artifacts.resolve("downloaded"))) *>
+          ArtifactFiles.write(config, configuration) *> ArtifactFiles.write(bootstrap, script) *>
           ArtifactFiles.write(participantConfig, json.spaces2)
       }
       process <- ManagedProcess.start(

@@ -12,6 +12,7 @@ The ledger enforces actions and records progression. Scala tools execute stories
 - [Scala organization and functional style](docs/architecture/scala.md)
 - [Source documents and provenance](docs/sources.md)
 - [The working book](book/README.md)
+- [Pinned local and upstream DAR inputs](packages/README.md)
 
 The first three commits establish the plan, a working runtime, and a real ledger story verified against a Markdown golden. Start with [local setup](book/setup.md), then run:
 

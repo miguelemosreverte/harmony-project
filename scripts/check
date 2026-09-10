@@ -4,4 +4,4 @@ source "$(dirname "${BASH_SOURCE[0]}")/environment"
 "$HARMONIA_ROOT/scripts/build"
 "$HARMONIA_ROOT/scripts/daml" test --package-root "$HARMONIA_ROOT/on-ledger/smoke"
 cd "$HARMONIA_ROOT/off-ledger"
-exec sbt --batch jvm/test 'jvm/run check'
+exec sbt --batch jvm/test 'jvm/run packages-check' 'jvm/run check'
