@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harmonia Architecture</title>
+<style>
+  :root{
+    --bg:#0b0f14; --panel:#111823; --ink:#e6edf3; --dim:#8fa3b8; --faint:#5b6b7d;
+    --off:#4cc9f0; --off-bg:#0f1a24; --off-br:#1e3a4f;
+    --on:#4ade80;  --on-bg:#0d1a14;  --on-br:#1f4a34;
+    --ext:#f0a04c; --edge:#6c8199; --grid:#1a2430;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font:14px/1.5 ui-sans-serif,-apple-system,"Segoe UI",Inter,system-ui,sans-serif;
+       padding:28px 24px 80px}
+  .wrap{max-width:1460px;margin:0 auto}
+  header{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+         border-bottom:1px solid var(--grid);padding-bottom:14px;margin-bottom:26px}
+  h1{font:600 22px/1.2 var(--mono);margin:0;letter-spacing:-.3px}
+  header .sub{color:var(--dim);font:12px/1.4 var(--mono)}
+  header .src{margin-left:auto;color:var(--faint);font:11px/1.4 var(--mono)}
+  h2{font:600 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+     color:var(--dim);margin:44px 0 14px;display:flex;align-items:center;gap:12px}
+  h2::after{content:"";flex:1;height:1px;background:var(--grid)}
+  figure{margin:0;background:var(--panel);border:1px solid var(--grid);border-radius:12px;
+         padding:10px;overflow-x:auto}
+  svg{display:block;width:100%;height:auto;min-width:1080px}
+  .t{font:600 14px var(--mono);fill:var(--ink)}
+  .t2{font:600 12px var(--mono);fill:var(--ink)}
+  .st{font:10.5px var(--mono);fill:var(--faint);letter-spacing:.06em}
+  .li{font:11.5px var(--mono);fill:var(--dim)}
+  .lo{font:10.5px var(--mono);fill:#9fb3c8}
+  .xs{font:9.5px var(--mono);fill:#8fa3b8}
+  .band{font:700 11px var(--mono);letter-spacing:.2em}
+  .num{font:700 12px var(--mono)}
+  .bandoff{fill:var(--off-bg);stroke:var(--off-br)}
+  .bandon{fill:var(--on-bg);stroke:var(--on-br)}
+  .node{fill:#16202c;stroke:#2b3a4a;stroke-width:1.2;rx:8}
+  .nodeoff{fill:#12202c;stroke:#2a4d63}
+  .nodeon{fill:#102019;stroke:#28553d}
+  .ext{fill:#1e1810;stroke:#5c451f;stroke-dasharray:5 4}
+  .sub{fill:#0e1721;stroke:#25333f;rx:5}
+  .subon{fill:#0c1912;stroke:#22432f;rx:5}
+  .sw{rx:3}
+  .e{stroke:var(--edge);stroke-width:1.4;fill:none;marker-end:url(#a)}
+  .e.build{stroke-dasharray:6 4;stroke:#f0a04c;marker-end:url(#ao)}
+  .e.deploy{stroke:#f0a04c;stroke-width:1.8;marker-end:url(#ao)}
+  .e.on{stroke:#4ade80;marker-end:url(#ag)}
+  .cut{stroke:#3d4f61;stroke-width:1.4;stroke-dasharray:10 7}
+  table{width:100%;border-collapse:collapse;font:12.5px/1.45 var(--mono);
+        background:var(--panel);border:1px solid var(--grid);border-radius:10px;overflow:hidden}
+  th{text-align:left;font-weight:600;color:var(--dim);background:#0e1620;
+     padding:9px 12px;border-bottom:1px solid var(--grid);white-space:nowrap;
+     font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+  td{padding:8px 12px;border-bottom:1px solid #16202c;vertical-align:top;color:#c9d6e2}
+  tr:last-child td{border-bottom:0}
+  td.k{color:var(--ink);white-space:nowrap}
+  .tag{display:inline-block;padding:1px 7px;border-radius:20px;font:10.5px var(--mono);
+       border:1px solid;letter-spacing:.04em}
+  .tag.off{color:var(--off);border-color:#1e4a63;background:#0d1e29}
+  .tag.on{color:var(--on);border-color:#1f4a34;background:#0d1d14}
+  .tag.ext{color:var(--ext);border-color:#5c451f;background:#1c1610}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .grid2>div>h3{font:600 11px var(--mono);letter-spacing:.14em;
+       text-transform:uppercase;color:var(--faint);margin:0 0 8px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{font:11.5px var(--mono);padding:4px 9px;border-radius:6px;
+        background:#12202c;border:1px solid #2a4d63;color:#bcd4e4}
+  .chip.no{background:#1c1114;border-color:#5a2a33;color:#e0a9b3;text-decoration:line-through;
+           text-decoration-color:#7a3a46}
+  code{font:12px var(--mono);color:#bcd4e4}
+  @media (max-width:900px){.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>HARMONIA</h1>
+  <span class="sub">on-ledger workflow composition · Canton / Daml</span>
+  <span class="src">unlockitio/canton-dev-fund @ unlockitio-harmonia · proposals/harmonia.md</span>
+</header>
+
+<!-- ═══════════════ 1. COMPONENT MAP ═══════════════ -->
+<h2>1 · Component map — off-ledger / on-ledger split</h2>
+<figure>
+<svg viewBox="0 0 1440 1000" role="img" aria-label="Harmonia component map split into off-ledger and on-ledger">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#6c8199"/></marker>
+    <marker id="ao" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#f0a04c"/></marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#4ade80"/></marker>
+  </defs>
+
+  <!-- ---------- OFF-LEDGER BAND ---------- -->
+  <rect class="bandoff" x="20" y="20" width="1400" height="470" rx="14"/>
+  <text class="band" x="42" y="48" fill="#4cc9f0">OFF-LEDGER</text>
+  <text class="st" x="150" y="48">clients · build-time tooling · external services</text>
+
+  <!-- Users -->
+  <rect class="node nodeoff" x="40" y="190" width="150" height="130" rx="8"/>
+  <text class="t" x="115" y="222" text-anchor="middle">Users</text>
+  <text class="st" x="115" y="238" text-anchor="middle">actors</text>
+  <rect class="sub" x="54" y="250" width="122" height="24"/>
+  <text class="li" x="115" y="266" text-anchor="middle">workflow actors</text>
+  <rect class="sub" x="54" y="280" width="122" height="24"/>
+  <text class="li" x="115" y="296" text-anchor="middle">DAR providers</text>
+
+  <!-- harmonia-dapp -->
+  <rect class="node nodeoff" x="300" y="70" width="520" height="170" rx="8"/>
+  <text class="t" x="320" y="98">harmonia-dapp</text>
+  <text class="st" x="320" y="114">application · viewer + composer · runtime</text>
+  <rect class="sub" x="320" y="128" width="114" height="42"/>
+  <text class="li" x="377" y="146" text-anchor="middle">viewer</text>
+  <text class="lo" x="377" y="161" text-anchor="middle">state · progress</text>
+  <rect class="sub" x="442" y="128" width="114" height="42"/>
+  <text class="li" x="499" y="146" text-anchor="middle">composer</text>
+  <text class="lo" x="499" y="161" text-anchor="middle">define · authz</text>
+  <rect class="sub" x="564" y="128" width="114" height="42"/>
+  <text class="li" x="621" y="146" text-anchor="middle">back-office</text>
+  <text class="lo" x="621" y="161" text-anchor="middle">exec views</text>
+  <rect class="sub" x="686" y="128" width="114" height="42"/>
+  <text class="li" x="743" y="146" text-anchor="middle">tx submit</text>
+  <text class="lo" x="743" y="161" text-anchor="middle">DAR fetch</text>
+  <rect class="sub" x="320" y="180" width="480" height="42"/>
+  <text class="li" x="560" y="198" text-anchor="middle">reads state + package metadata · writes workflow tx</text>
+  <text class="lo" x="560" y="213" text-anchor="middle">interaction surface · not the orchestration layer</text>
+
+  <!-- harmonia-builder -->
+  <rect class="node nodeoff" x="380" y="290" width="440" height="170" rx="8"/>
+  <text class="t" x="400" y="318">harmonia-builder</text>
+  <text class="st" x="400" y="334">internal tooling · BUILD TIME ONLY</text>
+  <rect class="sub" x="400" y="348" width="128" height="42"/>
+  <text class="li" x="464" y="366" text-anchor="middle">DAR upload</text>
+  <text class="lo" x="464" y="381" text-anchor="middle">user-supplied</text>
+  <rect class="sub" x="536" y="348" width="128" height="42"/>
+  <text class="li" x="600" y="366" text-anchor="middle">DAR retrieval</text>
+  <text class="lo" x="600" y="381" text-anchor="middle">pkg mgr · validator</text>
+  <rect class="sub" x="672" y="348" width="128" height="42"/>
+  <text class="li" x="736" y="366" text-anchor="middle">codegen</text>
+  <text class="lo" x="736" y="381" text-anchor="middle">project + boilerplate</text>
+  <rect class="sub" x="400" y="400" width="400" height="42"/>
+  <text class="li" x="600" y="418" text-anchor="middle">output → Binding DAR + generated project/code</text>
+  <text class="lo" x="600" y="433" text-anchor="middle">no separate runtime composition model</text>
+
+  <!-- Package Manager -->
+  <rect class="node ext" x="890" y="290" width="250" height="170" rx="8"/>
+  <text class="t" x="1015" y="322" text-anchor="middle" fill="#f0a04c">Package Manager</text>
+  <text class="st" x="1015" y="338" text-anchor="middle">external · e.g. Catalyx</text>
+  <rect class="sub" x="910" y="352" width="210" height="26"/>
+  <text class="li" x="1015" y="369" text-anchor="middle">DARs</text>
+  <rect class="sub" x="910" y="386" width="210" height="26"/>
+  <text class="li" x="1015" y="403" text-anchor="middle">package metadata</text>
+  <text class="lo" x="1015" y="430" text-anchor="middle">illustrative source only</text>
+  <text class="lo" x="1015" y="444" text-anchor="middle">no integration implied</text>
+
+  <!-- Legend -->
+  <rect class="node" x="890" y="70" width="490" height="170" rx="8" fill="#0e1620" stroke="#22303d"/>
+  <text class="st" x="910" y="94">LEGEND</text>
+  <rect class="node nodeoff sw" x="910" y="106" width="16" height="13"/>
+  <text class="li" x="934" y="117">Harmonia component</text>
+  <rect class="node ext sw" x="910" y="130" width="16" height="13"/>
+  <text class="li" x="934" y="141">external system</text>
+  <rect class="node nodeon sw" x="910" y="154" width="16" height="13"/>
+  <text class="li" x="934" y="165">Daml package (DAR)</text>
+  <path class="e" d="M1130 112 L1180 112"/>
+  <text class="li" x="1190" y="117">runtime call</text>
+  <path class="e build" d="M1130 136 L1180 136"/>
+  <text class="li" x="1190" y="141">build-time</text>
+  <path class="e on" d="M1130 160 L1180 160"/>
+  <text class="li" x="1190" y="165">on-ledger relation</text>
+  <path class="cut" d="M910 186 L1360 186"/>
+  <text class="lo" x="910" y="208">① direct path · app DAR implements Harmonia interfaces</text>
+  <text class="lo" x="910" y="226">② builder path · existing app DAR + generated binding</text>
+
+  <!-- edges: off-ledger -->
+  <path class="e" d="M190 215 L250 215 L250 155 L300 155"/>
+  <text class="lo" x="296" y="128" text-anchor="end">inspect · define</text>
+  <text class="lo" x="296" y="142" text-anchor="end">authorize · execute</text>
+  <path class="e build" d="M190 265 L250 265 L250 372 L380 372"/>
+  <text class="lo" x="262" y="336">upload DAR</text>
+  <path class="e build" d="M560 240 L560 290"/>
+  <text class="lo" x="570" y="268">app DARs</text>
+  <path class="e build" d="M820 372 L890 372"/>
+  <text class="lo" x="855" y="362" text-anchor="middle">fetch</text>
+  <path class="e" d="M820 150 L856 150 L856 330 L890 330"/>
+  <text class="lo" x="850" y="264" text-anchor="end">pkg metadata</text>
+
+  <!-- ---------- BOUNDARY ---------- -->
+  <path class="cut" d="M20 505 L1420 505"/>
+  <rect x="1050" y="492" width="320" height="26" rx="13" fill="#0b0f14" stroke="#3d4f61"/>
+  <text class="band" x="1210" y="509" text-anchor="middle" fill="#8fa3b8">LEDGER BOUNDARY · LEDGER API</text>
+
+  <!-- ---------- ON-LEDGER BAND ---------- -->
+  <rect class="bandon" x="20" y="520" width="1400" height="460" rx="14"/>
+  <text class="band" x="42" y="548" fill="#4ade80">ON-LEDGER · DAML</text>
+  <text class="st" x="220" y="548">hosted by Canton Validator / Super Validator (external) · composition state stays on-ledger</text>
+
+  <!-- harmonia-core -->
+  <rect class="node nodeon" x="50" y="600" width="400" height="330" rx="8"/>
+  <text class="t" x="70" y="628">harmonia-core</text>
+  <text class="st" x="70" y="644">Daml · the Core-managed workflow model</text>
+  <rect class="subon" x="70" y="658" width="174" height="40"/>
+  <text class="li" x="157" y="675" text-anchor="middle">orchestration</text>
+  <text class="lo" x="157" y="689" text-anchor="middle">templates · choices</text>
+  <rect class="subon" x="256" y="658" width="174" height="40"/>
+  <text class="li" x="343" y="675" text-anchor="middle">interfaces</text>
+  <text class="lo" x="343" y="689" text-anchor="middle">+ applicability</text>
+  <rect class="subon" x="70" y="706" width="174" height="40"/>
+  <text class="li" x="157" y="723" text-anchor="middle">workflow state</text>
+  <text class="lo" x="157" y="737" text-anchor="middle">persisted · queryable</text>
+  <rect class="subon" x="256" y="706" width="174" height="40"/>
+  <text class="li" x="343" y="723" text-anchor="middle">step-exec rules</text>
+  <text class="lo" x="343" y="737" text-anchor="middle">actor + authority</text>
+  <rect class="subon" x="70" y="754" width="360" height="40"/>
+  <text class="li" x="250" y="771" text-anchor="middle">sequential · XOR branch · join · continuation</text>
+  <text class="lo" x="250" y="785" text-anchor="middle">start event → steps → end event</text>
+  <rect class="subon" x="70" y="802" width="360" height="40"/>
+  <text class="li" x="250" y="819" text-anchor="middle">bounded atomic execution block</text>
+  <text class="lo" x="250" y="833" text-anchor="middle">collapse steps when authorizations co-exist</text>
+  <rect class="subon" x="70" y="850" width="360" height="40"/>
+  <text class="li" x="250" y="867" text-anchor="middle">role → party binding · no central operator</text>
+  <text class="lo" x="250" y="881" text-anchor="middle">privacy · ownership · authorization preserved</text>
+
+  <!-- Binding DAR -->
+  <rect class="node nodeon" x="545" y="600" width="305" height="330" rx="8"/>
+  <text class="t" x="565" y="628">Harmonia Binding DAR</text>
+  <text class="st" x="565" y="644">Daml · interface ⇄ app-template</text>
+  <rect class="subon" x="565" y="658" width="265" height="44"/>
+  <text class="li" x="698" y="676" text-anchor="middle">applicable app templates</text>
+  <text class="lo" x="698" y="691" text-anchor="middle">templateId · choice · role</text>
+  <rect class="subon" x="565" y="710" width="265" height="44"/>
+  <text class="li" x="698" y="728" text-anchor="middle">participation in the model</text>
+  <text class="lo" x="698" y="743" text-anchor="middle">which step kind a choice fulfils</text>
+  <rect class="subon" x="565" y="762" width="128" height="58"/>
+  <text class="num" x="629" y="783" text-anchor="middle" fill="#4ade80">①</text>
+  <text class="lo" x="629" y="798" text-anchor="middle">authored by</text>
+  <text class="lo" x="629" y="811" text-anchor="middle">app project</text>
+  <rect class="subon" x="702" y="762" width="128" height="58"/>
+  <text class="num" x="766" y="783" text-anchor="middle" fill="#f0a04c">②</text>
+  <text class="lo" x="766" y="798" text-anchor="middle">emitted by</text>
+  <text class="lo" x="766" y="811" text-anchor="middle">harmonia-builder</text>
+  <rect class="subon" x="565" y="828" width="265" height="44"/>
+  <text class="xs" x="698" y="846" text-anchor="middle" fill="#f0a04c">import direction · templateId repr</text>
+  <text class="xs" x="698" y="860" text-anchor="middle" fill="#f0a04c">binding mechanism — UNDECIDED</text>
+  <text class="lo" x="698" y="894" text-anchor="middle">both paths → one Core-managed model</text>
+
+  <!-- App DAR 1 -->
+  <rect class="node nodeon" x="912" y="600" width="265" height="155" rx="8"/>
+  <text class="t2" x="932" y="626">Source App DAR ①</text>
+  <text class="st" x="932" y="641">final DAR · new version</text>
+  <rect class="subon" x="932" y="654" width="225" height="34"/>
+  <text class="li" x="1044" y="675" text-anchor="middle">implements interfaces</text>
+  <rect class="subon" x="932" y="696" width="225" height="42"/>
+  <text class="li" x="1044" y="713" text-anchor="middle">own templates · choices</text>
+  <text class="lo" x="1044" y="728" text-anchor="middle">own authorization + ownership</text>
+
+  <!-- App DAR 2 -->
+  <rect class="node nodeon" x="912" y="775" width="265" height="155" rx="8"/>
+  <text class="t2" x="932" y="801">Source App DAR ②</text>
+  <text class="st" x="932" y="816">existing DAR · unchanged</text>
+  <rect class="subon" x="932" y="829" width="225" height="34"/>
+  <text class="li" x="1044" y="850" text-anchor="middle">bound by generated code</text>
+  <rect class="subon" x="932" y="871" width="225" height="42"/>
+  <text class="li" x="1044" y="888" text-anchor="middle">own templates · choices</text>
+  <text class="lo" x="1044" y="903" text-anchor="middle">no source change required</text>
+
+  <!-- references -->
+  <rect class="node nodeon" x="1197" y="600" width="183" height="330" rx="8"/>
+  <text class="t2" x="1288" y="626" text-anchor="middle">harmonia-</text>
+  <text class="t2" x="1288" y="642" text-anchor="middle">references</text>
+  <text class="st" x="1288" y="658" text-anchor="middle">Daml · proof</text>
+  <rect class="subon" x="1213" y="672" width="151" height="30"/>
+  <text class="lo" x="1288" y="691" text-anchor="middle">reference apps</text>
+  <rect class="subon" x="1213" y="710" width="151" height="30"/>
+  <text class="lo" x="1288" y="729" text-anchor="middle">≥2 sample DARs</text>
+  <rect class="subon" x="1213" y="748" width="151" height="44"/>
+  <text class="lo" x="1288" y="767" text-anchor="middle">min. composition</text>
+  <text class="lo" x="1288" y="781" text-anchor="middle">framework</text>
+  <rect class="subon" x="1213" y="800" width="151" height="44"/>
+  <text class="lo" x="1288" y="819" text-anchor="middle">4-party token</text>
+  <text class="lo" x="1288" y="833" text-anchor="middle">transfer</text>
+  <rect class="subon" x="1213" y="852" width="151" height="44"/>
+  <text class="lo" x="1288" y="871" text-anchor="middle">property financing</text>
+  <text class="lo" x="1288" y="885" text-anchor="middle">+ offer</text>
+
+  <!-- crossing edges -->
+  <path class="e" d="M352 240 L352 600"/>
+  <path class="e" d="M325 600 L325 240"/>
+  <text class="lo" x="372" y="574">↓ submit workflow transactions</text>
+  <text class="lo" x="372" y="588">↑ workflow state · application DARs</text>
+  <path class="e deploy" d="M660 460 L660 600"/>
+  <text class="lo" x="674" y="574">↓ deploy Harmonia Binding DAR</text>
+  <text class="lo" x="674" y="588">&#160;&#160; + generated project/code</text>
+
+  <!-- on-ledger edges -->
+  <path class="e on" d="M545 700 L455 700"/>
+  <text class="xs" x="498" y="682" text-anchor="middle">defines</text>
+  <text class="xs" x="498" y="694" text-anchor="middle">participation</text>
+  <path class="e on" d="M450 770 L540 770"/>
+  <text class="xs" x="498" y="788" text-anchor="middle">interfaces +</text>
+  <text class="xs" x="498" y="800" text-anchor="middle">applicability</text>
+  <path class="e on" d="M912 672 L857 672"/>
+  <text class="xs" x="905" y="660" text-anchor="end">implements</text>
+  <path class="e deploy" d="M850 852 L907 852"/>
+  <text class="xs" x="878" y="840" text-anchor="middle">binds</text>
+  <path class="e on" d="M1288 930 L1288 955 L200 955 L200 930"/>
+  <text class="lo" x="744" y="950" text-anchor="middle">demonstrates ① and ② against one Core-managed workflow model</text>
+</svg>
+</figure>
+
+<!-- ═══════════════ 2. CONTRACT MODEL ═══════════════ -->
+<h2>2 · On-ledger contract model — templates · interfaces · data</h2>
+<figure>
+<svg viewBox="0 0 1440 790" role="img" aria-label="Harmonia Daml contract model">
+  <defs>
+    <marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#4ade80"/></marker>
+  </defs>
+  <style>
+    .cls{fill:#102019;stroke:#28553d;stroke-width:1.2;rx:8}
+    .iface{fill:#101c26;stroke:#2a4d63;stroke-width:1.2;rx:8}
+    .dat{fill:#1a1610;stroke:#5c451f;stroke-width:1.2;rx:8}
+    .cn{font:600 13px var(--mono);fill:#e6edf3}
+    .cs{font:10px var(--mono);fill:#5b6b7d;letter-spacing:.1em}
+    .cf{font:11px var(--mono);fill:#9fb3c8}
+    .cc{font:11px var(--mono);fill:#4ade80}
+    .sep{stroke:#28553d;stroke-width:1}
+    .rel{stroke:#4ade80;stroke-width:1.3;fill:none;marker-end:url(#b)}
+    .relo{stroke:#f0a04c;stroke-width:1.3;fill:none;stroke-dasharray:5 4;marker-end:url(#ao)}
+    .rl{font:10.5px var(--mono);fill:#8fa3b8}
+  </style>
+
+  <!-- WorkflowDefinition -->
+  <rect class="cls" x="40" y="80" width="300" height="240"/>
+  <text class="cs" x="56" y="102">«template» harmonia-core</text>
+  <text class="cn" x="56" y="120">WorkflowDefinition</text>
+  <line class="sep" x1="40" y1="132" x2="340" y2="132"/>
+  <text class="cf" x="56" y="150">definitionId · version</text>
+  <text class="cf" x="56" y="168">startEvent · endEvent</text>
+  <text class="cf" x="56" y="186">steps : [StepSpec]</text>
+  <text class="cf" x="56" y="204">flow : sequential</text>
+  <text class="cf" x="56" y="222">branches : XOR · joins</text>
+  <text class="cf" x="56" y="240">atomicBlocks : [[StepId]]</text>
+  <text class="cf" x="56" y="258">subWorkflows : [DefId]</text>
+  <line class="sep" x1="40" y1="270" x2="340" y2="270"/>
+  <text class="cc" x="56" y="288">◆ Instantiate</text>
+  <text class="cf" x="56" y="306">signatory definer</text>
+
+  <!-- WorkflowInstance -->
+  <rect class="cls" x="400" y="60" width="330" height="300"/>
+  <text class="cs" x="416" y="82">«template» harmonia-core</text>
+  <text class="cn" x="416" y="100">WorkflowInstance</text>
+  <line class="sep" x1="400" y1="112" x2="730" y2="112"/>
+  <text class="cf" x="416" y="130">definitionId</text>
+  <text class="cf" x="416" y="148">roleBindings : [RoleBinding]</text>
+  <text class="cf" x="416" y="166">state : orchestration state</text>
+  <text class="cf" x="416" y="184">currentSteps · completedSteps</text>
+  <text class="cf" x="416" y="202">outputs : workflow results</text>
+  <line class="sep" x1="400" y1="214" x2="730" y2="214"/>
+  <text class="cc" x="416" y="232">◆ AdvanceStep</text>
+  <text class="cc" x="416" y="250">◆ TakeBranch (XOR) · Join</text>
+  <text class="cc" x="416" y="268">◆ ExecuteAtomic (bounded)</text>
+  <text class="cc" x="416" y="286">◆ Continue → sub-workflow</text>
+  <text class="cc" x="416" y="304">◆ Complete → end event</text>
+  <line class="sep" x1="400" y1="316" x2="730" y2="316"/>
+  <text class="cf" x="416" y="334">signatory bound parties</text>
+  <text class="cf" x="416" y="352">queryable · inspectable</text>
+
+  <!-- RoleBinding -->
+  <rect class="dat" x="400" y="410" width="160" height="120"/>
+  <text class="cs" x="416" y="432">«data»</text>
+  <text class="cn" x="416" y="450">RoleBinding</text>
+  <line class="sep" x1="400" y1="462" x2="560" y2="462" stroke="#5c451f"/>
+  <text class="cf" x="416" y="480">role : Text</text>
+  <text class="cf" x="416" y="498">party : Party</text>
+  <text class="cf" x="416" y="516">rights : [StepId]</text>
+
+  <!-- Continuation -->
+  <rect class="cls" x="590" y="410" width="200" height="140"/>
+  <text class="cs" x="606" y="432">«template» harmonia-core</text>
+  <text class="cn" x="606" y="450">Continuation</text>
+  <line class="sep" x1="590" y1="462" x2="790" y2="462"/>
+  <text class="cf" x="606" y="480">producer : InstanceId</text>
+  <text class="cf" x="606" y="498">consumer : DefinitionId</text>
+  <text class="cf" x="606" y="516">outputs : payload</text>
+  <text class="cf" x="606" y="538">links owned domains</text>
+
+  <!-- StepAssignment -->
+  <rect class="cls" x="800" y="60" width="330" height="290"/>
+  <text class="cs" x="816" y="82">«template» harmonia-core</text>
+  <text class="cn" x="816" y="100">StepAssignment</text>
+  <line class="sep" x1="800" y1="112" x2="1130" y2="112"/>
+  <text class="cf" x="816" y="130">stepId · instanceId</text>
+  <text class="cf" x="816" y="148">actor : Party ← assignee</text>
+  <text class="cf" x="816" y="166">kind : Create | Exercise | Wait</text>
+  <text class="cf" x="816" y="184">&#160;&#160;&#160;&#160; | Branch | Continue | Atomic</text>
+  <text class="cf" x="816" y="202">target : templateId · choice</text>
+  <text class="cf" x="816" y="220">view : interface view</text>
+  <text class="cf" x="816" y="238">authority : required from app</text>
+  <line class="sep" x1="800" y1="250" x2="1130" y2="250"/>
+  <text class="cc" x="816" y="268">◆ Execute → app choice</text>
+  <text class="cc" x="816" y="286">◆ Reject</text>
+  <line class="sep" x1="800" y1="298" x2="1130" y2="298"/>
+  <text class="cf" x="816" y="316">controller actor</text>
+  <text class="cf" x="816" y="334">human- or system-executed</text>
+
+  <!-- Interface -->
+  <rect class="iface" x="800" y="400" width="330" height="180"/>
+  <text class="cs" x="816" y="422">«interface» harmonia-core</text>
+  <text class="cn" x="816" y="440">HarmoniaStepAction</text>
+  <line class="sep" x1="800" y1="452" x2="1130" y2="452" stroke="#2a4d63"/>
+  <text class="cf" x="816" y="470">viewtype StepView</text>
+  <text class="cf" x="816" y="488">&#160;&#160;{ stepId, actor, status }</text>
+  <line class="sep" x1="800" y1="500" x2="1130" y2="500" stroke="#2a4d63"/>
+  <text class="cc" x="816" y="518" fill="#4cc9f0">◆ executeStep</text>
+  <line class="sep" x1="800" y1="530" x2="1130" y2="530" stroke="#2a4d63"/>
+  <text class="cf" x="816" y="548">declared in core</text>
+  <text class="cf" x="816" y="566">disclosure + visibility limits</text>
+
+  <!-- Applicability -->
+  <rect class="dat" x="800" y="630" width="330" height="120"/>
+  <text class="cs" x="816" y="652">«data» applicability declaration</text>
+  <text class="cn" x="816" y="670">AppliesTo</text>
+  <line class="sep" x1="800" y1="682" x2="1130" y2="682" stroke="#5c451f"/>
+  <text class="cf" x="816" y="700">templateId · choice</text>
+  <text class="cf" x="816" y="718">stepKind · role</text>
+  <text class="cf" x="816" y="736">carried by the Binding DAR</text>
+
+  <!-- Source app template -->
+  <rect class="cls" x="1180" y="400" width="220" height="350"/>
+  <text class="cs" x="1196" y="422">«template» source app DAR</text>
+  <text class="cn" x="1196" y="440">AppTemplate</text>
+  <line class="sep" x1="1180" y1="452" x2="1400" y2="452"/>
+  <text class="cf" x="1196" y="470">own fields</text>
+  <text class="cf" x="1196" y="488">own signatories</text>
+  <text class="cf" x="1196" y="506">own observers</text>
+  <line class="sep" x1="1180" y1="518" x2="1400" y2="518"/>
+  <text class="cc" x="1196" y="536">◆ eligible choice A</text>
+  <text class="cc" x="1196" y="554">◆ eligible choice B</text>
+  <line class="sep" x1="1180" y1="566" x2="1400" y2="566"/>
+  <text class="cf" x="1196" y="584">① implements iface</text>
+  <text class="cf" x="1196" y="602">② bound by generated</text>
+  <text class="cf" x="1196" y="620">&#160;&#160; code · unchanged</text>
+  <line class="sep" x1="1180" y1="632" x2="1400" y2="632"/>
+  <text class="cf" x="1196" y="650">ownership preserved</text>
+  <text class="cf" x="1196" y="668">authorization preserved</text>
+  <text class="cf" x="1196" y="686">privacy preserved</text>
+
+  <!-- relations -->
+  <path class="rel" d="M340 200 L395 200"/>
+  <text class="rl" x="367" y="192" text-anchor="middle">1 ▸ n</text>
+  <text class="rl" x="367" y="216" text-anchor="middle">creates</text>
+
+  <path class="rel" d="M730 170 L795 170"/>
+  <text class="rl" x="762" y="162" text-anchor="middle">1 ▸ n</text>
+  <text class="rl" x="762" y="186" text-anchor="middle">assigns</text>
+
+  <path class="rel" d="M480 360 L480 405"/>
+  <text class="rl" x="490" y="390">1 ▸ n</text>
+
+  <path class="rel" d="M690 360 L690 405"/>
+  <text class="rl" x="700" y="390">0 ▸ n</text>
+
+  <path class="rel" d="M700 550 L700 590 L190 590 L190 325"/>
+  <text class="rl" x="420" y="583" text-anchor="middle">continuation feeds the next definition</text>
+
+  <path class="rel" d="M965 350 L965 395"/>
+  <text class="rl" x="976" y="378">exercises via</text>
+
+  <path class="rel" d="M965 630 L965 585"/>
+  <text class="rl" x="976" y="612">qualifies</text>
+
+  <path class="relo" d="M1130 490 L1175 490"/>
+  <text class="rl" x="1152" y="480" text-anchor="middle">binds</text>
+
+  <path class="relo" d="M1130 700 L1152 700 L1152 545 L1175 545"/>
+  <text class="rl" x="1120" y="726" text-anchor="end">selects choice</text>
+</svg>
+</figure>
+
+<!-- ═══════════════ 3. CATALOG ═══════════════ -->
+<h2>3 · Component catalog</h2>
+<table>
+<thead><tr><th>Component</th><th>Side</th><th>Kind</th><th>Owns</th><th>Boundary</th></tr></thead>
+<tbody>
+<tr><td class="k">harmonia-dapp</td><td><span class="tag off">off-ledger</span></td><td>application</td><td>viewer · composer · back-office views · tx submission · DAR fetch</td><td>interaction surface, not orchestration; no managed hosting, no BPMN editor</td></tr>
+<tr><td class="k">harmonia-builder</td><td><span class="tag off">off-ledger</span></td><td>build-time tooling</td><td>DAR upload · DAR retrieval · codegen → Binding DAR + project/code</td><td>build time only; not a runtime composition model</td></tr>
+<tr><td class="k">Package Manager</td><td><span class="tag ext">external</span></td><td>service</td><td>DARs · package metadata</td><td>Catalyx illustrative only; no integration implied</td></tr>
+<tr><td class="k">Canton Validator / Super Validator</td><td><span class="tag ext">external</span></td><td>runtime host</td><td>hosts harmonia-core, Binding DAR, third-party DARs</td><td>upstream work subject to maintainer review + governance</td></tr>
+<tr><td class="k">harmonia-core</td><td><span class="tag on">on-ledger</span></td><td>Daml package</td><td>workflow model · templates · choices · interfaces + applicability · state · step-exec rules</td><td>one Core-managed model; no separate runtime model</td></tr>
+<tr><td class="k">Harmonia Binding DAR</td><td><span class="tag on">on-ledger</span></td><td>Daml package</td><td>applicable app templates · how each participates</td><td>import direction · templateId repr · binding mechanism undecided</td></tr>
+<tr><td class="k">Source App DAR ①</td><td><span class="tag on">on-ledger</span></td><td>Daml package</td><td>implements Harmonia interfaces in a new version</td><td>app ownership / authorization / privacy preserved</td></tr>
+<tr><td class="k">Source App DAR ②</td><td><span class="tag on">on-ledger</span></td><td>Daml package</td><td>existing DAR bound by generated code</td><td>no source change required</td></tr>
+<tr><td class="k">harmonia-references</td><td><span class="tag on">on-ledger</span></td><td>Daml package</td><td>reference apps · ≥2 sample DARs · min. composition framework · 2 workflows</td><td>reference material, not required for integration</td></tr>
+</tbody>
+</table>
+
+<!-- ═══════════════ 4. REFERENCE ENTITIES ═══════════════ -->
+<h2>4 · Reference workflows — participants &amp; domains</h2>
+<div class="grid2">
+  <div>
+    <h3>Four-party token transfer</h3>
+    <table>
+    <thead><tr><th>Role</th><th>Step kind</th><th>Owns</th></tr></thead>
+    <tbody>
+    <tr><td class="k">Buyer</td><td>Create</td><td>trade proposal (start event)</td></tr>
+    <tr><td class="k">Seller</td><td>Exercise</td><td>trade proposal agreement</td></tr>
+    <tr><td class="k">Source custodian</td><td>Exercise</td><td>position locked + eligible</td></tr>
+    <tr><td class="k">Destination custodian</td><td>Exercise</td><td>receive readiness / lock condition</td></tr>
+    <tr><td class="k">Settler</td><td>Atomic</td><td>fulfilled by one of the four — not a 5th party</td></tr>
+    </tbody>
+    </table>
+  </div>
+  <div>
+    <h3>Property financing → offer</h3>
+    <table>
+    <thead><tr><th>Domain / role</th><th>Step kind</th><th>Owns</th></tr></thead>
+    <tbody>
+    <tr><td class="k">Buyer</td><td>Create</td><td>documents / credential-backed evidence</td></tr>
+    <tr><td class="k">Bank / financing domain</td><td>Branch (XOR)</td><td>approve | reject under own rules</td></tr>
+    <tr><td class="k">Buyer</td><td>Continue</td><td>purchase proposal → offer workflow</td></tr>
+    <tr><td class="k">Buyer-side agent</td><td>Exercise</td><td>relay in own domain</td></tr>
+    <tr><td class="k">Seller-side agent</td><td>Exercise</td><td>relay in own domain</td></tr>
+    </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════ 5. SCOPE ═══════════════ -->
+<h2>5 · Workflow subset — in / out</h2>
+<div class="grid2">
+  <div>
+    <h3>Supported (M1–M6)</h3>
+    <div class="chips">
+      <span class="chip">start event</span><span class="chip">end event</span>
+      <span class="chip">persisted orchestration state</span><span class="chip">human step</span>
+      <span class="chip">system step</span><span class="chip">explicit assignee</span>
+      <span class="chip">sequential flow</span><span class="chip">XOR branch</span>
+      <span class="chip">join</span><span class="chip">bounded wait</span>
+      <span class="chip">bounded atomic block</span><span class="chip">multi-party progression</span>
+      <span class="chip">sub-workflow continuation</span><span class="chip">role → party binding</span>
+    </div>
+  </div>
+  <div>
+    <h3>Out of scope</h3>
+    <div class="chips">
+      <span class="chip no">generic BPMN</span><span class="chip no">timers</span>
+      <span class="chip no">escalations</span><span class="chip no">compensation</span>
+      <span class="chip no">rich exception handling</span><span class="chip no">subprocess library</span>
+      <span class="chip no">managed hosting</span><span class="chip no">workflow studio</span>
+      <span class="chip no">BPMN editor</span><span class="chip no">off-chain orchestration</span>
+      <span class="chip no">arbitrary dynamic composition</span><span class="chip no">custom adopter integration</span>
+      <span class="chip no">domain-specific app dev</span><span class="chip no">central operator</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ 6. OPEN ═══════════════ -->
+<h2>6 · Open design points (stated in the proposal)</h2>
+<table>
+<thead><tr><th>Point</th><th>Where it sits in the diagrams</th></tr></thead>
+<tbody>
+<tr><td class="k">Package-import direction</td><td>§1 — the two anti-parallel Binding DAR ⇄ harmonia-core edges</td></tr>
+<tr><td class="k">templateId representation</td><td>§2 — <code>AppliesTo.templateId</code></td></tr>
+<tr><td class="k">Binding mechanism</td><td>§2 — <code>binds</code> and <code>selects choice</code> relations</td></tr>
+<tr><td class="k">Interfaces: core vs Binding DAR</td><td>§1 — “interfaces + applicability” placed in harmonia-core, applicability carried by the Binding DAR; abstract and Core section state it differently</td></tr>
+<tr><td class="k">Authorization scope: party-level vs cross-party</td><td>§2 — <code>StepAssignment.authority</code>; §1 — bounded atomic execution block</td></tr>
+<tr><td class="k">Container boundaries</td><td>§1 — all Harmonia nodes are “proposed logical components”; final split set at technical design</td></tr>
+<tr><td class="k">Template &amp; choice names in §2</td><td>§2 — derived from the specified semantics; the proposal names no templates</td></tr>
+</tbody>
+</table>
+
+</div>
+</body>
+</html>

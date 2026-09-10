@@ -1,0 +1,14 @@
+.DS_Store
+.artifacts/
+.tools/
+.env
+.env.*
+!.env.example
+**/target/
+**/.daml/
+**/.bsp/
+**/.metals/
+**/.scala-build/
+**/node_modules/
+*.log
+*.pid
