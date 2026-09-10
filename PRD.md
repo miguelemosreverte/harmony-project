@@ -333,13 +333,13 @@ The first three actual Git commits have a fixed acceptance sequence: **document 
 
 ### Commit 04 — `feat: execute the first direct-interface workflow story`
 
-- [ ] Connect the story runner to a minimal real workflow.
-  - [ ] Define the smallest common action interface and core transition needed by the story.
-  - [ ] Add an independent sample application implementing the interface directly.
-  - [ ] Execute the application action and corresponding workflow advance in one transaction.
-  - [ ] Capture actual events/state from the ledger and compare them with a committed golden.
-  - [ ] Include a successful action, an unauthorized attempt, and a failed application action with unchanged workflow state.
-  - [ ] **Acceptance:** Chapter 1's example runs against Canton; changing a relevant expectation causes a real regression failure.
+- [x] Connect the story runner to a minimal real workflow.
+  - [x] Define the smallest common action interface and core transition needed by the story.
+  - [x] Add an independent sample application implementing the interface directly.
+  - [x] Execute the application action and corresponding workflow advance in one transaction.
+  - [x] Capture actual events/state from the ledger and compare them with a committed golden.
+  - [x] Include a successful action, an unauthorized attempt, and a failed application action with unchanged workflow state.
+  - [x] **Acceptance:** Chapter 1's example runs against Canton; changing a relevant expectation causes a real regression failure.
 
 ### Commit 05 — `feat: prove an adapter for an unchanged source DAR`
 

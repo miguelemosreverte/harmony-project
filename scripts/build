@@ -2,7 +2,7 @@
 set -euo pipefail
 source "$(dirname "${BASH_SOURCE[0]}")/environment"
 harmonia_root="$HARMONIA_ROOT"
-for harmonia_package in financing smoke; do
+for harmonia_package in interfaces core financing smoke; do
   cd "$harmonia_root/on-ledger/$harmonia_package"
   "$harmonia_root/scripts/daml" build
 done

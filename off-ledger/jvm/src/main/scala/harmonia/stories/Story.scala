@@ -9,13 +9,15 @@ final case class Story(
     bank: String,
     buyer: String,
     status: String,
-    actions: Vector[StoryAction]
+    actions: Vector[StoryAction],
+    workflow: Option[String] = None
 ):
   def scriptInput: Json = Json.obj(
     "namespace" -> Json.fromString(id),
     "bankName" -> Json.fromString(bank),
     "buyerName" -> Json.fromString(buyer),
     "initialStatus" -> Json.fromString(status),
+    "workflow" -> workflow.fold(Json.Null)(Json.fromString),
     "actions" -> Json.arr(actions.map { action =>
       Json.obj(
         "id" -> Json.fromString(action.id),

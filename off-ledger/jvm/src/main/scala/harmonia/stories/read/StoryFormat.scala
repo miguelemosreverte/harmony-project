@@ -6,7 +6,12 @@ import io.circe.{Json, JsonObject}
 object StoryFormat:
   def input(id: String, markdown: String): Either[String, Story] = for
     json <- MarkdownYaml.read(markdown, "Scenario")
-    root <- fields(json, "scenario", Set("setup", "actions"))
+    root <- fields(json, "scenario", Set("setup", "actions"), Set("workflow"))
+    workflow <- root("workflow").fold[Either[String, Option[String]]](Right(None)) { value =>
+      text(value, "workflow").flatMap { name =>
+        Either.cond(name == "approval", Some(name), "Unsupported workflow: " + name)
+      }
+    }
     setup <- fields(root("setup").get, "setup", Set("application"))
     application <- fields(
       setup("application").get,
@@ -45,7 +50,7 @@ object StoryFormat:
           _ <- Either.cond(!preceding.exists(_.id == name), (), s"Duplicate action id '$name'")
         yield preceding :+ StoryAction(name, actor, choice)
     }
-  yield Story(id, bank, buyer, status, actions)
+  yield Story(id, bank, buyer, status, actions, workflow)
 
   def result(markdown: String): Either[String, Json] = for
     json <- MarkdownYaml.read(markdown, "Result")
@@ -58,7 +63,7 @@ object StoryFormat:
           value,
           "result action",
           Set("id", "outcome", "application", "consumed", "active_contracts", "visible_to"),
-          Set("reason")
+          Set("reason", "workflow")
         )
         _ <- text(action("id").get, "result action.id")
         outcome <- text(action("outcome").get, "result action.outcome")
@@ -68,6 +73,11 @@ object StoryFormat:
           "Outcome must be committed or rejected"
         )
         _ <- text(action("application").get, "result action.application")
+        _ <- action("workflow").fold[Either[String, Unit]](Right(())) { value =>
+          text(value, "result action.workflow").flatMap { status =>
+            Either.cond(Set("waiting", "complete")(status), (), "Unknown workflow status")
+          }
+        }
         _ <- action("consumed").get.asBoolean.toRight("consumed must be true or false")
         count <- action("active_contracts").get.asNumber
           .flatMap(_.toInt)

@@ -55,4 +55,18 @@ Editing only the explanatory prose leaves the scenario unchanged. Adding an unsu
 - [Scala execution slice](../off-ledger/jvm/src/main/scala/harmonia/stories/run/RunStory.scala): translates input and retains observations without receiving the expectation.
 - [Pure comparison](../off-ledger/jvm/src/main/scala/harmonia/stories/compare/CompareResults.scala): checks complete result structures and reports differences.
 
-This chapter proves a small application action on one local participant. The reusable Harmonia core and integration across separate applications are the next implementation steps. Separate-participant privacy will require a separate execution topology and its own observations.
+## Let the workflow advance with the application
+
+The [workflow story](../stories/workflow-approved/input.md) adds one line, `workflow: approval`, to select the core-managed path. Its [expectation](../stories/workflow-approved/expected.md) observes both application and workflow state.
+
+```sh
+scripts/harmonia check stories/workflow-approved stories/workflow-rejected
+```
+
+Alice's attempt leaves the workflow waiting. Northbank's approval changes the application to approved and the workflow to complete in a single transaction. The core calls a common action interface; the financing application supplies its implementation and retains its own approval rule.
+
+The [rollback story](../stories/workflow-rejected/input.md) starts with an already-approved application. Even Northbank cannot approve it again. The failure leaves that application active and the workflow waiting. Daml rolls back the consuming workflow exercise with the failed child action.
+
+Follow the [common interface](../on-ledger/interfaces/daml/Harmonia/Action.daml), [core transition](../on-ledger/core/daml/Harmonia/Workflow.daml), and financing implementation above. Neither the common interface nor the core imports the financing application.
+
+These examples run on one local participant. Separate-participant privacy requires a different topology and its own observations. An adapter for an unchanged application is the next integration experiment.

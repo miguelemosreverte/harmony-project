@@ -38,6 +38,7 @@ final class RunStory(root: Path, ledger: CantonSandbox, dar: Path):
       outcome <- cursor.get[String]("outcome").left.map(_.message)
       reason <- cursor.get[Option[String]]("reason").left.map(_.message)
       application <- cursor.get[String]("application").left.map(_.message)
+      workflow <- cursor.get[Option[String]]("workflow").left.map(_.message)
       consumed <- cursor.get[Boolean]("consumed").left.map(_.message)
       countJson <- cursor.downField("activeContracts").focus.toRight("Missing activeContracts")
       count <- countJson.asNumber
@@ -53,5 +54,6 @@ final class RunStory(root: Path, ledger: CantonSandbox, dar: Path):
         "consumed" -> Json.fromBoolean(consumed),
         "active_contracts" -> Json.fromInt(count),
         "visible_to" -> Json.fromValues(visible.sorted.map(Json.fromString))
-      ) ++ reason.toVector.map(value => "reason" -> Json.fromString(value))
+      ) ++ reason.toVector.map(value => "reason" -> Json.fromString(value)) ++
+        workflow.toVector.map(value => "workflow" -> Json.fromString(value))
     )

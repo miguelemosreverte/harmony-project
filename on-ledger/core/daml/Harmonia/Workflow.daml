@@ -1,0 +1,27 @@
+module Harmonia.Workflow where
+
+import Harmonia.Action
+
+-- One assigned step is the smallest core-managed workflow.
+template WorkflowInstance with
+    owner : Party
+    readers : [Party]
+    assignee : Party
+    subject : Text
+    action : ContractId StepAction
+    status : Text
+  where
+    signatory owner
+    observer readers
+    ensure status == "waiting" || status == "complete"
+
+    choice Advance : (ContractId WorkflowInstance, ContractId StepAction)
+      controller assignee
+      do
+        assertMsg "Workflow must be waiting" (status == "waiting")
+        actionView <- view <$> fetch action
+        assertMsg "Assignee must own the application action" (actionView.actor == assignee)
+        assertMsg "Application subject must match" (actionView.subject == subject)
+        nextAction <- exercise action ExecuteAction
+        nextWorkflow <- create this with action = nextAction; status = "complete"
+        pure (nextWorkflow, nextAction)

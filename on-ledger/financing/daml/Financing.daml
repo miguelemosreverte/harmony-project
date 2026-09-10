@@ -1,5 +1,7 @@
 module Financing where
 
+import Harmonia.Action
+
 -- A deliberately small source application for the first executable story.
 template Application
   with
@@ -10,6 +12,12 @@ template Application
   where
     signatory bank
     observer buyer
+
+    interface instance StepAction for Application where
+      view = StepView with actor = bank; subject = reference
+      performAction actionId = do
+        next <- exercise (fromInterfaceContractId @Application actionId) Approve
+        pure (toInterfaceContractId @StepAction next)
 
     choice Approve : ContractId Application
       controller bank

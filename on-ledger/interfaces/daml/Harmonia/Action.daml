@@ -1,0 +1,15 @@
+module Harmonia.Action where
+
+data StepView = StepView with
+    actor : Party
+    subject : Text
+  deriving (Eq, Show)
+
+-- The application owns its implementation and the authority of its action.
+interface StepAction where
+  viewtype StepView
+  performAction : ContractId StepAction -> Update (ContractId StepAction)
+
+  nonconsuming choice ExecuteAction : ContractId StepAction
+    controller (view this).actor
+    do performAction this self
