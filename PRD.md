@@ -428,14 +428,14 @@ This item is split into consecutive subcommits: **12a** separates the reference 
 
 ### Commit 13 — `feat: generate typed bindings from explicit application mappings`
 
-- [ ] Turn the proven hand-written adapter pattern into build-time tooling.
-  - [ ] Implement package inspection and generation as Scala slices, with deterministic generation functions and explicit `IO` for package/filesystem operations.
-  - [ ] Define a mapping schema for source templates/choices, typed arguments, results, roles, and eligible step kinds.
-  - [ ] Accept a source DAR and authored mapping; validate supported types and known integration boundaries.
-  - [ ] Generate readable binding code, project configuration, and a runnable example/test entry point.
-  - [ ] Explain which authority and disclosure conditions still require runtime validation.
-  - [ ] Reject unsupported mappings with concrete diagnostics; preserve source DAR identity.
-  - [ ] **Acceptance:** generated output compiles without manual fixes and reproduces the hand-written adapter's supported business behavior; Chapter 7 shows the generated code.
+- [x] Turn the proven hand-written adapter pattern into build-time tooling.
+  - [x] Implement package inspection and generation as Scala slices, with deterministic generation functions and explicit `IO` for package/filesystem operations.
+  - [x] Define a mapping schema for source templates/choices, typed arguments, results, roles, and eligible step kinds.
+  - [x] Accept a source DAR and authored mapping; validate supported types and known integration boundaries.
+  - [x] Generate readable binding code, project configuration, and a runnable example/test entry point.
+  - [x] Explain which authority and disclosure conditions still require runtime validation.
+  - [x] Reject unsupported mappings with concrete diagnostics; preserve source DAR identity.
+  - [x] **Acceptance:** generated output compiles without manual fixes and reproduces the hand-written adapter's supported business behavior; Chapter 7 shows the generated code.
 
 ### Commit 14 — `test: establish direct and generated integration parity`
 

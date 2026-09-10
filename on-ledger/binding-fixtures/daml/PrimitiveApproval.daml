@@ -1,0 +1,22 @@
+module PrimitiveApproval where
+
+-- A source-only fixture for the supported primitive mapping types.
+template Application with
+    bank : Party
+    buyer : Party
+    reference : Text
+    status : Text
+    counter : Int
+    enabled : Bool
+    budget : Decimal
+  where
+    signatory bank
+    observer buyer
+
+    choice Approve : ContractId Application
+      with message : Text; days : Int; authorized : Bool; cost : Decimal; approver : Party
+      controller bank
+      do
+        assertMsg "Primitive arguments and source eligibility must agree"
+          (status == "pending" && enabled && message == "reviewed" && days == 2 && authorized && cost == 1.25 && approver == bank && budget >= cost)
+        create this with status = "approved"; counter = counter + days; budget = budget - cost

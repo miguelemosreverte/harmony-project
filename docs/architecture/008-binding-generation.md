@@ -1,0 +1,15 @@
+# Decision 008: inspect types, author meaning, compile the adapter
+
+Status: implemented for consuming replacement action choices.
+
+The generator receives an authored Markdown mapping and a source alias from the pinned DAR manifest. Source types and choice signatures come from the actual DAR's LF description produced by SDK 3.4.11. Business meaning remains authored: actor, readers, subject, choice, arguments, result shape, and example observation. The parser is tied to that compiler's readable inspection format and rejects unknown structures; it is not a general LF parser or runtime reflection engine.
+
+Scala code is organized under `bindings/{model,read,inspect,generate,verify}`. `GenerateSources` is pure; `GenerateBinding` uses concrete `IO` for source resolution, inspection access, file creation, compilation, and identity checks. `CheckBinding` runs an actual Canton example and compares independent Markdown expectations. Existing directories are overwritten only when marked as owned generated projects. Generated names are constrained and source field declarations must use supported identifiers.
+
+The library depends on interfaces and the source DAR. A separate example project adds the core and Daml Script. Package names derive from the authored module so different generated adapters can have distinct package names. Vendor paths are relative; source and generated-file hashes, SDK version, and compiled artifact hashes are recorded. The source archive is copied byte-for-byte and checked again after generation.
+
+The adapter validates the actual source actor, reader fields, and subject before exercising its typed choice. It stores the replacement contract ID. Primitive nonempty choice arguments use the source's generated choice type; empty choices add no redundant argument field. Primitive Party/Text/Int64/Bool/Decimal values are checked against the inspected fields. Party arguments resolve to existing named example parties. Decimal source literals always include a decimal point.
+
+The supported shape has at most sixteen source fields, eight choice arguments, and four reader fields. The actor is separate from the readers. The choice must be consuming and return its own source template. Subject and observation are Text fields; roles are Party fields. Decimal magnitude is at most one trillion with at most ten fractional places. Nested records, optional values, collections, other return shapes, and arbitrary continuations are rejected with diagnostics.
+
+The two executed sources use LF 2.2: frozen legacy financing and a source-only primitive fixture. LF 2.1 metadata import remains a separate demonstrated package capability, not evidence of a generated LF 2.1 action integration. Compilation checks types; real source controllers, visibility, and business predicates remain runtime conditions. Both examples require the independent reader's action to be unauthorized and the real actor's action to replace the source and complete the core. Raw submission errors and provenance are retained.

@@ -33,23 +33,26 @@ object ExportBook:
       "03-participant-views.md",
       "04-progression.md",
       "05-financing-and-offer.md",
-      "06-atomic-transfer.md"
+      "06-atomic-transfer.md",
+      "07-generated-bindings.md"
     ).traverse { name =>
-      ArtifactFiles.read(root.resolve("book").resolve(name)).map { markdown =>
-        val document = Parser.builder().build().parse(markdown)
-        document.accept(new AbstractVisitor {
-          override def visit(link: Link): Unit =
-            if !link.getDestination.contains(":") && !link.getDestination.startsWith("#") then
-              link.setDestination("source/book/" + link.getDestination)
-            visitChildren(link)
-        })
-        Json.obj(
-          "id" -> Json.fromString(name),
-          "title" -> Json.fromString(markdown.linesIterator.next().stripPrefix("# ")),
-          "html" -> Json.fromString(
-            HtmlRenderer.builder().escapeHtml(true).sanitizeUrls(true).build().render(document)
+      ArtifactFiles.read(root.resolve("book").resolve(name)).flatMap { markdown =>
+        CodeIncludes.expand(root.resolve("book"), markdown).map { expanded =>
+          val document = Parser.builder().build().parse(expanded)
+          document.accept(new AbstractVisitor {
+            override def visit(link: Link): Unit =
+              if !link.getDestination.contains(":") && !link.getDestination.startsWith("#") then
+                link.setDestination("source/book/" + link.getDestination)
+              visitChildren(link)
+          })
+          Json.obj(
+            "id" -> Json.fromString(name),
+            "title" -> Json.fromString(markdown.linesIterator.next().stripPrefix("# ")),
+            "html" -> Json.fromString(
+              HtmlRenderer.builder().escapeHtml(true).sanitizeUrls(true).build().render(document)
+            )
           )
-        )
+        }
       }
     }
     _ <- ArtifactFiles.write(

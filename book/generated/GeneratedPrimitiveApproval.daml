@@ -1,0 +1,31 @@
+module GeneratedPrimitiveApproval where
+
+import DA.List (sort)
+import Harmonia.Action
+import qualified PrimitiveApproval as Source
+
+-- Generated from the authored mapping. Source authority remains enforced.
+template Adapter with
+    actor : Party
+    readers : [Party]
+    subject : Text
+    source : ContractId Source.Application
+    arguments : Source.Approve
+  where
+    signatory actor
+    observer readers
+
+    choice Apply : ContractId Adapter
+      controller actor
+      do
+        value <- fetch source
+        assertMsg "Binding must match source actor, readers, and subject"
+          (value.bank == actor && sort [value.buyer] == sort readers && value.reference == subject)
+        replacement <- exercise source arguments
+        create this with source = replacement
+
+    interface instance StepAction for Adapter where
+      view = StepView with actor; subject
+      performAction self = do
+        next <- exercise (fromInterfaceContractId @Adapter self) Apply
+        pure (toInterfaceContractId @StepAction next)

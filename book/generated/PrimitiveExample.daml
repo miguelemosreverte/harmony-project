@@ -1,0 +1,85 @@
+module Example where
+
+import Daml.Script
+import Harmonia.Action
+import Harmonia.Workflow
+import qualified PrimitiveApproval as Source
+import qualified GeneratedPrimitiveApproval as Binding
+
+data Evidence = Evidence with
+    unauthorizedReader : Bool
+    sourceStatus : Text
+    originalActive : Bool
+    activeSources : Int
+    workflowStatus : Text
+    repeatedRejected : Bool
+    readerVisible : Bool
+    readerError : Optional Text
+    repeatedError : Optional Text
+  deriving (Eq, Show)
+
+run : Script Evidence
+run = script do
+  party_bank <- allocateParty "Northbank"
+  party_buyer <- allocateParty "Alice"
+  original <- submit party_bank do
+    createCmd Source.Application with
+      bank = party_bank
+      buyer = party_buyer
+      reference = "application"
+      status = "pending"
+      counter = 0
+      enabled = True
+      budget = (10.0 : Decimal)
+  adapter <- submit party_bank do
+    createCmd Binding.Adapter with
+      actor = party_bank
+      readers = [party_buyer]
+      subject = "application"
+      source = original
+      arguments = Source.Approve with
+        message = "reviewed"
+        days = 2
+        authorized = True
+        cost = (1.25 : Decimal)
+        approver = party_bank
+  process <- submit party_bank do
+    createCmd WorkflowInstance with
+      owner = party_bank
+      readers = [party_buyer]
+      assignee = party_bank
+      subject = "application"
+      action = toInterfaceContractId @StepAction adapter
+      status = "waiting"
+  wrong <- trySubmit party_buyer do exerciseCmd process Advance
+  unauthorizedReader <- case wrong of
+    Left AuthorizationError{} -> pure True
+    Left (FailureStatusError failure) | failure.errorId == "DAML_AUTHORIZATION_ERROR" -> pure True
+    Left error -> abort ("Unexpected reader failure: " <> show error)
+    Right _ -> pure False
+  (completed, action) <- submit party_bank do exerciseCmd process Advance
+  replacement <- queryContractId party_bank (fromInterfaceContractId @Binding.Adapter action)
+  next <- optional (abort "Missing generated binding") pure replacement
+  application <- queryContractId party_bank next.source
+  value <- optional (abort "Missing source replacement") pure application
+  readerApplication <- queryContractId party_buyer next.source
+  previous <- queryContractId party_bank original
+  active <- query @Source.Application party_bank
+  workflow <- queryContractId party_bank completed
+  current <- optional (abort "Missing completed workflow") pure workflow
+  repeated <- trySubmit party_bank do exerciseCmd completed Advance
+  repeatedRejected <- case repeated of
+    Left UnhandledException{} -> pure True
+    Left UserError{} -> pure True
+    Left (FailureStatusError failure) | failure.errorId == "UNHANDLED_EXCEPTION/DA.Exception.AssertionFailed:AssertionFailed" -> pure True
+    Left error -> abort ("Unexpected repeated-action failure: " <> show error)
+    Right _ -> pure False
+  let readerError = case wrong of Left error -> Some (show error); Right _ -> None
+  let repeatedError = case repeated of Left error -> Some (show error); Right _ -> None
+  pure Evidence with
+    readerVisible = readerApplication /= None
+    readerError; repeatedError; unauthorizedReader; repeatedRejected
+    sourceStatus = value.status
+    originalActive = previous /= None
+    activeSources = length active
+    workflowStatus = current.status

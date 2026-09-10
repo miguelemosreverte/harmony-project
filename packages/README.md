@@ -34,3 +34,7 @@ The Ledger API package service exposes compiled package payloads. It does not re
 The tested Canton 3.4.11 administrator path is `participant.dars.download(mainPackageId, destinationDirectory)`, backed by `PackageService.GetDar`. It can return a DAR that was uploaded to that participant. A package included only as a dependency need not have an independently uploaded DAR. The package check therefore uploads the metadata DAR itself before requesting it.
 
 This path requires participant administration access. Ordinary business party credentials do not grant it. The eventual builder can accept the downloaded file through the same pinned-input checks; it will not expose an unrestricted administration proxy. Package presence also does not grant business authority or disclosure rights. See the [official package management reference](https://archived.docs.digitalasset.com/operate/3.4/howtos/operate/packages/packages.html) and [Daml dependency reference](https://archived.docs.digitalasset.com/build/3.4/reference/daml/packages.html).
+
+## Typed integration
+
+The [financing mapping](mappings/financing.md) and [primitive-argument mapping](mappings/primitive-approval.md) drive the typed adapter generator. Both compare with the same independently authored [approval expectation](mappings/approval-expected.md). Run `scripts/harmonia bindings-check`; see [Chapter 7](../book/07-generated-bindings.md) for the generated project and its limits.
