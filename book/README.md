@@ -5,6 +5,8 @@ This book grows with the working implementation. Chapters link to the actual sto
 1. [Set up the local runtime](setup.md)
 2. [A story the ledger can prove](01-first-story.md)
 3. [Two ways an application can participate](02-two-integration-paths.md)
-4. [Explore a recorded execution](03-recorded-playback.md)
+4. [A private application and a shared next step](03-participant-views.md)
+
+Use the [recorded playback guide](playback.md) to open the browser edition.
 
 The current edition includes interactive playback for recorded stories, chapter navigation, observed progression, contract details, and complete expected/actual differences. Follow the playback guide to export and open a saved run. Later chapters extend the same book as the remaining capabilities pass their checks.

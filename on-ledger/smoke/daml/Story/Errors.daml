@@ -1,0 +1,16 @@
+module Story.Errors where
+
+import Daml.Script
+
+reason : SubmitError -> Script Text
+reason error = case error of
+  AuthorizationError{} -> pure "unauthorized"
+  ContractNotFound{} -> pure "not-visible"
+  UnhandledException{} -> pure "application-rejected"
+  UserError{} -> pure "application-rejected"
+  FailureStatusError failure
+    | failure.errorId == "UNHANDLED_EXCEPTION/DA.Exception.AssertionFailed:AssertionFailed" -> pure "application-rejected"
+    | failure.errorId == "UNHANDLED_EXCEPTION/DA.Exception.GeneralError:GeneralError" -> pure "application-rejected"
+    | failure.errorId == "DAML_AUTHORIZATION_ERROR" -> pure "unauthorized"
+    | failure.errorId == "CONTRACT_NOT_FOUND" -> pure "not-visible"
+  _ -> abort ("Unexpected ledger error: " <> show error)

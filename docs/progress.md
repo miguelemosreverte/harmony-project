@@ -4,7 +4,7 @@ The [PRD](../PRD.md) defines the ordered work. This record reports actual commit
 
 ## Current step
 
-Commit 06 delivers the first interactive book: recorded action playback, Chapters 1–2, contract details, evidence links, and expected/actual differences. The next proof is multi-party authority and privacy on separate participants.
+Commit 07 proves the private approval and shared continuation across three participant nodes, with party-specific contract queries and full event observations. Chapter 3 renders those perspectives. Next: persisted multi-step progression, waiting, retry, and client reconnection.
 
 ## Commit evidence
 
@@ -17,7 +17,8 @@ Actual commit identifiers are recorded in the next commit after they are created
 | 03 | `39d2143` | [Golden proof](verification/03-golden-proof.md): real observed results match, and a changed expectation fails |
 | 04 | `af521b7` | [Direct workflow proof](verification/04-direct-workflow.md): four live goldens and an intentional workflow mismatch |
 | 05 | `b0559cb` | [Unchanged-source proof](verification/05-adapter.md): six live goldens and source identity checked before and after execution |
-| 06 | This increment | [Recorded book verification](verification/06-book.md): browser walkthrough, narrow layout, artifact integrity, and the regular suite |
+| 06 | `dabea08` | [Recorded book verification](verification/06-book.md): browser walkthrough, narrow layout, artifact integrity, and the regular suite |
+| 07 | This increment | [Authority and privacy proof](verification/07-privacy.md): seven live goldens, participant event controls, and browser perspective views |
 
 ## External decisions
 

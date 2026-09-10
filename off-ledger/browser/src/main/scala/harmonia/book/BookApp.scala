@@ -7,7 +7,12 @@ import org.scalajs.dom
 import scala.scalajs.js.Thenable.Implicits.*
 import scala.concurrent.ExecutionContext.Implicits.global
 
-final case class ViewState(story: Int, step: Int, chapter: Option[Int] = None)
+final case class ViewState(
+    story: Int,
+    step: Int,
+    chapter: Option[Int] = None,
+    perspective: Option[String] = None
+)
 
 object BookApp extends IOApp.Simple:
   def run: IO[Unit] = Dispatcher

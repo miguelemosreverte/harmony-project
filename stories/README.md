@@ -20,3 +20,5 @@ Runs write raw observations, normalized `actual.md`, `diff.md`, and `run.json` p
 The optional scenario field `workflow: approval` runs the financing action through the Harmonia core. Without it, the story exercises the source application directly. Workflow results add a `workflow` status beside the observed application status.
 
 An approval workflow can select `integration: adapter` to exercise the unchanged legacy application through a typed binding. Omitting the field selects the direct interface implementation. Both paths observe the same business fields.
+
+The `private-approval` workflow adds a reviewer and synthetic private details to the application setup. `approve-financing` issues a signed result; `publish-approval` asks the buyer-owned shared workflow to consume it. Its result adds a `visibility` mapping of party-specific queries and observed event counts.

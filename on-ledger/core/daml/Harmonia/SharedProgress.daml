@@ -1,0 +1,28 @@
+module Harmonia.SharedProgress where
+
+import Harmonia.Result
+
+template SharedProgress with
+    owner : Party
+    issuer : Party
+    readers : [Party]
+    subject : Text
+    status : Text
+  where
+    signatory owner
+    observer issuer, readers
+    ensure status == "waiting" || status == "complete"
+
+    choice Continue : ContractId SharedProgress
+      with result : Optional (ContractId VerifiedResult)
+      controller owner
+      do
+        assertMsg "Progress must be waiting" (status == "waiting")
+        proof <- case result of
+          Some cid -> pure cid
+          None -> abort "Approval result required"
+        evidence <- fetch proof
+        assertMsg "Result issuer, consumer, subject, and decision must match"
+          (evidence.issuer == issuer && evidence.consumer == owner && evidence.subject == subject && evidence.decision == "approved")
+        exercise proof Consume
+        create this with status = "complete"

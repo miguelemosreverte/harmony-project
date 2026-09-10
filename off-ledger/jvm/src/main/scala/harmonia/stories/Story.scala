@@ -11,7 +11,9 @@ final case class Story(
     status: String,
     actions: Vector[StoryAction],
     workflow: Option[String] = None,
-    integration: Option[String] = None
+    integration: Option[String] = None,
+    reviewer: Option[String] = None,
+    privateDetails: Option[String] = None
 ):
   def scriptInput: Json = Json.obj(
     "namespace" -> Json.fromString(id),
@@ -20,6 +22,8 @@ final case class Story(
     "initialStatus" -> Json.fromString(status),
     "workflow" -> workflow.fold(Json.Null)(Json.fromString),
     "integration" -> integration.fold(Json.Null)(Json.fromString),
+    "reviewerName" -> reviewer.fold(Json.Null)(Json.fromString),
+    "privateDetails" -> privateDetails.fold(Json.Null)(Json.fromString),
     "actions" -> Json.arr(actions.map { action =>
       Json.obj(
         "id" -> Json.fromString(action.id),

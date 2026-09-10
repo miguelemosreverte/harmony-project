@@ -29,3 +29,7 @@ Each run retains `canton.log`, `script.log`, and `observation.json` in its print
 This is a real local Canton transaction with an application authorization check. Both parties are hosted by one local participant. It is not yet the reusable Harmonia core, a cross-application workflow, or evidence of privacy between separately operated participants. Those capabilities have their own later acceptance gates.
 
 The [first story chapter](01-first-story.md) supplies execution from readable Markdown and compares its observed result with a committed golden. Run `scripts/check` to build, run focused tests, and execute the complete current story collection.
+
+## Separate participants
+
+`scripts/harmonia network-smoke` starts three independently identified participant nodes on a common local synchronizer, uploads the story DAR, checks connectivity, and stops the owned nodes. The generated configuration and node IDs remain in the printed evidence directory. `scripts/harmonia check stories/private-approval` exercises the authority and privacy story in that topology.

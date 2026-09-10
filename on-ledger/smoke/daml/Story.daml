@@ -17,6 +17,8 @@ data Input = Input with
     initialStatus : Text
     workflow : Optional Text
     integration : Optional Text
+    reviewerName : Optional Text
+    privateDetails : Optional Text
     actions : [Attempt]
   deriving (Eq, Show)
 

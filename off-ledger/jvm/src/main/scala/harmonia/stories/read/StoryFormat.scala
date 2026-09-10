@@ -9,13 +9,17 @@ object StoryFormat:
     root <- fields(json, "scenario", Set("setup", "actions"), Set("workflow", "integration"))
     workflow <- root("workflow").fold[Either[String, Option[String]]](Right(None)) { value =>
       text(value, "workflow").flatMap { name =>
-        Either.cond(name == "approval", Some(name), "Unsupported workflow: " + name)
+        Either.cond(
+          Set("approval", "private-approval")(name),
+          Some(name),
+          "Unsupported workflow: " + name
+        )
       }
     }
     integration <- root("integration").fold[Either[String, Option[String]]](Right(None)) { value =>
       text(value, "integration").flatMap { name =>
         Either.cond(
-          name == "adapter" && workflow.nonEmpty,
+          name == "adapter" && workflow.contains("approval"),
           Some(name),
           "Adapter requires an approval workflow"
         )
@@ -25,11 +29,25 @@ object StoryFormat:
     application <- fields(
       setup("application").get,
       "setup.application",
-      Set("bank", "buyer", "status")
+      Set("bank", "buyer", "status"),
+      if workflow.contains("private-approval") then Set("reviewer", "private_details")
+      else Set.empty
     )
     bank <- text(application("bank").get, "bank")
     buyer <- text(application("buyer").get, "buyer")
     status <- text(application("status").get, "status")
+    reviewer <- optionalText(application, "reviewer")
+    privateDetails <- optionalText(application, "private_details")
+    _ <- Either.cond(
+      !workflow.contains("private-approval") || (reviewer.nonEmpty && privateDetails.nonEmpty),
+      (),
+      "Private approval requires reviewer and private_details"
+    )
+    _ <- Either.cond(
+      reviewer.forall(name => name != bank && name != buyer),
+      (),
+      "Reviewer must be a distinct party"
+    )
     _ <- Either.cond(bank != buyer, (), "Bank and buyer must be distinct parties")
     _ <- Either.cond(
       Set("pending", "approved")(status),
@@ -50,20 +68,27 @@ object StoryFormat:
           name <- text(action("id").get, "action.id")
           actor <- text(action("actor").get, s"$name.actor")
           choice <- text(action("action").get, s"$name.action")
-          _ <- Either.cond(Set(bank, buyer)(actor), (), s"$name: unknown actor '$actor'")
           _ <- Either.cond(
-            choice == "approve-financing",
+            (Set(bank, buyer) ++ reviewer)(actor),
+            (),
+            s"$name: unknown actor '$actor'"
+          )
+          _ <- Either.cond(
+            choice == "approve-financing" || (workflow.contains(
+              "private-approval"
+            ) && choice == "publish-approval"),
             (),
             s"$name: unsupported action '$choice'"
           )
           _ <- Either.cond(!preceding.exists(_.id == name), (), s"Duplicate action id '$name'")
         yield preceding :+ StoryAction(name, actor, choice)
     }
-  yield Story(id, bank, buyer, status, actions, workflow, integration)
+  yield Story(id, bank, buyer, status, actions, workflow, integration, reviewer, privateDetails)
 
   def result(markdown: String): Either[String, Json] = for
     json <- MarkdownYaml.read(markdown, "Result")
-    root <- fields(json, "result", Set("actions"))
+    root <- fields(json, "result", Set("actions"), Set("visibility"))
+    _ <- validateVisibility(root("visibility"))
     values <- root("actions").get.asArray.toRight("result.actions must be a list")
     _ <- values.foldLeft[Either[String, Unit]](Right(())) { (acc, value) =>
       for
@@ -115,14 +140,63 @@ object StoryFormat:
         )
       yield ()
     }
-  yield Json.obj("actions" -> Json.fromValues(values.map { value =>
-    value.mapObject { obj =>
-      obj.add(
-        "visible_to",
-        Json.fromValues(obj("visible_to").get.asArray.get.sortBy(_.asString.get))
-      )
+  yield json.mapObject(
+    _.add(
+      "actions",
+      Json.fromValues(values.map { value =>
+        value.mapObject { obj =>
+          obj.add(
+            "visible_to",
+            Json.fromValues(obj("visible_to").get.asArray.get.sortBy(_.asString.get))
+          )
+        }
+      })
+    )
+  )
+
+  private def optionalText(obj: JsonObject, name: String): Either[String, Option[String]] =
+    obj(name).fold[Either[String, Option[String]]](Right(None))(value =>
+      text(value, name).map(Some(_))
+    )
+
+  private def validateVisibility(value: Option[Json]): Either[String, Unit] =
+    value.fold[Either[String, Unit]](Right(())) { json =>
+      json.asObject.toRight("visibility must map party names to observations").flatMap { obj =>
+        obj.toVector.foldLeft[Either[String, Unit]](Right(())) { case (acc, (party, view)) =>
+          for
+            _ <- acc
+            fields <- fields(
+              view,
+              s"visibility.$party",
+              Set(
+                "application",
+                "progress",
+                "private_events",
+                "progress_events",
+                "private_payload_observed"
+              )
+            )
+            _ <- Vector("application", "progress", "private_payload_observed")
+              .foldLeft[Either[String, Unit]](Right(()))((acc, name) =>
+                acc.flatMap(_ =>
+                  fields(name).get.asBoolean.toRight(s"$party.$name must be boolean").map(_ => ())
+                )
+              )
+            _ <- Vector("private_events", "progress_events").foldLeft[Either[String, Unit]](
+              Right(())
+            )((acc, name) =>
+              acc.flatMap(_ =>
+                fields(name).get.asNumber
+                  .flatMap(_.toInt)
+                  .filter(_ >= 0)
+                  .toRight(s"$party.$name must be a nonnegative count")
+                  .map(_ => ())
+              )
+            )
+          yield ()
+        }
+      }
     }
-  }))
 
   private def fields(
       value: Json,

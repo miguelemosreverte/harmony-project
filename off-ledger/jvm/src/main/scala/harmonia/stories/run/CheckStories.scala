@@ -5,6 +5,7 @@ import cats.syntax.all.*
 import harmonia.files.ArtifactFiles
 import harmonia.bindings.inspect.SourceIdentity
 import harmonia.ledger.CantonSandbox
+import harmonia.ledger.network.CantonNetwork
 import harmonia.stories.Story
 import harmonia.stories.compare.CompareResults
 import harmonia.stories.read.{MarkdownYaml, StoryFormat}
@@ -49,45 +50,82 @@ object CheckStories:
     _ <- SourceIdentity.verify(root, artifacts)
     _ <- IO.println(s"Running ${prepared.size} stories against local Canton. Evidence: $artifacts")
     dar = root.resolve("on-ledger/smoke/.daml/dist/harmonia-smoke-0.1.0.dar")
-    checks <- CantonSandbox.resource(root, artifacts, dar).use { ledger =>
-      val runner = new RunStory(root, ledger, dar)
-      prepared.traverse { item =>
-        val output = artifacts.resolve(item.story.id)
-        for
-          _ <- ArtifactFiles.write(output.resolve("input.md"), item.inputMarkdown)
-          _ <- ArtifactFiles.write(output.resolve("expected.md"), item.expectedMarkdown)
-          actual <- runner.run(item.story, output)
-          _ <- IO.fromEither(
-            StoryFormat
-              .result(MarkdownYaml.render("Observed", "Result", actual))
-              .left
-              .map(RuntimeException(_))
-          )
-          differences = CompareResults.compare(item.expected, actual)
-          _ <- ArtifactFiles.write(
-            output.resolve("actual.md"),
-            MarkdownYaml.render(s"Observed ${item.story.id}", "Result", actual)
-          )
-          _ <- ArtifactFiles.write(output.resolve("diff.md"), CompareResults.markdown(differences))
-          _ <- RunProvenance.write(
+    (privateStories, ordinaryStories) = prepared.partition(
+      _.story.workflow.contains("private-approval")
+    )
+    ordinaryChecks <-
+      if ordinaryStories.isEmpty then IO.pure(Vector.empty[Boolean])
+      else
+        CantonSandbox.resource(root, artifacts, dar).use { ledger =>
+          checkPrepared(
             root,
-            output.resolve("input.md"),
-            output.resolve("expected.md"),
+            ordinaryStories,
+            artifacts,
             dar,
-            output,
-            differences.isEmpty
+            new RunStory(root, ledger, dar).run,
+            "one participant, one synchronizer, separate party identities"
           )
-          _ <- IO.println(
-            s"${if differences.isEmpty then "PASS" else "FAIL"} ${item.story.id}: ${differences.size} differences"
+        }
+    privateChecks <-
+      if privateStories.isEmpty then IO.pure(Vector.empty[Boolean])
+      else
+        CantonNetwork.resource(root, artifacts.resolve("network"), dar).use { network =>
+          checkPrepared(
+            root,
+            privateStories,
+            artifacts,
+            dar,
+            new RunPrivateStory(root, network, dar).run,
+            "three independent participant nodes, one local JVM, one common synchronizer"
           )
-          _ <-
-            if differences.nonEmpty then IO.println(CompareResults.markdown(differences))
-            else IO.unit
-        yield differences.isEmpty
-      }
-    }
+        }
     _ <- SourceIdentity.verify(root, artifacts)
-  yield if checks.forall(identity) then ExitCode.Success else ExitCode.Error
+  yield
+    if (ordinaryChecks ++ privateChecks).forall(identity) then ExitCode.Success else ExitCode.Error
+
+  private def checkPrepared(
+      root: Path,
+      prepared: Vector[Prepared],
+      artifacts: Path,
+      dar: Path,
+      execute: (Story, Path) => IO[Json],
+      topology: String
+  ): IO[Vector[Boolean]] =
+    prepared.traverse { item =>
+      val output = artifacts.resolve(item.story.id)
+      for
+        _ <- ArtifactFiles.write(output.resolve("input.md"), item.inputMarkdown)
+        _ <- ArtifactFiles.write(output.resolve("expected.md"), item.expectedMarkdown)
+        actual <- execute(item.story, output)
+        _ <- IO.fromEither(
+          StoryFormat
+            .result(MarkdownYaml.render("Observed", "Result", actual))
+            .left
+            .map(RuntimeException(_))
+        )
+        differences = CompareResults.compare(item.expected, actual)
+        _ <- ArtifactFiles.write(
+          output.resolve("actual.md"),
+          MarkdownYaml.render(s"Observed ${item.story.id}", "Result", actual)
+        )
+        _ <- ArtifactFiles.write(output.resolve("diff.md"), CompareResults.markdown(differences))
+        _ <- RunProvenance.write(
+          root,
+          output.resolve("input.md"),
+          output.resolve("expected.md"),
+          dar,
+          output,
+          differences.isEmpty,
+          topology
+        )
+        _ <- IO.println(
+          s"${if differences.isEmpty then "PASS" else "FAIL"} ${item.story.id}: ${differences.size} differences"
+        )
+        _ <-
+          if differences.nonEmpty then IO.println(CompareResults.markdown(differences))
+          else IO.unit
+      yield differences.isEmpty
+    }
 
   private def prepare(directory: Path): IO[Prepared] = for
     input <- ArtifactFiles.read(directory.resolve("input.md"))

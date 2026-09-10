@@ -13,6 +13,40 @@ object DamlScript:
       artifacts: Path,
       input: Option[Path] = None
   ): IO[Path] =
+    execute(
+      root,
+      dar,
+      script,
+      artifacts,
+      input,
+      List("--ledger-host", "localhost", "--ledger-port", ledger.port.toString)
+    )
+
+  def runNetwork(
+      root: Path,
+      configuration: Path,
+      dar: Path,
+      script: String,
+      artifacts: Path,
+      input: Path
+  ): IO[Path] =
+    execute(
+      root,
+      dar,
+      script,
+      artifacts,
+      Some(input),
+      List("--participant-config", configuration.toString)
+    )
+
+  private def execute(
+      root: Path,
+      dar: Path,
+      script: String,
+      artifacts: Path,
+      input: Option[Path],
+      connection: List[String]
+  ): IO[Path] =
     val output = artifacts.resolve("observation.json")
     ManagedProcess
       .run(
@@ -23,13 +57,9 @@ object DamlScript:
           dar.toString,
           "--script-name",
           script,
-          "--ledger-host",
-          "localhost",
-          "--ledger-port",
-          ledger.port.toString,
           "--output-file",
           output.toString
-        ) ++ input.toList.flatMap(path => List("--input-file", path.toString)),
+        ) ++ connection ++ input.toList.flatMap(path => List("--input-file", path.toString)),
         root,
         artifacts.resolve("script.log")
       )

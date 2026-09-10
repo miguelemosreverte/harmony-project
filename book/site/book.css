@@ -579,3 +579,5 @@ tr:last-child td {
   .sidebar nav { flex-wrap: wrap; }
   .nav-button { max-width: 100%; white-space: normal; }
 }
+
+.participant-evidence { margin-top: 22px; }

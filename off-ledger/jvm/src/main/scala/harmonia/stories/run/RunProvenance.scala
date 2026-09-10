@@ -14,7 +14,8 @@ object RunProvenance:
       expected: Path,
       dar: Path,
       artifacts: Path,
-      matched: Boolean
+      matched: Boolean,
+      topology: String
   ): IO[Unit] = for
     _ <- ManagedProcess.run(
       List("git", "rev-parse", "HEAD"),
@@ -39,9 +40,7 @@ object RunProvenance:
       Json
         .obj(
           "mode" -> Json.fromString("live-canton"),
-          "topology" -> Json.fromString(
-            "one participant, one synchronizer, separate party identities"
-          ),
+          "topology" -> Json.fromString(topology),
           "revision" -> Json.fromString(revision.trim),
           "worktree_dirty" -> Json.fromBoolean(worktree.nonEmpty),
           "recorded_at" -> Json.fromString(timestamp.toString),

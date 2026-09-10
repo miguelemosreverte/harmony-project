@@ -4,6 +4,7 @@ import cats.effect.{ExitCode, IO, IOApp}
 import harmonia.files.ArtifactFiles
 import harmonia.book.{ExportBook, ServeBook}
 import harmonia.ledger.{CantonSandbox, DamlScript}
+import harmonia.ledger.network.CantonNetwork
 import harmonia.stories.run.CheckStories
 import java.nio.file.Path
 
@@ -22,6 +23,18 @@ object Main extends IOApp:
       case List("serve-book", directory) =>
         ServeBook.serve(root.resolve(directory)).as(ExitCode.Success)
       case "check" :: stories => CheckStories.run(root, stories)
+      case List("network-smoke") =>
+        for
+          artifacts <- ArtifactFiles.createRun(root, "network")
+          _ <- IO.println(s"Starting three participant nodes. Evidence: $artifacts")
+          _ <- CantonNetwork
+            .resource(
+              root,
+              artifacts,
+              root.resolve("on-ledger/smoke/.daml/dist/harmonia-smoke-0.1.0.dar")
+            )
+            .use { network => IO.println(s"Connected: ${network.participants}") }
+        yield ExitCode.Success
       case List("smoke") =>
         val dar = root.resolve("on-ledger/smoke/.daml/dist/harmonia-smoke-0.1.0.dar")
         for
@@ -35,5 +48,5 @@ object Main extends IOApp:
         yield ExitCode.Success
       case _ =>
         IO.println(
-          "Usage: scripts/harmonia smoke | check [story-directory ...] | book run-directory | export-book run-directory output-directory | serve-book directory"
+          "Usage: scripts/harmonia smoke | network-smoke | check [story-directory ...] | book run-directory | export-book run-directory output-directory | serve-book directory"
         ).as(ExitCode.Error)

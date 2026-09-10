@@ -149,6 +149,8 @@ final class BookView(
         "small",
         if story.input.hcursor.get[String]("integration").toOption.contains("adapter") then
           "Typed adapter"
+        else if story.input.hcursor.get[String]("workflow").toOption.contains("private-approval")
+        then "Signed result handoff"
         else if story.input.hcursor.get[String]("workflow").isRight then "Direct interface"
         else "Application action"
       )
@@ -204,6 +206,7 @@ final class BookView(
     val details = element("div", "details-grid")
     append(details, comparison(story, state.step), evidence(story))
     append(main, hero, toolbar, panel, details)
+    participantEvidence(story, state).foreach(view => append(main, view))
     if story.differences.nonEmpty then
       val differences = element("section", "panel all-differences")
       val heading = element("div", "panel-head")
@@ -226,6 +229,59 @@ final class BookView(
       }
       append(differences, heading, table)
       append(main, differences)
+
+  private def participantEvidence(story: RecordedStory, state: ViewState): Option[dom.HTMLElement] =
+    story.actual.hcursor.downField("visibility").focus.flatMap(_.asObject).map { visibility =>
+      val names = visibility.keys.toVector.sorted
+      val selected = state.perspective.filter(names.contains).getOrElse(names.head)
+      val panel = element("section", "panel participant-evidence")
+      val heading = element("div", "panel-head")
+      val select = element("select").asInstanceOf[dom.html.Select]
+      select.id = "participant-select"
+      select.setAttribute("aria-label", "Recorded participant evidence")
+      names.foreach { name =>
+        val option = element("option", text = name).asInstanceOf[dom.html.Option]
+        option.value = name
+        option.selected = name == selected
+        append(select, option)
+      }
+      select.onchange = _ => navigate(state.copy(perspective = Some(select.value)))
+      append(heading, element("h2", text = "Participant evidence"), select)
+      val description = element(
+        "p",
+        "evidence",
+        s"Recorded queries and event history from $selected's participant. Shared progress is the positive control for this observation channel."
+      )
+      val table = element("table")
+      table.id = "participant-table"
+      val header = element("tr")
+      Vector("Observation", "Expected", "Observed")
+        .foreach(value => append(header, element("th", text = value)))
+      append(table, header)
+      val expected = story.expected.hcursor.downField("visibility").downField(selected)
+      val actual = visibility(selected).get.hcursor
+      Vector(
+        "application" -> "Private application visible",
+        "progress" -> "Shared progress visible",
+        "private_events" -> "Private application create events",
+        "progress_events" -> "Shared progress create events",
+        "private_payload_observed" -> "Private payload in event history"
+      ).foreach { (field, label) =>
+        val left = expected.downField(field).focus
+        val right = actual.downField(field).focus
+        val row = element("tr", if left != right then "different" else "")
+        row.setAttribute("data-visibility", field)
+        append(
+          row,
+          element("td", text = label),
+          element("td", text = display(left)),
+          element("td", text = display(right))
+        )
+        append(table, row)
+      }
+      append(panel, heading, description, table)
+      panel
+    }
 
   private def comparison(story: RecordedStory, step: Int): dom.HTMLElement =
     val panel = element("section", "panel")

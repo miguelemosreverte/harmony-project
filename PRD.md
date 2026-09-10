@@ -121,7 +121,7 @@ The proposal establishes the intended release scope. The illustration supplies a
 | Regression checks | Compare structured expected and observed results; produce renderable differences | Agreed direction |
 | Packaging | Start with a monorepo and explicit dependencies between logical packages | Proposed implementation default |
 | Shared interfaces | Consider a small, separate interface package to avoid coupling source apps to core implementation | Implemented; see ADR 001 |
-| State privacy | Separate shared progress from private domain payloads and disclose only required results | Proposed design to validate on separate participants |
+| State privacy | Separate shared progress from private domain payloads and disclose only required results | Implemented and observed on separate participants; see ADR 003 |
 | Off-ledger language | Scala for the runner, builder, services, book tooling, and interactive application code; Daml remains on-ledger | User requirement |
 | Effect style | Cats Effect with concrete `IO` for effects; pure functions for deterministic work; `Resource[IO, A]` for owned resources | User direction, with Cats Effect as the interpretation of the spoken library name |
 | Code organization | Vertical feature slices, cohesive objects/functions, immutable models, explicit dependencies, and mirrored test packages | User requirement; concrete layout proposed |
@@ -363,13 +363,13 @@ The first three actual Git commits have a fixed acceptance sequence: **document 
 
 ### Commit 07 — `feat: enforce and demonstrate multi-party authority and privacy`
 
-- [ ] Prove role and visibility boundaries using separate participants.
-  - [ ] Model explicit role bindings and narrowly scoped authorization/consent where required.
-  - [ ] Separate private application state from shared progression and required results.
-  - [ ] Run parties on separate participant nodes with a stated common-synchronizer topology.
-  - [ ] Capture party-specific queries and events, including permitted visibility and forbidden disclosure.
-  - [ ] Add wrong-actor, missing-authority, and disclosure-boundary goldens plus Chapter 3's participant views.
-  - [ ] **Acceptance:** positive controls prove each observation channel works; unauthorized execution fails and private payloads remain outside the prohibited party's observed scope.
+- [x] Prove role and visibility boundaries using separate participants.
+  - [x] Model explicit role bindings and narrowly scoped authorization/consent where required.
+  - [x] Separate private application state from shared progression and required results.
+  - [x] Run parties on separate participant nodes with a stated common-synchronizer topology.
+  - [x] Capture party-specific queries and events, including permitted visibility and forbidden disclosure.
+  - [x] Add wrong-actor, missing-authority, and disclosure-boundary goldens plus Chapter 3's participant views.
+  - [x] **Acceptance:** positive controls prove each observation channel works; unauthorized execution fails and private payloads remain outside the prohibited party's observed scope.
 
 ### Commit 08 — `feat: persist sequential progression and explicit wait states`
 

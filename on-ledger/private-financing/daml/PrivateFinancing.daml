@@ -1,0 +1,23 @@
+module PrivateFinancing where
+
+import Harmonia.Result
+
+-- Only the bank is a stakeholder of the private application.
+template Application with
+    bank : Party
+    buyer : Party
+    reviewers : [Party]
+    subject : Text
+    status : Text
+    privateDetails : Text
+  where
+    signatory bank
+
+    choice Approve : (ContractId Application, ContractId VerifiedResult)
+      controller bank
+      do
+        assertMsg "Application must be pending" (status == "pending")
+        next <- create this with status = "approved"
+        result <- create VerifiedResult with
+          issuer = bank; consumer = buyer; readers = reviewers; subject; decision = "approved"
+        pure (next, result)

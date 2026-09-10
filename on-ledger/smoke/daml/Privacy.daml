@@ -1,0 +1,96 @@
+module Privacy where
+
+import Daml.Script
+import DA.Time
+import qualified Story as S
+import qualified Story.Errors as Errors
+import qualified PrivateFinancing as Private
+import Harmonia.Result
+import Harmonia.SharedProgress
+
+data Actors = Actors with bank : Party; buyer : Party; reviewer : Party
+  deriving (Eq, Show)
+data State = State with
+    application : ContractId Private.Application
+    progress : ContractId SharedProgress
+    result : Optional (ContractId VerifiedResult)
+  deriving (Eq, Show)
+data PartyView = PartyView with name : Text; application : Bool; progress : Bool
+  deriving (Eq, Show)
+data Observation = Observation with actors : Actors; steps : [S.Step]; views : [PartyView]
+  deriving (Eq, Show)
+
+run : S.Input -> Script Observation
+run input = script do
+  reviewerName <- optional (abort "Reviewer required") pure input.reviewerName
+  privateDetails <- optional (abort "Private details required") pure input.privateDetails
+  bank <- allocatePartyOn (input.namespace <> "-" <> input.bankName) (ParticipantName "bank")
+  buyer <- allocatePartyOn (input.namespace <> "-" <> input.buyerName) (ParticipantName "buyer")
+  reviewer <- allocatePartyOn (input.namespace <> "-" <> reviewerName) (ParticipantName "reviewer")
+  let actors = Actors with bank; buyer; reviewer
+  forA ["bank", "buyer", "reviewer"] (\name -> await 60 do
+    known <- listKnownPartiesOn (ParticipantName name)
+    pure (all (\party -> elem party (map (.party) known)) [bank, buyer, reviewer]))
+  application <- submit bank do
+    createCmd Private.Application with bank; buyer; reviewers = [reviewer]; subject = "application"; status = input.initialStatus; privateDetails
+  progress <- submit buyer do
+    createCmd SharedProgress with owner = buyer; issuer = bank; readers = [reviewer]; subject = "application"; status = "waiting"
+  let initial = State with application; progress; result = None
+  awaitProgress actors progress
+  (steps, final) <- execute input actors reviewerName initial input.actions
+  views <- forA [(input.bankName, bank), (input.buyerName, buyer), (reviewerName, reviewer)] (\(name, party) -> do
+    privateView <- queryContractId party final.application
+    sharedView <- queryContractId party final.progress
+    pure PartyView with name; application = privateView /= None; progress = sharedView /= None)
+  pure Observation with actors; steps; views
+
+execute : S.Input -> Actors -> Text -> State -> [S.Attempt] -> Script ([S.Step], State)
+execute input actors reviewerName current attempts = case attempts of
+  [] -> pure ([], current)
+  attempt :: rest -> do
+    actor <- if attempt.actor == input.bankName then pure actors.bank
+      else if attempt.actor == input.buyerName then pure actors.buyer
+      else if attempt.actor == reviewerName then pure actors.reviewer
+      else abort "Unknown actor"
+    commands <- case attempt.action of
+      "approve-financing" -> pure ((\(application, proof) -> current with application; result = Some proof) <$> exerciseCmd current.application Private.Approve)
+      "publish-approval" -> pure ((\progress -> current with progress; result = None) <$> exerciseCmd current.progress (Continue current.result))
+      _ -> abort "Unsupported private workflow action"
+    result <- trySubmit actor commands
+    (next, outcome, reason, rawError) <- case result of
+      Right next -> pure (next, "committed", None, None)
+      Left error -> do
+        reason <- Errors.reason error
+        pure (current, "rejected", Some reason, Some (show error))
+    awaitProgress actors next.progress
+    case next.result of
+      Some proof -> await 60 do visible <- queryContractId actors.buyer proof; pure (visible /= None)
+      None -> pure ()
+    previous <- queryContractId actors.bank current.application
+    privateView <- queryContractId actors.bank next.application
+    sharedView <- queryContractId actors.buyer next.progress
+    active <- query @Private.Application actors.bank
+    let step = S.Step with
+          id = attempt.id; outcome; reason
+          application = optional "missing" (.status) privateView
+          workflow = Some (optional "missing" (.status) sharedView)
+          consumed = previous == None; activeContracts = length active
+          visibleTo = if privateView /= None then [input.bankName] else []
+          inputContract = show current.application; outputContract = show next.application; rawError
+    (later, final) <- execute input actors reviewerName next rest
+    pure (step :: later, final)
+
+awaitProgress : Actors -> ContractId SharedProgress -> Script ()
+awaitProgress actors cid = do
+  forA [actors.bank, actors.buyer, actors.reviewer] (\party -> await 60 do
+    view <- queryContractId party cid
+    pure (view /= None))
+  pure ()
+
+await : Int -> Script Bool -> Script ()
+await remaining check = do
+  ready <- check
+  if ready then pure () else do
+    assertMsg "Participant observation timed out" (remaining > 0)
+    sleep (milliseconds 100)
+    await (remaining - 1) check

@@ -12,3 +12,4 @@ data-dependencies:
   - ../financing/.daml/dist/harmonia-financing-0.1.0.dar
   - ../legacy-financing/.daml/dist/legacy-financing-0.1.0.dar
   - ../bindings/.daml/dist/harmonia-bindings-0.1.0.dar
+  - ../private-financing/.daml/dist/private-financing-0.1.0.dar

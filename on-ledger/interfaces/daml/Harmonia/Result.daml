@@ -1,0 +1,16 @@
+module Harmonia.Result where
+
+-- A signed, single-use result contains only the facts its consumer needs.
+template VerifiedResult with
+    issuer : Party
+    consumer : Party
+    readers : [Party]
+    subject : Text
+    decision : Text
+  where
+    signatory issuer
+    observer consumer, readers
+
+    choice Consume : ()
+      controller consumer
+      do pure ()
