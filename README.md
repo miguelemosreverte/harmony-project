@@ -12,7 +12,12 @@ The ledger enforces actions and records progression. Scala tools execute stories
 - [Scala organization and functional style](docs/architecture/scala.md)
 - [Source documents and provenance](docs/sources.md)
 
-The first three commits establish the plan, a working runtime, and a real ledger story verified against a Markdown golden. Setup commands and the first chapter arrive with those working increments.
+The first three commits establish the plan, a working runtime, and a real ledger story verified against a Markdown golden. Start with [local setup](book/setup.md), then run:
+
+```sh
+scripts/build
+scripts/harmonia smoke
+```
 
 ## Delivery principles
 

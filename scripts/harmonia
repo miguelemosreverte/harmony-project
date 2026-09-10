@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+source "$(dirname "${BASH_SOURCE[0]}")/environment"
+cd "$HARMONIA_ROOT/off-ledger"
+harmonia_arguments=''
+for harmonia_argument in "$@"; do
+  harmonia_argument="${harmonia_argument//\\/\\\\}"
+  harmonia_argument="${harmonia_argument//\"/\\\"}"
+  harmonia_arguments+=" \"$harmonia_argument\""
+done
+exec sbt --batch "jvm/run$harmonia_arguments"

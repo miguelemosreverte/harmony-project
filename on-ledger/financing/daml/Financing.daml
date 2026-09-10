@@ -1,0 +1,18 @@
+module Financing where
+
+-- A deliberately small source application for the first executable story.
+template Application
+  with
+    bank : Party
+    buyer : Party
+    reference : Text
+    status : Text
+  where
+    signatory bank
+    observer buyer
+
+    choice Approve : ContractId Application
+      controller bank
+      do
+        assertMsg "Application must be pending" (status == "pending")
+        create this with status = "approved"

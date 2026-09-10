@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+export DAML_SDK_VERSION=3.4.11
+harmonia_daml="${HARMONIA_DAML:-$HOME/.daml/bin/daml}"
+if [[ ! -x "$harmonia_daml" ]]; then
+  printf 'Daml SDK 3.4.11 is required. Set HARMONIA_DAML to the assistant executable. See book/setup.md.\n' >&2
+  exit 1
+fi
+exec "$harmonia_daml" --no-legacy-assistant-warning "$@"

@@ -4,7 +4,7 @@ The [PRD](../PRD.md) defines the ordered work. This record reports actual commit
 
 ## Current step
 
-Commit 01: establish the repository and document the approved architecture, folder map, readable golden format, and third-commit working-proof requirement.
+Commit 02: the Scala/Daml runtime baseline has passed its local build, script tests, and live Canton run. Record this increment, then implement Commit 03's Markdown golden proof.
 
 ## Commit evidence
 
@@ -12,7 +12,8 @@ Actual commit identifiers are recorded in the next commit after they are created
 
 | Plan item | Commit | Verified behavior |
 | --- | --- | --- |
-| 01 | Pending creation | Planning documents, local links, imported source provenance, and source exclusions |
+| 01 | `6e99049` | Planning documents, local links, imported source provenance, and source exclusions |
+| 02 | This increment | [Runtime verification](verification/02-runtime.md): compiled Scala/Daml and real Canton create/reject/approve/query execution |
 
 ## External decisions
 

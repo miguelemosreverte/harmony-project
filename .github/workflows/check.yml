@@ -1,0 +1,26 @@
+name: Check
+on: [push, pull_request]
+jobs:
+  baseline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: sbt/setup-sbt@v1
+      - name: Install the pinned Daml SDK
+        run: |
+          curl -fL --retry 3 -o /tmp/daml-sdk.tar.gz https://github.com/digital-asset/daml/releases/download/v3.4.11/daml-sdk-3.4.11-linux.tar.gz
+          mkdir /tmp/daml-sdk
+          tar xzf /tmp/daml-sdk.tar.gz -C /tmp/daml-sdk --strip-components=1
+          /tmp/daml-sdk/install.sh --install-assistant yes --set-path no
+      - run: scripts/build
+      - run: scripts/harmonia smoke
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: execution-evidence
+          path: .artifacts/
+          include-hidden-files: true

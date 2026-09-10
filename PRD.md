@@ -346,22 +346,22 @@ The first three actual Git commits have a fixed acceptance sequence: **document 
 
 ### Commit 01 — `docs: establish the Harmonia product and delivery baseline`
 
-- [ ] Record the agreed project baseline in Git.
-  - [ ] Initialize the repository and preserve both imported source documents with provenance.
-  - [ ] Commit this PRD, a short reader-oriented README, and an index of decisions still to prove.
-  - [ ] Record which imported diagram assets are unavailable instead of leaving readers to infer that they exist locally.
-  - [ ] Establish source, generated-artifact, and secret exclusions; record the open-source license decision before publication.
-  - [ ] **Acceptance:** a reader can find the purpose, sources, scope, next commit, and pending decisions from the README.
+- [x] Record the agreed project baseline in Git.
+  - [x] Initialize the repository and preserve both imported source documents with provenance.
+  - [x] Commit this PRD, a short reader-oriented README, and an index of decisions still to prove.
+  - [x] Record which imported diagram assets are unavailable instead of leaving readers to infer that they exist locally.
+  - [x] Establish source, generated-artifact, and secret exclusions; record the open-source license decision before publication.
+  - [x] **Acceptance:** a reader can find the purpose, sources, scope, next commit, and pending decisions from the README.
 
 ### Commit 02 — `build: add a reproducible local Canton and Daml baseline`
 
-- [ ] Establish a small runtime that can be rebuilt and exercised.
-  - [ ] Select and pin compatible runtime/compiler versions and required dependencies.
-  - [ ] Establish the Scala/JVM build with Cats Effect, formatting conventions, and the first feature/test packages following the Scala architecture note.
-  - [ ] Add a minimal Daml package and a successful local create/exercise smoke example.
-  - [ ] Document setup, start, stop, reset, and smoke-check commands with explicit prerequisites.
-  - [ ] Add build/smoke automation and continuous integration configuration.
-  - [ ] **Acceptance:** a fresh project environment builds and executes the documented example; the book's setup page reproduces it.
+- [x] Establish a small runtime that can be rebuilt and exercised.
+  - [x] Select and pin compatible runtime/compiler versions and required dependencies.
+  - [x] Establish the Scala/JVM build with Cats Effect, formatting conventions, and the first feature/test packages following the Scala architecture note.
+  - [x] Add a minimal Daml package and a successful local create/exercise smoke example.
+  - [x] Document setup, start, stop, reset, and smoke-check commands with explicit prerequisites.
+  - [x] Add build/smoke automation and continuous integration configuration.
+  - [x] **Acceptance:** a fresh project environment builds and executes the documented example; the book's setup page reproduces it.
 
 ### Commit 03 — `feat: prove a Markdown golden story against the local ledger`
 

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+source "$(dirname "${BASH_SOURCE[0]}")/environment"
+harmonia_root="$HARMONIA_ROOT"
+for harmonia_package in financing smoke; do
+  cd "$harmonia_root/on-ledger/$harmonia_package"
+  "$harmonia_root/scripts/daml" build
+done
+cd "$harmonia_root/off-ledger"
+sbt --batch 'scalafmtCheckAll' 'jvm/compile'

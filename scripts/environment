@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Shared launch configuration; source this file from the build/run wrappers.
+export HARMONIA_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+if [[ -z "${JAVA_HOME:-}" && "$(uname -s)" == Darwin ]]; then
+  export JAVA_HOME="$(/usr/libexec/java_home -v 17)"
+fi

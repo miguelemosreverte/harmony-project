@@ -1,0 +1,45 @@
+module Smoke where
+
+import Daml.Script
+import Financing
+
+data Observation = Observation
+  with
+    before : Text
+    after : Text
+    bankVisible : Bool
+    buyerVisible : Bool
+    originalContract : Text
+    approvedContract : Text
+  deriving (Eq, Show)
+
+smoke : Script Observation
+smoke = script do
+  bank <- allocateParty "Northbank"
+  buyer <- allocateParty "Alice"
+  original <- submit bank do
+    createCmd Application with bank; buyer; reference = "mortgage"; status = "pending"
+  pending <- queryContractId bank original
+  submitMustFail buyer do exerciseCmd original Approve
+  stillPending <- queryContractId bank original
+  assert (pending == stillPending)
+  approved <- submit bank do exerciseCmd original Approve
+  bankView <- queryContractId bank approved
+  buyerView <- queryContractId buyer approved
+  let before = optional "missing" (.status) pending
+  let after = optional "missing" (.status) bankView
+  pure Observation with
+    before
+    after
+    bankVisible = bankView /= None
+    buyerVisible = buyerView /= None
+    originalContract = show original
+    approvedContract = show approved
+
+testSmoke : Script ()
+testSmoke = script do
+  result <- smoke
+  assert (result.before == "pending")
+  assert (result.after == "approved")
+  assert result.bankVisible
+  assert result.buyerVisible
