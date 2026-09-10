@@ -6,10 +6,19 @@ import io.circe.{Json, JsonObject}
 object StoryFormat:
   def input(id: String, markdown: String): Either[String, Story] = for
     json <- MarkdownYaml.read(markdown, "Scenario")
-    root <- fields(json, "scenario", Set("setup", "actions"), Set("workflow"))
+    root <- fields(json, "scenario", Set("setup", "actions"), Set("workflow", "integration"))
     workflow <- root("workflow").fold[Either[String, Option[String]]](Right(None)) { value =>
       text(value, "workflow").flatMap { name =>
         Either.cond(name == "approval", Some(name), "Unsupported workflow: " + name)
+      }
+    }
+    integration <- root("integration").fold[Either[String, Option[String]]](Right(None)) { value =>
+      text(value, "integration").flatMap { name =>
+        Either.cond(
+          name == "adapter" && workflow.nonEmpty,
+          Some(name),
+          "Adapter requires an approval workflow"
+        )
       }
     }
     setup <- fields(root("setup").get, "setup", Set("application"))
@@ -50,7 +59,7 @@ object StoryFormat:
           _ <- Either.cond(!preceding.exists(_.id == name), (), s"Duplicate action id '$name'")
         yield preceding :+ StoryAction(name, actor, choice)
     }
-  yield Story(id, bank, buyer, status, actions, workflow)
+  yield Story(id, bank, buyer, status, actions, workflow, integration)
 
   def result(markdown: String): Either[String, Json] = for
     json <- MarkdownYaml.read(markdown, "Result")

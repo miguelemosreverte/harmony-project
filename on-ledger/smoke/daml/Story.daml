@@ -1,8 +1,7 @@
 module Story where
 
 import Daml.Script
-import Financing
-import Harmonia.Action
+import Story.Application
 import Harmonia.Workflow
 
 data Attempt = Attempt with
@@ -17,6 +16,7 @@ data Input = Input with
     buyerName : Text
     initialStatus : Text
     workflow : Optional Text
+    integration : Optional Text
     actions : [Attempt]
   deriving (Eq, Show)
 
@@ -38,18 +38,17 @@ run : Input -> Script [Step]
 run input = script do
   bank <- allocateParty (input.namespace <> "-" <> input.bankName)
   buyer <- allocateParty (input.namespace <> "-" <> input.buyerName)
-  original <- submit bank do
-    createCmd Application with bank; buyer; reference = "application"; status = input.initialStatus
+  (original, initialAction) <- createApplication input.integration bank buyer input.initialStatus
   workflowId <- case input.workflow of
     None -> pure None
     Some "approval" -> Some <$> submit bank do
       createCmd WorkflowInstance with
         owner = bank; readers = [buyer]; assignee = bank; subject = "application"
-        action = toInterfaceContractId @StepAction original; status = "waiting"
+        action = initialAction; status = "waiting"
     Some _ -> abort "Unsupported workflow"
   execute input bank buyer original workflowId input.actions
 
-execute : Input -> Party -> Party -> ContractId Application -> Optional (ContractId WorkflowInstance) -> [Attempt] -> Script [Step]
+execute : Input -> Party -> Party -> Reference -> Optional (ContractId WorkflowInstance) -> [Attempt] -> Script [Step]
 execute input bank buyer current workflowId remaining = case remaining of
   [] -> pure []
   attempt :: rest -> do
@@ -57,13 +56,17 @@ execute input bank buyer current workflowId remaining = case remaining of
     actor <- if attempt.actor == input.bankName then pure bank
       else if attempt.actor == input.buyerName then pure buyer
       else abort "Unknown actor"
-    result <- trySubmit actor do
-      case workflowId of
-        None -> (\next -> (next, None)) <$> exerciseCmd current Approve
-        Some cid -> (\(nextWorkflow, nextAction) ->
-          (fromInterfaceContractId @Application nextAction, Some nextWorkflow)) <$> exerciseCmd cid Advance
+    commands <- case workflowId of
+      None -> do
+        command <- approveDirect current
+        pure ((\next -> (next, None)) <$> command)
+      Some cid -> pure ((\(nextWorkflow, nextAction) ->
+        (nextAction, Some nextWorkflow)) <$> exerciseCmd cid Advance)
+    result <- trySubmit actor commands
     (next, nextWorkflowId, outcome, reason, rawError) <- case result of
-      Right (cid, nextWorkflow) -> pure (cid, nextWorkflow, "committed", None, None)
+      Right (action, nextWorkflow) -> do
+        cid <- resolve bank current action
+        pure (cid, nextWorkflow, "committed", None, None)
       Left error@AuthorizationError{} -> pure (current, workflowId, "rejected", Some "unauthorized", Some (show error))
       Left error@UnhandledException{} -> pure (current, workflowId, "rejected", Some "application-rejected", Some (show error))
       Left error@UserError{} -> pure (current, workflowId, "rejected", Some "application-rejected", Some (show error))
@@ -73,10 +76,8 @@ execute input bank buyer current workflowId remaining = case remaining of
         | failure.errorId == "DAML_AUTHORIZATION_ERROR" ->
           pure (current, workflowId, "rejected", Some "unauthorized", Some (show error))
       Left error -> abort ("Unexpected ledger error: " <> show error)
-    previous <- queryContractId bank current
-    bankView <- queryContractId bank next
-    buyerView <- queryContractId buyer next
-    allActive <- query @Application bank
+    previous <- observe bank buyer current
+    observedApplication <- observe bank buyer next
     workflowState <- case nextWorkflowId of
       None -> pure None
       Some cid -> do
@@ -86,12 +87,12 @@ execute input bank buyer current workflowId remaining = case remaining of
           id = attempt.id
           outcome
           reason
-          application = optional "missing" (.status) bankView
+          application = observedApplication.status
           workflow = workflowState
-          consumed = previous == None
-          activeContracts = length allActive
-          visibleTo = (if buyerView /= None then [input.buyerName] else []) <>
-            (if bankView /= None then [input.bankName] else [])
+          consumed = not previous.bankVisible
+          activeContracts = observedApplication.count
+          visibleTo = (if observedApplication.buyerVisible then [input.buyerName] else []) <>
+            (if observedApplication.bankVisible then [input.bankName] else [])
           inputContract = show current
           outputContract = show next
           rawError

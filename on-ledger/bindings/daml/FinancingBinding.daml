@@ -1,0 +1,29 @@
+module FinancingBinding where
+
+import Harmonia.Action
+import qualified LegacyFinancing as Source
+
+-- Typed integration against the source package; no source implementation changes.
+template ApprovalBinding with
+    bank : Party
+    buyer : Party
+    reference : Text
+    application : ContractId Source.Application
+  where
+    signatory bank
+    observer buyer
+
+    interface instance StepAction for ApprovalBinding where
+      view = StepView with actor = bank; subject = reference
+      performAction actionId = do
+        next <- exercise (fromInterfaceContractId @ApprovalBinding actionId) ApplyApproval
+        pure (toInterfaceContractId @StepAction next)
+
+    choice ApplyApproval : ContractId ApprovalBinding
+      controller bank
+      do
+        source <- fetch application
+        assertMsg "Binding must match source authority and subject"
+          (source.bank == bank && source.buyer == buyer && source.reference == reference)
+        next <- exercise application Source.Approve
+        create this with application = next

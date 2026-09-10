@@ -116,11 +116,11 @@ The proposal establishes the intended release scope. The illustration supplies a
 | Execution | Daml owns workflow transitions and validation of application actions/results | Agreed direction |
 | User interface | A thin viewer/composer submits commands and displays ledger-derived state | Agreed direction |
 | Integration | Both participation paths converge on the same core model | Required by proposal |
-| Existing applications | Prove a hand-written adapter against an unchanged source DAR before generating it | Agreed implementation approach; mechanism needs proof |
+| Existing applications | Prove a hand-written adapter against an unchanged source DAR before generating it | Implemented for the demonstrated approval binding; see ADR 001 |
 | Story artifacts | Human-readable Markdown with a concise, designated YAML block; avoid duplicated metadata and narrative | Agreed format and readability requirement |
 | Regression checks | Compare structured expected and observed results; produce renderable differences | Agreed direction |
 | Packaging | Start with a monorepo and explicit dependencies between logical packages | Proposed implementation default |
-| Shared interfaces | Consider a small, separate interface package to avoid coupling source apps to core implementation | Proposed; settle in the binding experiment |
+| Shared interfaces | Consider a small, separate interface package to avoid coupling source apps to core implementation | Implemented; see ADR 001 |
 | State privacy | Separate shared progress from private domain payloads and disclose only required results | Proposed design to validate on separate participants |
 | Off-ledger language | Scala for the runner, builder, services, book tooling, and interactive application code; Daml remains on-ledger | User requirement |
 | Effect style | Cats Effect with concrete `IO` for effects; pure functions for deterministic work; `Resource[IO, A]` for owned resources | User direction, with Cats Effect as the interpretation of the spoken library name |
@@ -343,13 +343,13 @@ The first three actual Git commits have a fixed acceptance sequence: **document 
 
 ### Commit 05 — `feat: prove an adapter for an unchanged source DAR`
 
-- [ ] Validate the second participation path before developing the generator.
-  - [ ] Package a source application without Harmonia interface implementations and record its artifact identity.
-  - [ ] Hand-write a typed adapter/binding against that unchanged artifact.
-  - [ ] Execute through the same core action model and verify equivalent externally meaningful behavior.
-  - [ ] Exercise authorization and application-failure cases across the adapter boundary.
-  - [ ] Record the package dependency graph, interface ownership, consuming behavior, and supported binding limits in an architecture decision record.
-  - [ ] **Acceptance:** both paths run successfully, their application boundaries remain explicit, and the original source DAR identity is unchanged.
+- [x] Validate the second participation path before developing the generator.
+  - [x] Package a source application without Harmonia interface implementations and record its artifact identity.
+  - [x] Hand-write a typed adapter/binding against that unchanged artifact.
+  - [x] Execute through the same core action model and verify equivalent externally meaningful behavior.
+  - [x] Exercise authorization and application-failure cases across the adapter boundary.
+  - [x] Record the package dependency graph, interface ownership, consuming behavior, and supported binding limits in an architecture decision record.
+  - [x] **Acceptance:** both paths run successfully, their application boundaries remain explicit, and the original source DAR identity is unchanged.
 
 ### Commit 06 — `feat: render the first recorded stories in the book`
 

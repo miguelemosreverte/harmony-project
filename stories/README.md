@@ -18,3 +18,5 @@ The Scala runner parses the designated Markdown/YAML blocks and validates their 
 Runs write raw observations, normalized `actual.md`, `diff.md`, and `run.json` provenance under `.artifacts/`. The command exits unsuccessfully on a mismatch and never rewrites expectations. Review intentional changes by editing the expected file and rerunning; there is no automatic baseline-acceptance command.
 
 The optional scenario field `workflow: approval` runs the financing action through the Harmonia core. Without it, the story exercises the source application directly. Workflow results add a `workflow` status beside the observed application status.
+
+An approval workflow can select `integration: adapter` to exercise the unchanged legacy application through a typed binding. Omitting the field selects the direct interface implementation. Both paths observe the same business fields.

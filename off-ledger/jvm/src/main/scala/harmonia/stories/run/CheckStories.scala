@@ -3,6 +3,7 @@ package harmonia.stories.run
 import cats.effect.{ExitCode, IO}
 import cats.syntax.all.*
 import harmonia.files.ArtifactFiles
+import harmonia.bindings.inspect.SourceIdentity
 import harmonia.ledger.CantonSandbox
 import harmonia.stories.Story
 import harmonia.stories.compare.CompareResults
@@ -39,6 +40,7 @@ object CheckStories:
       RuntimeException("Story names must be unique within a run")
     )
     artifacts <- ArtifactFiles.createRun(root, "check")
+    _ <- SourceIdentity.verify(root, artifacts)
     _ <- IO.println(s"Running ${prepared.size} stories against local Canton. Evidence: $artifacts")
     dar = root.resolve("on-ledger/smoke/.daml/dist/harmonia-smoke-0.1.0.dar")
     checks <- CantonSandbox.resource(root, artifacts, dar).use { ledger =>
@@ -76,6 +78,7 @@ object CheckStories:
         yield differences.isEmpty
       }
     }
+    _ <- SourceIdentity.verify(root, artifacts)
   yield if checks.forall(identity) then ExitCode.Success else ExitCode.Error
 
   private def prepare(directory: Path): IO[Prepared] = for

@@ -1,0 +1,17 @@
+module LegacyFinancing where
+
+-- This source application deliberately knows nothing about Harmonia.
+template Application with
+    bank : Party
+    buyer : Party
+    reference : Text
+    status : Text
+  where
+    signatory bank
+    observer buyer
+
+    choice Approve : ContractId Application
+      controller bank
+      do
+        assertMsg "Application must be pending" (status == "pending")
+        create this with status = "approved"

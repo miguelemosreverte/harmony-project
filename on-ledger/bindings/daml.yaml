@@ -1,14 +1,10 @@
 sdk-version: 3.4.11
-name: harmonia-smoke
+name: harmonia-bindings
 version: 0.1.0
 source: daml
 dependencies:
   - daml-prim
   - daml-stdlib
-  - daml-script
 data-dependencies:
   - ../interfaces/.daml/dist/harmonia-interfaces-0.1.0.dar
-  - ../core/.daml/dist/harmonia-core-0.1.0.dar
-  - ../financing/.daml/dist/harmonia-financing-0.1.0.dar
   - ../legacy-financing/.daml/dist/legacy-financing-0.1.0.dar
-  - ../bindings/.daml/dist/harmonia-bindings-0.1.0.dar

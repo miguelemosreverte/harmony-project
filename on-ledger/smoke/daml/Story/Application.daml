@@ -1,0 +1,61 @@
+module Story.Application where
+
+import Daml.Script
+import Harmonia.Action
+import qualified Financing as Direct
+import qualified LegacyFinancing as Source
+import FinancingBinding
+
+data Reference = DirectApplication (ContractId Direct.Application)
+  | AdaptedApplication (ContractId Source.Application)
+  deriving (Eq, Show)
+
+data Snapshot = Snapshot with
+    status : Text
+    count : Int
+    bankVisible : Bool
+    buyerVisible : Bool
+  deriving (Eq, Show)
+
+createApplication : Optional Text -> Party -> Party -> Text -> Script (Reference, ContractId StepAction)
+createApplication integration bank buyer status = case integration of
+  None -> do
+    cid <- submit bank do
+      createCmd Direct.Application with bank; buyer; reference = "application"; status
+    pure (DirectApplication cid, toInterfaceContractId @StepAction cid)
+  Some "adapter" -> do
+    cid <- submit bank do
+      createCmd Source.Application with bank; buyer; reference = "application"; status
+    binding <- submit bank do
+      createCmd ApprovalBinding with bank; buyer; reference = "application"; application = cid
+    pure (AdaptedApplication cid, toInterfaceContractId @StepAction binding)
+  Some _ -> abort "Unsupported integration"
+
+approveDirect : Reference -> Script (Commands (ContractId StepAction))
+approveDirect reference = case reference of
+  DirectApplication cid -> pure (toInterfaceContractId @StepAction <$> exerciseCmd cid Direct.Approve)
+  AdaptedApplication _ -> abort "Adapter requires a workflow"
+
+resolve : Party -> Reference -> ContractId StepAction -> Script Reference
+resolve bank original action = case original of
+  DirectApplication _ -> pure (DirectApplication (fromInterfaceContractId @Direct.Application action))
+  AdaptedApplication _ -> do
+    binding <- queryContractId bank (fromInterfaceContractId @ApprovalBinding action)
+    case binding of
+      Some value -> pure (AdaptedApplication value.application)
+      None -> abort "Committed binding is not observable"
+
+observe : Party -> Party -> Reference -> Script Snapshot
+observe bank buyer reference = case reference of
+  DirectApplication cid -> do
+    bankView <- queryContractId bank cid
+    buyerView <- queryContractId buyer cid
+    active <- query @Direct.Application bank
+    pure Snapshot with status = optional "missing" (.status) bankView
+                       count = length active; bankVisible = bankView /= None; buyerVisible = buyerView /= None
+  AdaptedApplication cid -> do
+    bankView <- queryContractId bank cid
+    buyerView <- queryContractId buyer cid
+    active <- query @Source.Application bank
+    pure Snapshot with status = optional "missing" (.status) bankView
+                       count = length active; bankVisible = bankView /= None; buyerVisible = buyerView /= None
