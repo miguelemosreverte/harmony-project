@@ -10,7 +10,7 @@ object StoryFormat:
     workflow <- root("workflow").fold[Either[String, Option[String]]](Right(None)) { value =>
       text(value, "workflow").flatMap { name =>
         Either.cond(
-          Set("approval", "private-approval", "sequential-approval")(name),
+          Set("approval", "private-approval", "sequential-approval", "branching-approval")(name),
           Some(name),
           "Unsupported workflow: " + name
         )
@@ -68,7 +68,8 @@ object StoryFormat:
             value,
             "action",
             Set("id", "actor", "action"),
-            if workflow.contains("sequential-approval") then Set("request") else Set.empty
+            if workflow.exists(Set("sequential-approval", "branching-approval")) then Set("request")
+            else Set.empty
           )
           request <- optionalText(action, "request")
           name <- text(action("id").get, "action.id")
@@ -89,6 +90,14 @@ object StoryFormat:
               "wait",
               "reconnect",
               "forge-completion"
+            )(choice)) || (workflow.contains("branching-approval") && Set(
+              "choose-approve",
+              "choose-decline",
+              "confirm-review",
+              "close-application",
+              "complete-join",
+              "wait",
+              "reconnect"
             )(choice)),
             (),
             s"$name: unsupported action '$choice'"
@@ -120,7 +129,16 @@ object StoryFormat:
           value,
           "result action",
           Set("id", "outcome", "application", "consumed", "active_contracts", "visible_to"),
-          Set("reason", "workflow", "review", "completed", "enabled")
+          Set(
+            "reason",
+            "workflow",
+            "review",
+            "completed",
+            "enabled",
+            "branch",
+            "closure",
+            "skipped"
+          )
         )
         _ <- text(action("id").get, "result action.id")
         outcome <- text(action("outcome").get, "result action.outcome")
@@ -135,7 +153,7 @@ object StoryFormat:
             Either.cond(Set("waiting", "complete")(status), (), "Unknown workflow status")
           }
         }
-        _ <- Vector("completed", "enabled").foldLeft[Either[String, Unit]](Right(())) {
+        _ <- Vector("completed", "enabled", "skipped").foldLeft[Either[String, Unit]](Right(())) {
           (acc, name) =>
             acc.flatMap(_ =>
               action(name).fold[Either[String, Unit]](Right(())) { value =>
@@ -150,9 +168,14 @@ object StoryFormat:
               }
             )
         }
-        _ <- action("review").fold[Either[String, Unit]](Right(()))(value =>
-          text(value, "review").map(_ => ())
-        )
+        _ <- Vector("review", "branch", "closure").foldLeft[Either[String, Unit]](Right(())) {
+          (acc, name) =>
+            acc.flatMap(_ =>
+              action(name).fold[Either[String, Unit]](Right(()))(value =>
+                text(value, name).map(_ => ())
+              )
+            )
+        }
         _ <- action("consumed").get.asBoolean.toRight("consumed must be true or false")
         count <- action("active_contracts").get.asNumber
           .flatMap(_.toInt)

@@ -1,0 +1,30 @@
+module DefinitionTests where
+
+import Daml.Script
+import qualified Branching
+import Harmonia.Process.Model
+import Harmonia.Process.Engine
+
+testDefinitions : Script ()
+testDefinitions = script do
+  publisher <- allocateParty "Publisher"
+  let good = Branching.branchingDefinition
+  let changeStep id update definition = definition with steps = map (\step -> if step.id == id then update step else step) definition.steps
+  let invalid =
+        [ good with version = 0
+        , good with steps = []
+        , good with steps = good.steps <> good.steps
+        , changeStep "decision" (\step -> step with prerequisites = ["join"]) good
+        , changeStep "financing" (\step -> step with prerequisites = ["missing"]) good
+        , changeStep "decision" (\step -> step with kind = DecisionStep ["approve", "approve"]) good
+        , changeStep "decision" (\step -> step with kind = DecisionStep ["approve", "decline", "unreachable"]) good
+        , changeStep "review" (\step -> step with branch = Some (Branch "decision" "unknown")) good
+        , changeStep "closure" (\step -> step with prerequisites = ["decision", "financing"]) good
+        , changeStep "join" (\step -> step with prerequisites = ["financing", "review"]) good
+        , changeStep "join" (\step -> step with kind = ActionStep) good
+        ]
+  forA invalid (\definition -> do
+    assert (not (validDefinition definition))
+    submitMustFail publisher do createCmd PublishedDefinition with publisher; readers = []; definition)
+  submit publisher do createCmd PublishedDefinition with publisher; readers = []; definition = good
+  pure ()

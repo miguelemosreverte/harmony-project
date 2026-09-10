@@ -152,7 +152,7 @@ final class BookView(
           "Typed adapter"
         else if story.input.hcursor.get[String]("workflow").toOption.contains("private-approval")
         then "Signed result handoff"
-        else if story.input.hcursor.get[String]("workflow").toOption.contains("sequential-approval")
+        else if story.actual.hcursor.downField("definition").focus.nonEmpty
         then
           s"${story.actual.hcursor.downField("definition").get[String]("name").getOrElse("Workflow")} · version ${story.actual.hcursor.downField("definition").get[Int]("version").getOrElse(0)}"
         else if story.input.hcursor.get[String]("workflow").isRight then "Direct interface"
@@ -370,6 +370,9 @@ final class BookView(
   private def label(field: String): String = Map(
     "application" -> "Application",
     "review" -> "Review",
+    "closure" -> "Closure",
+    "branch" -> "Selected branch",
+    "skipped" -> "Skipped steps",
     "completed" -> "Completed steps",
     "enabled" -> "Enabled steps",
     "workflow" -> "Workflow",

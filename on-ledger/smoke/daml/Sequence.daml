@@ -43,7 +43,7 @@ setup input = script do
   let definition = Definition with
         name = "approval-review"
         version = 1
-        steps = [StepSpec "financing" "bank" [], StepSpec "review" "buyer" ["financing"]]
+        steps = [StepSpec "financing" "bank" [] ActionStep None, StepSpec "review" "buyer" ["financing"] ActionStep None]
   published <- submit engine do createCmd PublishedDefinition with publisher = engine; readers = [bank, buyer]; definition
   submit bank do
     exerciseCmd published Start with
@@ -95,7 +95,7 @@ act Request{context, attempt} = script do
         visibleTo = (if application /= None then [context.bankName] else []) <> (if buyerView /= None then [context.buyerName] else [])
         inputContract = show previousApplication; outputContract = show currentApplication; rawError
   pure Observation with step; review = optional "missing" (.status) review
-                        completed = observed.completed; enabled = enabledSteps observed.definition observed.completed
+                        completed = observed.completed; enabled = enabledSteps observed.definition observed.completed observed.selections
                         definition = DefinitionVersion observed.definition.name observed.definition.version
                         processContract = show observedId
 

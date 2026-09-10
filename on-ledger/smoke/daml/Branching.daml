@@ -1,0 +1,105 @@
+module Branching where
+
+import Daml.Script
+import qualified Story as S
+import qualified Story.Errors as Errors
+import qualified Sequence as Q
+import qualified Financing
+import qualified Review
+import Harmonia.Action
+import Harmonia.Process.Model
+import Harmonia.Process.Engine
+
+branchingDefinition : Definition
+branchingDefinition = Definition "decision-review" 1
+  [ StepSpec "decision" "bank" [] (DecisionStep ["approve", "decline"]) None
+  , StepSpec "financing" "bank" ["decision"] ActionStep (Some (Branch "decision" "approve"))
+  , StepSpec "review" "buyer" ["decision"] ActionStep (Some (Branch "decision" "approve"))
+  , StepSpec "closure" "bank" ["decision"] ActionStep (Some (Branch "decision" "decline"))
+  , StepSpec "join" "buyer" ["financing", "review", "closure"] JoinStep None
+  ]
+
+data Observation = Observation with
+    step : S.Step
+    review : Text
+    closure : Text
+    branch : Text
+    completed : [Text]
+    skipped : [Text]
+    enabled : [Text]
+    definition : Q.DefinitionVersion
+    processContract : Text
+  deriving (Eq, Show)
+
+setup : S.Input -> Script Q.Context
+setup input = script do
+  bank <- allocateParty (input.namespace <> "-" <> input.bankName)
+  buyer <- allocateParty (input.namespace <> "-" <> input.buyerName)
+  engine <- allocateParty (input.namespace <> "-DefinitionPublisher")
+  financing <- submit bank do createCmd Financing.Application with bank; buyer; reference = input.namespace; status = input.initialStatus
+  review <- submit buyer do createCmd Review.Review with owner = buyer; reader = bank; subject = input.namespace; status = "pending"
+  closure <- submit bank do createCmd Review.Review with owner = bank; reader = buyer; subject = input.namespace; status = "pending"
+  published <- submit engine do createCmd PublishedDefinition with publisher = engine; readers = [bank, buyer]; definition = branchingDefinition
+  submit bank do
+    exerciseCmd published Start with
+      owner = bank; reference = input.namespace; subject = input.namespace
+      roles = [Role "bank" bank, Role "buyer" buyer]
+      bindings = [ ActionBinding "financing" (toInterfaceContractId @StepAction financing)
+               , ActionBinding "review" (toInterfaceContractId @StepAction review)
+               , ActionBinding "closure" (toInterfaceContractId @StepAction closure)]
+  pure Q.Context with bank; buyer; engine; bankName = input.bankName; buyerName = input.buyerName; reference = input.namespace; published
+
+act : Q.Request -> Script Observation
+act Q.Request{context, attempt} = script do
+  (currentId, current) <- Q.discover context
+  previousApplication <- Q.applicationId current
+  actor <- if attempt.actor == context.bankName then pure context.bank
+    else if attempt.actor == context.buyerName then pure context.buyer
+    else abort "Unknown branch actor"
+  let request = optional attempt.id identity attempt.request
+  (nextId, outcome, reason, rawError) <- if elem attempt.action ["wait", "reconnect"] then
+    pure (currentId, "observed", None, None)
+    else do
+      commands <- case attempt.action of
+        "choose-approve" -> pure (exerciseCmd currentId SelectBranch with step = "decision"; actor; request; option = "approve")
+        "choose-decline" -> pure (exerciseCmd currentId SelectBranch with step = "decision"; actor; request; option = "decline")
+        "complete-join" -> pure (exerciseCmd currentId CompleteJoin with step = "join"; actor; request)
+        action -> do
+          step <- case action of
+            "approve-financing" -> pure "financing"
+            "confirm-review" -> pure "review"
+            "close-application" -> pure "closure"
+            _ -> abort "Unsupported branch action"
+          pure (exerciseCmd currentId AdvanceStep with step; actor; request)
+      result <- trySubmit actor commands
+      case result of
+        Right cid -> pure (cid, if cid == currentId then "duplicate" else "committed", None, None)
+        Left error -> do
+          reason <- Errors.reason error
+          pure (currentId, "rejected", Some reason, Some (show error))
+  (observedId, observed) <- Q.discover context
+  assertMsg "Returned instance must match the active ledger instance" (observedId == nextId)
+  currentApplication <- Q.applicationId observed
+  currentReview <- Q.binding observed "review"
+  currentClosure <- Q.binding observed "closure"
+  application <- queryContractId context.bank currentApplication
+  buyerView <- queryContractId context.buyer currentApplication
+  review <- queryContractId context.buyer (fromInterfaceContractId @Review.Review currentReview)
+  closure <- queryContractId context.bank (fromInterfaceContractId @Review.Review currentClosure)
+  previous <- queryContractId context.bank previousApplication
+  applications <- query @Financing.Application context.bank
+  reviews <- query @Review.Review context.buyer
+  let step = S.Step with
+        id = attempt.id; outcome; reason
+        application = optional "missing" (.status) application
+        workflow = Some (if processComplete observed.definition observed.completed observed.selections then "complete" else "waiting")
+        consumed = previous == None; activeContracts = length applications + length reviews
+        visibleTo = (if application /= None then [context.bankName] else []) <> (if buyerView /= None then [context.buyerName] else [])
+        inputContract = show previousApplication; outputContract = show currentApplication; rawError
+  pure Observation with
+    step; review = optional "missing" (.status) review; closure = optional "missing" (.status) closure
+    branch = case observed.selections of [chosen] -> chosen.option; _ -> "undecided"
+    completed = observed.completed; skipped = skippedSteps observed.definition observed.selections
+    enabled = enabledSteps observed.definition observed.completed observed.selections
+    definition = Q.DefinitionVersion observed.definition.name observed.definition.version
+    processContract = show observedId

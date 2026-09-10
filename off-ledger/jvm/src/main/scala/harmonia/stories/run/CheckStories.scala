@@ -7,7 +7,7 @@ import harmonia.bindings.inspect.SourceIdentity
 import harmonia.ledger.CantonSandbox
 import harmonia.ledger.network.CantonNetwork
 import harmonia.stories.Story
-import harmonia.stories.run.sequence.RunSequenceStory
+import harmonia.stories.run.process.RunProcessStory
 import harmonia.stories.compare.CompareResults
 import harmonia.stories.read.{MarkdownYaml, StoryFormat}
 import io.circe.Json
@@ -64,8 +64,8 @@ object CheckStories:
             artifacts,
             dar,
             (story, output) =>
-              if story.workflow.contains("sequential-approval") then
-                new RunSequenceStory(root, ledger, dar).run(story, output)
+              if story.workflow.exists(Set("sequential-approval", "branching-approval")) then
+                new RunProcessStory(root, ledger, dar).run(story, output)
               else new RunStory(root, ledger, dar).run(story, output),
             "one participant, one synchronizer, separate party identities"
           )

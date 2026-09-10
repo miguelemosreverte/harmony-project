@@ -22,14 +22,15 @@ template PublishedDefinition with
         bindings : [ActionBinding]
       controller owner
       do
+        let actions = filter (\step -> step.kind == ActionStep) definition.steps
         assertMsg "Bind exactly the roles required by the definition" (sort (map (.name) roles) == sort (dedup (map (.role) definition.steps)))
-        assertMsg "Each step must be bound once" (sort (map (.step) bindings) == sort (map (.id) definition.steps))
-        forA definition.steps (\step -> do
+        assertMsg "Each application step must be bound once" (sort (map (.step) bindings) == sort (map (.id) actions))
+        forA actions (\step -> do
           role <- requireRole roles step.role
           binding <- requireBinding bindings step.id
           action <- view <$> fetch binding.action
           assertMsg "Application actor and subject must match the bound role" (action.actor == role.party && action.subject == subject))
-        create ProcessInstance with owner; engine = publisher; reference; subject; published = self; definition; roles; bindings; completed = []; receipts = []
+        create ProcessInstance with owner; engine = publisher; reference; subject; published = self; definition; roles; bindings; completed = []; receipts = []; selections = []
 
 template ProcessInstance with
     engine : Party
@@ -42,6 +43,7 @@ template ProcessInstance with
     bindings : [ActionBinding]
     completed : [Text]
     receipts : [Receipt]
+    selections : [Branch]
   where
     signatory engine, owner
     observer map (.party) roles
@@ -51,29 +53,63 @@ template ProcessInstance with
       with step : Text; actor : Party; request : Text
       controller actor
       do
-        origin <- fetch published
-        assertMsg "Instance definition must match its published version" (origin.publisher == engine && origin.definition == definition)
-        spec <- case find (\item -> item.id == step) definition.steps of
-          Some value -> pure value
-          None -> abort "Unknown process step"
-        role <- requireRole roles spec.role
-        assertMsg "Only the assigned actor can perform this step" (role.party == actor)
-        assertMsg "Request identifier required" (request /= "")
-        case find (\receipt -> receipt.request == request) receipts of
-          Some receipt -> do
-            assertMsg "Request identifier belongs to another action" (receipt.step == step && receipt.actor == actor)
-            pure self
-          None -> do
-            assertMsg "Step must be enabled" (elem step (enabledSteps definition completed))
-            binding <- requireBinding bindings step
-            actionView <- view <$> fetch binding.action
-            assertMsg "Application authority and subject must match" (actionView.actor == actor && actionView.subject == subject)
-            nextAction <- exercise binding.action ExecuteAction
-            archive self
-            create this with
-              bindings = map (\item -> if item.step == step then item with action = nextAction else item) bindings
-              completed = completed <> [step]
-              receipts = receipts <> [Receipt with request; step; actor]
+        spec <- requireStep definition step
+        assertMsg "Expected an application step" (spec.kind == ActionStep)
+        duplicate <- checkRequest this spec actor request None
+        if duplicate then pure self else do
+          binding <- requireBinding bindings step
+          actionView <- view <$> fetch binding.action
+          assertMsg "Application authority and subject must match" (actionView.actor == actor && actionView.subject == subject)
+          nextAction <- exercise binding.action ExecuteAction
+          record self (this with bindings = map (\item -> if item.step == step then item with action = nextAction else item) bindings) step actor request None
+
+    nonconsuming choice SelectBranch : ContractId ProcessInstance
+      with step : Text; actor : Party; request : Text; option : Text
+      controller actor
+      do
+        spec <- requireStep definition step
+        case spec.kind of
+          DecisionStep options -> assertMsg "Unknown decision option" (elem option options)
+          _ -> abort "Expected a decision step"
+        duplicate <- checkRequest this spec actor request (Some option)
+        if duplicate then pure self else
+          record self (this with selections = selections <> [Branch step option]) step actor request (Some option)
+
+    nonconsuming choice CompleteJoin : ContractId ProcessInstance
+      with step : Text; actor : Party; request : Text
+      controller actor
+      do
+        spec <- requireStep definition step
+        assertMsg "Expected a join step" (spec.kind == JoinStep)
+        duplicate <- checkRequest this spec actor request None
+        if duplicate then pure self else record self this step actor request None
+
+checkRequest : ProcessInstance -> StepSpec -> Party -> Text -> Optional Text -> Update Bool
+checkRequest process spec actor request selection = do
+  origin <- fetch process.published
+  assertMsg "Instance definition must match its published version" (origin.publisher == process.engine && origin.definition == process.definition)
+  role <- requireRole process.roles spec.role
+  assertMsg "Only the assigned actor can perform this step" (role.party == actor)
+  assertMsg "Request identifier required" (request /= "")
+  case find (\receipt -> receipt.request == request) process.receipts of
+    Some receipt -> do
+      assertMsg "Request identifier belongs to another action" (receipt.step == spec.id && receipt.actor == actor && receipt.selection == selection)
+      pure True
+    None -> do
+      assertMsg "Step must be enabled" (elem spec.id (enabledSteps process.definition process.completed process.selections))
+      pure False
+
+record : ContractId ProcessInstance -> ProcessInstance -> Text -> Party -> Text -> Optional Text -> Update (ContractId ProcessInstance)
+record current process step actor request selection = do
+  archive current
+  create process with
+    completed = process.completed <> [step]
+    receipts = process.receipts <> [Receipt with request; step; actor; selection]
+
+requireStep : Definition -> Text -> Update StepSpec
+requireStep definition step = case find (\item -> item.id == step) definition.steps of
+  Some value -> pure value
+  None -> abort "Unknown process step"
 
 requireRole : [Role] -> Text -> Update Role
 requireRole roles name = case find (\role -> role.name == name) roles of

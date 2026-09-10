@@ -1,4 +1,4 @@
-package harmonia.stories.run.sequence
+package harmonia.stories.run.process
 
 import cats.effect.IO
 import cats.syntax.all.*
@@ -9,14 +9,18 @@ import harmonia.stories.run.NormalizeAction
 import io.circe.Json
 import java.nio.file.Path
 
-final class RunSequenceStory(root: Path, ledger: CantonSandbox, dar: Path):
-  def run(story: Story, artifacts: Path): IO[Json] = for
+final class RunProcessStory(root: Path, ledger: CantonSandbox, dar: Path):
+  def run(story: Story, artifacts: Path): IO[Json] =
+    val module = if story.workflow.contains("branching-approval") then "Branching" else "Sequence"
+    execute(story, artifacts, module)
+
+  private def execute(story: Story, artifacts: Path, module: String): IO[Json] = for
     _ <- ArtifactFiles.write(artifacts.resolve("input.json"), story.scriptInput.spaces2)
     contextFile <- DamlScript.run(
       root,
       ledger,
       dar,
-      "Sequence:setup",
+      s"$module:setup",
       artifacts.resolve("setup"),
       Some(artifacts.resolve("input.json"))
     )
@@ -33,7 +37,7 @@ final class RunSequenceStory(root: Path, ledger: CantonSandbox, dar: Path):
           root,
           ledger,
           dar,
-          "Sequence:act",
+          s"$module:act",
           directory,
           Some(directory.resolve("input.json"))
         )
@@ -45,13 +49,17 @@ final class RunSequenceStory(root: Path, ledger: CantonSandbox, dar: Path):
       for
         step <- IO.fromEither(observation.hcursor.get[Json]("step"))
         base <- IO.fromEither(NormalizeAction(step).left.map(RuntimeException(_)))
-        review <- IO.fromEither(observation.hcursor.get[String]("review"))
-        completed <- IO.fromEither(observation.hcursor.get[Vector[String]]("completed"))
-        enabled <- IO.fromEither(observation.hcursor.get[Vector[String]]("enabled"))
-      yield base.mapObject(
-        _.add("review", Json.fromString(review))
-          .add("completed", Json.fromValues(completed.map(Json.fromString)))
-          .add("enabled", Json.fromValues(enabled.map(Json.fromString)))
+        names = Vector(
+          "review",
+          "completed",
+          "enabled"
+        ) ++ (if module == "Branching" then Vector("branch", "closure", "skipped")
+              else Vector.empty)
+        fields <- names.traverse(name =>
+          IO.fromEither(observation.hcursor.get[Json](name)).map(name -> _)
+        )
+      yield base.mapObject(obj =>
+        fields.foldLeft(obj) { case (current, (name, value)) => current.add(name, value) }
       )
     }
     definition <- IO.fromEither(observations.last.hcursor.get[Json]("definition"))

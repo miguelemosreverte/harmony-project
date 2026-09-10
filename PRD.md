@@ -384,12 +384,12 @@ The first three actual Git commits have a fixed acceptance sequence: **document 
 
 ### Commit 09 — `feat: add exclusive branches and bounded joins`
 
-- [ ] Specify and implement the first branching/joining subset.
-  - [ ] Define exclusive branch selection, branch merge behavior, and explicit all-required-prerequisite joins where supported.
-  - [ ] Define which prerequisites can be active together and how completion is recorded; avoid ambiguous BPMN interpretations.
-  - [ ] Reject malformed definitions, impossible joins, unsupported cycles, and unsupported execution shapes before use.
-  - [ ] Add approve/reject, unselected-branch, premature-join, and repeated-join stories.
-  - [ ] **Acceptance:** Chapter 4 demonstrates every supported branch/join shape and explains the rejected shapes.
+- [x] Specify and implement the first branching/joining subset.
+  - [x] Define exclusive branch selection, branch merge behavior, and explicit all-required-prerequisite joins where supported.
+  - [x] Define which prerequisites can be active together and how completion is recorded; avoid ambiguous BPMN interpretations.
+  - [x] Reject malformed definitions, impossible joins, unsupported cycles, and unsupported execution shapes before use.
+  - [x] Add approve/reject, unselected-branch, premature-join, and repeated-join stories.
+  - [x] **Acceptance:** Chapter 4 demonstrates every supported branch/join shape and explains the rejected shapes.
 
 ### Commit 10 — `feat: resolve and record reproducible application DAR inputs`
 

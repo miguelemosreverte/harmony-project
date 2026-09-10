@@ -3,7 +3,16 @@ module Harmonia.Process.Model where
 import DA.List
 import Harmonia.Action
 
-data StepSpec = StepSpec with id : Text; role : Text; prerequisites : [Text]
+data StepKind = ActionStep | DecisionStep [Text] | JoinStep
+  deriving (Eq, Show)
+data Branch = Branch with decision : Text; option : Text
+  deriving (Eq, Show)
+data StepSpec = StepSpec with
+    id : Text
+    role : Text
+    prerequisites : [Text]
+    kind : StepKind
+    branch : Optional Branch
   deriving (Eq, Show)
 data Definition = Definition with name : Text; version : Int; steps : [StepSpec]
   deriving (Eq, Show)
@@ -11,15 +20,17 @@ data Role = Role with name : Text; party : Party
   deriving (Eq, Show)
 data ActionBinding = ActionBinding with step : Text; action : ContractId StepAction
   deriving (Eq, Show)
-data Receipt = Receipt with request : Text; step : Text; actor : Party
+data Receipt = Receipt with request : Text; step : Text; actor : Party; selection : Optional Text
   deriving (Eq, Show)
 
+-- The supported decision shape is one exclusive decision, conditional actions,
+-- and one exhaustive join. Ordinary acyclic action dependencies also remain valid.
 validDefinition : Definition -> Bool
 validDefinition definition =
   definition.name /= "" && definition.version > 0 &&
   not (null definition.steps) && length definition.steps <= 16 &&
   length (dedup (map (.id) definition.steps)) == length definition.steps &&
-  orderedSteps [] definition.steps
+  orderedSteps [] definition.steps && validBranches definition.steps
 
 orderedSteps : [Text] -> [StepSpec] -> Bool
 orderedSteps seen remaining = case remaining of
@@ -29,5 +40,48 @@ orderedSteps seen remaining = case remaining of
     all (\required -> elem required seen) step.prerequisites &&
     orderedSteps (step.id :: seen) rest
 
-enabledSteps : Definition -> [Text] -> [Text]
-enabledSteps definition completed = map (.id) (filter (\step -> not (elem step.id completed) && all (\required -> elem required completed) step.prerequisites) definition.steps)
+validBranches : [StepSpec] -> Bool
+validBranches steps =
+  let decisions = filter (\step -> case step.kind of DecisionStep _ -> True; _ -> False) steps
+      joins = filter (\step -> step.kind == JoinStep) steps
+      conditional = filter (\step -> step.branch /= None) steps
+  in case (decisions, joins) of
+    ([], []) -> null conditional
+    ([decision], [join]) -> case decision.kind of
+      DecisionStep options ->
+        decision.branch == None && join.branch == None &&
+        length options >= 2 && length options <= 4 &&
+        all (/= "") options && dedup options == options &&
+        sort join.prerequisites == sort (map (.id) conditional) &&
+        all (\option -> any (\step -> step.branch == Some (Branch decision.id option)) conditional) options &&
+        all (validStepBranch steps decision options) steps
+      _ -> False
+    _ -> False
+
+validStepBranch : [StepSpec] -> StepSpec -> [Text] -> StepSpec -> Bool
+validStepBranch steps decision options step = case step.branch of
+  Some branch -> step.kind == ActionStep && branch.decision == decision.id &&
+    elem branch.option options && elem decision.id step.prerequisites &&
+    all (\required -> case find (\item -> item.id == required) steps of
+      Some item -> item.branch == None || item.branch == step.branch
+      None -> False) step.prerequisites
+  None -> step.kind == JoinStep || all (\required -> case find (\item -> item.id == required) steps of
+    Some item -> item.branch == None
+    None -> False) step.prerequisites
+
+skippedSteps : Definition -> [Branch] -> [Text]
+skippedSteps definition selections = map (.id) (filter (\step -> case step.branch of
+  None -> False
+  Some branch -> any (\chosen -> chosen.decision == branch.decision && chosen.option /= branch.option) selections) definition.steps)
+
+enabledSteps : Definition -> [Text] -> [Branch] -> [Text]
+enabledSteps definition completed selections =
+  let skipped = skippedSteps definition selections
+  in map (.id) (filter (\step ->
+    not (elem step.id (completed <> skipped)) &&
+    optional True (\branch -> elem branch selections) step.branch &&
+    all (\required -> elem required (completed <> skipped)) step.prerequisites) definition.steps)
+
+processComplete : Definition -> [Text] -> [Branch] -> Bool
+processComplete definition completed selections =
+  all (\step -> elem step.id (completed <> skippedSteps definition selections)) definition.steps
