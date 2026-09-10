@@ -16,3 +16,6 @@ data-dependencies:
   - ../review/.daml/dist/harmonia-review-0.1.0.dar
   - ../property-financing/.daml/dist/harmonia-property-financing-0.1.0.dar
   - ../property-offer/.daml/dist/harmonia-property-offer-0.1.0.dar
+  - ../source-custody/.daml/dist/harmonia-source-custody-0.1.0.dar
+  - ../destination-custody/.daml/dist/harmonia-destination-custody-0.1.0.dar
+  - ../transfer/.daml/dist/harmonia-transfer-0.1.0.dar

@@ -1,0 +1,55 @@
+module Transfer.Observe where
+
+import Daml.Script
+import qualified Privacy
+import qualified AtomicTransfer as T
+import qualified SourceCustody as Source
+import qualified DestinationCustody as Destination
+import Harmonia.Transfer
+import Harmonia.Process.Engine
+import Harmonia.Process.Model
+import Transfer.Model
+
+refresh : Context -> State -> Script State
+refresh context state = case state.process of
+  None -> pure state
+  Some cid -> do
+    process <- queryContractId context.terms.settler cid
+    case process >>= (\value -> find (\binding -> binding.step == "settlement") value.bindings) of
+      Some binding -> pure state with trade = fromInterfaceContractId @T.Trade binding.action
+      None -> abort "Completed workflow must retain its transfer binding"
+
+observe : Context -> State -> Text -> Text -> Optional Text -> Optional Text -> Script Step
+observe context state id outcome reason rawError = do
+  forA (parties context.terms) (\party -> Privacy.await 80 do value <- queryContractId party state.trade; pure (value /= None))
+  trade <- queryContractId context.terms.buyer state.trade
+  case trade of
+    None -> abort "Transfer observation is missing"
+    Some value -> do
+      if value.settled then pure () else do
+        case state.position of
+          Some cid -> do
+            forA (parties context.terms) (\party -> Privacy.await 80 do found <- queryContractId party cid; pure (found /= None))
+            pure ()
+          None -> pure ()
+        case state.permit of
+          Some cid -> do
+            forA (parties context.terms) (\party -> Privacy.await 80 do found <- queryContractId party cid; pure (found /= None))
+            pure ()
+          None -> pure ()
+      available <- queryFilter @Source.Holding context.terms.source (\holding -> holding.terms.reference == context.terms.reference)
+      locked <- queryFilter @Source.LockedPosition context.terms.source (\holding -> holding.terms.reference == context.terms.reference)
+      destination <- queryFilter @Destination.Holding context.terms.destination (\holding -> holding.terms.reference == context.terms.reference)
+      releases <- queryFilter @Release context.terms.source (\proof -> proof.terms.reference == context.terms.reference)
+      processes <- queryFilter @ProcessInstance context.terms.settler (\process -> process.reference == context.terms.reference)
+      views <- forA (namedParties context) (\(name, party) -> do
+        found <- queryContractId party state.trade
+        pure (if found /= None then [name] else []))
+      let complete = any (\(_, process) -> processComplete process.definition process.completed process.selections) processes
+      pure Step with id; outcome; reason; rawError
+                     trade = if value.settled then "settled" else if value.destinationConfirmed then "ready" else if value.sourceConfirmed then "source-confirmed" else if value.agreed then "agreed" else "proposed"
+                     available = sum (map (\(_, holding) -> holding.terms.quantity) available)
+                     locked = sum (map (\(_, holding) -> holding.terms.quantity) locked)
+                     destination = sum (map (\(_, holding) -> holding.terms.quantity) destination)
+                     workflow = if complete then "complete" else "waiting"
+                     activeWorkflows = length processes; releases = length releases; visibleTo = concat views

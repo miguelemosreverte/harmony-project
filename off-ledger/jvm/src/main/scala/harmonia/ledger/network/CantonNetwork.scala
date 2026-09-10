@@ -23,9 +23,10 @@ object CantonNetwork:
   ): Resource[IO, CantonNetwork] =
     require(
       participantNames.nonEmpty && participantNames.size <= 4 && participantNames.distinct.size == participantNames.size && participantNames
-        .contains("bank") && participantNames.forall(_.matches("[a-z][a-z0-9]*")),
-      "Use one to four distinct participant names including bank"
+        .forall(_.matches("[a-z][a-z0-9]*")),
+      "Use one to four distinct participant names "
     )
+    val first = participantNames.head
     val count = participantNames.size
     val freePorts = List
       .fill(count * 3 + 3)(Resource.fromAutoCloseable(IO.blocking(new ServerSocket(0))))
@@ -61,8 +62,10 @@ object CantonNetwork:
           |}""".stripMargin
         val retrieval = inspectDars.zipWithIndex
           .map { (source, index) =>
-            s"""val inputDar$index = bank.dars.upload(${quote(source.toString)})
-             |bank.dars.download(inputDar$index, ${quote(artifacts.resolve("downloaded").toString)})
+            s"""val inputDar$index = $first.dars.upload(${quote(source.toString)})
+             |$first.dars.download(inputDar$index, ${quote(
+                artifacts.resolve("downloaded").toString
+              )})
              |""".stripMargin
           }
           .mkString("\n")
@@ -75,8 +78,8 @@ object CantonNetwork:
           |  participant.dars.upload(${quote(dar.toString)})
           |}
           |${participantNames
-                         .filterNot(_ == "bank")
-                         .map(name => s"bank.health.ping($name)")
+                         .filterNot(_ == first)
+                         .map(name => s"$first.health.ping($name)")
                          .mkString("\n")}
           |$retrieval
           |java.nio.file.Files.writeString(java.nio.file.Path.of(${quote(
@@ -84,7 +87,7 @@ object CantonNetwork:
                        )}), participants.local.map(p => p.id.toString).mkString("\\n"))
           |""".stripMargin
         val json = Json.obj(
-          "default_participant" -> endpoint(endpoints("bank")),
+          "default_participant" -> endpoint(endpoints(first)),
           "participants" -> Json.fromFields(
             endpoints.toVector.map((name, port) => name -> endpoint(port))
           ),

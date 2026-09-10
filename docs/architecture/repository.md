@@ -34,6 +34,8 @@ harmony-project/
 | `files/` | Filesystem access and artifact persistence | Read Markdown or write actual results and a diff |
 | `app/` | Configuration, resource ownership, and entry-point wiring | Construct programs and run the CLI/server |
 
+The transfer reference is a complete feature slice under `stories/transfer/{model,read,run}`. Its on-ledger packages are `source-custody`, `destination-custody`, and `transfer`; their common types live in `interfaces`. Financing and purchase have separate typed input models so their data does not accumulate in a shared optional-field record.
+
 `ledger/` and `files/` are distinct packages. Domain parsing belongs to its feature; the filesystem package supplies file access. Domain action selection belongs to its feature; the ledger package supplies the Canton integration.
 
 The Scala binding generator emits Daml contracts. Scala workflow operations submit requests; Daml enforces their validity. This distinction also applies to the book: a diagram displays observed behavior without implementing a second execution engine.

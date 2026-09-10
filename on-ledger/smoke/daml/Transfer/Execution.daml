@@ -1,0 +1,46 @@
+module Transfer.Execution where
+
+import Daml.Script
+import qualified Story as S
+import qualified Story.Errors as Errors
+import qualified AtomicTransfer as T
+import qualified SourceCustody as Source
+import qualified DestinationCustody as Destination
+import Harmonia.Action
+import Harmonia.Process.Engine
+import Harmonia.Process.Model
+import Transfer.Model
+import Transfer.Observe
+
+execute : Context -> State -> [S.Attempt] -> Script ([Step], State)
+execute context current attempts = case attempts of
+  [] -> pure ([], current)
+  attempt :: remaining -> do
+    actor <- optional (abort "Unknown transfer actor") pure (lookup attempt.actor (namedParties context))
+    commands <- command context current attempt actor
+    submitted <- trySubmit actor commands
+    (state, outcome, reason, rawError) <- case submitted of
+      Right state -> pure (state, "committed", None, None)
+      Left error -> do
+        reason <- Errors.reason error
+        pure (current, "rejected", Some reason, Some (show error))
+    next <- refresh context state
+    step <- observe context next attempt.id outcome reason rawError
+    (later, final) <- execute context next remaining
+    pure (step :: later, final)
+
+command : Context -> State -> S.Attempt -> Party -> Script (Commands State)
+command context state attempt actor = case attempt.action of
+  "agree-trade" -> pure ((\trade -> state with trade) <$> exerciseCmd state.trade T.Agree)
+  "lock-position" -> pure ((\cid -> state with position = Some cid) <$> exerciseCmd context.holding Source.Lock)
+  "confirm-source" -> pure ((\trade -> state with trade) <$> exerciseCmd state.trade (T.ConfirmSource state.position))
+  "prepare-destination" -> pure ((\cid -> state with permit = Some cid) <$> exerciseCmd context.request Destination.Prepare)
+  "confirm-destination" -> pure ((\trade -> state with trade) <$> exerciseCmd state.trade (T.ConfirmDestination state.permit))
+  "withdraw-directly" -> do
+    position <- optional (abort "Direct withdrawal experiment needs a lock") pure state.position
+    pure ((\_ -> state) <$> exerciseCmd position Source.Withdraw)
+  "settle" -> pure ((\cid -> state with process = Some cid) <$> exerciseCmd context.definition StartAndAdvance with
+    owner = actor; reference = context.terms.reference; subject = context.terms.reference
+    roles = [Role "settler" context.terms.settler]; bindings = [ActionBinding "settlement" (toInterfaceContractId @StepAction state.trade)]
+    step = "settlement"; request = attempt.id)
+  _ -> abort "Unsupported transfer action"

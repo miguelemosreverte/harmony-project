@@ -1,0 +1,13 @@
+# Four-party transfer proof
+
+Verified locally on 2026-09-10. The six transfer goldens pass in `.artifacts/check-1781012286506488617/`. Eighteen Scala tests pass, including exact decimal serialization and rejection of a fifth-party Settler. `scripts/check` also passed the complete Daml and Scala builds, Daml checks, package reproduction, and all twenty-five workflow goldens. Aggregate evidence: `.artifacts/check-1227608955268429488/`; package evidence: `.artifacts/packages-15974277853095381086/`. The final browser adjustment was rebuilt and re-exported separately after the aggregate build.
+
+The successful Alice-settled trade rejects direct custody withdrawal, rejects the wrong Settler, transfers ten units, and rejects repeated settlement. The source-as-Settler case transfers exactly 7.125 units. Every per-step balance and workflow observation matches its authored expectation. Missing seller agreement, missing lock, and missing destination readiness leave the corresponding staged state intact.
+
+The failed-final-leg case reaches destination receipt after attempted source withdrawal. The retained ledger error contains `Destination rejected receipt`. Actual queries still find ten source units locked, zero destination units, zero unconsumed releases, and zero workflow instances. The trade remains ready. No partial final effect survives.
+
+The successful Alice recording identifies transaction `122000f9e7d070a943289064c41b2c1b0aa73b37629356c47ecde333ba14e1c741a5`. Its event stream contains the consuming exercise of the exact locked-position contract and the destination holding, trade, and workflow creations together. This API encodes consuming exercises as `exercised` events with `consuming: true`; the collector also recognizes an explicit archive event. Active contract queries independently verify the final states. The failed-final-leg recording contains zero matching settlement transactions.
+
+The browser edition at `.artifacts/book-transfer/` exposes six transfer recordings and Chapter 6. Its balance charts show 0/10/0 after the rejected final leg and 0/0/7.125 after successful fractional transfer. All twelve Chapter 6 links return HTTP 200, its diagram renders as SVG, and the 390-pixel layout has no page overflow. Controls retain keyboard focus while changing attempts. Screenshots: `.artifacts/verification/12-transfer-rollback-mobile.png` and `12-transfer-fractional-desktop.png`.
+
+The [architecture decision](../architecture/007-atomic-transfer.md) records the exact authority model and initial atomic bound. This is a synthetic whole-position transfer; no payment, cancellation, expiry, external token network, or production custody integration is claimed.

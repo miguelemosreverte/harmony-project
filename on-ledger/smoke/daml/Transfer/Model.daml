@@ -1,0 +1,26 @@
+module Transfer.Model where
+
+import qualified Story as S
+import Harmonia.Transfer
+import Harmonia.Process.Engine
+import qualified AtomicTransfer as T
+import qualified SourceCustody as Source
+import qualified DestinationCustody as Destination
+
+data Setup = Setup with buyerName : Text; sellerName : Text; sourceName : Text; destinationName : Text; settlerName : Text; asset : Text; quantity : Decimal; receipts : Text
+  deriving (Eq, Show)
+data Input = Input with namespace : Text; setup : Setup; actions : [S.Attempt]
+  deriving (Eq, Show)
+data Context = Context with input : Input; terms : Terms; definition : ContractId PublishedDefinition; holding : ContractId Source.Holding; request : ContractId Destination.ReceivingRequest
+  deriving (Eq, Show)
+data State = State with trade : ContractId T.Trade; position : Optional (ContractId Source.LockedPosition); permit : Optional (ContractId Destination.ReceivingPermit); process : Optional (ContractId ProcessInstance)
+  deriving (Eq, Show)
+data Step = Step with id : Text; outcome : Text; reason : Optional Text; rawError : Optional Text
+                      trade : Text; available : Decimal; locked : Decimal; destination : Decimal
+                      workflow : Text; activeWorkflows : Int; releases : Int; visibleTo : [Text]
+  deriving (Eq, Show)
+data Observation = Observation with settler : Party; steps : [Step]; position : Optional (ContractId Source.LockedPosition)
+  deriving (Eq, Show)
+
+namedParties : Context -> [(Text, Party)]
+namedParties context = [(context.input.setup.buyerName, context.terms.buyer), (context.input.setup.sellerName, context.terms.seller), (context.input.setup.sourceName, context.terms.source), (context.input.setup.destinationName, context.terms.destination)]

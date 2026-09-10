@@ -96,6 +96,7 @@ final class BookView(
 
   private def laboratory(main: dom.HTMLElement, state: ViewState): Unit =
     val story = stories(state.story)
+    val transfer = story.input.hcursor.get[String]("workflow").contains("atomic-transfer")
     val hero = element("header", "hero")
     append(
       hero,
@@ -150,6 +151,7 @@ final class BookView(
         "small",
         if story.input.hcursor.get[String]("integration").toOption.contains("adapter") then
           "Typed adapter"
+        else if transfer then "Four-party atomic transfer"
         else if story.input.hcursor.get[String]("workflow").toOption.contains("property-purchase")
         then "Financing → offer → agents"
         else if story.input.hcursor.get[String]("workflow").toOption.contains("private-approval")
@@ -168,8 +170,14 @@ final class BookView(
     append(
       start,
       element("span", "eyebrow", "Starting point"),
-      element("strong", text = setup.get[String]("status").getOrElse("Unknown")),
-      element("span", text = "Application created")
+      element(
+        "strong",
+        text = if transfer then "proposed" else setup.get[String]("status").getOrElse("Unknown")
+      ),
+      element(
+        "span",
+        text = if transfer then "Trade and source position created" else "Application created"
+      )
     )
     append(graph, start)
     story.actions.zipWithIndex.foreach { (action, index) =>
@@ -212,7 +220,9 @@ final class BookView(
     append(panel, head, graph, controls)
     val details = element("div", "details-grid")
     append(details, comparison(story, state.step), evidence(story))
-    append(main, hero, toolbar, panel, details)
+    append(main, hero, toolbar, panel)
+    if transfer then append(main, harmonia.book.transfer.TransferView.render(story, state.step))
+    append(main, details)
     participantEvidence(story, state).foreach(view => append(main, view))
     if story.differences.nonEmpty then
       val differences = element("section", "panel all-differences")
@@ -377,6 +387,8 @@ final class BookView(
         .map(field => text(actual, field))
         .find(value => !Set("none", "not-opened", "Unknown")(value))
         .getOrElse("Unknown")
+    else if story.input.hcursor.get[String]("workflow").contains("atomic-transfer") then
+      text(actual, "trade")
     else text(actual, "application")
 
   private def text(json: Json, field: String): String =
@@ -386,8 +398,22 @@ final class BookView(
     case Some(json) =>
       json.asString
         .orElse(json.asArray.map(_.map(v => v.asString.getOrElse(v.noSpaces)).mkString(", ")))
+        .orElse(
+          json.asObject.map(
+            _.toVector
+              .map((name, value) => s"${label(name)}: ${display(Some(value))}")
+              .mkString("; ")
+          )
+        )
         .getOrElse(json.noSpaces)
   private def label(field: String): String = Map(
+    "available" -> "Available",
+    "locked" -> "Locked",
+    "trade" -> "Trade",
+    "source" -> "Source balances",
+    "destination" -> "Destination received",
+    "active_workflows" -> "Active workflow contracts",
+    "releases" -> "Unconsumed releases",
     "application" -> "Application",
     "review" -> "Review",
     "offer" -> "Current offer",

@@ -1,0 +1,64 @@
+module AtomicTransfer where
+
+import Harmonia.Action
+import Harmonia.Transfer
+import qualified SourceCustody as Source
+import qualified DestinationCustody as Destination
+
+template Trade with
+    terms : Terms
+    agreed : Bool
+    sourceConfirmed : Bool
+    destinationConfirmed : Bool
+    locked : Optional (ContractId Source.LockedPosition)
+    permit : Optional (ContractId Destination.ReceivingPermit)
+    settled : Bool
+  where
+    signatory [terms.buyer] <> (if agreed then [terms.seller] else [])
+      <> (if sourceConfirmed then [terms.source] else [])
+      <> (if destinationConfirmed then [terms.destination] else [])
+    observer parties terms
+    ensure valid terms && (not sourceConfirmed || (agreed && locked /= None))
+      && (not destinationConfirmed || (sourceConfirmed && permit /= None))
+      && (not settled || destinationConfirmed)
+
+    choice Agree : ContractId Trade
+      controller terms.seller
+      do
+        assertMsg "Seller agreement already recorded" (not agreed && not settled)
+        create this with agreed = True
+
+    choice ConfirmSource : ContractId Trade
+      with position : Optional (ContractId Source.LockedPosition)
+      controller terms.source
+      do
+        assertMsg "Seller agreement is required" (agreed && not sourceConfirmed && not settled)
+        cid <- optional (abort "Locked position is required") pure position
+        value <- fetch cid
+        assertMsg "Locked position must match the trade" (value.terms == terms)
+        create this with sourceConfirmed = True; locked = Some cid
+
+    choice ConfirmDestination : ContractId Trade
+      with readiness : Optional (ContractId Destination.ReceivingPermit)
+      controller terms.destination
+      do
+        assertMsg "Confirmed source is required" (sourceConfirmed && not destinationConfirmed && not settled)
+        cid <- optional (abort "Destination readiness is required") pure readiness
+        value <- fetch cid
+        assertMsg "Destination permit must match the trade" (value.terms == terms)
+        create this with destinationConfirmed = True; permit = Some cid
+
+    choice Settle : ContractId Trade
+      controller terms.settler
+      do
+        assertMsg "All four parties must have consented" (destinationConfirmed && not settled)
+        position <- optional (abort "Locked position is required") pure locked
+        readiness <- optional (abort "Destination readiness is required") pure permit
+        -- Both custody choices and this replacement belong to this one update.
+        release <- exercise position Source.Withdraw
+        exercise readiness (Destination.Receive release)
+        create this with settled = True
+
+    interface instance StepAction for Trade where
+      view = StepView with actor = terms.settler; subject = terms.reference
+      performAction self = toInterfaceContractId @StepAction <$> exercise (fromInterfaceContractId @Trade self) Settle

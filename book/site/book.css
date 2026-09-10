@@ -583,3 +583,11 @@ tr:last-child td {
 .participant-evidence { margin-top: 22px; }
 
 .chapter-diagram { overflow-x: auto; margin: 24px 0; border: 1px solid var(--line); border-radius: 6px; background: var(--white); }
+
+.transfer-balances { margin-top: 1.4rem; }
+.balance-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; padding: 1.5rem; }
+.balance-card { display: flex; flex-direction: column; gap: .8rem; }
+.balance-card strong { font-size: 1.6rem; }
+.balance-card progress { width: 100%; accent-color: var(--green, #285c4d); }
+.atomic-proof { padding: 0 1.5rem 1.5rem; line-height: 1.6; }
+@media (max-width: 650px) { .balance-grid { grid-template-columns: 1fr; } }

@@ -1,0 +1,33 @@
+module SourceCustody where
+
+import Harmonia.Transfer
+
+template Allocation with terms : Terms
+  where
+    signatory terms.source
+    observer terms.seller
+    ensure valid terms
+
+    choice AcceptAllocation : ContractId Holding
+      controller terms.seller
+      do create Holding with terms
+
+template Holding with terms : Terms
+  where
+    signatory terms.source, terms.seller
+    observer parties terms
+    ensure valid terms
+
+    choice Lock : ContractId LockedPosition
+      controller terms.seller
+      do create LockedPosition with terms
+
+template LockedPosition with terms : Terms
+  where
+    signatory terms.source, terms.seller
+    observer parties terms
+    ensure valid terms
+
+    choice Withdraw : ContractId Release
+      controller parties terms
+      do create Release with terms

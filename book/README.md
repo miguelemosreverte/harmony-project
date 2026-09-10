@@ -8,6 +8,7 @@ This book grows with the working implementation. Chapters link to the actual sto
 4. [A private application and a shared next step](03-participant-views.md)
 5. [Progress survives the client](04-progression.md)
 6. [A private assessment enables a separate offer](05-financing-and-offer.md)
+7. [Four parties, one final transaction](06-atomic-transfer.md)
 
 Use the [recorded playback guide](playback.md) to open the browser edition.
 

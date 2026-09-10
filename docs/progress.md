@@ -4,7 +4,7 @@ The [PRD](../PRD.md) defines the ordered work. This record reports actual commit
 
 ## Current step
 
-Step 12a separates financing and purchase input models. The full check still passes all nineteen unchanged goldens. Next: staged consent and bounded atomic four-party transfer (12b).
+Step 12 proves staged four-party consent and atomic whole-position transfer, including complete rollback of a rejected destination receipt. All twenty-five goldens pass. Chapter 6 includes interactive balance charts. Next: typed binding generation from authored mappings.
 
 ## Commit evidence
 
@@ -23,7 +23,8 @@ Actual commit identifiers are recorded in the next commit after they are created
 | 09 | `68c1950` | [Branch and join proof](verification/09-branches.md): eleven live goldens, invalid-definition rejection, and both routes in Chapter 4 |
 | 10 | `64c365d` | [Package reproduction proof](verification/10-packages.md): pinned local/upstream inputs, two fresh executions, exact DAR retrieval, and negative resolution checks |
 | 11 | `ed9a686` | [Financing-to-offer proof](verification/11-financing-offer.md): nineteen live goldens, scoped single-use evidence, four participant views, and Chapter 5 |
-| 12a | This increment | [Model separation](verification/12a-story-models.md): full build and nineteen unchanged ledger goldens |
+| 12a | `3136d45` | [Model separation](verification/12a-story-models.md): full build and nineteen unchanged ledger goldens |
+| 12b | This increment | [Atomic transfer proof](verification/12-atomic-transfer.md): twenty-five live goldens, exact quantities, transaction evidence, and complete rollback |
 
 ## External decisions
 

@@ -10,6 +10,8 @@ object StoryFormat:
     story <-
       if json.hcursor.get[String]("workflow").contains("property-purchase") then
         purchase.PurchaseFormat.input(id, json)
+      else if json.hcursor.get[String]("workflow").contains("atomic-transfer") then
+        harmonia.stories.transfer.read.TransferFormat.input(id, json)
       else ordinary(id, json)
   yield story
 
@@ -127,6 +129,13 @@ object StoryFormat:
 
   def result(markdown: String): Either[String, Json] = for
     json <- MarkdownYaml.read(markdown, "Result")
+    normalized <-
+      if json.hcursor.downField("settlement_transactions").succeeded then
+        harmonia.stories.transfer.read.TransferFormat.result(json)
+      else ordinaryResult(json)
+  yield normalized
+
+  private def ordinaryResult(json: Json): Either[String, Json] = for
     root <- fields(json, "result", Set("actions"), Set("visibility", "definition"))
     _ <- validateVisibility(root("visibility"))
     _ <- root("definition").fold[Either[String, Unit]](Right(())) { value =>
@@ -294,7 +303,7 @@ object StoryFormat:
       }
     }
 
-  private[read] def fields(
+  private[stories] def fields(
       value: Json,
       path: String,
       required: Set[String],
@@ -310,5 +319,5 @@ object StoryFormat:
       )
     }
 
-  private[read] def text(value: Json, path: String): Either[String, String] =
+  private[stories] def text(value: Json, path: String): Either[String, String] =
     value.asString.filter(_.nonEmpty).toRight(s"$path must be nonempty text")

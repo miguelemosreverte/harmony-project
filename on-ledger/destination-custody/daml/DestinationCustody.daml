@@ -1,0 +1,36 @@
+module DestinationCustody where
+
+import Harmonia.Transfer
+
+template ReceivingRequest with terms : Terms; receipts : Text
+  where
+    signatory terms.buyer
+    observer terms.destination
+    ensure valid terms && elem receipts ["accept", "reject"]
+
+    choice Prepare : ContractId ReceivingPermit
+      controller terms.destination
+      do create ReceivingPermit with terms; receipts
+
+template ReceivingPermit with terms : Terms; receipts : Text
+  where
+    signatory terms.buyer, terms.destination
+    observer parties terms
+    ensure valid terms && elem receipts ["accept", "reject"]
+
+    choice Receive : ContractId Holding
+      with release : ContractId Release
+      controller parties terms
+      do
+        evidence <- fetch release
+        assertMsg "Source release must match the complete trade" (evidence.terms == terms)
+        -- Readiness grants authority to attempt receipt; local rules still apply.
+        assertMsg "Destination rejected receipt" (receipts == "accept")
+        exercise release ReceiveRelease
+        create Holding with terms
+
+template Holding with terms : Terms
+  where
+    signatory terms.buyer, terms.destination
+    observer parties terms
+    ensure valid terms

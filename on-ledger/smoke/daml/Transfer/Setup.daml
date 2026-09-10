@@ -1,0 +1,34 @@
+module Transfer.Setup where
+
+import Daml.Script
+import qualified Privacy
+import qualified AtomicTransfer as T
+import qualified SourceCustody as Source
+import qualified DestinationCustody as Destination
+import Harmonia.Transfer
+import Harmonia.Process.Engine
+import Harmonia.Process.Model
+import Transfer.Model
+
+initialize : Input -> Script (Context, State)
+initialize input = script do
+  let setup = input.setup
+  buyer <- allocatePartyOn (input.namespace <> "-" <> setup.buyerName) (ParticipantName "buyer")
+  seller <- allocatePartyOn (input.namespace <> "-" <> setup.sellerName) (ParticipantName "seller")
+  source <- allocatePartyOn (input.namespace <> "-" <> setup.sourceName) (ParticipantName "source")
+  destination <- allocatePartyOn (input.namespace <> "-" <> setup.destinationName) (ParticipantName "destination")
+  forA ["buyer", "seller", "source", "destination"] (\node -> Privacy.await 80 do
+    known <- listKnownPartiesOn (ParticipantName node)
+    pure (all (\party -> elem party (map (.party) known)) [buyer, seller, source, destination]))
+  settler <- optional (abort "Settler must be one of the four parties") pure (lookup setup.settlerName [(setup.buyerName, buyer), (setup.sellerName, seller), (setup.sourceName, source), (setup.destinationName, destination)])
+  let terms = Terms with buyer; seller; source; destination; settler; reference = input.namespace; asset = setup.asset; quantity = setup.quantity
+  allocation <- submit source do createCmd Source.Allocation with terms
+  Privacy.await 80 do value <- queryContractId seller allocation; pure (value /= None)
+  holding <- submit seller do exerciseCmd allocation Source.AcceptAllocation
+  request <- submit buyer do createCmd Destination.ReceivingRequest with terms; receipts = setup.receipts
+  trade <- submit buyer do createCmd T.Trade with terms; agreed = False; sourceConfirmed = False; destinationConfirmed = False; locked = None; permit = None; settled = False
+  definition <- submit source do createCmd PublishedDefinition with publisher = source; readers = parties terms; definition = Definition "atomic-transfer" 1 [StepSpec "settlement" "settler" [] ActionStep None]
+  forA (parties terms) (\party -> Privacy.await 80 do value <- queryContractId party definition; pure (value /= None))
+  let context = Context with input; terms; definition; holding; request
+  let state = State with trade; position = None; permit = None; process = None
+  pure (context, state)

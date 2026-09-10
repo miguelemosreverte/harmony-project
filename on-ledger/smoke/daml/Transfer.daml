@@ -1,0 +1,12 @@
+module Transfer where
+
+import Daml.Script
+import Transfer.Model
+import Transfer.Setup
+import Transfer.Execution
+
+run : Input -> Script Observation
+run input = script do
+  (context, initial) <- initialize input
+  (steps, final) <- execute context initial input.actions
+  pure Observation with settler = context.terms.settler; steps; position = final.position

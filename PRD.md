@@ -418,13 +418,13 @@ This item is split into consecutive subcommits: **12a** separates the reference 
   - [x] Give financing and purchase their own typed input models and Daml Script inputs behind the common runner contract.
   - [x] Preserve all nineteen existing golden results without changing their expectations.
 
-- [ ] Deliver the second full reference workflow.
-  - [ ] Model Buyer, Seller, source custodian, and destination custodian explicitly.
-  - [ ] Bind the Settler role to one of those four parties, with the required authority and disclosure.
-  - [ ] Record agreement, locked-position eligibility, and destination readiness as staged prerequisites.
-  - [ ] Execute the eligible final path atomically and record its actual asset/workflow effects.
-  - [ ] Add missing-approval, missing-lock, failed-final-leg, and successful-settlement stories plus Chapter 6.
-  - [ ] **Acceptance:** a deliberately failing final operation produces no partial settlement; the chapter distinguishes prior staged commits from the atomic completion transaction.
+- [x] Deliver the second full reference workflow.
+  - [x] Model Buyer, Seller, source custodian, and destination custodian explicitly.
+  - [x] Bind the Settler role to one of those four parties, with the required authority and disclosure.
+  - [x] Record agreement, locked-position eligibility, and destination readiness as staged prerequisites.
+  - [x] Execute the eligible final path atomically and record its actual asset/workflow effects.
+  - [x] Add missing-approval, missing-lock, failed-final-leg, and successful-settlement stories plus Chapter 6.
+  - [x] **Acceptance:** a deliberately failing final operation produces no partial settlement; the chapter distinguishes prior staged commits from the atomic completion transaction.
 
 ### Commit 13 — `feat: generate typed bindings from explicit application mappings`
 

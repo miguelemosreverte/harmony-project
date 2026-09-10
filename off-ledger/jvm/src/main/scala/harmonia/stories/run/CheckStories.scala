@@ -6,6 +6,8 @@ import harmonia.files.ArtifactFiles
 import harmonia.bindings.inspect.SourceIdentity
 import harmonia.ledger.CantonSandbox
 import harmonia.ledger.network.CantonNetwork
+import harmonia.stories.transfer.model.TransferStory
+import harmonia.stories.transfer.run.RunTransferStory
 import harmonia.stories.Story
 import harmonia.stories.financing.model.FinancingStory
 import harmonia.stories.purchase.model.PurchaseStory
@@ -54,7 +56,8 @@ object CheckStories:
     _ <- SourceIdentity.verify(root, artifacts)
     _ <- IO.println(s"Running ${prepared.size} stories against local Canton. Evidence: $artifacts")
     dar = root.resolve("on-ledger/smoke/.daml/dist/harmonia-smoke-0.1.0.dar")
-    (purchases, remaining) = prepared.partition(_.story.workflow.contains("property-purchase"))
+    (transfers, others) = prepared.partition(_.story.workflow.contains("atomic-transfer"))
+    (purchases, remaining) = others.partition(_.story.workflow.contains("property-purchase"))
     (privateStories, ordinaryStories) = remaining.partition(
       _.story.workflow.contains("private-approval")
     )
@@ -119,9 +122,34 @@ object CheckStories:
               "four independent participant nodes, one local JVM, one common synchronizer"
             )
           }
+    transferChecks <-
+      if transfers.isEmpty then IO.pure(Vector.empty[Boolean])
+      else
+        CantonNetwork
+          .resource(
+            root,
+            artifacts.resolve("transfer-network"),
+            dar,
+            participantNames = Vector("source", "destination", "buyer", "seller")
+          )
+          .use { network =>
+            checkPrepared(
+              root,
+              transfers,
+              artifacts,
+              dar,
+              (story, output) =>
+                story match
+                  case transfer: TransferStory =>
+                    new RunTransferStory(root, network, dar).run(transfer, output)
+                  case _ => IO.raiseError(RuntimeException("Expected a transfer story")),
+              "four independent participant nodes, one local JVM, one common synchronizer"
+            )
+          }
     _ <- SourceIdentity.verify(root, artifacts)
   yield
-    if (ordinaryChecks ++ privateChecks ++ purchaseChecks).forall(identity) then ExitCode.Success
+    if (ordinaryChecks ++ privateChecks ++ purchaseChecks ++ transferChecks).forall(identity) then
+      ExitCode.Success
     else ExitCode.Error
 
   private def checkPrepared(

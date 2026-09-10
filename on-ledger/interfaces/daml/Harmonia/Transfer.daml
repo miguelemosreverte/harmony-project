@@ -1,0 +1,32 @@
+module Harmonia.Transfer where
+
+import DA.List (dedup)
+
+data Terms = Terms with
+    buyer : Party
+    seller : Party
+    source : Party
+    destination : Party
+    settler : Party
+    reference : Text
+    asset : Text
+    quantity : Decimal
+  deriving (Eq, Show)
+
+parties : Terms -> [Party]
+parties terms = [terms.buyer, terms.seller, terms.source, terms.destination]
+
+valid : Terms -> Bool
+valid terms = length (dedup (parties terms)) == 4 && elem terms.settler (parties terms)
+  && terms.quantity > 0.0 && terms.asset /= "" && terms.reference /= ""
+
+-- Source retirement evidence is consumed by the destination in the same update.
+template Release with terms : Terms
+  where
+    signatory terms.source, terms.seller
+    observer parties terms
+    ensure valid terms
+
+    choice ReceiveRelease : ()
+      controller terms.destination
+      do pure ()
