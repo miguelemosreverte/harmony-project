@@ -1,0 +1,79 @@
+module Purchase.Observe where
+
+import Daml.Script
+import qualified Story as S
+import qualified Privacy
+import qualified PropertyFinancing as F
+import qualified PropertyOffer as O
+import Harmonia.Action
+import Harmonia.Process.Model
+import Harmonia.Process.Engine
+import Purchase.Model
+
+boundAction : Party -> ContractId ProcessInstance -> Text -> Script (ContractId StepAction)
+boundAction party cid step = do
+  process <- queryContractId party cid
+  case process >>= (\value -> find (\item -> item.step == step) value.bindings) of
+    Some binding -> pure binding.action
+    None -> abort "Expected active process and its application binding"
+
+financeId : Context -> State -> Script (ContractId F.Application)
+financeId context state = fromInterfaceContractId @F.Application <$> boundAction context.actors.bank state.finance "assessment"
+
+offerId : Context -> State -> Script (Optional (ContractId O.Offer))
+offerId context state = case state.offer of
+  None -> pure None
+  Some cid -> Some . fromInterfaceContractId @O.Offer <$> boundAction context.actors.buyer cid "proposal"
+
+awaitState : Context -> State -> Script ()
+awaitState context state = do
+  application <- financeId context state
+  forA [context.actors.bank, context.actors.buyer] (\party -> Privacy.await 80 do value <- queryContractId party application; pure (value /= None))
+  offer <- offerId context state
+  case offer of
+    Some cid -> do
+      forA [context.actors.buyer, context.actors.buyerAgent, context.actors.sellerAgent] (\party -> Privacy.await 80 do value <- queryContractId party cid; pure (value /= None))
+      pure ()
+    None -> pure ()
+  case state.proposal of
+    Some cid -> do
+      forA [context.actors.buyer, context.actors.buyerAgent, context.actors.sellerAgent] (\party -> Privacy.await 80 do value <- queryContractId party cid; pure (value /= None))
+      pure ()
+    None -> pure ()
+
+observe : Context -> ContractId F.Application -> State -> S.Attempt -> Text -> Optional Text -> Optional Text -> Script Step
+observe context previousId state attempt outcome reason rawError = do
+  awaitState context state
+  applicationId <- financeId context state
+  application <- queryContractId context.actors.bank applicationId
+  buyerView <- queryContractId context.actors.buyer applicationId
+  previous <- queryContractId context.actors.bank previousId
+  offerCid <- offerId context state
+  offer <- case offerCid of None -> pure None; Some cid -> queryContractId context.actors.buyer cid
+  proposal <- case state.proposal of None -> pure None; Some cid -> queryContractId context.actors.buyer cid
+  evidence <- case state.proof of None -> pure None; Some cid -> queryContractId context.actors.buyer cid
+  applications <- query @F.Application context.actors.bank
+  offers <- query @O.Offer context.actors.buyer
+  proposals <- query @O.PurchaseProposal context.actors.buyer
+  completed <- forA [("assessment", context.actors.bank, Some state.finance), ("proposal", context.actors.buyer, state.offer), ("relay", context.actors.buyerAgent, state.relay), ("receipt", context.actors.sellerAgent, state.receipt)] (\(name, party, cid) -> do
+    process <- case cid of None -> pure None; Some id -> queryContractId party id
+    pure (if optional False (\value -> processComplete value.definition value.completed value.selections) process then [name] else []))
+  let action = S.Step with
+        id = attempt.id; outcome; reason
+        application = optional "missing" (.status) application
+        workflow = Some (if optional False (\value -> value.status == "received") proposal then "complete" else "waiting")
+        consumed = previous == None
+        activeContracts = length applications + length offers + length proposals
+        visibleTo = (if application /= None then [context.input.bankName] else []) <> (if buyerView /= None then [context.input.buyerName] else [])
+        inputContract = show previousId; outputContract = show applicationId; rawError
+  pure Step with action; offer = optional "not-opened" (.status) offer; proposal = optional "none" (.status) proposal
+                 proposals = length proposals; evidenceAvailable = evidence /= None; completed = concat completed
+
+partyViews : Context -> State -> Script [PartyView]
+partyViews context state = do
+  app <- financeId context state
+  offer <- offerId context state
+  forA (parties context) (\(name, party) -> do
+    application <- queryContractId party app
+    progress <- case offer of None -> pure None; Some cid -> queryContractId party cid
+    pure PartyView with name; application = application /= None; progress = progress /= None)

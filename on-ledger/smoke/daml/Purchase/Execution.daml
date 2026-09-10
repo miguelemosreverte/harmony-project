@@ -1,0 +1,98 @@
+module Purchase.Execution where
+
+import Daml.Script
+import qualified Story as S
+import qualified Story.Errors as Errors
+import qualified Privacy
+import qualified PropertyOffer as O
+import Harmonia.Action
+import Harmonia.Result
+import Harmonia.Process.Model
+import Harmonia.Process.Engine
+import Purchase.Model
+import Purchase.Observe
+
+execute : Context -> State -> [S.Attempt] -> Script ([Step], State)
+execute context current attempts = case attempts of
+  [] -> pure ([], current)
+  attempt :: remaining -> do
+    actor <- case lookup attempt.actor (parties context) of Some party -> pure party; None -> abort "Unknown purchase actor"
+    previous <- financeId context current
+    (next, outcome, reason, rawError) <- if attempt.action == "open-offer" then openOffer context current actor else do
+      commands <- command context current attempt actor
+      submitted <- trySubmit actor commands
+      case submitted of
+        Right state -> pure (state, "committed", None, None)
+        Left error -> do
+          reason <- Errors.reason error
+          pure (current, "rejected", Some reason, Some (show error))
+    refreshed <- if outcome == "committed" then refresh context next attempt.action else pure next
+    observed <- observe context previous refreshed attempt outcome reason rawError
+    (later, final) <- execute context refreshed remaining
+    pure (observed :: later, final)
+
+openOffer : Context -> State -> Party -> Script (State, Text, Optional Text, Optional Text)
+openOffer context current actor = do
+  result <- trySubmit actor do exerciseCmd context.invitation (O.OpenOffer current.proof)
+  case result of
+    Left error -> do
+      reason <- Errors.reason error
+      pure (current, "rejected", Some reason, Some (show error))
+    Right offer -> do
+      -- Preparing the offer and starting its workflow are two explicit staged
+      -- transactions by the same buyer. A startup failure aborts the runner.
+      process <- submit actor do
+        exerciseCmd context.definitions.proposal Start with
+          owner = actor; reference = context.offerRef <> ":" <> show (current.offerCount + 1); subject = context.applicationRef
+          roles = [Role "buyer" context.actors.buyer]; bindings = [ActionBinding "proposal" (toInterfaceContractId @StepAction offer)]
+      let next = current with offer = Some process; relay = None; receipt = None; proposal = None; offerCount = current.offerCount + 1
+      pure (next, "committed", None, None)
+
+command : Context -> State -> S.Attempt -> Party -> Script (Commands State)
+command context state attempt actor = case attempt.action of
+  "assess-financing" -> pure ((\finance -> state with finance) <$> exerciseCmd state.finance (AdvanceStep "assessment" actor attempt.id))
+  "make-proposal" -> do
+    offer <- optional (abort "Open an offer before attempting its proposal") pure state.offer
+    pure ((\cid -> state with offer = Some cid) <$> exerciseCmd offer (AdvanceStep "proposal" actor attempt.id))
+  "relay-proposal" -> do
+    proposal <- optional (abort "Create a proposal before attempting relay") pure state.proposal
+    pure ((\cid -> state with relay = Some cid) <$> exerciseCmd context.definitions.relay StartAndAdvance with
+      owner = actor; reference = context.offerRef <> ":relay"; subject = context.applicationRef
+      roles = [Role "agent" context.actors.buyerAgent]; bindings = [ActionBinding "relay" (toInterfaceContractId @StepAction proposal)]
+      step = "relay"; request = attempt.id)
+  "receive-proposal" -> do
+    proposal <- optional (abort "Create a proposal before attempting receipt") pure state.proposal
+    pure ((\cid -> state with receipt = Some cid) <$> exerciseCmd context.definitions.receipt StartAndAdvance with
+      owner = actor; reference = context.offerRef <> ":receipt"; subject = context.applicationRef
+      roles = [Role "agent" context.actors.sellerAgent]; bindings = [ActionBinding "receipt" (toInterfaceContractId @StepAction proposal)]
+      step = "receipt"; request = attempt.id)
+  "forge-proposal" -> do
+    proof <- optional (abort "This forgery experiment needs an existing result reference") pure state.proof
+    pure ((\_ -> state) <$> createCmd O.PurchaseProposal with
+      buyer = context.actors.buyer; agent = context.actors.buyerAgent; sellerAgent = context.actors.sellerAgent
+      application = context.applicationRef; reference = context.offerRef; approval = proof; status = "draft")
+  _ -> abort "Unsupported purchase action"
+
+refresh : Context -> State -> Text -> Script State
+refresh context state action = case action of
+  "assess-financing" -> if context.setup.evidence /= "financing" then pure state else do
+    let matching = queryFilter @VerifiedResult context.actors.buyer (\proof -> proof.issuer == context.actors.bank && proof.consumer == context.actors.buyer && proof.subject == context.applicationRef && proof.continuation == context.offerRef)
+    Privacy.await 80 do values <- matching; pure (not (null values))
+    results <- matching
+    case results of
+      [(cid, _)] -> pure state with proof = Some cid
+      _ -> abort "Expected exactly one financing result for this application"
+  "make-proposal" -> do
+    proposals <- queryFilter @O.PurchaseProposal context.actors.buyer (\proposal -> proposal.application == context.applicationRef && proposal.reference == context.offerRef)
+    case proposals of
+      [(cid, _)] -> pure state with proposal = Some cid
+      _ -> abort "Expected exactly one proposal for the consumed result"
+  "relay-proposal" -> do
+    cid <- optional (abort "Missing relay process") pure state.relay
+    proposal <- boundAction context.actors.buyerAgent cid "relay"
+    pure state with proposal = Some (fromInterfaceContractId @O.PurchaseProposal proposal)
+  "receive-proposal" -> do
+    cid <- optional (abort "Missing receipt process") pure state.receipt
+    proposal <- boundAction context.actors.sellerAgent cid "receipt"
+    pure state with proposal = Some (fromInterfaceContractId @O.PurchaseProposal proposal)
+  _ -> pure state

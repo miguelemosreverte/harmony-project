@@ -8,6 +8,7 @@ import harmonia.ledger.CantonSandbox
 import harmonia.ledger.network.CantonNetwork
 import harmonia.stories.Story
 import harmonia.stories.run.process.RunProcessStory
+import harmonia.stories.run.purchase.RunPurchaseStory
 import harmonia.stories.compare.CompareResults
 import harmonia.stories.read.{MarkdownYaml, StoryFormat}
 import io.circe.Json
@@ -51,7 +52,8 @@ object CheckStories:
     _ <- SourceIdentity.verify(root, artifacts)
     _ <- IO.println(s"Running ${prepared.size} stories against local Canton. Evidence: $artifacts")
     dar = root.resolve("on-ledger/smoke/.daml/dist/harmonia-smoke-0.1.0.dar")
-    (privateStories, ordinaryStories) = prepared.partition(
+    (purchases, remaining) = prepared.partition(_.story.workflow.contains("property-purchase"))
+    (privateStories, ordinaryStories) = remaining.partition(
       _.story.workflow.contains("private-approval")
     )
     ordinaryChecks <-
@@ -83,9 +85,30 @@ object CheckStories:
             "three independent participant nodes, one local JVM, one common synchronizer"
           )
         }
+    purchaseChecks <-
+      if purchases.isEmpty then IO.pure(Vector.empty[Boolean])
+      else
+        CantonNetwork
+          .resource(
+            root,
+            artifacts.resolve("purchase-network"),
+            dar,
+            participantNames = Vector("bank", "buyer", "buyeragent", "selleragent")
+          )
+          .use { network =>
+            checkPrepared(
+              root,
+              purchases,
+              artifacts,
+              dar,
+              new RunPurchaseStory(root, network, dar).run,
+              "four independent participant nodes, one local JVM, one common synchronizer"
+            )
+          }
     _ <- SourceIdentity.verify(root, artifacts)
   yield
-    if (ordinaryChecks ++ privateChecks).forall(identity) then ExitCode.Success else ExitCode.Error
+    if (ordinaryChecks ++ privateChecks ++ purchaseChecks).forall(identity) then ExitCode.Success
+    else ExitCode.Error
 
   private def checkPrepared(
       root: Path,

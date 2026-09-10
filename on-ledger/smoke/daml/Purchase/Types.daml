@@ -1,0 +1,10 @@
+module Purchase.Types where
+
+data Setup = Setup with
+    buyerAgentName : Text
+    sellerAgentName : Text
+    property : Text
+    documents : Text
+    decision : Text
+    evidence : Text
+  deriving (Eq, Show)

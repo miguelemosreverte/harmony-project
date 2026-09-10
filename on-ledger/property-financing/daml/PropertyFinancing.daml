@@ -1,0 +1,49 @@
+module PropertyFinancing where
+
+import Harmonia.Action
+import Harmonia.Result
+
+-- Documents are disclosed only to their buyer and bank.
+template Submission with
+    bank : Party
+    buyer : Party
+    buyerAgent : Party
+    reference : Text
+    continuation : Text
+    documents : Text
+  where
+    signatory buyer
+    observer bank
+    ensure documents /= ""
+
+    choice ReviewDocuments : ContractId Application
+      with decision : Text
+      controller bank
+      do
+        assertMsg "Bank decision must be approved or rejected" (elem decision ["approved", "rejected"])
+        create Application with bank; buyer; buyerAgent; reference; continuation; documents; decision; status = "pending"
+
+template Application with
+    bank : Party
+    buyer : Party
+    buyerAgent : Party
+    reference : Text
+    continuation : Text
+    documents : Text
+    decision : Text
+    status : Text
+  where
+    signatory bank, buyer
+    ensure elem decision ["approved", "rejected"] && elem status ["pending", "approved", "rejected"]
+
+    choice FinalizeAssessment : ContractId Application
+      controller bank
+      do
+        assertMsg "Assessment must be pending" (status == "pending")
+        next <- create this with status = decision
+        create VerifiedResult with issuer = bank; consumer = buyer; readers = [buyerAgent]; subject = reference; decision; continuation
+        pure next
+
+    interface instance StepAction for Application where
+      view = StepView with actor = bank; subject = reference
+      performAction self = toInterfaceContractId @StepAction <$> exercise (fromInterfaceContractId @Application self) FinalizeAssessment

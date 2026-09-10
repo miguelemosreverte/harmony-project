@@ -150,6 +150,8 @@ final class BookView(
         "small",
         if story.input.hcursor.get[String]("integration").toOption.contains("adapter") then
           "Typed adapter"
+        else if story.input.hcursor.get[String]("workflow").toOption.contains("property-purchase")
+        then "Financing → offer → agents"
         else if story.input.hcursor.get[String]("workflow").toOption.contains("private-approval")
         then "Signed result handoff"
         else if story.actual.hcursor.downField("definition").focus.nonEmpty
@@ -180,7 +182,8 @@ final class BookView(
       append(
         node,
         element("span", text = s"${index + 1}. ${text(action, "actor")}"),
-        element("strong", text = text(actual, "application")),
+        element("span", "small", text(action, "action").replace('-', ' ')),
+        element("strong", text = observedState(story, actual)),
         element(
           "span",
           if text(actual, "outcome") == "rejected" then "rejected" else "",
@@ -251,10 +254,15 @@ final class BookView(
       }
       select.onchange = _ => navigate(state.copy(perspective = Some(select.value)))
       append(heading, element("h2", text = "Participant evidence"), select)
+      val purchase =
+        story.input.hcursor.get[String]("workflow").toOption.contains("property-purchase")
       val description = element(
         "p",
         "evidence",
-        s"Recorded queries and event history from $selected's participant. Shared progress is the positive control for this observation channel."
+        s"Recorded queries and event history from $selected's participant. " + (if purchase then
+                                                                                  "Visible financing or offer events provide a positive control for this party."
+                                                                                else
+                                                                                  "Shared progress is the positive control for this observation channel.")
       )
       val table = element("table")
       table.id = "participant-table"
@@ -265,11 +273,15 @@ final class BookView(
       val expected = story.expected.hcursor.downField("visibility").downField(selected)
       val actual = visibility(selected).get.hcursor
       Vector(
-        "application" -> "Private application visible",
-        "progress" -> "Shared progress visible",
-        "private_events" -> "Private application create events",
-        "progress_events" -> "Shared progress create events",
-        "private_payload_observed" -> "Private payload in event history"
+        "application" -> (if purchase then "Financing application visible"
+                          else "Private application visible"),
+        "progress" -> (if purchase then "Offer visible" else "Shared progress visible"),
+        "private_events" -> (if purchase then "Private financing create events"
+                             else "Private application create events"),
+        "progress_events" -> (if purchase then "Offer create events"
+                              else "Shared progress create events"),
+        "private_payload_observed" -> (if purchase then "Documents in event history"
+                                       else "Private payload in event history")
       ).foreach { (field, label) =>
         val left = expected.downField(field).focus
         val right = actual.downField(field).focus
@@ -359,6 +371,14 @@ final class BookView(
     append(panel, head, content)
     panel
 
+  private def observedState(story: RecordedStory, actual: Json): String =
+    if story.input.hcursor.get[String]("workflow").toOption.contains("property-purchase") then
+      Vector("proposal", "offer", "application")
+        .map(field => text(actual, field))
+        .find(value => !Set("none", "not-opened", "Unknown")(value))
+        .getOrElse("Unknown")
+    else text(actual, "application")
+
   private def text(json: Json, field: String): String =
     json.hcursor.get[String](field).getOrElse("Unknown")
   private def display(value: Option[Json]): String = value match
@@ -370,6 +390,10 @@ final class BookView(
   private def label(field: String): String = Map(
     "application" -> "Application",
     "review" -> "Review",
+    "offer" -> "Current offer",
+    "proposal" -> "Current proposal",
+    "proposals" -> "Active proposals",
+    "evidence_available" -> "Bound result active",
     "closure" -> "Closure",
     "branch" -> "Selected branch",
     "skipped" -> "Skipped steps",

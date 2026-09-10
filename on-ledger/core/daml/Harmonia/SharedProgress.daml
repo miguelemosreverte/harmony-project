@@ -23,7 +23,7 @@ template SharedProgress with
           None -> abort "Approval result required"
         evidence <- fetch proof
         assertMsg "Result issuer, consumer, subject, and decision must match"
-          (evidence.issuer == issuer && evidence.consumer == owner && evidence.subject == subject && evidence.decision == "approved")
+          (evidence.issuer == issuer && evidence.consumer == owner && evidence.subject == subject && evidence.decision == "approved" && evidence.continuation == "shared-progress:" <> subject)
         exercise proof Consume
         create this with status = "complete"
 

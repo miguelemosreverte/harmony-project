@@ -402,13 +402,13 @@ The first three actual Git commits have a fixed acceptance sequence: **document 
 
 ### Commit 11 — `feat: compose financing and offer workflows through verified results`
 
-- [ ] Deliver the first full reference workflow across independently owned applications.
-  - [ ] Package financing and offer behavior independently and integrate through the direct interface path.
-  - [ ] Bind approval evidence to the correct issuer, buyer, application, and permitted continuation.
-  - [ ] Preserve bank, buyer, buyer-agent, and seller-agent ownership and relevant private state.
-  - [ ] Add approval-to-offer, rejection, wrong-subject, invalid-issuer, and reused-evidence stories.
-  - [ ] Add Chapter 5 with a visual handoff between the two applications.
-  - [ ] **Acceptance:** a valid financing result enables the separate offer process; invalid evidence cannot produce a purchase proposal through that continuation.
+- [x] Deliver the first full reference workflow across independently owned applications.
+  - [x] Package financing and offer behavior independently and integrate through the direct interface path.
+  - [x] Bind approval evidence to the correct issuer, buyer, application, and permitted continuation.
+  - [x] Preserve bank, buyer, buyer-agent, and seller-agent ownership and relevant private state.
+  - [x] Add approval-to-offer, rejection, wrong-subject, invalid-issuer, and reused-evidence stories.
+  - [x] Add Chapter 5 with a visual handoff between the two applications.
+  - [x] **Acceptance:** a valid financing result enables the separate offer process; invalid evidence cannot produce a purchase proposal through that continuation.
 
 ### Commit 12 — `feat: demonstrate bounded atomic four-party transfer`
 

@@ -24,7 +24,8 @@ final case class Story(
     workflow: Option[String] = None,
     integration: Option[String] = None,
     reviewer: Option[String] = None,
-    privateDetails: Option[String] = None
+    privateDetails: Option[String] = None,
+    purchase: Option[harmonia.stories.purchase.model.PurchaseSetup] = None
 ):
   def scriptInput: Json = Json.obj(
     "namespace" -> Json.fromString(id),
@@ -35,5 +36,6 @@ final case class Story(
     "integration" -> integration.fold(Json.Null)(Json.fromString),
     "reviewerName" -> reviewer.fold(Json.Null)(Json.fromString),
     "privateDetails" -> privateDetails.fold(Json.Null)(Json.fromString),
+    "purchase" -> purchase.fold(Json.Null)(_.json),
     "actions" -> Json.fromValues(actions.map(_.json))
   )

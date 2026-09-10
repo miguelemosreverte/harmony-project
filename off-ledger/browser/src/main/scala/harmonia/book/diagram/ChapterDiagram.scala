@@ -42,6 +42,11 @@ object ChapterDiagram:
         }.toMap
         val wrapper = dom.document.createElement("div")
         wrapper.setAttribute("class", "chapter-diagram")
+        wrapper.setAttribute("tabindex", "0")
+        wrapper.setAttribute(
+          "aria-label",
+          "Workflow diagram; scroll horizontally to inspect all steps"
+        )
         val svg = node(
           "svg",
           "width" -> width.toString,

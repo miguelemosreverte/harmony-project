@@ -32,6 +32,21 @@ template PublishedDefinition with
           assertMsg "Application actor and subject must match the bound role" (action.actor == role.party && action.subject == subject))
         create ProcessInstance with owner; engine = publisher; reference; subject; published = self; definition; roles; bindings; completed = []; receipts = []; selections = []
 
+    -- A domain can open its one-step continuation and act in the same transaction.
+    nonconsuming choice StartAndAdvance : ContractId ProcessInstance
+      with
+        owner : Party
+        reference : Text
+        subject : Text
+        roles : [Role]
+        bindings : [ActionBinding]
+        step : Text
+        request : Text
+      controller owner
+      do
+        started <- exercise self Start with owner; reference; subject; roles; bindings
+        exercise started AdvanceStep with step; actor = owner; request
+
 template ProcessInstance with
     engine : Party
     owner : Party

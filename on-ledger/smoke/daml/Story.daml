@@ -1,6 +1,7 @@
 module Story where
 
 import Daml.Script
+import qualified Purchase.Types
 import Story.Application
 import Harmonia.Workflow
 
@@ -20,6 +21,7 @@ data Input = Input with
     integration : Optional Text
     reviewerName : Optional Text
     privateDetails : Optional Text
+    purchase : Optional Purchase.Types.Setup
     actions : [Attempt]
   deriving (Eq, Show)
 

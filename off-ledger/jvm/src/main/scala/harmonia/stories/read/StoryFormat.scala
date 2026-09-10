@@ -6,6 +6,13 @@ import io.circe.{Json, JsonObject}
 object StoryFormat:
   def input(id: String, markdown: String): Either[String, Story] = for
     json <- MarkdownYaml.read(markdown, "Scenario")
+    story <-
+      if json.hcursor.get[String]("workflow").contains("property-purchase") then
+        purchase.PurchaseFormat.input(id, json)
+      else ordinary(id, json)
+  yield story
+
+  private def ordinary(id: String, json: Json): Either[String, Story] = for
     root <- fields(json, "scenario", Set("setup", "actions"), Set("workflow", "integration"))
     workflow <- root("workflow").fold[Either[String, Option[String]]](Right(None)) { value =>
       text(value, "workflow").flatMap { name =>
@@ -137,7 +144,11 @@ object StoryFormat:
             "enabled",
             "branch",
             "closure",
-            "skipped"
+            "skipped",
+            "offer",
+            "proposal",
+            "proposals",
+            "evidence_available"
           )
         )
         _ <- text(action("id").get, "result action.id")
@@ -168,14 +179,24 @@ object StoryFormat:
               }
             )
         }
-        _ <- Vector("review", "branch", "closure").foldLeft[Either[String, Unit]](Right(())) {
-          (acc, name) =>
+        _ <- Vector("review", "branch", "closure", "offer", "proposal")
+          .foldLeft[Either[String, Unit]](Right(())) { (acc, name) =>
             acc.flatMap(_ =>
               action(name).fold[Either[String, Unit]](Right(()))(value =>
                 text(value, name).map(_ => ())
               )
             )
-        }
+          }
+        _ <- action("proposals").fold[Either[String, Unit]](Right(()))(value =>
+          value.asNumber
+            .flatMap(_.toInt)
+            .filter(_ >= 0)
+            .toRight("proposals must be a nonnegative integer")
+            .map(_ => ())
+        )
+        _ <- action("evidence_available").fold[Either[String, Unit]](Right(()))(value =>
+          value.asBoolean.toRight("evidence_available must be boolean").map(_ => ())
+        )
         _ <- action("consumed").get.asBoolean.toRight("consumed must be true or false")
         count <- action("active_contracts").get.asNumber
           .flatMap(_.toInt)
@@ -262,7 +283,7 @@ object StoryFormat:
       }
     }
 
-  private def fields(
+  private[read] def fields(
       value: Json,
       path: String,
       required: Set[String],
@@ -278,5 +299,5 @@ object StoryFormat:
       )
     }
 
-  private def text(value: Json, path: String): Either[String, String] =
+  private[read] def text(value: Json, path: String): Either[String, String] =
     value.asString.filter(_.nonEmpty).toRight(s"$path must be nonempty text")

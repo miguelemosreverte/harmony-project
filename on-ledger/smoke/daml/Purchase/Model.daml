@@ -1,0 +1,40 @@
+module Purchase.Model where
+
+import qualified Story as S
+import qualified Purchase.Types as P
+import qualified PropertyOffer as O
+import Harmonia.Process.Engine
+import Harmonia.Result
+
+data Actors = Actors with bank : Party; buyer : Party; buyerAgent : Party; sellerAgent : Party
+  deriving (Eq, Show)
+data Definitions = Definitions with financing : ContractId PublishedDefinition; proposal : ContractId PublishedDefinition; relay : ContractId PublishedDefinition; receipt : ContractId PublishedDefinition
+  deriving (Eq, Show)
+data Context = Context with
+    input : S.Input; setup : P.Setup; actors : Actors; definitions : Definitions
+    invitation : ContractId O.Invitation; applicationRef : Text; offerRef : Text
+  deriving (Eq, Show)
+data State = State with
+    finance : ContractId ProcessInstance
+    offer : Optional (ContractId ProcessInstance)
+    relay : Optional (ContractId ProcessInstance)
+    receipt : Optional (ContractId ProcessInstance)
+    proposal : Optional (ContractId O.PurchaseProposal)
+    proof : Optional (ContractId VerifiedResult)
+    offerCount : Int
+  deriving (Eq, Show)
+data Step = Step with
+    action : S.Step
+    offer : Text
+    proposal : Text
+    proposals : Int
+    evidenceAvailable : Bool
+    completed : [Text]
+  deriving (Eq, Show)
+data PartyView = PartyView with name : Text; application : Bool; progress : Bool
+  deriving (Eq, Show)
+data Observation = Observation with actors : Actors; steps : [Step]; views : [PartyView]
+  deriving (Eq, Show)
+
+parties : Context -> [(Text, Party)]
+parties context = [(context.input.bankName, context.actors.bank), (context.input.buyerName, context.actors.buyer), (context.setup.buyerAgentName, context.actors.buyerAgent), (context.setup.sellerAgentName, context.actors.sellerAgent)]

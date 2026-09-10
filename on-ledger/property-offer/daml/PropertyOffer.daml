@@ -1,0 +1,80 @@
+module PropertyOffer where
+
+import Harmonia.Action
+import Harmonia.Result
+
+-- The agent authorizes the buyer to prepare this specific offer continuation.
+template Invitation with
+    agent : Party
+    buyer : Party
+    sellerAgent : Party
+    bank : Party
+    application : Text
+    reference : Text
+  where
+    signatory agent
+    observer buyer, sellerAgent
+
+    nonconsuming choice OpenOffer : ContractId Offer
+      with evidence : Optional (ContractId VerifiedResult)
+      controller buyer
+      do create Offer with agent; buyer; sellerAgent; bank; application; reference; evidence; status = "waiting"
+
+template Offer with
+    agent : Party
+    buyer : Party
+    sellerAgent : Party
+    bank : Party
+    application : Text
+    reference : Text
+    evidence : Optional (ContractId VerifiedResult)
+    status : Text
+  where
+    signatory agent, buyer
+    observer sellerAgent
+    ensure elem status ["waiting", "proposed"]
+
+    choice MakeProposal : ContractId Offer
+      controller buyer
+      do
+        assertMsg "Offer must be waiting" (status == "waiting")
+        proof <- case evidence of Some value -> pure value; None -> abort "Financing result required"
+        result <- fetch proof
+        assertMsg "Financing issuer, buyer, application, approval, and continuation must match"
+          (result.issuer == bank && result.consumer == buyer && result.subject == application && result.decision == "approved" && result.continuation == reference)
+        exercise proof Consume
+        create PurchaseProposal with buyer; agent; sellerAgent; application; reference; approval = proof; status = "draft"
+        create this with status = "proposed"
+
+    interface instance StepAction for Offer where
+      view = StepView with actor = buyer; subject = application
+      performAction self = toInterfaceContractId @StepAction <$> exercise (fromInterfaceContractId @Offer self) MakeProposal
+
+template PurchaseProposal with
+    buyer : Party
+    agent : Party
+    sellerAgent : Party
+    application : Text
+    reference : Text
+    approval : ContractId VerifiedResult
+    status : Text
+  where
+    signatory buyer, agent
+    observer sellerAgent
+    ensure elem status ["draft", "relayed", "received"]
+
+    choice Relay : ContractId PurchaseProposal
+      controller agent
+      do
+        assertMsg "Proposal must be a draft" (status == "draft")
+        create this with status = "relayed"
+
+    choice Receive : ContractId PurchaseProposal
+      controller sellerAgent
+      do
+        assertMsg "Proposal must have been relayed" (status == "relayed")
+        create this with status = "received"
+
+    interface instance StepAction for PurchaseProposal where
+      view = StepView with actor = if status == "draft" then agent else sellerAgent; subject = application
+      performAction self = toInterfaceContractId @StepAction <$> (if status == "draft" then exercise (fromInterfaceContractId @PurchaseProposal self) Relay else exercise (fromInterfaceContractId @PurchaseProposal self) Receive)

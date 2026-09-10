@@ -19,5 +19,5 @@ template Application with
         assertMsg "Application must be pending" (status == "pending")
         next <- create this with status = "approved"
         result <- create VerifiedResult with
-          issuer = bank; consumer = buyer; readers = reviewers; subject; decision = "approved"
+          issuer = bank; consumer = buyer; readers = reviewers; subject; decision = "approved"; continuation = "shared-progress:" <> subject
         pure (next, result)

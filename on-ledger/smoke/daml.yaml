@@ -14,3 +14,5 @@ data-dependencies:
   - ../bindings/.daml/dist/harmonia-bindings-0.1.0.dar
   - ../private-financing/.daml/dist/private-financing-0.1.0.dar
   - ../review/.daml/dist/harmonia-review-0.1.0.dar
+  - ../property-financing/.daml/dist/harmonia-property-financing-0.1.0.dar
+  - ../property-offer/.daml/dist/harmonia-property-offer-0.1.0.dar

@@ -1,0 +1,15 @@
+module Purchase where
+
+import Daml.Script
+import qualified Story as S
+import Purchase.Model
+import Purchase.Setup
+import Purchase.Execution
+import Purchase.Observe
+
+run : S.Input -> Script Observation
+run input = script do
+  (context, initial) <- initialize input
+  (steps, final) <- execute context initial input.actions
+  views <- partyViews context final
+  pure Observation with actors = context.actors; steps; views

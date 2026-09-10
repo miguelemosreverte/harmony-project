@@ -18,10 +18,17 @@ object CantonNetwork:
       root: Path,
       artifacts: Path,
       dar: Path,
-      inspectDars: Vector[Path] = Vector.empty
+      inspectDars: Vector[Path] = Vector.empty,
+      participantNames: Vector[String] = names
   ): Resource[IO, CantonNetwork] =
+    require(
+      participantNames.nonEmpty && participantNames.size <= 4 && participantNames.distinct.size == participantNames.size && participantNames
+        .contains("bank") && participantNames.forall(_.matches("[a-z][a-z0-9]*")),
+      "Use one to four distinct participant names including bank"
+    )
+    val count = participantNames.size
     val freePorts = List
-      .fill(12)(Resource.fromAutoCloseable(IO.blocking(new ServerSocket(0))))
+      .fill(count * 3 + 3)(Resource.fromAutoCloseable(IO.blocking(new ServerSocket(0))))
       .sequence
       .use(sockets => IO.pure(sockets.map(_.getLocalPort).toVector))
     for
@@ -30,9 +37,9 @@ object CantonNetwork:
       bootstrap = artifacts.resolve("bootstrap.canton")
       ready = artifacts.resolve("network.ready")
       participantConfig = artifacts.resolve("participants.json")
-      endpoints = names.zipWithIndex.map((name, index) => name -> ports(index * 3)).toMap
+      endpoints = participantNames.zipWithIndex.map((name, index) => name -> ports(index * 3)).toMap
       _ <- Resource.eval {
-        val participants = names.zipWithIndex
+        val participants = participantNames.zipWithIndex
           .map { (name, index) =>
             s"""$name {
              | storage.type = memory
@@ -46,11 +53,11 @@ object CantonNetwork:
           | participants { $participants }
           | sequencers.sequencer1 {
           |   storage.type = memory
-          |   admin-api.port = ${ports(9)}
-          |   public-api.port = ${ports(10)}
+          |   admin-api.port = ${ports(count * 3)}
+          |   public-api.port = ${ports(count * 3 + 1)}
           |   sequencer { type = reference, config.storage.type = memory }
           | }
-          | mediators.mediator1 { storage.type = memory, admin-api.port = ${ports(11)} }
+          | mediators.mediator1 { storage.type = memory, admin-api.port = ${ports(count * 3 + 2)} }
           |}""".stripMargin
         val retrieval = inspectDars.zipWithIndex
           .map { (source, index) =>
@@ -67,8 +74,10 @@ object CantonNetwork:
           |  participant.synchronizers.connect_local(sequencer1, "harmonia")
           |  participant.dars.upload(${quote(dar.toString)})
           |}
-          |bank.health.ping(buyer)
-          |bank.health.ping(reviewer)
+          |${participantNames
+                         .filterNot(_ == "bank")
+                         .map(name => s"bank.health.ping($name)")
+                         .mkString("\n")}
           |$retrieval
           |java.nio.file.Files.writeString(java.nio.file.Path.of(${quote(
                          ready.toString

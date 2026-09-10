@@ -4,7 +4,7 @@ The [PRD](../PRD.md) defines the ordered work. This record reports actual commit
 
 ## Current step
 
-Commit 10 resolves pinned local and upstream DARs, reproduces a mixed-version import on fresh networks, and verifies administrator DAR retrieval. Next: financing results enabling an independently owned offer workflow.
+Commit 11 proves financing-to-offer composition across four participant nodes. All nineteen live goldens pass, and Chapter 5 shows the handoff and rejection cases. Next: staged consent and bounded atomic four-party transfer.
 
 ## Commit evidence
 
@@ -21,7 +21,8 @@ Actual commit identifiers are recorded in the next commit after they are created
 | 07 | `8c42b3e` | [Authority and privacy proof](verification/07-privacy.md): seven live goldens, participant event controls, and browser perspective views |
 | 08 | `b8feb4f` | [Progression proof](verification/08-progression.md): nine live goldens, distinct client processes, equal final effects, and rejected forged completion |
 | 09 | `68c1950` | [Branch and join proof](verification/09-branches.md): eleven live goldens, invalid-definition rejection, and both routes in Chapter 4 |
-| 10 | This increment | [Package reproduction proof](verification/10-packages.md): pinned local/upstream inputs, two fresh executions, exact DAR retrieval, and negative resolution checks |
+| 10 | `64c365d` | [Package reproduction proof](verification/10-packages.md): pinned local/upstream inputs, two fresh executions, exact DAR retrieval, and negative resolution checks |
+| 11 | This increment | [Financing-to-offer proof](verification/11-financing-offer.md): nineteen live goldens, scoped single-use evidence, four participant views, and Chapter 5 |
 
 ## External decisions
 

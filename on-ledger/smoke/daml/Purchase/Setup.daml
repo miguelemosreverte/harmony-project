@@ -1,0 +1,54 @@
+module Purchase.Setup where
+
+import Daml.Script
+import qualified Story as S
+import qualified Privacy
+import qualified PropertyFinancing as F
+import qualified PropertyOffer as O
+import Harmonia.Action
+import Harmonia.Result
+import Harmonia.Process.Model
+import Harmonia.Process.Engine
+import Purchase.Model
+
+initialize : S.Input -> Script (Context, State)
+initialize input = script do
+  setup <- optional (abort "Purchase setup required") pure input.purchase
+  bank <- allocatePartyOn (input.namespace <> "-" <> input.bankName) (ParticipantName "bank")
+  buyer <- allocatePartyOn (input.namespace <> "-" <> input.buyerName) (ParticipantName "buyer")
+  buyerAgent <- allocatePartyOn (input.namespace <> "-" <> setup.buyerAgentName) (ParticipantName "buyeragent")
+  sellerAgent <- allocatePartyOn (input.namespace <> "-" <> setup.sellerAgentName) (ParticipantName "selleragent")
+  let actors = Actors with bank; buyer; buyerAgent; sellerAgent
+  forA ["bank", "buyer", "buyeragent", "selleragent"] (\node -> Privacy.await 80 do
+    known <- listKnownPartiesOn (ParticipantName node)
+    pure (all (\party -> elem party (map (.party) known)) [bank, buyer, buyerAgent, sellerAgent]))
+  let applicationRef = input.namespace <> ":application"
+  let offerRef = input.namespace <> ":" <> setup.property
+  submission <- submit buyer do createCmd F.Submission with bank; buyer; buyerAgent; reference = applicationRef; continuation = offerRef; documents = setup.documents
+  Privacy.await 80 do value <- queryContractId bank submission; pure (value /= None)
+  application <- submit bank do exerciseCmd submission (F.ReviewDocuments setup.decision)
+  financing <- publish bank [buyer] "financing-assessment" "assessment" "bank"
+  proposal <- publish buyerAgent [buyer, sellerAgent] "purchase-proposal" "proposal" "buyer"
+  relay <- publish buyerAgent [buyer, sellerAgent] "buyer-agent-relay" "relay" "agent"
+  receipt <- publish sellerAgent [buyer, buyerAgent] "seller-agent-receipt" "receipt" "agent"
+  let definitions = Definitions with financing; proposal; relay; receipt
+  invitation <- submit buyerAgent do createCmd O.Invitation with agent = buyerAgent; buyer; sellerAgent; bank; application = applicationRef; reference = offerRef
+  Privacy.await 80 do value <- queryContractId buyer invitation; pure (value /= None)
+  Privacy.await 80 do value <- queryContractId buyer proposal; pure (value /= None)
+  finance <- submit bank do exerciseCmd financing Start with owner = bank; reference = applicationRef; subject = applicationRef; roles = [Role "bank" bank]; bindings = [ActionBinding "assessment" (toInterfaceContractId @StepAction application)]
+  proof <- if elem setup.evidence ["financing", "missing"] then pure None else do
+    let issuer = if setup.evidence == "wrong-issuer" then buyer else bank
+    Some <$> submit issuer do
+      createCmd VerifiedResult with
+        issuer; consumer = if setup.evidence == "wrong-buyer" then buyerAgent else buyer
+        readers = [buyer, buyerAgent]
+        subject = if setup.evidence == "wrong-subject" then applicationRef <> "-other" else applicationRef
+        decision = "approved"
+        continuation = if setup.evidence == "wrong-continuation" then offerRef <> "-other" else offerRef
+  let context = Context with input; setup; actors; definitions; invitation; applicationRef; offerRef
+  let state = State with finance; offer = None; relay = None; receipt = None; proposal = None; proof; offerCount = 0
+  pure (context, state)
+
+publish : Party -> [Party] -> Text -> Text -> Text -> Script (ContractId PublishedDefinition)
+publish publisher readers name step role = submit publisher do
+  createCmd PublishedDefinition with publisher; readers; definition = Definition name 1 [StepSpec step role [] ActionStep None]
