@@ -46,9 +46,9 @@ These are observed problems in actual entry points, not a reason to move every d
 
 ### TD03 — Prove the first complete slice
 
-- [ ] Run actual authenticated financing and failure/recovery checks with unchanged goldens.
-- [ ] Confirm the browser still shows private approval and shared continuation correctly.
-- [ ] Make the third actual commit include this proven slice and its evidence.
+- [x] Run actual authenticated financing and failure/recovery checks with unchanged goldens.
+- [x] Confirm the browser still shows private approval and shared continuation correctly.
+- [x] Make the third actual commit include this proven slice and its evidence.
 
 ### TD04 — Use typed models through the workspace
 
@@ -80,3 +80,5 @@ Human readability is the purpose of this pass, not something a successful compil
 ## Implementation evidence
 
 TD02 passes 40 Scala tests and JVM/browser compilation (`.artifacts/third-02-build.log`). The new checks distinguish absent contracts from malformed visible payloads, reject malformed collections and competing Ledger API value variants, and retain valid omitted protobuf collections. Named exercises replace the financing/composition tuples.
+
+TD03 proves `fc2de14` on the real ledger: authenticated handoff, direct API authority, stale/repeated requests, and reconnect all pass (`.artifacts/third-03-live-check.log`; `.artifacts/live-check-13369180420142803701/live-handoff/`). In the browser, Bank approval changed the private application to approved; Buyer continuation completed shared progress, without exposing the private income details. The owned live runtime (`.artifacts/live-6253572949849521465/`) was stopped afterward; the second-draft book remains at its original URL. This evidence is recorded in the third actual commit.
