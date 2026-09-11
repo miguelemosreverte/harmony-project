@@ -192,3 +192,35 @@ html:not(.js) .page-tools,html:not(.js) [data-interactive],html:not(.js) #menu-t
   .diagram-scroll { overflow:visible; }
   pre { white-space:pre-wrap; }
 }
+
+/* A use case is a scene first. Evidence stays within reach, below it. */
+.scene-toolbar {display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:20px;}
+.recording-label {font-size:.78rem;color:var(--muted);}
+.scenario-choice {display:flex;align-items:center;gap:10px;font-size:.8rem;}
+.scenario-choice select {max-width:230px;padding:8px 12px;}
+.story-carousel {outline-offset:6px;touch-action:pan-y;}
+.carousel-controls {display:flex;align-items:center;justify-content:center;gap:18px;margin:20px 0 10px;min-height:48px;}
+.carousel-controls>button {min-width:42px;min-height:42px;padding:8px 12px;}
+#scene-dots {display:flex;gap:8px;list-style:none;padding:0;margin:0;}
+#scene-dots button {width:12px;height:12px;min-width:0;min-height:0;padding:0;border-radius:50%;background:var(--line);color:transparent;border:0;position:relative;}
+#scene-dots button::after {content:"";position:absolute;inset:-12px;}
+#scene-dots button[aria-current=step] {background:#3765d7;transform:scale(1.18);}
+#recorded-step {font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums;}
+.infographic-panel .inspector {margin-top:26px;}
+.inspector-controls {display:flex;gap:18px;flex-wrap:wrap;margin:16px 0;}
+.inspector-controls label {display:grid;gap:6px;font-size:.85rem;}
+.inspector-controls select {max-width:100%;}
+.live-sandbox-link {display:table;margin:24px auto 0;font-size:.9rem;}
+.infographic-panel .completion-note {text-align:center;font-size:.85rem;}
+.chapter-content:has(.infographic-panel) {max-width:1100px;}
+.chapter-content:has(.infographic-panel) h1 {font-size:clamp(1.9rem,3.5vw,3rem);margin-bottom:18px;}
+.mode-tabs {margin-bottom:26px;}
+@media(max-width:600px) {
+ .scene-toolbar {align-items:flex-start;gap:8px;margin:0 0 14px;}
+ .scenario-choice {display:grid;gap:3px;}
+ .scenario-choice select {max-width:190px;font-size:.8rem;}
+ .carousel-controls {gap:12px;} #scene-dots {gap:8px;}
+ .inspector-controls {display:grid;} .inspector-controls select {width:100%;}
+ .mode-tabs {gap:2px;margin-bottom:18px;} .mode-tabs button {padding:9px 8px;font-size:.8rem;}
+}
+@media print { .scene-toolbar,.carousel-controls,.live-sandbox-link {display:none!important;} .story-carousel {break-inside:avoid;} }

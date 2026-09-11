@@ -12,14 +12,16 @@ final class LiveView:
   private val main = element("main", "live-main"); main.id = "main"
   private val feedback = element("section")
   private val identity = element("p", "live-identity"); identity.id = "live-identity"
-  private val finance = element("div")
+  private val financing = new FinancingPanel
+  private val finance = financing.root
   private val jobs = element("section", "live-panel")
   private val composition = element("section", "live-panel"); composition.id = "composer"
   private val draft = element("div")
   private val composed = element("div")
-  private val packageNavigation = link("Application packages", "#package-builder")
+  private val packageNavigation = link("Applications", "?view=packages")
   private val packageArea = element("div")
-  private val history = element("details", "live-panel")
+  private val evidence = element("section")
+  private val history = element("section", "live-panel")
   private val historyBody = element("div")
   private var previous: Option[WorkspaceSnapshot] = None
   private var previousBlocked = true
@@ -43,24 +45,22 @@ final class LiveView:
       mounted = true
       append(
         main,
-        element("p", "eyebrow", "HARMONIA / LIVE PARTICIPANT SESSION"),
+        element("p", "eyebrow", "HARMONIA / LIVE SANDBOX"),
         element("h1", text = "A private decision. A shared next step."),
-        element(
-          "p",
-          "lede",
-          "The bank approves its private financing case. The buyer uses the signed result to continue. Each session sees what its own participant discloses."
-        ),
         feedback,
         identity
       )
       val nav = element("nav", "workspace-nav"); nav.setAttribute("aria-label", "Workspace tasks")
       Vector(
         "Financing" -> "financing",
-        "Compose a workflow" -> "composer"
-      ).foreach((title, id) => append(nav, link(title, "#" + id)))
-      append(nav, packageNavigation)
+        "Compose" -> "composer",
+        "Evidence" -> "evidence"
+      ).foreach((title, id) => append(nav, link(title, "?view=" + id)))
+      append(nav, packageNavigation, link("The book ↗", "/book/"))
+      new WorkspaceNavigation(nav, () => selectPage())
       finance.id = "financing"
-      append(main, nav, finance, jobs)
+      append(main, nav, finance)
+      append(evidence, jobs, history)
       append(
         composition,
         element("h2", text = "Build a workflow together"),
@@ -74,7 +74,7 @@ final class LiveView:
       )
       append(
         history,
-        element("summary", text = "Visible ledger history"),
+        element("h2", text = "Visible ledger history"),
         element(
           "p",
           text =
@@ -86,11 +86,11 @@ final class LiveView:
         main,
         composition,
         packageArea,
-        history,
+        evidence,
         element(
           "p",
           "live-footnote",
-          "Local evaluation · synthetic data · one synchronizer · state lasts until the local network stops. Recorded playback is available separately in the book."
+          "Disposable local sandbox · synthetic data"
         )
       )
       val root = dom.document.getElementById("app"); root.textContent = ""; append(root, main)
@@ -105,11 +105,9 @@ final class LiveView:
         else connection.label
       val banner = element("p", "live-connection", message); banner.id = "live-connection";
       banner.setAttribute("role", "status")
-      append(
-        feedback,
-        banner,
-        button("Reconnect / refresh", "secondary", "live-refresh")(reconnect())
-      )
+      append(feedback, banner)
+      if connection != ConnectionState.Connected then
+        append(feedback, button("Reconnect", "secondary", "live-refresh")(reconnect()))
       if unconfirmed && !submitting && connection == ConnectionState.Connected then
         append(feedback, button("Retry unconfirmed request", "secondary", "live-retry")(retry()))
       notice.foreach { message =>
@@ -136,17 +134,10 @@ final class LiveView:
           _.outcome == SubmissionStatus.Pending
         ) || unconfirmed || submitting || connection != ConnectionState.Connected
         if previous.map(_.financing) != Some(state.financing) || blocked != previousBlocked then
-          replace(
-            finance,
-            FinancingPanel.render(
-              state.financing,
-              blocked,
-              a => submit(WorkspaceCommand.Financing(a))
-            )
-          )
+          financing.render(state.financing, blocked, a => submit(WorkspaceCommand.Financing(a)))
         if previous.map(_.submissions) != Some(state.submissions) then renderJobs(state.submissions)
         val compositionState = state.composition
-        draft.style.display = if compositionState.canPropose then "" else "none"
+        hide(draft, !compositionState.canPropose)
         val input = editor.render(blocked, compositionState.remainingProposals)
         if input.parentNode != draft then append(draft, input)
         if previous.map(_.composition) != Some(compositionState) || blocked != previousBlocked then
@@ -154,13 +145,21 @@ final class LiveView:
             composed,
             harmonia.composition.ComposerView.render(compositionState, blocked, submit)
           )
-        packageNavigation.style.display = if actor == "bank" then "" else "none"
-        packageArea.style.display = if actor == "bank" then "" else "none"
+        hide(packageNavigation, actor != "bank")
         if actor == "bank" then
           val panel = packages.render()
           if panel.parentNode != packageArea then append(packageArea, panel)
         if previous.map(_.history) != Some(state.history) then renderHistory(state.history)
         previous = Some(state); previousBlocked = blocked
+    selectPage()
+
+  private def selectPage(): Unit =
+    val page = WorkspaceNavigation.page
+    hide(finance, page != "financing")
+    hide(composition, page != "composer")
+    hide(evidence, page != "evidence")
+    hide(packageArea, page != "packages" || previous.forall(_.financing.actor != "bank"))
+    if page == "packages" && previous.exists(_.financing.actor != "bank") then hide(finance, false)
 
   private def replace(parent: dom.HTMLElement, child: dom.HTMLElement): Unit =
     val focused =

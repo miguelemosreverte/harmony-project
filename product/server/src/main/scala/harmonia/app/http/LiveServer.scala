@@ -20,7 +20,12 @@ final case class LiveServer(port: Int, capabilities: Map[String, String]):
   override def toString: String = s"LiveServer($port, <redacted>)"
 
 object LiveServer:
-  def resource(root: Path, artifacts: Path, runtime: Connections): Resource[IO, LiveServer] = for
+  def resource(
+      root: Path,
+      artifacts: Path,
+      runtime: Connections,
+      book: Option[Path] = None
+  ): Resource[IO, LiveServer] = for
     actions <- Workspace.resource(runtime)
     builder <- Resource.eval(
       harmonia.packages.workspace.PackageBuilder
@@ -40,7 +45,7 @@ object LiveServer:
         "/",
         (exchange: HttpExchange) =>
           dispatcher.unsafeRunAndForget(
-            respond(root, http.getAddress.getPort, sessions, actions, builder, exchange)
+            respond(root, http.getAddress.getPort, sessions, actions, builder, book, exchange)
               .handleErrorWith { error =>
                 val code = if error.isInstanceOf[IllegalArgumentException] then 400 else 503
                 send(
@@ -84,6 +89,7 @@ object LiveServer:
       sessions: Map[String, String],
       actions: Workspace,
       builder: harmonia.packages.workspace.PackageBuilder,
+      book: Option[Path],
       exchange: HttpExchange
   ): IO[Unit] =
     val path = exchange.getRequestURI.getPath
@@ -122,10 +128,30 @@ object LiveServer:
               )
           else apiResponse(actor, method, path, actions, builder, exchange)
     else if method != "GET" then send(exchange, 405, "text/plain", Array.emptyByteArray)
+    else if path == "/book/source/design/0.2/context.js" && book.nonEmpty then
+      send(exchange, 200, "text/javascript", "window.HarmoniaLiveRoot = '/';".getBytes(UTF_8))
+    else if path == "/book" || path.startsWith("/book/") then
+      IO.blocking(
+        book.flatMap(directory =>
+          StaticFiles.resolve(directory, path.stripPrefix("/book").stripPrefix("/"))
+        )
+      ).flatMap(
+        _.fold(
+          send(
+            exchange,
+            404,
+            "text/plain",
+            "The book is not mounted on this server.".getBytes(UTF_8)
+          )
+        ) { (file, kind) =>
+          IO.blocking(Files.readAllBytes(file)).flatMap(send(exchange, 200, kind, _))
+        }
+      )
     else
       val file = path match
-        case "/"         => Some(root.resolve("product/web/site/index.html") -> "text/html")
-        case "/live.css" => Some(root.resolve("product/web/site/live.css") -> "text/css")
+        case "/"          => Some(root.resolve("product/web/site/index.html") -> "text/html")
+        case "/scene.css" => Some(root.resolve("product/scene/site/scene.css") -> "text/css")
+        case "/live.css"  => Some(root.resolve("product/web/site/live.css") -> "text/css")
         case "/main.js" =>
           Some(
             root.resolve(

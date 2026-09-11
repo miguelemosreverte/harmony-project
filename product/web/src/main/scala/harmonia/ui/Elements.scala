@@ -22,3 +22,6 @@ private[harmonia] object Elements:
     node.`type` = "button"
     node.onclick = _ => action
     node
+
+  def hide(node: dom.HTMLElement, hidden: Boolean): Unit =
+    if hidden then node.setAttribute("hidden", "") else node.removeAttribute("hidden")

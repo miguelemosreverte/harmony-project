@@ -1,0 +1,91 @@
+package harmonia.book
+
+import cats.effect.IO
+import cats.syntax.all.*
+import harmonia.files.ArtifactFiles
+import io.circe.syntax.*
+import java.nio.file.{Files, Path, StandardCopyOption}
+import scala.jdk.CollectionConverters.*
+
+/** Exports the designed book as files. The production server only mounts this directory. */
+object FieldGuide:
+  def write(root: Path, output: Path, stories: Vector[RecordedStory] = Vector.empty): IO[Unit] = for
+    _ <- Vector("book", "docs", "examples", "product", "harness", "design/0.2")
+      .traverse_(directory => copyTree(root, root.resolve(directory), output.resolve("source")))
+    _ <- Vector("README.md", "FOURTH-DRAFT.md").traverse_(name =>
+      copy(root.resolve(name), output.resolve("source").resolve(name))
+    )
+    _ <- copy(
+      root.resolve("product/scene/target/scala-3.3.6/harmonia-scene-fastopt/main.js"),
+      output.resolve("source/product/scene/target/scala-3.3.6/harmonia-scene-fastopt/main.js")
+    )
+    _ <- ArtifactFiles.write(
+      output.resolve("index.html"),
+      """<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Harmonia field guide</title><script src="guide-entry.js" defer></script></head><body><a href="source/design/0.2/book-overview.html">Open the field guide →</a></body></html>"""
+    )
+    _ <- ArtifactFiles.write(
+      output.resolve("guide-entry.js"),
+      "location.replace('source/design/0.2/book-overview.html' + location.search + location.hash);"
+    )
+    _ <- ArtifactFiles.write(
+      output.resolve("source/design/0.2/run-recordings.js"),
+      "window.HarmoniaRunRecordings = " + stories
+        .filter(s =>
+          Set(
+            "purchase-approved",
+            "purchase-rejected",
+            "transfer-approved",
+            "transfer-final-leg-rejected"
+          )(s.id)
+        )
+        .map(s => s.id -> s)
+        .toMap
+        .asJson
+        .noSpaces
+        .replace("<", "\\u003c") + ";"
+    )
+    _ <- IO.whenA(stories.nonEmpty)(
+      ArtifactFiles.write(
+        output.resolve("source/design/0.2/context.js"),
+        "window.HarmoniaLiveRoot = null; window.HarmoniaLaboratory = '../../../laboratory.html';"
+      )
+    )
+  yield ()
+
+  private def copyTree(root: Path, directory: Path, output: Path): IO[Unit] = IO
+    .blocking {
+      val stream = Files.walk(directory)
+      try
+        stream
+          .iterator()
+          .asScala
+          .filter { path =>
+            Files.isRegularFile(path) && Set(
+              "md",
+              "scala",
+              "daml",
+              "yaml",
+              "json",
+              "sbt",
+              "html",
+              "css",
+              "js",
+              "svg",
+              "png",
+              "pdf"
+            )(path.getFileName.toString.split('.').last) &&
+            !path
+              .iterator()
+              .asScala
+              .exists(part => Set(".daml", "target", ".bsp", "__pycache__")(part.toString))
+          }
+          .toVector
+      finally stream.close()
+    }
+    .flatMap(_.traverse_(path => copy(path, output.resolve(root.relativize(path)))))
+
+  private def copy(source: Path, target: Path): IO[Unit] = IO.blocking {
+    Files.createDirectories(target.getParent)
+    Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING)
+    ()
+  }

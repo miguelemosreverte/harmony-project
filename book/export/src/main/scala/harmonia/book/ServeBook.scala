@@ -34,12 +34,7 @@ object ServeBook:
           .isRegularFile(path) || !path.toRealPath().startsWith(root.toRealPath())
       then exchange.sendResponseHeaders(404, -1)
       else
-        val contentType = path.getFileName.toString.split('.').last match
-          case "html" => "text/html"
-          case "css"  => "text/css"
-          case "js"   => "text/javascript"
-          case "json" => "application/json"
-          case _      => "text/plain"
+        val contentType = harmonia.app.http.StaticFiles.contentType(path)
         exchange.getResponseHeaders.set("Content-Type", s"$contentType; charset=utf-8")
         exchange.getResponseHeaders.set("X-Content-Type-Options", "nosniff")
         exchange.getResponseHeaders.set("Cache-Control", "no-store")

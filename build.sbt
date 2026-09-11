@@ -53,7 +53,11 @@ lazy val service = project.in(file("product/server")).settings(jvmSettings).sett
     "org.commonmark" % "commonmark" % "0.24.0"
   )
 )
-lazy val web = project.in(file("product/web")).enablePlugins(ScalaJSPlugin).settings(browserSettings).settings(
+lazy val scene = project.in(file("product/scene")).enablePlugins(ScalaJSPlugin).settings(browserSettings).settings(
+  name := "harmonia-scene",
+  scalaJSUseMainModuleInitializer := false
+)
+lazy val web = project.in(file("product/web")).dependsOn(scene).enablePlugins(ScalaJSPlugin).settings(browserSettings).settings(
   name := "harmonia-web",
   Compile / mainClass := Some("harmonia.live.Main"),
   Compile / unmanagedSourceDirectories += file("product/api/src/main/scala").getAbsoluteFile
@@ -79,7 +83,7 @@ lazy val tools = project.in(file("harness/tools")).dependsOn(bookExport).setting
   exportRuntime := exportRuntime.dependsOn(service / exportRuntime, bookExport / exportRuntime).value,
   Compile / mainClass := Some("harmonia.tools.Main")
 )
-lazy val root = project.in(file(".")).aggregate(service, web, runner, bookExport, reader, tools).settings(
+lazy val root = project.in(file(".")).aggregate(service, scene, web, runner, bookExport, reader, tools).settings(
   name := "harmonia",
   publish / skip := true
 )

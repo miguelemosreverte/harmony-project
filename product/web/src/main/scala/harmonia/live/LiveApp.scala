@@ -25,7 +25,11 @@ object LiveApp:
         val fragment = dom.window.location.hash.stripPrefix("#session=")
         if fragment.matches("[A-Za-z0-9_-]{43}") then
           dom.window.sessionStorage.setItem("harmonia-live", fragment)
-          dom.window.history.replaceState(null, "", "/")
+          dom.window.history.replaceState(
+            null,
+            "",
+            dom.window.location.pathname + dom.window.location.search
+          )
         Option(dom.window.sessionStorage.getItem("harmonia-live")).getOrElse("")
       }
       remembered <- IO(

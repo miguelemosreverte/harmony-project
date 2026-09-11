@@ -2,8 +2,9 @@
 (() => {
   'use strict';
   const config = JSON.parse(document.getElementById('view-config').textContent);
+  config.stories = Object.fromEntries((config.stories || []).map(key => [key, (window.HarmoniaRunRecordings || {})[key] || window.HarmoniaRecordings[key]]));
   const firstStory = Object.keys(config.stories || {})[0] || '';
-  const defaults = {audience:'explorer', theme:'light', text:'standard', panel:'closed', nav:'closed', open:'', view:'read', story:firstStory, step:0, actor:'all', tab:'observed', state:'ready', package:'legacy', phase:1};
+  const defaults = {audience:'explorer', theme:'light', text:'standard', panel:'closed', nav:'closed', open:'', view:firstStory ? 'try' : 'read', story:firstStory, step:0, actor:'all', tab:'observed', state:'ready', package:'legacy', phase:1};
   if (config.kind === 'workspace') Object.assign(defaults, {view:'overview', step:2, actor:'Bank'});
   const allowedViews = config.kind === 'workspace' ? ['overview','applications','history'] : config.kind === 'source' ? ['read','source'] : ['read','sources','evidence', ...(firstStory ? ['try'] : [])];
   const common = ['audience','theme','text','panel','nav','open'];

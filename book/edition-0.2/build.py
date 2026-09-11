@@ -171,13 +171,15 @@ def build_outputs(root=ROOT):
         report["chapters"].append({"id": slug, "title": pages.CHAPTERS[slug], "quoted_units": count})
         stories = {key: value for key,value in recordings.items() if (slug.startswith("03") and key.startswith("purchase")) or (slug.startswith("04") and key.startswith("transfer"))}
         outputs[f"chapters/{slug}.html"] = pages.chapter(slug, text, passages, corpus, stories)
+    outputs["recordings.js"] = "window.HarmoniaRecordings = " + pages.json_script(recordings) + ";\n"
+    outputs["sandbox.html"] = pages.sandbox()
     outputs["coverage.html"] = pages.coverage(report, claim_rows(root))
     outputs["coverage.json"] = json.dumps(report, ensure_ascii=False, indent=2) + "\n"
     outputs["review.html"] = pages.review()
     outputs["book-overview.html"] = pages.welcome()
     outputs["application.html"] = workspace.application()
     outputs["application-builder.html"] = workspace.builder()
-    outputs["book-chapter.html"] = '''<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Alice buys a home · Harmonia</title><script>location.replace("chapters/03-financing-to-offer.html" + location.search + location.hash);</script></head><body><p>This chapter has one home: <a href="chapters/03-financing-to-offer.html">Alice buys a home</a>.</p></body></html>\n'''
+    outputs["book-chapter.html"] = '''<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Alice buys a home · Harmonia</title><script src="chapter-redirect.js" defer></script></head><body><p>This chapter has one home: <a href="chapters/03-financing-to-offer.html">Alice buys a home</a>.</p></body></html>\n'''
     return {name: "\n".join(line.rstrip() for line in text.splitlines()) + "\n" for name, text in outputs.items()}
 
 

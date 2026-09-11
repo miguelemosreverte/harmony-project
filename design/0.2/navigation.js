@@ -3,8 +3,8 @@
   const view = window.HarmoniaView;
   const {config} = view;
   const byId = id => document.getElementById(id);
-  const destination = slug => slug === 'coverage' || slug === 'application' ? `${slug}.html` : `chapters/${slug}.html`;
-  const label = slug => config.chapters[slug] || {coverage:'Find the original requirements', application:'Try the workspace'}[slug];
+  const destination = slug => ['coverage','application','sandbox'].includes(slug) ? `${slug}.html` : `chapters/${slug}.html`;
+  const label = slug => config.chapters[slug] || {coverage:'Find the original requirements', application:'Workspace design reference', sandbox:'Make a live handoff'}[slug];
   const setPressed = (selector, key, selected) => document.querySelectorAll(selector).forEach(button => {
     button.setAttribute('aria-pressed', String(button.dataset[key] === selected));
   });

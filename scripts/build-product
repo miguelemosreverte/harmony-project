@@ -6,6 +6,6 @@ for harmonia_package in "${harmonia_base_packages[@]}"; do
   "$HARMONIA_ROOT/scripts/daml" build --package-root "$HARMONIA_ROOT/$harmonia_package"
 done
 cd "$HARMONIA_ROOT"
-sbt --batch 'service/scalafmtCheck' 'web/scalafmtCheck' 'service/compile' 'web/fastLinkJS'
+sbt --batch 'scene/scalafmtCheck' 'service/scalafmtCheck' 'web/scalafmtCheck' 'service/compile' 'web/fastLinkJS' 'scene/fastLinkJS'
 scripts/harmonia generate-bindings product/packages/mappings/financing.md .artifacts/generated-financing
 scripts/daml build --package-root product/ledger/composition

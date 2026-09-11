@@ -1,21 +1,23 @@
 # Do the next task
 
-Nina is reviewing a financing request at the bank. She needs to know what she is looking at, whether the decision belongs to her, and what will happen when she submits it.
+Nina works at the bank. Her task is to approve a private financing case. The scene shows the bank, the buyer, and an observer of shared progress.
 
-## The workspace starts with the current responsibility
+## Make a live handoff
 
-The task names the workflow, the person who can act, and the source application that owns the decision. Supporting details stay available without competing with the next action.
+[Open the local sandbox](../sandbox.html). Its private launcher opens each participant in a separate tab.
 
-When Nina approves the sample financing, the task moves to the buyer. When she refuses it, the sample stops before an offer is created. A waiting participant sees who must act next.
+1. In **Bank**, inspect the private case and approve financing.
+2. In **Buyer**, wait for the signed approval, then continue.
+3. In **Reviewer**, observe the shared completion.
 
-[Try the workspace simulation](../application.html). Start as the bank, make a decision, then switch to the buyer to follow the handoff. Actor switching is a design aid, not authentication.
+The scene changes when the server observes the ledger result. Refreshing recovers that participant's current state. The buyer and reviewer never receive the bank's private details.
 
-## What should happen when something goes wrong?
+## Compose a workflow
 
-A pending submission disables another command. A lost connection makes the lack of a current observation visible. A refused action leaves progress unchanged. Stale state asks for a new observation before retrying.
+The **Compose** view lets the bank propose a bounded workflow and the buyer consent before execution. The draft stays in place during polling and when switching workspace tabs. Inspect committed operations in **Evidence**; connect an application under **Applications** in the bank session.
 
-The prototype exposes these states under **Explore connection states**, so the ordinary task stays focused.
+## When a submission is interrupted
 
-## How this relates to the product
+An unresolved request remains pending. Reconnecting reconciles it with the server; retrying reuses the same request identity. A lost connection keeps the last observed state visible. It does not turn uncertainty into success.
 
-The underlying core includes more composition behavior than this sequential screen. Branches, joins, and continuation still need their supported live views. The simple task screen is not a claim that every proposed composer feature is implemented.
+This sandbox covers the existing financing and composition APIs. The full property offer and custody transfer remain recorded stories in their respective chapters.

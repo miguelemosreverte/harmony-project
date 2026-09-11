@@ -103,3 +103,31 @@ button:focus-visible,a:focus-visible,select:focus-visible {
 #financing, #composer, #package-builder { scroll-margin-top: 24px; }
 .workspace-nav { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 24px; margin-top: 28px; border-bottom: 1px solid var(--line); padding-bottom: 18px; }
 @media (max-width: 720px) { .workspace-nav { gap: 14px; font-size: 14px; } }
+
+/* One task per screen; the diagram is the financing interface. */
+[hidden] { display: none !important; }
+:root { color-scheme:light; --page:#f5f7fa; --surface:#fff; --ink:#172638; --muted:#546578; --line:#dce3eb; --accent:#275ee3; }
+html[data-theme=dark] { color-scheme:dark; --page:#111922; --surface:#1c2733; --ink:#e8eff6; --muted:#b4c1ce; --line:#3c4b5a; --accent:#8aafff; }
+html[data-theme=paper] { --page:#f2eee4; --surface:#fffcf5; --ink:#302e28; --muted:#625f54; --line:#d7d0be; --accent:#465c79; }
+html[data-text=compact] { font-size:14px; } html[data-text=large] { font-size:19px; }
+body { background:var(--page); color:var(--ink); }
+a { color:var(--accent); }
+.live-main { max-width:1060px; margin:auto; padding:30px 32px; }
+.live-main h1 { font-size:clamp(1.65rem,3vw,2.5rem); letter-spacing:-.045em; max-width:none; margin:12px 0; }
+.live-identity { color:var(--muted); margin:8px 0 20px; }
+.live-connection { font-size:.8rem; padding:0; border:0; background:transparent; color:var(--muted); margin:0; }
+.workspace-nav { display:flex; flex-wrap:wrap; align-items:center; gap:6px; border-bottom:1px solid var(--line); padding:0 0 14px; margin:0 0 24px; }
+.workspace-nav a { padding:8px 12px; text-decoration:none; border-radius:8px; font-size:.9rem; color:var(--muted); }
+.workspace-nav a[aria-current=page] { background:var(--surface); color:var(--ink); box-shadow:0 1px 3px #14233518; }
+.workspace-appearance { margin-left:auto; font-size:.85rem; }
+.workspace-appearance summary { cursor:pointer; } .workspace-appearance label { display:block; margin:8px 0; }
+.financing-action { min-height:58px; display:flex; justify-content:center; padding:8px 0 18px; }
+button.primary { background:#275ee3; color:#fff; border:1px solid #275ee3; border-radius:11px; padding:13px 20px; }
+button:disabled { opacity:.65; }
+.private-case { max-width:700px; margin:12px auto; padding:16px 0; border-top:1px solid var(--line); color:var(--muted); }
+.private-case summary { cursor:pointer; }
+.live-panel, .live-job { background:var(--surface); color:var(--ink); border-color:var(--line); }
+.live-footnote { color:var(--muted); text-align:center; margin-top:32px; font-size:.75rem; }
+.visually-hidden { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+@media(max-width:600px) { .live-main { padding:20px 16px; } .workspace-nav {gap:2px;} .workspace-nav a{padding:7px 8px;} .workspace-appearance{margin-left:8px;} }
+@media print { .workspace-nav,.financing-action {display:none;} }

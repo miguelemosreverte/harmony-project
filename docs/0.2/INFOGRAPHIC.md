@@ -29,11 +29,11 @@ It is not a bitmap background.
 
 ## Implementation sequence and owners
 
-- [ ] 1. Establish this contract and preserve the generated reference and prompt.
-- [ ] 2. Add a small reusable scene renderer under `product/scene/`.
-  - [ ] Typed scene data and semantic HTML; CSS owns responsive geometry and motion.
-  - [ ] Product and Scala book depend on the renderer, never the reverse.
-  - [ ] A narrow exported renderer lets the static field guide use the same scene.
+- [x] 1. Establish this contract and preserve the generated reference and prompt.
+- [x] 2. Add a small reusable scene renderer under `product/scene/`.
+  - [x] Typed scene data and semantic HTML; CSS owns responsive geometry and motion.
+  - [x] The product browser and exported field guide use the renderer, never the reverse.
+  - [x] A narrow exported renderer lets the static field guide use the same scene.
 - [ ] 3. Replace the book's repetitive use-case view with an infographic carousel.
   - [ ] `book/edition-0.2/pages.py`, `chapters/`, and `design/0.2/book.js` own the
     narrative and recorded progression; shared scene code only draws supplied data.

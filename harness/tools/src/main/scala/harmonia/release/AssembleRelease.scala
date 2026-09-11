@@ -37,6 +37,7 @@ private[release] object AssembleRelease:
     }
     _ <- Vector(
       "product/web/target/scala-3.3.6/harmonia-web-fastopt/main.js",
+      "product/scene/target/scala-3.3.6/harmonia-scene-fastopt/main.js",
       "book/browser/target/scala-3.3.6/harmonia-reader-fastopt/main.js"
     ).traverse_(js => ReleaseFiles.copy(source.resolve(js), bundle.resolve("source").resolve(js)))
     _ <- ReleaseFiles.copySelected(

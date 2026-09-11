@@ -1,72 +1,102 @@
-// Read-only playback of pinned ledger evidence. The browser never invents an outcome.
+// Project recorded observations into a shared, typed Scala/HTML scene.
 (() => {
   'use strict';
   const view = window.HarmoniaView;
-  if (!document.getElementById('story-select')) return;
   const node = id => document.getElementById(id);
-  const names = {'assess-financing':'Finalize the financing assessment', 'forge-proposal':'Attempt to create a proposal directly', 'open-offer':'Prepare the offer', 'make-proposal':'Make the purchase proposal', 'receive-proposal':'Receive the proposal', 'relay-proposal':'Relay the proposal', 'agree-trade':'Agree to the trade', 'lock-position':'Lock the source position', 'confirm-source':'Confirm the source position', 'prepare-destination':'Prepare the receiving permission', 'confirm-destination':'Confirm destination readiness', 'withdraw-directly':'Attempt to bypass the coordinator', settle:'Request settlement'};
-  const reasons = {'not-visible':'The required private contract is not visible to this actor.', unauthorized:'This actor does not have the required authority.', 'application-rejected':'The source application refused this action under its rules.', 'destination-rejected':'The destination refused receipt. The final transaction rolled back; earlier preparations remain.'};
-  function fact(label, value) {
-    const pair=document.createElement('div'), term=document.createElement('dt'), detail=document.createElement('dd');
-    term.textContent=label; detail.textContent=String(value); pair.append(term,detail); return pair;
-  }
-  function observed(story, unit) {
-    const result=document.createElement('dl');
-    result.className='state-facts';
-    if (!unit) {result.append(fact('Starting point',story.presentation.start_detail)); return result;}
-    const actual=unit.actual;
-    if (actual.source) {
-      result.append(fact('Source · available',`${actual.source.available} TEST`),fact('Source · locked',`${actual.source.locked} TEST`),fact('Destination · received',`${actual.destination} TEST`));
-      // Quantities are exact text from the recording. Bar lengths are only a visual aid.
-      for (const [label, quantity] of [['Available',actual.source.available],['Locked',actual.source.locked],['Received',actual.destination]]) {
-        const row=document.createElement('div'); row.className='quantity-row';
-        const caption=document.createElement('span'); caption.textContent=label;
-        const meter=document.createElement('meter'); meter.min=0; meter.max=10; meter.value=Number(quantity); meter.setAttribute('aria-label',`${label}: ${quantity} TEST`);
-        row.append(caption,meter); result.append(row);
-      }
-    } else {
-      result.append(fact('Financing decision',actual.application),fact('Offer',actual.offer),fact('Proposal',actual.proposal || 'none'));
+  if (window.HarmoniaLiveRoot) {
+    document.querySelectorAll('.live-sandbox-link').forEach(a => {a.href=view.href('sandbox.html');});
+    if (node('live-entry')) {
+      const a=document.createElement('a'); a.href=window.HarmoniaLiveRoot; a.className='button primary'; a.textContent='Open your participant workspace →';
+      const p=document.createElement('p'); p.textContent='Use the private launcher to open your bank or buyer session first. Keep each participant in its own tab.';
+      node('live-entry').replaceChildren(a,p);
     }
-    result.append(fact('Workflow',actual.workflow));
-    return result;
+  }
+  if (window.HarmoniaLaboratory && node('chapter-evidence')) {
+    const a=document.createElement('a');a.href=view.href(window.HarmoniaLaboratory);a.textContent='Open all recorded experiments →';node('chapter-evidence').append(a);
+  }
+  if (!node('story-select')) return;
+  const names = {'assess-financing':'Assess financing','forge-proposal':'Attempt a direct proposal','open-offer':'Prepare the offer','make-proposal':'Make the proposal','receive-proposal':'Receive the proposal','relay-proposal':'Relay the proposal','agree-trade':'Agree the trade','lock-position':'Lock the position','confirm-source':'Confirm the source','prepare-destination':'Prepare the destination','confirm-destination':'Confirm readiness','withdraw-directly':'Attempt a direct withdrawal',settle:'Settle the trade'};
+  const reasons = {'not-visible':'The required private contract is not visible to this actor.',unauthorized:'This actor does not have the required authority.','application-rejected':'The application refused this attempt under its rules.','destination-rejected':'The destination refused receipt. The final transaction rolled back; the earlier source lock remains.'};
+  const mainAttempt = u => u.actual.outcome==='committed' || ['rejected-financing','settle'].includes(u.id);
+  let sequence=[];
+  function frame(story,unit,actor) {
+    const transfer=!!story.input.setup.trade, setup=story.input.setup, a=unit?.actual;
+    const refused=a?.outcome==='rejected';
+    const person=(id,role,icon='person')=>({id,name:id,role,icon});
+    let people,title,caption,phase=0,artifact='',amounts=[];
+    if (transfer) {
+      const t=setup.trade;
+      people=[person(t.seller,'Owns the position'),person(t.source,'Source custodian','bank'),person(t.buyer,'Receives the asset'),person(t.destination,'Destination custodian','bank')];
+      const available=a?.source.available ?? t.quantity, locked=a?.source.locked ?? '0', received=a?.destination ?? '0';
+      phase=a?.trade==='settled'?4:a?.trade==='ready'?3:a?.source.locked!=='0'&&a?2:a?1:0;
+      artifact=`${phase===4?'Received':Number(locked)>0?'Locked':'Available'} · ${phase===4?received:Number(locked)>0?locked:available} ${t.asset}`;
+      amounts=[['Available at source',available],['Locked at source',locked],['Received at destination',received]].map(([label,value])=>({label,value:`${value} ${t.asset}`,fraction:Number(value)/Number(t.quantity)}));
+      [title,caption]=!unit ? ['One trade. Four responsibilities.',`${t.seller} is transferring ${t.quantity} ${t.asset} to ${t.buyer}. The two custodians must prepare before settlement.`] : ({
+        'agree-trade':['The seller agrees.',`${t.seller} accepts the trade. No assets have moved.`],
+        'lock-position':['The position is locked.',`${t.quantity} ${t.asset} is reserved at the source. It is no longer available for another transfer.`],
+        'confirm-source':['The source is ready.',`${t.source} confirms that the locked position can be withdrawn during settlement.`],
+        'prepare-destination':['The receiving side prepares.',`${t.destination} creates the permission needed to receive the asset.`],
+        'confirm-destination':['Both sides are ready.',`The destination confirms readiness. ${t.settler} can now request settlement.`],
+        settle:['The asset arrives.',`One final transaction withdraws the locked position and records receipt of ${received} ${t.asset}.`]
+      }[unit.action] || ['An additional attempt.',unit.observed_state]);
+    } else {
+      const b=setup.application,o=setup.offer;
+      people=[person(b.bank,'Financing','bank'),person(b.buyer,'Buyer'),person(o.buyer_agent,'Buyer’s agent'),person(o.seller_agent,'Seller’s agent')];
+      phase=a?.proposal==='received'?4:a?.proposal==='relayed'?3:a?.proposal==='draft'?2:a?.evidence_available?1:0;
+      artifact=phase>=2?'Purchase proposal':phase===1?`Financing · ${a.application}`:'';
+      [title,caption]=!unit ? [`${b.buyer} wants to make an offer.`,`Her financing application is with ${b.bank}. The property agents will need a verified result to move the offer forward.`] : ({
+        'assess-financing':a?.application==='approved' ? [`${b.bank} approves the financing.`,`A verified result is available to ${b.buyer}. Her financing documents stay within the financing application.`] : [`${b.bank} declines the financing.`,`The result records a refusal. It cannot authorize a purchase proposal.`],
+        'open-offer':[`${b.buyer} prepares the offer.`,`The property application is ready to check her financing result.`],
+        'make-proposal':[`${b.buyer} makes her proposal.`,`The property application accepts the approved financing result and creates one proposal.`],
+        'relay-proposal':[`${o.buyer_agent} relays the proposal.`,`The buyer’s agent passes the proposal to the seller’s agent.`],
+        'receive-proposal':[`${o.seller_agent} receives the proposal.`,`The financing-to-offer workflow is complete. The property agents receive the proposal, without the private financing documents.`]
+      }[unit.action] || ['An additional attempt.',unit.observed_state]);
+    }
+    if (refused) {
+      title=unit.id==='rejected-financing'?'The offer cannot proceed.':unit.actual.reason==='destination-rejected'?'Settlement rolls back.':'This attempt is refused.';
+      caption=unit.id==='rejected-financing'?'The financing decision is rejected, so the property application creates no proposal.':reasons[unit.actual.reason] || unit.observed_state;
+    }
+    return {kind:transfer?'transfer':'purchase',title,caption,people,phase,focus:actor==='all'?(unit?.actor || people[0].id):actor,artifact,refused,amounts};
   }
   view.subscribe(s => {
     const story=view.config.stories[s.story], units=story.presentation.units, unit=units[s.step-1];
+    sequence=[0,...units.flatMap((u,i)=>mainAttempt(u)?[i+1]:[])];
+    if (!sequence.includes(s.step)) sequence.push(s.step);
+    sequence.sort((a,b)=>a-b);
+    const current=sequence.indexOf(s.step), end=current===sequence.length-1;
     node('story-select').value=s.story;
+    renderHarmoniaScene(node('story-scene'),JSON.stringify(frame(story,unit,s.actor)));
+    node('recorded-step').textContent=`${current+1} / ${sequence.length}`;
+    node('scene-dots').replaceChildren(...sequence.map((step,i)=>{
+      const li=document.createElement('li'),b=document.createElement('button');b.textContent=String(i+1);b.setAttribute('aria-label',step===0?'Scene 1: starting point':`Scene ${i+1}: ${units[step-1].actor} · ${names[units[step-1].action] || units[step-1].action}`);b.setAttribute('aria-current',step===s.step?'step':'false');b.addEventListener('click',()=>view.update({step}));li.append(b);return li;
+    }));
+    node('previous-step').hidden=current===0; node('next-step').hidden=end; node('reset-story').hidden=!end;
+    node('story-complete').hidden=!end;
+    node('story-complete').textContent='End of this story. Try another outcome above, or make a live handoff below.';
+    const option=(value,label)=>{const o=document.createElement('option');o.value=String(value);o.textContent=label;return o;};
+    node('story-actor').replaceChildren(...['all',...new Set(units.map(u=>u.actor))].map(actor=>option(actor,actor==='all'?'Current actor':actor)));node('story-actor').value=s.actor;
+    node('evidence-action').replaceChildren(option(0,'Setup'),...units.map((u,i)=>option(i+1,`${i+1}. ${u.actor}: ${names[u.action]||u.action} · ${u.actual.outcome}`)));node('evidence-action').value=String(s.step);
+    node('recorded-action').textContent=unit?`Recorded action ${s.step}: ${unit.actor} · ${names[unit.action]||unit.action}`:story.presentation.start_detail;
+    node('recorded-outcome').textContent=unit?unit.actual.outcome:'Setup';
+    node('recorded-outcome').dataset.outcome=unit?.actual.outcome||'setup';
+    node('recorded-state').textContent=unit?.observed_state||'';
     document.querySelectorAll('[data-recording]').forEach(table=>{table.hidden=table.dataset.recording!==s.story;});
-    const actors=['all',...new Set(units.map(u=>u.actor))];
-    node('story-actor').replaceChildren(...actors.map(actor=>{const option=document.createElement('option');option.value=actor;option.textContent=actor==='all'?'Everyone':actor;return option;}));
-    node('story-actor').value=s.actor;
-    node('recorded-step').textContent=s.step ? `Action ${s.step} of ${units.length} · ${unit.actor}` : `Before action 1 of ${units.length}`;
-    node('recorded-action').textContent=unit ? names[unit.action] || unit.action : story.presentation.start_detail;
-    node('recorded-outcome').textContent=unit ? unit.actual.outcome === 'committed' ? 'Transaction committed' : 'Action refused' : 'Recorded setup';
-    node('recorded-outcome').dataset.outcome=unit?.actual.outcome || 'setup';
-    let explanation=unit ? unit.actual.outcome==='rejected' ? reasons[unit.actual.reason] || `The attempt was refused (${unit.actual.reason}). Observed state: ${unit.observed_state}.` : `${unit.actor}'s action was recorded. ${unit.action==='assess-financing' ? `The financing decision is ${unit.actual.application}.` : `The observed state is ${unit.observed_state}.`}` : 'The scenario begins after its declared setup. Next shows the first attempted action, including any refusal.';
-    if (s.actor !== 'all') explanation += unit?.actor === s.actor ? ` This is ${s.actor}'s action.` : ` You are following ${s.actor}; this ${unit ? 'action belongs to '+unit.actor : 'is the shared starting point'}.`;
-    node('recorded-explanation').textContent=explanation;
-    node('recorded-state').replaceChildren(observed(story,unit));
-    node('previous-step').disabled=s.step===0;
-    node('next-step').disabled=s.step===units.length;
-    node('next-step').textContent=s.step===units.length?'Recording complete':'Next action →';
-    node('story-complete').hidden=s.step!==units.length;
-    node('story-complete').textContent='You have reached the end of this recording. Compare the other scenario, return to the story, or continue along your reading path below.';
-    const data = s.tab==='provenance' ? story.provenance : s.tab==='input' ? (unit ? story.input.actions[s.step-1] : story.input.setup) : unit ? unit[s.tab==='observed'?'actual':'expected'] : story[s.tab==='observed'?'actual':'expected'];
+    const data=s.tab==='provenance'?story.provenance:s.tab==='input'?(unit?story.input.actions[s.step-1]:story.input.setup):unit?unit[s.tab==='observed'?'actual':'expected']:story[s.tab==='observed'?'actual':'expected'];
     node('recorded-json').textContent=JSON.stringify(data,null,2);
-    node('inspector-caption').textContent={input:'Declared story input. These actions were supplied to the recorded run.',expected:'Independently committed golden expectation.',observed:'Observed result from the preserved ledger recording.',provenance:'Historical run metadata. This is not a fresh submission.'}[s.tab];
-    document.querySelectorAll('[data-tab]').forEach(button=>{button.id=`evidence-${button.dataset.tab}`;button.tabIndex=button.dataset.tab===s.tab?0:-1;button.setAttribute('aria-selected',String(button.dataset.tab===s.tab));node('inspector-panel').setAttribute('aria-labelledby',`evidence-${s.tab}`);button.classList.toggle('active',button.dataset.tab===s.tab);});
+    node('inspector-caption').textContent={input:'Input supplied to the recorded run.',expected:'Independently committed golden expectation.',observed:'Actual ledger result from the preserved recording.',provenance:'Run identity and artifact fingerprints. Playback submits no new transactions.'}[s.tab];
+    document.querySelectorAll('[data-tab]').forEach(b=>{b.id=`evidence-${b.dataset.tab}`;b.tabIndex=b.dataset.tab===s.tab?0:-1;b.setAttribute('aria-selected',String(b.dataset.tab===s.tab));b.classList.toggle('active',b.dataset.tab===s.tab);});node('inspector-panel').setAttribute('aria-labelledby',`evidence-${s.tab}`);
   });
-  document.querySelector('.inspector-tabs').addEventListener('keydown', event => {
-    const tabs=[...document.querySelectorAll('[data-tab]')];
-    const index=tabs.indexOf(document.activeElement);
-    if(index<0||!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
-    event.preventDefault();
-    const next=event.key==='Home'?0:event.key==='End'?tabs.length-1:(index+(event.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;
-    tabs[next].click();tabs[next].focus();
+  const move=delta=>{const i=sequence.indexOf(view.state.step)+delta;if(i>=0&&i<sequence.length)view.update({step:sequence[i]});};
+  node('story-select').addEventListener('change',e=>view.update({story:e.target.value,step:0,actor:'all'}));
+  node('story-actor').addEventListener('change',e=>view.update({actor:e.target.value}));
+  node('evidence-action').addEventListener('change',e=>view.update({step:Number(e.target.value)}));
+  node('previous-step').addEventListener('click',()=>move(-1));node('next-step').addEventListener('click',()=>move(1));node('reset-story').addEventListener('click',()=>view.update({step:0}));
+  node('story-carousel').addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();move(e.key==='ArrowRight'?1:-1);}});
+  let touch;
+  node('story-carousel').addEventListener('touchstart',e=>{touch={x:e.touches[0].clientX,y:e.touches[0].clientY};},{passive:true});
+  node('story-carousel').addEventListener('touchend',e=>{if(!touch)return;const dx=e.changedTouches[0].clientX-touch.x,dy=e.changedTouches[0].clientY-touch.y;if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.5)move(dx<0?1:-1);touch=null;},{passive:true});
+  document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>view.update({tab:b.dataset.tab})));
+  document.querySelector('.inspector-tabs').addEventListener('keydown',e=>{
+    const tabs=[...document.querySelectorAll('[data-tab]')],i=tabs.indexOf(document.activeElement);if(i<0||!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const n=e.key==='Home'?0:e.key==='End'?tabs.length-1:(i+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;tabs[n].click();tabs[n].focus();
   });
-  node('story-select').addEventListener('change',event=>view.update({story:event.target.value,step:0,actor:'all'}));
-  node('story-actor').addEventListener('change',event=>view.update({actor:event.target.value}));
-  node('previous-step').addEventListener('click',()=>view.update({step:view.state.step-1}));
-  node('next-step').addEventListener('click',()=>view.update({step:view.state.step+1}));
-  node('reset-story').addEventListener('click',()=>view.update({step:0}));
-  document.querySelectorAll('[data-tab]').forEach(button=>button.addEventListener('click',()=>view.update({tab:button.dataset.tab})));
 })();
