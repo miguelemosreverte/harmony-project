@@ -45,10 +45,10 @@ reproduces it. Previous/Next never wraps silently to the start.
 - [x] Commit 2: remove product/book runtime and navigation coupling.
   - [x] Replace book-specific product documentation with module documentation.
   - [x] Separate the book host and product host in development orchestration.
-- [ ] Commit 3: implement all four reader paths and prove the small interaction budget.
-  - [ ] Replace the shared control drawer and six audience presets with binary entrances.
-  - [ ] Simplify source, reviewer, original-author, workflow and chapter pages.
-  - [ ] Preserve actual source, all 32 recordings, exact quotations and useful URLs.
+- [x] Commit 3: implement all four reader paths and prove the small interaction budget.
+  - [x] Replace the shared control drawer and six audience presets with binary entrances.
+  - [x] Simplify source, reviewer, original-author, workflow and chapter pages.
+  - [x] Preserve actual source, all 32 recordings, exact quotations and useful URLs.
 - [ ] Commit 4: simplify live entry, financing, composition and package journeys.
   - [ ] Keep each live step within two interactions without hiding a dashboard.
   - [ ] Exercise real commands and recovery against one disposable network.

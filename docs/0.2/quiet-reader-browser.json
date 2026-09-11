@@ -1,0 +1,485 @@
+{
+  "base": "http://127.0.0.1:56202/design/0.2/",
+  "checks": [
+    "welcome at 1280 has at most two interactions: [\"I want to understand it.Follow the product, or explore its code.Begin →\",\"I want to verify it.Review the implementation, or trace the original proposal.Begin →\"]",
+    "welcome at 1280 fits the viewport",
+    "understand at 1280 has at most two interactions: [\"Show me what the product doesFollow people and applications through an observed handoff.Co\",\"Show me the implementationRead actual source, its purpose and the vertical slice it belong\"]",
+    "understand at 1280 fits the viewport",
+    "verify at 1280 has at most two interactions: [\"Review the architectureFollow manifests, contracts and execution. See the evidence and the\",\"Follow my original documentsRead each original passage beside what implements or explains \"]",
+    "verify at 1280 fits the viewport",
+    "product at 1280 has at most two interactions: [\"Follow Alice’s purchase.See the people, applications and handoffs in a recorded ledger exe\",\"Understand the mechanism.Daml contracts, Canton participants, and the boundary of the impl\"]",
+    "product at 1280 fits the viewport",
+    "purchase at 1280 has at most two interactions: [\"← Recorded outcomes\",\"Next scene →\"]",
+    "purchase at 1280 fits the viewport",
+    "outcomes at 1280 has at most two interactions: [\"Follow the approval.The observed result allows the handoff to continue.Follow this recordi\",\"Follow the refusal.See the refused action and the state that remains.Follow this recording\"]",
+    "outcomes at 1280 fits the viewport",
+    "transfer at 1280 has at most two interactions: [\"← Previous scene\",\"Next scene →\"]",
+    "transfer at 1280 fits the viewport",
+    "developer at 1280 has at most two interactions: [\"Return to the reading paths →\",\"Repository file tree\"]",
+    "developer at 1280 fits the viewport",
+    "reviewer at 1280 has at most two interactions: [\"← Choose a reading path\",\"Next relationship →\"]",
+    "reviewer at 1280 fits the viewport",
+    "author at 1280 has at most two interactions: [\"← Previous passage\",\"Next passage →\"]",
+    "author at 1280 fits the viewport",
+    "chapter at 1280 has at most two interactions: [\"← Previous chapter\",\"Next chapter →\"]",
+    "chapter at 1280 fits the viewport",
+    "coverage at 1280 has at most two interactions: [\"← Return to the original text\",\"Finish this reading path →\"]",
+    "coverage at 1280 fits the viewport",
+    "laboratory at 1280 has at most two interactions: [\"← Previous observation\",\"Next observation →\"]",
+    "laboratory at 1280 fits the viewport",
+    "sandbox at 1280 has at most two interactions: [\"Follow the recorded handoff →\",\"Return to Alice’s story →\"]",
+    "sandbox at 1280 fits the viewport",
+    "welcome at 390 has at most two interactions: [\"I want to understand it.Follow the product, or explore its code.Begin →\",\"I want to verify it.Review the implementation, or trace the original proposal.Begin →\"]",
+    "welcome at 390 fits the viewport",
+    "understand at 390 has at most two interactions: [\"Show me what the product doesFollow people and applications through an observed handoff.Co\",\"Show me the implementationRead actual source, its purpose and the vertical slice it belong\"]",
+    "understand at 390 fits the viewport",
+    "verify at 390 has at most two interactions: [\"Review the architectureFollow manifests, contracts and execution. See the evidence and the\",\"Follow my original documentsRead each original passage beside what implements or explains \"]",
+    "verify at 390 fits the viewport",
+    "product at 390 has at most two interactions: [\"Follow Alice’s purchase.See the people, applications and handoffs in a recorded ledger exe\",\"Understand the mechanism.Daml contracts, Canton participants, and the boundary of the impl\"]",
+    "product at 390 fits the viewport",
+    "purchase at 390 has at most two interactions: [\"← Recorded outcomes\",\"Next scene →\"]",
+    "purchase at 390 fits the viewport",
+    "outcomes at 390 has at most two interactions: [\"Follow the approval.The observed result allows the handoff to continue.Follow this recordi\",\"Follow the refusal.See the refused action and the state that remains.Follow this recording\"]",
+    "outcomes at 390 fits the viewport",
+    "transfer at 390 has at most two interactions: [\"← Previous scene\",\"Next scene →\"]",
+    "transfer at 390 fits the viewport",
+    "developer at 390 has at most two interactions: [\"Return to the reading paths →\",\"Repository file tree\"]",
+    "developer at 390 fits the viewport",
+    "reviewer at 390 has at most two interactions: [\"← Choose a reading path\",\"Next relationship →\"]",
+    "reviewer at 390 fits the viewport",
+    "author at 390 has at most two interactions: [\"← Previous passage\",\"Next passage →\"]",
+    "author at 390 fits the viewport",
+    "chapter at 390 has at most two interactions: [\"← Previous chapter\",\"Next chapter →\"]",
+    "chapter at 390 fits the viewport",
+    "coverage at 390 has at most two interactions: [\"← Return to the original text\",\"Finish this reading path →\"]",
+    "coverage at 390 fits the viewport",
+    "laboratory at 390 has at most two interactions: [\"← Previous observation\",\"Next observation →\"]",
+    "laboratory at 390 fits the viewport",
+    "sandbox at 390 has at most two interactions: [\"Follow the recorded handoff →\",\"Return to Alice’s story →\"]",
+    "sandbox at 390 fits the viewport",
+    "No browser exceptions or failed assets"
+  ],
+  "reports": [
+    {
+      "id": "welcome",
+      "width": 1280,
+      "page": "book-overview.html",
+      "purpose": "Choose whether to understand the product or verify it.",
+      "next": "Understand or Verify; both lead to a second, specific choice.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "I want to understand it.Follow the product, or explore its code.Begin →",
+          "I want to verify it.Review the implementation, or trace the original proposal.Begin →"
+        ]
+      },
+      "screenshot": "welcome-1280.png"
+    },
+    {
+      "id": "understand",
+      "width": 1280,
+      "page": "understand.html",
+      "purpose": "Choose product behavior or implementation.",
+      "next": "Follow the product or open the actual source tree.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "Show me what the product doesFollow people and applications through an observed handoff.Co",
+          "Show me the implementationRead actual source, its purpose and the vertical slice it belong"
+        ]
+      },
+      "screenshot": "understand-1280.png"
+    },
+    {
+      "id": "verify",
+      "width": 1280,
+      "page": "verify.html",
+      "purpose": "Choose architecture review or original-document review.",
+      "next": "Enter the reviewer path or the author path.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "Review the architectureFollow manifests, contracts and execution. See the evidence and the",
+          "Follow my original documentsRead each original passage beside what implements or explains "
+        ]
+      },
+      "screenshot": "verify-1280.png"
+    },
+    {
+      "id": "product",
+      "width": 1280,
+      "page": "workflows.html",
+      "purpose": "Explain application authority through a concrete handoff.",
+      "next": "Follow Alice or read the product mechanism.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "Follow Alice’s purchase.See the people, applications and handoffs in a recorded ledger exe",
+          "Understand the mechanism.Daml contracts, Canton participants, and the boundary of the impl"
+        ]
+      },
+      "screenshot": "product-1280.png"
+    },
+    {
+      "id": "purchase",
+      "width": 1280,
+      "page": "chapters/03-financing-to-offer.html?step=2",
+      "purpose": "Understand Northbank’s observed approval.",
+      "next": "Go back to the recorded outcomes or follow Alice’s proposal.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "← Recorded outcomes",
+          "Next scene →"
+        ]
+      },
+      "screenshot": "purchase-1280.png"
+    },
+    {
+      "id": "outcomes",
+      "width": 1280,
+      "page": "purchase-outcome.html",
+      "purpose": "Choose an observed approval or refusal.",
+      "next": "Two recorded branches, both with a finite continuation.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "Follow the approval.The observed result allows the handoff to continue.Follow this recordi",
+          "Follow the refusal.See the refused action and the state that remains.Follow this recording"
+        ]
+      },
+      "screenshot": "outcomes-1280.png"
+    },
+    {
+      "id": "transfer",
+      "width": 1280,
+      "page": "chapters/04-four-party-transfer.html?step=3",
+      "purpose": "Understand preparation before settlement.",
+      "next": "Previous or next recorded scene.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "← Previous scene",
+          "Next scene →"
+        ]
+      },
+      "screenshot": "transfer-1280.png"
+    },
+    {
+      "id": "developer",
+      "width": 1280,
+      "page": "code.html",
+      "purpose": "Select a file and read its purpose, exact source and slice.",
+      "next": "Use the one file tree or return to the reading paths.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "Return to the reading paths →",
+          "Repository file tree"
+        ]
+      },
+      "screenshot": "developer-1280.png"
+    },
+    {
+      "id": "reviewer",
+      "width": 1280,
+      "page": "reviewer.html",
+      "purpose": "Read the first implementation relationship and its limits.",
+      "next": "Previous or next authored relationship.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "← Choose a reading path",
+          "Next relationship →"
+        ]
+      },
+      "screenshot": "reviewer-1280.png"
+    },
+    {
+      "id": "author",
+      "width": 1280,
+      "page": "author.html?passage=proposal-53",
+      "purpose": "Compare original wording with its implementation context.",
+      "next": "Previous or next original passage; the companion follows automatically.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "← Previous passage",
+          "Next passage →"
+        ]
+      },
+      "screenshot": "author-1280.png"
+    },
+    {
+      "id": "chapter",
+      "width": 1280,
+      "page": "chapters/01-product.html",
+      "purpose": "Explain what Harmonia provides in readable prose.",
+      "next": "Previous or next chapter.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "← Previous chapter",
+          "Next chapter →"
+        ]
+      },
+      "screenshot": "chapter-1280.png"
+    },
+    {
+      "id": "coverage",
+      "width": 1280,
+      "page": "coverage.html",
+      "purpose": "Distinguish exact quotation coverage from implementation.",
+      "next": "Return to the documents or finish the reading path.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "← Return to the original text",
+          "Finish this reading path →"
+        ]
+      },
+      "screenshot": "coverage-1280.png"
+    },
+    {
+      "id": "laboratory",
+      "width": 1280,
+      "page": "laboratory.html?story=branch-approved&step=1",
+      "purpose": "Inspect one actual branch observation against its committed expectation.",
+      "next": "Previous or next observation in a finite recording sequence.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "← Previous observation",
+          "Next observation →"
+        ]
+      },
+      "screenshot": "laboratory-1280.png"
+    },
+    {
+      "id": "sandbox",
+      "width": 1280,
+      "page": "sandbox.html",
+      "purpose": "Explain the separate live application and its participant identity.",
+      "next": "Enter the live application when available, or follow the recording; return to Alice.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "Follow the recorded handoff →",
+          "Return to Alice’s story →"
+        ]
+      },
+      "screenshot": "sandbox-1280.png"
+    },
+    {
+      "id": "welcome",
+      "width": 390,
+      "page": "book-overview.html",
+      "purpose": "Choose whether to understand the product or verify it.",
+      "next": "Understand or Verify; both lead to a second, specific choice.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "I want to understand it.Follow the product, or explore its code.Begin →",
+          "I want to verify it.Review the implementation, or trace the original proposal.Begin →"
+        ]
+      },
+      "screenshot": "welcome-390.png"
+    },
+    {
+      "id": "understand",
+      "width": 390,
+      "page": "understand.html",
+      "purpose": "Choose product behavior or implementation.",
+      "next": "Follow the product or open the actual source tree.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "Show me what the product doesFollow people and applications through an observed handoff.Co",
+          "Show me the implementationRead actual source, its purpose and the vertical slice it belong"
+        ]
+      },
+      "screenshot": "understand-390.png"
+    },
+    {
+      "id": "verify",
+      "width": 390,
+      "page": "verify.html",
+      "purpose": "Choose architecture review or original-document review.",
+      "next": "Enter the reviewer path or the author path.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "Review the architectureFollow manifests, contracts and execution. See the evidence and the",
+          "Follow my original documentsRead each original passage beside what implements or explains "
+        ]
+      },
+      "screenshot": "verify-390.png"
+    },
+    {
+      "id": "product",
+      "width": 390,
+      "page": "workflows.html",
+      "purpose": "Explain application authority through a concrete handoff.",
+      "next": "Follow Alice or read the product mechanism.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "Follow Alice’s purchase.See the people, applications and handoffs in a recorded ledger exe",
+          "Understand the mechanism.Daml contracts, Canton participants, and the boundary of the impl"
+        ]
+      },
+      "screenshot": "product-390.png"
+    },
+    {
+      "id": "purchase",
+      "width": 390,
+      "page": "chapters/03-financing-to-offer.html?step=2",
+      "purpose": "Understand Northbank’s observed approval.",
+      "next": "Go back to the recorded outcomes or follow Alice’s proposal.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "← Recorded outcomes",
+          "Next scene →"
+        ]
+      },
+      "screenshot": "purchase-390.png"
+    },
+    {
+      "id": "outcomes",
+      "width": 390,
+      "page": "purchase-outcome.html",
+      "purpose": "Choose an observed approval or refusal.",
+      "next": "Two recorded branches, both with a finite continuation.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "Follow the approval.The observed result allows the handoff to continue.Follow this recordi",
+          "Follow the refusal.See the refused action and the state that remains.Follow this recording"
+        ]
+      },
+      "screenshot": "outcomes-390.png"
+    },
+    {
+      "id": "transfer",
+      "width": 390,
+      "page": "chapters/04-four-party-transfer.html?step=3",
+      "purpose": "Understand preparation before settlement.",
+      "next": "Previous or next recorded scene.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "← Previous scene",
+          "Next scene →"
+        ]
+      },
+      "screenshot": "transfer-390.png"
+    },
+    {
+      "id": "developer",
+      "width": 390,
+      "page": "code.html",
+      "purpose": "Select a file and read its purpose, exact source and slice.",
+      "next": "Use the one file tree or return to the reading paths.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "Return to the reading paths →",
+          "Repository file tree"
+        ]
+      },
+      "screenshot": "developer-390.png"
+    },
+    {
+      "id": "reviewer",
+      "width": 390,
+      "page": "reviewer.html",
+      "purpose": "Read the first implementation relationship and its limits.",
+      "next": "Previous or next authored relationship.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "← Choose a reading path",
+          "Next relationship →"
+        ]
+      },
+      "screenshot": "reviewer-390.png"
+    },
+    {
+      "id": "author",
+      "width": 390,
+      "page": "author.html?passage=proposal-53",
+      "purpose": "Compare original wording with its implementation context.",
+      "next": "Previous or next original passage; the companion follows automatically.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "← Previous passage",
+          "Next passage →"
+        ]
+      },
+      "screenshot": "author-390.png"
+    },
+    {
+      "id": "chapter",
+      "width": 390,
+      "page": "chapters/01-product.html",
+      "purpose": "Explain what Harmonia provides in readable prose.",
+      "next": "Previous or next chapter.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "← Previous chapter",
+          "Next chapter →"
+        ]
+      },
+      "screenshot": "chapter-390.png"
+    },
+    {
+      "id": "coverage",
+      "width": 390,
+      "page": "coverage.html",
+      "purpose": "Distinguish exact quotation coverage from implementation.",
+      "next": "Return to the documents or finish the reading path.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "← Return to the original text",
+          "Finish this reading path →"
+        ]
+      },
+      "screenshot": "coverage-390.png"
+    },
+    {
+      "id": "laboratory",
+      "width": 390,
+      "page": "laboratory.html?story=branch-approved&step=1",
+      "purpose": "Inspect one actual branch observation against its committed expectation.",
+      "next": "Previous or next observation in a finite recording sequence.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "← Previous observation",
+          "Next observation →"
+        ]
+      },
+      "screenshot": "laboratory-390.png"
+    },
+    {
+      "id": "sandbox",
+      "width": 390,
+      "page": "sandbox.html",
+      "purpose": "Explain the separate live application and its participant identity.",
+      "next": "Enter the live application when available, or follow the recording; return to Alice.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "Follow the recorded handoff →",
+          "Return to Alice’s story →"
+        ]
+      },
+      "screenshot": "sandbox-390.png"
+    }
+  ],
+  "errors": []
+}

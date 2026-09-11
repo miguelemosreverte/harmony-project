@@ -1,33 +1,23 @@
 (() => {
   const pane=document.getElementById('author-document-pane');if(!pane)return;
-  const view=HarmoniaView,atlas=HarmoniaAtlas,{query}=HarmoniaReader;
-  const frame=document.getElementById('companion-frame');let previous='';
-  const reveal=()=>{const section=document.getElementById('passage-'+view.state.passage);pane.scrollTop+=section.getBoundingClientRect().top-pane.getBoundingClientRect().top-12;};
-  document.fonts.ready.then(reveal);
+  const view=HarmoniaView,atlas=HarmoniaAtlas,frame=document.getElementById('companion-frame');
+  let selected='',scrolling=false;
+  const address=p=>view.href('author.html?passage='+p.id+'&source='+p.source);
   view.subscribe(s=>{
-    const passage=atlas.passages.find(p=>p.id===s.passage),slice=atlas.slices[passage.slice];
-    document.getElementById('author-document').value=s.source;
-    for(const section of pane.querySelectorAll('[data-passage]')){section.hidden=section.dataset.document!==s.source;section.classList.toggle('selected-passage',section.dataset.passage===s.passage);}
-    if(previous!==s.passage){reveal();previous=s.passage;}
-    const mode=!slice?'chapter':s.companion;
-    for(const b of document.querySelectorAll('[data-companion]')){b.hidden=(!slice&&b.dataset.companion!=='chapter');b.setAttribute('aria-pressed',String(b.dataset.companion===mode));}
+    const index=atlas.passages.findIndex(p=>p.id===s.passage),passage=atlas.passages[index],slice=atlas.slices[passage.slice];
+    document.getElementById('author-position').textContent=`Passage ${index+1} of ${atlas.passages.length}`;
+    for(const section of pane.children)section.classList.toggle('selected-passage',section.dataset.passage===s.passage);
+    if(selected!==s.passage&&!scrolling){const section=document.getElementById('passage-'+s.passage);pane.scrollTop+=section.getBoundingClientRect().top-pane.getBoundingClientRect().top-16;}selected=s.passage;
     let url;
-    if(mode==='diagram')url=query('reviewer.html',{slice:slice.id,embed:1});
-    else if(mode==='code')url=query('code.html',{file:slice.nodes[0].file,embed:1});
-    else if(mode==='workflow')url=['financing','transfer'].includes(slice.id)?query(`chapters/${slice.chapter}.html`,{step:0,embed:1}):query('laboratory.html',{story:({process:'branch-approved',composition:'composer-direct',packages:'package-builder',book:'execution-boundaries'})[slice.id],step:0,embed:1});
-    else url=query(`chapters/${passage.chapter}.html`,{view:'read',embed:1});
-    if(s.detail)url=new URL(s.detail,new URL(view.config.base,location.href)).href;
-    const embedded=new URL(url);embedded.searchParams.set('embed','1');for(const [key,fallback] of [['theme','light'],['text','standard'],['audience','explorer']]){if(s[key]===fallback)embedded.searchParams.delete(key);else embedded.searchParams.set(key,s[key]);}url=embedded.href;
-    let current='';try{current=frame.contentWindow.location.href;}catch{}
-    if(current!==url)frame.src=url;
+    if(['03-financing-to-offer','04-four-party-transfer'].includes(passage.chapter))url=`chapters/${passage.chapter}.html?step=2&embed=1`;
+    else if(slice)url='reviewer.html?slice='+slice.id+'&embed=1';
+    else url=`chapters/${passage.chapter}.html?view=read&embed=1`;
+    url=view.href(url);if(frame.getAttribute('src')!==url)frame.src=url;
     document.getElementById('companion-title').textContent=passage.title;
-    document.getElementById('companion-boundary').textContent=slice?slice.gap:'This passage is preserved as original context. Its inclusion does not establish implementation, publication, or adoption.';
-    const external=new URL(url);external.searchParams.delete('embed');document.getElementById('companion-open').href=external.href;
+    document.getElementById('companion-boundary').textContent=slice?slice.gap:'This original context is preserved. Inclusion does not establish implementation or adoption.';
+    const previous=document.getElementById('page-previous'),next=document.getElementById('page-next');previous.href=index?address(atlas.passages[index-1]):view.href('verify.html');previous.textContent=index?'← Previous passage':'← Choose a reading path';next.href=index+1<atlas.passages.length?address(atlas.passages[index+1]):view.href('coverage.html');next.textContent=index+1<atlas.passages.length?'Next passage →':'See the quotation coverage →';
+    for(const a of [previous,next])a.onclick=e=>{const p=new URL(a.href).searchParams.get('passage');if(p&&!e.metaKey&&!e.ctrlKey){e.preventDefault();view.update({passage:p});}};
   });
-  document.getElementById('author-document').addEventListener('change',e=>view.update({source:e.target.value,passage:'',detail:''}));
-  for(const b of document.querySelectorAll('[data-select-passage]'))b.addEventListener('click',()=>view.update({passage:b.dataset.selectPassage,detail:''}));
-  for(const section of pane.querySelectorAll('[data-passage]'))section.addEventListener('click',e=>{if(!e.target.closest('a,button,summary'))view.update({passage:section.dataset.passage,detail:''},{replace:true});});
-  for(const b of document.querySelectorAll('[data-companion]'))b.addEventListener('click',()=>view.update({companion:b.dataset.companion,detail:''}));
-  // Interactions in a reused view become part of the parent's shareable URL.
-  frame.addEventListener('load',()=>{try{const child=frame.contentWindow.HarmoniaView;if(child)child.subscribe(()=>{const base=new URL(view.config.base,location.href),u=new URL(frame.contentWindow.location.href),detail=u.pathname.slice(base.pathname.length)+u.search+u.hash;if(detail!==view.state.detail)view.update({detail},{replace:true});});}catch{}});
+  let pending;
+  pane.addEventListener('scroll',()=>{clearTimeout(pending);pending=setTimeout(()=>{const y=pane.getBoundingClientRect().top+24;const current=[...pane.children].reduce((best,n)=>Math.abs(n.getBoundingClientRect().top-y)<Math.abs(best.getBoundingClientRect().top-y)?n:best);if(current.dataset.passage!==selected){scrolling=true;view.update({passage:current.dataset.passage},{replace:true});scrolling=false;}},160);},{passive:true});
 })();

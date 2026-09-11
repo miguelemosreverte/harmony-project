@@ -99,3 +99,20 @@ def diagram_assets(source):
     if len(assets) != 2:
         raise ValueError("Expected both original architecture diagrams")
     return assets
+
+
+def passive(html):
+    """Readable document content has no controls; navigation is authored by the page."""
+    class Reader(HTMLParser):
+        def __init__(self):
+            super().__init__(convert_charrefs=False)
+            self.output=[]
+        def handle_starttag(self,tag,attrs):
+            mapped={'a':'span','details':'section','summary':'h3'}.get(tag,tag)
+            clean=[(key,value) for key,value in attrs if key not in {'href','tabindex','onclick','open'}]
+            self.output.append('<'+mapped+''.join(' '+key+('="'+escape(value,quote=True)+'"' if value is not None else '') for key,value in clean)+'>')
+        def handle_endtag(self,tag):self.output.append('</'+{'a':'span','details':'section','summary':'h3'}.get(tag,tag)+'>')
+        def handle_data(self,data):self.output.append(data)
+        def handle_entityref(self,name):self.output.append('&'+name+';')
+        def handle_charref(self,name):self.output.append('&#'+name+';')
+    reader=Reader();reader.feed(html);return ''.join(reader.output)

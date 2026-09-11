@@ -26,6 +26,6 @@
   view.subscribe(s=>{document.documentElement.dataset.embed=String(s.embed);document.documentElement.dataset.presentation=String(s.present);});
   for(const root of document.querySelectorAll('[data-slice-diagram],[data-chapter-diagram]')) {
     const slice=root.dataset.sliceDiagram||atlas.chapterSlices[root.dataset.chapterDiagram];
-    if(slice){diagram(root,slice);root.addEventListener('harmonia-select',e=>{location.href=query('reviewer.html',{slice,node:e.detail});});}
+    if(slice)diagram(root,slice);
   }
 })();

@@ -39,7 +39,7 @@ object BookApp extends IOApp.Simple:
         _ <- IO.raiseWhen(stories.isEmpty || chapters.isEmpty)(
           RuntimeException("This book has no stories or chapters")
         )
-        _ <- Resource.make(IO(new Inspector(dispatcher)))(i => IO(i.dispose())).use { inspector =>
+        _ <- {
           lazy val view: BookView = new BookView(
             stories,
             chapters,
@@ -51,8 +51,7 @@ object BookApp extends IOApp.Simple:
                 ) *> view.render(next) *> IO(
                   dom.window.dispatchEvent(new dom.Event("harmonia-view"))
                 )
-              ),
-            inspector
+              )
           )
           def current = BookNavigation.read(
             if dom.window.location.search.nonEmpty then dom.window.location.search

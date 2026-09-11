@@ -3,230 +3,279 @@ package harmonia.packages
 /** @module.slice
   *   packages
   * @module.role
-  *   Explain what can run
+  *   Inspect, then compile
   * @module.summary
-  *   The browser presents package origin, compilation, and the separate live-registration boundary.
+  *   One package journey separates its origin, reviewed mapping, compilation and live availability.
   */
 
 import cats.effect.{IO, Resource}
 import cats.effect.std.Dispatcher
 import harmonia.ui.Elements.*
 import harmonia.live.LiveApi
+import harmonia.scene.{WorkflowDiagram, WorkflowDiagramView, DiagramNode, DiagramEdge, DiagramState}
 import io.circe.Json
 import org.scalajs.dom
-import harmonia.scene.{WorkflowDiagram, WorkflowDiagramView, DiagramNode, DiagramEdge, DiagramState}
 import scala.concurrent.duration.*
 
-/** Package operations have their own bounded lifetime and no ledger command authority. */
+/** Each page presents one package and at most two possible actions. */
 final class PackagePanel(capability: String, dispatcher: Dispatcher[IO]):
-  private val root = element("section", "live-panel")
-  root.id = "package-builder"
-  private val fileInput = element("input").asInstanceOf[dom.html.Input]
-  fileInput.id = "builder-file"; fileInput.`type` = "file"; fileInput.accept = ".dar"
-  private var selectedSource = "participant"
+  private enum Page:
+    case Start, Input, Upload, Source
+    case Inspect(id: String)
+  private val root = element("section", "live-panel"); root.id = "package-builder"
   private var initialized = false
   private var busy = false
   private var message = ""
   private var snapshot = PackageState.empty
-  private var diagrams = Vector.empty[WorkflowDiagramView]
-
+  private var page: Page = Page.Start
+  private var sourceIndex = 0
+  private var diagram: Option[WorkflowDiagramView] = None
+  private val file = element("input").asInstanceOf[dom.html.Input]
+  file.id = "builder-file"; file.`type` = "file"; file.accept = ".dar"
+  private def readPage(): Unit =
+    val query = new dom.URLSearchParams(dom.window.location.search)
+    page = Option(query.get("package"))
+      .map(Page.Inspect(_))
+      .getOrElse(
+        Option(query.get("package-step"))
+          .flatMap(v =>
+            Vector(Page.Start, Page.Input, Page.Upload, Page.Source).find(_.toString == v)
+          )
+          .getOrElse(Page.Start)
+      )
+    sourceIndex =
+      Option(query.get("source-index")).flatMap(_.toIntOption).filter(_ >= 0).getOrElse(0)
+  readPage()
+  dom.window.addEventListener("popstate", (_: dom.Event) => { readPage(); draw() })
+  private def go(next: Page, replace: Boolean = false): Unit =
+    page = next
+    val url = new dom.URL(dom.window.location.href)
+    url.searchParams.delete("package"); url.searchParams.set("package-step", page.toString)
+    url.searchParams.set("source-index", sourceIndex.toString)
+    page match
+      case Page.Inspect(id) =>
+        url.searchParams.set("package", id); url.searchParams.delete("package-step")
+      case _ => ()
+    if replace then dom.window.history.replaceState(null, "", url.toString)
+    else if url.toString != dom.window.location.href then
+      dom.window.history.pushState(null, "", url.toString)
+    draw()
   def render(): dom.HTMLElement =
     if !initialized then
       initialized = true
-      run("Reading package sources", api("GET", "/api/builder"))
+      run("Reading package inputs", api("GET", "/api/builder"), _ => page, replace = true)
     root
-
-  private def api(method: String, path: String, input: Option[Json] = None): IO[Json] =
-    LiveApi.request(capability, method, path, input, deadline = 100.seconds)
-
-  private def run(label: String, operation: IO[Json]): Unit =
+  private def api(method: String, path: String, body: Option[Json] = None): IO[Json] =
+    LiveApi.request(capability, method, path, body, deadline = 100.seconds)
+  private def run(
+      label: String,
+      operation: IO[Json],
+      next: PackageState => Page,
+      replace: Boolean = false
+  ): Unit =
     if !busy then
       busy = true; message = label; draw()
       dispatcher.unsafeRunAndForget(
-        operation
-          .flatMap(value => IO.fromEither(value.as[PackageState]))
-          .attempt
-          .flatMap(result =>
-            IO {
-              busy = false
-              result match
-                case Right(value) => snapshot = value; message = "Package information refreshed"
-                case Left(error)  => message = error.getMessage
-              draw()
+        operation.flatMap(j => IO.fromEither(j.as[PackageState])).attempt.flatMap { result =>
+          IO {
+            busy = false
+            result match
+              case Right(value) => snapshot = value; message = ""; go(next(value), replace)
+              case Left(error)  => message = error.getMessage; draw()
+          }
+        }
+      )
+  private def latest(value: PackageState): Page =
+    value.inputs.lastOption.map(p => Page.Inspect(p.id)).getOrElse(Page.Start)
+  private def draw(): Unit =
+    diagram.foreach(_.dispose()); diagram = None; root.textContent = ""
+    append(root, element("p", "eyebrow", "Application integration"))
+    val status = element("p", "live-connection", message); status.id = "builder-status";
+    status.setAttribute("role", "status")
+    if message.nonEmpty then append(root, status)
+    if busy then append(root, element("h1", text = "Working on the package…"))
+    else
+      page match
+        case Page.Start if snapshot.inputs.nonEmpty =>
+          append(
+            root,
+            element("h1", text = "Continue an integration."),
+            button("Review the latest package →", "primary", "builder-latest")(
+              go(latest(snapshot))
+            ),
+            button("Inspect another package →", "secondary", "builder-another")(go(Page.Input))
+          )
+        case Page.Start | Page.Input =>
+          append(
+            root,
+            element("h1", text = "Where is the application?"),
+            element(
+              "p",
+              text = "Inspect the compiled DAR before deciding how an action can participate."
+            ),
+            button("Upload a local DAR", "primary", "builder-local")(go(Page.Upload)),
+            button("Use a verified source", "secondary", "builder-remote")(go(Page.Source))
+          )
+        case Page.Upload =>
+          val label = element("label", text = "Choose a DAR, up to 8 MiB.");
+          label.setAttribute("for", "builder-file")
+          append(
+            root,
+            element("h1", text = "Inspect your application."),
+            label,
+            file,
+            button("Inspect this DAR →", "primary", "builder-upload") {
+              Option(file.files).filter(_.length > 0).map(_(0)) match
+                case Some(selected) if selected.size <= 8 * 1024 * 1024 =>
+                  run(
+                    "Inspecting the uploaded package",
+                    LiveApi.request(
+                      capability,
+                      "POST",
+                      "/api/builder/upload",
+                      None,
+                      Some(selected),
+                      100.seconds
+                    ),
+                    latest
+                  )
+                case _ => message = "Choose a DAR no larger than 8 MiB."; draw()
             }
           )
-      )
-
-  private def draw(): Unit =
-    diagrams.foreach(_.dispose()); diagrams = Vector.empty
-    val focused = Option(dom.document.activeElement).filter(root.contains).map(_.id)
-    root.textContent = ""
-    append(
-      root,
-      element("h2", text = "Bring an application package"),
-      element(
-        "p",
-        text =
-          "Inspect a DAR, check its identity, and generate a portable adapter project for a reviewed mapping. Newly generated actions need typed registration and a fresh evaluation before they can run here."
-      )
-    )
-    val status = element("p", "live-connection", (if busy then "Working · " else "") + message)
-    status.id = "builder-status"; status.setAttribute("role", "status"); append(root, status)
-    val refresh = button("Refresh package inputs", "secondary", "builder-refresh") {
-      run("Reading current package inputs", api("GET", "/api/builder"))
-    }
-    refresh.disabled = busy
-    append(root, refresh)
-    val controls = element("div", "composition-fields")
-    val local = element("div")
-    val label = element("label", text = "Local DAR · at most 8 MiB");
-    label.setAttribute("for", "builder-file")
-    val file = fileInput
-    file.disabled = busy
-    val upload = button("Inspect selected DAR", "primary", "builder-upload") {
-      Option(file.files).filter(_.length > 0) match
-        case None => message = "Choose a local DAR file first"; draw()
-        case Some(files) =>
-          val selected = files(0)
-          if selected.size > 8 * 1024 * 1024 then
-            message = "Upload a DAR no larger than 8 MiB"; draw()
-          else
-            run(
-              "Inspecting uploaded package",
-              LiveApi.request(
-                capability,
-                "POST",
-                "/api/builder/upload",
-                None,
-                Some(selected),
-                100.seconds
+        case Page.Source =>
+          val sources = Vector(
+            "participant" -> "The local participant’s legacy application"
+          ) ++ snapshot.sources.map(s => s.id -> s.source)
+          sourceIndex = math.min(sourceIndex, sources.size - 1)
+          val (id, label) = sources(sourceIndex)
+          append(
+            root,
+            element("h1", text = label),
+            element(
+              "p",
+              text =
+                s"Verified source ${sourceIndex + 1} of ${sources.size}. The operator supplies this source; a business session receives no administrator access."
+            ),
+            button("Retrieve and inspect →", "primary", "builder-retrieve") {
+              run(
+                "Retrieving the verified package",
+                api(
+                  "POST",
+                  "/api/builder/retrieve",
+                  Some(Json.obj("source" -> Json.fromString(id)))
+                ),
+                latest
               )
-            )
-    }
-    upload.disabled = busy || snapshot.remaining == 0
-    append(local, label, file, upload)
-    val remote = element("div")
-    val caption = element("label", text = "Verified source");
-    caption.setAttribute("for", "builder-source")
-    val select = element("select").asInstanceOf[dom.html.Select]; select.id = "builder-source";
-    select.disabled = busy
-    val options =
-      Vector("participant" -> "Local participant · legacy DAR export") ++ snapshot.sources.map(s =>
-        s.id -> s.id
-      )
-    options.foreach { (id, title) =>
-      val option = element("option", text = title).asInstanceOf[dom.html.Option]; option.value = id;
-      append(select, option)
-    }
-    select.value = selectedSource
-    select.onchange = _ => selectedSource = select.value
-    val retrieve = button("Retrieve and inspect", "primary", "builder-retrieve") {
-      val source = select.value
-      run(
-        "Retrieving verified package",
-        api("POST", "/api/builder/retrieve", Some(Json.obj("source" -> Json.fromString(source))))
-      )
-    }
-    retrieve.disabled = busy || snapshot.remaining == 0
-    append(remote, caption, select, retrieve); append(controls, local, remote);
-    append(root, controls)
-    append(
-      root,
-      element(
-        "p",
-        text =
-          s"${snapshot.remaining} input slots remain. Participant exports are prepared by the local operator; business sessions do not gain administrator access."
-      )
-    )
-    snapshot.inputs.reverse.foreach { value =>
-      val id = value.id
-      val card = element("article", "composition-record")
-      append(
-        card,
-        element("h3", text = value.matchedSource.getOrElse("Inspected package")),
-        element("p", text = value.diagnostic),
-        element("p", text = "Daml-LF " + value.lf)
-      )
-      val diagramRoot = element("div")
-      append(card, diagramRoot)
-      val diagram = new WorkflowDiagramView(diagramRoot)
-      diagrams :+= diagram
-      val nodes = Vector(
-        DiagramNode(
-          "input",
-          "Inspect the DAR",
-          "Compiled package metadata",
-          "Package input",
-          DiagramState.Complete
-        ),
-        DiagramNode(
-          "mapping",
-          "Review the mapping",
-          value.diagnostic,
-          "Binding",
-          if value.matchedSource.isDefined then DiagramState.Complete else DiagramState.Refused
-        ),
-        DiagramNode(
-          "compile",
-          "Compile the adapter",
-          "Portable project",
-          "Daml compiler",
-          if value.compiled then DiagramState.Complete
-          else if value.canGenerate then DiagramState.Current
-          else DiagramState.Pending
-        ),
-        DiagramNode(
-          "register",
-          "Register and evaluate",
-          "Separate typed registration and fresh evaluation",
-          "Live workspace",
-          if value.availableLive then DiagramState.Complete else DiagramState.Pending
-        )
-      )
-      diagram.render(
-        WorkflowDiagram(
-          "From package identity to usable integration.",
-          "Compilation and live availability are separate observed facts.",
-          nodes,
-          nodes
-            .zip(nodes.drop(1))
-            .map((a, b) =>
-              DiagramEdge(
-                a.id,
-                b.id,
-                if b.state == DiagramState.Complete then DiagramState.Complete
-                else DiagramState.Pending
-              )
-            )
-        )
-      )
-      val details = element("details")
-      append(details, element("summary", text = "Package identity and origin"))
-      Vector("SHA-256" -> value.sha256, "Package" -> value.packageId, "Origin" -> value.origin)
-        .foreach { (key, content) =>
-          append(details, element("p", text = s"$key: $content"))
-        }
-      append(card, details)
-      if value.compiled then
-        append(
-          card,
-          element("p", text = "Adapter library and example compiled successfully."),
-          button("Download compiled project", "primary", "builder-download-" + id)(download(id))
-        )
-      else if value.canGenerate then
-        val generate = button("Generate and compile project", "primary", "builder-generate-" + id) {
-          run(
-            "Generating and compiling the reviewed mapping",
-            api("POST", "/api/builder/generate", Some(Json.obj("id" -> Json.fromString(id))))
+            },
+            button(
+              if sourceIndex + 1 < sources.size then "Next source →" else "Upload a DAR instead →",
+              "secondary",
+              "builder-next-source"
+            ) {
+              if sourceIndex + 1 < sources.size then { sourceIndex += 1; go(Page.Source) }
+              else go(Page.Upload)
+            }
           )
-        }
-        generate.disabled = busy; append(card, generate)
-      append(root, card)
-    }
-
-    focused
-      .flatMap(id => Option(dom.document.getElementById(id)))
-      .foreach(_.asInstanceOf[dom.HTMLElement].focus())
+        case Page.Inspect(id) =>
+          snapshot.inputs.find(_.id == id) match
+            case None =>
+              append(
+                root,
+                element("h1", text = "This package is not in the current workspace."),
+                button("Refresh the workspace", "primary", "builder-refresh")(
+                  run("Reading package inputs", api("GET", "/api/builder"), _ => Page.Inspect(id))
+                ),
+                button("Choose an input →", "secondary", "builder-another")(go(Page.Input))
+              )
+            case Some(value) =>
+              append(
+                root,
+                element("h1", text = value.matchedSource.getOrElse("Inspected application")),
+                element("p", text = value.diagnostic)
+              )
+              val canvas = element("div"); append(root, canvas)
+              val renderer = new WorkflowDiagramView(canvas); diagram = Some(renderer)
+              val nodes = Vector(
+                DiagramNode(
+                  "input",
+                  "Inspect the DAR",
+                  "Compiled package identity",
+                  "Application",
+                  DiagramState.Complete
+                ),
+                DiagramNode(
+                  "mapping",
+                  "Review the mapping",
+                  value.diagnostic,
+                  "Binding",
+                  if value.matchedSource.isDefined then DiagramState.Complete
+                  else DiagramState.Refused
+                ),
+                DiagramNode(
+                  "compile",
+                  "Compile the adapter",
+                  "Portable project",
+                  "Daml compiler",
+                  if value.compiled then DiagramState.Complete
+                  else if value.canGenerate then DiagramState.Current
+                  else DiagramState.Pending
+                ),
+                DiagramNode(
+                  "register",
+                  "Register and evaluate",
+                  "Separate typed registration and fresh evaluation",
+                  "Live workspace",
+                  if value.availableLive then DiagramState.Complete else DiagramState.Pending
+                )
+              )
+              renderer.render(
+                WorkflowDiagram(
+                  "From application identity to usable integration.",
+                  "Compilation and live availability are separate observed facts.",
+                  nodes,
+                  nodes
+                    .zip(nodes.drop(1))
+                    .map((a, b) =>
+                      DiagramEdge(
+                        a.id,
+                        b.id,
+                        if b.state == DiagramState.Complete then DiagramState.Complete
+                        else DiagramState.Pending
+                      )
+                    )
+                )
+              )
+              if value.compiled then
+                append(
+                  root,
+                  button("Download the compiled project →", "primary", "builder-download-" + id)(
+                    download(id)
+                  )
+                )
+              else if value.canGenerate then
+                append(
+                  root,
+                  button("Generate and compile →", "primary", "builder-generate-" + id) {
+                    run(
+                      "Generating and compiling the reviewed mapping",
+                      api(
+                        "POST",
+                        "/api/builder/generate",
+                        Some(Json.obj("id" -> Json.fromString(id)))
+                      ),
+                      _ => Page.Inspect(id)
+                    )
+                  }
+                )
+              append(
+                root,
+                button("Choose another input →", "secondary", "builder-another")(go(Page.Input)),
+                element(
+                  "p",
+                  "live-footnote",
+                  s"Daml-LF ${value.lf} · Origin: ${value.origin}\nSHA-256: ${value.sha256}\nPackage: ${value.packageId}"
+                )
+              )
 
   private def download(id: String): Unit = dispatcher.unsafeRunAndForget(
     LiveApi
@@ -236,8 +285,8 @@ final class PackagePanel(capability: String, dispatcher: Dispatcher[IO]):
           .make(IO(dom.URL.createObjectURL(blob)))(url => IO(dom.URL.revokeObjectURL(url)))
           .use { url =>
             IO {
-              val anchor = element("a").asInstanceOf[dom.html.Anchor]
-              anchor.href = url; anchor.download = "harmonia-generated-project.zip"; anchor.click()
+              val a = element("a").asInstanceOf[dom.html.Anchor]; a.href = url;
+              a.download = "harmonia-generated-project.zip"; a.click()
             } *> IO.sleep(1.second)
           }
       }

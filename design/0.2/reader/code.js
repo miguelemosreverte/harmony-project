@@ -1,74 +1,31 @@
 (() => {
   const tree=document.getElementById('file-tree');if(!tree)return;
-  const view=HarmoniaView,atlas=HarmoniaAtlas,{node,link,query,diagram,source,citation}=HarmoniaReader;
+  const view=HarmoniaView,atlas=HarmoniaAtlas,{node,diagram,source}=HarmoniaReader;
   const code=document.getElementById('source-code'),map=document.getElementById('source-diagram'),notes=document.getElementById('source-notes');
-  let loaded='',treeKey='',request=0;
-  function fileTree(s) {
-    const key=[s.q,s.scope].join('|');
-    if(key!==treeKey||!tree.children.length) {
-      treeKey=key;tree.replaceChildren();
-      const files=Object.values(atlas.files).filter(f=>(s.scope==='all'||f.path.startsWith(s.scope+'/'))&&f.path.toLowerCase().includes(s.q.toLowerCase()));
-      const branch=()=>({folders:new Map(),files:[]}),root=branch();
-      for(const file of files) {
-        let current=root;
-        for(const part of file.path.split('/').slice(0,-1)){if(!current.folders.has(part))current.folders.set(part,branch());current=current.folders.get(part);}
-        current.files.push(file);
-      }
-      function append(parent,folder,prefix='') {
-        for(const [name,child] of folder.folders) {
-          let label=name,descendant=child;
-          while(!descendant.files.length&&descendant.folders.size===1){const [part,next]=[...descendant.folders][0];label+='/'+part;descendant=next;}
-          const path=prefix+label,d=node('details'),title=node('summary',label);d.dataset.folder=path;d.open=!!s.q;d.append(title);parent.append(d);append(d,descendant,path+'/');
-        }
-        for(const file of folder.files){
-          const a=link(file.path.split('/').at(-1),query('code.html',{file:file.path,line:1,scope:s.scope,q:s.q}));a.dataset.file=file.path;a.title=file.path;a.addEventListener('click',e=>{if(e.metaKey||e.ctrlKey)return;e.preventDefault();view.update({file:file.path,line:1,codeTab:'code'});});parent.append(a);
-        }
-      }
-      append(tree,root);
-      if(!files.length)tree.append(node('p','No source paths match this search.'));
+  let loaded='',request=0;
+  if(view.state.embed){tree.parentElement.remove();document.querySelector('.quiet-return').remove();}
+  else {
+    const branch=()=>({folders:new Map(),files:[]}),root=branch();
+    for(const file of Object.values(atlas.files)){
+      let current=root;for(const part of file.path.split('/').slice(0,-1)){if(!current.folders.has(part))current.folders.set(part,branch());current=current.folders.get(part);}current.files.push(file);
     }
-    for(const a of tree.querySelectorAll('[data-file]')) {
-      const selected=a.dataset.file===s.file;a.setAttribute('aria-current',selected?'page':'false');
-      if(selected){let d=a.closest('details');while(d){d.open=true;d=d.parentElement.closest('details');}}
+    function append(parent,folder,prefix=''){
+      for(const [name,child] of folder.folders){let label=name,descendant=child;while(!descendant.files.length&&descendant.folders.size===1){const [part,next]=[...descendant.folders][0];label+='/'+part;descendant=next;}const d=node('details'),title=node('summary',label);d.dataset.folder=prefix+label;d.append(title);parent.append(d);append(d,descendant,prefix+label+'/');}
+      for(const file of folder.files){const a=node('a',file.path.split('/').at(-1));a.href=view.href('code.html?file='+encodeURIComponent(file.path));a.dataset.file=file.path;a.title=file.path;a.onclick=e=>{if(e.metaKey||e.ctrlKey)return;e.preventDefault();view.update({file:file.path,line:1});};parent.append(a);}
     }
-    const active=tree.querySelector('[aria-current=page]'),pane=tree;
-    if(active){const a=active.getBoundingClientRect(),r=pane.getBoundingClientRect();if(a.top<r.top||a.bottom>r.bottom)pane.scrollTop+=a.top-r.top-pane.clientHeight/2;}
-  }
-  function describe(file,slice) {
-    const context=atlas.contexts[file.context];
-    notes.replaceChildren(node('p',file.owner,'eyebrow'),node('h2',file.annotation.role||file.path.split('/').at(-1)),node('p',file.annotation.summary||context.summary));
-    if(context){notes.append(node('h3',context.title),node('p',file.annotation.summary?context.summary:`Package context shared by ${context.files.length} files.`,'reader-footnote'));const related=node('details');related.append(node('summary','Files in this group'));for(const path of context.files)related.append(link(path,query('code.html',{file:path})));notes.append(related);}
-    const stats=node('p',`${file.lines.toLocaleString()} lines · ${file.language}`,'reader-footnote');notes.append(stats);
-    const download=link('Open the original file ↗','../../'+file.path);download.download=file.path.split('/').at(-1);notes.append(download);
-    if(file.annotation.line)notes.append(link('Jump to its documentation',query('code.html',{file:file.path,line:file.annotation.line})));
-    if(slice)notes.append(node('h3','This vertical slice'),node('p',slice.question),link('Review the slice diagram →',query('reviewer.html',{slice:slice.id})),citation(slice),node('h3','Boundary to remember'),node('p',slice.gap));
-    const hash=node('details');hash.append(node('summary','Source fingerprint'),node('code',file.sha256));notes.append(hash);
+    append(tree,root);
   }
   view.subscribe(async s=>{
-    fileTree(s);document.getElementById('file-search').value=s.q;document.getElementById('source-scope').value=s.scope;
-    const file=atlas.files[s.file],slice=atlas.slices[file.annotation.slice||file.slices?.[0]||atlas.contexts[file.context]?.slice];
-    document.getElementById('source-name').textContent=s.file.split('/').at(-1);
-    document.getElementById('source-location').textContent=s.file;
-    document.getElementById('source-counts').textContent=`This checkout: ${atlas.counts.files.toLocaleString()} source files · ${atlas.counts.lines.toLocaleString()} lines · ${atlas.counts.annotated} file annotations · ${Object.keys(atlas.contexts).length} documented groups. Generated files and private runtime state are excluded.`;
-    for(const b of document.querySelectorAll('[data-code-tab]')){b.hidden=b.dataset.codeTab==='diagram'&&!slice;b.setAttribute('aria-pressed',String(b.dataset.codeTab===s.codeTab));}
-    code.hidden=s.codeTab==='diagram'&&!!slice;map.hidden=!code.hidden;
-    describe(file,slice);
-    if(!map.hidden)diagram(map,slice.id,slice.nodes.find(n=>n.file===s.file)?.id);
-    if(loaded!==s.file){
-      const ticket=++request;loaded='';code.replaceChildren(node('p','Loading this source file…'));
-      try {
-        const data=await source(s.file);if(ticket!==request||view.state.file!==s.file)return;
-        const fragment=document.createDocumentFragment();
-        data.lines.forEach((html,i)=>{const row=node('div','','code-line');row.id='code-L'+(i+1);row.dataset.line=i+1;const a=link(String(i+1),query('code.html',{file:s.file,line:i+1}));a.setAttribute('aria-label',`Line ${i+1}`);a.addEventListener('click',e=>{if(e.metaKey||e.ctrlKey)return;e.preventDefault();view.update({line:i+1});});const content=node('code');content.innerHTML=html||' ';row.append(a,content);fragment.append(row);});
-        code.replaceChildren(fragment);loaded=s.file;
-      }catch(error){code.replaceChildren(node('p',error.message));return;}
-    }
-    for(const row of code.children)row.classList.toggle('selected-line',Number(row.dataset.line)===view.state.line);
-    const selected=document.getElementById('code-L'+view.state.line);
-    if(selected&&!code.hidden)code.scrollTop+=selected.getBoundingClientRect().top-code.getBoundingClientRect().top-80;
+    const file=atlas.files[s.file],context=atlas.contexts[file.context],slice=atlas.slices[file.annotation.slice||file.slices?.[0]||context.slice];
+    for(const a of tree.querySelectorAll('[data-file]')){const active=a.dataset.file===s.file;a.setAttribute('aria-current',active?'page':'false');if(active){let d=a.closest('details');while(d){d.open=true;d=d.parentElement.closest('details');}}}
+    const active=tree.querySelector('[aria-current=page]');if(active){const a=active.getBoundingClientRect(),r=tree.getBoundingClientRect();if(a.top<r.top||a.bottom>r.bottom)tree.scrollTop+=a.top-r.top-tree.clientHeight/2;}
+    document.getElementById('source-name').textContent=s.file.split('/').at(-1);document.getElementById('source-location').textContent=s.file;
+    notes.replaceChildren(node('p',file.annotation.summary||context.summary,'source-purpose'),node('p',`${context.title} · ${file.lines} lines · ${file.language}`,'citation'));
+    if(slice){diagram(map,slice.id,slice.nodes.find(n=>n.file===s.file)?.id);}
+    else map.replaceChildren(node('p',context.summary));
+    document.getElementById('source-counts').textContent=`${atlas.counts.files} source files · ${atlas.counts.lines.toLocaleString()} lines. Exact source is exported from this checkout. SHA-256 ${file.sha256}`;
+    if(loaded!==s.file){const ticket=++request;loaded='';code.replaceChildren(node('p','Reading the source…'));try{const data=await source(s.file);if(ticket!==request)return;const fragment=document.createDocumentFragment();data.lines.forEach((html,i)=>{const row=node('div','','code-line');row.id='code-L'+(i+1);row.dataset.line=i+1;const number=node('span',String(i+1),'line-number'),content=node('code');content.innerHTML=html||' ';row.append(number,content);fragment.append(row);});code.replaceChildren(fragment);loaded=s.file;}catch(error){code.replaceChildren(node('p',error.message));return;}}
+    for(const row of code.children)row.classList.toggle('selected-line',Number(row.dataset.line)===s.line);
+    code.scrollTop=0;if(s.line>1){const selected=document.getElementById('code-L'+s.line);code.scrollTop=selected.offsetTop-code.offsetTop-50;}
   });
-  document.getElementById('file-search').addEventListener('input',e=>view.update({q:e.target.value},{replace:true}));
-  document.getElementById('source-scope').addEventListener('change',e=>view.update({scope:e.target.value}));
-  for(const button of document.querySelectorAll('[data-code-tab]'))button.addEventListener('click',()=>view.update({codeTab:button.dataset.codeTab}));
-  map.addEventListener('harmonia-select',e=>{const file=atlas.files[view.state.file],slice=atlas.slices[file.annotation.slice||file.slices?.[0]||atlas.contexts[file.context]?.slice],target=slice.nodes.find(n=>n.id===e.detail);if(target)view.update({file:target.file,line:1,codeTab:'code'});});
 })();

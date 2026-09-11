@@ -1,75 +1,47 @@
-// Project recorded observations into a shared, typed Scala/HTML scene.
+// A finite sequence of observed scenes. No selectors, disclosures or clickable progress dots.
 (() => {
-  'use strict';
-  const view = window.HarmoniaView;
-  const node = id => document.getElementById(id);
-  const tasks={financing:['Make the handoff yourself.','First, the bank approves a private financing case. Then the buyer uses that approval to continue.'],composer:['Agree on a plan. Then run it.','The bank proposes the actions. The buyer accepts that exact plan. Each participant executes the next action assigned to them.'],packages:['Bring a real application package.','Use the bank session to inspect a DAR, review its mapping, and compile the adapter. Registration and fresh evaluation determine what can run.']};
-  const taskForChapter={'05-bring-an-application':'packages','06-compose-a-workflow':'composer'};
-  document.querySelectorAll('.live-sandbox-link').forEach(a=>{a.href=view.href('sandbox.html?task='+(taskForChapter[view.config.slug]||'financing'));});
-  if(node('live-entry'))view.subscribe(s=>{
-    node('sandbox-title').textContent=tasks[s.task][0];node('sandbox-lead').textContent=tasks[s.task][1];
-    if(window.HarmoniaLiveRoot){
-      const a=document.createElement('a'),url=new URL(window.HarmoniaLiveRoot,location.href);url.searchParams.set('view',s.task);a.href=url.href;a.className='button primary';a.textContent='Open the '+(s.task==='composer'?'workflow composer':s.task==='packages'?'package workspace':'financing workspace')+' →';
-      const p=document.createElement('p');p.textContent='Your participant stays with this tab. If you have not entered yet, the workspace explains how to use your private launcher link. Open Bank or Buyer in its own tab.';
-      node('live-entry').replaceChildren(a,p);
+  const view=HarmoniaView,{node}=HarmoniaReader;
+  const enter=document.getElementById('sandbox-enter');
+  if(enter&&window.HarmoniaLiveRoot){const u=new URL(HarmoniaLiveRoot);u.searchParams.set('view',view.state.task);enter.href=u.href;enter.textContent='Enter the live workspace →';}
+  const scene=document.getElementById('story-scene'),laboratory=document.getElementById('laboratory-stage');
+  if(!scene&&!laboratory)return;
+  const previous=document.getElementById('previous-step'),next=document.getElementById('next-step');
+  const move=(url)=>location.href=view.href(url);
+  let back,forward;
+  view.subscribe(s=>{
+    const story=view.config.stories[s.story],units=story.presentation.units;
+    if(scene){
+      const purchase=story.presentation.kind==='Purchase';
+      const sequence=purchase?(s.story==='purchase-approved'?[0,2,5,8]:[0,...units.flatMap((u,i)=>u.actual.outcome==='committed'||u.id==='rejected-financing'?[i+1]:[])]):[0,...units.flatMap((u,i)=>u.actual.outcome==='committed'||u.id==='settle'?[i+1]:[])];
+      if(!sequence.includes(units.length))sequence.push(units.length);
+      const index=Math.max(0,sequence.findLastIndex(n=>n<=s.step));
+      const frame=JSON.parse(projectHarmoniaRecording(JSON.stringify(story),s.step,'all'));
+      renderHarmoniaScene(scene,JSON.stringify(frame));
+      document.getElementById('recorded-step').textContent=`${index+1} of ${sequence.length}`;
+      document.getElementById('scene-detail').textContent=s.step?`Observed ${units[s.step-1].actual.outcome}: ${units[s.step-1].actor} · ${units[s.step-1].action.replaceAll('-',' ')}.`:'Start with the people and the application they rely on.';
+      document.getElementById('mechanism-detail').textContent=purchase?'Northbank signs a result for a specific consumer, subject and continuation. Alice’s next action must present that result. Ben and Sofia pass the resulting proposal under the property application’s own choices.':'The source and destination prepare separately. The final eligible Daml transaction exercises both custody interfaces. A refusal rolls back that transaction; earlier preparation remains observable.';
+      const decision=purchase?'purchase-outcome.html':'transfer-outcome.html';
+      back=()=>index>1?view.update({step:sequence[index-1]}):move(index===0?'workflows.html':decision);
+      forward=()=>s.step===0?move(decision):index+1<sequence.length?view.update({step:sequence[index+1]}):move(purchase?'chapters/04-four-party-transfer.html':'chapters/05-bring-an-application.html');
+      previous.textContent=index===0?'← Product overview':index===1?'← Recorded outcomes':'← Previous scene';
+      next.textContent=s.step===0?'Follow a recorded outcome →':index+1<sequence.length?'Next scene →':'Continue the book →';
+    } else {
+      const keys=Object.keys(view.config.stories),storyIndex=keys.indexOf(s.story),step=Math.min(s.step,units.length-1),unit=units[step];
+      document.getElementById('laboratory-title').textContent=story.title;document.getElementById('laboratory-lead').textContent=story.description;
+      document.getElementById('laboratory-position').textContent=`Example ${storyIndex+1} of ${keys.length} · observation ${step+1} of ${units.length}`;
+      if(['Purchase','Transfer'].includes(story.presentation.kind))renderHarmoniaScene(laboratory,projectHarmoniaRecording(JSON.stringify(story),step+1,'all'));
+      else renderHarmoniaDiagram(laboratory,projectHarmoniaDiagram(JSON.stringify(story),step));
+      const detail=document.getElementById('laboratory-observation');detail.replaceChildren(node('h2',`${unit.actor}: ${unit.action.replaceAll('-',' ')}`),node('p',`Observed outcome: ${unit.actual.outcome||unit.outcome_label}. ${story.differences?.length?'The recording contains differences from its expectation.':'The recorded result matches the committed expectation.'}`));
+      const columns=node('div','','observed-comparison');for(const [title,value] of [['Committed expectation',unit.expected],['Recorded observation',unit.actual]]){const column=node('section');column.append(node('h3',title),node('pre',JSON.stringify(value,null,2)));columns.append(column);}detail.append(columns);
+      back=()=>step?view.update({step:step-1}):storyIndex?view.update({story:keys[storyIndex-1],step:view.config.stories[keys[storyIndex-1]].presentation.units.length-1}):move('workflows.html');
+      forward=()=>step+1<units.length?view.update({step:step+1}):storyIndex+1<keys.length?view.update({story:keys[storyIndex+1],step:0}):move('coverage.html');
+      previous.textContent=step?'← Previous observation':storyIndex?'← Previous example':'← Product overview';next.textContent=step+1<units.length?'Next observation →':storyIndex+1<keys.length?'Next example →':'Finish the recorded review →';
     }
+    document.getElementById('recording-provenance').textContent=`Historical Canton recording · revision ${story.provenance.revision.slice(0,12)} · ${story.provenance.recorded_at}. Playback submits no transactions.`;
   });
-  if (window.HarmoniaLaboratory && node('chapter-evidence')) {
-    const a=document.createElement('a');a.href=view.href(window.HarmoniaLaboratory);a.textContent='Open all recorded experiments →';node('chapter-evidence').append(a);
-  }
-  if (!node('story-select')) return;
-  const names = {'assess-financing':'Assess financing','forge-proposal':'Attempt a direct proposal','open-offer':'Prepare the offer','make-proposal':'Make the proposal','receive-proposal':'Receive the proposal','relay-proposal':'Relay the proposal','agree-trade':'Agree the trade','lock-position':'Lock the position','confirm-source':'Confirm the source','prepare-destination':'Prepare the destination','confirm-destination':'Confirm readiness','withdraw-directly':'Attempt a direct withdrawal',settle:'Settle the trade'};
-  const reasons = {'not-visible':'The required private contract is not visible to this actor.',unauthorized:'This actor does not have the required authority.','application-rejected':'The application refused this attempt under its rules.','destination-rejected':'The destination refused receipt. The final transaction rolled back; the earlier source lock remains.'};
-  const mainAttempt = u => u.actual.outcome==='committed' || ['rejected-financing','settle'].includes(u.id);
-  const purchaseBeats=['Documents','Approval','Proposal','Offer'];
-  let sequence=[];
-  const beatIndex=step=>{
-    const exact=sequence.indexOf(step), next=sequence.findIndex(candidate=>candidate>step);
-    return exact>=0?exact:next>=0?next:sequence.length-1;
-  };
-  view.subscribe(s => {
-    const story=view.config.stories[s.story], units=story.presentation.units, unit=units[s.step-1];
-    const purchase=!story.input.setup.trade;
-    sequence=purchase && s.story==='purchase-approved' ? [0,2,5,8] : [0,...units.flatMap((u,i)=>mainAttempt(u)?[i+1]:[])];
-    const current=beatIndex(s.step);
-    const labels=purchase && s.story==='purchase-approved'?purchaseBeats:sequence.map((step,i)=>step===0?'Start':names[units[step-1].action]||`Step ${i}`);
-    node('story-select').value=s.story;
-    const currentFrame=JSON.parse(projectHarmoniaRecording(JSON.stringify(story),s.step,s.actor));
-    renderHarmoniaScene(node('story-scene'),JSON.stringify(currentFrame));
-    node('story-scene').dataset.follow=s.actor;
-    node('scene-detail').textContent=currentFrame.caption;
-    node('recorded-step').textContent=`${current+1} / ${sequence.length}`;
-    node('scene-dots').replaceChildren(...sequence.map((step,i)=>{
-      const li=document.createElement('li'),b=document.createElement('button'),label=document.createElement('span');
-      b.textContent=String(i+1);b.setAttribute('aria-label',`Scene ${i+1}: ${labels[i]}`);b.setAttribute('aria-current',i===current?'step':'false');
-      b.addEventListener('click',()=>view.update({step}));label.textContent=labels[i];li.classList.toggle('active',i===current);li.append(b,label);return li;
-    }));
-    node('previous-step').hidden=false;node('next-step').hidden=false;node('reset-story').hidden=true;
-    node('story-complete').hidden=true;
-    const option=(value,label)=>{const o=document.createElement('option');o.value=String(value);o.textContent=label;return o;};
-    node('story-actor').replaceChildren(...['all',...new Set(units.map(u=>u.actor))].map(actor=>option(actor,actor==='all'?'Current actor':actor)));node('story-actor').value=s.actor;
-    node('evidence-action').replaceChildren(option(0,'Setup'),...units.map((u,i)=>option(i+1,`${i+1}. ${u.actor}: ${names[u.action]||u.action} · ${u.actual.outcome}`)));node('evidence-action').value=String(s.step);
-    node('recorded-action').textContent=unit?`Recorded action ${s.step}: ${unit.actor} · ${names[unit.action]||unit.action}`:story.presentation.start_detail;
-    node('recorded-outcome').textContent=unit?unit.actual.outcome:'Setup';
-    node('recorded-outcome').dataset.outcome=unit?.actual.outcome||'setup';
-    node('recorded-state').textContent=unit?.observed_state||'';
-    document.querySelectorAll('[data-recording]').forEach(table=>{table.hidden=table.dataset.recording!==s.story;});
-    const data=s.tab==='provenance'?story.provenance:s.tab==='input'?(unit?story.input.actions[s.step-1]:story.input.setup):unit?unit[s.tab==='observed'?'actual':'expected']:story[s.tab==='observed'?'actual':'expected'];
-    node('recorded-json').textContent=JSON.stringify(data,null,2);
-    node('inspector-caption').textContent={input:'Input supplied to the recorded run.',expected:'Independently committed golden expectation.',observed:'Actual ledger result from the preserved recording.',provenance:'Run identity and artifact fingerprints. Playback submits no new transactions.'}[s.tab];
-    document.querySelectorAll('[data-tab]').forEach(b=>{b.id=`evidence-${b.dataset.tab}`;b.tabIndex=b.dataset.tab===s.tab?0:-1;b.setAttribute('aria-selected',String(b.dataset.tab===s.tab));b.classList.toggle('active',b.dataset.tab===s.tab);});node('inspector-panel').setAttribute('aria-labelledby',`evidence-${s.tab}`);
-  });
-  const move=delta=>view.update({step:sequence[(beatIndex(view.state.step)+delta+sequence.length)%sequence.length]});
-  node('story-select').addEventListener('change',e=>view.update({story:e.target.value,step:0,actor:'all'}));
-  node('story-actor').addEventListener('change',e=>view.update({actor:e.target.value}));
-  node('evidence-action').addEventListener('change',e=>view.update({step:Number(e.target.value)}));
-  node('previous-step').addEventListener('click',()=>move(-1));node('next-step').addEventListener('click',()=>move(1));node('reset-story').addEventListener('click',()=>view.update({step:0}));
-  node('story-carousel').addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();move(e.key==='ArrowRight'?1:-1);}});
-  let touch;
-  node('story-carousel').addEventListener('touchstart',e=>{touch={x:e.touches[0].clientX,y:e.touches[0].clientY};},{passive:true});
-  node('story-carousel').addEventListener('touchend',e=>{if(!touch)return;const dx=e.changedTouches[0].clientX-touch.x,dy=e.changedTouches[0].clientY-touch.y;if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.5)move(dx<0?1:-1);touch=null;},{passive:true});
-  document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>view.update({tab:b.dataset.tab})));
-  document.querySelector('.inspector-tabs').addEventListener('keydown',e=>{
-    const tabs=[...document.querySelectorAll('[data-tab]')],i=tabs.indexOf(document.activeElement);if(i<0||!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const n=e.key==='Home'?0:e.key==='End'?tabs.length-1:(i+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;tabs[n].click();tabs[n].focus();
-  });
+  previous.onclick=()=>back();next.onclick=()=>forward();
+  addEventListener('keydown',e=>{if(e.target.closest('input,textarea,select'))return;if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();(e.key==='ArrowLeft'?back:forward)();}});
+  let touch;const region=scene||laboratory;
+  region.addEventListener('touchstart',e=>{touch={x:e.touches[0].clientX,y:e.touches[0].clientY};},{passive:true});
+  region.addEventListener('touchend',e=>{if(!touch)return;const dx=e.changedTouches[0].clientX-touch.x,dy=e.changedTouches[0].clientY-touch.y;if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.5)(dx<0?forward:back)();touch=null;},{passive:true});
 })();

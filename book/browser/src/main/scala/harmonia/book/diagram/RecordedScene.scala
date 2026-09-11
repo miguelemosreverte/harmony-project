@@ -163,3 +163,8 @@ object RecordedScene:
   def project(json: String, step: Int, actor: String): String =
     val story = io.circe.parser.decode[RecordedStory](json).fold(throw _, identity)
     apply(story, step, actor).asJson.noSpaces
+
+  @JSExportTopLevel("projectHarmoniaDiagram")
+  def diagram(json: String, step: Int): String =
+    val story = io.circe.parser.decode[RecordedStory](json).fold(throw _, identity)
+    StoryDiagram(story, step).asJson.noSpaces

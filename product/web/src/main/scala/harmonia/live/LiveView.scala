@@ -27,6 +27,7 @@ final class LiveView:
   private var previousBlocked = true
   private var previousFeedback: Option[(ConnectionState, Boolean, Boolean, Option[String])] = None
   private var mounted = false
+  private var recovering = false
 
   def render(
       snapshot: Option[WorkspaceSnapshot],
@@ -77,11 +78,11 @@ final class LiveView:
         diagnostic.setAttribute("role", "alert")
         append(
           diagnostic,
-          element("p", text = message),
-          button("Dismiss", "secondary", "live-dismiss")(dismiss())
+          element("p", text = message)
         )
         append(feedback, diagnostic)
       }
+    recovering = connection != ConnectionState.Connected || unconfirmed
     snapshot match
       case None =>
         identity.textContent = "Open the participant link supplied by the local operator."
@@ -99,7 +100,11 @@ final class LiveView:
           financing.render(state.financing, blocked, a => submit(WorkspaceCommand.Financing(a)))
         if previous.map(_.submissions) != Some(state.submissions) then renderJobs(state.submissions)
         val compositionState = state.composition
-        hide(draft, !compositionState.canPropose)
+        val creating = compositionState.canPropose &&
+          compositionState.drafts.isEmpty && (compositionState.processes.isEmpty ||
+            new dom.URLSearchParams(dom.window.location.search).get("new") == "1")
+        hide(draft, !creating)
+        hide(composed, creating)
         val input = editor.render(blocked, compositionState.remainingProposals)
         if input.parentNode != draft then append(draft, input)
         if previous.map(_.composition) != Some(compositionState) || blocked != previousBlocked then
@@ -116,7 +121,7 @@ final class LiveView:
 
   private val destination = element("section", "live-destination")
   private def selectPage(): Unit =
-    val page = WorkspaceNavigation.page
+    val page = if recovering then "recovery" else WorkspaceNavigation.page
     hide(finance, page != "financing")
     hide(composition, page != "composer")
     hide(evidence, page != "evidence")
@@ -125,6 +130,14 @@ final class LiveView:
     if destination.parentNode != main then append(main, destination)
     if page == "financing" || page == "evidence" then
       append(destination, link("Choose the next task →", "?view=workspace"))
+    else if page == "packages" && previous.forall(_.financing.actor != "bank") then
+      append(
+        destination,
+        element("h1", text = "The operator supplies application packages."),
+        element("p", text = "Your participant can follow financing and agreed workflows."),
+        link("Follow financing →", "?view=financing"),
+        link("Follow the shared workflow →", "?view=composer")
+      )
     else if page == "workspace" then
       append(
         destination,
@@ -168,10 +181,10 @@ final class LiveView:
     val list = element("ol", "live-history")
     values.foreach { tx =>
       val row = element("li")
-      val details = element("details")
+      val details = element("section")
       append(
         details,
-        element("summary", text = "Transaction identity"),
+        element("strong", text = "Transaction identity"),
         element("code", text = tx.updateId.getOrElse(""))
       )
       append(row, element("p", text = tx.events.mkString(" → ")), details); append(list, row)

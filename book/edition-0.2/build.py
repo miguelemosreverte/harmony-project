@@ -200,6 +200,10 @@ def build_outputs(root=ROOT):
     outputs["coverage.json"] = json.dumps(report, ensure_ascii=False, indent=2) + "\n"
     outputs["review.html"] = pages.review()
     outputs["book-overview.html"] = pages.welcome()
+    outputs["understand.html"] = pages.entrance()
+    outputs["verify.html"] = pages.entrance(True)
+    outputs["purchase-outcome.html"] = pages.outcome()
+    outputs["transfer-outcome.html"] = pages.outcome(False)
     outputs["application.html"] = workspace.application()
     outputs["application-builder.html"] = workspace.builder()
     outputs["book-chapter.html"] = '''<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Alice buys a home · Harmonia</title><script src="chapter-redirect.js" defer></script></head><body><p>This chapter has one home: <a href="chapters/03-financing-to-offer.html">Alice buys a home</a>.</p></body></html>\n'''
