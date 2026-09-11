@@ -86,6 +86,7 @@ object CheckPortableProject:
         .read(directory.resolve("generation.json"))
         .flatMap(value => IO.fromEither(io.circe.parser.parse(value)))
       digest <- IO.fromEither(manifest.hcursor.downField("source").get[String]("sha256"))
+      members <- IO.fromEither(manifest.hcursor.get[Map[String, String]]("files"))
       archive <- ProjectArchive.write(
         GeneratedProject(
           directory,
@@ -93,9 +94,10 @@ object CheckPortableProject:
           directory.resolve(
             "example/.daml/dist/harmonia-binding-generatedfinancing-example-0.1.0.dar"
           ),
-          digest
-        ),
-        manifest
+          digest,
+          members.keys.toVector,
+          manifest
+        )
       )
     yield archive
 
@@ -139,7 +141,9 @@ object CheckPortableProject:
           output,
           dar("library"),
           dar("example"),
-          manifest.hcursor.downField("source").get[String]("sha256").fold(throw _, identity)
+          manifest.hcursor.downField("source").get[String]("sha256").fold(throw _, identity),
+          manifest.hcursor.get[Map[String, String]]("files").fold(throw _, identity).keys.toVector,
+          manifest
         )
       }
     }

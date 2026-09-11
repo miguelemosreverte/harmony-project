@@ -16,7 +16,9 @@ final case class GeneratedProject(
     directory: Path,
     library: Path,
     example: Path,
-    sourceDigest: String
+    sourceDigest: String,
+    members: Vector[String],
+    manifest: Json
 )
 
 object GenerateBinding:
@@ -67,20 +69,16 @@ object GenerateBinding:
         ()
       }
     }
-    _ <- ArtifactFiles.write(
-      output.resolve("generation.json"),
-      Json
-        .obj(
-          "generator" -> Json.fromString(owner),
-          "sdk" -> Json.fromString("3.4.11"),
-          "mapping_sha256" -> Json.fromString(hash(markdown)),
-          "source" -> input.record(root),
-          "files" -> Json.fromFields(
-            files.map(file => file.path -> Json.fromString(hash(file.content)))
-          )
-        )
-        .spaces2
+    record = Json.obj(
+      "generator" -> Json.fromString(owner),
+      "sdk" -> Json.fromString("3.4.11"),
+      "mapping_sha256" -> Json.fromString(hash(markdown)),
+      "source" -> input.record(root),
+      "files" -> Json.fromFields(
+        files.map(file => file.path -> Json.fromString(hash(file.content)))
+      )
     )
+    _ <- ArtifactFiles.write(output.resolve("generation.json"), record.spaces2)
     _ <- Vector("library", "example").traverse_ { name =>
       ManagedProcess.run(
         List(
@@ -98,32 +96,24 @@ object GenerateBinding:
     _ <- IO.raiseUnless(after == digest && copied == digest)(
       RuntimeException("Source DAR identity changed during generation")
     )
+    library = output.resolve(
+      s"library/.daml/dist/${GenerateSources.packageName(mapping)}-0.1.0.dar"
+    )
+    example = output.resolve(
+      s"example/.daml/dist/${GenerateSources.packageName(mapping)}-example-0.1.0.dar"
+    )
     artifactDigests <- Vector(
-      "library_dar" -> output.resolve(
-        s"library/.daml/dist/${GenerateSources.packageName(mapping)}-0.1.0.dar"
-      ),
-      "example_dar" -> output.resolve(
-        s"example/.daml/dist/${GenerateSources.packageName(mapping)}-example-0.1.0.dar"
-      ),
+      "library_dar" -> library,
+      "example_dar" -> example,
       "interfaces_dar" -> output.resolve("vendor/interfaces.dar"),
       "core_dar" -> output.resolve("vendor/core.dar")
     ).traverse { (name, path) =>
       InspectDar.digest(path).map(value => name -> Json.fromString(value))
     }
-    manifest <- ArtifactFiles
-      .read(output.resolve("generation.json"))
-      .flatMap(value => IO.fromEither(io.circe.parser.parse(value)))
-    _ <- ArtifactFiles.write(
-      output.resolve("generation.json"),
-      manifest.mapObject(_.add("artifacts", Json.fromFields(artifactDigests))).spaces2
-    )
+    manifest = record.mapObject(_.add("artifacts", Json.fromFields(artifactDigests)))
+    _ <- ArtifactFiles.write(output.resolve("generation.json"), manifest.spaces2)
     _ <- IO.println(s"Generated and compiled typed binding: $output")
-  yield GeneratedProject(
-    output,
-    output.resolve(s"library/.daml/dist/${GenerateSources.packageName(mapping)}-0.1.0.dar"),
-    output.resolve(s"example/.daml/dist/${GenerateSources.packageName(mapping)}-example-0.1.0.dar"),
-    digest
-  )
+  yield GeneratedProject(output, library, example, digest, files.map(_.path), manifest)
 
   private def hash(text: String): String = MessageDigest
     .getInstance("SHA-256")

@@ -2,15 +2,13 @@ package harmonia.packages.workspace
 
 import cats.effect.IO
 import harmonia.bindings.generate.GeneratedProject
-import io.circe.Json
 import java.nio.file.{Files, Path}
 import java.util.zip.{ZipEntry, ZipOutputStream}
 
 object ProjectArchive:
-  def write(project: GeneratedProject, manifest: Json): IO[Path] = IO.blocking {
+  def write(project: GeneratedProject): IO[Path] = IO.blocking {
     val root = project.directory.toAbsolutePath.normalize()
-    val generated = manifest.hcursor.downField("files").keys.getOrElse(Vector.empty).toVector
-    val files = (generated ++ Vector(
+    val files = (project.members ++ Vector(
       "mapping.md",
       "generation.json",
       "vendor/source.dar",

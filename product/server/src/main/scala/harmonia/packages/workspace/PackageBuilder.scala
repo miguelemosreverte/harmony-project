@@ -95,10 +95,8 @@ final class PackageBuilder private (
               root.resolve(s"product/packages/mappings/${binding.mapping}.md"),
               entry.directory.resolve("project")
             )
-            manifestText <- ArtifactFiles.read(project.directory.resolve("generation.json"))
-            manifest <- IO.fromEither(io.circe.parser.parse(manifestText))
-            archive <- ProjectArchive.write(project, manifest)
-            updated = entry.copy(project = Some(CompiledProject(archive, manifest)))
+            archive <- ProjectArchive.write(project)
+            updated = entry.copy(project = Some(CompiledProject(archive, project.manifest)))
             _ <- inputs.update(_.map(value => if value.id == id then updated else value))
           yield ()
       result <- state

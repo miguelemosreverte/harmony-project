@@ -56,23 +56,23 @@ The earlier proposal is the first branch commit. This expanded plan is the secon
 
 ## FD52 — fourth actual commit: retain generation facts
 
-- [ ] `bindings/generate/GenerateBinding.scala`
+- [x] `bindings/generate/GenerateBinding.scala`
   - Extend `GeneratedProject` with the generated member names and final manifest already known to the producer.
   - Construct the manifest in memory, add compiled artifact digests to that value, and write evidence without rereading it to continue the operation.
   - Preserve the ownership-marker read when reusing an existing output directory; this is an external-state check, not a redundant conversion.
-- [ ] `packages/workspace/ProjectArchive.scala`
+- [x] `packages/workspace/ProjectArchive.scala`
   - Build the ZIP member list from the generated project's member names rather than decoding its JSON manifest.
   - Keep member-count, containment, regular-file checks, and deterministic entry timestamps.
-- [ ] `packages/workspace/PackageBuilder.scala`
+- [x] `packages/workspace/PackageBuilder.scala`
   - Archive the returned project and retain its manifest without reading the just-written `generation.json`.
   - Preserve the final browser response shape and repeat-generation behavior.
-- [ ] `harness/runner/.../verification/CheckPortableProject.scala`
+- [x] `harness/runner/.../verification/CheckPortableProject.scala`
   - Reconstruct the project facts when loading an existing manifest or unpacking an archive. Decode at this actual input boundary.
   - Continue rebuilding from empty outputs and independently comparing artifact hashes and ledger observations.
-- [ ] Review `bindings/verify/CheckBinding.scala`, `GenerationDeterminism.scala`, and `BindingMutation.scala`.
+- [x] Review `bindings/verify/CheckBinding.scala`, `GenerationDeterminism.scala`, and `BindingMutation.scala`.
   - Keep reads whose purpose is to verify saved artifacts and the deliberately modified compiled adapter.
-- [ ] Add an archive-boundary test for preserved member selection and rejection of an escaping path.
-- [ ] Run Scala tests and generation, builder, and portability checks sequentially; compare generated source and DAR identities with the preserved baseline.
+- [x] Add an archive-boundary test for preserved member selection and rejection of an escaping path.
+- [x] Run Scala tests and generation, builder, and portability checks sequentially; compare generated source and DAR identities with the preserved baseline.
 
 ## FD53 — fifth actual commit: readable HTTP handling
 
@@ -112,3 +112,5 @@ The earlier proposal is the first branch commit. This expanded plan is the secon
 Any necessary adjustment is recorded here before its implementation. Reducing line count never permits weakening an independent expectation, removing a runtime boundary, or hiding a failed check.
 
 FD51 proof: all 52 Scala tests pass (`.artifacts/fifth-51-build.log`); package import/retrieval passes on two fresh networks (`fifth-51-packages.log`); the real builder story matches its original expectation with zero differences (`fifth-51-builder.log`). All three resolution records equal the retained fourth-draft JSON (`fifth-51-resolution-parity.json`). These checks were run before committing the implementation; the final release will record a fresh clean revision.
+
+FD52 proof: all 53 Scala tests pass (`.artifacts/fifth-52-build.log`). Deterministic generated sources and DARs, the compiled mutation regression, the unchanged builder golden, and a portable rebuild from empty outputs all pass (`fifth-52-bindings.log`, `fifth-52-builder.log`, `fifth-52-portable.log`). The harness retains independent artifact reads.
