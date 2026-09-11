@@ -1,0 +1,21 @@
+{
+  "scope": "Read-only acceptance of the final mounted book and fresh sandbox; no commands submitted",
+  "code_revision": "c0eec35988944b3a01f92b858dcedb4aa67d725c",
+  "source_catalog_files": 380,
+  "source_catalog_sha256": "9c429e483d565fb5c09e2e8ad0a1a6e6a2959b3273418d00fc5b84973c8758fa",
+  "checks": [
+    "Four reader entrances are mounted by the actual server",
+    "All 380 mounted sources match their catalog fingerprints",
+    "HTML entry files are readable as colored source",
+    "Mounted laboratory contains all 32 registered examples",
+    "Mounted evidence URL opens its historical provenance",
+    "Mounted dependency view is parsed from the manifests",
+    "The mounted author can explore a branch beside the original passage",
+    "Mounted companion interaction becomes part of the parent URL",
+    "Print geometry uses the same fixed A4 content width as the PDF",
+    "The current manifest review exports to PDF",
+    "The delivered sandbox starts pending with no submitted jobs",
+    "No browser or CSP errors"
+  ],
+  "errors": []
+}

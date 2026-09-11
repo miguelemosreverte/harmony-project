@@ -48,3 +48,11 @@ annotations, diagram review, original passages beside reusable companion views,
 and URL-driven presentation recording. The [reader contract](0.2/READER-EXPERIENCE.md),
 [browser checks](0.2/reader-browser.json), and [live checks](0.2/reader-live.json)
 record its scope and verification. The original golden expectations are preserved.
+
+
+`v0.2.0-reader.2` extends the shared visual reader to all 32 registered recordings.
+It adds documented source groups, parsed Daml dependency maps, reviewed execution
+handoffs, complete evidence URLs, offline artifact inspection, and stable A4 diagram
+printing. The [acceptance audit](0.2/COMPLETION-AUDIT.md) records the full scope and
+verification; the [delivery report](0.2/reader-delivery.json) verifies the final mounted
+book and a fresh sandbox. `main` remains the fourth-draft baseline.

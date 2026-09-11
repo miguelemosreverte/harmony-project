@@ -1,94 +1,65 @@
-# Audit against the complete visual-book request
+# Reader.2 acceptance against the complete request
 
-The `reader.1` checkpoint delivered the four reader entrances. The original request
-also applies the approved visual language to **every workflow and demonstration**.
-That broader requirement is not proved by four featured recordings or six reading maps.
+The approved infographic is now shared by the featured stories, the complete recording
+laboratory, live financing, live composition, package stages, and the book's diagrams.
+This audit covers the complete reader request, rather than only the four featured stories.
 
-| Requirement | Current evidence | Remaining work |
+## Completed implementation
+
+- [x] Repair and reuse the approved visual language.
+  - [x] Preserve Sofia's arrow clearance and the blue Proposal → Ben handoff.
+  - [x] Render ordered actions, branches, joins, skipped work, and refusals with shared components.
+  - [x] Route connectors around intermediate cards in both horizontal and vertical layouts.
+- [x] Include every registered recording in the standard book.
+  - [x] Preserve all 32 examples, 11 example kinds, and 130 observed moments.
+  - [x] Keep expectations independent of the state drawn by the diagram.
+  - [x] Bundle original evidence for offline inspection; retain dates, revisions, and hashes.
+  - [x] Restore story, step, node, evidence file, appearance, navigation, and presentation from URLs.
+- [x] Give each reader a direct, useful entrance.
+  - [x] Developer: actual source tree, colored code, line links, annotations, and vertical slices.
+  - [x] Reviewer: distinct reading maps, parsed manifest dependencies, and reviewed execution handoffs.
+  - [x] Original author: original passages and highlights beside reused workflows, code, and diagrams.
+  - [x] Technical investor or user: narrated workflows and explicit Daml/Canton mechanisms and limits.
+- [x] Verify the delivered experience.
+  - [x] Exercise desktop, narrow layouts, keyboard/touch navigation, shared links, and offline evidence.
+  - [x] Execute live financing, consented composition, and package compilation through the actual UI.
+  - [x] Inspect screenshots and the printed diagram; record a 24-second HTML presentation.
+  - [x] Verify the final mounted source and leave one fresh sandbox with no submitted jobs.
+  - [x] Commit and push the working checkpoints to the private GitHub repository.
+
+## Evidence
+
+| Check | Result | Evidence |
 | --- | --- | --- |
-| Sofia clearance and Proposal → Ben blue | Measured endpoints and responsive browser checks | Preserve while extending other scenes |
-| Every workflow, recorded and live | Live financing/composition/packages and four featured recordings | Replace the older laboratory's attempt strip and green diagrams; check every registered example |
-| A book that describes the current code | Exact source files and hashes, 24 file annotations, six reading maps | Make package context useful beyond the selected annotated entry points |
-| Reviewer diagrams from manifest to code | Six authored reading maps and original architecture images | Distinguish package dependencies, runtime handoffs, and explanatory reading order in navigable diagrams |
-| Original passages beside reused views | Complete quotation corpus and shareable companion panes | Include the additional workflow families in companion navigation |
-| Public/technical investor narratives | Purchase/transfer stories and Daml/Canton explanation | Give the other workflow families meaningful entry points and explanations |
-| Parameterized slides and video | Purchase presentation and recorder | Retain deterministic navigation across the expanded laboratory |
-| Verification, commits and remote backup | `reader.1`, browser/live reports, GitHub branches and tags | Verify the remaining surfaces at their actual scope before closing the goal |
+| Scala suites | 63 passed | Scene, reader, service, runner, and book exporter suites |
+| Source and quotation checks | 27 passed | `book/edition-0.2/check.py` |
+| Original quotations | 736/736 units, unchanged | `design/0.2/coverage.json` |
+| Complete recording library | 792 browser checks | [Recording report](laboratory-browser.json) |
+| Existing reader experiences | 119 browser checks | [Reader report](reader-browser.json) |
+| Relationships and package context | 133 browser checks | [Relationship report](relationships-browser.json) |
+| Real commands and live UI | 40 browser checks | [Live report](reader-live.json) |
+| Final mounted delivery | 12 read-only checks; 380 exact source files | [Delivery report](reader-delivery.json) |
+| Printable diagrams | Inspected A4 output with measured connectors | [Manifest review PDF](../../design/0.2/reader/review/manifest-review.pdf) |
+| Offline export | All source/document, chapter, recording, and browser-asset links passed | `scripts/harmonia book-links` |
 
-## Completion sequence
+The source catalog has 24 file-specific annotations and 29 documented groups. Group
+explanations are explicitly shared context. Five dependency views come from 14 current
+production Daml manifests. Three execution maps are authored relationships tied to
+reviewed source fingerprints. Six reading maps explain a useful order through the code.
+These three kinds of diagram are labeled separately.
 
-- [x] Replace the remaining laboratory renderer with the shared visual components.
-  - [x] Cover every registered example kind, including branches, joins and refusal cases.
-  - [x] Keep observed results independent of expected values.
-  - [x] Keep secondary evidence available without putting every attempt on screen.
-- [x] Bring the complete registered recording inventory into the standard book entry.
-  - [x] Preserve source provenance and original golden hashes.
-  - [x] Provide direct URLs, keyboard/touch controls, and offline playback.
-- [x] Strengthen package and reviewer context, and connect author companions to it.
-- [ ] Check every requirement against current rendered and executable evidence.
+The 32 historical recordings come from the preserved fourth-draft export with SHA-256
+`887ed02645f2287d847f96165dc9309611f98cae969e535a355f2aba3267dc82`.
+All input and expectation hashes still match the committed golden files; the original
+four featured recordings remain unchanged. Historical recordings are not presented as
+fresh submissions. The live report records actual new commands separately, and the
+final delivery report verifies a fresh sandbox without submitting commands.
 
-## Complete recording library checkpoint
+## Product scope
 
-The standard book now includes all **32 registered examples, 11 example kinds,
-and 130 observed moments**. The existing four featured recordings are unchanged.
-Additional recordings come from the same preserved fourth-draft export, whose
-SHA-256 is `887ed02645f2287d847f96165dc9309611f98cae969e535a355f2aba3267dc82`.
-Every input and expectation still matches its committed golden file; raw artifacts
-are pinned individually. These remain historical observations, not new submissions.
-
-The detailed reader shares the live diagram components, uses one scene at a time,
-and keeps its comparison behind a disclosure. Source links open the colored source
-browser. Author companions can now open branches, composition, package inspection,
-and boundary verification as well as the featured purchase and transfer scenes.
-The featured chapters and complete laboratory use one typed recording projection.
-
-Verification: seven Scala browser-model tests cover every registered observation,
-expectation independence, skipped branches, missing observations, and URL round trips.
-The export suite checks exact inventory membership. The Python book checks preserve
-all 736 source quotation units. The browser report in
-[`laboratory-browser.json`](laboratory-browser.json) records 788 checks across desktop,
-mobile, offline evidence, source links, and shared author-companion URLs.
-
-Package-level source explanations and the distinction between manifest dependencies,
-runtime handoffs, and reading order are still open in the completion sequence above.
-
-## Reviewer and source context checkpoint
-
-All catalog files now belong to one of 29 documented groups. File annotations remain
-file-specific; inherited package explanations are labeled as shared context. The
-source browser offers links to the other files in the group and its vertical slice.
-
-The reviewer can distinguish three relationships:
-
-- Suggested reading order, authored to explain a slice.
-- Daml dependencies, parsed from all 14 current production manifests with the YAML
-  parser, then checked for inventory and fingerprint drift. Five slice views select
-  relevant packages and their transitive imports. External/generated DAR declarations
-  are labeled explicitly rather than presented as compiled or authorized code.
-- Execution handoffs, reviewed against exact source fingerprints for financing,
-  composition, and package integration. An edited implementation forces a fresh
-  diagram review; separate live checks provide behavioral evidence.
-
-The shared renderer now orders cards by graph dependencies, so narrow layouts retain
-correct direction even when a manifest inventory lists files in another order.
-
-The relationship browser report, [`relationships-browser.json`](relationships-browser.json),
-records 133 checks at 304, 390, 768 and 1280 pixels. Both long manifest-path wrapping
-and connectors that skip a column were corrected from failures in these checks.
-The YAML reader has focused tests for comments, flow lists, duplicate fields and
-invalid dependency types. The Python build now runs 27 source and quotation checks.
-
-## Navigation and final verification
-
-An evidence dialog, its selected public file, open navigation, and appearance controls
-now round-trip through the recording URL. Closing evidence returns keyboard focus to
-the originating link. The inspector works from bundled evidence offline. HTML entry
-files are included in the colored source catalog alongside Scala, Daml, and other
-allowlisted text sources.
-
-The final local checks passed: 63 Scala tests, 27 source/quotation checks, 792 recording
-browser checks, 119 reader regression checks, 133 relationship checks, and 40 live
-browser checks. The live checks exercised actual financing approval and continuation,
-partner consent and both composition actions, DAR retrieval and adapter compilation.
-They also verified that the served production browser matches the current compiled
-renderer. The final delivered book snapshot is checked separately after mounting.
+The live financing handoff runs from bank to buyer. The complete property offer and
+custody transfer are recorded examples. The live composer supports bounded sequential
+plans; recorded examples also demonstrate branches and joins. A generated package,
+a compiled DAR, and typed registration remain distinct stages. Quotation coverage
+measures inclusion of original text, separately from implementation and adoption.
+This is a reader checkpoint on `version/0.2.0`, not a stable release or a promotion to `main`.

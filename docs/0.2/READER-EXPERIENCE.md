@@ -139,3 +139,9 @@ has been authored.
 Further evidence: [all recording surfaces](laboratory-browser.json),
 [manifest diagrams and package context](relationships-browser.json), and
 [the completion audit](COMPLETION-AUDIT.md).
+
+
+The delivered `reader.2` book is verified in [the delivery report](reader-delivery.json).
+It includes 380 catalogued source files. A fixed A4 content width keeps the measured
+connectors aligned when the browser prints to PDF; the printed diagram was inspected
+in addition to checking that a PDF file was produced.
