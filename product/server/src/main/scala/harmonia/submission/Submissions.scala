@@ -6,26 +6,21 @@ import cats.syntax.all.*
 import harmonia.workspace.{ActionRequest, SubmissionView}
 import harmonia.protocol.SubmissionStatus
 import harmonia.protocol.SubmissionStatus.*
-import io.circe.Json
-import io.circe.syntax.*
 
 final case class LiveJob(
     actor: String,
     request: ActionRequest,
     outcome: SubmissionStatus,
-    detail: String,
-    transaction: Option[Json] = None
+    detail: String
 ):
   def view: SubmissionView =
     SubmissionView(request.id, actor, request.command.wire, outcome, detail)
-  def json: Json = view.asJson
 
 /** Preparation observes state; the returned effect submits only after the version check. */
 final case class PreparedSubmission(version: String, execute: Option[IO[SubmissionResult]])
 final case class SubmissionResult(
     outcome: SubmissionStatus,
-    detail: String,
-    transaction: Option[Json] = None
+    detail: String
 )
 
 final class Submissions private (
@@ -85,8 +80,7 @@ final class Submissions private (
               execute.map(result =>
                 job.copy(
                   outcome = result.outcome,
-                  detail = result.detail,
-                  transaction = result.transaction
+                  detail = result.detail
                 )
               )
     yield next
@@ -104,20 +98,21 @@ final class Submissions private (
   private def replace(next: LiveJob): IO[Unit] = jobs.update(
     _.map(j => if j.actor == next.actor && j.request.id == next.request.id then next else j)
   )
-  def reconcile(actor: String, commits: Map[String, Json]): IO[Unit] =
-    jobs.get.flatMap(_.filter(j => j.actor == actor && j.outcome == Unconfirmed).traverse_ { job =>
-      commits
-        .get(commandId(job))
-        .fold(IO.unit)(tx =>
-          replace(
-            job.copy(
-              outcome = Committed,
-              detail = "Commit recovered from ledger history after reconnect",
-              transaction = Some(tx)
-            )
+  def reconcile(actor: String, committedCommands: Set[String]): IO[Unit] =
+    jobs.get.flatMap(
+      _.filter(job =>
+        job.actor == actor && job.outcome == Unconfirmed && committedCommands.contains(
+          commandId(job)
+        )
+      ).traverse_(job =>
+        replace(
+          job.copy(
+            outcome = Committed,
+            detail = "Commit recovered from ledger history after reconnect"
           )
         )
-    })
+      )
+    )
 
 object Submissions:
   def resource(

@@ -14,7 +14,7 @@ import harmonia.ledger.client.SubmitChoice
 final class Workspace private (runtime: Connections, submissions: Submissions):
   def state(actor: String): IO[WorkspaceSnapshot] = for
     snapshot <- LedgerSnapshot.read(runtime.ledgers(actor), runtime.catalog)
-    _ <- submissions.reconcile(actor, snapshot.commits)
+    _ <- submissions.reconcile(actor, snapshot.commits.keySet)
     current <- submissions.current(actor)
     financing <- IO.fromEither(FinancingObservation.read(snapshot))
     composition <- IO.fromEither(ComposerSnapshot.read(snapshot.contracts, runtime.parties, actor))

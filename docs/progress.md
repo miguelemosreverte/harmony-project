@@ -1,7 +1,5 @@
-# Fourth-draft progress
+# Fifth-draft progress
 
-FD01–FD07 in the [ordered plan](../FOURTH-DRAFT.md) are complete. The third actual commit, `957bc67`, records a working authenticated ledger/browser slice and compiler isolation.
+FD50–FD54 in the [file-level plan](fifth-draft/implementation-plan.md) are complete. The third actual commit, `2524ced`, records a working typed package slice after Scala tests and real package/builder checks. Generation and HTTP changes have also passed their focused gates.
 
-Verified software `0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948` passes all eleven clean-checkout gates, 49 Scala tests, four Daml scripts, and 32 independent golden recordings. The relocated product and book passed their browser checks. Only the bounded book preview remains running.
-
-Read the [product guide](../product/README.md), [measurements](fourth-draft/measurements.md), and [full handoff evidence](fourth-draft/acceptance.md). Earlier plans and verification records are preserved under [history](history/README.md).
+The [reading guide](fifth-draft/reading-guide.md) follows financing, composition, and package generation from input to effect. The implementation is frozen for the full clean release; final acceptance is pending. All 57 Scala tests, focused ledger gates, browser compilation, and source/book links pass. The preserved [fourth-draft acceptance](fourth-draft/acceptance.md) describes the previous verified release.

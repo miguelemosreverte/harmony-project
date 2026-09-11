@@ -1,8 +1,7 @@
 package harmonia.financing
 
 import harmonia.protocol.JsonCodec
-import io.circe.{Codec, Decoder, Encoder, Json}
-import io.circe.syntax.*
+import io.circe.{Codec, Decoder, Encoder}
 
 enum FinancingAction(val wire: String):
   case Approve extends FinancingAction("approve-financing")
@@ -44,8 +43,7 @@ final case class FinancingState(
     evidenceAvailable: Boolean,
     eligible: Vector[FinancingAction],
     currentStep: String
-):
-  def json: Json = this.asJson
+)
 
 object FinancingState:
   given Codec.AsObject[FinancingState] = JsonCodec.derived[FinancingState]

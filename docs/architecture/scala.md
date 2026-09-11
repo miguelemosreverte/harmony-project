@@ -2,15 +2,17 @@
 
 Use concrete Cats Effect `IO`, immutable values, ordinary named functions, and explicit `Resource` ownership. Keep a related operation together. A smaller file obtained by scattering its logic does not improve the reading experience.
 
-The [product reading guide](../fourth-draft/reading-guide.md) follows the features. The [repository map](repository.md) explains the compiler boundaries between product, book, and harness.
+The [product reading guide](../fifth-draft/reading-guide.md) follows the features. The [repository map](repository.md) explains the compiler boundaries between product, book, and harness.
 
 ## Values inside, decoding at boundaries
 
 `FinancingAction`, `CompositionAction`, `CompositionCommand`, and `WorkspaceCommand` make supported operations explicit and exhaustively matched. A `LedgerExercise` names the choice submitted. Financing and composition observations decode visible contracts once; malformed visible data fails with context, and missing disclosure remains optional.
 
+`ActionRequest` carries the same typed command, request identity, and version through the browser, remembered retries, HTTP decoding, and submission. Its encoder preserves the flattened wire envelope. Bounded byte reading belongs to `RequestBody`; authenticated dispatch remains visible in `LiveServer`.
+
 The server constructs the public `WorkspaceSnapshot`, `CompositionState`, and `PackageState`; the browser decodes those same types. A small `JsonCodec` derives the established snake-case field names. Unusual envelopes remain explicit. The composition editor builds a typed `Composition` and calls the same validation as the HTTP decoder. It does not construct internal JSON merely to validate its own values.
 
-`BuilderInput` carries typed inspection, source, and compilation facts. Generation permissions follow from those facts. Raw metadata and generation manifests remain evidence. `LfArchive` reads bounded archives through SDK LF protobuf classes, and `TemplateShapeReader` checks their structures. Text matching belongs at authored-name, route, Markdown, and identifier boundaries.
+`ResolvedPackage` carries its verified pin, path, and `InspectedDar`. `GeneratedProject` retains generated members and the final manifest, so archive assembly does not decode or reread the producer's evidence. `BuilderInput` carries typed inspection, source, and compilation facts. Generation permissions follow from those facts. Raw metadata and generation manifests remain evidence. `LfArchive` reads bounded archives through SDK LF protobuf classes, and `TemplateShapeReader` checks their structures. Text matching belongs at authored-name, route, Markdown, and identifier boundaries.
 
 ## Effects have owners
 

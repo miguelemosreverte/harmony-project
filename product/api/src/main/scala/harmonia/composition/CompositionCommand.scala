@@ -2,6 +2,7 @@ package harmonia.composition
 
 import harmonia.composition.model.Composition
 import io.circe.Json
+import io.circe.syntax.*
 
 enum CompositionCommand:
   case Propose(plan: Composition)
@@ -16,7 +17,7 @@ enum CompositionCommand:
     case Advance(_, _) => "compose-advance"
 
   def parameters: Json = this match
-    case Propose(plan)     => plan.json
+    case Propose(plan)     => plan.asJson
     case Accept(reference) => Json.obj("reference" -> Json.fromString(reference))
     case Cancel(reference) => Json.obj("reference" -> Json.fromString(reference))
     case Advance(reference, step) =>

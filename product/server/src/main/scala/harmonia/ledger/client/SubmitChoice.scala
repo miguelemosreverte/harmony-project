@@ -16,7 +16,7 @@ object SubmitChoice:
   ): IO[SubmissionResult] =
     ledger
       .exercise(operation.contract, operation.choice, operation.argument, commandId)
-      .map(tx => SubmissionResult(Committed, "Confirmed by the ledger", Some(tx)))
+      .as(SubmissionResult(Committed, "Confirmed by the ledger"))
       .handleError { error =>
         val code = Status.fromThrowable(error).getCode
         val definite = Set(

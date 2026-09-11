@@ -1,6 +1,7 @@
 package harmonia.financing
 
 import io.circe.Json
+import io.circe.syntax.*
 import munit.FunSuite
 
 class FinancingStateSuite extends FunSuite:
@@ -16,7 +17,7 @@ class FinancingStateSuite extends FunSuite:
   )
 
   test("hidden private state remains absent while a shared continuation is available") {
-    assertEquals(observed.json.as[FinancingState], Right(observed))
+    assertEquals(observed.asJson.as[FinancingState], Right(observed))
     assertEquals(observed.application, None)
     assertEquals(observed.eligible, Vector(FinancingAction.Continue))
   }
@@ -27,12 +28,12 @@ class FinancingStateSuite extends FunSuite:
       "application" -> Json.fromString("unknown"),
       "eligible" -> Json.arr(Json.fromString("grant-authority"))
     ).foreach { (field, value) =>
-      assert(observed.json.mapObject(_.add(field, value)).as[FinancingState].isLeft)
+      assert(observed.asJson.mapObject(_.add(field, value)).as[FinancingState].isLeft)
     }
   }
 
   test("missing evidence and progression fail decoding rather than becoming empty success") {
     Vector("workflow", "evidence_available", "eligible").foreach { field =>
-      assert(observed.json.mapObject(_.remove(field)).as[FinancingState].isLeft)
+      assert(observed.asJson.mapObject(_.remove(field)).as[FinancingState].isLeft)
     }
   }

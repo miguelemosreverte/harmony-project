@@ -67,7 +67,7 @@ class WorkspaceContractSuite extends FunSuite:
     val step = PlannedStep("approval", "lender", CompositionActor.Bank, CompositionAction.Approve)
     val plan = Composition("Offer", "offer-1", Vector(step))
     assertEquals(Composition.validate(plan), Right(plan))
-    assertEquals(Composition.read(plan.json), Right(plan))
+    assertEquals(Composition.read(plan.asJson), Right(plan))
     val invalid = Vector(
       plan.copy(name = ""),
       plan.copy(steps = Vector.empty),
@@ -76,6 +76,6 @@ class WorkspaceContractSuite extends FunSuite:
     )
     invalid.foreach { value =>
       assert(Composition.validate(value).isLeft)
-      assert(Composition.read(value.json).isLeft)
+      assert(Composition.read(value.asJson).isLeft)
     }
   }

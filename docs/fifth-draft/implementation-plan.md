@@ -98,14 +98,21 @@ The earlier proposal is the first branch commit. This expanded plan is the secon
 
 ## FD54 — sixth actual commit: explain and measure the final operations
 
-- [ ] Review financing, composition, and package-generation paths from input to ledger or file effect.
+- [x] Review financing, composition, and package-generation paths from input to ledger or file effect.
   - Record what each named function owns, which facts are established at its boundary, and where the independent expectation lives.
   - Retain the already direct financing selector and typed composition editor unless the completed trace reveals a necessary adjustment.
-- [ ] `docs/fifth-draft/reading-guide.md` (new): provide direct source links for the three traces and explain intentional external JSON/file decoding.
-- [ ] `product/README.md`, root `README.md`, `docs/architecture/scala.md`, `docs/progress.md`, and `docs/release/changelog.md`: describe the final operation flow and point to current evidence.
-- [ ] `book/export/.../ExportBook.scala`: include the fifth-draft design in source export; update affected authored links and specimens if necessary.
-- [ ] Record comparable production Scala counts, per-file deltas, removed encode/decode or write/read cycles, and test totals. Distinguish added test/documentation code from product changes.
-- [ ] Check all source/book links and freeze the implementation in a clean commit before the full release.
+- [x] Final trace findings: `submission/Submissions.scala`, `ledger/client/SubmitChoice.scala`, and `app/workspace/Workspace.scala`
+  - Remove the unread transaction copy from `LiveJob` and `SubmissionResult`; the ledger snapshot and recorded history remain authoritative.
+  - Pass confirmed command IDs to reconciliation, which only needs membership to recover an uncertain job.
+  - Preserve supervised execution, stale checks, definite rejection classification, and reconciliation behavior; rerun the live gate after this change.
+- [x] Remove redundant `json` forwarding methods from `LiveJob`, `FinancingState`, `PlannedStep`, and `Composition`.
+  - Use the existing codecs explicitly at the actual `CompositionCommand` wire boundary and in `FinancingStateSuite` and `WorkspaceContractSuite`.
+  - Keep every established field and independent expectation.
+- [x] `docs/fifth-draft/reading-guide.md` (new): provide direct source links for the three traces and explain intentional external JSON/file decoding.
+- [x] `product/README.md`, root `README.md`, `docs/architecture/scala.md`, `docs/progress.md`, and `docs/release/changelog.md`: describe the final operation flow and point to current evidence.
+- [x] `book/export/.../ExportBook.scala`: include the fifth-draft design in source export; update affected authored links and specimens if necessary.
+- [x] Record comparable production Scala counts, per-file deltas, removed encode/decode or write/read cycles, and test totals. Distinguish added test/documentation code from product changes.
+- [x] Check all source/book links and freeze the implementation in a clean commit before the full release.
 
 ## FD55 — final acceptance and handoff
 
@@ -123,3 +130,5 @@ FD51 proof: all 52 Scala tests pass (`.artifacts/fifth-51-build.log`); package i
 FD52 proof: all 53 Scala tests pass (`.artifacts/fifth-52-build.log`). Deterministic generated sources and DARs, the compiled mutation regression, the unchanged builder golden, and a portable rebuild from empty outputs all pass (`fifth-52-bindings.log`, `fifth-52-builder.log`, `fifth-52-portable.log`). The harness retains independent artifact reads.
 
 FD53 proof: all 57 Scala tests pass, including literal HTTP-format and bounded request-reading cases; the live Scala.js browser compiles (`.artifacts/fifth-53-build.log`). The authenticated live gate preserves authority, stale views, repeats, and reconnect; the builder golden still has zero differences (`fifth-53-live.log`, `fifth-53-builder.log`). The browser now retains a shared `ActionRequest` instead of an untyped JSON request.
+
+FD54 proof: all 57 Scala tests and the linked live browser pass (`.artifacts/fifth-54-build.log`); authenticated ledger handoff, stale/repeat protection, and reconnect pass after removing unused submission copies (`fifth-54-live.log`). All source links, nine exported chapters, and recording links pass (`fifth-54-book.log`). The preliminary book intentionally uses retained fourth-draft recordings; FD55 generates all evidence afresh from the clean implementation commit. Production is 4,235 lines versus 4,252.

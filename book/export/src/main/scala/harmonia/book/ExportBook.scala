@@ -85,7 +85,7 @@ object ExportBook:
           _.traverse_(path => copy(path, output.resolve("source").resolve(root.relativize(path))))
         )
       }
-    _ <- Vector("README.md", "FOURTH-DRAFT.md")
+    _ <- Vector("README.md", "FOURTH-DRAFT.md", "FIFTH-DRAFT.md")
       .traverse_(name => copy(root.resolve(name), output.resolve("source").resolve(name)))
     _ <- IO.println(s"Book exported: $output")
   yield ()

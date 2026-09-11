@@ -3,7 +3,6 @@ package harmonia.composition.model
 import cats.syntax.all.*
 import harmonia.protocol.JsonCodec
 import io.circe.{Codec, Json, Decoder, Encoder}
-import io.circe.syntax.*
 
 enum CompositionActor(val wire: String):
   case Bank extends CompositionActor("bank")
@@ -32,13 +31,11 @@ final case class PlannedStep(
     role: String,
     actor: CompositionActor,
     action: CompositionAction
-):
-  def json: Json = this.asJson
+)
 object PlannedStep:
   given Codec.AsObject[PlannedStep] = JsonCodec.derived[PlannedStep]
 
-final case class Composition(name: String, reference: String, steps: Vector[PlannedStep]):
-  def json: Json = this.asJson
+final case class Composition(name: String, reference: String, steps: Vector[PlannedStep])
 object Composition:
   given Codec.AsObject[Composition] = JsonCodec.derived[Composition]
 

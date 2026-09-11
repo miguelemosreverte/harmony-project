@@ -20,6 +20,8 @@ Harmonia coordinates independently owned Daml applications. Contracts authorize 
 
 `Connections` contains supplied ledger clients and their catalog. It does not create a network or read a story. `Resource` closes the clients, HTTP executor, and submission supervisor when their owner stops.
 
+For complete request-to-effect paths, read the [fifth-draft guide](../docs/fifth-draft/reading-guide.md). `ActionRequest` is shared with the browser, including remembered retries. Package resolution returns verified facts directly; generation returns its member list and manifest for archive assembly. JSON is encoded at transport and evidence boundaries.
+
 ## Build and run
 
 From the repository root, `scripts/build-product` builds product contracts, service, and browser. It does not build the book or harness. `scripts/product serve configuration.json [state-directory]` connects to existing local participants; it does not provision them.
