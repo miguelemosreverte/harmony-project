@@ -2,7 +2,7 @@ package harmonia.builder
 
 import cats.effect.{IO, Resource}
 import cats.effect.std.Dispatcher
-import harmonia.book.Elements.*
+import harmonia.ui.Elements.*
 import harmonia.live.LiveApi
 import io.circe.Json
 import org.scalajs.dom

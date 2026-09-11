@@ -1,6 +1,7 @@
 package harmonia.workspace
 
 import harmonia.financing.FinancingState
+import harmonia.composition.CompositionState
 import harmonia.protocol.SubmissionStatus
 import io.circe.{Decoder, Json}
 
@@ -31,7 +32,7 @@ object HistoryView:
 
 final case class WorkspaceSnapshot(
     financing: FinancingState,
-    composition: Json,
+    composition: CompositionState,
     submissions: Vector[SubmissionView],
     history: Vector[HistoryView]
 )
@@ -39,7 +40,7 @@ object WorkspaceSnapshot:
   given Decoder[WorkspaceSnapshot] = Decoder.instance { c =>
     for
       financing <- c.as[FinancingState]
-      composition <- c.get[Json]("composer")
+      composition <- c.get[CompositionState]("composer")
       submissions <- c.get[Vector[SubmissionView]]("jobs")
       history <- c.get[Vector[HistoryView]]("history")
     yield WorkspaceSnapshot(financing, composition, submissions, history)

@@ -1,10 +1,10 @@
 package harmonia.live
 
-import harmonia.book.Elements.*
+import harmonia.ui.Elements.*
 import io.circe.Json
 import harmonia.financing.*
 import harmonia.protocol.SubmissionStatus
-import harmonia.workspace.WorkspaceSnapshot
+import harmonia.workspace.{WorkspaceSnapshot, WorkspaceCommand}
 import org.scalajs.dom
 
 object LiveView:
@@ -20,8 +20,7 @@ object LiveView:
       reconnect: () => Unit,
       retry: () => Unit,
       dismiss: () => Unit,
-      submit: String => Unit,
-      compose: (String, Json) => Unit
+      submit: WorkspaceCommand => Unit
   ): Unit =
     val signature = snapshot
       .map(_.toString)
@@ -130,7 +129,9 @@ object LiveView:
             val label =
               if action == FinancingAction.Approve then "Approve financing"
               else "Continue shared workflow"
-            val control = button(label, "primary", "live-" + action.wire)(submit(action.wire))
+            val control = button(label, "primary", "live-" + action.wire)(
+              submit(WorkspaceCommand.Financing(action))
+            )
             control.disabled = pending || unconfirmed || submitting || connection != "Connected"
             append(state, control)
           }
@@ -167,7 +168,7 @@ object LiveView:
                 composition,
                 pending || unconfirmed || submitting || connection != "Connected",
                 editor,
-                compose
+                submit
               )
             )
           }

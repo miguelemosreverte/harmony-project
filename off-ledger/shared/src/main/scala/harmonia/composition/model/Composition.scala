@@ -1,12 +1,50 @@
 package harmonia.composition.model
 
-import io.circe.Json
+import io.circe.{Json, Decoder}
 
-final case class PlannedStep(id: String, role: String, actor: String, action: String)
-final case class Composition(name: String, reference: String, steps: Vector[PlannedStep])
+enum CompositionActor(val wire: String):
+  case Bank extends CompositionActor("bank")
+  case Buyer extends CompositionActor("buyer")
+object CompositionActor:
+  given Decoder[CompositionActor] = Decoder.decodeString.emap(s =>
+    CompositionActor.values.find(_.wire == s).toRight("Bind each role to the bank or buyer session")
+  )
+
+enum CompositionAction(val wire: String, val label: String):
+  case Approve extends CompositionAction("approve-financing", "Approve financing · direct")
+  case Review extends CompositionAction("confirm-review", "Confirm review · direct")
+  case GeneratedApproval
+      extends CompositionAction("approve-generated", "Approve financing · generated adapter")
+object CompositionAction:
+  given Decoder[CompositionAction] = Decoder.decodeString.emap(s =>
+    CompositionAction.values
+      .find(_.wire == s)
+      .toRight("Supported actions: direct approval, generated approval, and review")
+  )
+
+final case class PlannedStep(
+    id: String,
+    role: String,
+    actor: CompositionActor,
+    action: CompositionAction
+):
+  def json: Json = Json.obj(
+    "id" -> Json.fromString(id),
+    "role" -> Json.fromString(role),
+    "actor" -> Json.fromString(actor.wire),
+    "action" -> Json.fromString(action.wire)
+  )
+object PlannedStep:
+  given Decoder[PlannedStep] =
+    Decoder.forProduct4("id", "role", "actor", "action")(PlannedStep.apply)
+final case class Composition(name: String, reference: String, steps: Vector[PlannedStep]):
+  def json: Json = Json.obj(
+    "name" -> Json.fromString(name),
+    "reference" -> Json.fromString(reference),
+    "steps" -> Json.arr(steps.map(_.json)*)
+  )
 
 object Composition:
-  val actions = Set("approve-financing", "confirm-review", "approve-generated")
   def read(json: Json): Either[String, Composition] = for
     _ <- fields(json, Set("name", "reference", "steps"))
     name <- string(json, "name", 80)
@@ -20,18 +58,8 @@ object Composition:
           _ <- fields(step, Set("id", "role", "actor", "action"))
           id <- string(step, "id", 40)
           role <- string(step, "role", 40)
-          actor <- string(step, "actor", 20)
-          action <- string(step, "action", 40)
-          _ <- Either.cond(
-            Set("bank", "buyer").contains(actor),
-            (),
-            "Bind each role to the bank or buyer session"
-          )
-          _ <- Either.cond(
-            actions.contains(action),
-            (),
-            "Supported actions: direct approval, generated approval, and review"
-          )
+          actor <- step.hcursor.get[CompositionActor]("actor").left.map(_.getMessage)
+          action <- step.hcursor.get[CompositionAction]("action").left.map(_.getMessage)
         yield previous :+ PlannedStep(id, role, actor, action)
     }
     _ <- Either.cond(steps.map(_.id).distinct.size == steps.size, (), "Step names must be distinct")

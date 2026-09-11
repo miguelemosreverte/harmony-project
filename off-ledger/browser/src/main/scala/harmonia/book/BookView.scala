@@ -1,5 +1,6 @@
 package harmonia.book
 
+import harmonia.ui.Elements
 import cats.effect.IO
 import io.circe.Json
 import org.scalajs.dom

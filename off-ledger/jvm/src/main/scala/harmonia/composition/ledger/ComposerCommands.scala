@@ -23,8 +23,8 @@ object ComposerCommands:
           V.record(
             "id" -> V.text(step.id),
             "role" -> V.text(step.role),
-            "actor" -> V.party(parties(step.actor)),
-            "action" -> V.text(step.action)
+            "actor" -> V.party(parties(step.actor.wire)),
+            "action" -> V.text(step.action.wire)
           )
         )
         find("Composer", "Workspace").map(c =>

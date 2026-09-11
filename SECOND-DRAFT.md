@@ -87,8 +87,8 @@ The first three actual commits on `second-draft` form one acceptance sequence: d
 
 ### SD05 — Complete composition as a feature
 
-- [ ] Group proposal, acceptance, cancellation, execution, and observations under consistent composition ownership.
-- [ ] Decode composition state once; keep the editor's draft state separate from refreshed server observations.
+- [x] Group proposal, acceptance, cancellation, execution, and observations under consistent composition ownership.
+- [x] Decode composition state once; keep the editor's draft state separate from refreshed server observations.
 - [ ] Use the shared delivery lifecycle and prove both direct and generated composer stories.
 - [ ] **Acceptance:** a developer can follow consent and execution from the feature entry points, and refresh preserves the reader's unfinished input and focus.
 
@@ -155,3 +155,5 @@ SD01 (`f40cb17`), SD02 (`eafeea7`), and SD03 are complete. SD03 passed 30 Scala 
 The chapter links distinguish the introductory shared application from the private live handoff. The next steps remove the remaining mixed ownership in `LiveActions` and `LiveSnapshot`, then apply typed boundaries to composition and package inspection. The preserved first-draft book remains available during migration.
 
 SD04 separates `submission/Submissions`, `ledger/client`, `financing/FinancingObservation`, and `app/workspace/Workspace`. Thirty Scala tests pass, including observation failures versus definite submission rejection; JVM and browser builds pass (`.artifacts/second-04-final.log`). HTTP diagnostics retain the actual validation error. The full release gate will repeat the real ledger recovery and resource checks.
+
+SD05 implements typed composition plans, observations, and browser commands. Thirty Scala tests and both compilation targets pass (`.artifacts/second-05-verified.log`). Shared UI primitives now live in `harmonia.ui`. The direct/generated ledger proofs and the stable-component browser walkthrough remain scheduled for the release gate and SD09.

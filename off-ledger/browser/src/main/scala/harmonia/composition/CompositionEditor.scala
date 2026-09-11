@@ -1,7 +1,8 @@
 package harmonia.composition
 
-import harmonia.book.Elements.*
+import harmonia.ui.Elements.*
 import io.circe.Json
+import harmonia.composition.model.{Composition, CompositionAction}
 import org.scalajs.dom
 
 private final case class StepDraft(id: String, role: String, actor: String, action: String):
@@ -13,7 +14,7 @@ private final case class StepDraft(id: String, role: String, actor: String, acti
   )
 
 /** This editor owns its DOM so participant polling preserves unfinished input. */
-final class CompositionEditor(propose: Json => Unit):
+final class CompositionEditor(propose: Either[String, Composition] => Unit):
   private var name = "Offer checks"
   private var reference = "home-17"
   private var steps = Vector(
@@ -28,10 +29,12 @@ final class CompositionEditor(propose: Json => Unit):
     event.preventDefault()
     if !blocked && remaining > 0 then
       propose(
-        Json.obj(
-          "name" -> Json.fromString(name),
-          "reference" -> Json.fromString(reference),
-          "steps" -> Json.arr(steps.map(_.json)*)
+        Composition.read(
+          Json.obj(
+            "name" -> Json.fromString(name),
+            "reference" -> Json.fromString(reference),
+            "steps" -> Json.arr(steps.map(_.json)*)
+          )
         )
       )
   rebuild()
@@ -88,11 +91,7 @@ final class CompositionEditor(propose: Json => Unit):
           "Action",
           s"composition-action-$index",
           step.action,
-          Vector(
-            "approve-financing" -> "Approve financing · direct",
-            "approve-generated" -> "Approve financing · generated adapter",
-            "confirm-review" -> "Confirm review · direct"
-          )
+          CompositionAction.values.toVector.map(action => action.wire -> action.label)
         )(v => update(_.copy(action = v)))
       )
       append(row, fields)

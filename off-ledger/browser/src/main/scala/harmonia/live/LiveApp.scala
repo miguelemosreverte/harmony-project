@@ -4,7 +4,7 @@ import cats.effect.{IO, Ref}
 import cats.effect.std.Dispatcher
 import cats.syntax.all.*
 import io.circe.Json
-import harmonia.workspace.WorkspaceSnapshot
+import harmonia.workspace.{WorkspaceSnapshot, WorkspaceCommand}
 import org.scalajs.dom
 import scala.scalajs.js
 import scala.concurrent.duration.*
@@ -53,9 +53,13 @@ private final class BrowserSession(
   private val storageKey = "harmonia-request-" + capability
   private val packages = new harmonia.builder.PackagePanel(capability, dispatcher)
   private val editor =
-    new harmonia.composition.CompositionEditor(input => submit("compose-propose", Some(input)))
+    new harmonia.composition.CompositionEditor({
+      case Right(plan) => submit(WorkspaceCommand.Propose(plan))
+      case Left(message) =>
+        dispatcher.unsafeRunAndForget(state.update(_.copy(notice = Some(message))) *> draw)
+    })
 
-  private def submit(action: String, parameters: Option[Json]): Unit =
+  private def submit(command: WorkspaceCommand): Unit =
     dispatcher.unsafeRunAndForget(state.get.flatMap { current =>
       if current.submitting || current.unconfirmed.nonEmpty || current.connection != "Connected"
       then IO.unit
@@ -64,10 +68,10 @@ private final class BrowserSession(
           val input = Json
             .obj(
               "id" -> Json.fromString(js.Dynamic.global.crypto.randomUUID().asInstanceOf[String]),
-              "action" -> Json.fromString(action),
+              "action" -> Json.fromString(command.wire),
               "version" -> Json.fromString(snapshot.financing.version)
             )
-            .deepMerge(parameters.fold(Json.obj())(value => Json.obj("input" -> value)))
+            .deepMerge(command.parameters.fold(Json.obj())(value => Json.obj("input" -> value)))
           send(input)
         }
     })
@@ -142,8 +146,7 @@ private final class BrowserSession(
         () => dispatcher.unsafeRunAndForget(refresh),
         () => current.unconfirmed.foreach(input => dispatcher.unsafeRunAndForget(send(input))),
         () => dispatcher.unsafeRunAndForget(state.update(_.copy(notice = None)) *> draw),
-        action => submit(action, None),
-        (action, input) => submit(action, Some(input))
+        submit
       )
     }
   }

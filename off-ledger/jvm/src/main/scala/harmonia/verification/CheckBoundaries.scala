@@ -91,7 +91,7 @@ object CheckBoundaries:
       .read(plan)
       .fold(message => throw IllegalArgumentException(message), identity)
     require(
-      parsed.steps.size == 1 && parsed.steps.head.actor == "bank" && parsed.steps.head.action == "approve-financing",
+      parsed.steps.size == 1 && parsed.steps.head.actor == harmonia.composition.model.CompositionActor.Bank && parsed.steps.head.action == harmonia.composition.model.CompositionAction.Approve,
       "The race requires one direct bank approval"
     )
     val reference = parsed.reference

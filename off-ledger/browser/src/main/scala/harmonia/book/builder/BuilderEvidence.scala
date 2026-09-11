@@ -1,6 +1,7 @@
 package harmonia.book.builder
 
-import harmonia.book.{RecordedStory, Elements}
+import harmonia.ui.Elements
+import harmonia.book.{RecordedStory}
 import Elements.*
 import io.circe.Json
 import org.scalajs.dom

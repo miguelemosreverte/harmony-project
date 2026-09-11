@@ -18,6 +18,14 @@ enum WorkspaceCommand:
     case Cancel(_)         => "compose-cancel"
     case Advance(_, _)     => "compose-advance"
 
+  def parameters: Option[Json] = this match
+    case Financing(_)      => None
+    case Propose(plan)     => Some(plan.json)
+    case Accept(reference) => Some(Json.obj("reference" -> Json.fromString(reference)))
+    case Cancel(reference) => Some(Json.obj("reference" -> Json.fromString(reference)))
+    case Advance(reference, step) =>
+      Some(Json.obj("reference" -> Json.fromString(reference), "step" -> Json.fromString(step)))
+
 object WorkspaceCommand:
   /** Text dispatch belongs at this external API boundary only. */
   def read(action: String, parameters: Option[Json]): Either[String, WorkspaceCommand] =

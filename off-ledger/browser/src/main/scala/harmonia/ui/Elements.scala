@@ -1,4 +1,4 @@
-package harmonia.book
+package harmonia.ui
 
 import org.scalajs.dom
 

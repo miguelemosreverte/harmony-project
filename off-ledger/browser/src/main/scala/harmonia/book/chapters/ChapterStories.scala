@@ -1,6 +1,7 @@
 package harmonia.book.chapters
 
-import harmonia.book.{RecordedStory, ViewState, Elements}
+import harmonia.ui.Elements
+import harmonia.book.{RecordedStory, ViewState}
 import Elements.*
 import org.scalajs.dom
 
