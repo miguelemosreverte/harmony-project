@@ -583,6 +583,9 @@ tr:last-child td {
 .participant-evidence { margin-top: 22px; }
 
 .chapter-diagram { overflow-x: auto; margin: 24px 0; border: 1px solid var(--line); border-radius: 6px; background: var(--white); }
+.chapter-experiments { margin-top: 2.5rem; padding: 1.5rem; border: 1px solid var(--line); border-radius: 8px; background: var(--white); }
+.chapter-demo { margin: .4rem .5rem .4rem 0; text-align: left; white-space: normal; max-width: 100%; }
+:focus-visible { outline: 3px solid #24735c; outline-offset: 3px; }
 
 .transfer-balances { margin-top: 1.4rem; }
 .balance-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; padding: 1.5rem; }

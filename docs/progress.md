@@ -39,7 +39,9 @@ Actual commit identifiers are recorded in the next commit after they are created
 
 | 16c | `4d830e5` | [Package builder proof](verification/16c-builder.md): actual upload/export, reviewed compilation, verified download, negative inputs, and Chapter 8 with thirty recordings |
 
-| 17 | This increment | [Execution boundary proof](verification/17-boundaries.md): upper bounds, disclosure/stale/retry checks, concurrent commands, twenty-seven Scala tests, and portable project reproduction |
+| 17 | `b8a8520` | [Execution boundary proof](verification/17-boundaries.md): upper bounds, disclosure/stale/retry checks, concurrent commands, twenty-seven Scala tests, and portable project reproduction |
+
+| 18 | This increment | [Complete reader path](verification/18-book.md): nine chapters, 32 recordings, matching experiments, local link audit, and narrow-screen keyboard navigation |
 
 ## External decisions
 

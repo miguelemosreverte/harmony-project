@@ -47,11 +47,12 @@ final class BookView(
       element(
         "p",
         "sidebar-note",
-        "Every story has an input, a committed expectation, and an observation from the ledger. Explore the evidence behind each result."
+        "Every story has an input, a committed expectation, and an observed execution. Explore the evidence behind each result."
       )
     )
     val main = element("main", "main")
     main.id = "main"
+    main.tabIndex = -1
     append(main, topLine())
     state.chapter match
       case Some(index) =>
@@ -59,18 +60,26 @@ final class BookView(
         // The exporter escapes raw HTML and sanitizes URLs before this content reaches the browser.
         chapter.innerHTML = text(chapters(index), "html")
         harmonia.book.diagram.ChapterDiagram.render(chapter)
+        val scrollRegions = chapter.querySelectorAll("pre, table")
+        (0 until scrollRegions.length).foreach { i =>
+          val region = scrollRegions(i).asInstanceOf[dom.HTMLElement]
+          region.tabIndex = 0;
+          region.setAttribute("aria-label", "Code or table; scroll horizontally if needed")
+        }
         append(main, chapter)
+        append(main, harmonia.book.chapters.ChapterStories.render(index, stories, navigate))
       case None => laboratory(main, state)
     append(
       main,
       element(
         "p",
         "footer",
-        "Harmonia is an evolving reference implementation. These demonstrations use synthetic applications and recorded local Canton executions."
+        "Harmonia is a local reference implementation. These demonstrations use synthetic applications and recorded executions; each recording carries its own source provenance."
       )
     )
     append(layout, sidebar, main)
     append(root, layout)
+    Option(nav.querySelector(".active")).foreach(_.setAttribute("aria-current", "page"))
     Option(root.querySelector(".graph")).foreach { graphNode =>
       val graph = graphNode.asInstanceOf[dom.HTMLElement]
       Option(graph.querySelector(".selected")).foreach { selected =>
@@ -80,9 +89,13 @@ final class BookView(
           (graph.clientWidth - selected.getBoundingClientRect().width) / 2
       }
     }
-    focused
-      .flatMap(id => Option(dom.document.getElementById(id)))
-      .foreach(_.asInstanceOf[dom.HTMLElement].focus())
+    if focused.exists(id => id.startsWith("nav-") || id.startsWith("chapter-demo-")) then
+      main.focus()
+      main.scrollIntoView()
+    else
+      focused
+        .flatMap(id => Option(dom.document.getElementById(id)))
+        .foreach(_.asInstanceOf[dom.HTMLElement].focus())
   }
 
   private def topLine(): dom.HTMLElement =
@@ -90,7 +103,7 @@ final class BookView(
     append(
       row,
       element("span", text = "APPLICATIONS, WORKING TOGETHER"),
-      element("span", "badge", "●  Recorded ledger evidence")
+      element("span", "badge", "●  Recorded execution evidence")
     )
     row
 
@@ -107,7 +120,7 @@ final class BookView(
       element(
         "p",
         text =
-          "Walk through a real execution, one attempt at a time. Compare what we committed to expect with what the ledger actually observed."
+          "Walk through a real execution, one attempt at a time. Compare what we committed to expect with the observed result."
       )
     )
     val toolbar = element("div", "toolbar")
@@ -155,6 +168,7 @@ final class BookView(
           "Generated typed adapter"
         else if story.input.hcursor.get[String]("integration").toOption.contains("adapter") then
           "Typed adapter"
+        else if story.isBoundaryReport then "Independent verification phases"
         else if builder then "Inspect → verify → generate"
         else if composition then "Propose → consent → core execution"
         else if transfer then "Four-party atomic transfer"
@@ -179,7 +193,8 @@ final class BookView(
       element(
         "strong",
         text =
-          if builder then "No package inputs"
+          if story.isBoundaryReport then "Empty local networks"
+          else if builder then "No package inputs"
           else if composition then "Empty workspace"
           else if transfer then "proposed"
           else setup.get[String]("status").getOrElse("Unknown")
@@ -187,7 +202,8 @@ final class BookView(
       element(
         "span",
         text =
-          if builder then "Eight available input slots"
+          if story.isBoundaryReport then "Core limits, then concurrent requests"
+          else if builder then "Eight available input slots"
           else if composition then "Sources await partner consent"
           else if transfer then "Trade and source position created"
           else "Application created"
@@ -239,6 +255,8 @@ final class BookView(
     if composition then
       append(main, harmonia.book.composer.CompositionEvidence.render(story, state.step))
     if builder then append(main, harmonia.book.builder.BuilderEvidence.render(story, state.step))
+    if story.isBoundaryReport then
+      append(main, harmonia.book.chapters.BoundaryEvidence.render(story, state.step))
     if transfer then append(main, harmonia.book.transfer.TransferView.render(story, state.step))
     append(main, details)
     if story.input.hcursor.get[String]("integration").contains("generated") then
@@ -402,7 +420,8 @@ final class BookView(
     panel
 
   private def observedState(story: RecordedStory, actual: Json): String =
-    if story.input.hcursor.get[String]("workflow").toOption.contains("property-purchase") then
+    if story.isBoundaryReport then s"${actual.asObject.fold(0)(_.size - 2)} observations"
+    else if story.input.hcursor.get[String]("workflow").toOption.contains("property-purchase") then
       Vector("proposal", "offer", "application")
         .map(field => text(actual, field))
         .find(value => !Set("none", "not-opened", "Unknown")(value))

@@ -1,6 +1,6 @@
 # Explore a recorded execution
 
-The browser edition lets you read the first two chapters and walk through their real ledger observations. The application is written in Scala.js. It reads a bundle exported by the Scala/JVM tools; it does not simulate application rules or infer success from an expected file.
+The browser edition lets you read nine chapters and walk through their actual execution evidence. The application is written in Scala.js. It reads a bundle exported by the Scala/JVM tools; it does not simulate application rules or infer success from an expected file.
 
 ## Open the book
 
@@ -34,7 +34,7 @@ The bundle contains the compiled browser application, chapters, relevant source 
 2. Select **Next attempt**. Northbank's approval produces an approved application and a completed workflow.
 3. Compare the committed expectation and ledger observation in the detail table. Contract consumption, active application count, and visibility appear alongside the workflow status.
 4. Open the input, expectation, actual result, diff, or raw observations from the evidence panel. The provenance link identifies the recording's source revision, worktree state, topology, and hashes.
-5. Read Chapters 1 and 2 using the chapter navigation. Their source links point to files included with this edition.
+5. Read a chapter using the navigation, then use its recorded-example buttons to return directly to the relevant story. Source links point to files included with this edition.
 
 ## Explore a failing comparison
 

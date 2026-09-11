@@ -484,12 +484,12 @@ Deliver this larger step as three ordered, working commits:
 
 ### Commit 18 — `docs: complete the book and evaluation walkthroughs`
 
-- [ ] Complete the reader's path through the working release.
-  - [ ] Finish Chapter 9, glossary, setup troubleshooting, architecture decisions, and extension guidance.
-  - [ ] Pair every chapter with matching stories, evidence, source links, and an experiment.
-  - [ ] Review layout, keyboard access, legibility, mobile/narrow-screen behavior, and non-color indicators.
-  - [ ] Prepare a developer walkthrough and runnable demo script using the actual release artifacts.
-  - [ ] **Acceptance:** a fresh-reader walkthrough identifies no missing step needed to understand, run, inspect, and adapt the reference examples.
+- [x] Complete the reader's path through the working release.
+  - [x] Finish Chapter 9, glossary, setup troubleshooting, architecture decisions, and extension guidance.
+  - [x] Pair every chapter with matching stories, evidence, source links, and an experiment.
+  - [x] Review layout, keyboard access, legibility, mobile/narrow-screen behavior, and non-color indicators.
+  - [x] Prepare a developer walkthrough and runnable demo script using the actual release artifacts.
+  - [x] **Acceptance:** a fresh-reader walkthrough identifies no missing step needed to understand, run, inspect, and adapt the reference examples.
 
 ### Commit 19 — `build: package a reproducible software and book release`
 

@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+source "$(dirname "${BASH_SOURCE[0]}")/environment"
+case "${1:-}" in
+  live) exec "$HARMONIA_ROOT/scripts/harmonia" live ;;
+  book)
+    if [[ "$#" -ne 2 ]]; then
+      printf 'Usage: scripts/demo book EXPORTED_BOOK_DIRECTORY\n' >&2
+      exit 2
+    fi
+    exec "$HARMONIA_ROOT/scripts/harmonia" serve-book "$2"
+    ;;
+  *) printf 'Usage: scripts/demo live | book EXPORTED_BOOK_DIRECTORY\n' >&2; exit 2 ;;
+esac

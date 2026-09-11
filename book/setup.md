@@ -1,10 +1,10 @@
-# Run the local baseline
+# Set up the local evaluation
 
-The first working version creates a financing application, verifies that its buyer cannot approve it, and lets the bank approve it. The final contract is queried under both party identities.
+The smoke command creates a financing application, verifies that its buyer cannot approve it, and lets the bank approve it. The complete suite adds workflows, participant privacy, typed generation, composition, package input, atomic transfer, and boundary checks.
 
 ## Requirements
 
-- macOS or Linux with Java 17 or later and sbt available.
+- macOS or Linux with Java 17 and sbt available. Local verification uses Java 17.
 - Daml SDK **3.4.11**, including its Canton runtime, compiler, and script runner.
 - Scala **3.3.6**, Cats Effect **3.6.3**, and sbt **1.12.5** are pinned in the build and resolved by sbt.
 
@@ -26,7 +26,7 @@ Each run retains `canton.log`, `script.log`, and `observation.json` in its print
 
 ## What this proves
 
-This is a real local Canton transaction with an application authorization check. Both parties are hosted by one local participant. It is not yet the reusable Harmonia core, a cross-application workflow, or evidence of privacy between separately operated participants. Those capabilities have their own later acceptance gates.
+This is a real local Canton transaction with an application authorization check. Both parties are hosted by one local participant. The core, cross-application workflows, and separate-participant privacy are covered by their own stories in the complete suite; the smoke command only checks the basic application transition.
 
 The [first story chapter](01-first-story.md) supplies execution from readable Markdown and compares its observed result with a committed golden. Run `scripts/check` to build, run focused tests, and execute the complete current story collection.
 

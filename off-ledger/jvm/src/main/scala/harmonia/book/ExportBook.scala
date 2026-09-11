@@ -35,7 +35,8 @@ object ExportBook:
       "05-financing-and-offer.md",
       "06-atomic-transfer.md",
       "07-generated-bindings.md",
-      "08-compose-a-workflow.md"
+      "08-compose-a-workflow.md",
+      "09-extend-with-evidence.md"
     ).traverse { name =>
       ArtifactFiles.read(root.resolve("book").resolve(name)).flatMap { markdown =>
         CodeIncludes.expand(root.resolve("book"), markdown).map { expanded =>

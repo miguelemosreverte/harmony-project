@@ -12,6 +12,8 @@ object Main extends IOApp:
   def run(args: List[String]): IO[ExitCode] =
     val root = Path.of(sys.env.getOrElse("HARMONIA_ROOT", "..")).toAbsolutePath.normalize()
     args match
+      case List("book-links", directory) =>
+        harmonia.book.verify.CheckBookLinks.run(root, root.resolve(directory)).as(ExitCode.Success)
       case List("portable-check") =>
         harmonia.verification.CheckPortableProject.run(root, None).as(ExitCode.Success)
       case List("portable-check", archive) =>

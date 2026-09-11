@@ -1,6 +1,6 @@
 # Repository map
 
-This map describes the intended repository as capabilities are implemented. Create directories when they contain a working feature; the [progress record](../progress.md) shows what exists and has been verified.
+This map describes the implemented repository. The [progress record](../progress.md) links its working capabilities to commits and evidence.
 
 ```text
 harmony-project/
@@ -14,7 +14,8 @@ harmony-project/
     sources.md                Provenance of imported documents
   book/                       Chapters and presentation assets
   packages/                   Pinned DAR input manifest and provenance
-  stories/                    Committed input.md and expected.md examples
+  stories/                    Regular ledger input.md and expected.md examples
+  evaluations/                Authenticated UI, composer, package, and boundary goldens
   on-ledger/                  Daml contracts, interfaces, bindings, and references
   off-ledger/
     shared/                   Models needed by JVM and browser code
@@ -29,8 +30,14 @@ harmony-project/
 | --- | --- | --- |
 | `stories/` | Reading, executing, and comparing executable stories | Run an input and compare observed results with its golden |
 | `bindings/` | Application package inspection and generation of typed Daml integration | Generate an adapter for an eligible financing choice |
-| `workflows/` | Client operations to inspect and interact with a workflow | Request an approval under the submitting party's identity |
+| `live/` | Authenticated workflow state, actions, HTTP sessions, and reconciliation | Submit under one restricted party identity |
+| `composer/` | Ordered plan validation, typed instantiation, and source projections | Obtain partner consent and execute a core-managed plan |
+| `builder/` | Bounded package input and downloadable compiled projects | Inspect an uploaded DAR and use its reviewed mapping |
+| `packages/` | Pinned source resolution and DAR identity inspection | Verify archive, package, and LF identities |
 | `ledger/` | Canton-specific connections, submissions, queries, and observations | Obtain a command's committed or rejected outcome |
+| `book/` | Static chapter/evidence export and local HTTP playback | Produce a self-contained reader bundle |
+| `verification/` | Cross-feature boundary and portable-project checks | Race two submissions against one process |
+| `processes/` | Owned subprocess lifecycles | Stop compiler/script/runtime children after a run |
 | `files/` | Filesystem access and artifact persistence | Read Markdown or write actual results and a diff |
 | `app/` | Configuration, resource ownership, and entry-point wiring | Construct programs and run the CLI/server |
 
@@ -40,6 +47,6 @@ The transfer reference is a complete feature slice under `stories/transfer/{mode
 
 The Scala binding generator emits Daml contracts. Scala workflow operations submit requests; Daml enforces their validity. This distinction also applies to the book: a diagram displays observed behavior without implementing a second execution engine.
 
-Tests mirror the feature packages under `src/test/scala`. The authored stories stay in the root `stories/` collection. Generated local runs and diagnostics go to ignored `.artifacts/` directories, while selected release evidence is packaged deliberately with its provenance.
+Tests mirror the feature packages under `src/test/scala`. The authored regular stories stay in `stories/`; authenticated interaction and cross-feature evaluations live in `evaluations/`. Generated local runs and diagnostics go to ignored `.artifacts/` directories, while selected release evidence is packaged deliberately with its provenance.
 
 See [Scala organization](scala.md) for the source tree and dependency rules, and [the PRD](../../PRD.md) for the exact delivery order.

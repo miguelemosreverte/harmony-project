@@ -1,9 +1,9 @@
 # Scala organization for Harmonia
 
-**Status:** Scala and the functional style are user requirements. The layout below is a proposal to implement incrementally.  
+**Status:** implemented with Scala 3.3.6, Cats Effect 3.6.3, JVM tools, and Scala.js 1.22.0. The functional style is a user requirement.  
 **Context:** [Product requirements and commit plan](../../PRD.md)
 
-Harmonia's off-ledger application code will be Scala. Use Cats Effect with concrete `IO` for effectful operations, immutable data, named functions, and explicit dependencies. Organize the code by capability so a reader can follow one feature without searching across unrelated technical layers.
+Harmonia's off-ledger application code is Scala. Use Cats Effect with concrete `IO` for effectful operations, immutable data, named functions, and explicit dependencies. Organize the code by capability so a reader can follow one feature without searching across unrelated technical layers.
 
 “Cats Effect” is the working interpretation of the spoken phrase “catch effects.” The on-ledger implementation remains Daml.
 
@@ -13,11 +13,11 @@ Harmonia's off-ledger application code will be Scala. Use Cats Effect with concr
 | --- | --- |
 | Ledger contracts and generated binding contracts | Daml |
 | Story runner, golden comparison, builder, package retrieval, API/server, and book generation | Scala on the JVM |
-| Interactive book, workflow viewer, and composer | Scala compiled for the browser through Scala.js, subject to the early UI dependency check |
+| Interactive book, workflow viewer, and composer | Scala compiled for the browser through Scala.js |
 | Story inputs, expectations, and book prose | Human-readable Markdown and YAML |
 | Page structure and presentation | HTML/CSS assets produced or used by the Scala application |
 
-Scala 3 is the proposed default. Pin a compatible Scala, JDK, Cats Effect, and Canton client combination during the build baseline. Select the Scala.js/UI dependencies when the first interactive edition is built. Any dependency that requires JavaScript interoperation should have a small named Scala boundary; an alternative application language would be a change to the user's requirement.
+The checked toolchain uses Java 17 and Daml/Canton SDK 3.4.11. Browser DOM interoperation is confined to Scala.js presentation and request boundaries. Any dependency that requires JavaScript interoperation should have a small named Scala boundary; an alternative application language would be a change to the user's requirement.
 
 The builder is Scala code that emits Daml code. The browser receives permitted observations and submits authorized requests; it does not become a second implementation of ledger execution rules.
 
@@ -52,68 +52,36 @@ A slice is a user or developer capability: read a story, run it, compare its res
 
 Each slice owns its local input/error types, pure operations, effectful program, and command/HTTP entry adapter when needed. Tests mirror that package under `src/test/scala`. A change to one capability should normally lead the reader to one feature folder and its corresponding tests.
 
-This is a proposed source layout as the capabilities arrive:
+The implemented source ownership is:
 
 ```text
 off-ledger/
-  build.sbt
-  project/
-
+  build.sbt, .jvmopts, project/    Pinned build and compiler resource budget
   shared/src/main/scala/harmonia/
-    stories/
-      Story.scala
-      StoryResult.scala
-      StoryDiff.scala
-    workflows/
-      WorkflowView.scala
-
+    book/                        Recorded evidence model
+    stories/compare/             Pure structural comparison shared by both targets
   jvm/src/main/scala/harmonia/
-    stories/
-      read/
-        ReadStory.scala
-        StoryFormat.scala
-      run/
-        RunStory.scala
-        RunStoryCommand.scala
-        RunStoryError.scala
-      compare/
-        CompareResults.scala
-    bindings/
-      inspect/
-        InspectPackage.scala
-      generate/
-        GenerateBinding.scala
-        BindingMapping.scala
-    workflows/
-      inspect/
-        InspectWorkflow.scala
-      execute/
-        ExecuteStep.scala
-    ledger/
-      LedgerSubmission.scala
-      CantonSubmission.scala
-    files/
-      ArtifactFiles.scala
-    app/
-      Main.scala
-      Resources.scala
-
+    app/                         CLI wiring
+    stories/                     Typed story slices, reading, execution, observation
+    bindings/                    Mapping model, LF shape inspection, typed generation
+    packages/                    Source pins, acquisition, DAR inspection
+    live/                        Restricted participant sessions, state, actions, HTTP
+    composer/                    Plan model, commands, projections, golden verifier
+    builder/                     Package input, compilation, portable project archive
+    ledger/                      Runtime topology, authentication, events, lifecycle lease
+    book/                        Chapter/evidence export and static playback server
+    verification/                Cross-feature bounds and portable reference checks
+    files/, processes/           Explicit I/O and owned child lifecycles
   browser/src/main/scala/harmonia/
-    stories/
-      playback/
-        StoryPlayback.scala
-    workflows/
-      view/
-        WorkflowPage.scala
-      compose/
-        WorkflowComposer.scala
-    app/
-      Main.scala
+    book/                        Chapters, recorded playback, feature-specific diagrams
+    live/                        Session requests, uncertain-command recovery, rendering
+    composer/                    Editor and actual consent/source-state presentation
+    builder/                     Bounded package operation panel
 ```
 
 The build defines the shared code for JVM and Scala.js consumption. It shares only the models and pure operations actually needed by both targets. JVM ledger clients and filesystem code remain in the JVM target. Scala.js supplies the browser compilation target; see its [official documentation](https://www.scala-js.org/doc/).
 
-The tree illustrates ownership, not a requirement to create every folder at initialization. Start with the first runnable story and add slices when implementing their capabilities. Use one build initially; create additional build modules only when they enforce a useful dependency or platform boundary.
+The JVM and browser remain two targets in one build. Add a folder when it owns a working feature; add a build module only when it enforces a useful dependency or platform boundary. Local mutation is confined to integration loops and DOM state where it bounds memory or preserves user input; domain values and transformations remain immutable.
 
 ### Dependency rules
 
@@ -129,17 +97,17 @@ Interfaces are useful at actual boundaries, such as ledger submission or artifac
 
 ## 4. What a slice should read like
 
-The following signatures illustrate the separation; they are design examples, not compiled implementation:
+These actual API shapes make the separation visible:
 
 ```scala
 object CompareResults:
-  def compare(expected: StoryResult, actual: StoryResult): StoryDiff
+  def compare(expected: Json, actual: Json): Vector[Difference]
 
-final class RunStory(ledger: StoryLedger, artifacts: StoryArtifacts):
-  def run(story: Story): IO[ObservedRun]
+object LiveSnapshot:
+  def read(ledger: ParticipantLedger, catalog: TemplateCatalog): IO[LiveSnapshot]
 ```
 
-`CompareResults` calculates a difference. `RunStory` performs the effects required to execute a story and retain its observed output. Its execution does not receive the expected result. A command connects those capabilities, passes the actual output to the comparator, writes the diff, and chooses the exit status.
+`CompareResults` calculates a difference from ordinary values. `LiveSnapshot.read` observes a restricted participant, filters supported package identities, and returns the current view. `LiveActions` owns submission/reconciliation; a read failure cannot become a business rejection. The story checkers read independent expectations, execute the input, then compare actual results without using the expectation to drive business actions.
 
 The resource wiring remains visible in the application entry point. A reader should be able to identify which ledger identity is used, which artifacts are written, and who owns each resource without navigating a dependency-injection framework.
 
@@ -156,4 +124,4 @@ The resource wiring remains visible in the application entry point. A reader sho
 - [ ] A reader can follow the story from input through observed output to comparison without finding a second copy of its business rules.
 - [ ] New abstractions make a concrete feature easier to read or maintain.
 
-The first implementation establishes the style through one small, complete example. Later slices should follow that working precedent rather than starting with a large scaffold.
+New slices should follow these working precedents and preserve the explicit pure/effect and resource boundaries.
