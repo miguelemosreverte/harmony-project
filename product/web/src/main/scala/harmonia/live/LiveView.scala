@@ -57,7 +57,6 @@ final class LiveView:
         "Evidence" -> "evidence"
       ).foreach((title, id) => append(nav, link(title, "?view=" + id)))
       append(nav, packageNavigation, link("The book ↗", "/book/"))
-      new WorkspaceNavigation(nav, () => selectPage())
       finance.id = "financing"
       append(main, nav, finance)
       append(evidence, jobs, history)
@@ -94,6 +93,7 @@ final class LiveView:
         )
       )
       val root = dom.document.getElementById("app"); root.textContent = ""; append(root, main)
+      new WorkspaceNavigation(nav, () => selectPage())
     val feedbackState = (connection, unconfirmed, submitting, notice)
     if !previousFeedback.contains(feedbackState) then
       previousFeedback = Some(feedbackState)

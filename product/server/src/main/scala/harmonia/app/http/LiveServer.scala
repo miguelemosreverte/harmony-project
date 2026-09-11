@@ -128,9 +128,12 @@ object LiveServer:
               )
           else apiResponse(actor, method, path, actions, builder, exchange)
     else if method != "GET" then send(exchange, 405, "text/plain", Array.emptyByteArray)
+    else if path == "/book" then
+      IO.blocking(exchange.getResponseHeaders.set("Location", "/book/")) *>
+        send(exchange, 302, "text/plain", Array.emptyByteArray)
     else if path == "/book/source/design/0.2/context.js" && book.nonEmpty then
       send(exchange, 200, "text/javascript", "window.HarmoniaLiveRoot = '/';".getBytes(UTF_8))
-    else if path == "/book" || path.startsWith("/book/") then
+    else if path.startsWith("/book/") then
       IO.blocking(
         book.flatMap(directory =>
           StaticFiles.resolve(directory, path.stripPrefix("/book").stripPrefix("/"))
@@ -149,6 +152,8 @@ object LiveServer:
       )
     else
       val file = path match
+        case "/favicon.ico" | "/favicon.svg" =>
+          Some(root.resolve("product/web/site/favicon.svg") -> "image/svg+xml")
         case "/"          => Some(root.resolve("product/web/site/index.html") -> "text/html")
         case "/scene.css" => Some(root.resolve("product/scene/site/scene.css") -> "text/css")
         case "/live.css"  => Some(root.resolve("product/web/site/live.css") -> "text/css")

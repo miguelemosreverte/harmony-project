@@ -15,7 +15,7 @@ The integration needs an actor, a subject, an eligible choice, and a meaningful 
 
 The adapter must compile against the actual package signatures and pass an independently committed input and expected result before anyone relies on it.
 
-[Open the live sandbox](../sandbox.html), choose the Bank session, then **Applications**. Upload or retrieve a supported DAR, inspect its choices, and generate a portable integration project. This does not install new actions into the running workflow catalog.
+[Open the live sandbox](../../../design/0.2/sandbox.html), choose the Bank session, then **Applications**. Upload or retrieve a supported DAR, inspect its choices, and generate a portable integration project. This does not install new actions into the running workflow catalog.
 
 ## Where the current boundary lies
 

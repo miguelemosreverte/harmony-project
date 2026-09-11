@@ -1,0 +1,59 @@
+// Uses private, locally provisioned sessions without writing their capabilities into reports.
+import fs from 'node:fs/promises';
+import assert from 'node:assert/strict';
+import {browser} from './cdp.mjs';
+const b=await browser(process.argv[2]);
+const sessions=JSON.parse(await fs.readFile(process.argv[3],'utf8'));
+const origin=new URL(sessions.bank).origin;
+const directory='design/0.2/infographic/review';await fs.mkdir(directory,{recursive:true});
+const checks=[];const check=(name,value)=>{assert(value,name);checks.push(name);};
+const click=s=>b.evaluate(`document.querySelector(${JSON.stringify(s)}).click()`);
+async function participant(actor,query='') {
+  const u=new URL(sessions[actor]);u.search=query;await b.navigate(u.href);
+  await b.until(`document.querySelector('#live-identity')?.textContent.includes(${JSON.stringify(actor==='reviewer'?'observer':actor==='bank'?'Bank':'Buyer')}) && document.querySelector('#live-connection')?.textContent.includes('Connected')`);
+}
+const api=()=>b.evaluate(`fetch('/api/state',{headers:{Authorization:'Bearer '+sessionStorage.getItem('harmonia-live')}}).then(r=>r.json())`);
+const connected=()=>b.until(`document.querySelector('#live-connection')?.textContent.includes('Connected')`);
+try {
+  await b.viewport(1280,1000);await participant('bank','view=composer&theme=dark&text=large');
+  check('Session entry preserves query navigation and strips the capability',await b.evaluate(`location.hash==='' && location.search.includes('view=composer') && !document.querySelector('#composer').hidden && document.documentElement.dataset.theme==='dark'`));
+  await b.evaluate(`const input=document.querySelector('#composition-name');input.value='An unfinished human draft';input.dispatchEvent(new Event('input'));`);
+  await click('a[href="?view=financing"]');await b.wait(2200);await click('a[href="?view=composer"]');
+  check('Polling and navigation preserve the unfinished composition',await b.evaluate(`document.querySelector('#composition-name').value==='An unfinished human draft'`));
+  await b.evaluate(`history.back()`);await b.until(`!document.querySelector('#financing').hidden`);
+  check('Browser Back restores the previous workspace task',true);
+  await b.evaluate(`const select=document.querySelector('#workspace-theme');select.value='light';select.dispatchEvent(new Event('change'));`);
+  await b.evaluate(`const sizeSelect=document.querySelector('#workspace-text');sizeSelect.value='standard';sizeSelect.dispatchEvent(new Event('change'));`);
+  await b.screenshot(`${directory}/live-bank.png`);
+  const bank=await api();check('The bank sees its real private application',bank.actor==='bank'&&!!bank.private_details);
+  check('Only the bank approval is offered initially',await b.evaluate(`!!document.querySelector('#live-approve-financing')&&!document.querySelector('#live-publish-approval')`));
+  await click('#live-approve-financing');await b.until(`document.querySelector('.scene-title')?.textContent==='Your approval is issued.'`);
+  const approved=await api();check('Approval is an observed committed server result',approved.application==='approved'&&approved.jobs.some(j=>j.outcome==='committed'));
+  await participant('buyer');await b.until(`!!document.querySelector('#live-publish-approval')`);
+  const buyer=await api();check('The buyer receives evidence without private details',buyer.actor==='buyer'&&buyer.evidence_available&&!buyer.private_details&&!buyer.application);
+  check('The buyer has no bank approval control',await b.evaluate(`!document.querySelector('#live-approve-financing')`));
+  await b.viewport(390,1000);await b.screenshot(`${directory}/live-buyer-mobile.png`);
+  check('Live mobile layout fits the viewport',await b.evaluate('document.documentElement.scrollWidth<=innerWidth+1'));
+  await click('#live-publish-approval');await b.until(`document.querySelector('#live-workflow')?.textContent==='Workflow: complete'`);
+  const complete=await api();check('The buyer continuation commits on the ledger',complete.workflow==='complete'&&complete.jobs.some(j=>j.outcome==='committed'));
+  await b.cdp('Page.reload');await connected();await b.until(`document.querySelector('#live-workflow')?.textContent==='Workflow: complete'`);
+  check('Refresh recovers completion without repeating a command',true);
+  await participant('reviewer');await b.until(`document.querySelector('#live-workflow')?.textContent==='Workflow: complete'`);
+  const reviewer=await api();check('The observer sees shared completion only',reviewer.actor==='reviewer'&&!reviewer.private_details&&!reviewer.application&&reviewer.eligible.length===0);
+  check('Waiting roles receive no unusable financing action',await b.evaluate('document.querySelectorAll(".financing-action button").length===0'));
+  await b.viewport(1280,1000);await b.screenshot(`${directory}/live-complete.png`);
+  await b.navigate(origin+'/book','/book/source/design/0.2/book-overview.html');await b.until(`!!window.HarmoniaView`);
+  check('The actual server mounts the designed book',await b.evaluate(`location.pathname.includes('/book/source/design/0.2/book-overview.html')`));
+  await b.navigate(origin+'/book/source/design/0.2/chapters/03-financing-to-offer.html?step=5');await b.until(`!!document.querySelector('.harmonia-scene')`);
+  check('The mounted book uses the shared compiled renderer',await b.evaluate(`document.querySelector('.scene-title').textContent==='Alice makes her proposal.'`));
+  await b.navigate(origin+'/book/source/design/0.2/sandbox.html');await b.until(`!!window.HarmoniaView`);
+  check('The book provides a route back to the live workspace',await b.evaluate(`document.querySelector('#live-entry a').pathname==='/'`));
+  await click('#live-entry a');await connected();check('Returning from the book retains participant identity',(await api()).actor==='reviewer');
+  const blocked=await fetch(origin+'/book/%2e%2e%2fsessions.json');check('Mounted files cannot traverse into private session artifacts',blocked.status===404);
+  const svg=await fetch(origin+'/book/source/design/0.2/assets/component-map.svg');
+  check('Original SVG is served with an image MIME type',svg.status===200&&svg.headers.get('content-type').startsWith('image/svg+xml'));
+  await fs.writeFile('docs/0.2/infographic-live.json',JSON.stringify({scope:'Actual Scala service, authenticated participant sessions and disposable Canton ledger',checks,errors:b.errors},null,2)+'\n');
+  check('No browser script or CSP errors',b.errors.filter(e=>!e.includes('favicon.ico')).length===0);
+  await fs.writeFile('docs/0.2/infographic-live.json',JSON.stringify({scope:'Actual Scala service, authenticated participant sessions and disposable Canton ledger',checks,errors:b.errors},null,2)+'\n');
+  console.log(JSON.stringify({checks:checks.length,errors:b.errors}));
+} finally {b.close();}

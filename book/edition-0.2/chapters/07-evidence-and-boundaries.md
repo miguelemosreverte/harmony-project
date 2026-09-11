@@ -19,4 +19,4 @@ The four included recordings come from the preserved fourth-draft evaluation. Th
 
 ## Find the exact source
 
-[Open document coverage](../coverage.html). Choose the requirement's chapter, open its source passage, and inspect the exact original text if needed. The readable rendering and audit text serve different reading tasks.
+[Open document coverage](../../../design/0.2/coverage.html). Choose the requirement's chapter, open its source passage, and inspect the exact original text if needed. The readable rendering and audit text serve different reading tasks.

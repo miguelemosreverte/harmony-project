@@ -1,0 +1,29 @@
+{
+  "scope": "Actual Scala service, authenticated participant sessions and disposable Canton ledger",
+  "checks": [
+    "Session entry preserves query navigation and strips the capability",
+    "Polling and navigation preserve the unfinished composition",
+    "Browser Back restores the previous workspace task",
+    "The bank sees its real private application",
+    "Only the bank approval is offered initially",
+    "Approval is an observed committed server result",
+    "The buyer receives evidence without private details",
+    "The buyer has no bank approval control",
+    "Live mobile layout fits the viewport",
+    "The buyer continuation commits on the ledger",
+    "Refresh recovers completion without repeating a command",
+    "The observer sees shared completion only",
+    "Waiting roles receive no unusable financing action",
+    "The actual server mounts the designed book",
+    "The mounted book uses the shared compiled renderer",
+    "The book provides a route back to the live workspace",
+    "Returning from the book retains participant identity",
+    "Mounted files cannot traverse into private session artifacts",
+    "Original SVG is served with an image MIME type",
+    "No browser script or CSP errors"
+  ],
+  "errors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found) [/favicon.ico]",
+    "Failed to load resource: the server responded with a status of 404 (Not Found) [/favicon.ico]"
+  ]
+}

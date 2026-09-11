@@ -1,6 +1,6 @@
 # Harmonia 0.2 — from proposal to an understandable product
 
-Status: design and source traceability checkpoint complete. Runtime work remains planned. Base: fourth draft, `bef8ac5`.
+Status: source-cited infographic book and existing financing API integration verified. Trust, external integration, and full 0.2 release work remain planned. Base: fourth draft, `bef8ac5`.
 This plan changes the product evaluation surface and makes the remaining product
 work explicit. It does not treat historical test results as fresh 0.2 results.
 
@@ -73,8 +73,9 @@ the subsequent phase described below, matching the requested design-first sequen
 The completed second UX pass is governed by [the UX contract](UX.md), with
 [its own verification](verification-2.md). It adds readable
 source rendering, reader routes, deterministic URLs, and four preserved recordings
-to the static design edition. Step 07 below still refers to integration into the
-Scala book and portable runtime export; these HTML improvements do not complete it.
+to the static design edition. The subsequent [infographic increment](INFOGRAPHIC.md)
+integrates the designed guide into the Scala export and the live participant server.
+Its [verification](verification-3.md) is separate from the prior design evidence.
 
 First-pass evidence: [verification](verification.md), [browser results](browser-results.json), and
 [concept/render comparison](../../design/0.2/review.html).
@@ -118,19 +119,17 @@ silently into arbitrary dynamic composition or a general workflow studio.
   - [ ] Add live views for supported branches/joins and the four-party reference;
     retain explicit actor sessions rather than presenting a role picker as security.
   - [ ] Verify denied, pending, failed, disconnected, stale, and successful states.
-- [ ] 07 — Integrate the designed book with actual recordings.
-  - [ ] `book/model/.../BookChapter.scala`: add typed source citations and evidence
-    references, keeping document coverage distinct from observed story outcomes.
-  - [ ] `book/export/.../ExportBook.scala`: package chapter text, quotations, pinned
-    source files, recordings, and the coverage report for offline reading.
-  - [ ] `book/browser/.../{BookNavigation,BookView}.scala`: implement the designed
-    navigation and reading hierarchy using semantic, keyboard-accessible elements.
-  - [ ] `book/browser/.../reader/StoryLaboratory.scala`: drive the visual timeline
-    from recorded observations; show independent goldens and honest differences.
-  - [ ] `book/site/book.css`: translate the reviewed visual tokens without coupling
-    the book implementation to `product/web`.
-  - [ ] Replace each prototype simulation with an actual recording or an explicit
-    pending state. Preserve source citations and coverage in the exported book.
+- [x] 07 — Integrate the designed book with actual recordings.
+  - [x] `book/edition-0.2/`: preserve exact source citations and measured quotation coverage.
+  - [x] `book/export/.../FieldGuide.scala`: package the guide, pinned sources and recordings.
+  - [x] `book/export/.../ExportBook.scala`: supply verified recordings from the requested run.
+  - [x] `design/0.2/book.js`: select recorded observations for the infographic carousel;
+    the shared Scala `product/scene/` renderer presents them as responsive HTML.
+  - [x] Preserve `book/browser/` as the detailed laboratory at `laboratory.html`.
+  - [x] Link the book to the actual financing sandbox. Keep unsupported live stories
+    explicitly recorded and historical mock screens outside the primary reader route.
+  - [x] Check relocated export links, offline playback, gestures, URL replay, source rendering, and print.
+
 - [ ] 08 — Validate and prepare 0.2 for release.
   - [ ] Run focused tests followed by the existing sequential `scripts/check`.
   - [ ] Preserve original goldens; review new expectations and intentional contract

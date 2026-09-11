@@ -2,23 +2,30 @@
 
 Compose independently owned Canton/Daml applications into a shared workflow. The ledger authorizes actions and records progression; the Scala service observes state and submits commands; the browser makes the workflow visible.
 
-## Version 0.2 design
+## Version 0.2 in progress
 
 The active work revisits the original product requirements from the fourth-draft
 baseline. Read the [linear plan](docs/0.2/PLAN.md), [product contract](docs/0.2/product-contract.md),
-and [numbered Git history](docs/versions.md). The new book and application designs
-are available in the [design review](design/0.2/README.md); the book plays preserved ledger recordings and the workspace is a labelled simulation.
+and [numbered Git history](docs/versions.md). The field guide now uses interactive
+HTML infographics; the Scala workspace connects those visuals to the real financing API.
+See the [experience contract](docs/0.2/INFOGRAPHIC.md) and [verification](docs/0.2/verification-3.md).
 
-Run `scripts/design-preview` and open [the new field guide](http://127.0.0.1:56202/design/0.2/book-overview.html).
-Inspect the [current design review](http://127.0.0.1:56202/design/0.2/review.html) and
-[quotation coverage](http://127.0.0.1:56202/design/0.2/coverage.html).
+After the [runtime setup](book/setup.md) and initial `scripts/build`, run
+`scripts/start-sandbox`. Open the private `open.html` launcher printed by the command:
+Bank approves, Buyer continues, Reviewer observes. The same server serves the book.
+One disposable Canton environment runs at a time; Ctrl-C closes it.
+
+For recorded exploration without a ledger, run `scripts/design-preview` and open
+[the field guide](http://127.0.0.1:56202/design/0.2/book-overview.html).
+[Design review](design/0.2/review.html) · [Quotation coverage](design/0.2/coverage.html).
+The full property offer and custody transfer remain recorded examples.
 
 ## Read the product
 
-Start in **[product/](product/README.md)**. It contains the contracts, service, shared API types, live browser, and reviewed package mappings. The [reading guide](docs/fourth-draft/reading-guide.md) follows one operation through those owners.
+Start in **[product/](product/README.md)**. It contains the contracts, service, shared API types, HTML scene renderer, live browser, and reviewed package mappings. The [reading guide](docs/fourth-draft/reading-guide.md) follows one operation through those owners.
 
 ```text
-product/     Contracts, service, API, live browser, package inputs
+product/     Contracts, service, API, scene renderer, live browser, package inputs
 book/        Chapters, recorded browser, recording models, exporter
 harness/     Disposable networks, golden runners, tests, release tools
 examples/    Readable inputs and committed independent expectations
@@ -35,7 +42,7 @@ Follow [setup](book/setup.md) for the pinned tools. Build the product with `scri
 
 For the complete demonstration, run `scripts/build` followed by `scripts/demo live`. The [harness guide](harness/README.md) lists the focused checks and full suite. One ledger environment runs at a time.
 
-Read the [nine-chapter book](book/README.md) or open recorded runs using the [playback guide](book/playback.md). The book presents concrete inputs, independent expectations, observed results, interactive progression, and source inspection. A [packaged delivery](docs/release/packaging.md) provides `run-product`, `run-book`, `run-live`, and `run-verify`.
+Read the [book and detailed laboratory](book/README.md) or open recorded runs using the [playback guide](book/playback.md). The book presents concrete inputs, independent expectations, observed results, interactive progression, and source inspection. A [packaged delivery](docs/release/packaging.md) provides `run-product`, `run-book`, `run-live`, and `run-verify`.
 
 ## Review the fourth-draft baseline
 

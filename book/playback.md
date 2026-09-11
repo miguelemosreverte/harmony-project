@@ -1,6 +1,6 @@
 # Explore a recorded execution
 
-The browser edition lets you read nine chapters and walk through their actual execution evidence. The application is written in Scala.js. It reads a bundle exported by the Scala/JVM tools; it does not simulate application rules or infer success from an expected file.
+The export opens on the source-cited field guide. Its infographic renderer and the detailed laboratory are written in Scala.js. It reads a bundle exported by the Scala/JVM tools; it does not simulate application rules or infer success from an expected file.
 
 ## Open the book
 
@@ -27,6 +27,10 @@ scripts/harmonia serve-book .artifacts/my-book
 ```
 
 The bundle contains the compiled browser application, chapters, relevant source files, and selected evidence. It can also be served by an ordinary static HTTP server. No CDN or external font is required.
+
+The field guide opens directly on the main business journey. Use arrows, swipe,
+or the scene dots; **Evidence & other attempts** includes every recorded probe.
+To use the detailed walkthroughs below, open `laboratory.html` in the export.
 
 ## Take a short walkthrough
 

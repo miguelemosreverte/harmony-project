@@ -1,0 +1,15 @@
+{
+  "scope": "Final untouched live sandbox; read-only checks; no financing actions submitted",
+  "checks": [
+    "A fresh case is pending at the bank",
+    "Only the actual approval is offered",
+    "The session is removed from the address",
+    "The primary action uses the reviewed blue palette",
+    "favicon.svg is served as SVG",
+    "favicon.ico is served as SVG",
+    "The current review gallery loads",
+    "The final mounted guide renders the selected scene",
+    "No browser or resource errors on fresh startup"
+  ],
+  "errors": []
+}

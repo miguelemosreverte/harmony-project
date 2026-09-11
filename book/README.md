@@ -1,9 +1,9 @@
 # The Harmonia book
 
-The [0.2 design plan](../docs/0.2/PLAN.md) introduces a source-cited, use-case-oriented
-edition alongside this working book. Its design prototype is separate from these
-existing recorded-runtime chapters.
-
+The [source-cited field guide](../design/0.2/book-overview.html) is the default
+export entry. Its ten destinations include infographic stories, original quotations,
+and a live sandbox entry. The detailed Scala.js laboratory remains in the export
+at `laboratory.html`, with all supplied recordings and their independent differences.
 
 This nine-chapter book accompanies the working implementation. Chapters link to the actual story inputs, committed expectations, and code used by the regression suite.
 
@@ -29,3 +29,10 @@ The current edition includes interactive playback for recorded stories, chapter 
 ## Book implementation
 
 `browser/` owns the recorded Scala.js reader, `model/` its recording and chapter types, `export/` the JVM exporter/server, and `site/` the reader assets. This directory is independent of the live product browser. From the repository root, `scripts/harmonia export-book RUN OUTPUT` exports existing evidence; `scripts/harmonia serve-book OUTPUT` opens it without a ledger.
+
+`edition-0.2/` owns authored narrative, quotation extraction, and the static build;
+`../design/0.2/` holds its HTML and browser behavior. `export/FieldGuide` packages
+that guide beside the laboratory and supplies verified matching stories from the
+requested run. Stories absent from that run retain their clearly identified pinned
+recording. `product/scene/` only renders supplied presentation data: it owns neither
+ledger rules nor book content.

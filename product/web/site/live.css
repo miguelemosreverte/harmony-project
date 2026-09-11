@@ -1,119 +1,14 @@
-:root {
-  color-scheme:light;
-  --paper:#f8f7f3;
-  --ink:#253934;
-  --muted:#65766e;
-  --line:#dce2db;
-  --accent:#236b55;
-  --pale:#e8f1e8;
-  --red:#983e36;
-  --redpale:#fff0ea;
-  --white:#fffefa;
-  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  color:var(--ink);
-  background:var(--paper);
-}
-
-* {
-  box-sizing:border-box;
-}
-
-body {
-  margin:0;
-}
-
-button,select {
-  font:inherit;
-}
-
-a {
-  color:var(--accent);
-  text-underline-offset:3px;
-}
-
-button,a,select {
-  touch-action:manipulation;
-}
-
-button {
-  cursor:pointer;
-}
-
-button:focus-visible,a:focus-visible,select:focus-visible {
-  outline:3px solid #b47f20;
-  outline-offset:4px;
-}
-
-.skip {
-  position:absolute;
-  left:20px;
-  top:-60px;
-  z-index:10;
-  background:white;
-  padding:12px;
-}
-
-.skip:focus {
-  top:10px;
-}
-
-.loading {
-  padding:4rem;
-}
-
-.eyebrow {
-  text-transform:uppercase;
-  letter-spacing:.14em;
-  font-size:11px;
-  font-weight:650;
-  color:var(--accent);
-}
-
-.live-main { max-width: 1120px; margin: 0 auto; padding: 3rem 2rem; }
-.live-main h1 { max-width: 850px; font-size: clamp(2rem, 4vw, 3.5rem); }
-.live-main .lede { max-width: 780px; font-size: 1.15rem; }
-.live-identity { font-weight: 700; margin-top: 2rem; }
-.live-connection { padding: .7rem 1rem; border-left: 3px solid #356653; background: #edf2e9; }
-.live-flow { display: flex; gap: 1rem; padding: 0; margin: 2rem 0; list-style: none; }
-.live-flow li { flex: 1; border: 1px solid #c9c8b8; border-radius: 8px; padding: 1rem; }
-.live-flow .done { background: #e7efde; border-color: #47704e; }
-.live-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-.live-panel { background: #fffdf6; border: 1px solid #d9d7c9; border-radius: 10px; padding: 1.5rem; margin: 1rem 0; min-width: 0; }
-.live-job { border-bottom: 1px solid #d9d7c9; padding: .6rem 0; }
-.live-job strong { text-transform: uppercase; font-size: .8rem; letter-spacing: .08em; }
-.live-history li { margin-bottom: 1.2rem; }
-.live-history code { overflow-wrap: anywhere; }
-.live-main button { padding: .7rem 1rem; margin: .5rem .5rem .5rem 0; border: 1px solid #356653; border-radius: 6px; cursor: pointer; }
-.live-main button.primary { color: white; background: #285542; }
-.live-main button:disabled { opacity: .55; cursor: wait; }
-.live-footnote { font-size: .85rem; color: #606657; margin-top: 2rem; }
-@media (max-width: 700px) { .live-main { padding: 1.5rem 1rem; } .live-grid { grid-template-columns: 1fr; } .live-flow { flex-direction: column; } }
-.composition-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
-.composition-fields label { display: block; font-weight: 600; margin-bottom: .4rem; }
-.composition-fields input, .composition-fields select { box-sizing: border-box; width: 100%; min-width: 0; padding: .7rem; border: 1px solid #8e9989; border-radius: 5px; background: white; color: #203c31; font: inherit; }
-.composition-step { min-width: 0; border: 1px solid #c9c8b8; border-radius: 8px; margin: 1.2rem 0; padding: 1rem; }
-.composition-step legend { padding: 0 .4rem; font-weight: 700; }
-.composition-record { border-top: 1px solid #c9c8b8; margin-top: 2rem; padding-top: 1rem; overflow-wrap: anywhere; }
-.composition-record .live-flow li { min-width: 0; }
-.live-diagnostic { border: 2px solid #965e2e; background: #fff0d6; padding: 1rem; margin: 1rem 0; }
-@media (max-width: 700px) { .composition-fields { grid-template-columns: 1fr; } }
-.live-main h1 { font-family: Georgia, serif; font-weight: 400; line-height: 1.12; letter-spacing: -.03em; }
-.live-main .lede, .live-panel p { line-height: 1.75; }
-.live-panel > summary { cursor: pointer; font-weight: 600; }
-#financing, #composer, #package-builder { scroll-margin-top: 24px; }
-.workspace-nav { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 24px; margin-top: 28px; border-bottom: 1px solid var(--line); padding-bottom: 18px; }
-@media (max-width: 720px) { .workspace-nav { gap: 14px; font-size: 14px; } }
-
 /* One task per screen; the diagram is the financing interface. */
 [hidden] { display: none !important; }
-:root { color-scheme:light; --page:#f5f7fa; --surface:#fff; --ink:#172638; --muted:#546578; --line:#dce3eb; --accent:#275ee3; }
+:root { font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; color-scheme:light; --page:#f5f7fa; --surface:#fff; --ink:#172638; --muted:#546578; --line:#dce3eb; --accent:#275ee3; }
 html[data-theme=dark] { color-scheme:dark; --page:#111922; --surface:#1c2733; --ink:#e8eff6; --muted:#b4c1ce; --line:#3c4b5a; --accent:#8aafff; }
 html[data-theme=paper] { --page:#f2eee4; --surface:#fffcf5; --ink:#302e28; --muted:#625f54; --line:#d7d0be; --accent:#465c79; }
 html[data-text=compact] { font-size:14px; } html[data-text=large] { font-size:19px; }
-body { background:var(--page); color:var(--ink); }
+* {box-sizing:border-box;}
+body { margin:0; background:var(--page); color:var(--ink); }
 a { color:var(--accent); }
 .live-main { max-width:1060px; margin:auto; padding:30px 32px; }
-.live-main h1 { font-size:clamp(1.65rem,3vw,2.5rem); letter-spacing:-.045em; max-width:none; margin:12px 0; }
+.live-main h1 { font-weight:650; line-height:1.15; font-size:clamp(1.65rem,3vw,2.5rem); letter-spacing:-.045em; max-width:none; margin:12px 0; }
 .live-identity { color:var(--muted); margin:8px 0 20px; }
 .live-connection { font-size:.8rem; padding:0; border:0; background:transparent; color:var(--muted); margin:0; }
 .workspace-nav { display:flex; flex-wrap:wrap; align-items:center; gap:6px; border-bottom:1px solid var(--line); padding:0 0 14px; margin:0 0 24px; }
@@ -131,3 +26,34 @@ button:disabled { opacity:.65; }
 .visually-hidden { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
 @media(max-width:600px) { .live-main { padding:20px 16px; } .workspace-nav {gap:2px;} .workspace-nav a{padding:7px 8px;} .workspace-appearance{margin-left:8px;} }
 @media print { .workspace-nav,.financing-action {display:none;} }
+:root { --paper:var(--page); --white:var(--surface); --pale:#edf3fb; }
+html[data-theme=dark] { --pale:#20364b; }
+html[data-theme=paper] { --pale:#eee7d7; }
+
+button,select,input {font:inherit;}
+button,a,select {touch-action:manipulation;}
+button {cursor:pointer;border:1px solid var(--line);border-radius:8px;padding:.7rem 1rem;margin:.4rem .4rem .4rem 0;background:var(--surface);color:var(--ink);}
+button:disabled {cursor:wait;}
+:focus-visible {outline:3px solid var(--accent);outline-offset:4px;}
+.skip {position:absolute;left:20px;top:-60px;z-index:10;background:var(--surface);padding:12px;}
+.skip:focus {top:10px;}
+.loading {padding:4rem;}
+.eyebrow {text-transform:uppercase;letter-spacing:.14em;font-size:11px;font-weight:650;color:var(--accent);}
+.live-panel {border:1px solid var(--line);border-radius:12px;padding:1.5rem;margin:1rem 0;min-width:0;}
+.live-panel p {line-height:1.65;}
+.live-panel>summary {cursor:pointer;font-weight:600;}
+.live-job {border-bottom:1px solid var(--line);padding:.6rem 0;}
+.live-job strong {text-transform:uppercase;font-size:.8rem;letter-spacing:.08em;}
+.live-history li {margin-bottom:1.2rem;}
+.live-history code {overflow-wrap:anywhere;}
+.live-grid,.composition-fields {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;}
+.live-flow {display:flex;gap:1rem;padding:0;margin:2rem 0;list-style:none;}
+.live-flow li {flex:1;min-width:0;border:1px solid var(--line);border-radius:8px;padding:1rem;}
+.live-flow .done {background:var(--pale);}
+.composition-fields label {display:block;font-weight:600;margin-bottom:.4rem;}
+.composition-fields input,.composition-fields select {width:100%;min-width:0;padding:.7rem;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);}
+.composition-step {min-width:0;border:1px solid var(--line);border-radius:8px;margin:1.2rem 0;padding:1rem;}
+.composition-step legend {padding:0 .4rem;font-weight:600;}
+.composition-record {border-top:1px solid var(--line);margin-top:2rem;padding-top:1rem;overflow-wrap:anywhere;}
+.live-diagnostic {border:2px solid #af702f;padding:1rem;margin:1rem 0;}
+@media(max-width:700px) {.live-grid,.composition-fields {grid-template-columns:1fr;} .live-flow {flex-direction:column;}}

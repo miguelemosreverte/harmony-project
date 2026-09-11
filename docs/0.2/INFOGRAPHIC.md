@@ -34,27 +34,27 @@ It is not a bitmap background.
   - [x] Typed scene data and semantic HTML; CSS owns responsive geometry and motion.
   - [x] The product browser and exported field guide use the renderer, never the reverse.
   - [x] A narrow exported renderer lets the static field guide use the same scene.
-- [ ] 3. Replace the book's repetitive use-case view with an infographic carousel.
-  - [ ] `book/edition-0.2/pages.py`, `chapters/`, and `design/0.2/book.js` own the
+- [x] 3. Replace the book's repetitive use-case view with an infographic carousel.
+  - [x] `book/edition-0.2/pages.py`, `chapters/`, and `design/0.2/book.js` own the
     narrative and recorded progression; shared scene code only draws supplied data.
-  - [ ] Preserve URL replay, original sources, static/print reading, and refusals.
-  - [ ] `book/export/` packages the designed guide and injects validated recordings
+  - [x] Preserve URL replay, original sources, static/print reading, and refusals.
+  - [x] `book/export/` packages the designed guide and injects validated recordings
     from the requested run; the existing detailed laboratory remains reachable.
-- [ ] 4. Integrate the scene into the actual Scala.js product browser.
-  - [ ] `product/web/.../financing/` maps `FinancingState` to the scene and submits
+- [x] 4. Integrate the scene into the actual Scala.js product browser.
+  - [x] `product/web/.../financing/` maps `FinancingState` to the scene and submits
     the existing typed commands through `LiveApp` and `LiveApi`.
-  - [ ] `product/web/.../live/` uses one task surface, URL navigation, and secondary
+  - [x] `product/web/.../live/` uses one task surface, URL navigation, and secondary
     composer/package/history views without discarding drafts during polling.
-  - [ ] `product/server/.../http/` serves the actual compiled assets and an optional
+  - [x] `product/server/.../http/` serves the actual compiled assets and an optional
     exported book. Book mounting is a file boundary, not a product dependency on harness.
-  - [ ] The harness provisions the local evaluation and private session launcher.
-- [ ] 5. Prove the integration with real observations and handoffs.
-  - [ ] Compile and test changed Scala projects sequentially with bounded heaps.
-  - [ ] Exercise actual HTTP/ledger commands, actor boundaries, observed completion,
+  - [x] The harness provisions the local evaluation and private session launcher.
+- [x] 5. Prove the integration with real observations and handoffs.
+  - [x] Compile and test changed Scala projects sequentially with bounded heaps.
+  - [x] Exercise actual HTTP/ledger commands, actor boundaries, observed completion,
     refresh, and browser state. Preserve independent golden expectations.
-  - [ ] Review desktop/mobile screenshots, carousel gestures, source rendering,
+  - [x] Review desktop/mobile screenshots, carousel gestures, source rendering,
     offline export, and print. Record exactly which paths are live or recorded.
-  - [ ] Commit the verified slice and provide the working entry point.
+  - [x] Commit the verified slice and provide the working entry point.
 
 ## Existing backend scope
 

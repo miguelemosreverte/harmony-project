@@ -224,3 +224,5 @@ html:not(.js) .page-tools,html:not(.js) [data-interactive],html:not(.js) #menu-t
  .mode-tabs {gap:2px;margin-bottom:18px;} .mode-tabs button {padding:9px 8px;font-size:.8rem;}
 }
 @media print { .scene-toolbar,.carousel-controls,.live-sandbox-link {display:none!important;} .story-carousel {break-inside:avoid;} }
+.prototype-notice { margin:20px 36px 0 282px; padding:14px 20px; border:1px solid var(--line); border-radius:10px; color:var(--muted); font-size:.85rem; }
+@media(max-width:900px) { .prototype-notice {margin:18px 22px 0;} }

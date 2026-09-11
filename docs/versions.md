@@ -28,3 +28,8 @@ for the distinction between design completion and runtime implementation.
 Historical documents retain their original branch names and evidence revisions.
 Use this table to resolve those names; do not rewrite recorded history as if it
 had been produced on the new branches.
+
+`v0.2.0-design.2` preserves the second UX pass. `v0.2.0-infographic.1` identifies
+shared HTML infographic scenes and verified integration with the existing live
+financing server. Its [verification](0.2/verification-3.md) distinguishes live
+commands, recorded stories, and the remaining 0.2 release work. `main` is unchanged.

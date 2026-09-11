@@ -1,57 +1,47 @@
-# Harmonia 0.2 — second UX pass
+# Harmonia 0.2 — infographic and live handoff
 
-Run `scripts/design-preview` and begin here:
+Start with [Alice's story](chapters/03-financing-to-offer.html) or
+[choose a reading path](book-overview.html). Arrows, swipe, and scene dots move
+through the business journey. **Evidence & other attempts** contains the exact
+recorded input, independent expectation, observation, and every deliberate refusal.
 
-**<http://127.0.0.1:56202/design/0.2/book-overview.html>**
+The HTML uses the same compiled Scala scene renderer as the real participant UI.
+The book's purchase and custody-transfer stories are recorded. The live server
+supports the private financing handoff, composition, and package operations.
 
-Choose your reason for reading. The sidebar shows that route's next stops; the
-complete contents are available under All chapters. Use Read, Try it, Original
-sources, and Evidence & limits inside a single canonical chapter.
-
-- [Alice's purchase](chapters/03-financing-to-offer.html): four people, a financing result, and a proposal handoff.
-- [Four-party transfer](chapters/04-four-party-transfer.html): staged preparation, settlement, and a failed final leg.
-- [Document coverage](coverage.html): every original text unit has a destination; product evidence stays separate.
-- [Workspace](application.html): a clearly labelled task simulation with handoff and recovery states.
-- [Connect an application](application-builder.html): one integration stage at a time.
-- [Design review](review.html): current entry points and preserved first-pass concepts.
-
-The book uses four actual **historical recordings**, with independently committed
-expectations and checked fingerprints. It does not submit new ledger commands.
-The application screens simulate the proposed interaction. They are not the live
-Scala-backed production UI.
-
-Appearance offers Light, Dark, Paper, and three reading sizes. Share copies the
-current URL, including selected scenario, step, actor, evidence tab, source panels,
-and appearance. Back/Forward and cold navigation restore that state. No local
-storage overrides a link. Appearance also offers Print / save PDF.
-
-The [second-pass verification](../../docs/0.2/verification-2.md) records actual
-checks and remaining limitations.
-
-Read the [UX contract](../../docs/0.2/UX.md) for the explicit screen goals, personas,
-color provenance, and navigation rules. `v0.2.0-design.1` preserves the first pass:
-its root `.png`, `.rendered.png`, and `.mobile.png` images are historical, with
-original generation prompts and `provenance.json`. They are not current screenshots.
-
-To rebuild and check the edition:
+After initial runtime setup and `scripts/build`, run:
 
 ```sh
-scripts/build-design
+scripts/start-sandbox
 ```
 
-This installs pinned Markdown rendering dependencies into an isolated Python
-environment on first use. Opening the committed HTML requires no installation.
+Open the printed private `open.html` launcher. Bank approves; Buyer continues;
+Reviewer observes. Keep each participant in its own tab. The server also mounts
+the book, and a participant can move between book and workspace in the same tab.
+Ctrl-C closes the one owned ledger environment.
 
-Browser checks use Node's built-in WebSocket client and one existing, owned local
-Chrome preview tab. Enable Chrome's local debugging endpoint, open the preview,
-then supply that browser's port explicitly:
+For recorded exploration, `scripts/design-preview` serves this folder without
+starting a ledger. Light, Dark, Paper, text sizes, story steps, and source disclosures
+are URL state. A shared live URL uses the recipient's session and current ledger state.
+The book also works from local HTML and supports Print / save PDF.
+
+[Visual review](review.html) · [Experience contract](../../docs/0.2/INFOGRAPHIC.md) ·
+[Verification](../../docs/0.2/verification-3.md) · [Original quotation coverage](coverage.html).
+
+The `application.html` and `application-builder.html` files are retained historical
+mockups, labelled as simulations. They are not the route into the live server.
+Generated reference art and its exact prompt are under `infographic/`; actual
+screenshots and a PDF are under `infographic/review/`.
+
+Rebuild the scene with `sbt 'scene/fastLinkJS'`, then `scripts/build-design` validates
+the committed source quotations and recordings. Browser checks reuse one explicitly
+selected, owned Chrome debugging session:
 
 ```sh
-node design/0.2/checks/run.mjs http://127.0.0.1:DEBUG_PORT
+node design/0.2/checks/infographic.mjs http://127.0.0.1:DEBUG_PORT
+node design/0.2/checks/live.mjs http://127.0.0.1:DEBUG_PORT .artifacts/live-RUN/sessions.json
 ```
 
-The runner exercises the actual DOM, cold URL replay, browser history, all recorded
-actions, refusal and recovery states, source disclosures, responsive layouts,
-print, and JavaScript-disabled reading. It writes `docs/0.2/browser-results-2.json`
-and captures `review-2/`. It starts no browser, JVM, or ledger. The browser must be
-owned by this review because the script navigates its existing preview tab.
+The live check consumes a fresh sandbox's financing case. Restart the sandbox
+before a new demonstration. Capabilities stay in the private local launcher and
+are never written into the verification reports.

@@ -7,6 +7,7 @@ Harmonia coordinates independently owned Daml applications. Contracts authorize 
 | `ledger/` | Interfaces, process execution, application choices, consent, and adapters |
 | `api/` | Public commands, observations, and response types shared with the browser |
 | `server/` | Feature operations, ledger transport, request handling, and package generation |
+| `scene/` | Typed presentation frames and a reusable HTML/CSS infographic renderer |
 | `web/` | Live financing, workflow editor, and package interface |
 | `packages/` | Pinned application identities and reviewed mappings |
 
@@ -41,3 +42,12 @@ Ports refer to the supported local Ledger API connections. Token files supply ex
 The separate harness command `scripts/demo live` provisions the demonstrated local network. The book and full verification instructions are outside this product directory.
 
 Public case classes use `JsonCodec` to derive the established snake-case HTTP fields. Special envelopes, such as the flattened workspace response, remain explicit. Composition validation operates on the typed plan and is shared by the editor and HTTP boundary.
+
+The optional configuration field `"book": "path/to/exported-book"` mounts a static
+book at `/book/`. The service imports no book or harness code. The mount rejects
+path traversal and symlinks outside the export.
+
+The live browser keeps only task and appearance in query parameters (`view`,
+`theme`, `text`). A shared URL opens the recipient's own authenticated view of the
+current ledger; it cannot freeze mutable ledger state. Session capabilities are
+removed from the address after entry and never included in ordinary navigation.

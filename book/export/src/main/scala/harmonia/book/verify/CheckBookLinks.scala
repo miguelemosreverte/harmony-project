@@ -10,6 +10,7 @@ import java.nio.file.attribute.BasicFileAttributes
 import org.commonmark.node.{AbstractVisitor, Link, Image}
 import org.commonmark.parser.Parser
 import scala.collection.mutable.ArrayBuffer
+import scala.jdk.CollectionConverters.*
 
 object CheckBookLinks:
   def run(root: Path, book: Path): IO[Unit] = for
@@ -57,6 +58,26 @@ object CheckBookLinks:
       attribute
         .findAllMatchIn(html)
         .foreach(m => check(book, m.group(1).replace("&amp;", "&"), "exported book", problems))
+      val guide = book.resolve("source/design/0.2")
+      val pages = Files.walk(guide)
+      try
+        pages
+          .iterator()
+          .asScala
+          .filter(p => Files.isRegularFile(p) && p.toString.endsWith(".html"))
+          .foreach { page =>
+            attribute
+              .findAllMatchIn(Files.readString(page))
+              .foreach(m =>
+                check(
+                  page.getParent,
+                  m.group(1).replace("&amp;", "&"),
+                  "field guide " + guide.relativize(page),
+                  problems
+                )
+              )
+          }
+      finally pages.close()
       Vector("main.js", "book.css", "evidence.json").foreach(name =>
         check(book, name, "book assets", problems)
       )

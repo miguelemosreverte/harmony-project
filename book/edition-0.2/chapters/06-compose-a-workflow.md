@@ -4,7 +4,7 @@ Nina works at the bank. Her task is to approve a private financing case. The sce
 
 ## Make a live handoff
 
-[Open the local sandbox](../sandbox.html). Its private launcher opens each participant in a separate tab.
+[Open the local sandbox](../../../design/0.2/sandbox.html). Its private launcher opens each participant in a separate tab.
 
 1. In **Bank**, inspect the private case and approve financing.
 2. In **Buyer**, wait for the signed approval, then continue.
