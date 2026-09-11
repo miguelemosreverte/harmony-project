@@ -50,7 +50,7 @@ Draft three's preliminary package classification has 1,677 book lines, 4,590 sto
 
 - [x] FD01: preserve the third draft, inspect actual coupling, and record principles and baseline.
 - [x] FD02: introduce a plain service context and move demo preparation behind it; establish independent product/book/harness builds and entry points.
-- [ ] FD03: make the third actual commit record a working slice, with compiler boundaries and a real ledger/browser check against the unchanged golden.
+- [x] FD03: make the third actual commit record a working slice, with compiler boundaries and a real ledger/browser check against the unchanged golden.
 - [ ] FD04: finish the filesystem migration, update build/package paths, and simplify product state and operation wiring without losing supported behavior.
 - [ ] FD05: provide independently runnable artifacts and a short product reading guide; update export, source links, release assembly, and architectural evidence.
 - [ ] FD06: run the complete clean-checkout gate sequentially; verify relocation, browser controls, independent expectations, archive identity, and owned process cleanup.
@@ -67,3 +67,5 @@ A final guide follows one operation through a small number of meaningful owners 
 ## Implementation evidence
 
 FD02 separates the product service and browser from runner, book export, recorded browser, and development tools. `Connections` replaces the participant wrapper and the service receives existing ledger clients. The standalone entry point reads explicit connection configuration; the harness owns synthetic setup. All 48 Scala tests pass, including compiler-based product isolation and configuration validation (`.artifacts/fourth-02-tests.log`). `scripts/build-product` compiles product contracts, service, browser, and generated binding without compiling book or harness projects. The full build also compiles the separate reader and harness assemblies (`.artifacts/fourth-02-complete-build.log`).
+
+FD03 proves clean source `a44509d67f841335b2d88138ed9d3d5ad4e617dd`: authenticated handoff, direct API authority, stale requests, repeat protection, and reconnect pass (`.artifacts/fourth-03-live-check.log`). The separately compiled live browser completed Bank approval and Buyer continuation without disclosing private details (`.artifacts/fourth-03-browser-proof.json`). The owned demo and Canton child were stopped afterward. Compiler isolation tests pass, and the product runtime classpath contains only `harmonia-service` as its internal application JAR (`.artifacts/fourth-03-isolation.json`). This proof is recorded in the third actual commit.
