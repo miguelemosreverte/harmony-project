@@ -276,7 +276,9 @@ object LiveServer:
       headers.set("Referrer-Policy", "no-referrer")
       headers.set(
         "Content-Security-Policy",
-        "default-src 'self'; connect-src 'self'; script-src 'self'; style-src 'self'; frame-ancestors 'none'; base-uri 'none'"
+        "default-src 'self'; connect-src 'self'; script-src 'self'; style-src 'self'; frame-ancestors " +
+          (if exchange.getRequestURI.getPath.startsWith("/book/") then "'self'"
+           else "'none'") + "; base-uri 'none'"
       )
       exchange.sendResponseHeaders(code, bytes.length.toLong)
       exchange.getResponseBody.write(bytes)

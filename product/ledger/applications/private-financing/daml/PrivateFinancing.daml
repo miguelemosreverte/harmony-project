@@ -1,3 +1,6 @@
+-- @book.slice financing
+-- @book.role Private decision
+-- @book.summary Only the bank signs the private Application. Approve creates a VerifiedResult for a named consumer.
 module PrivateFinancing where
 
 import Harmonia.Result

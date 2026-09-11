@@ -1,5 +1,14 @@
 package harmonia.bindings.generate
 
+/** @book.slice
+  *   packages
+  * @book.role
+  *   Generate and compile
+  * @book.summary
+  *   The generator produces a bounded adapter project for an inspected, reviewed application
+  *   mapping.
+  */
+
 import cats.effect.IO
 import cats.syntax.all.*
 import harmonia.bindings.read.BindingFormat

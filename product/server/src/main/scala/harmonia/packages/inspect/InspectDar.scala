@@ -1,5 +1,14 @@
 package harmonia.packages.inspect
 
+/** @book.slice
+  *   packages
+  * @book.role
+  *   Read compiled metadata
+  * @book.summary
+  *   Archive metadata is inspected structurally. Source-text searches do not determine template
+  *   shapes.
+  */
+
 import cats.effect.IO
 import harmonia.files.ArtifactFiles
 import harmonia.processes.ManagedProcess

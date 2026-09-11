@@ -3,12 +3,13 @@
   'use strict';
   const config = JSON.parse(document.getElementById('view-config').textContent);
   config.stories = Object.fromEntries((config.stories || []).map(key => [key, (window.HarmoniaRunRecordings || {})[key] || window.HarmoniaRecordings[key]]));
+  const atlas=window.HarmoniaAtlas;
   const firstStory = Object.keys(config.stories || {})[0] || '';
-  const defaults = {audience:'explorer', theme:'light', text:'standard', panel:'closed', nav:'closed', open:'', view:firstStory ? 'try' : 'read', story:firstStory, step:0, actor:'all', tab:'observed', state:'ready', package:'legacy', phase:1};
+  const defaults = {audience:'explorer', theme:'light', text:'standard', panel:'closed', nav:'closed', open:'', view:firstStory ? 'try' : 'read', story:firstStory, step:0, actor:'all', tab:'observed', state:'ready', package:'legacy', phase:1,embed:0,present:0,autoplay:0,file:'product/server/src/main/scala/harmonia/financing/FinancingObservation.scala',line:1,slice:'financing',node:'',source:'proposal',passage:'proposal-1',companion:'diagram',q:'',scope:'all',codeTab:'code',detail:'',task:'financing'};
   if (config.kind === 'workspace') Object.assign(defaults, {view:'overview', step:2, actor:'Bank'});
   const allowedViews = config.kind === 'workspace' ? ['overview','applications','history'] : config.kind === 'source' ? ['read','source'] : ['read','sources','evidence', ...(firstStory ? ['try'] : [])];
-  const common = ['audience','theme','text','panel','nav','open'];
-  const fields = [...common, ...(config.kind === 'workspace' ? ['view','state','step','actor'] : config.kind === 'builder' ? ['package','phase'] : config.kind === 'chapter' || config.kind === 'source' ? ['view', ...(firstStory ? ['story','step','actor','tab'] : [])] : [])];
+  const common = ['audience','theme','text','panel','nav','open','embed'];
+  const fields = [...common,...(config.kind==='sandbox'?['task']:[]), ...(config.kind.startsWith('atlas-')?['file','line','slice','node','source','passage','companion','q','scope','codeTab','detail']:[]), ...(firstStory?['present','autoplay']:[]), ...(config.kind === 'workspace' ? ['view','state','step','actor'] : config.kind === 'builder' ? ['package','phase'] : config.kind === 'chapter' || config.kind === 'source' ? ['view', ...(firstStory ? ['story','step','actor','tab'] : [])] : [])];
   const choose = (value, options, fallback) => options.includes(value) ? value : fallback;
   const integer = (value, min, max, fallback) => /^\d+$/.test(String(value)) ? Math.max(min, Math.min(max, Number(value))) : fallback;
   function normalize(input) {
@@ -35,6 +36,20 @@
     if (s.state === 'rejected') s.step = 2;
     s.package = choose(input.package, ['legacy','unsupported'], defaults.package);
     s.phase = integer(input.phase, 1, s.package === 'unsupported' ? 2 : 4, 1);
+    s.task=choose(input.task,['financing','composer','packages'],'financing');
+    s.embed=integer(input.embed,0,1,0);s.present=integer(input.present,0,1,0);s.autoplay=integer(input.autoplay,0,1,0);
+    s.file=choose(input.file,Object.keys(atlas.files),defaults.file);
+    s.line=integer(input.line,1,atlas.files[s.file]?.lines||1,1);
+    s.slice=choose(input.slice,Object.keys(atlas.slices),'financing');
+    s.node=choose(input.node,atlas.slices[s.slice].nodes.map(n=>n.id),'');
+    s.source=choose(input.source,['proposal','architecture'],'proposal');
+    const passages=atlas.passages.filter(p=>p.source===s.source);
+    s.passage=choose(input.passage,passages.map(p=>p.id),passages[0].id);
+    s.companion=choose(input.companion,['diagram','workflow','code','chapter'],'diagram');
+    s.detail='';
+    if(input.detail&&String(input.detail).length<2400){try{const base=new URL(config.base,location.href),u=new URL(input.detail,base),path=u.pathname.slice(base.pathname.length);if(u.origin===base.origin&&u.pathname.startsWith(base.pathname)&&['code.html','reviewer.html',...Object.keys(config.chapters).map(c=>'chapters/'+c+'.html')].includes(path))s.detail=path+u.search;}catch{}}
+    s.codeTab=choose(input.codeTab,['code','diagram'],'code');
+    s.q=String(input.q||'').slice(0,80);s.scope=choose(input.scope,['all','product','harness','book','examples','scripts'],'all');
     return s;
   }
   let state;

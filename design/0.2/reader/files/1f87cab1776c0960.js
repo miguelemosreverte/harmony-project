@@ -1,0 +1,2 @@
+window.HarmoniaSourceFiles = window.HarmoniaSourceFiles || {};
+window.HarmoniaSourceFiles["book/edition-0.2/atlas/__init__.py"] = {"text": "\"\"\"The book's generated source, diagram, and document-review vertical slice.\"\"\"\n", "lines": ["\u003cspan class=\"token-string\">&quot;&quot;&quot;The book&#x27;s generated source, diagram, and document-review vertical slice.&quot;&quot;&quot;\u003c/span>"]};

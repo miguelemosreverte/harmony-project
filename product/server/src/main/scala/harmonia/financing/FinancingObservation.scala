@@ -1,5 +1,14 @@
 package harmonia.financing
 
+/** @book.slice
+  *   financing
+  * @book.role
+  *   Observe what is visible
+  * @book.summary
+  *   Participant-visible contracts become the public financing state. Private details are not
+  *   invented for other actors.
+  */
+
 import cats.syntax.all.*
 import harmonia.ledger.client.{ActiveContract, LedgerSnapshot, LedgerDecodingFailure}
 import io.circe.Decoder

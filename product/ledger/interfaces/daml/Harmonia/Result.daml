@@ -1,3 +1,6 @@
+-- @book.slice financing
+-- @book.role Signed result
+-- @book.summary The verified result records issuer, consumer, subject, decision, and the permitted continuation.
 module Harmonia.Result where
 
 -- A signed, single-use result contains only the facts its consumer needs.

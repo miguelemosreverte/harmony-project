@@ -1,5 +1,13 @@
 package harmonia.composition.ledger
 
+/** @book.slice
+  *   composition
+  * @book.role
+  *   Dispatch an authorized command
+  * @book.summary
+  *   The command interpreter maps a validated composition request to the intended Daml choice.
+  */
+
 import harmonia.composition.CompositionCommand
 import harmonia.ledger.client.{ActiveContract, LedgerExercise, LedgerValue as V, LiveLedger}
 

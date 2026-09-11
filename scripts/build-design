@@ -5,7 +5,7 @@ harmonia_design_python="$harmonia_design_root/.artifacts/book-tools/bin/python"
 if [[ ! -x "$harmonia_design_python" ]]; then
   python3 -m venv "$harmonia_design_root/.artifacts/book-tools"
 fi
-if ! "$harmonia_design_python" -c 'from importlib.metadata import version; assert version("markdown-it-py") == "3.0.0" and version("mdurl") == "0.1.2"' 2>/dev/null; then
+if ! "$harmonia_design_python" -c 'from importlib.metadata import version; assert version("markdown-it-py") == "3.0.0" and version("mdurl") == "0.1.2" and version("Pygments") == "2.19.2"' 2>/dev/null; then
   "$harmonia_design_python" -m pip install -r "$harmonia_design_root/book/edition-0.2/requirements.txt"
 fi
 "$harmonia_design_python" "$harmonia_design_root/book/edition-0.2/build.py"

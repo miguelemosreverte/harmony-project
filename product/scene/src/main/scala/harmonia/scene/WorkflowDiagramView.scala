@@ -18,6 +18,7 @@ final class WorkflowDiagramView(root: dom.HTMLElement):
   private val map = node("div", "workflow-map")
   private val title = node("strong", "workflow-title")
   private val caption = node("p", "workflow-caption")
+  caption.setAttribute("aria-live", "polite")
   figure.appendChild(map); figure.appendChild(title); figure.appendChild(caption)
   root.appendChild(figure)
   private val connections = new ConnectionLayer(map)
@@ -47,9 +48,10 @@ final class WorkflowDiagramView(root: dom.HTMLElement):
           if item.state == DiagramState.Complete then "✓" else (layer + 1).toString
         val heading = node("strong", ""); heading.textContent = item.label
         val actor = node("span", "workflow-actor"); actor.textContent = item.actor
-        val detail = node("span", "workflow-detail"); detail.textContent = item.detail
-        Vector(badge, heading, actor, detail).foreach(card.appendChild)
+        Vector(badge, heading, actor).foreach(card.appendChild)
         card.onclick = _ =>
+          title.textContent = item.label
+          caption.textContent = item.detail
           cards.foreach(other => other.setAttribute("aria-pressed", (other == card).toString))
           root.dispatchEvent(
             new dom.CustomEvent(
@@ -69,7 +71,7 @@ final class WorkflowDiagramView(root: dom.HTMLElement):
             edge.from + "--" + edge.to,
             indexed(edge.from),
             indexed(edge.to),
-            edge.state.toString.toLowerCase
+            edge.state
           )
         )
       )

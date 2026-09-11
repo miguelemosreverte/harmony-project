@@ -1,5 +1,14 @@
 package harmonia.book
 
+/** @book.slice
+  *   book
+  * @book.role
+  *   Mount or read offline
+  * @book.summary
+  *   The exported directory can be read independently or mounted by the product HTTP server without
+  *   importing book logic.
+  */
+
 import cats.effect.IO
 import cats.syntax.all.*
 import harmonia.files.ArtifactFiles
@@ -10,9 +19,18 @@ import scala.jdk.CollectionConverters.*
 /** Exports the designed book as files. The production server only mounts this directory. */
 object FieldGuide:
   def write(root: Path, output: Path, stories: Vector[RecordedStory] = Vector.empty): IO[Unit] = for
-    _ <- Vector("book", "docs", "examples", "product", "harness", "design/0.2")
+    _ <- Vector(
+      "book",
+      "docs",
+      "examples",
+      "product",
+      "harness",
+      "scripts",
+      "project",
+      "design/0.2"
+    )
       .traverse_(directory => copyTree(root, root.resolve(directory), output.resolve("source")))
-    _ <- Vector("README.md", "FOURTH-DRAFT.md").traverse_(name =>
+    _ <- Vector("README.md", "FOURTH-DRAFT.md", "build.sbt").traverse_(name =>
       copy(root.resolve(name), output.resolve("source").resolve(name))
     )
     _ <- copy(
@@ -60,7 +78,7 @@ object FieldGuide:
           .iterator()
           .asScala
           .filter { path =>
-            Files.isRegularFile(path) && Set(
+            Files.isRegularFile(path) && !Files.isSymbolicLink(path) && (Set(
               "md",
               "scala",
               "daml",
@@ -70,14 +88,24 @@ object FieldGuide:
               "html",
               "css",
               "js",
+              "mjs",
               "svg",
               "png",
-              "pdf"
-            )(path.getFileName.toString.split('.').last) &&
+              "pdf",
+              "py",
+              "yml",
+              "sh",
+              "properties"
+            )(path.getFileName.toString.split('.').last) ||
+              (root.relativize(path).startsWith("scripts") && !path.getFileName.toString.contains(
+                "."
+              ))) &&
             !path
               .iterator()
               .asScala
-              .exists(part => Set(".daml", "target", ".bsp", "__pycache__")(part.toString))
+              .exists(part =>
+                Set(".daml", "target", ".bsp", "__pycache__", ".git", ".artifacts")(part.toString)
+              )
           }
           .toVector
       finally stream.close()

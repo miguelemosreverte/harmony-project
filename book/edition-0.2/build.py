@@ -1,3 +1,6 @@
+# @book.slice book
+# @book.role Build the edition
+# @book.summary The deterministic build validates sources and recordings before generating the reader pages.
 #!/usr/bin/env python3
 """Build the source-cited design edition. No product code or network is involved."""
 from dataclasses import dataclass
@@ -10,6 +13,8 @@ import re
 
 import pages
 import workspace
+from atlas.catalog import build_catalog
+from atlas import pages as reader_pages
 from render import diagram_assets
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -159,7 +164,16 @@ def build_outputs(root=ROOT):
     chapters = {path.stem: path.read_text() for path in sorted((root / EDITION / "chapters").glob("*.md"))}
     assignments = validate_assignments(corpus, passages, chapters)
     recordings = load_recordings(root)
-    outputs = diagram_assets(corpus["architecture"][1])
+    catalog, outputs = build_catalog(root)
+    chapter_slices = {'01-product':'process','02-roles-and-trust':'process','03-financing-to-offer':'financing','04-four-party-transfer':'transfer','05-bring-an-application':'packages','06-compose-a-workflow':'composition','07-evidence-and-boundaries':'book'}
+    catalog['passages'] = [dict(id=f'{p.source}-{p.start}',source=p.source,start=p.start,end=p.end,title=p.title,chapter=p.chapter,slice=chapter_slices.get(p.chapter,'')) for p in passages]
+    catalog['chapterSlices'] = chapter_slices
+    outputs['reader/catalog.js'] = 'window.HarmoniaAtlas = '+pages.json_script(catalog)+';\n'
+    outputs.update(diagram_assets(corpus["architecture"][1]))
+    outputs['code.html'] = reader_pages.code()
+    outputs['reviewer.html'] = reader_pages.reviewer()
+    outputs['author.html'] = reader_pages.author(passages,corpus)
+    outputs['workflows.html'] = reader_pages.workflows()
     report = {"schema": 1, "scope": "Quotation inclusion, not product implementation or adoption", "documents": [], "chapters": []}
     for name, (pin, text, units) in corpus.items():
         report["documents"].append({"id": name, **pin, "units": len(units), "quoted_units": len(units),

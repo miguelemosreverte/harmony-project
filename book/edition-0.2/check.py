@@ -12,6 +12,7 @@ import unittest
 import xml.etree.ElementTree as ET
 from unittest.mock import patch
 from render import markdown, html_fragment
+from atlas.catalog import annotations, colored_lines, build_catalog
 
 import build
 
@@ -217,6 +218,45 @@ class CoverageChecks(unittest.TestCase):
         sample = '<html><head><title>Excluded</title><style>.x { color:red; }</style></head><body><h1>A &amp; B</h1><!-- hidden --><svg><text>Actor</text></svg><script>ignore()</script><p> next </p></body></html>'
         self.assertEqual([u.text for u in build.source_units("architecture", sample)], ["A & B", "Actor", "next"])
         self.assertEqual([u.text for u in build.source_units("proposal", "# Heading\n\n  - nested  \n```daml\nmodule A where\n```\n")], ["# Heading", "  - nested  ", "```daml", "module A where", "```"])
+
+
+class SourceCatalogChecks(unittest.TestCase):
+    def test_scalafmt_wrapping_preserves_annotations(self):
+        inline="/** @book.slice financing\n  * @book.role Observe\n  * @book.summary Read the participant state.\n  */"
+        wrapped="/** @book.slice\n  *   financing\n  * @book.role\n  *   Observe\n  * @book.summary\n  *   Read the participant\n  *   state.\n  */"
+        self.assertEqual(annotations(inline,'View.scala'),annotations(wrapped,'View.scala'))
+        self.assertEqual(annotations(wrapped,'View.scala')['summary'],'Read the participant state.')
+
+    def test_annotation_examples_in_executable_strings_are_ignored(self):
+        self.assertEqual(annotations('val example = "@book.slice imaginary"','View.scala'),{})
+        self.assertEqual(annotations('example = "# @book.slice imaginary"','catalog.py'),{})
+
+    def test_invalid_annotation_is_not_silently_accepted(self):
+        for text in ['-- @book.slice process', '-- @book.silce process', '-- @book.slice process\n-- @book.slice process']:
+            with self.assertRaises(ValueError):annotations(text,'Engine.daml')
+
+    def test_coloring_preserves_exact_source_text(self):
+        class Text(HTMLParser):
+            def __init__(self):super().__init__(convert_charrefs=True);self.parts=[]
+            def handle_data(self,data):self.parts.append(data)
+        for language,text in [('scala','val x = "<script>&"\n\n// hello\n'),('daml','template Example\n  with who : Party\n'),('python','value = "< & >"')]:
+            actual=[]
+            for line in colored_lines(text,language):
+                parsed=Text();parsed.feed(line);actual.append(''.join(parsed.parts))
+            self.assertEqual(actual,text.splitlines())
+
+    def test_invalid_slice_references_fail_before_export(self):
+        with TemporaryDirectory() as directory:
+            root=Path(directory);(root/'book/edition-0.2/atlas').mkdir(parents=True);(root/'product').mkdir()
+            (root/'product/A.scala').write_text('object A')
+            base=dict(id='a',nodes=[dict(id='a',file='product/A.scala',label='A',detail='A file')],edges=[],evidence='product/A.scala')
+            manifest=root/'book/edition-0.2/atlas/slices.json'
+            for change,message in [({'nodes':[]},'Empty'),({'nodes':[dict(id='a',file='missing.scala')]},'Missing'),({'edges':[['a','unknown']]},'Unknown'),({'edges':[['a','a']]},'Cycle'),({'evidence':'missing.md'},'Missing evidence')]:
+                manifest.write_text(json.dumps([{**base,**change}]))
+                with self.assertRaisesRegex(ValueError,message):build_catalog(root)
+            manifest.write_text(json.dumps([base]))
+            (root/'product/A.scala').write_text('/** @book.slice unknown\n * @book.role A\n * @book.summary Source.\n */')
+            with self.assertRaisesRegex(ValueError,'Unknown slice'):build_catalog(root)
 
 
 if __name__ == "__main__":

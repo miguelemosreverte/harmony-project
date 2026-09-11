@@ -1,0 +1,367 @@
+[
+  {
+    "id": "financing",
+    "title": "A private decision becomes shared progress",
+    "question": "What leaves the bank, and who may use it?",
+    "chapter": "03-financing-to-offer",
+    "status": "Live financing; recorded four-person property offer",
+    "citation": [
+      "proposal",
+      133,
+      141
+    ],
+    "evidence": "docs/0.2/reference-live.json",
+    "gap": "The live API covers the bank-to-buyer continuation. Ben and Sofia belong to the separately recorded property example.",
+    "nodes": [
+      {
+        "id": "private",
+        "file": "product/ledger/applications/private-financing/daml/PrivateFinancing.daml",
+        "actor": "Daml application"
+      },
+      {
+        "id": "result",
+        "file": "product/ledger/interfaces/daml/Harmonia/Result.daml",
+        "actor": "Daml interface package"
+      },
+      {
+        "id": "continue",
+        "file": "product/ledger/core/daml/Harmonia/SharedProgress.daml",
+        "actor": "Daml core"
+      },
+      {
+        "id": "observe",
+        "file": "product/server/src/main/scala/harmonia/financing/FinancingObservation.scala",
+        "actor": "Scala service"
+      },
+      {
+        "id": "screen",
+        "file": "product/web/src/main/scala/harmonia/financing/FinancingScene.scala",
+        "actor": "Browser projection"
+      }
+    ],
+    "edges": [
+      [
+        "private",
+        "result"
+      ],
+      [
+        "result",
+        "continue"
+      ],
+      [
+        "continue",
+        "observe"
+      ],
+      [
+        "observe",
+        "screen"
+      ]
+    ],
+    "relationship": "Reading order: follow the cited files. These connectors do not claim to be a runtime call graph."
+  },
+  {
+    "id": "process",
+    "title": "Application choices remain authoritative",
+    "question": "Does the core coordinate a choice, or bypass it?",
+    "chapter": "02-roles-and-trust",
+    "status": "Core ledger implementation; branch and join tests",
+    "citation": [
+      "proposal",
+      53,
+      74
+    ],
+    "evidence": "harness/ledger/tests/daml/Branching.daml",
+    "gap": "The reusable core supports decisions and joins. The live composer currently exposes bounded sequential plans.",
+    "nodes": [
+      {
+        "id": "manifest",
+        "file": "product/ledger/core/daml.yaml",
+        "label": "Declare dependencies",
+        "actor": "DAR manifest",
+        "detail": "The core depends on the shared interface package. It does not import each application implementation."
+      },
+      {
+        "id": "action",
+        "file": "product/ledger/interfaces/daml/Harmonia/Action.daml",
+        "actor": "Daml interface"
+      },
+      {
+        "id": "definition",
+        "file": "product/ledger/core/daml/Harmonia/Process/Model.daml",
+        "actor": "Daml model"
+      },
+      {
+        "id": "engine",
+        "file": "product/ledger/core/daml/Harmonia/Process/Engine.daml",
+        "actor": "Daml execution"
+      },
+      {
+        "id": "transport",
+        "file": "product/server/src/main/scala/harmonia/ledger/client/SubmitChoice.scala",
+        "actor": "Scala transport"
+      }
+    ],
+    "edges": [
+      [
+        "manifest",
+        "action"
+      ],
+      [
+        "action",
+        "definition"
+      ],
+      [
+        "definition",
+        "engine"
+      ],
+      [
+        "engine",
+        "transport"
+      ]
+    ],
+    "relationship": "Reading order: follow the cited files. These connectors do not claim to be a runtime call graph."
+  },
+  {
+    "id": "transfer",
+    "title": "Prepare separately. Settle atomically.",
+    "question": "Which operations belong to the final transaction?",
+    "chapter": "04-four-party-transfer",
+    "status": "Recorded local ledger reference",
+    "citation": [
+      "proposal",
+      120,
+      127
+    ],
+    "evidence": "examples/stories/transfer-final-leg-rejected/expected.md",
+    "gap": "A failed final leg rolls back the settlement transaction. The earlier source lock remains; the entire preparation history is not undone.",
+    "nodes": [
+      {
+        "id": "contract",
+        "file": "product/ledger/interfaces/daml/Harmonia/Transfer.daml",
+        "actor": "Daml transfer interfaces"
+      },
+      {
+        "id": "source",
+        "file": "product/ledger/applications/source-custody/daml/SourceCustody.daml",
+        "actor": "Source custodian"
+      },
+      {
+        "id": "destination",
+        "file": "product/ledger/applications/destination-custody/daml/DestinationCustody.daml",
+        "actor": "Destination custodian"
+      },
+      {
+        "id": "settlement",
+        "file": "product/ledger/applications/transfer/daml/AtomicTransfer.daml",
+        "actor": "Daml transaction"
+      },
+      {
+        "id": "golden",
+        "file": "harness/ledger/tests/daml/Transfer.daml",
+        "actor": "Ledger test"
+      }
+    ],
+    "edges": [
+      [
+        "contract",
+        "source"
+      ],
+      [
+        "contract",
+        "destination"
+      ],
+      [
+        "source",
+        "settlement"
+      ],
+      [
+        "destination",
+        "settlement"
+      ],
+      [
+        "settlement",
+        "golden"
+      ]
+    ],
+    "relationship": "Reading order: follow the cited files. These connectors do not claim to be a runtime call graph."
+  },
+  {
+    "id": "composition",
+    "title": "A proposed plan needs the buyer’s consent",
+    "question": "What does the live composer actually support?",
+    "chapter": "06-compose-a-workflow",
+    "status": "Live bounded sequential composer",
+    "citation": [
+      "proposal",
+      407,
+      420
+    ],
+    "evidence": "harness/runner/src/main/scala/harmonia/composition/verify/CheckComposer.scala",
+    "gap": "One to four supported actions, two evaluation parties, and eight proposals. This is not an arbitrary BPMN editor.",
+    "nodes": [
+      {
+        "id": "plan",
+        "file": "product/api/src/main/scala/harmonia/composition/model/Composition.scala",
+        "actor": "Shared Scala model"
+      },
+      {
+        "id": "consent",
+        "file": "product/ledger/composition/daml/Composer.daml",
+        "actor": "Daml choices"
+      },
+      {
+        "id": "submit",
+        "file": "product/server/src/main/scala/harmonia/composition/ledger/ComposerCommands.scala",
+        "actor": "Scala service"
+      },
+      {
+        "id": "view",
+        "file": "product/web/src/main/scala/harmonia/composition/ComposerView.scala",
+        "actor": "Live browser"
+      }
+    ],
+    "edges": [
+      [
+        "plan",
+        "consent"
+      ],
+      [
+        "consent",
+        "submit"
+      ],
+      [
+        "submit",
+        "view"
+      ]
+    ],
+    "relationship": "Reading order: follow the cited files. These connectors do not claim to be a runtime call graph."
+  },
+  {
+    "id": "packages",
+    "title": "A compiled adapter has a verifiable origin",
+    "question": "Where is the boundary between inspection and executable integration?",
+    "chapter": "05-bring-an-application",
+    "status": "Live inspection and bounded generation; explicit registration",
+    "citation": [
+      "proposal",
+      103,
+      116
+    ],
+    "evidence": "harness/runner/src/main/scala/harmonia/bindings/verify/CheckBindings.scala",
+    "gap": "A newly generated project is not automatically authorized in the live workspace. Typed registration and fresh evaluation are separate steps.",
+    "nodes": [
+      {
+        "id": "manifest",
+        "file": "product/packages/inputs.md",
+        "label": "Pin an application",
+        "actor": "Package manifest",
+        "detail": "The package input records the expected source and identity instead of treating an arbitrary DAR as trusted."
+      },
+      {
+        "id": "inspect",
+        "file": "product/server/src/main/scala/harmonia/packages/inspect/InspectDar.scala",
+        "actor": "Daml-LF inspection"
+      },
+      {
+        "id": "mapping",
+        "file": "product/packages/mappings/financing.md",
+        "label": "Review the mapping",
+        "actor": "Human-readable binding",
+        "detail": "The mapping states the application choice, authority, and result that the adapter must preserve."
+      },
+      {
+        "id": "generate",
+        "file": "product/server/src/main/scala/harmonia/bindings/generate/GenerateBinding.scala",
+        "actor": "Scala build operation"
+      },
+      {
+        "id": "register",
+        "file": "product/web/src/main/scala/harmonia/packages/PackagePanel.scala",
+        "actor": "Live package view"
+      }
+    ],
+    "edges": [
+      [
+        "manifest",
+        "inspect"
+      ],
+      [
+        "inspect",
+        "mapping"
+      ],
+      [
+        "mapping",
+        "generate"
+      ],
+      [
+        "generate",
+        "register"
+      ]
+    ],
+    "relationship": "Reading order: follow the cited files. These connectors do not claim to be a runtime call graph."
+  },
+  {
+    "id": "book",
+    "title": "The book is an independently generated reader",
+    "question": "Is this explanation connected to the actual source and evidence?",
+    "chapter": "07-evidence-and-boundaries",
+    "status": "Generated source catalog and recorded evidence",
+    "citation": [
+      "proposal",
+      410,
+      423
+    ],
+    "evidence": "book/edition-0.2/check.py",
+    "gap": "Quotation inclusion and source presence are mechanically checked. Interpretation, public release, and external adoption require separate review.",
+    "nodes": [
+      {
+        "id": "corpus",
+        "file": "book/edition-0.2/coverage-map.md",
+        "label": "Assign the original words",
+        "actor": "Source map",
+        "detail": "Each original quotation unit has one chapter destination. The original source fingerprints are retained."
+      },
+      {
+        "id": "catalog",
+        "file": "book/edition-0.2/atlas/catalog.py",
+        "label": "Read this checkout",
+        "actor": "Book generator",
+        "detail": "The source catalog exports allowlisted files, hashes, annotations, and explicit diagram relationships."
+      },
+      {
+        "id": "build",
+        "file": "book/edition-0.2/build.py",
+        "actor": "Book assembly"
+      },
+      {
+        "id": "scene",
+        "file": "product/scene/src/main/scala/harmonia/scene/WorkflowDiagramView.scala",
+        "actor": "Typed browser component"
+      },
+      {
+        "id": "export",
+        "file": "book/export/src/main/scala/harmonia/book/FieldGuide.scala",
+        "actor": "Book export"
+      }
+    ],
+    "edges": [
+      [
+        "corpus",
+        "catalog"
+      ],
+      [
+        "catalog",
+        "build"
+      ],
+      [
+        "build",
+        "scene"
+      ],
+      [
+        "scene",
+        "export"
+      ]
+    ],
+    "relationship": "Reading order: follow the cited files. These connectors do not claim to be a runtime call graph."
+  }
+]

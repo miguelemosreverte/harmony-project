@@ -1,3 +1,6 @@
+-- @book.slice transfer
+-- @book.role Observe the result
+-- @book.summary The reference exercises transfer stories and compares the observed ledger state with independently committed expectations.
 module Transfer where
 
 import Daml.Script

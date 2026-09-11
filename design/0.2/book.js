@@ -3,14 +3,17 @@
   'use strict';
   const view = window.HarmoniaView;
   const node = id => document.getElementById(id);
-  if (window.HarmoniaLiveRoot) {
-    document.querySelectorAll('.live-sandbox-link').forEach(a => {a.href=view.href('sandbox.html');});
-    if (node('live-entry')) {
-      const a=document.createElement('a'); a.href=window.HarmoniaLiveRoot; a.className='button primary'; a.textContent='Open your participant workspace →';
-      const p=document.createElement('p'); p.textContent='Use the private launcher to open your bank or buyer session first. Keep each participant in its own tab.';
+  const tasks={financing:['Make the handoff yourself.','First, the bank approves a private financing case. Then the buyer uses that approval to continue.'],composer:['Agree on a plan. Then run it.','The bank proposes the actions. The buyer accepts that exact plan. Each participant executes the next action assigned to them.'],packages:['Bring a real application package.','Use the bank session to inspect a DAR, review its mapping, and compile the adapter. Registration and fresh evaluation determine what can run.']};
+  const taskForChapter={'05-bring-an-application':'packages','06-compose-a-workflow':'composer'};
+  document.querySelectorAll('.live-sandbox-link').forEach(a=>{a.href=view.href('sandbox.html?task='+(taskForChapter[view.config.slug]||'financing'));});
+  if(node('live-entry'))view.subscribe(s=>{
+    node('sandbox-title').textContent=tasks[s.task][0];node('sandbox-lead').textContent=tasks[s.task][1];
+    if(window.HarmoniaLiveRoot){
+      const a=document.createElement('a'),url=new URL(window.HarmoniaLiveRoot,location.href);url.searchParams.set('view',s.task);a.href=url.href;a.className='button primary';a.textContent='Open the '+(s.task==='composer'?'workflow composer':s.task==='packages'?'package workspace':'financing workspace')+' →';
+      const p=document.createElement('p');p.textContent='Open the bank or buyer from the private launcher first. Each participant keeps its own tab.';
       node('live-entry').replaceChildren(a,p);
     }
-  }
+  });
   if (window.HarmoniaLaboratory && node('chapter-evidence')) {
     const a=document.createElement('a');a.href=view.href(window.HarmoniaLaboratory);a.textContent='Open all recorded experiments →';node('chapter-evidence').append(a);
   }

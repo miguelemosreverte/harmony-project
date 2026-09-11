@@ -1,3 +1,6 @@
+-- @book.slice transfer
+-- @book.role Reserve the source
+-- @book.summary The source application owns the available position, its lock, and the withdrawal permission.
 module SourceCustody where
 
 import Harmonia.Transfer

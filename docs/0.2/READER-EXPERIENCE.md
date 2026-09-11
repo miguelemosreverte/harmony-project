@@ -51,28 +51,54 @@ must never invent a line-by-line explanation of code it has not documented.
 
 ## Linear implementation
 
-- [ ] 1. Repair the existing scenes.
-  - [ ] Add measured connectors and cumulative handoff colors.
-  - [ ] Check Sofia clearance, Proposal → Ben, portrait spacing, and narrow layouts.
-- [ ] 2. Introduce the reusable typed diagram component.
-  - [ ] Support ordered steps, branches, joins, node selection, and explicit observed states.
-  - [ ] Apply it to composition and package journeys as well as book explanations.
-- [ ] 3. Generate a source and slice catalog.
-  - [ ] Add meaningful source annotations and curated slice narratives.
-  - [ ] Export exact source, syntax colors, hashes, line counts, and validated relationships.
-  - [ ] Fail generation when a referenced source or annotation is inconsistent.
-- [ ] 4. Build the developer and reviewer views.
-  - [ ] Tree → code/annotations → slice diagram, with line and file URLs.
-  - [ ] Manifest → Daml interfaces/choices → Scala service → browser, with review questions.
-- [ ] 5. Build the original-author comparison.
-  - [ ] Full original passages, selected highlight, citations, and source location.
-  - [ ] Reuse the diagram, workflow, code, and chapter views in the companion pane.
-- [ ] 6. Revise the book entry and chapters.
-  - [ ] Route readers by their actual questions; add visual explanations to the chapters.
-  - [ ] Explain Daml/Canton mechanisms and distinguish demonstrated behavior from gaps.
-  - [ ] Provide deterministic presentation URLs and a controllable slideshow for recording.
+- [x] 1. Repair the existing scenes.
+  - [x] Add measured connectors and cumulative handoff colors.
+  - [x] Check Sofia clearance, Proposal → Ben, portrait spacing, and narrow layouts.
+- [x] 2. Introduce the reusable typed diagram component.
+  - [x] Support ordered steps, branches, joins, node selection, and explicit observed states.
+  - [x] Apply it to composition and package journeys as well as book explanations.
+- [x] 3. Generate a source and slice catalog.
+  - [x] Add meaningful source annotations and curated slice narratives.
+  - [x] Export exact source, syntax colors, hashes, line counts, and validated relationships.
+  - [x] Fail generation when a referenced source or annotation is inconsistent.
+- [x] 4. Build the developer and reviewer views.
+  - [x] Tree → code/annotations → slice diagram, with line and file URLs.
+  - [x] Manifest → Daml interfaces/choices → Scala service → browser, with review questions.
+- [x] 5. Build the original-author comparison.
+  - [x] Full original passages, selected highlight, citations, and source location.
+  - [x] Reuse the diagram, workflow, code, and chapter views in the companion pane.
+- [x] 6. Revise the book entry and chapters.
+  - [x] Route readers by their actual questions; add visual explanations to the chapters.
+  - [x] Explain Daml/Canton mechanisms and distinguish demonstrated behavior from gaps.
+  - [x] Provide deterministic presentation URLs and a controllable slideshow for recording.
 - [ ] 7. Verify and deliver.
   - [ ] Check graph/reference integrity, source export drift, and preserved golden expectations.
   - [ ] Exercise reader routes, files, citations, diagram selection, sharing, and live controls.
   - [ ] Inspect desktop/mobile screenshots, arrow bounds/colors, and PDF output.
   - [ ] Commit the verified work, document remaining product gaps, and leave one usable entry.
+
+
+## Ownership and review entry points
+
+- `product/scene/` owns the typed scene and diagram renderers, measured arrows, and shared appearance.
+- `product/web/` projects observed financing, composition, and package state into those views.
+- `book/edition-0.2/atlas/` owns source extraction, documentation validation, and the six authored review maps.
+- `design/0.2/reader/` owns reader navigation and layout. `files/` and `catalog.js` are generated.
+- `design/0.2/checks/readers.mjs` verifies navigation and layout against a real browser.
+- `book/edition-0.2/presentation.mjs` records the HTML purchase presentation as a four-scene MP4, using an owned local browser and two encoder threads.
+
+Build with `scripts/build-design`; it checks exact quotations and generated source freshness.
+Scala changes also require `scripts/build`. The source browser exports the checkout's actual
+files; important review paths carry explicit annotations. Files without an authored annotation
+say so and identify their owning directory.
+
+For a presentation, open `chapters/03-financing-to-offer.html?present=1&audience=investor`.
+Arrow keys and touch advance it; Play opts into six-second advancement. For a video, run:
+
+```sh
+node book/edition-0.2/presentation.mjs http://127.0.0.1:CDP_PORT
+```
+
+The default preview URL is `http://127.0.0.1:56202/design/0.2/`; a relocated chapter URL
+and output directory can be supplied as the second and third arguments. Output goes to
+`.artifacts/presentation/`. The video records the HTML presentation and submits no ledger commands.

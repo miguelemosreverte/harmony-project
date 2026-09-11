@@ -1,5 +1,13 @@
 package harmonia.financing
 
+/** @book.slice
+  *   financing
+  * @book.role
+  *   Show the next handoff
+  * @book.summary
+  *   The live scene projects only the financing facts visible to the current participant.
+  */
+
 import harmonia.scene.{SceneFrame, SceneKind, ScenePerson}
 
 /** Only facts visible to this participant determine the scene. */

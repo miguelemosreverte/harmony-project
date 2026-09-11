@@ -1,6 +1,7 @@
 package harmonia.scene
 
 import org.scalajs.dom
+import scala.scalajs.js
 
 /** Connections end outside rendered nodes, including their labels on vertical layouts. */
 final class ConnectionLayer(root: dom.HTMLElement):
@@ -13,7 +14,14 @@ final class ConnectionLayer(root: dom.HTMLElement):
   private val observer = new dom.ResizeObserver((_, _) => draw())
   observer.observe(root)
 
-  def dispose(): Unit = observer.disconnect()
+  private val printLayout: js.Function1[dom.Event, Unit] = _ => draw()
+  dom.window.addEventListener("beforeprint", printLayout)
+  dom.window.addEventListener("afterprint", printLayout)
+
+  def dispose(): Unit =
+    observer.disconnect()
+    dom.window.removeEventListener("beforeprint", printLayout)
+    dom.window.removeEventListener("afterprint", printLayout)
 
   def render(value: Vector[Arrow]): Unit =
     arrows = value
@@ -58,7 +66,7 @@ final class ConnectionLayer(root: dom.HTMLElement):
           else s"M$x1 $y1 C${(x1 + x2) / 2} $y1 ${(x1 + x2) / 2} $y2 $x2 $y2"
         path.setAttribute("d", shape)
         path.setAttribute("data-edge", arrow.id)
-        path.setAttribute("data-status", arrow.status)
+        path.setAttribute("data-status", arrow.status.toString.toLowerCase)
         svg.appendChild(path)
         if arrow.head then
           val head = dom.document.createElementNS(namespace, "path")
@@ -70,7 +78,7 @@ final class ConnectionLayer(root: dom.HTMLElement):
           )
           head.setAttribute("class", "connector-head")
           head.setAttribute("data-edge", arrow.id)
-          head.setAttribute("data-status", arrow.status)
+          head.setAttribute("data-status", arrow.status.toString.toLowerCase)
           svg.appendChild(head)
     }
 
@@ -80,6 +88,6 @@ object ConnectionLayer:
       id: String,
       from: dom.Element,
       to: dom.Element,
-      status: String,
+      status: DiagramState,
       head: Boolean = true
   )

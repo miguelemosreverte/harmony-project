@@ -127,10 +127,10 @@ final class SceneView(root: dom.HTMLElement):
     }
     def person(index: Int): dom.Element =
       people.children(index)
-    def status(phase: Int): String =
-      if frame.refused then "refused"
-      else if frame.phase >= phase then "complete"
-      else "pending"
+    def status(phase: Int): DiagramState =
+      if frame.phase >= phase then DiagramState.Complete
+      else if frame.refused then DiagramState.Refused
+      else DiagramState.Pending
     val approvalPaper = approval.querySelector(".document-sheet")
     val proposalPaper = artifact.querySelector(".document-sheet")
     val links =
@@ -141,7 +141,7 @@ final class SceneView(root: dom.HTMLElement):
             "bank",
             people.children(0).querySelector("strong"),
             approvalPaper,
-            "pending",
+            DiagramState.Pending,
             false
           ),
           ConnectionLayer.Arrow("approval", approvalPaper, person(1), status(1)),

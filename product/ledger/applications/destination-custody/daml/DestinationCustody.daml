@@ -1,3 +1,6 @@
+-- @book.slice transfer
+-- @book.role Prepare receipt
+-- @book.summary The destination owns the receipt rules. It can refuse the final receipt.
 module DestinationCustody where
 
 import Harmonia.Transfer

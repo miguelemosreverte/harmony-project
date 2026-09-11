@@ -15,8 +15,8 @@
   byId('close-evidence')?.addEventListener('click',closeDrawer);
   drawer?.addEventListener('cancel',event=>{event.preventDefault();closeDrawer();});
   drawer?.addEventListener('click',event=>{if(event.target===drawer){const r=drawer.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)closeDrawer();}});
-  const destination = slug => ['coverage','application','sandbox'].includes(slug) ? `${slug}.html` : `chapters/${slug}.html`;
-  const label = slug => config.chapters[slug] || {coverage:'Find the original requirements', application:'Workspace design reference', sandbox:'Make a live handoff'}[slug];
+  const destination = slug => ['coverage','application','sandbox','code','reviewer','author','workflows'].includes(slug) ? `${slug}.html` : `chapters/${slug}.html`;
+  const label = slug => config.chapters[slug] || {code:'Explore the actual code',reviewer:'Review the implementation diagrams',author:'Read originals beside evidence',workflows:'Follow a workflow',coverage:'Find the original requirements', application:'Workspace design reference', sandbox:'Make a live handoff'}[slug];
   const setPressed = (selector, key, selected) => document.querySelectorAll(selector).forEach(button => {
     button.setAttribute('aria-pressed', String(button.dataset[key] === selected));
   });

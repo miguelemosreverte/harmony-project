@@ -1,5 +1,13 @@
 package harmonia.composition.model
 
+/** @book.slice
+  *   composition
+  * @book.role
+  *   Validate a typed plan
+  * @book.summary
+  *   The editor and HTTP boundary use the same validated actions, roles, names, and references.
+  */
+
 import cats.syntax.all.*
 import harmonia.protocol.JsonCodec
 import io.circe.{Codec, Json, Decoder, Encoder}
