@@ -3,17 +3,12 @@ package harmonia.submission
 import cats.effect.{IO, Ref, Resource}
 import cats.effect.std.{Semaphore, Supervisor}
 import cats.syntax.all.*
-import harmonia.workspace.{WorkspaceCommand, SubmissionView}
+import harmonia.workspace.{ActionRequest, SubmissionView}
 import harmonia.protocol.SubmissionStatus
 import harmonia.protocol.SubmissionStatus.*
 import io.circe.Json
 import io.circe.syntax.*
 
-final case class ActionRequest(
-    id: String,
-    command: WorkspaceCommand,
-    version: String
-)
 final case class LiveJob(
     actor: String,
     request: ActionRequest,

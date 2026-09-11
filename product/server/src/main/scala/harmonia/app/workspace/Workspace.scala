@@ -5,7 +5,7 @@ import harmonia.app.Connections
 import harmonia.ledger.client.LedgerSnapshot
 import harmonia.financing.FinancingObservation
 import harmonia.submission.*
-import harmonia.workspace.{WorkspaceCommand, WorkspaceSnapshot}
+import harmonia.workspace.{ActionRequest, WorkspaceCommand, WorkspaceSnapshot}
 import harmonia.financing.Financing
 import harmonia.composition.ledger.{ComposerCommands, ComposerSnapshot}
 import harmonia.ledger.client.SubmitChoice

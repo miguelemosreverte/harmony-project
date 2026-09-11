@@ -3,8 +3,8 @@ package harmonia.live
 import cats.effect.{IO, Ref, Resource}
 import cats.effect.std.Dispatcher
 import cats.syntax.all.*
-import io.circe.Json
-import harmonia.workspace.{WorkspaceSnapshot, WorkspaceCommand}
+import io.circe.syntax.*
+import harmonia.workspace.{ActionRequest, WorkspaceSnapshot, WorkspaceCommand}
 import harmonia.composition.CompositionCommand
 import org.scalajs.dom
 import scala.scalajs.js
@@ -13,7 +13,7 @@ import scala.concurrent.duration.*
 private final case class ClientState(
     snapshot: Option[WorkspaceSnapshot],
     connection: ConnectionState,
-    unconfirmed: Option[Json],
+    unconfirmed: Option[ActionRequest],
     submitting: Boolean = false,
     notice: Option[String] = None
 )
@@ -31,6 +31,7 @@ object LiveApp:
       remembered <- IO(
         Option(dom.window.sessionStorage.getItem("harmonia-request-" + capability))
           .flatMap(io.circe.parser.parse(_).toOption)
+          .flatMap(ActionRequest.read(_).toOption)
       )
       state <- Ref.of[IO, ClientState](ClientState(None, ConnectionState.Connecting, remembered))
       session = new BrowserSession(capability, state, dispatcher)
@@ -66,19 +67,17 @@ private final class BrowserSession(
       then IO.unit
       else
         current.snapshot.fold(IO.unit) { snapshot =>
-          val input = Json
-            .obj(
-              "id" -> Json.fromString(js.Dynamic.global.crypto.randomUUID().asInstanceOf[String]),
-              "action" -> Json.fromString(command.wire),
-              "version" -> Json.fromString(snapshot.financing.version)
-            )
-            .deepMerge(command.parameters.fold(Json.obj())(value => Json.obj("input" -> value)))
+          val input = ActionRequest(
+            js.Dynamic.global.crypto.randomUUID().asInstanceOf[String],
+            command,
+            snapshot.financing.version
+          )
           send(input)
         }
     })
-  private def remember(input: Option[Json]): IO[Unit] = IO {
+  private def remember(input: Option[ActionRequest]): IO[Unit] = IO {
     input match
-      case Some(value) => dom.window.sessionStorage.setItem(storageKey, value.noSpaces)
+      case Some(value) => dom.window.sessionStorage.setItem(storageKey, value.asJson.noSpaces)
       case None        => dom.window.sessionStorage.removeItem(storageKey)
   }
   def refresh: IO[Unit] = LiveApi
@@ -87,7 +86,7 @@ private final class BrowserSession(
     .flatMap { snapshot =>
       state.update { current =>
         val found = current.unconfirmed.exists { request =>
-          snapshot.submissions.exists(job => request.hcursor.get[String]("id").contains(job.id))
+          snapshot.submissions.exists(job => request.id == job.id)
         }
         current.copy(
           snapshot = Some(snapshot),
@@ -103,7 +102,7 @@ private final class BrowserSession(
       state.update(_.copy(connection = ConnectionState.Disconnected(message)))
     } *> draw
 
-  private def send(input: Json): IO[Unit] =
+  private def send(input: ActionRequest): IO[Unit] =
     state
       .modify { current =>
         if current.submitting then current -> false
@@ -113,7 +112,7 @@ private final class BrowserSession(
         case false => IO.unit
         case true =>
           remember(Some(input)) *> draw *> LiveApi
-            .request(capability, "POST", "/api/actions", Some(input))
+            .request(capability, "POST", "/api/actions", Some(input.asJson))
             .attempt
             .flatMap {
               case Right(_) =>

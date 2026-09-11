@@ -3,7 +3,7 @@ package harmonia.submission
 import cats.effect.{Deferred, IO}
 import cats.effect.unsafe.implicits.global
 import cats.syntax.all.*
-import harmonia.workspace.WorkspaceCommand
+import harmonia.workspace.{ActionRequest, WorkspaceCommand}
 import harmonia.financing.FinancingAction
 import munit.FunSuite
 import scala.concurrent.duration.*

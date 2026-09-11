@@ -4,7 +4,7 @@ import cats.effect.{IO, Ref, Deferred}
 import cats.effect.unsafe.implicits.global
 import cats.syntax.all.*
 import harmonia.app.workspace.Workspace
-import harmonia.submission.ActionRequest
+import harmonia.workspace.ActionRequest
 import harmonia.ledger.client.{ActiveContract, ParticipantLedger, TemplateCatalog, LiveLedger}
 import harmonia.demo.Demo
 import harmonia.app.Connections

@@ -5,12 +5,10 @@ import cats.effect.std.Dispatcher
 import cats.syntax.all.*
 import com.sun.net.httpserver.{HttpExchange, HttpServer}
 import harmonia.app.workspace.Workspace
-import harmonia.submission.ActionRequest
 import harmonia.ledger.auth.LocalCredentials
 import harmonia.app.Connections
-import io.circe.Json
+import io.circe.{Encoder, Json}
 import io.circe.syntax.*
-import harmonia.workspace.WorkspaceCommand
 import java.net.InetSocketAddress
 import java.nio.charset.StandardCharsets.UTF_8
 import java.nio.file.{Files, Path}
@@ -43,20 +41,10 @@ object LiveServer:
             respond(root, http.getAddress.getPort, sessions, actions, builder, exchange)
               .handleErrorWith { error =>
                 val code = if error.isInstanceOf[IllegalArgumentException] then 400 else 503
-                send(
-                  exchange,
-                  code,
-                  "application/json",
-                  Json
-                    .obj(
-                      "error" -> Json.fromString(
-                        if code == 400 then error.getMessage
-                        else "Participant disconnected; refresh to recover current state"
-                      )
-                    )
-                    .noSpaces
-                    .getBytes(UTF_8)
-                )
+                val message =
+                  if code == 400 then error.getMessage
+                  else "Participant disconnected; refresh to recover current state"
+                sendJson(exchange, code, Json.obj("error" -> Json.fromString(message)))
               }
               .guarantee(IO.blocking(exchange.close()))
           )
@@ -145,86 +133,29 @@ object LiveServer:
       builder: harmonia.packages.workspace.PackageBuilder,
       exchange: HttpExchange
   ): IO[Unit] =
-    val response = (method, path) match
-      case ("GET", "/api/state")   => actions.state(actor).map(_.asJson)
-      case ("GET", "/api/builder") => builder.state.map(_.asJson)
-      case ("POST", "/api/builder/upload") =>
-        builder
-          .upload(
-            IO.blocking(
-              exchange.getRequestBody.readNBytes(
-                harmonia.packages.inspect.InspectDar.maximumBytes + 1
-              )
-            )
-          )
-          .map(_.asJson)
-      case ("POST", "/api/builder/retrieve") =>
-        builderKey(exchange, "source").flatMap(builder.retrieve).map(_.asJson)
-      case ("POST", "/api/builder/generate") =>
-        builderKey(exchange, "id").flatMap(builder.generate).map(_.asJson)
-      case ("POST", "/api/actions") =>
-        for
-          bytes <- IO.blocking(exchange.getRequestBody.readNBytes(16385))
-          _ <- IO.raiseWhen(bytes.length > 16384)(
-            IllegalArgumentException("Request exceeds 16 KiB")
-          )
-          json <- IO.fromEither(
-            io.circe.parser
-              .parse(new String(bytes, UTF_8))
-              .leftMap(_ => IllegalArgumentException("Invalid JSON"))
-          )
-          _ <- IO.raiseUnless(
-            json.asObject.exists(obj =>
-              Set("id", "action", "version").subsetOf(
-                obj.keys.toSet
-              ) && (obj.keys.toSet -- Set("id", "action", "version", "input")).isEmpty
-            )
-          )(
-            IllegalArgumentException(
-              "Expected id, action, version, and optional composition input"
-            )
-          )
-          request <- IO
-            .fromEither(for
-              id <- json.hcursor.get[String]("id")
-              action <- json.hcursor.get[String]("action")
-              command <- WorkspaceCommand
-                .read(action, json.hcursor.downField("input").focus)
-                .leftMap(message => io.circe.DecodingFailure(message, json.hcursor.history))
-              version <- json.hcursor.get[String]("version")
-            yield ActionRequest(id, command, version))
-            .adaptError { case error: io.circe.Error =>
-              IllegalArgumentException(error.getMessage)
-            }
-          job <- actions.submit(actor, request)
-        yield job.json
-      case _ => IO.raiseError(IllegalArgumentException("Unsupported endpoint or method"))
-    response.flatMap(json =>
-      send(
-        exchange,
-        if method == "POST" && path == "/api/actions" then 202 else 200,
-        "application/json",
-        json.noSpaces.getBytes(UTF_8)
-      )
-    )
+    def reply[A: Encoder](value: IO[A], code: Int = 200): IO[Unit] =
+      value.flatMap(value => sendJson(exchange, code, value.asJson))
 
-  private def builderKey(exchange: HttpExchange, field: String): IO[String] = for
-    bytes <- IO.blocking(exchange.getRequestBody.readNBytes(1025))
-    _ <- IO.raiseWhen(bytes.length > 1024)(
-      IllegalArgumentException("Package request exceeds 1 KiB")
-    )
-    json <- IO.fromEither(
-      io.circe.parser
-        .parse(new String(bytes, UTF_8))
-        .leftMap(_ => IllegalArgumentException("Invalid package request JSON"))
-    )
-    _ <- IO.raiseUnless(json.asObject.exists(_.keys.toSet == Set(field)))(
-      IllegalArgumentException(s"Expected only $field")
-    )
-    key <- IO.fromEither(
-      json.hcursor.get[String](field).leftMap(_ => IllegalArgumentException(s"$field must be text"))
-    )
-  yield key
+    val body = exchange.getRequestBody
+    (method, path) match
+      case ("GET", "/api/state")   => reply(actions.state(actor))
+      case ("GET", "/api/builder") => reply(builder.state)
+      case ("POST", "/api/builder/upload") =>
+        reply(
+          builder.upload(
+            IO.blocking(body.readNBytes(harmonia.packages.inspect.InspectDar.maximumBytes + 1))
+          )
+        )
+      case ("POST", "/api/builder/retrieve") =>
+        reply(RequestBody.packageKey(body, "source").flatMap(builder.retrieve))
+      case ("POST", "/api/builder/generate") =>
+        reply(RequestBody.packageKey(body, "id").flatMap(builder.generate))
+      case ("POST", "/api/actions") =>
+        reply(RequestBody.action(body).flatMap(actions.submit(actor, _)).map(_.view), 202)
+      case _ => IO.raiseError(IllegalArgumentException("Unsupported endpoint or method"))
+
+  private def sendJson(exchange: HttpExchange, code: Int, value: Json): IO[Unit] =
+    send(exchange, code, "application/json", value.noSpaces.getBytes(UTF_8))
 
   private def send(exchange: HttpExchange, code: Int, kind: String, bytes: Array[Byte]): IO[Unit] =
     IO.blocking {

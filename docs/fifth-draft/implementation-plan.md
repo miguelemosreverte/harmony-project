@@ -76,18 +76,25 @@ The earlier proposal is the first branch commit. This expanded plan is the secon
 
 ## FD53 — fifth actual commit: readable HTTP handling
 
-- [ ] `app/http/LiveServer.scala`
+- [x] `app/http/LiveServer.scala`
   - Keep server/executor lifetime, session creation, origin validation, authentication, and endpoint routing visible.
   - Extract bounded request decoding into one cohesive `RequestBody.scala` in the same package; keep the route table short and explicit.
   - Make submission's HTTP 202 response and ordinary HTTP 200 responses explicit while retaining all other statuses and headers.
-- [ ] `app/http/RequestBody.scala` (new)
+- [x] `app/http/RequestBody.scala` (new)
   - Own bounded JSON reading, action envelope decoding, and single-key package requests.
   - Return `ActionRequest` or a validated key to callers; reject malformed, excessive, unknown, or missing fields at the boundary.
-- [ ] `submission/Submissions.scala`, `api/.../workspace/WorkspaceCommand.scala`, and `app/workspace/Workspace.scala`
+- [x] `api/.../workspace/ActionRequest.scala` (moved from submission ownership)
+  - Share the existing request identity, typed command, and state version with the browser; encode the unchanged flattened HTTP format only at transport/storage boundaries.
+  - Decode the envelope once into this shared model, preserving exact-field and typed command validation.
+- [x] `web/.../live/LiveApp.scala`
+  - Keep unconfirmed retries as `ActionRequest`, compare request IDs directly, and encode only for HTTP or session storage.
+  - Decode existing saved requests on browser startup; preserve reconnect and retry behavior.
+- [x] `harness/runner/.../live/LiveFailureSuite.scala` and `submission/SubmissionLifetimeSuite.scala`: update the moved request-model import; retain their independent lifecycle checks.
+- [x] `submission/Submissions.scala`, `api/.../workspace/WorkspaceCommand.scala`, and `app/workspace/Workspace.scala`
   - Review the complete request-to-effect path; retain the existing command families, stale check, request identity, uncertain outcomes, and Resource ownership.
   - Edit only a demonstrated redundant representation or forwarding step; record the final scope.
-- [ ] Add focused request-boundary tests for sizes, malformed input, extra actor fields, and existing financing/composition payloads.
-- [ ] Run the standalone authenticated live gate and builder gate; preserve independent negative checks and compiler isolation.
+- [x] Add focused request-boundary tests for sizes, malformed input, extra actor fields, and existing financing/composition payloads.
+- [x] Run the standalone authenticated live gate and builder gate; preserve independent negative checks and compiler isolation.
 
 ## FD54 — sixth actual commit: explain and measure the final operations
 
@@ -114,3 +121,5 @@ Any necessary adjustment is recorded here before its implementation. Reducing li
 FD51 proof: all 52 Scala tests pass (`.artifacts/fifth-51-build.log`); package import/retrieval passes on two fresh networks (`fifth-51-packages.log`); the real builder story matches its original expectation with zero differences (`fifth-51-builder.log`). All three resolution records equal the retained fourth-draft JSON (`fifth-51-resolution-parity.json`). These checks were run before committing the implementation; the final release will record a fresh clean revision.
 
 FD52 proof: all 53 Scala tests pass (`.artifacts/fifth-52-build.log`). Deterministic generated sources and DARs, the compiled mutation regression, the unchanged builder golden, and a portable rebuild from empty outputs all pass (`fifth-52-bindings.log`, `fifth-52-builder.log`, `fifth-52-portable.log`). The harness retains independent artifact reads.
+
+FD53 proof: all 57 Scala tests pass, including literal HTTP-format and bounded request-reading cases; the live Scala.js browser compiles (`.artifacts/fifth-53-build.log`). The authenticated live gate preserves authority, stale views, repeats, and reconnect; the builder golden still has zero differences (`fifth-53-live.log`, `fifth-53-builder.log`). The browser now retains a shared `ActionRequest` instead of an untyped JSON request.
