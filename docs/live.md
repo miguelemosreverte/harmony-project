@@ -14,6 +14,15 @@ buyer links in separate tabs. Open the reviewer link in a third tab to inspect
 Olivia's view. These links grant access to the running synthetic demonstration;
 keep them in your local session.
 
+A shared workspace address such as `/?view=financing` selects a screen, not a
+participant. In a new tab it opens the session welcome screen. Use **Bank**,
+**Buyer**, or **Reviewer** in the local `open.html` launcher, or paste that
+participant's private link into the welcome screen. Pasting preserves the task
+and appearance from the shared address. The book and recorded handoff remain
+available without a session. A missing session sends no ledger requests; an
+expired session stops polling and asks for a current link. Reconnect is reserved
+for connection failures in an authenticated session.
+
 1. In the bank tab, inspect the private application and click **Approve financing**.
    Wait for the submission to say **committed**.
 2. In the buyer tab, the signed approval enables **Continue shared workflow**.

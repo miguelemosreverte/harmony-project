@@ -37,7 +37,6 @@ object LiveApp:
           .flatMap(io.circe.parser.parse(_).toOption)
       )
       state <- Ref.of[IO, ClientState](ClientState(None, ConnectionState.Connecting, remembered))
-      session = new BrowserSession(capability, state, dispatcher)
       listener: (dom.Event => Unit) = _ =>
         if dom.window.location.hash.matches("#session=[A-Za-z0-9_-]{43}") then
           dom.window.location.reload()
@@ -45,7 +44,12 @@ object LiveApp:
         .make(IO(dom.window.addEventListener("hashchange", listener)))(_ =>
           IO(dom.window.removeEventListener("hashchange", listener))
         )
-        .use(_ => (session.refresh *> IO.sleep(1.second)).foreverM)
+        .use { _ =>
+          if capability.isEmpty then IO(SessionEntry.render(expired = false)) *> IO.never
+          else
+            val session = new BrowserSession(capability, state, dispatcher)
+            (session.refresh *> IO.sleep(1.second)).foreverM
+        }
     yield ()
   }
 
@@ -85,7 +89,11 @@ private final class BrowserSession(
       case Some(value) => dom.window.sessionStorage.setItem(storageKey, value.noSpaces)
       case None        => dom.window.sessionStorage.removeItem(storageKey)
   }
-  def refresh: IO[Unit] = LiveApi
+  def refresh: IO[Unit] = state.get.flatMap { current =>
+    if current.connection == ConnectionState.SessionRequired then IO.unit else observe
+  }
+
+  private def observe: IO[Unit] = LiveApi
     .request(capability, "GET", "/api/state", None)
     .flatMap(json => IO.fromEither(json.as[WorkspaceSnapshot]))
     .flatMap { snapshot =>
@@ -101,10 +109,10 @@ private final class BrowserSession(
       } *> state.get.flatMap(s => remember(s.unconfirmed))
     }
     .handleErrorWith { error =>
-      val message = error match
-        case failure: LiveHttpFailure if failure.code == 401 => failure.getMessage
-        case _ => "Disconnected — showing the last observed state"
-      state.update(_.copy(connection = ConnectionState.Disconnected(message)))
+      val connection = error match
+        case failure: LiveHttpFailure if failure.code == 401 => ConnectionState.SessionRequired
+        case _ => ConnectionState.Disconnected("Disconnected — showing the last observed state")
+      state.update(_.copy(connection = connection))
     } *> draw
 
   private def send(input: Json): IO[Unit] =
@@ -140,19 +148,22 @@ private final class BrowserSession(
       }
 
   private def draw: IO[Unit] = state.get.flatMap { current =>
-    IO {
-      view.render(
-        current.snapshot,
-        current.connection,
-        current.unconfirmed.nonEmpty,
-        current.submitting,
-        current.notice,
-        editor,
-        packages,
-        () => dispatcher.unsafeRunAndForget(refresh),
-        () => current.unconfirmed.foreach(input => dispatcher.unsafeRunAndForget(send(input))),
-        () => dispatcher.unsafeRunAndForget(state.update(_.copy(notice = None)) *> draw),
-        submit
-      )
-    }
+    if current.connection == ConnectionState.SessionRequired then
+      IO(SessionEntry.render(expired = true))
+    else
+      IO {
+        view.render(
+          current.snapshot,
+          current.connection,
+          current.unconfirmed.nonEmpty,
+          current.submitting,
+          current.notice,
+          editor,
+          packages,
+          () => dispatcher.unsafeRunAndForget(refresh),
+          () => current.unconfirmed.foreach(input => dispatcher.unsafeRunAndForget(send(input))),
+          () => dispatcher.unsafeRunAndForget(state.update(_.copy(notice = None)) *> draw),
+          submit
+        )
+      }
   }

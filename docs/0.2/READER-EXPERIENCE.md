@@ -34,6 +34,20 @@ implementation and external adoption. A new annotation does not prove a feature.
 - Keyboard, touch, Back/Forward, direct links, offline reading, and printing remain useful.
   Auto-advance is explicitly started, stops for reduced motion, and never submits a command.
 
+## Entering the live workspace
+
+A shared task URL must be usable in a fresh tab. Without a participant session,
+show the entry screen: explain Bank, Buyer and Reviewer, accept a private link
+from the local launcher, and offer the recorded handoff and book. Do not poll an
+unauthenticated API or present Reconnect as a remedy for missing access. A 401
+stops polling and asks for a current link, preserving any unconfirmed request.
+Entering through the form keeps the selected task and appearance in the URL;
+the capability is consumed into tab-local storage and removed from the address.
+
+The [session-entry browser checks](session-entry-browser.json) exercise fresh tabs,
+expired links, the three participant identities, book navigation and narrow layouts
+against the running server without submitting ledger commands.
+
 ## Source documentation contract
 
 The source browser is generated from an explicit allowlist of repository text files.

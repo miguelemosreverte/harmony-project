@@ -10,7 +10,7 @@
     node('sandbox-title').textContent=tasks[s.task][0];node('sandbox-lead').textContent=tasks[s.task][1];
     if(window.HarmoniaLiveRoot){
       const a=document.createElement('a'),url=new URL(window.HarmoniaLiveRoot,location.href);url.searchParams.set('view',s.task);a.href=url.href;a.className='button primary';a.textContent='Open the '+(s.task==='composer'?'workflow composer':s.task==='packages'?'package workspace':'financing workspace')+' →';
-      const p=document.createElement('p');p.textContent='Open the bank or buyer from the private launcher first. Each participant keeps its own tab.';
+      const p=document.createElement('p');p.textContent='Your participant stays with this tab. If you have not entered yet, the workspace explains how to use your private launcher link. Open Bank or Buyer in its own tab.';
       node('live-entry').replaceChildren(a,p);
     }
   });

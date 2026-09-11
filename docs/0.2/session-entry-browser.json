@@ -1,0 +1,22 @@
+{
+  "scope": "Unauthenticated URLs, private participant links, expired-session recovery and book navigation against the running server; no ledger commands submitted",
+  "checks": [
+    "A shared financing URL shows an entry screen and sends no unauthenticated requests",
+    "The entry screen has no ineffective reconnect or workspace evidence controls",
+    "The welcome screen fits at 1280px",
+    "The welcome screen fits at 390px",
+    "The welcome screen fits at 304px",
+    "A participant link for another server is rejected locally",
+    "The recorded handoff works without participant access",
+    "Pasting a real bank link enters the selected task and preserves appearance",
+    "Book to workspace navigation reuses the authenticated participant tab",
+    "An expired session stops after one rejection and explains how to recover",
+    "Session expiry preserves the unconfirmed request for reconciliation",
+    "The stale-session probe accounts for exactly one expected HTTP 401",
+    "A current buyer link recovers an expired session",
+    "A direct reviewer fragment enters without granting financing actions",
+    "No ledger commands were submitted by the entry checks",
+    "No unexpected browser or CSP errors"
+  ],
+  "errors": []
+}
