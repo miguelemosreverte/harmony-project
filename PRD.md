@@ -2,7 +2,7 @@
 
 **Product requirements and linear implementation plan**  
 **Date:** 2026-09-10  
-**Status:** Implementation authorized; proceed in the commit order below  
+**Status:** First-draft implementation complete; active refinement plan in [SECOND-DRAFT.md](SECOND-DRAFT.md)  
 **Product name:** Harmonia; the current workspace is named `harmony-project`.
 
 Harmonia lets independently developed Canton/Daml applications participate in a shared business process. The ledger enforces eligible transitions and application permissions. A reader learns the system through working stories whose committed inputs and expected outputs also power regression tests and interactive explanations.
@@ -19,7 +19,7 @@ Harmonia lets independently developed Canton/Daml applications participate in a 
 - [6. Executable stories and golden files](#6-executable-stories-and-golden-files)
 - [7. The book and interactive demonstrations](#7-the-book-and-interactive-demonstrations)
 - [8. Linear commit plan](#8-linear-commit-plan)
-- [9. Release acceptance checklist](#9-release-acceptance-checklist)
+- [9. Implementation acceptance checklist](#9-implementation-acceptance-checklist)
 - [10. Open decisions and evidence gates](#10-open-decisions-and-evidence-gates)
 - [11. Relationship to the proposal](#11-relationship-to-the-proposal)
 

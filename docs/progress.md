@@ -4,6 +4,8 @@ The [PRD](../PRD.md) defines the ordered work. This record reports actual commit
 
 ## Current step
 
+The active refinement work is on `second-draft`; see its [principles and ordered plan](../SECOND-DRAFT.md). The implementation record below describes the completed first draft, preserved on `first-draft` at `d58c113`.
+
 Steps 01–20 are complete for the local technical delivery. The [acceptance record](release/acceptance.md) identifies source revision `dd5cf02754241730dc6cfed71e0b92216d657da0`, eleven passing clean-checkout gates, 32 recordings, nine chapters, the hashed archive, and relocated launcher verification. One bounded book process is retained. The PRD checklist covers implementation and verification only.
 
 ## Commit evidence
