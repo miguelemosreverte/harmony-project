@@ -65,7 +65,7 @@ These are observed problems in actual entry points, not a reason to move every d
 
 ### TD06 — Finish the review path and delivery
 
-- [ ] Remove replaced APIs and update the repository guide and concrete reading traces.
+- [x] Remove replaced APIs and update the repository guide and concrete reading traces.
 - [ ] Run focused tests and the complete clean-checkout release gate sequentially.
 - [ ] Verify all unchanged examples, fresh book recordings, package identities, archive integrity, relocated launchers, and browser interactions.
 - [ ] Record exact commits, measured memory/process cleanup, and remaining limitations.
@@ -86,3 +86,5 @@ TD03 proves `fc2de14` on the real ledger: authenticated handoff, direct API auth
 TD04 constructs a typed workspace throughout the server, with shared codecs at HTTP serialization. Composition has its own command family and named ledger payload schemas; malformed visible workspaces/drafts fail instead of becoming empty views. Ledger history retains command IDs in a shared `LedgerUpdate`. All 44 Scala tests and both targets pass (`.artifacts/third-04-verified.log`), including transport-field preservation. Dedicated composition execution follows this commit and is repeated in the final release.
 
 TD04's direct and generated composition goldens both passed with zero differences (`.artifacts/third-04-composer.log`, clean source `3a37771`). TD05 makes package workspace state typed, derives transport flags from its inspected source and compiled project, and makes book projection/export return the shared envelope directly. All 45 Scala tests and both targets pass (`.artifacts/third-05-build.log`). The new missing-observation test retains both the visible absence and the complete independent mismatch through recording encoding.
+
+TD05's actual package-builder check passed (`.artifacts/third-05-builder.log`, clean source `e66dad5`). Exporting the preserved second-release recordings through the typed producer yielded the same full JSON payload for all 32 examples and nine chapters; all source/book links passed. This establishes presentation preservation, with original provenance retained. Fresh third-draft executions belong to the final release gate. The [current reading guide](docs/third-draft/reading-guide.md) explains the implemented paths and remaining deliberate boundaries.

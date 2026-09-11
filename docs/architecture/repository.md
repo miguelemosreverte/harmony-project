@@ -1,6 +1,6 @@
 # Repository map
 
-Start with [a chapter](../../book/README.md) or [an example](../../examples/README.md), then follow its named capability. The [reading traces](../second-draft/reading-traces.md) link the operations, boundaries, and independent tests directly.
+Start with [a chapter](../../book/README.md) or [an example](../../examples/README.md), then follow its named capability. The [third-draft reading guide](../third-draft/reading-guide.md) links typed operations, boundaries, and independent tests directly.
 
 ```text
 examples/      Human-readable inputs and independent expectations
@@ -30,8 +30,8 @@ scripts/       Small bounded launch, build, check, and packaging commands
 | `ui` | Small generic DOM primitives shared by book and workspace | `Elements` |
 | `release`, `files`, `processes` | Delivery assembly and narrow operating-system boundaries | `CheckRelease`, `ArtifactFiles`, `ManagedProcess` |
 
-All book-specific models, projectors, export and browser code live under `harmonia.book`. Shared visual primitives belong to `harmonia.ui`. The browser does not run another business-rule engine: it renders observations and submits supported commands.
+All book-specific models, projectors, export and browser code live under `harmonia.book`. Shared visual primitives belong to `harmonia.ui`. The server constructs the same `WorkspaceSnapshot`, `CompositionState`, `PackageState`, and recording models that consumers decode. HTTP/file encoding happens at the boundary. The browser renders observations and submits supported commands; the ledger owns business authority.
 
 The [ledger map](../../on-ledger/README.md) explains package ownership. The live demo assembly has no dependency on the test assembly. Core depends on common interfaces; applications retain independent compiled identities. Existing business rules and input/expectation contents survive the second draft.
 
-Generated projects, networks, compiler products, and local recordings live under ignored `.artifacts/`. A release copies selected evidence and verifies its clean source revision and file hashes. It does not package live credentials or network authorization files.
+Generated projects, networks, local recordings, and release bundles live under ignored `.artifacts/`. Ordinary compiler output uses ignored `target/` and `.daml/` directories beside its source. A release copies selected evidence and verifies its clean source revision and file hashes. It does not package live credentials or network authorization files.

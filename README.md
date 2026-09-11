@@ -6,7 +6,7 @@ The ledger enforces actions and records progression. Scala tools execute stories
 
 ## Start here
 
-The [third draft](THIRD-DRAFT.md) continues the refinement toward direct, typed reading paths. The verified [second draft](SECOND-DRAFT.md) remains preserved on `second-draft`; its [operation traces](docs/second-draft/reading-traces.md) describe the starting point. The original working version remains on `first-draft`.
+The [third draft](THIRD-DRAFT.md) carries typed models through operations, server state, and the executable book. Start with its [reading guide](docs/third-draft/reading-guide.md). The verified [second draft](SECOND-DRAFT.md) remains preserved on `second-draft`, and the original working version remains on `first-draft`.
 
 - [Verified local delivery and handoff](docs/release/acceptance.md)
 - [Product requirements and ordered commit plan](PRD.md)
