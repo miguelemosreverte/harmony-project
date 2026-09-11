@@ -1,10 +1,10 @@
 package harmonia.ledger.client
 
-/** @book.slice
+/** @module.slice
   *   process
-  * @book.role
+  * @module.role
   *   Submit through a participant
-  * @book.summary
+  * @module.summary
   *   Typed exercise values travel through the Ledger API. The service does not replace the Daml
   *   choice authorization.
   */

@@ -1,6 +1,6 @@
--- @book.slice process
--- @book.role Declare the action contract
--- @book.summary StepAction describes the application actor and subject and the choice through which the application acts.
+-- @module.slice process
+-- @module.role Declare the action contract
+-- @module.summary StepAction describes the application actor and subject and the choice through which the application acts.
 module Harmonia.Action where
 
 data StepView = StepView with

@@ -1,10 +1,10 @@
 package harmonia.packages
 
-/** @book.slice
+/** @module.slice
   *   packages
-  * @book.role
+  * @module.role
   *   Explain what can run
-  * @book.summary
+  * @module.summary
   *   The browser presents package origin, compilation, and the separate live-registration boundary.
   */
 

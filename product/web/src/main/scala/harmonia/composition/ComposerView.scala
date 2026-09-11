@@ -1,10 +1,10 @@
 package harmonia.composition
 
-/** @book.slice
+/** @module.slice
   *   composition
-  * @book.role
+  * @module.role
   *   Follow observed execution
-  * @book.summary
+  * @module.summary
   *   Observed completed, enabled, and executable steps determine the diagram and available actions.
   */
 

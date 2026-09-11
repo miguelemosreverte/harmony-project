@@ -1,10 +1,10 @@
 package harmonia.composition.ledger
 
-/** @book.slice
+/** @module.slice
   *   composition
-  * @book.role
+  * @module.role
   *   Dispatch an authorized command
-  * @book.summary
+  * @module.summary
   *   The command interpreter maps a validated composition request to the intended Daml choice.
   */
 

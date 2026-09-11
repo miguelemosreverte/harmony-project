@@ -1,10 +1,10 @@
 package harmonia.packages.inspect
 
-/** @book.slice
+/** @module.slice
   *   packages
-  * @book.role
+  * @module.role
   *   Read compiled metadata
-  * @book.summary
+  * @module.summary
   *   Archive metadata is inspected structurally. Source-text searches do not determine template
   *   shapes.
   */

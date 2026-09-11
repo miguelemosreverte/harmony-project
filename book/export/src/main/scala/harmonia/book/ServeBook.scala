@@ -6,24 +6,26 @@ import java.net.InetSocketAddress
 import java.nio.file.{Files, Path}
 import java.util.concurrent.Executors
 
+/** The book has its own host. The product never mounts or routes reader files. */
 object ServeBook:
-  def serve(directory: Path): IO[Unit] =
+  def resource(directory: Path): Resource[IO, Int] =
     val root = directory.toAbsolutePath.normalize()
-    val server = Resource.make(IO.blocking {
-      val executor = Executors.newFixedThreadPool(4)
-      val port = sys.env.get("HARMONIA_BOOK_PORT").fold(0)(_.toInt)
-      require(port >= 0 && port <= 65535, "HARMONIA_BOOK_PORT must be between 0 and 65535")
-      val http = HttpServer.create(new InetSocketAddress("127.0.0.1", port), 0)
-      http.setExecutor(executor)
-      http.createContext("/", (exchange: HttpExchange) => respond(root, exchange))
-      http.start()
-      (http, executor)
-    }) { (http, executor) => IO.blocking { http.stop(0); executor.shutdownNow(); () } }
-    server.use { (http, _) =>
-      IO.println(
-        s"Open http://127.0.0.1:${http.getAddress.getPort}/ — Ctrl-C stops the book server."
-      ) *> IO.never
-    }
+    Resource
+      .make(IO.blocking {
+        val executor = Executors.newFixedThreadPool(2)
+        val port = sys.env.get("HARMONIA_BOOK_PORT").fold(0)(_.toInt)
+        require(port >= 0 && port <= 65535, "HARMONIA_BOOK_PORT must be between 0 and 65535")
+        val http = HttpServer.create(new InetSocketAddress("127.0.0.1", port), 0)
+        http.setExecutor(executor)
+        http.createContext("/", (exchange: HttpExchange) => respond(root, exchange))
+        http.start()
+        (http, executor)
+      }) { (http, executor) => IO.blocking { http.stop(0); executor.shutdownNow(); () } }
+      .map(_._1.getAddress.getPort)
+
+  def serve(directory: Path): IO[Unit] = resource(directory).use { port =>
+    IO.println(s"Open http://127.0.0.1:$port/ — Ctrl-C stops the book server.") *> IO.never
+  }
 
   private def respond(root: Path, exchange: HttpExchange): Unit =
     try

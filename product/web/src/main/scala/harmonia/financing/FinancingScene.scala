@@ -1,10 +1,10 @@
 package harmonia.financing
 
-/** @book.slice
+/** @module.slice
   *   financing
-  * @book.role
+  * @module.role
   *   Show the next handoff
-  * @book.summary
+  * @module.summary
   *   The live scene projects only the financing facts visible to the current participant.
   */
 

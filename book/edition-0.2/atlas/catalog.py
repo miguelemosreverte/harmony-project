@@ -42,7 +42,7 @@ def annotations(text, path):
         if not content or content in {'/','*/'}:
             active=None
             continue
-        match=re.match(r'^@book\.(\w+)(?:\s+(.*))?$',content)
+        match=re.match(r'^@(?:book|module)\.(\w+)(?:\s+(.*))?$',content)
         if match:
             key,content=match.groups()
             if key not in {'slice','role','summary'}:raise ValueError(f'Unknown book annotation {key}: {path}')
@@ -87,6 +87,7 @@ def build_catalog(root):
         name = path.relative_to(root).as_posix()
         text = path.read_text()
         annotation = annotations(text,name)
+        if annotation.get('slice')=='presentation':annotation['slice']='book'
         if annotation and annotation['slice'] not in known:
             raise ValueError(f'Unknown slice in {name}')
         identifier = sha256(name.encode()).hexdigest()[:16]

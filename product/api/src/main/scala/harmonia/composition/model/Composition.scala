@@ -1,10 +1,10 @@
 package harmonia.composition.model
 
-/** @book.slice
+/** @module.slice
   *   composition
-  * @book.role
+  * @module.role
   *   Validate a typed plan
-  * @book.summary
+  * @module.summary
   *   The editor and HTTP boundary use the same validated actions, roles, names, and references.
   */
 

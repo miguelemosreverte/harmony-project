@@ -1,10 +1,10 @@
 package harmonia.financing
 
-/** @book.slice
+/** @module.slice
   *   financing
-  * @book.role
+  * @module.role
   *   Observe what is visible
-  * @book.summary
+  * @module.summary
   *   Participant-visible contracts become the public financing state. Private details are not
   *   invented for other actors.
   */

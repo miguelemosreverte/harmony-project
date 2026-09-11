@@ -23,8 +23,7 @@ object LiveServer:
   def resource(
       root: Path,
       artifacts: Path,
-      runtime: Connections,
-      book: Option[Path] = None
+      runtime: Connections
   ): Resource[IO, LiveServer] = for
     actions <- Workspace.resource(runtime)
     builder <- Resource.eval(
@@ -45,7 +44,7 @@ object LiveServer:
         "/",
         (exchange: HttpExchange) =>
           dispatcher.unsafeRunAndForget(
-            respond(root, http.getAddress.getPort, sessions, actions, builder, book, exchange)
+            respond(root, http.getAddress.getPort, sessions, actions, builder, exchange)
               .handleErrorWith { error =>
                 val code = if error.isInstanceOf[IllegalArgumentException] then 400 else 503
                 // A browser may cancel an illustration after its response has started.
@@ -92,7 +91,6 @@ object LiveServer:
       sessions: Map[String, String],
       actions: Workspace,
       builder: harmonia.packages.workspace.PackageBuilder,
-      book: Option[Path],
       exchange: HttpExchange
   ): IO[Unit] =
     val path = exchange.getRequestURI.getPath
@@ -137,28 +135,6 @@ object LiveServer:
       ).flatMap(_.fold(send(exchange, 404, "text/plain", Array.emptyByteArray)) { (file, kind) =>
         IO.blocking(Files.readAllBytes(file)).flatMap(send(exchange, 200, kind, _))
       })
-    else if path == "/book" then
-      IO.blocking(exchange.getResponseHeaders.set("Location", "/book/")) *>
-        send(exchange, 302, "text/plain", Array.emptyByteArray)
-    else if path == "/book/source/design/0.2/context.js" && book.nonEmpty then
-      send(exchange, 200, "text/javascript", "window.HarmoniaLiveRoot = '/';".getBytes(UTF_8))
-    else if path.startsWith("/book/") then
-      IO.blocking(
-        book.flatMap(directory =>
-          StaticFiles.resolve(directory, path.stripPrefix("/book").stripPrefix("/"))
-        )
-      ).flatMap(
-        _.fold(
-          send(
-            exchange,
-            404,
-            "text/plain",
-            "The book is not mounted on this server.".getBytes(UTF_8)
-          )
-        ) { (file, kind) =>
-          IO.blocking(Files.readAllBytes(file)).flatMap(send(exchange, 200, kind, _))
-        }
-      )
     else
       val file = path match
         case "/surface.css" => Some(root.resolve("product/scene/site/surface.css") -> "text/css")
@@ -276,9 +252,7 @@ object LiveServer:
       headers.set("Referrer-Policy", "no-referrer")
       headers.set(
         "Content-Security-Policy",
-        "default-src 'self'; connect-src 'self'; script-src 'self'; style-src 'self'; frame-ancestors " +
-          (if exchange.getRequestURI.getPath.startsWith("/book/") then "'self'"
-           else "'none'") + "; base-uri 'none'"
+        "default-src 'self'; connect-src 'self'; script-src 'self'; style-src 'self'; frame-ancestors 'none'; base-uri 'none'"
       )
       exchange.sendResponseHeaders(code, bytes.length.toLong)
       exchange.getResponseBody.write(bytes)

@@ -41,10 +41,10 @@ reproduces it. Previous/Next never wraps silently to the start.
 
 ## Work and review
 
-- [ ] Commit 1: document the page contracts and finite reader routes.
-- [ ] Commit 2: remove product/book runtime and navigation coupling.
-  - [ ] Replace book-specific product documentation with module documentation.
-  - [ ] Separate the book host and product host in development orchestration.
+- [x] Commit 1: document the page contracts and finite reader routes.
+- [x] Commit 2: remove product/book runtime and navigation coupling.
+  - [x] Replace book-specific product documentation with module documentation.
+  - [x] Separate the book host and product host in development orchestration.
 - [ ] Commit 3: implement all four reader paths and prove the small interaction budget.
   - [ ] Replace the shared control drawer and six audience presets with binary entrances.
   - [ ] Simplify source, reviewer, original-author, workflow and chapter pages.

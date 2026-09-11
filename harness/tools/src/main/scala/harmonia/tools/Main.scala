@@ -27,14 +27,7 @@ object Main extends IOApp:
         harmonia.packages.verify.CheckBuilder.run(root).as(ExitCode.Success)
       case List("composer-check") =>
         harmonia.composition.verify.CheckComposer.run(root).as(ExitCode.Success)
-      case List("live") =>
-        ArtifactFiles
-          .createRun(root, "field-guide")
-          .flatMap { output =>
-            harmonia.book.FieldGuide
-              .write(root, output) *> harmonia.demo.Demo.serve(root, Some(output))
-          }
-          .as(ExitCode.Success)
+      case List("live")       => harmonia.tools.ReaderSandbox.run(root).as(ExitCode.Success)
       case List("live-check") => harmonia.live.verify.CheckLive.run(root).as(ExitCode.Success)
       case List("bindings-check") =>
         harmonia.bindings.verify.CheckBindings.run(root).as(ExitCode.Success)

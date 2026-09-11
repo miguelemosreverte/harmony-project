@@ -1,6 +1,6 @@
--- @book.slice process
--- @book.role Check and exercise
--- @book.summary AdvanceStep verifies the actor and subject before exercising the bound application interface. Branch selection and joins have explicit choices.
+-- @module.slice process
+-- @module.role Check and exercise
+-- @module.summary AdvanceStep verifies the actor and subject before exercising the bound application interface. Branch selection and joins have explicit choices.
 module Harmonia.Process.Engine where
 
 import DA.List

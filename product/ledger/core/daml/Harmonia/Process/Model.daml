@@ -1,6 +1,6 @@
--- @book.slice process
--- @book.role Describe the process
--- @book.summary Definitions describe actions, decisions, joins, dependencies, roles, and bounded receipts.
+-- @module.slice process
+-- @module.role Describe the process
+-- @module.summary Definitions describe actions, decisions, joins, dependencies, roles, and bounded receipts.
 module Harmonia.Process.Model where
 
 import DA.List

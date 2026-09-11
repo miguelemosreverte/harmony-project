@@ -1,6 +1,6 @@
--- @book.slice composition
--- @book.role Propose and accept
--- @book.summary The bank proposes; the buyer accepts the exact plan before source contracts and the process are created.
+-- @module.slice composition
+-- @module.role Propose and accept
+-- @module.summary The bank proposes; the buyer accepts the exact plan before source contracts and the process are created.
 module Composer where
 
 import DA.List

@@ -1,6 +1,6 @@
--- @book.slice financing
--- @book.role Shared continuation
--- @book.summary The continuation consumes the required result under the declared authority and records shared progress.
+-- @module.slice financing
+-- @module.role Shared continuation
+-- @module.summary The continuation consumes the required result under the declared authority and records shared progress.
 module Harmonia.SharedProgress where
 
 import Harmonia.Result

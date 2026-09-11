@@ -1,6 +1,6 @@
--- @book.slice transfer
--- @book.role Agree the interface
--- @book.summary The common interfaces separate withdrawal and receipt capabilities from the custody applications.
+-- @module.slice transfer
+-- @module.role Agree the interface
+-- @module.summary The common interfaces separate withdrawal and receipt capabilities from the custody applications.
 module Harmonia.Transfer where
 
 import DA.List (dedup)

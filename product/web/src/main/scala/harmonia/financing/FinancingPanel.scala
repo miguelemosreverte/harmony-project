@@ -9,10 +9,10 @@ final class FinancingPanel:
   val root = element("section", "financing-scene")
   private val scene = new SceneView(root)
   private val actionArea = element("div", "financing-action")
-  private val details = element("details", "private-case")
+  private val details = element("section", "private-case")
   private val detailBody = element("div")
   private val status = element("p", "visually-hidden"); status.id = "live-workflow"
-  append(details, element("summary", text = "Your private application"), detailBody)
+  append(details, element("strong", text = "Your private application"), detailBody)
   append(root, actionArea, details, status)
 
   def render(state: FinancingState, blocked: Boolean, submit: FinancingAction => Unit): Unit =

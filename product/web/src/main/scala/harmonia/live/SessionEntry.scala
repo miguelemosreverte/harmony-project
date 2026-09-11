@@ -9,8 +9,8 @@ private[live] object SessionEntry:
   def render(expired: Boolean): Unit =
     val main = element("main", "live-main session-entry"); main.id = "main"
     val header = element("header", "reference-header")
-    val brand = link("Harmonia", "/book/"); brand.className = "reference-brand"
-    append(header, brand, link("Explore the book →", "/book/"))
+    val brand = element("span", "reference-brand", "Harmonia")
+    append(header, brand)
     val content = element("section", "session-entry-content")
     append(
       content,
@@ -63,11 +63,6 @@ private[live] object SessionEntry:
             "Use a participant link for this running sandbox, copied from its local launcher."
           input.setAttribute("aria-invalid", "true"); input.focus()
     append(form, label, input, error, submit)
-    val recorded = link(
-      "Explore the recorded handoff →",
-      "/book/source/design/0.2/laboratory.html?story=live-handoff"
-    )
-    recorded.id = "session-recorded-handoff"
     append(
       content,
       roles,
@@ -75,9 +70,8 @@ private[live] object SessionEntry:
       element(
         "p",
         "session-hint",
-        "Keep each participant in its own tab. Shared workspace addresses do not include participant access."
-      ),
-      recorded
+        "Each participant keeps a separate tab. A shared workspace address does not grant participant access."
+      )
     )
     append(main, header, content)
     val root = dom.document.getElementById("app"); root.textContent = ""; append(root, main)

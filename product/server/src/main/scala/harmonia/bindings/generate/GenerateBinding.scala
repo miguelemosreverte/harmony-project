@@ -1,10 +1,10 @@
 package harmonia.bindings.generate
 
-/** @book.slice
+/** @module.slice
   *   packages
-  * @book.role
+  * @module.role
   *   Generate and compile
-  * @book.summary
+  * @module.summary
   *   The generator produces a bounded adapter project for an inspected, reviewed application
   *   mapping.
   */

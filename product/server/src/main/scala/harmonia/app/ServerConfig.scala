@@ -25,8 +25,7 @@ object ParticipantConfig:
 final case class ServerConfig(
     catalogDar: String,
     packageExports: String,
-    participants: Map[String, ParticipantConfig],
-    book: Option[String] = None
+    participants: Map[String, ParticipantConfig]
 )
 object ServerConfig:
   private val fields = JsonCodec.derived[ServerConfig]
@@ -68,8 +67,7 @@ object ServerConfig:
         LiveServer.resource(
           root,
           output,
-          Connections(ledgers.toMap, root.resolve(config.packageExports), catalog),
-          config.book.map(root.resolve)
+          Connections(ledgers.toMap, root.resolve(config.packageExports), catalog)
         )
       }
       .use(server =>

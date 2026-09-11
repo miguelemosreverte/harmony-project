@@ -23,7 +23,7 @@
         "related": [
           {
             "file": "product/server/src/main/scala/harmonia/app/http/LiveServer.scala",
-            "sha256": "69b546a161cbe5d87e24f697b8829ff19392192fc08e69f57d7c86b0a439cadc"
+            "sha256": "83fd2fb8f088979f1ab1881b306e0590dff9b270126ea558c85c411620df08e9"
           }
         ]
       },
@@ -47,15 +47,15 @@
         "detail": "The transport submits the selected choice. Daml controllers and application rules remain authoritative.",
         "actor": "Canton participant",
         "file": "product/server/src/main/scala/harmonia/ledger/client/SubmitChoice.scala",
-        "sha256": "d1273757a063b4b0229f24126550f5c91f14868244201bc84e65547afaa68444",
+        "sha256": "9434071a200d6569c8d924beed7e257e94c3f30354b2d6ca4fe26dfc5912a4d8",
         "related": [
           {
             "file": "product/ledger/applications/private-financing/daml/PrivateFinancing.daml",
-            "sha256": "61bc057283560be02e3f48a70bbc08cb7881fc8292e7145d59857751c3308ded"
+            "sha256": "fdd0527845f8dfdf1a694aaf63a0cda6f694bcda48df75c0a887843cd056965c"
           },
           {
             "file": "product/ledger/core/daml/Harmonia/SharedProgress.daml",
-            "sha256": "14dca3fbb9abb2294875ad997be51f664704701142957f779c4a09770bf5fe27"
+            "sha256": "6065ee70d667874d7d205d137dae999cb0d30e9851f43a5d83d485114804b56d"
           }
         ]
       },
@@ -65,7 +65,7 @@
         "detail": "Participant-visible contracts become typed financing state, then the shared illustrated scene. A submitted command alone is not a completion.",
         "actor": "Observation and browser",
         "file": "product/server/src/main/scala/harmonia/financing/FinancingObservation.scala",
-        "sha256": "c331dd9a23592e920101923ac1292f901b1f5144ebaebb9a36662aaa4314c52e",
+        "sha256": "34242173df0f9b194f15ea8c331970ee987f3762b793364b4e682a41f9a351e9",
         "related": [
           {
             "file": "product/server/src/main/scala/harmonia/ledger/client/LedgerSnapshot.scala",
@@ -73,7 +73,7 @@
           },
           {
             "file": "product/web/src/main/scala/harmonia/financing/FinancingScene.scala",
-            "sha256": "776f27ccca5a4910e2fe1afb42afe05a542204b5c222f75a0cb4c75c1ced670c"
+            "sha256": "039e9e4dc184fd2cd185be05c4d135b42d0cfab045338528034c255e467504c5"
           }
         ]
       }
@@ -122,7 +122,7 @@
         "related": [
           {
             "file": "product/server/src/main/scala/harmonia/app/http/LiveServer.scala",
-            "sha256": "69b546a161cbe5d87e24f697b8829ff19392192fc08e69f57d7c86b0a439cadc"
+            "sha256": "83fd2fb8f088979f1ab1881b306e0590dff9b270126ea558c85c411620df08e9"
           }
         ]
       },
@@ -132,7 +132,7 @@
         "detail": "A proposed plan, partner acceptance, or enabled action maps to its actual Daml choice.",
         "actor": "Composition service",
         "file": "product/server/src/main/scala/harmonia/composition/ledger/ComposerCommands.scala",
-        "sha256": "6f6bd86106280c823dc9525e6f18d283b61b9a054dffbe51be2975bf21aaa3ad",
+        "sha256": "fe82f101f2f518076b30cf5a33470c5422327b170d95a5cd01a62bb84ea77a82",
         "related": [
           {
             "file": "product/server/src/main/scala/harmonia/app/workspace/Workspace.scala",
@@ -146,11 +146,11 @@
         "detail": "The Daml composer owns proposal acceptance and source creation. Process execution remains delegated to the core.",
         "actor": "Daml application",
         "file": "product/ledger/composition/daml/Composer.daml",
-        "sha256": "ab4559115df84b8833599e08b9c66326e3e969d96f014346e20e8bfe527ebcfc",
+        "sha256": "6910026b9ec788e102f7a4d255e2c5d61b3b338b3dea89faafdf70357a942162",
         "related": [
           {
             "file": "product/ledger/core/daml/Harmonia/Process/Engine.daml",
-            "sha256": "20ee8d5bee1e7b5c310b8b91270d1875c89f06f6eca812403272ff6deb4f43bd"
+            "sha256": "6dd2309e6845f2e44966debddf25fe129afcad91ba8ea5a90fda3a610e5862ac"
           }
         ]
       },
@@ -164,7 +164,7 @@
         "related": [
           {
             "file": "product/web/src/main/scala/harmonia/composition/ComposerView.scala",
-            "sha256": "9ee9ec47b9dd798173403502b032b505d83410ff03f43e5ae363c3523deca642"
+            "sha256": "0c78a0dd5a319a9673914c9cc01d73ef6119c218d37319ee731f6e2529fba6e8"
           }
         ]
       }
@@ -204,7 +204,7 @@
         "related": [
           {
             "file": "product/server/src/main/scala/harmonia/app/http/LiveServer.scala",
-            "sha256": "69b546a161cbe5d87e24f697b8829ff19392192fc08e69f57d7c86b0a439cadc"
+            "sha256": "83fd2fb8f088979f1ab1881b306e0590dff9b270126ea558c85c411620df08e9"
           }
         ]
       },
@@ -214,7 +214,7 @@
         "detail": "Archive parsing enforces size limits and reads Daml-LF declarations, rather than guessing a template from source text.",
         "actor": "Daml-LF parser",
         "file": "product/server/src/main/scala/harmonia/packages/inspect/InspectDar.scala",
-        "sha256": "ce171d71a82ddbc803e6e9ac694b092893f3cbe015d261dc0bc106a4cdf7635f",
+        "sha256": "aad77b5ed339688deacafcdf2307c465c412b7afc4065f5540ade29634f2b1c5",
         "related": [
           {
             "file": "product/server/src/main/scala/harmonia/packages/inspect/LfArchive.scala",
@@ -228,7 +228,7 @@
         "detail": "An inspected, supported mapping emits a bounded adapter project. A generated project and a compiled DAR are distinct artifacts.",
         "actor": "Binding operation",
         "file": "product/server/src/main/scala/harmonia/bindings/generate/GenerateBinding.scala",
-        "sha256": "9fa163b3ae2a889964ddc372a651699279d5380265d7f24e9d6b18508400fcb7",
+        "sha256": "19e925b3ff4ff36e8e905b899b4ecad075562e58ef140d545bb10b86501336ca",
         "related": []
       },
       {
@@ -237,7 +237,7 @@
         "detail": "The browser exposes the inspected mapping, generation result and registration boundary. Package availability does not grant choice authority.",
         "actor": "Operator browser",
         "file": "product/web/src/main/scala/harmonia/packages/PackagePanel.scala",
-        "sha256": "309676991b1cafb52c2b107cf251efc98c38a68ae7014eef82ed360a1b35d32b",
+        "sha256": "cbfd2cee89f31b7fa02bf11c00a894f8b7d69a8c28194eff21316edd6a8c5192",
         "related": []
       }
     ],
