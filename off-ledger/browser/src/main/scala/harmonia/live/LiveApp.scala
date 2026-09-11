@@ -12,7 +12,8 @@ private final case class ClientState(
     snapshot: Option[Json],
     connection: String,
     unconfirmed: Option[Json],
-    submitting: Boolean = false
+    submitting: Boolean = false,
+    notice: Option[String] = None
 )
 
 object LiveApp:
@@ -24,6 +25,14 @@ object LiveApp:
           dom.window.sessionStorage.setItem("harmonia-live", fragment)
           dom.window.history.replaceState(null, "", "/")
         Option(dom.window.sessionStorage.getItem("harmonia-live")).getOrElse("")
+      }
+      _ <- IO {
+        dom.window.addEventListener(
+          "hashchange",
+          (_: dom.Event) =>
+            if dom.window.location.hash.matches("#session=[A-Za-z0-9_-]{43}") then
+              dom.window.location.reload()
+        )
       }
       remembered <- IO(
         Option(dom.window.sessionStorage.getItem("harmonia-request-" + capability))
@@ -41,6 +50,25 @@ private final class BrowserSession(
     dispatcher: Dispatcher[IO]
 ):
   private val storageKey = "harmonia-request-" + capability
+  private val editor =
+    new harmonia.composer.CompositionEditor(input => submit("compose-propose", Some(input)))
+
+  private def submit(action: String, parameters: Option[Json]): Unit =
+    dispatcher.unsafeRunAndForget(state.get.flatMap { current =>
+      if current.submitting || current.unconfirmed.nonEmpty || current.connection != "Connected"
+      then IO.unit
+      else
+        current.snapshot.fold(IO.unit) { snapshot =>
+          val input = Json
+            .obj(
+              "id" -> Json.fromString(js.Dynamic.global.crypto.randomUUID().asInstanceOf[String]),
+              "action" -> Json.fromString(action),
+              "version" -> snapshot.hcursor.downField("version").focus.getOrElse(Json.Null)
+            )
+            .deepMerge(parameters.fold(Json.obj())(value => Json.obj("input" -> value)))
+          send(input)
+        }
+    })
   private def remember(input: Option[Json]): IO[Unit] = IO {
     input match
       case Some(value) => dom.window.sessionStorage.setItem(storageKey, value.noSpaces)
@@ -76,7 +104,7 @@ private final class BrowserSession(
     state
       .modify { current =>
         if current.submitting then current -> false
-        else current.copy(unconfirmed = Some(input), submitting = true) -> true
+        else current.copy(unconfirmed = Some(input), submitting = true, notice = None) -> true
       }
       .flatMap {
         case false => IO.unit
@@ -91,7 +119,7 @@ private final class BrowserSession(
                 ) *> refresh
               case Left(error: LiveHttpFailure) if Set(400, 401, 403).contains(error.code) =>
                 state.update(
-                  _.copy(unconfirmed = None, submitting = false, connection = error.getMessage)
+                  _.copy(unconfirmed = None, submitting = false, notice = Some(error.getMessage))
                 ) *> remember(None) *> draw
               case Left(_) =>
                 state.update(
@@ -110,20 +138,13 @@ private final class BrowserSession(
         current.connection,
         current.unconfirmed.nonEmpty,
         current.submitting,
+        current.notice,
+        editor,
         () => dispatcher.unsafeRunAndForget(refresh),
         () => current.unconfirmed.foreach(input => dispatcher.unsafeRunAndForget(send(input))),
-        action =>
-          current.snapshot.foreach { snapshot =>
-            val input = Json.obj(
-              "id" -> Json.fromString(js.Dynamic.global.crypto.randomUUID().asInstanceOf[String]),
-              "action" -> Json.fromString(action),
-              "version" -> snapshot.hcursor
-                .get[String]("version")
-                .toOption
-                .fold(Json.Null)(Json.fromString)
-            )
-            dispatcher.unsafeRunAndForget(send(input))
-          }
+        () => dispatcher.unsafeRunAndForget(state.update(_.copy(notice = None)) *> draw),
+        action => submit(action, None),
+        (action, input) => submit(action, Some(input))
       )
     }
   }

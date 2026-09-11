@@ -4,7 +4,7 @@ The [PRD](../PRD.md) defines the ordered work. This record reports actual commit
 
 ## Current step
 
-Step 15 is complete. A memory correction now bounds JVM heaps, releases sbt before runtime work, and prevents overlapping local ledger environments. The four-participant transfer still passes. Step 16 composition is in progress; its live editor and DAR input path remain to be completed.
+Step 15 is complete. A memory correction now bounds JVM heaps, releases sbt before runtime work, and prevents overlapping local ledger environments. The four-participant transfer still passes. Step 16 now has consented ledger composition, two goldens, and a verified browser editor. The DAR input builder and Chapter 8 walkthrough remain.
 
 ## Commit evidence
 
@@ -33,7 +33,9 @@ Actual commit identifiers are recorded in the next commit after they are created
 
 | 15a | `b6ee9d0` | [Memory proof](verification/15a-memory.md): direct JVM launch, one ledger environment, bounded heaps, successful four-party transfer, and one retained preview |
 
-| 16a | This increment | [Composition foundation](verification/16a-composition.md): two authenticated goldens, partner consent, core-managed direct/generated actions, and recorded source states |
+| 16a | `2c53a5d` | [Composition foundation](verification/16a-composition.md): two authenticated goldens, partner consent, core-managed direct/generated actions, and recorded source states |
+
+| 16b | This increment | [Live editor proof](verification/16b-editor.md): reader-defined order/roles, generated adapter execution, actual buyer consent, persistent input diagnostics, and mobile layout |
 
 ## External decisions
 

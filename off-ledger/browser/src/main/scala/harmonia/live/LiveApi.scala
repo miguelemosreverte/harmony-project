@@ -7,10 +7,10 @@ import scala.scalajs.js.Thenable.Implicits.*
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.*
 
-final case class LiveHttpFailure(code: Int)
+final case class LiveHttpFailure(code: Int, detail: Option[String] = None)
     extends RuntimeException(
       if code == 401 then "Session unavailable — open your provisioned session link"
-      else s"Request unavailable (HTTP $code) — reconnect to recover state"
+      else detail.getOrElse(s"Request unavailable (HTTP $code) — reconnect to recover state")
     )
 
 private object LiveApi:
@@ -31,8 +31,13 @@ private object LiveApi:
             body.foreach(value => options.body = value.noSpaces)
             dom.fetch(path, options).toFuture
           })
-          _ <- IO.raiseUnless(response.ok)(LiveHttpFailure(response.status.toInt))
           text <- IO.fromFuture(IO(response.text().toFuture))
+          _ <- IO.raiseUnless(response.ok)(
+            LiveHttpFailure(
+              response.status.toInt,
+              io.circe.parser.parse(text).toOption.flatMap(_.hcursor.get[String]("error").toOption)
+            )
+          )
           json <- IO.fromEither(io.circe.parser.parse(text))
         yield json
       }

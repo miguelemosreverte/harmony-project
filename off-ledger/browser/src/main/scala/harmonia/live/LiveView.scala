@@ -11,13 +11,19 @@ object LiveView:
       connection: String,
       unconfirmed: Boolean,
       submitting: Boolean,
+      notice: Option[String],
+      editor: harmonia.composer.CompositionEditor,
       reconnect: () => Unit,
       retry: () => Unit,
-      submit: String => Unit
+      dismiss: () => Unit,
+      submit: String => Unit,
+      compose: (String, Json) => Unit
   ): Unit =
     val signature = snapshot
       .map(_.noSpaces)
-      .getOrElse("") + connection + unconfirmed.toString + submitting.toString
+      .getOrElse("") + connection + unconfirmed.toString + submitting.toString + notice.getOrElse(
+      ""
+    )
     if signature != previous then
       previous = signature
       val focused = Option(dom.document.activeElement).map(_.id).filter(_.nonEmpty)
@@ -48,6 +54,16 @@ object LiveView:
       )
       if unconfirmed && !submitting && connection == "Connected" then
         append(main, button("Retry unconfirmed request", "secondary", "live-retry")(retry()))
+      notice.foreach { message =>
+        val diagnostic = element("div", "live-diagnostic"); diagnostic.setAttribute("role", "alert")
+        diagnostic.id = "live-diagnostic"
+        append(
+          diagnostic,
+          element("p", text = message),
+          button("Dismiss", "secondary", "live-dismiss")(dismiss())
+        )
+        append(main, diagnostic)
+      }
       snapshot match
         case None =>
           append(
@@ -142,6 +158,17 @@ object LiveView:
             append(jobs, row)
           }
           append(grid, state, jobs); append(main, grid)
+          cursor.downField("composer").focus.foreach { composition =>
+            append(
+              main,
+              harmonia.composer.ComposerView.render(
+                composition,
+                pending || unconfirmed || submitting || connection != "Connected",
+                editor,
+                compose
+              )
+            )
+          }
           val history = element("section", "live-panel")
           append(
             history,

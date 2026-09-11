@@ -50,3 +50,13 @@ The printed evidence directory contains the business result, field-level diffs,
 security result, scoped raw ledger events, and provenance. Open it with
 `scripts/book .artifacts/live-check-RUN` to inspect the handoff as a recorded
 story. Ordinary checks do not update expected files.
+
+## Compose a shared workflow
+
+The same bank and buyer sessions also contain **Build a workflow together**. The bank chooses a name, unique reference, one to four ordered actions, and an actor/role for each action. Use **Move earlier**, **Move later**, **Add action**, and **Remove action** to arrange the sequence. The form survives background participant refreshes while you edit it.
+
+**Propose workflow** records the plan. In the buyer session, read every proposed action and choose **Accept this plan**. The ledger creates the public source contracts and the core process together. Each party then uses its own **Execute** control when its assigned step is ready. Source status, integration path, and prerequisite/completion state are observed from actual contracts. The bank can cancel an unaccepted proposal.
+
+Only direct financing approval, generated legacy approval, and review confirmation are compiled into this evaluation. The composer supports eight unique proposal references per disposable workspace. Repeated role names must bind to the same party. Invalid input produces a persistent diagnostic; pending or uncertain commands disable new submissions until their outcome is reconciled. Adding a new action package requires a reviewed mapping and rebuild.
+
+These composed sources are visible to both parties. The private financing handoff above remains a separate example with its own disclosure boundary. Stopping the local network ends both evaluations.

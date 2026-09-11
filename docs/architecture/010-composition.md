@@ -1,6 +1,6 @@
 # ADR 010: bounded composition with explicit partner consent
 
-Status: accepted for the local evaluation. The ledger foundation and recorded proof are implemented; the browser editor and package-input builder follow in the same PRD step.
+Status: accepted for the local evaluation. The ledger foundation, recorded proof, and browser editor are implemented; package input follows in the same PRD step.
 
 A bank proposes a named, ordered workflow with one to four actions, unique step names, and roles bound consistently to the bank or buyer. The buyer accepts the exact ledger draft. Acceptance atomically creates the application contracts, publishes a core definition, and starts its instance. The bank can cancel an unaccepted draft. Sources do not exist before acceptance. The workspace retains at most eight unique proposal references, including cancelled proposals.
 
