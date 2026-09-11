@@ -45,8 +45,16 @@ object ComposerView:
       def action(label: String, command: WorkspaceCommand): Unit =
         val control = button(label, "primary", s"${command.wire}-$index")(submit(command))
         control.disabled = blocked; append(card, control)
-      if draft.canAccept then action("Accept this plan", WorkspaceCommand.Accept(draft.reference))
-      if draft.canCancel then action("Cancel proposal", WorkspaceCommand.Cancel(draft.reference))
+      if draft.canAccept then
+        action(
+          "Accept this plan",
+          WorkspaceCommand.Composition(CompositionCommand.Accept(draft.reference))
+        )
+      if draft.canCancel then
+        action(
+          "Cancel proposal",
+          WorkspaceCommand.Composition(CompositionCommand.Cancel(draft.reference))
+        )
       append(root, card)
     }
     state.processes.zipWithIndex.foreach { (process, index) =>
@@ -84,7 +92,9 @@ object ComposerView:
         if step.canExecute then
           val control =
             button(s"Execute ${step.id}", "primary", s"compose-execute-$index-$position") {
-              submit(WorkspaceCommand.Advance(process.reference, step.id))
+              submit(
+                WorkspaceCommand.Composition(CompositionCommand.Advance(process.reference, step.id))
+              )
             }
           control.disabled = blocked; append(row, control)
         append(flow, row)

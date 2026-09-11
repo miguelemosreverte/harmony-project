@@ -1,6 +1,7 @@
 package harmonia.financing
 
-import io.circe.{Decoder, Encoder, Json}
+import io.circe.{Codec, Decoder, Encoder, Json}
+import io.circe.syntax.*
 
 enum FinancingAction(val wire: String):
   case Approve extends FinancingAction("approve-financing")
@@ -43,29 +44,27 @@ final case class FinancingState(
     eligible: Vector[FinancingAction],
     currentStep: String
 ):
-  def json: Json =
-    import io.circe.syntax.*
-    Json.obj(
-      "actor" -> actor.asJson,
-      "version" -> version.asJson,
-      "workflow" -> progress.asJson,
-      "application" -> application.asJson,
-      "private_details" -> privateDetails.asJson,
-      "evidence_available" -> evidenceAvailable.asJson,
-      "eligible" -> eligible.asJson,
-      "current_step" -> currentStep.asJson
-    )
+  def json: Json = this.asJson
 
 object FinancingState:
-  given Decoder[FinancingState] = Decoder.instance { cursor =>
-    for
-      actor <- cursor.get[String]("actor")
-      version <- cursor.get[String]("version")
-      progress <- cursor.get[ProgressStatus]("workflow")
-      application <- cursor.get[Option[ApplicationStatus]]("application")
-      details <- cursor.get[Option[String]]("private_details")
-      evidence <- cursor.get[Boolean]("evidence_available")
-      eligible <- cursor.get[Vector[FinancingAction]]("eligible")
-      step <- cursor.get[String]("current_step")
-    yield FinancingState(actor, version, progress, application, details, evidence, eligible, step)
-  }
+  given Codec.AsObject[FinancingState] = Codec.forProduct8(
+    "actor",
+    "version",
+    "workflow",
+    "application",
+    "private_details",
+    "evidence_available",
+    "eligible",
+    "current_step"
+  )(FinancingState.apply)(v =>
+    (
+      v.actor,
+      v.version,
+      v.progress,
+      v.application,
+      v.privateDetails,
+      v.evidenceAvailable,
+      v.eligible,
+      v.currentStep
+    )
+  )

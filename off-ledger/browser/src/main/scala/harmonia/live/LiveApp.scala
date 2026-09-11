@@ -5,6 +5,7 @@ import cats.effect.std.Dispatcher
 import cats.syntax.all.*
 import io.circe.Json
 import harmonia.workspace.{WorkspaceSnapshot, WorkspaceCommand}
+import harmonia.composition.CompositionCommand
 import org.scalajs.dom
 import scala.scalajs.js
 import scala.concurrent.duration.*
@@ -54,7 +55,7 @@ private final class BrowserSession(
   private val packages = new harmonia.packages.PackagePanel(capability, dispatcher)
   private val editor =
     new harmonia.composition.CompositionEditor({
-      case Right(plan) => submit(WorkspaceCommand.Propose(plan))
+      case Right(plan) => submit(WorkspaceCommand.Composition(CompositionCommand.Propose(plan)))
       case Left(message) =>
         dispatcher.unsafeRunAndForget(state.update(_.copy(notice = Some(message))) *> draw)
     })

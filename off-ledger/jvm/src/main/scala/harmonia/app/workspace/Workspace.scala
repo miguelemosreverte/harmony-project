@@ -5,33 +5,28 @@ import harmonia.app.live.LiveRuntime
 import harmonia.ledger.client.LedgerSnapshot
 import harmonia.financing.FinancingObservation
 import harmonia.submission.*
-import harmonia.workspace.WorkspaceCommand
+import harmonia.workspace.{WorkspaceCommand, WorkspaceSnapshot}
 import harmonia.financing.Financing
 import harmonia.composition.ledger.{ComposerCommands, ComposerSnapshot}
 import harmonia.ledger.client.SubmitChoice
-import io.circe.Json
 
 /** Composes participant observations and routes valid feature commands. */
 final class Workspace private (runtime: LiveRuntime, submissions: Submissions):
-  def state(actor: String): IO[Json] = for
+  def state(actor: String): IO[WorkspaceSnapshot] = for
     snapshot <- LedgerSnapshot.read(runtime.participants(actor).ledger, runtime.catalog)
     _ <- submissions.reconcile(actor, snapshot.commits)
     current <- submissions.current(actor)
     financing <- IO.fromEither(FinancingObservation.read(snapshot))
-  yield financing
-    .state(actor)
-    .json
-    .deepMerge(snapshot.historyJson)
-    .deepMerge(
-      Json.obj(
-        "composer" -> ComposerSnapshot.json(
-          snapshot.contracts,
-          runtime.participants.map((name, p) => name -> p.ledger.party),
-          actor
-        ),
-        "jobs" -> Json.arr(current.map(_.json)*)
-      )
-    )
+    composition <- IO.fromEither(ComposerSnapshot.read(snapshot.contracts, parties, actor))
+  yield WorkspaceSnapshot(
+    financing.state(actor),
+    composition,
+    current.map(_.view),
+    snapshot.updates
+  )
+
+  private val parties =
+    runtime.participants.map((name, participant) => name -> participant.ledger.party)
 
   def submit(actor: String, request: ActionRequest): IO[LiveJob] =
     submissions.submit(actor, request)
@@ -43,22 +38,22 @@ object Workspace:
         val ledger = runtime.participants(actor).ledger
         for
           snapshot <- LedgerSnapshot.read(ledger, runtime.catalog)
-          financing <- IO.fromEither(FinancingObservation.read(snapshot))
-        yield
-          val selected = request.command match
+          selected <- request.command match
             case WorkspaceCommand.Financing(action) =>
-              Financing.select(action, financing)
-            case command =>
-              ComposerCommands.select(
-                command,
-                request.id,
-                snapshot.contracts,
-                ledger.party,
-                runtime.participants.map((name, p) => name -> p.ledger.party)
+              IO.fromEither(FinancingObservation.read(snapshot)).map(Financing.select(action, _))
+            case WorkspaceCommand.Composition(command) =>
+              IO.delay(
+                ComposerCommands.select(
+                  command,
+                  request.id,
+                  snapshot.contracts,
+                  ledger.party,
+                  runtime.participants.map((name, p) => name -> p.ledger.party)
+                )
               )
-          PreparedSubmission(
-            snapshot.version,
-            selected.map(operation => SubmitChoice(ledger, operation, commandId))
-          )
+        yield PreparedSubmission(
+          snapshot.version,
+          selected.map(operation => SubmitChoice(ledger, operation, commandId))
+        )
       }
       .map(new Workspace(runtime, _))

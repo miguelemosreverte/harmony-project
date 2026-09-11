@@ -1,54 +1,28 @@
 package harmonia.workspace
 
 import harmonia.financing.FinancingAction
-import harmonia.composition.model.Composition
+import harmonia.composition.CompositionCommand
 import io.circe.Json
 
 enum WorkspaceCommand:
   case Financing(action: FinancingAction)
-  case Propose(plan: Composition)
-  case Accept(reference: String)
-  case Cancel(reference: String)
-  case Advance(reference: String, step: String)
+  case Composition(command: CompositionCommand)
 
   def wire: String = this match
-    case Financing(action) => action.wire
-    case Propose(_)        => "compose-propose"
-    case Accept(_)         => "compose-accept"
-    case Cancel(_)         => "compose-cancel"
-    case Advance(_, _)     => "compose-advance"
+    case Financing(action)    => action.wire
+    case Composition(command) => command.wire
 
   def parameters: Option[Json] = this match
-    case Financing(_)      => None
-    case Propose(plan)     => Some(plan.json)
-    case Accept(reference) => Some(Json.obj("reference" -> Json.fromString(reference)))
-    case Cancel(reference) => Some(Json.obj("reference" -> Json.fromString(reference)))
-    case Advance(reference, step) =>
-      Some(Json.obj("reference" -> Json.fromString(reference), "step" -> Json.fromString(step)))
+    case Financing(_)         => None
+    case Composition(command) => Some(command.parameters)
 
 object WorkspaceCommand:
-  /** Text dispatch belongs at this external API boundary only. */
+  /** Each feature owns its external command vocabulary. Routing remains exhaustive. */
   def read(action: String, parameters: Option[Json]): Either[String, WorkspaceCommand] =
-    def input = parameters.toRight("Composition input is required")
-    def reference = for
-      json <- input
-      _ <- Composition.fields(json, Set("reference"))
-      ref <- Composition.string(json, "reference", 80)
-    yield ref
     action match
       case "approve-financing" | "publish-approval" =>
         for
           _ <- Either.cond(parameters.isEmpty, (), "This action takes no extra input")
           action <- Json.fromString(action).as[FinancingAction].left.map(_.getMessage)
         yield Financing(action)
-      case "compose-propose" => input.flatMap(Composition.read).map(Propose(_))
-      case "compose-accept"  => reference.map(Accept(_))
-      case "compose-cancel"  => reference.map(Cancel(_))
-      case "compose-advance" =>
-        for
-          json <- input
-          _ <- Composition.fields(json, Set("reference", "step"))
-          ref <- Composition.string(json, "reference", 80)
-          step <- Composition.string(json, "step", 40)
-        yield Advance(ref, step)
-      case _ => Left(s"Unsupported action: $action")
+      case _ => CompositionCommand.read(action, parameters).map(Composition(_))

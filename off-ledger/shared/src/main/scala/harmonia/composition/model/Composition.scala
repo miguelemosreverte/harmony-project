@@ -1,6 +1,6 @@
 package harmonia.composition.model
 
-import io.circe.{Json, Decoder}
+import io.circe.{Json, Decoder, Encoder}
 
 enum CompositionActor(val wire: String):
   case Bank extends CompositionActor("bank")
@@ -35,6 +35,7 @@ final case class PlannedStep(
     "action" -> Json.fromString(action.wire)
   )
 object PlannedStep:
+  given Encoder[PlannedStep] = Encoder.instance(_.json)
   given Decoder[PlannedStep] =
     Decoder.forProduct4("id", "role", "actor", "action")(PlannedStep.apply)
 final case class Composition(name: String, reference: String, steps: Vector[PlannedStep]):

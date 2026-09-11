@@ -52,9 +52,9 @@ These are observed problems in actual entry points, not a reason to move every d
 
 ### TD04 — Use typed models through the workspace
 
-- [ ] Construct financing, composition, submission, and history views as shared models.
-- [ ] Decode composition ledger payloads at one named boundary and remove silent defaults for required data.
-- [ ] Encode the unchanged HTTP representation at the server boundary; keep the editor and polling lifetimes intact.
+- [x] Construct financing, composition, submission, and history views as shared models.
+- [x] Decode composition ledger payloads at one named boundary and remove silent defaults for required data.
+- [x] Encode the unchanged HTTP representation at the server boundary; keep the editor and polling lifetimes intact.
 
 ### TD05 — Use typed package and book state
 
@@ -82,3 +82,5 @@ Human readability is the purpose of this pass, not something a successful compil
 TD02 passes 40 Scala tests and JVM/browser compilation (`.artifacts/third-02-build.log`). The new checks distinguish absent contracts from malformed visible payloads, reject malformed collections and competing Ledger API value variants, and retain valid omitted protobuf collections. Named exercises replace the financing/composition tuples.
 
 TD03 proves `fc2de14` on the real ledger: authenticated handoff, direct API authority, stale/repeated requests, and reconnect all pass (`.artifacts/third-03-live-check.log`; `.artifacts/live-check-13369180420142803701/live-handoff/`). In the browser, Bank approval changed the private application to approved; Buyer continuation completed shared progress, without exposing the private income details. The owned live runtime (`.artifacts/live-6253572949849521465/`) was stopped afterward; the second-draft book remains at its original URL. This evidence is recorded in the third actual commit.
+
+TD04 constructs a typed workspace throughout the server, with shared codecs at HTTP serialization. Composition has its own command family and named ledger payload schemas; malformed visible workspaces/drafts fail instead of becoming empty views. Ledger history retains command IDs in a shared `LedgerUpdate`. All 44 Scala tests and both targets pass (`.artifacts/third-04-verified.log`), including transport-field preservation. Dedicated composition execution follows this commit and is repeated in the final release.

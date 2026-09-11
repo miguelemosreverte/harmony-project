@@ -3,7 +3,8 @@ package harmonia.live
 import harmonia.ui.Elements.*
 import harmonia.financing.FinancingPanel
 import harmonia.protocol.SubmissionStatus
-import harmonia.workspace.{WorkspaceSnapshot, WorkspaceCommand, SubmissionView, HistoryView}
+import harmonia.protocol.LedgerUpdate
+import harmonia.workspace.{WorkspaceSnapshot, WorkspaceCommand, SubmissionView}
 import org.scalajs.dom
 
 /** Owns stable workspace regions. Polling never detaches the draft editor or package controls. */
@@ -186,7 +187,7 @@ final class LiveView:
       append(jobs, row)
     }
 
-  private def renderHistory(values: Vector[HistoryView]): Unit =
+  private def renderHistory(values: Vector[LedgerUpdate]): Unit =
     val list = element("ol", "live-history")
     values.foreach { tx =>
       val row = element("li")

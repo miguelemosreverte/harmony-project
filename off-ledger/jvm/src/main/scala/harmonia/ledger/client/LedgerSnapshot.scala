@@ -3,6 +3,7 @@ package harmonia.ledger.client
 import cats.effect.IO
 import harmonia.ledger.client.{ActiveContract, ParticipantLedger, TemplateCatalog}
 import io.circe.Json
+import harmonia.protocol.LedgerUpdate
 import java.nio.charset.StandardCharsets.UTF_8
 import java.security.MessageDigest
 
@@ -17,35 +18,29 @@ final case class LedgerSnapshot(contracts: Vector[ActiveContract], history: Vect
   def commits: Map[String, Json] = history.flatMap { update =>
     update.hcursor.downField("transaction").get[String]("commandId").toOption.map(_ -> update)
   }.toMap
-  def historyJson: Json =
-    Json.obj(
-      "history" -> Json.arr(history.map { update =>
-        val transaction = update.hcursor.downField("transaction")
-        Json.obj(
-          "update_id" -> transaction
-            .get[String]("updateId")
-            .toOption
-            .fold(Json.Null)(Json.fromString),
-          "command_id" -> transaction
-            .get[String]("commandId")
-            .toOption
-            .fold(Json.Null)(Json.fromString),
-          "events" -> Json.arr(
-            transaction.get[Vector[Json]]("events").getOrElse(Vector.empty).map { event =>
-              val created = event.hcursor.downField("created")
-              val exercised = event.hcursor.downField("exercised")
-              val value = if created.succeeded then created else exercised
-              val template =
-                value.downField("templateId").get[String]("entityName").getOrElse("Contract")
-              val operation =
-                if created.succeeded then "created"
-                else exercised.get[String]("choice").getOrElse("archived")
-              Json.fromString(s"$template · $operation")
-            }*
-          )
-        )
-      }*)
+  def updates: Vector[LedgerUpdate] = history.map { update =>
+    val transaction = update.hcursor.downField("transaction")
+    val events = transaction
+      .get[Option[Vector[Json]]]("events")
+      .fold(
+        error => throw LedgerDecodingFailure("transaction.events", error.getMessage),
+        _.getOrElse(Vector.empty)
+      )
+    LedgerUpdate(
+      transaction.get[Option[String]]("updateId").fold(throw _, identity),
+      transaction.get[Option[String]]("commandId").fold(throw _, identity),
+      events.map { event =>
+        val created = event.hcursor.downField("created")
+        val exercised = event.hcursor.downField("exercised")
+        val value = if created.succeeded then created else exercised
+        val template = value.downField("templateId").get[String]("entityName").getOrElse("Contract")
+        val operation =
+          if created.succeeded then "created"
+          else exercised.get[String]("choice").getOrElse("archived")
+        s"$template · $operation"
+      }
     )
+  }
 
 object LedgerSnapshot:
   def read(ledger: ParticipantLedger, catalog: TemplateCatalog): IO[LedgerSnapshot] = for

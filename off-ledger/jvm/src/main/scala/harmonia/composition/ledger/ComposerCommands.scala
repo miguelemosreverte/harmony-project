@@ -1,11 +1,11 @@
 package harmonia.composition.ledger
 
-import harmonia.workspace.WorkspaceCommand
+import harmonia.composition.CompositionCommand
 import harmonia.ledger.client.{ActiveContract, LedgerExercise, LedgerValue as V, LiveLedger}
 
 object ComposerCommands:
   def select(
-      command: WorkspaceCommand,
+      command: CompositionCommand,
       requestId: String,
       contracts: Vector[ActiveContract],
       party: String,
@@ -17,7 +17,7 @@ object ComposerCommands:
       )
     )
     command match
-      case WorkspaceCommand.Propose(plan) =>
+      case CompositionCommand.Propose(plan) =>
         val steps = plan.steps.map(step =>
           V.record(
             "id" -> V.text(step.id),
@@ -37,15 +37,15 @@ object ComposerCommands:
             )
           )
         )
-      case WorkspaceCommand.Accept(reference) =>
+      case CompositionCommand.Accept(reference) =>
         find("Composer", "Draft", Some(reference)).map(c =>
           LedgerExercise(c, "Accept", LiveLedger.emptyArgument)
         )
-      case WorkspaceCommand.Cancel(reference) =>
+      case CompositionCommand.Cancel(reference) =>
         find("Composer", "Draft", Some(reference)).map(c =>
           LedgerExercise(c, "Cancel", LiveLedger.emptyArgument)
         )
-      case WorkspaceCommand.Advance(reference, step) =>
+      case CompositionCommand.Advance(reference, step) =>
         find("Harmonia.Process.Engine", "ProcessInstance", Some(reference)).map(c =>
           LedgerExercise(
             c,
@@ -57,4 +57,3 @@ object ComposerCommands:
             )
           )
         )
-      case WorkspaceCommand.Financing(_) => None

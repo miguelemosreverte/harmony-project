@@ -3,10 +3,11 @@ package harmonia.submission
 import cats.effect.{IO, Ref, Resource}
 import cats.effect.std.{Semaphore, Supervisor}
 import cats.syntax.all.*
-import harmonia.workspace.WorkspaceCommand
+import harmonia.workspace.{WorkspaceCommand, SubmissionView}
 import harmonia.protocol.SubmissionStatus
 import harmonia.protocol.SubmissionStatus.*
 import io.circe.Json
+import io.circe.syntax.*
 
 final case class ActionRequest(
     id: String,
@@ -20,13 +21,9 @@ final case class LiveJob(
     detail: String,
     transaction: Option[Json] = None
 ):
-  def json: Json = Json.obj(
-    "id" -> Json.fromString(request.id),
-    "actor" -> Json.fromString(actor),
-    "action" -> Json.fromString(request.command.wire),
-    "outcome" -> Json.fromString(outcome.wire),
-    "detail" -> Json.fromString(detail)
-  )
+  def view: SubmissionView =
+    SubmissionView(request.id, actor, request.command.wire, outcome, detail)
+  def json: Json = view.asJson
 
 /** Preparation observes state; the returned effect submits only after the version check. */
 final case class PreparedSubmission(version: String, execute: Option[IO[SubmissionResult]])

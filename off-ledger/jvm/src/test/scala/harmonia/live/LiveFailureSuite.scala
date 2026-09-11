@@ -11,7 +11,8 @@ import harmonia.financing.FinancingObservation
 import harmonia.ledger.client.LedgerSnapshot
 import com.daml.ledger.api.v2.ValueOuterClass
 import io.circe.Json
-import harmonia.workspace.WorkspaceCommand
+import harmonia.workspace.{WorkspaceCommand, SubmissionView}
+import harmonia.protocol.SubmissionStatus
 import harmonia.financing.FinancingAction
 import io.grpc.Status
 import java.nio.file.Path
@@ -58,7 +59,7 @@ class LiveFailureSuite extends FunSuite:
               ActionRequest(
                 "attempt",
                 WorkspaceCommand.Financing(FinancingAction.Approve),
-                initial.hcursor.get[String]("version").toOption.get
+                initial.financing.version
               )
             )
             _ <- observed.get
@@ -67,7 +68,7 @@ class LiveFailureSuite extends FunSuite:
           yield job -> submissions
         }
       yield result).timeout(5.seconds).unsafeRunSync()
-      assertEquals(result._1.hcursor.get[String]("outcome").toOption, Some("disconnected"))
+      assertEquals(Some(result._1.outcome.wire), Some("disconnected"))
       assertEquals(result._2, 0)
     }
   }
@@ -101,7 +102,7 @@ class LiveFailureSuite extends FunSuite:
                 ActionRequest(
                   "attempt",
                   WorkspaceCommand.Financing(FinancingAction.Approve),
-                  initial.hcursor.get[String]("version").toOption.get
+                  initial.financing.version
                 )
               )
               job <- finalJob(actions)
@@ -109,7 +110,7 @@ class LiveFailureSuite extends FunSuite:
             yield job -> submissions
           }
         yield result).timeout(5.seconds).unsafeRunSync()
-        assertEquals(result._1.hcursor.get[String]("outcome").toOption, Some(expected))
+        assertEquals(Some(result._1.outcome.wire), Some(expected))
         assertEquals(result._2, 1)
     }
   }
@@ -131,15 +132,12 @@ class LiveFailureSuite extends FunSuite:
     )
   }
 
-  private def finalJob(actions: Workspace): IO[Json] = actions.state("bank").flatMap { state =>
-    state.hcursor
-      .get[Vector[Json]]("jobs")
-      .toOption
-      .get
-      .find(!_.hcursor.get[String]("outcome").contains("pending")) match
-      case Some(value) => IO.pure(value)
-      case None        => IO.sleep(10.millis) *> IO.defer(finalJob(actions))
-  }
+  private def finalJob(actions: Workspace): IO[SubmissionView] =
+    actions.state("bank").flatMap { state =>
+      state.submissions.find(_.outcome != SubmissionStatus.Pending) match
+        case Some(value) => IO.pure(value)
+        case None        => IO.sleep(10.millis) *> IO.defer(finalJob(actions))
+    }
 
   private final class Stub(
       failRead: Ref[IO, Boolean],

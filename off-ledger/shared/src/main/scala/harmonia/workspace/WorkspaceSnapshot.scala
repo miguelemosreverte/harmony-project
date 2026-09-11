@@ -2,39 +2,28 @@ package harmonia.workspace
 
 import harmonia.financing.FinancingState
 import harmonia.composition.CompositionState
-import harmonia.protocol.SubmissionStatus
-import io.circe.{Decoder, Json}
+import harmonia.protocol.{SubmissionStatus, LedgerUpdate}
+import io.circe.{Codec, Decoder, Encoder}
+import io.circe.syntax.*
 
 final case class SubmissionView(
     id: String,
+    actor: String,
     action: String,
     outcome: SubmissionStatus,
     detail: String
 )
 object SubmissionView:
-  given Decoder[SubmissionView] = Decoder.instance { c =>
-    for
-      id <- c.get[String]("id")
-      action <- c.get[String]("action")
-      outcome <- c.get[SubmissionStatus]("outcome")
-      detail <- c.get[String]("detail")
-    yield SubmissionView(id, action, outcome, detail)
-  }
-
-final case class HistoryView(updateId: Option[String], events: Vector[String])
-object HistoryView:
-  given Decoder[HistoryView] = Decoder.instance { c =>
-    for
-      id <- c.get[Option[String]]("update_id")
-      events <- c.get[Vector[String]]("events")
-    yield HistoryView(id, events)
-  }
+  given Codec.AsObject[SubmissionView] =
+    Codec.forProduct5("id", "actor", "action", "outcome", "detail")(SubmissionView.apply)(v =>
+      (v.id, v.actor, v.action, v.outcome, v.detail)
+    )
 
 final case class WorkspaceSnapshot(
     financing: FinancingState,
     composition: CompositionState,
     submissions: Vector[SubmissionView],
-    history: Vector[HistoryView]
+    history: Vector[LedgerUpdate]
 )
 object WorkspaceSnapshot:
   given Decoder[WorkspaceSnapshot] = Decoder.instance { c =>
@@ -42,6 +31,14 @@ object WorkspaceSnapshot:
       financing <- c.as[FinancingState]
       composition <- c.get[CompositionState]("composer")
       submissions <- c.get[Vector[SubmissionView]]("jobs")
-      history <- c.get[Vector[HistoryView]]("history")
+      history <- c.get[Vector[LedgerUpdate]]("history")
     yield WorkspaceSnapshot(financing, composition, submissions, history)
+  }
+
+  /** Preserve the established HTTP shape; internal producers use the model above. */
+  given Encoder.AsObject[WorkspaceSnapshot] = Encoder.AsObject.instance { state =>
+    state.financing.asJsonObject
+      .add("composer", state.composition.asJson)
+      .add("jobs", state.submissions.asJson)
+      .add("history", state.history.asJson)
   }

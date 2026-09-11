@@ -9,6 +9,7 @@ import harmonia.submission.ActionRequest
 import harmonia.ledger.auth.LocalCredentials
 import harmonia.app.live.LiveRuntime
 import io.circe.Json
+import io.circe.syntax.*
 import harmonia.workspace.WorkspaceCommand
 import java.net.InetSocketAddress
 import java.nio.charset.StandardCharsets.UTF_8
@@ -145,7 +146,7 @@ object LiveServer:
       exchange: HttpExchange
   ): IO[Unit] =
     val response = (method, path) match
-      case ("GET", "/api/state")   => actions.state(actor)
+      case ("GET", "/api/state")   => actions.state(actor).map(_.asJson)
       case ("GET", "/api/builder") => builder.state
       case ("POST", "/api/builder/upload") =>
         builder.upload(
