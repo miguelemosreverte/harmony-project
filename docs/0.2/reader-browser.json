@@ -12,6 +12,7 @@
     "Browser Back restores the reviewed node",
     "Original passage is highlighted and visible",
     "A shared author URL restores the companion file and line",
+    "Companion appearance follows the parent reader",
     "Embedded workflow navigation updates the parent URL",
     "Page fits at 304: book-overview.html",
     "Page fits at 304: code.html",
@@ -116,6 +117,7 @@
     "Presentation can advance from keyboard focus outside the carousel",
     "Reduced motion prevents automatic advancement",
     "Source chunks load from a local HTML file without a server",
+    "Printed diagram remains visible and fits one page",
     "Review diagram exports to PDF",
     "No script or resource errors"
   ],

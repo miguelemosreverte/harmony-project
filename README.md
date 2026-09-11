@@ -6,11 +6,12 @@ Compose independently owned Canton/Daml applications into a shared workflow. The
 
 The active work revisits the original product requirements from the fourth-draft
 baseline. Read the [linear plan](docs/0.2/PLAN.md), [product contract](docs/0.2/product-contract.md),
-and [numbered Git history](docs/versions.md). The field guide now uses interactive
-HTML infographics; the Scala workspace connects those visuals to the real financing API.
+and [numbered Git history](docs/versions.md). The field guide uses shared HTML infographics for workflow playback, code exploration,
+diagram review, and original-document comparison. The Scala workspace uses the same
+components for live financing, composition, and package stages.
 See the [approved visual contract and verification](docs/0.2/REFERENCE-FIDELITY.md),
 [reference comparison](design/0.2/infographic/reference-review/compare.html), and
-[experience contract](docs/0.2/INFOGRAPHIC.md).
+[reader principles and implementation plan](docs/0.2/READER-EXPERIENCE.md).
 
 After the [runtime setup](book/setup.md) and initial `scripts/build`, run
 `scripts/start-sandbox`. Open the private `open.html` launcher printed by the command:
@@ -19,7 +20,9 @@ One disposable Canton environment runs at a time; Ctrl-C closes it.
 
 For recorded exploration without a ledger, run `scripts/design-preview` and open
 [the field guide](http://127.0.0.1:56202/design/0.2/book-overview.html).
-[Design review](design/0.2/review.html) · [Quotation coverage](design/0.2/coverage.html).
+[Code browser](design/0.2/code.html) · [Diagram review](design/0.2/reviewer.html) ·
+[Originals beside implementation](design/0.2/author.html) · [Workflows](design/0.2/workflows.html).
+The original [quotation coverage](design/0.2/coverage.html) remains independently checked.
 The full property offer and custody transfer remain recorded examples.
 
 ## Read the product
@@ -50,4 +53,4 @@ Read the [book and detailed laboratory](book/README.md) or open recorded runs us
 
 [Fourth-draft principles and plan](FOURTH-DRAFT.md) · [Measurements](docs/fourth-draft/measurements.md) · [Progress](docs/progress.md) · [Acceptance](docs/release/acceptance.md) · [Capabilities](docs/capabilities.md) · [Compatibility](docs/compatibility.md)
 
-The earlier versions remain on the numbered archive branches listed in [version history](docs/versions.md). Their plans and verification notes are in [history](docs/history/README.md). Imported proposals and attribution are recorded in [sources](docs/sources.md). Public repository destination and licensing remain undecided.
+The earlier versions remain on the numbered archive branches listed in [version history](docs/versions.md). Their plans and verification notes are in [history](docs/history/README.md). Imported proposals and attribution are recorded in [sources](docs/sources.md). Development history is backed up in the private [GitHub repository](https://github.com/miguelemosreverte/harmony-project). Public release and licensing remain undecided.

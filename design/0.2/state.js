@@ -47,7 +47,7 @@
     s.passage=choose(input.passage,passages.map(p=>p.id),passages[0].id);
     s.companion=choose(input.companion,['diagram','workflow','code','chapter'],'diagram');
     s.detail='';
-    if(input.detail&&String(input.detail).length<2400){try{const base=new URL(config.base,location.href),u=new URL(input.detail,base),path=u.pathname.slice(base.pathname.length);if(u.origin===base.origin&&u.pathname.startsWith(base.pathname)&&['code.html','reviewer.html',...Object.keys(config.chapters).map(c=>'chapters/'+c+'.html')].includes(path))s.detail=path+u.search;}catch{}}
+    if(input.detail&&String(input.detail).length<2400){try{const base=new URL(config.base,location.href),u=new URL(input.detail,base),path=u.pathname.slice(base.pathname.length);if(u.origin===base.origin&&u.pathname.startsWith(base.pathname)&&['code.html','reviewer.html','sources/proposal.html','sources/architecture.html',...Object.keys(config.chapters).map(c=>'chapters/'+c+'.html')].includes(path))s.detail=path+u.search+u.hash;}catch{}}
     s.codeTab=choose(input.codeTab,['code','diagram'],'code');
     s.q=String(input.q||'').slice(0,80);s.scope=choose(input.scope,['all','product','harness','book','examples','scripts'],'all');
     return s;

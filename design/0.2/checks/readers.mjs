@@ -36,6 +36,8 @@ try {
   await b.until(`HarmoniaView.state.detail.includes('line=24')`);const authorUrl=await b.evaluate('location.href');
   await go(authorUrl);await b.until(`document.querySelector('iframe').contentDocument?.querySelector('#code-L24.selected-line')`);
   check('A shared author URL restores the companion file and line',await b.evaluate(`document.querySelector('iframe').contentWindow.HarmoniaView.state.file===${JSON.stringify(file)}`));
+  await b.evaluate(`HarmoniaView.update({theme:'dark'})`);await b.until(`document.querySelector('iframe').contentWindow.HarmoniaView?.state.theme==='dark'`);check('Companion appearance follows the parent reader',true);
+  await b.evaluate(`HarmoniaView.update({theme:'light'})`);
   await click('[data-companion=workflow]');await b.until(`!!document.querySelector('iframe').contentDocument?.querySelector('#next-step')`);
   await b.evaluate(`document.querySelector('iframe').contentDocument.querySelector('#next-step').click()`);await b.until(`HarmoniaView.state.detail.includes('step=2')`);
   check('Embedded workflow navigation updates the parent URL',true);
@@ -66,8 +68,10 @@ try {
     await b.viewport(width,height);await go(page);await b.screenshot(`${output}/${name}.png`);screenshots.push({name,page,width,height});
   }
   await b.viewport(1280,1000);await go('reviewer.html?slice=transfer');
-  const pdf=await b.cdp('Page.printToPDF',{printBackground:true,preferCSSPageSize:true});await fs.writeFile(`${output}/reviewer.pdf`,Buffer.from(pdf.data,'base64'));check('Review diagram exports to PDF',pdf.data.length>10000);
+  await b.cdp('Emulation.setEmulatedMedia',{media:'print'});await b.wait(150);
+  check('Printed diagram remains visible and fits one page',await b.evaluate(`document.querySelector('.workflow-map').getBoundingClientRect().height<500&&[...document.querySelectorAll('.workflow-node')].every(n=>getComputedStyle(n).display!=='none')`));
+  const pdf=await b.cdp('Page.printToPDF',{printBackground:true,preferCSSPageSize:true});await fs.writeFile(`${output}/reviewer.pdf`,Buffer.from(pdf.data,'base64'));check('Review diagram exports to PDF',pdf.data.length>10000);await b.cdp('Emulation.setEmulatedMedia',{media:''});
   check('No script or resource errors',b.errors.filter(e=>!e.includes('favicon.ico')).length===0);
   await fs.writeFile('docs/0.2/reader-browser.json',JSON.stringify({scope:'Reader navigation, source fidelity, author companion sharing, responsive diagrams, presentation, offline source and PDF',checks,screenshots,errors:b.errors},null,2)+'\n');
   console.log(JSON.stringify({checks:checks.length,screenshots:screenshots.length,errors:b.errors}));
-} finally {await b.cdp('Emulation.setEmulatedMedia',{features:[]});b.close();}
+} finally {await b.cdp('Emulation.setEmulatedMedia',{media:'',features:[]});b.close();}

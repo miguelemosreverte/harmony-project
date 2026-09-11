@@ -17,6 +17,7 @@
     else if(mode==='workflow')url=query(`chapters/${slice.chapter}.html`,{step:0,embed:1});
     else url=query(`chapters/${passage.chapter}.html`,{view:'read',embed:1});
     if(s.detail)url=new URL(s.detail,new URL(view.config.base,location.href)).href;
+    const embedded=new URL(url);embedded.searchParams.set('embed','1');for(const [key,fallback] of [['theme','light'],['text','standard'],['audience','explorer']]){if(s[key]===fallback)embedded.searchParams.delete(key);else embedded.searchParams.set(key,s[key]);}url=embedded.href;
     let current='';try{current=frame.contentWindow.location.href;}catch{}
     if(current!==url)frame.src=url;
     document.getElementById('companion-title').textContent=passage.title;
@@ -28,5 +29,5 @@
   for(const section of pane.querySelectorAll('[data-passage]'))section.addEventListener('click',e=>{if(!e.target.closest('a,button,summary'))view.update({passage:section.dataset.passage,detail:''},{replace:true});});
   for(const b of document.querySelectorAll('[data-companion]'))b.addEventListener('click',()=>view.update({companion:b.dataset.companion,detail:''}));
   // Interactions in a reused view become part of the parent's shareable URL.
-  frame.addEventListener('load',()=>{try{const child=frame.contentWindow.HarmoniaView;if(child)child.subscribe(()=>{const base=new URL(view.config.base,location.href),u=new URL(frame.contentWindow.location.href),detail=u.pathname.slice(base.pathname.length)+u.search;if(detail!==view.state.detail)view.update({detail},{replace:true});});}catch{}});
+  frame.addEventListener('load',()=>{try{const child=frame.contentWindow.HarmoniaView;if(child)child.subscribe(()=>{const base=new URL(view.config.base,location.href),u=new URL(frame.contentWindow.location.href),detail=u.pathname.slice(base.pathname.length)+u.search+u.hash;if(detail!==view.state.detail)view.update({detail},{replace:true});});}catch{}});
 })();

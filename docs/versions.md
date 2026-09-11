@@ -2,7 +2,8 @@
 
 The five `0.1` snapshots explored code quality while preserving the first draft's
 behavioral expectations. The `0.2` line revisits the original product documents.
-These are local development references, not published package releases.
+These are development references, not published package releases. The branches and
+tags are backed up in the private `miguelemosreverte/harmony-project` repository.
 
 | Previous branch | Archive branch | Annotated tag | Commit | Purpose |
 | --- | --- | --- | --- | --- |
@@ -39,3 +40,11 @@ the original illustration pixels, a four-beat purchase carousel, and shared book
 header and evidence drawers. Its [visual contract and checks](0.2/REFERENCE-FIDELITY.md)
 include side-by-side browser captures and a real financing handoff. This remains a
 checkpoint on `version/0.2.0`; it does not change `main` or declare a stable release.
+
+
+`v0.2.0-reader.1` shares measured diagrams across live composition, package stages,
+and the book. It adds four reader entrances, exact source browsing with authored
+annotations, diagram review, original passages beside reusable companion views,
+and URL-driven presentation recording. The [reader contract](0.2/READER-EXPERIENCE.md),
+[browser checks](0.2/reader-browser.json), and [live checks](0.2/reader-live.json)
+record its scope and verification. The original golden expectations are preserved.

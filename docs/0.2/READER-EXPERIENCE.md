@@ -71,11 +71,11 @@ must never invent a line-by-line explanation of code it has not documented.
   - [x] Route readers by their actual questions; add visual explanations to the chapters.
   - [x] Explain Daml/Canton mechanisms and distinguish demonstrated behavior from gaps.
   - [x] Provide deterministic presentation URLs and a controllable slideshow for recording.
-- [ ] 7. Verify and deliver.
-  - [ ] Check graph/reference integrity, source export drift, and preserved golden expectations.
-  - [ ] Exercise reader routes, files, citations, diagram selection, sharing, and live controls.
-  - [ ] Inspect desktop/mobile screenshots, arrow bounds/colors, and PDF output.
-  - [ ] Commit the verified work, document remaining product gaps, and leave one usable entry.
+- [x] 7. Verify and deliver.
+  - [x] Check graph/reference integrity, source export drift, and preserved golden expectations.
+  - [x] Exercise reader routes, files, citations, diagram selection, sharing, and live controls.
+  - [x] Inspect desktop/mobile screenshots, arrow bounds/colors, and PDF output.
+  - [x] Commit the verified work, document remaining product gaps, and leave one usable entry.
 
 
 ## Ownership and review entry points
@@ -102,3 +102,22 @@ node book/edition-0.2/presentation.mjs http://127.0.0.1:CDP_PORT
 The default preview URL is `http://127.0.0.1:56202/design/0.2/`; a relocated chapter URL
 and output directory can be supplied as the second and third arguments. Output goes to
 `.artifacts/presentation/`. The video records the HTML presentation and submits no ledger commands.
+
+
+## Verification
+
+The implementation was checked with the pinned Daml build and ledger tests, Scala
+formatting and 52 Scala tests, 24 source/quotation checks, desktop/mobile browser
+checks, and authenticated live browser journeys. The live run included buyer consent,
+execution of both assigned composition actions, and real adapter compilation. Every
+exported source file was downloaded from the real server and checked against its catalog hash.
+
+Evidence: [reader navigation and layouts](reader-browser.json),
+[live commands and export checks](reader-live.json),
+[desktop and mobile captures](../../design/0.2/reader/review/), and
+[printable review diagram](../../design/0.2/reader/review/reviewer.pdf).
+
+The reader does not increase the product's demonstrated scope: the live financing
+handoff is bank-to-buyer, the full property offer and custody transfer are recorded,
+and the composer is a bounded sequential evaluator. Source annotations explain selected
+review paths; unannotated files identify their owner without an invented explanation.
