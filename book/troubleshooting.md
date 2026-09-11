@@ -21,4 +21,4 @@
 | The golden differs | Read `diff.md`, then compare input, expected, actual, and raw observations. Fix the behavior or review an intentional expectation change; ordinary checks never bless a new baseline. |
 | The full suite fails | Open the log/evidence path printed for the failing stage. Earlier passing stages are useful evidence, but they do not make the release gate pass. |
 
-The [capability matrix](../docs/capabilities.md) describes tested limits and trust boundaries. The [progress record](../docs/progress.md) distinguishes completed local verification from public release and external acceptance.
+The [capability matrix](../docs/capabilities.md) describes tested limits and trust boundaries. The [progress record](../docs/history/progress-through-third.md) distinguishes completed local verification from public release and external acceptance.

@@ -1,6 +1,6 @@
 # Local technical acceptance
 
-The third draft is complete on `third-draft`. Its [verification and handoff record](../third-draft/acceptance.md) identifies the exact software, fresh ledger evidence, hashed archive, relocated launchers, browser checks, and measured resource use.
+The third draft is complete on `third-draft`. Its [verification and handoff record](../history/third-draft/acceptance.md) identifies the exact software, fresh ledger evidence, hashed archive, relocated launchers, browser checks, and measured resource use.
 
 | Item | Accepted delivery |
 | --- | --- |
@@ -11,9 +11,9 @@ The third draft is complete on `third-draft`. Its [verification and handoff reco
 | Book and evidence | Nine chapters, 32 passing fresh recordings, 1,292 payload hashes |
 | Local preview | `http://127.0.0.1:56007/`, using the relocated packaged launcher |
 
-Start with the [principles and completed plan](../../THIRD-DRAFT.md), then the [four operation traces](../third-draft/reading-guide.md). Named models now carry operations, observations, workspace state, package facts, and book recordings through their producers and consumers. The book presents the same capabilities through concrete stories, independent expectations, observed results, and contextual source inspection.
+Start with the [principles and completed plan](../history/THIRD-DRAFT.md), then the [four operation traces](../history/third-draft/reading-guide.md). Named models now carry operations, observations, workspace state, package facts, and book recordings through their producers and consumers. The book presents the same capabilities through concrete stories, independent expectations, observed results, and contextual source inspection.
 
-All 67 preserved example files and both pinned source DAR identities remain unchanged. The source snapshot precedes this final documentation commit; the archive and recordings retain their verified software revision. The [second-draft acceptance](../second-draft/acceptance.md) and [first-draft acceptance](first-draft-acceptance.md) retain prior deliveries. `main` and `first-draft` remain at `d58c113`; `second-draft` remains at `c971845`.
+All 67 preserved example files and both pinned source DAR identities remain unchanged. The source snapshot precedes this final documentation commit; the archive and recordings retain their verified software revision. The [second-draft acceptance](../history/second-draft/acceptance.md) and [first-draft acceptance](../history/first-draft-acceptance.md) retain prior deliveries. `main` and `first-draft` remain at `d58c113`; `second-draft` remains at `c971845`.
 
 Unpack the archive and run `./run-book` with Java 17. `./run-verify` checks the payload and uses Git for source identity. `./run-live` also needs Daml SDK 3.4.11; Ctrl-C releases its disposable network. See [setup](../../book/setup.md), the [developer walkthrough](../developer-walkthrough.md), and [packaging](packaging.md) for reproduction.
 

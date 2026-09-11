@@ -52,4 +52,4 @@ scripts/harmonia builder-check
 
 Try giving both actions the same name: the UI must show a specific diagnostic. Then restore unique names, put buyer review first, and select generated bank approval second. Complete the workflow from the two real participant sessions. In the package panel, inspect metadata and observe why package availability does not imply an executable action.
 
-Read the [composition decision](../docs/architecture/010-composition.md), [on-ledger consent model](../product/ledger/composition/daml/Composer.daml), [Scala input builder](../product/server/src/main/scala/harmonia/packages/workspace/PackageBuilder.scala), and [verification evidence](../docs/verification/16c-builder.md).
+Read the [composition decision](../docs/architecture/010-composition.md), [on-ledger consent model](../product/ledger/composition/daml/Composer.daml), [Scala input builder](../product/server/src/main/scala/harmonia/packages/workspace/PackageBuilder.scala), and [verification evidence](../docs/history/verification/16c-builder.md).

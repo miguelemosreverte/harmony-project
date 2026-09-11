@@ -52,4 +52,4 @@ A passing badge means that the recording matches its accompanying baseline. It d
 
 New runs save copies of the exact authored input and expectation used during execution. The exporter verifies those copies, the normalized actual result, and raw observations against the recorded hashes. If one changes, export fails. Older runs created before these snapshots were introduced must be rerun before export.
 
-The JVM and browser compile the same pure structural comparator from `off-ledger/shared/`. YAML parsing, filesystem access, and ledger integration stay on the JVM. The browser owns presentation and selection state.
+The JVM and browser compile the same pure structural comparator from `harness/model/`. YAML parsing, filesystem access, and ledger integration stay on the JVM. The browser owns presentation and selection state.

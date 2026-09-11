@@ -19,4 +19,4 @@ Generated adapters accept the bounded shape in [Decision 008](architecture/008-b
 
 One local JVM hosts the multi-participant examples with distinct participant identities and stores on one shared synchronizer. This proves the demonstrated ledger behavior, not a production deployment's operational isolation or scale. Recorded perspective switching is a view of saved evidence. The implemented live viewer uses separate authenticated participant sessions; the composer and package builder follow the [capability matrix](capabilities.md).
 
-The current boundary and portable-project gates are recorded in [verification 17](verification/17-boundaries.md). They establish supported local limits and clean build-directory reproduction, not general application or production performance.
+The current boundary and portable-project gates are recorded in [verification 17](history/verification/17-boundaries.md). They establish supported local limits and clean build-directory reproduction, not general application or production performance.

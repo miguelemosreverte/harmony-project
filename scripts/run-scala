@@ -18,7 +18,14 @@ harmonia_fingerprint() {
 harmonia_before="$(harmonia_fingerprint | shasum -a 256)"
 harmonia_manifest=".artifacts/classpaths/$harmonia_target.txt"
 harmonia_stamp=".artifacts/classpaths/$harmonia_target.fingerprint"
-if [[ ! -f "$harmonia_manifest" || ! -f "$harmonia_stamp" || "$(cat "$harmonia_stamp")" != "$harmonia_before" ]]; then
+harmonia_runtime_ready=true
+if [[ -f "$harmonia_manifest" ]]; then
+  IFS=: read -r -a harmonia_jars <<< "$(cat "$harmonia_manifest")"
+  for harmonia_jar in "${harmonia_jars[@]}"; do
+    [[ -f "$harmonia_jar" ]] || harmonia_runtime_ready=false
+  done
+fi
+if [[ "$harmonia_runtime_ready" != true || ! -f "$harmonia_manifest" || ! -f "$harmonia_stamp" || "$(cat "$harmonia_stamp")" != "$harmonia_before" ]]; then
   sbt --batch "$harmonia_target/exportRuntime"
   if [[ "$(harmonia_fingerprint | shasum -a 256)" != "$harmonia_before" ]]; then
     printf 'Sources changed during compilation; run this command again.\n' >&2

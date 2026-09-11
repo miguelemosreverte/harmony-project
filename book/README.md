@@ -20,3 +20,7 @@ This nine-chapter book accompanies the working implementation. Chapters link to 
 Use the [recorded playback guide](playback.md) to open the browser edition.
 
 The current edition includes interactive playback for recorded stories, chapter navigation, observed progression, contract details, and complete expected/actual differences. Follow the playback guide to export and open a saved run. Each chapter provides direct access to its matching recordings when they are included in the export.
+
+## Book implementation
+
+`browser/` owns the recorded Scala.js reader, `model/` its recording and chapter types, `export/` the JVM exporter/server, and `site/` the reader assets. This directory is independent of the live product browser. From the repository root, `scripts/harmonia export-book RUN OUTPUT` exports existing evidence; `scripts/harmonia serve-book OUTPUT` opens it without a ledger.

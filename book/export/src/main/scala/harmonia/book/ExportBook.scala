@@ -70,7 +70,8 @@ object ExportBook:
               .iterator()
               .asScala
               .filter { path =>
-                Files.isRegularFile(path) && Set("md", "scala", "daml", "yaml", "json", "sbt")(
+                Files
+                  .isRegularFile(path) && Set("md", "scala", "daml", "yaml", "json", "sbt", "html")(
                   path.getFileName.toString.split('.').last
                 ) &&
                 !path
@@ -84,15 +85,8 @@ object ExportBook:
           _.traverse_(path => copy(path, output.resolve("source").resolve(root.relativize(path))))
         )
       }
-    _ <- Vector(
-      "README.md",
-      "PRD.md",
-      "SECOND-DRAFT.md",
-      "THIRD-DRAFT.md",
-      "FOURTH-DRAFT.md",
-      "harmonia.md",
-      "harmonia-architecture.html"
-    ).traverse_(name => copy(root.resolve(name), output.resolve("source").resolve(name)))
+    _ <- Vector("README.md", "FOURTH-DRAFT.md")
+      .traverse_(name => copy(root.resolve(name), output.resolve("source").resolve(name)))
     _ <- IO.println(s"Book exported: $output")
   yield ()
 

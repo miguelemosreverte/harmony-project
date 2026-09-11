@@ -9,8 +9,7 @@ Read `interfaces`, then the particular application and choice used by your examp
 | `applications/` | Independently owned financing, review, property, and custody applications |
 | `bindings/` | Handwritten adapter for an unchanged legacy application |
 | `composition/` | Consented proposal and process creation |
-| `demo/` | Standalone authenticated live setup, with no dependency on the test assembly |
-| `tests/` | Daml Script integration, branching, privacy, transfer, and boundary tests |
-| `fixtures/` | Primitive generation and imported metadata examples |
 
 Each package's `daml.yaml` declares its dependencies. [The build order](../../scripts/ledger-packages) keeps those dependencies explicit. Generated adapter projects live under `.artifacts/`, importing pinned application and Harmonia API DARs. Source application identities stay pinned in [the input manifest](../packages/inputs.md).
+
+Disposable demonstration, integration tests, and imported metadata fixtures live in [the harness](../../harness/README.md). The primitive approval application stays with product applications because it is a supported binding-generation input.

@@ -47,7 +47,7 @@ A reader should be able to:
 
 ### Starting point
 
-At the planning baseline, the workspace contained only the imported [development proposal](harmonia.md), [architecture illustration](harmonia-architecture.html), and planning documents. Implementation and frequent local commits are now authorized. The [progress record](docs/progress.md) identifies delivered commits, verification evidence, and the next step.
+At the planning baseline, the workspace contained only the imported [development proposal](../proposal/harmonia.md), [architecture illustration](../proposal/harmonia-architecture.html), and planning documents. Implementation and frequent local commits are now authorized. The [progress record](progress-through-third.md) identifies delivered commits, verification evidence, and the next step.
 
 The proposal establishes the intended release scope. The illustration supplies a useful design sketch; its template names and several package relationships are explicitly provisional. This PRD records our subsequent product and engineering decisions without treating those sketches as proven implementations.
 
@@ -143,9 +143,9 @@ The exact location of interface declarations differs between passages of the imp
 
 ### Scala code organization
 
-The [Scala architecture note](docs/architecture/scala.md) defines the proposed source tree, dependency direction, effect conventions, and review criteria. Each feature, such as running a story or generating a binding, owns its related code. Keep the shared model small and platform-independent; keep ledger SDK and filesystem integration on the JVM. Select specific libraries within the Scala requirement as the relevant examples are implemented.
+The [Scala architecture note](../architecture/scala.md) defines the proposed source tree, dependency direction, effect conventions, and review criteria. Each feature, such as running a story or generating a binding, owns its related code. Keep the shared model small and platform-independent; keep ledger SDK and filesystem integration on the JVM. Select specific libraries within the Scala requirement as the relevant examples are implemented.
 
-The [repository map](docs/architecture/repository.md) explains the root folders and the separate responsibilities of `bindings/`, `workflows/`, `ledger/`, and `files/` within the Scala implementation.
+The [repository map](../architecture/repository.md) explains the root folders and the separate responsibilities of `bindings/`, `workflows/`, `ledger/`, and `files/` within the Scala implementation.
 
 ### Execution and evidence rules
 
@@ -217,9 +217,9 @@ Committed story inputs and expectations are human-reviewed product specification
 
 The executable examples are maintained in one place:
 
-- [Financing approval input](examples/stories/financing-approved/input.md) and [its committed expectation](examples/stories/financing-approved/expected.md).
-- [Already-approved input](examples/stories/already-approved/input.md) and [its committed expectation](examples/stories/already-approved/expected.md).
-- [Current format and observation scope](examples/stories/README.md).
+- [Financing approval input](../../examples/stories/financing-approved/input.md) and [its committed expectation](../../examples/stories/financing-approved/expected.md).
+- [Already-approved input](../../examples/stories/already-approved/input.md) and [its committed expectation](../../examples/stories/already-approved/expected.md).
+- [Current format and observation scope](../../examples/stories/README.md).
 
 These files are the reader-facing specification used by the runner. They replace the initial inline schema sketches to avoid duplicating examples that could drift apart. As later commits extend the supported actions, update the format documentation and affected stories together.
 
@@ -460,7 +460,7 @@ This item is split into consecutive subcommits: **12a** separates the reference 
 
 Deliver this larger step as three ordered, working commits:
 
-- [x] **16a:** ledger proposal/consent, core instantiation, authenticated commands, two committed goldens, and recorded source-state playback. Evidence: [composition foundation](docs/verification/16a-composition.md).
+- [x] **16a:** ledger proposal/consent, core instantiation, authenticated commands, two committed goldens, and recorded source-state playback. Evidence: [composition foundation](verification/16a-composition.md).
 - [x] **16b:** accessible live editor, partner consent, execution controls, and observed source states.
 - [x] **16c:** bounded DAR input/inspection and supported mapping diagnostics, with Chapter 8's complete walkthrough.
 
@@ -523,7 +523,7 @@ Deliver this larger step as three ordered, working commits:
 
 ## 9. Implementation acceptance checklist
 
-This checklist covers the local implementation and its verification. Technical acceptance is recorded in the [identified local delivery](docs/release/acceptance.md).
+This checklist covers the local implementation and its verification. Technical acceptance is recorded in the [identified local delivery](../release/acceptance.md).
 
 - [x] **Working composition**
   - [x] Both integration paths execute through the same core-managed model.
@@ -595,4 +595,4 @@ The documentation below informed the initial discussion. They are versioned Digi
 - [Parties and authority](https://archived.docs.digitalasset.com/build/3.5/tutorials/smart-contracts/parties.html): authorization context and the limits of authority propagation.
 - [Compose choices](https://archived.docs.digitalasset.com/build/3.4/tutorials/smart-contracts/compose.html): transaction composition, atomicity, and disclosure of consequences.
 
-**Current implementation step:** see the [progress record](docs/progress.md). Completed checkboxes require the corresponding implementation and evidence.
+**Current implementation step:** see the [progress record](progress-through-third.md). Completed checkboxes require the corresponding implementation and evidence.

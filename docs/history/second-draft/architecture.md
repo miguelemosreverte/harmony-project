@@ -1,6 +1,6 @@
 # Second-draft architecture
 
-This is the implemented design. The [ordered plan](../../SECOND-DRAFT.md) records verification status, the [repository map](../architecture/repository.md) describes folders, and the [reading traces](reading-traces.md) connect examples to operations and tests.
+This is the implemented design. The [ordered plan](../SECOND-DRAFT.md) records verification status, the [repository map](../../architecture/repository.md) describes folders, and the [reading traces](reading-traces.md) connect examples to operations and tests.
 
 ## A feature explains a complete operation
 

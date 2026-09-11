@@ -10,4 +10,4 @@ The successful Alice recording identifies transaction `122000f9e7d070a943289064c
 
 The browser edition at `.artifacts/book-transfer/` exposes six transfer recordings and Chapter 6. Its balance charts show 0/10/0 after the rejected final leg and 0/0/7.125 after successful fractional transfer. All twelve Chapter 6 links return HTTP 200, its diagram renders as SVG, and the 390-pixel layout has no page overflow. Controls retain keyboard focus while changing attempts. Screenshots: `.artifacts/verification/12-transfer-rollback-mobile.png` and `12-transfer-fractional-desktop.png`.
 
-The [architecture decision](../architecture/007-atomic-transfer.md) records the exact authority model and initial atomic bound. This is a synthetic whole-position transfer; no payment, cancellation, expiry, external token network, or production custody integration is claimed.
+The [architecture decision](../../architecture/007-atomic-transfer.md) records the exact authority model and initial atomic bound. This is a synthetic whole-position transfer; no payment, cancellation, expiry, external token network, or production custody integration is claimed.

@@ -1,6 +1,6 @@
 # The second-draft book and live workspace
 
-This document records the implemented presentation principles and their interaction checks. The [second-draft plan](../../SECOND-DRAFT.md) and release evidence distinguish completed checks from pending verification.
+This document records the implemented presentation principles and their interaction checks. The [second-draft plan](../SECOND-DRAFT.md) and release evidence distinguish completed checks from pending verification.
 
 ## The first ten minutes
 

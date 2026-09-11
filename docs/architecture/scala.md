@@ -1,21 +1,27 @@
-# Scala organization and style
+# Scala principles
 
-The code uses concrete Cats Effect `IO`, immutable values and enums, ordinary functions, and explicit `Resource` ownership. Platform directories reflect JVM and browser compilation; capability packages explain the product. See the [repository map](repository.md) and [third-draft reading guide](../third-draft/reading-guide.md).
+Use concrete Cats Effect `IO`, immutable values, ordinary named functions, and explicit `Resource` ownership. Keep a related operation together. A smaller file obtained by scattering its logic does not improve the reading experience.
 
-A normal reading path is a shared command/model, a JVM operation and observation boundary, and its browser view. Related small definitions stay together. There is no universal service interface or one class per file rule.
+The [product reading guide](../fourth-draft/reading-guide.md) follows the features. The [repository map](repository.md) explains the compiler boundaries between product, book, and harness.
 
-The financing operation is an exhaustive match over `FinancingAction`. Composition plans use `CompositionActor` and `CompositionAction`, while `CompositionCommand` owns proposal, acceptance, cancellation, and execution. `WorkspaceCommand` routes these feature families exhaustively. Operations return a named `LedgerExercise`. Financing observations and composition payload schemas are decoded once, with explicit failures for malformed visible data.
+## Values inside, decoding at boundaries
 
-`WorkspaceSnapshot`, `CompositionState`, and `PackageState` are constructed by the server and decoded by the browser using shared codecs. HTTP serialization preserves the established field names. `BuilderInput` stores typed inspection, source, and compiled-project facts; generation permissions and output flags are derived from them. Raw metadata and generation manifests remain retained evidence, not control state.
+`FinancingAction`, `CompositionAction`, `CompositionCommand`, and `WorkspaceCommand` make supported operations explicit and exhaustively matched. A `LedgerExercise` names the choice submitted. Financing and composition observations decode visible contracts once; malformed visible data fails with context, and missing disclosure remains optional.
 
-`Submissions` owns request delivery. Its preparation function observes current state and returns an optional submission effect. The owner checks the observed version before running that effect. `Workspace` supplies authenticated participants and routes commands to features. `SubmitChoice` interprets actual gRPC submission failures; failed observations never become definite business rejection. Reconciliation uses command identities recovered from ledger history.
+The server constructs the public `WorkspaceSnapshot`, `CompositionState`, and `PackageState`; the browser decodes those same types. A small `JsonCodec` derives the established snake-case field names. Unusual envelopes remain explicit. The composition editor builds a typed `Composition` and calls the same validation as the HTTP decoder. It does not construct internal JSON merely to validate its own values.
 
-`LfArchive` reads bounded DAR archives and the SDK's public LF protobuf classes. `TemplateShapeReader` checks supported record and choice structures. Text matching remains appropriate for external identifiers, Markdown directives, HTTP routes, and authored names; it does not replace type checking of internal commands or compiler syntax trees.
+`BuilderInput` carries typed inspection, source, and compilation facts. Generation permissions follow from those facts. Raw metadata and generation manifests remain evidence. `LfArchive` reads bounded archives through SDK LF protobuf classes, and `TemplateShapeReader` checks their structures. Text matching belongs at authored-name, route, Markdown, and identifier boundaries.
 
-The book's `PresentStory` and `BoundaryPhases` return typed reader units; `ExportBook` constructs `RecordedStory` and `BookChapter` directly before writing JSON. Independent expected/actual comparison remains in `CompareResults`. Missing observations stay missing, and verification phases do not acquire fictional business outcomes. `Examples` supplies discovery, chapter coverage, and release membership.
+## Effects have owners
 
-The browser owns one `BookView` and one inspector for a reader lifetime. `BookNavigation` stores chapter/example/attempt context in the address. `LiveView` owns stable regions; its editor and package controls remain mounted during participant refreshes. Polling/listeners, cancellable fetches, server executors, ledger channels, and subprocesses have scoped owners.
+`Connections` supplies existing participant clients and their catalog. `Workspace` routes commands and coordinates submissions. `Submissions` checks the observed version before running a prepared effect, reconciles uncertain outcomes against ledger command identities, and owns its background work. Failed observations do not become definite business rejection.
 
-Build and test one heavy stage at a time. The existing heap limits remain: sbt 1 GiB, application tools 512 MiB, Canton 2 GiB, Script 512 MiB, recorded book 128 MiB. A workspace lease prevents overlapping ledger environments. `scripts/harmonia` exports an immutable runtime JAR so sbt exits before a ledger starts.
+The standalone service reads operator-supplied local connection configuration. The harness owns disposable networks, sample parties, and demo JWT signing. HTTP executors, ledger channels, polling, fetches, and subprocesses close with their owning `Resource`.
 
-Tests mirror the capability they verify. Goldens are authored Markdown beside their inputs; no test updates its expectation automatically. Boundary and failure tests check meaningful malformed inputs, authority, missing observations, uncertain outcomes, and cancellation.
+The live view keeps its editor and package controls mounted during refresh. The book owns its own browser, navigation, recording projection, and source inspector. `CompareResults` supplies the independent structural comparison used by checks and recorded playback.
+
+## Verification and memory
+
+Golden expectations remain authored Markdown beside their inputs. No checker rewrites them automatically. Tests cover behavior and boundaries: malformed data, authority, missing observations, transport fields, uncertain submissions, cancellation, and compiler isolation.
+
+Build and check one heavy stage at a time. Heap caps are sbt 1 GiB, application tools 512 MiB, Canton 2 GiB, Script 512 MiB, and recorded playback 128 MiB. Heap caps are not resident-memory measurements. A workspace lease prevents overlapping ledgers. Launch scripts export immutable runtime JARs so sbt exits before ledger execution begins.

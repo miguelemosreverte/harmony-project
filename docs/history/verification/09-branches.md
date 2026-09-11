@@ -10,4 +10,4 @@ The declined route skips financing and review, rejects its unselected financing 
 
 The browser edition at `.artifacts/book-branches/` was exported from the aggregate run. Its premature-join table shows approved financing, pending review, waiting workflow, and review still enabled. Its successful join shows completed workflow with closure still skipped. Chapter 4 renders both diagrams (nine nodes total), and all sixteen chapter links returned HTTP 200.
 
-The [decision record](../architecture/005-decisions-and-joins.md) states the supported graph subset and staged transaction boundary. This increment implements explicit human selection, not automatic inference from an unverified external result.
+The [decision record](../../architecture/005-decisions-and-joins.md) states the supported graph subset and staged transaction boundary. This increment implements explicit human selection, not automatic inference from an unverified external result.

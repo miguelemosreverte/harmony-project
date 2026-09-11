@@ -1,6 +1,6 @@
 # Third-draft verification and handoff
 
-Verified locally on 2026-09-11. TD01–TD06 are complete on `third-draft`. The [design](../../THIRD-DRAFT.md) records the principles and ordered work; the [reading guide](reading-guide.md) follows the implemented financing, composition, package, and book paths.
+Verified locally on 2026-09-11. TD01–TD06 are complete on `third-draft`. The [design](../THIRD-DRAFT.md) records the principles and ordered work; the [reading guide](reading-guide.md) follows the implemented financing, composition, package, and book paths.
 
 ## Identified delivery
 
@@ -14,7 +14,7 @@ Verified locally on 2026-09-11. TD01–TD06 are complete on `third-draft`. The [
 | Relocated bundle | `.artifacts/third release relocation/harmonia-070f499f045b/` |
 | Retained book | `http://127.0.0.1:56007/`, served by the relocated `run-book` |
 
-This acceptance documentation is committed after the verified software. The archive and observations retain their actual source revision; unfinished planning boxes inside that immutable snapshot reflect its packaging point. The second draft remains at `c971845`; `main` and `first-draft` remain at `d58c113`. Their [second](../second-draft/acceptance.md) and [first](../release/first-draft-acceptance.md) acceptance records remain historical.
+This acceptance documentation is committed after the verified software. The archive and observations retain their actual source revision; unfinished planning boxes inside that immutable snapshot reflect its packaging point. The second draft remains at `c971845`; `main` and `first-draft` remain at `d58c113`. Their [second](../second-draft/acceptance.md) and [first](../first-draft-acceptance.md) acceptance records remain historical.
 
 ## What changed
 
@@ -68,6 +68,6 @@ Final independent process inspection found one book JVM, PID `96856`, at 98,784 
 
 Read one golden story in the book, then follow its operation using the [four reading traces](reading-guide.md). They also identify the remaining intentional raw metadata/evidence, SDK field decoding, and Daml choice adapters. Feature packages express ownership within separate JVM and browser build targets.
 
-The verified environment uses Java 17, Scala 3.3.6, Cats Effect 3.6.3, and Daml SDK 3.4.11 on macOS ARM64. The clean build reused installed tools and dependency caches. From the bundle, `./run-book` needs Java 17; `./run-verify` also uses Git; `./run-live` additionally needs the pinned Daml SDK. Follow [setup](../../book/setup.md) for rebuilding with `source/scripts/check`.
+The verified environment uses Java 17, Scala 3.3.6, Cats Effect 3.6.3, and Daml SDK 3.4.11 on macOS ARM64. The clean build reused installed tools and dependency caches. From the bundle, `./run-book` needs Java 17; `./run-verify` also uses Git; `./run-live` additionally needs the pinned Daml SDK. Follow [setup](../../../book/setup.md) for rebuilding with `source/scripts/check`.
 
-Acceptance covers the local behavior in the [capability](../capabilities.md) and [compatibility](../compatibility.md) documents. The reading guide supports human review; compiler and test success do not establish a human readability verdict. Production availability, arbitrary integration, publication, and external adoption are not claimed.
+Acceptance covers the local behavior in the [capability](../../capabilities.md) and [compatibility](../../compatibility.md) documents. The reading guide supports human review; compiler and test success do not establish a human readability verdict. Production availability, arbitrary integration, publication, and external adoption are not claimed.

@@ -33,7 +33,8 @@ object CheckBookLinks:
             then FileVisitResult.SKIP_SUBTREE
             else FileVisitResult.CONTINUE
           override def visitFile(path: Path, attributes: BasicFileAttributes): FileVisitResult =
-            if path.toString.endsWith(".md") && path != root.resolve("harmonia.md") then
+            if path.toString.endsWith(".md") && path != root.resolve("docs/proposal/harmonia.md")
+            then
               parser
                 .parse(Files.readString(path))
                 .accept(new AbstractVisitor {

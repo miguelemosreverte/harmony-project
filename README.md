@@ -1,43 +1,33 @@
 # Harmonia
 
-Compose independently owned Canton/Daml applications into a shared workflow, and understand the result through executable stories and an interactive book.
+Compose independently owned Canton/Daml applications into a shared workflow. The ledger authorizes actions and records progression; the Scala service observes state and submits commands; the browser makes the workflow visible.
 
-The ledger enforces actions and records progression. Scala tools execute stories, compare observations with committed golden files, generate application bindings, and present the results.
+## Read the product
 
-## Start here
+Start in **[product/](product/README.md)**. It contains the contracts, service, shared API types, live browser, and reviewed package mappings. The [reading guide](docs/fourth-draft/reading-guide.md) follows one operation through those owners.
 
-The [fourth draft](FOURTH-DRAFT.md) separates a minimal [product](product/README.md) from the book and development harness. The previous verified versions remain preserved on `first-draft`, `second-draft`, and `third-draft`.
-
-- [Verified local delivery and handoff](docs/release/acceptance.md)
-- [Product requirements and ordered commit plan](PRD.md)
-- [Implementation progress and verification](docs/progress.md)
-- [Repository map](docs/architecture/repository.md)
-- [Scala organization and functional style](docs/architecture/scala.md)
-- [Source documents and provenance](docs/sources.md)
-- [The working book](book/README.md)
-- [Authenticated live viewer and composer](docs/live.md)
-- [Developer/evaluator walkthrough](docs/developer-walkthrough.md)
-- [Supported limits and trust boundaries](docs/capabilities.md)
-- [Pinned local and upstream DAR inputs](product/packages/README.md)
-
-The verified local edition includes both reference workflows, direct and generated integration, an authenticated live composer, package inspection/generation, and a nine-chapter executable book with 32 recordings. The packaged `run-book` launcher opens recorded playback with Java 17; `run-live` starts the disposable ledger evaluation with the pinned SDK. Start with [local setup](book/setup.md), then run:
-
-```sh
-scripts/build
-scripts/harmonia smoke
-scripts/harmonia check
+```text
+product/     Contracts, service, API, live browser, package inputs
+book/        Chapters, recorded browser, recording models, exporter
+harness/     Disposable networks, golden runners, tests, release tools
+examples/    Readable inputs and committed independent expectations
+docs/        Architecture and acceptance; prior plans under history/
+scripts/     Small build and launch commands
+build.sbt    The compilation boundaries
 ```
 
-To explore the printed run directory in the interactive book, use `scripts/book .artifacts/check-RUN`. See the [playback guide](book/playback.md) for exporting, opening, and inspecting recorded evidence.
+The product compiles and runs without book or harness classes. The book consumes recorded evidence; the harness provisions demonstrations and checks the product. Each has its own entry point. See the [repository map](docs/architecture/repository.md) and [Scala principles](docs/architecture/scala.md).
 
-## Delivery principles
+## Run it
 
-Each capability ships with readable code, a concrete story, committed expectations, and an explanation. The same execution artifacts power regression checks and interactive demonstrations.
+Follow [setup](book/setup.md) for the pinned tools. Build the product with `scripts/build-product`, then connect to configured local participants with `scripts/product serve configuration.json`. The [product guide](product/README.md) describes that configuration.
 
-Off-ledger application code is Scala with Cats Effect `IO`. On-ledger contracts are Daml. Code is organized into cohesive feature slices. Markdown and YAML remain human-readable, with explicit meanings and minimal duplication.
+For the complete demonstration, run `scripts/build` followed by `scripts/demo live`. The [harness guide](harness/README.md) lists the focused checks and full suite. One ledger environment runs at a time.
 
-## Publication
+Read the [nine-chapter book](book/README.md) or open recorded runs using the [playback guide](book/playback.md). The book presents concrete inputs, independent expectations, observed results, interactive progression, and source inspection. A [packaged delivery](docs/release/packaging.md) provides `run-product`, `run-book`, `run-live`, and `run-verify`.
 
-Development currently takes place in this local repository. Public repository destination and licensing must be settled before publication. Imported source documents retain their original attribution; see the provenance record.
+## Review this draft
 
-Build a versioned local delivery with the [release packaging guide](docs/release/packaging.md).
+[Fourth-draft principles and plan](FOURTH-DRAFT.md) · [Progress](docs/progress.md) · [Acceptance](docs/release/acceptance.md) · [Capabilities](docs/capabilities.md) · [Compatibility](docs/compatibility.md)
+
+The earlier versions remain on `first-draft`, `second-draft`, and `third-draft`. Their plans and verification notes are in [history](docs/history/README.md). Imported proposals and attribution are recorded in [sources](docs/sources.md). Public repository destination and licensing remain undecided.

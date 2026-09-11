@@ -8,7 +8,7 @@
 
 The second draft makes Harmonia straightforward to read, explain, and extend while preserving its demonstrated behavior. Its intended reviewer is a senior developer who understands software engineering and has limited time to learn this particular system. Search tools and compiler feedback help development; they are not the measure of whether the design explains itself.
 
-This is the completed implementation plan for the second draft. The completed [first implementation PRD](PRD.md), [release evidence](docs/verification/19-release.md), and existing [capability matrix](docs/capabilities.md) establish its behavioral baseline. Checkboxes here cover implementation, documentation, and verification.
+This is the completed implementation plan for the second draft. The completed [first implementation PRD](PRD.md), [release evidence](verification/19-release.md), and existing [capability matrix](../capabilities.md) establish its behavioral baseline. Checkboxes here cover implementation, documentation, and verification.
 
 ## The final version
 
@@ -36,15 +36,15 @@ The final local release includes all currently demonstrated capabilities, a cohe
 
 | Document | Owns |
 | --- | --- |
-| [Architecture](docs/second-draft/architecture.md) | Feature boundaries, target source organization, typed operations, dependency direction, and migration map |
-| [Book and live experience](docs/second-draft/reader.md) | Navigation, progressive explanation, visual language, state ownership, and interaction checks |
+| [Architecture](second-draft/architecture.md) | Feature boundaries, target source organization, typed operations, dependency direction, and migration map |
+| [Book and live experience](second-draft/reader.md) | Navigation, progressive explanation, visual language, state ownership, and interaction checks |
 | This plan | Principles, ordered commits, review evidence, and final acceptance |
 
-The architecture and reader documents describe the implemented design. The [operation traces](docs/second-draft/reading-traces.md) identify its source owners, and the [acceptance record](docs/second-draft/acceptance.md) supplies the final verification evidence.
+The architecture and reader documents describe the implemented design. The [operation traces](second-draft/reading-traces.md) identify its source owners, and the [acceptance record](second-draft/acceptance.md) supplies the final verification evidence.
 
 ## Behavior carried forward
 
-The supported scope remains the [demonstrated capability matrix](docs/capabilities.md): direct and generated participation; progression, branches, and joins; private result handoff; financing to property offer; atomic four-party transfer; authenticated live sessions; the consented composer; and bounded package input, generation, and export.
+The supported scope remains the [demonstrated capability matrix](../capabilities.md): direct and generated participation; progression, branches, and joins; private result handoff; financing to property offer; atomic four-party transfer; authenticated live sessions; the consented composer; and bounded package input, generation, and export.
 
 The baseline has 27 regular stories and five further reader recordings: authenticated handoff, two composer stories, the package builder, and execution bounds. Required checks also include Daml and Scala tests, package reproduction, generation determinism, detection of a deliberately compiled regression, participant visibility, concurrent advances, and portable project reproduction.
 
@@ -117,7 +117,7 @@ The first three actual commits on `second-draft` form one acceptance sequence: d
 
 ### SD09 — Complete the book and live workspace
 
-- [x] Apply the [reader design](docs/second-draft/reader.md) across all chapters and demonstrations, with a shared visual vocabulary and stable component lifetimes.
+- [x] Apply the [reader design](second-draft/reader.md) across all chapters and demonstrations, with a shared visual vocabulary and stable component lifetimes.
 - [x] Provide contextual code/evidence inspection, navigable reader state, and a clear return to the story.
 - [x] Give the live workspace clear financing, composition, and package tasks under its authenticated session.
 - [x] **Acceptance:** desktop and narrow-screen walkthroughs cover keyboard access, focus, editing, refresh, pending/uncertain/rejected states, and all baseline recordings.
@@ -166,8 +166,8 @@ The first three actual commits preserved the agreed sequence: design, typed fina
 | SD11 correction and verified source | `b1ed52f` | Correct fixture lookup; complete clean-checkout gate and fresh release pass |
 | SD11 handoff | This documentation commit | Acceptance record, checked plan, relocated launchers, fresh browser walkthrough, and final process inspection |
 
-The [final verification record](docs/second-draft/acceptance.md) identifies all eleven passing gates, 36 Scala tests, four Daml scripts, 32 fresh recordings, nine chapters, archive identity, and measured cleanup. Both dedicated composition stories and portable generation pass at the exact release revision. All 67 moved example files and both pinned source DAR digests remain unchanged.
+The [final verification record](second-draft/acceptance.md) identifies all eleven passing gates, 36 Scala tests, four Daml scripts, 32 fresh recordings, nine chapters, archive identity, and measured cleanup. Both dedicated composition stories and portable generation pass at the exact release revision. All 67 moved example files and both pinned source DAR digests remain unchanged.
 
-The [interaction record](docs/second-draft/interaction-checks.md) covers editing through polling, focus, lost-reply recovery, consented generated composition, package compilation/download, participant privacy, and visible golden failures. The relocated release was separately exercised through authenticated approval and continuation. Its book rendered all fresh examples and their operation links at the retained URL.
+The [interaction record](second-draft/interaction-checks.md) covers editing through polling, focus, lost-reply recovery, consented generated composition, package compilation/download, participant privacy, and visible golden failures. The relocated release was separately exercised through authenticated approval and continuation. Its book rendered all fresh examples and their operation links at the retained URL.
 
 The preserved first-draft preview remained available during implementation. The final handoff replaces it with the second-draft packaged book at `http://127.0.0.1:56007/`. Only that bounded book JVM remains; the verification and live ledger processes are stopped. Human review can now assess the three source-reading traces against the documented principles.

@@ -1,6 +1,6 @@
 # Harmonia, third draft
 
-**Status:** TD01–TD06 complete; [verified delivery](docs/third-draft/acceptance.md).  
+**Status:** TD01–TD06 complete; [verified delivery](third-draft/acceptance.md).  
 **Branch:** `third-draft`  
 **Preserved second draft:** `c97184587c5b68589fd69ddf98e98e404c231a29`  
 **Verified second-draft software:** `b1ed52f38553888696fd512c9558a18f395a0ec5`
@@ -87,9 +87,9 @@ TD04 constructs a typed workspace throughout the server, with shared codecs at H
 
 TD04's direct and generated composition goldens both passed with zero differences (`.artifacts/third-04-composer.log`, clean source `3a37771`). TD05 makes package workspace state typed, derives transport flags from its inspected source and compiled project, and makes book projection/export return the shared envelope directly. All 45 Scala tests and both targets pass (`.artifacts/third-05-build.log`). The new missing-observation test retains both the visible absence and the complete independent mismatch through recording encoding.
 
-TD05's actual package-builder check passed (`.artifacts/third-05-builder.log`, clean source `e66dad5`). Exporting the preserved second-release recordings through the typed producer yielded the same full JSON payload for all 32 examples and nine chapters; all source/book links passed. This establishes presentation preservation, with original provenance retained. Fresh third-draft executions belong to the final release gate. The [current reading guide](docs/third-draft/reading-guide.md) explains the implemented paths and remaining deliberate boundaries.
+TD05's actual package-builder check passed (`.artifacts/third-05-builder.log`, clean source `e66dad5`). Exporting the preserved second-release recordings through the typed producer yielded the same full JSON payload for all 32 examples and nine chapters; all source/book links passed. This establishes presentation preservation, with original provenance retained. Fresh third-draft executions belong to the final release gate. The [current reading guide](third-draft/reading-guide.md) explains the implemented paths and remaining deliberate boundaries.
 
-TD06 passed the full clean release at `070f499`: eleven gates, 45 Scala tests, four Daml scripts, 32 fresh recordings, and nine chapters. Archive relocation, deliberate tamper rejection, live/browser execution, package download, and final process cleanup all passed. The [acceptance record](docs/third-draft/acceptance.md) identifies the archive, measurements, evidence paths, and remaining limits. Only the packaged book remains at `http://127.0.0.1:56007/`.
+TD06 passed the full clean release at `070f499`: eleven gates, 45 Scala tests, four Daml scripts, 32 fresh recordings, and nine chapters. Archive relocation, deliberate tamper rejection, live/browser execution, package download, and final process cleanup all passed. The [acceptance record](third-draft/acceptance.md) identifies the archive, measurements, evidence paths, and remaining limits. Only the packaged book remains at `http://127.0.0.1:56007/`.
 
 ## Commit record
 

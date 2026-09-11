@@ -1,6 +1,6 @@
 # Second-draft verification and handoff
 
-Verified locally on 2026-09-11. All SD01–SD11 implementation work is complete on `second-draft`. The [principles](../../SECOND-DRAFT.md), [architecture](architecture.md), and [three reading traces](reading-traces.md) explain the resulting design. `main` and `first-draft` remain at `d58c1136b1b90180bb36bc5b69ac43131051003e`.
+Verified locally on 2026-09-11. All SD01–SD11 implementation work is complete on `second-draft`. The [principles](../SECOND-DRAFT.md), [architecture](architecture.md), and [three reading traces](reading-traces.md) explain the resulting design. `main` and `first-draft` remain at `d58c1136b1b90180bb36bc5b69ac43131051003e`.
 
 ## Identified delivery
 
@@ -14,7 +14,7 @@ Verified locally on 2026-09-11. All SD01–SD11 implementation work is complete 
 | Relocated bundle | `.artifacts/second release relocation/harmonia-b1ed52f38553/` |
 | Retained book | `http://127.0.0.1:56007/`, served by the relocated `run-book` |
 
-The archive identifies the software and evidence revision above. This handoff documentation is committed afterward and does not relabel the archive or its observations. Planning checkboxes inside the immutable source snapshot reflect the earlier packaging point; this record supplies final acceptance. The [first-draft acceptance](../release/first-draft-acceptance.md) remains historical.
+The archive identifies the software and evidence revision above. This handoff documentation is committed afterward and does not relabel the archive or its observations. Planning checkboxes inside the immutable source snapshot reflect the earlier packaging point; this record supplies final acceptance. The [first-draft acceptance](../first-draft-acceptance.md) remains historical.
 
 ## Complete clean-checkout gate
 
@@ -65,10 +65,10 @@ The release sampler recorded 880 observations of the release process and its des
 
 After relocation checks and preview replacement, process inspection found one book JVM, PID `88837`, at 97,360 KiB RSS (about 95 MiB), with a 128 MiB heap cap. No sbt, live runtime, or Canton process remained. The temporary Python preview and original book JVM were stopped. `.artifacts/second-final-processes.json` records that inspection. Heap caps do not cap all resident memory.
 
-The verified environment uses Java 17, Scala 3.3.6, Cats Effect 3.6.3, and Daml SDK 3.4.11 on macOS ARM64. Clean builds reused installed tools and dependency caches. The [capability](../capabilities.md) and [compatibility](../compatibility.md) documents define the supported local topology, finite reviewed mappings, and bounded inputs. The work does not establish production availability, arbitrary runtime integration, or an independent human readability verdict.
+The verified environment uses Java 17, Scala 3.3.6, Cats Effect 3.6.3, and Daml SDK 3.4.11 on macOS ARM64. Clean builds reused installed tools and dependency caches. The [capability](../../capabilities.md) and [compatibility](../../compatibility.md) documents define the supported local topology, finite reviewed mappings, and bounded inputs. The work does not establish production availability, arbitrary runtime integration, or an independent human readability verdict.
 
 ## Review and reproduce
 
-Open the book, follow one example into its expectation and operation, then use the three reading traces to review financing, composition, and package generation. The [repository map](../architecture/repository.md) and [Scala guide](../architecture/scala.md) explain where those owners live.
+Open the book, follow one example into its expectation and operation, then use the three reading traces to review financing, composition, and package generation. The [repository map](../../architecture/repository.md) and [Scala guide](../../architecture/scala.md) explain where those owners live.
 
-From the unpacked bundle, `./run-book` needs Java 17; `./run-verify` also uses Git. `./run-live` additionally needs Daml SDK 3.4.11. For a complete rebuild, follow [setup](../../book/setup.md) and run `source/scripts/check` with the documented toolchain. The source archive, generated projects, committed expectations, actual recordings, and release manifest provide separate reviewable artifacts.
+From the unpacked bundle, `./run-book` needs Java 17; `./run-verify` also uses Git. `./run-live` additionally needs Daml SDK 3.4.11. For a complete rebuild, follow [setup](../../../book/setup.md) and run `source/scripts/check` with the documented toolchain. The source archive, generated projects, committed expectations, actual recordings, and release manifest provide separate reviewable artifacts.

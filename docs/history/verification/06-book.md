@@ -1,6 +1,6 @@
 # First interactive book verification
 
-Verified locally on 2026-09-10. Scala/JVM and Scala.js compile with the pinned versions in [ADR 002](../architecture/002-recorded-book.md).
+Verified locally on 2026-09-10. Scala/JVM and Scala.js compile with the pinned versions in [ADR 002](../../architecture/002-recorded-book.md).
 
 ## Ledger evidence and export
 
@@ -20,7 +20,7 @@ The rendered book was exercised in a real browser:
 - Desktop playback was inspected at 1440 pixels wide. At 390 pixels wide, the document width remained 390 pixels; the graph scrolls within its panel and brings the selected step into view. Chapter navigation wraps and comparison headings remain legible.
 - Source revision, dirty-worktree status, recording time, and participant topology are visible or linked as provenance. Evidence files are directly inspectable.
 
-Final screenshots are retained locally at `.artifacts/verification/06-book-desktop.png` and `.artifacts/verification/06-book-mobile.png`. The browser bundle is reproducible using the [playback guide](../../book/playback.md).
+Final screenshots are retained locally at `.artifacts/verification/06-book-desktop.png` and `.artifacts/verification/06-book-mobile.png`. The browser bundle is reproducible using the [playback guide](../../../book/playback.md).
 
 ## Scope
 

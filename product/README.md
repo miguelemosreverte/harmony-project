@@ -12,11 +12,11 @@ Harmonia coordinates independently owned Daml applications. Contracts authorize 
 
 ## Follow one operation
 
-1. `api/.../financing/FinancingState.scala` names the supported actions and observations.
-2. `server/.../financing/FinancingObservation.scala` decodes visible contracts.
-3. `server/.../financing/Financing.scala` selects the ledger choice.
-4. `server/.../app/workspace/Workspace.scala` supplies connections and owns submission coordination.
-5. `server/.../app/http/LiveServer.scala` encodes the response for the browser.
+1. [FinancingState](api/src/main/scala/harmonia/financing/FinancingState.scala) names supported actions and observations.
+2. [FinancingObservation](server/src/main/scala/harmonia/financing/FinancingObservation.scala) decodes visible contracts.
+3. [Financing](server/src/main/scala/harmonia/financing/Financing.scala) selects the ledger choice.
+4. [Workspace](server/src/main/scala/harmonia/app/workspace/Workspace.scala) supplies connections and owns submission coordination.
+5. [LiveServer](server/src/main/scala/harmonia/app/http/LiveServer.scala) encodes the response for the browser.
 
 `Connections` contains supplied ledger clients and their catalog. It does not create a network or read a story. `Resource` closes the clients, HTTP executor, and submission supervisor when their owner stops.
 

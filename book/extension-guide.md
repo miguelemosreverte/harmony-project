@@ -4,7 +4,7 @@ Start with a copy of a small story, a concrete source action, and an independent
 
 ## An application you own
 
-1. Add a cohesive Daml package under `on-ledger/`, depending on the small `interfaces` package. Follow [Financing](../product/ledger/applications/financing/daml/Financing.daml) or [Review](../product/ledger/applications/review/daml/Review.daml).
+1. Add a cohesive Daml package under `product/ledger/applications/`, depending on the small `interfaces` package. Follow [Financing](../product/ledger/applications/financing/daml/Financing.daml) or [Review](../product/ledger/applications/review/daml/Review.daml).
 2. Implement the `StepAction` view with the actual actor and subject. Its operation exercises the application's real choice and returns the correct replacement action contract.
 3. Add the package to the ordered build only after its dependencies. Add a typed story slice if its input/result shape needs a new model; extend an existing slice only when its meaning fits.
 4. Add an approved path, wrong actor, invalid source state, and repeated/stale action. Query actual source and workflow state after each attempt.

@@ -6,4 +6,4 @@ The source application was compiled before the adapter on 2026-09-10. Its identi
 
 The added `adapter-approved` and `adapter-rejected` stories have the same business expectations as their direct-interface counterparts. The buyer's attempt fails, the bank's valid approval completes the workflow, and a source validation failure leaves the original source contract active and the workflow waiting. Raw observations identify the actual legacy source contracts.
 
-The [architecture decision](../architecture/001-application-integration.md) records the dependency graph and supported binding shape. [Chapter 2](../../book/02-two-integration-paths.md) provides the reader's walkthrough. Automatic adapter generation is a later increment.
+The [architecture decision](../../architecture/001-application-integration.md) records the dependency graph and supported binding shape. [Chapter 2](../../../book/02-two-integration-paths.md) provides the reader's walkthrough. Automatic adapter generation is a later increment.

@@ -20,7 +20,7 @@ These positive controls are required. A failed event request or a stream without
 
 The exported book was exercised in a browser. Selecting Alice, Northbank, and Olivia showed each corresponding recorded query/event result against the baseline. Northbank's private payload flag was true; Alice's and Olivia's were false. Chapter 3 rendered and all eight chapter links returned HTTP 200. A screenshot is retained at `.artifacts/verification/07-participant.png`.
 
-The [architecture decision](../architecture/003-private-progress.md) describes the two transaction stages, role ownership, result checks, and the local topology. The [chapter](../../book/03-participant-views.md) explains the same behavior to a reader.
+The [architecture decision](../../architecture/003-private-progress.md) describes the two transaction stages, role ownership, result checks, and the local topology. The [chapter](../../../book/03-participant-views.md) explains the same behavior to a reader.
 
 ## Aggregate checks
 

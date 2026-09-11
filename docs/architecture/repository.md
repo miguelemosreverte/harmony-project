@@ -1,37 +1,38 @@
 # Repository map
 
-Start with [a chapter](../../book/README.md) or [an example](../../examples/README.md), then follow its named capability. The [third-draft reading guide](../third-draft/reading-guide.md) links typed operations, boundaries, and independent tests directly.
+Three directories explain the implementation: **[product](../../product/README.md)** is the software, **[book](../../book/README.md)** teaches it, and **[harness](../../harness/README.md)** supplies demonstrations and evidence. Start with the [product reading guide](../fourth-draft/reading-guide.md).
+
+| Root | Contents |
+| --- | --- |
+| `product/` | Ledger contracts, Scala service, shared public types, live browser, pinned inputs |
+| `book/` | Chapters, diagrams, independent browser, recording models, exporter, styling |
+| `harness/` | Golden execution, disposable networks, tests, fixtures, release assembly |
+| `examples/` | Markdown/YAML inputs and independent committed expectations |
+| `docs/` | Current architecture and delivery; prior plans and evidence under `history/` |
+| `scripts/` | Small build, launch, and check commands |
+| `build.sbt`, `project/` | Build definition and pinned plugins |
+
+## Compilation boundaries
+
+An arrow means “depends on.” Shared source directories are compiled only into their named consumers.
 
 ```text
-examples/      Human-readable inputs and independent expectations
-book/          Nine authored chapters, diagrams, setup, and site styling
-on-ledger/     Interfaces, core, applications, bindings, composition, demo, tests
-off-ledger/   Scala application, browser, shared models, and focused tests
-docs/          Architecture, walkthroughs, evidence, and release records
-product/packages/      Pinned external/local DAR identities and reviewed mappings
-scripts/       Small bounded launch, build, check, and packaging commands
+service     ← product/server + product/api
+web         ← product/web + product/api
+runner      → service              (+ harness/model)
+bookExport  → runner               (+ book/model)
+reader      ← book/browser + book/model + harness/model
+tools       → bookExport
 ```
 
-`off-ledger` has two build targets, JVM and Scala.js, with shared pure types. Inside them, Scala packages use the same capability vocabulary:
+`service` and `web` have no dependency on a book or harness project. `reader` has a different Scala.js entry point and output from `web`. The book exporter can interpret harness recordings without placing those interpreters in the product.
 
-| Package | Owns | Entry point |
-| --- | --- | --- |
-| `financing` | Approval, continuation, private observations, and their view | `Financing`, `FinancingObservation`, `FinancingState`, `FinancingPanel` |
-| `composition` | Validated plans, consent/execution choices, observations, and the draft editor | `Composition`, `ComposerCommands`, `ComposerView` |
-| `packages` | Acquisition, structured LF inspection, package workspace and export | `ResolvePackages`, `LfArchive`, `PackageBuilder` |
-| `bindings` | Reviewed mapping, supported type checks, generated code, independent proof | `TemplateShapeReader`, `GenerateSources`, `GenerateBinding` |
-| `submission` | Duplicate requests, stale observations, scheduling, and reconciliation | `Submissions` |
-| `ledger` | Authenticated transport, values, queries, networks, and Script execution | `ParticipantLedger`, `LedgerSnapshot`, `CantonNetwork` |
-| `stories` | Scenario parsing, execution, normalized observations, comparison, provenance | `CheckStories`, feature runners, `CompareResults` |
-| `examples` | Required example and chapter membership | `Examples` |
-| `book` | Recording presentation, chapter export, reader navigation and inspection | `PresentStory`, `ExportBook`, `BookApp` |
-| `app` | CLI, HTTP, authenticated live resource wiring, feature dispatch | `Main`, `LiveRuntime`, `Workspace` |
-| `live` | Browser session and HTTP client; dedicated live verification | `LiveApp`, `LiveView`, `CheckLive` |
-| `ui` | Small generic DOM primitives shared by book and workspace | `Elements` |
-| `release`, `files`, `processes` | Delivery assembly and narrow operating-system boundaries | `CheckRelease`, `ArtifactFiles`, `ManagedProcess` |
+JVM launchers select explicit classpaths. `run-product` contains the service JAR and its libraries. `run-book` uses the book exporter classpath; `run-live` and `run-verify` use the tools classpath. The shared bundle `lib/` directory stores each distinct JAR once, while `classpaths/` records what each launcher can load.
 
-All book-specific models, projectors, export and browser code live under `harmonia.book`. Shared visual primitives belong to `harmonia.ui`. The server constructs the same `WorkspaceSnapshot`, `CompositionState`, `PackageState`, and recording models that consumers decode. HTTP/file encoding happens at the boundary. The browser renders observations and submits supported commands; the ledger owns business authority.
+## Inside the product
 
-The [ledger map](../../product/ledger/README.md) explains package ownership. The live demo assembly has no dependency on the test assembly. Core depends on common interfaces; applications retain independent compiled identities. Existing business rules and input/expectation contents survive the second draft.
+The server, API, and browser repeat meaningful feature names: `financing`, `composition`, and `packages`. Each operation stays with its observations and view. `app` connects those operations to HTTP; `ledger` owns authenticated transport and typed SDK decoding; `submission` owns request coordination. Bindings inspect structured LF metadata and generate the supported adapter. Small `files`, `processes`, and `ui` helpers serve their concrete boundaries.
 
-Generated projects, networks, local recordings, and release bundles live under ignored `.artifacts/`. Ordinary compiler output uses ignored `target/` and `.daml/` directories beside its source. A release copies selected evidence and verifies its clean source revision and file hashes. It does not package live credentials or network authorization files.
+The [ledger map](../../product/ledger/README.md) describes common interfaces, workflow execution, owned applications, and integration. Demo and test assemblies live under `harness/ledger` and depend on the product contracts.
+
+Generated projects, local networks, recordings, and release bundles live under ignored `.artifacts/`. Compiler outputs use ignored `target/` and `.daml/` beside their source. A release copies selected evidence and verifies source identity and payload hashes. Private participant credentials stay in the execution directory.

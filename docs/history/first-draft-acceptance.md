@@ -1,6 +1,6 @@
 # First-draft local technical acceptance
 
-The implementation plan is complete through Step 20 for the local evaluation delivery. Public licensing, publication, external evaluation, and adoption acceptance are outside this implementation plan. The [verification record](../verification/19-release.md) supplies the actual commands, environment, artifact paths, measurements, and limits behind this acceptance.
+The implementation plan is complete through Step 20 for the local evaluation delivery. Public licensing, publication, external evaluation, and adoption acceptance are outside this implementation plan. The [verification record](verification/19-release.md) supplies the actual commands, environment, artifact paths, measurements, and limits behind this acceptance.
 
 ## Identified delivery
 
@@ -39,12 +39,12 @@ Unpack the archive and run `./run-book` with Java 17. Open the printed loopback 
 
 For live evaluation, install Daml SDK 3.4.11 and use `./run-live`. Follow the provisioned participant links in the private local sessions file and Chapter 8's workflow. Ctrl-C releases the network. The relocated launcher was exercised from a path containing spaces, with all three authenticated state requests accepted and missing credentials rejected.
 
-For development, follow [setup](../../book/setup.md), the [walkthrough](../developer-walkthrough.md), and [packaging](packaging.md). `source/scripts/check` runs from the packaged source checkout with the required tools. The clean release reused installed SDK/dependency caches; rebuilding without them requires dependency access. The original third actual commit, `39d2143`, already proved a real ledger golden and a failing changed expectation.
+For development, follow [setup](../../book/setup.md), the [walkthrough](../developer-walkthrough.md), and [packaging](../release/packaging.md). `source/scripts/check` runs from the packaged source checkout with the required tools. The clean release reused installed SDK/dependency caches; rebuilding without them requires dependency access. The original third actual commit, `39d2143`, already proved a real ledger golden and a failing changed expectation.
 
 The final process inspection found one retained book JVM, around 97 MiB resident with a 128 MiB heap cap, and no sbt or Canton process. The complete release check reached about 3.21 GiB aggregate Java RSS while its bounded transient tools ran sequentially. Heap caps are not total resident-memory caps.
 
 ## Ready for an external conversation
 
-The [unpublished release description](public-description.md), [demonstration outline](demo-outline.md), [feedback template](evaluator-feedback.md), [application-team guide](adopter-guide.md), and [maintenance boundaries](maintenance.md) are prepared. No message, publication, workshop, outside-team confirmation, or adoption claim has been made.
+The [unpublished release description](../release/public-description.md), [demonstration outline](../release/demo-outline.md), [feedback template](../release/evaluator-feedback.md), [application-team guide](../release/adopter-guide.md), and [maintenance boundaries](../release/maintenance.md) are prepared. No message, publication, workshop, outside-team confirmation, or adoption claim has been made.
 
-The public development destination, project license and upstream distribution conditions, evaluator contact, feedback, demonstrations, and adoption evidence sit outside the implementation checklist. The [original proposal](../../harmonia.md) retains their context and conditions.
+The public development destination, project license and upstream distribution conditions, evaluator contact, feedback, demonstrations, and adoption evidence sit outside the implementation checklist. The [original proposal](../proposal/harmonia.md) retains their context and conditions.

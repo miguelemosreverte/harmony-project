@@ -43,7 +43,7 @@ class RecordingSuite extends FunSuite:
   }
   test("first-draft example inputs and expectations remain byte-identical after relocation") {
     val records = io.circe.parser
-      .parse(Files.readString(root.resolve("docs/second-draft/example-moves.json")))
+      .parse(Files.readString(root.resolve("docs/history/second-draft/example-moves.json")))
       .toOption
       .get
       .asArray

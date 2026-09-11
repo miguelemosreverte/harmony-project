@@ -1,6 +1,6 @@
 # ADR 001: interfaces and typed application bindings
 
-Status: implemented and verified for a single consuming approval action; see the [evidence](../verification/05-adapter.md).
+Status: implemented and verified for a single consuming approval action; see the [evidence](../history/verification/05-adapter.md).
 
 ## Decision
 

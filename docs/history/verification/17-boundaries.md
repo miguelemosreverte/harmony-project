@@ -26,6 +26,6 @@ The freshly compiled example executes on a new Canton sandbox and matches the in
 
 ## Regression scope and resources
 
-Existing continuation/issuer/subject/reuse, privacy, atomic rollback, and generated mutation checks remain the linked evidence in the [capability matrix](../capabilities.md). The full release suite will rerun them at one clean revision. `scripts/check` now includes execution boundaries and the portable reference after the existing checks, sequentially.
+Existing continuation/issuer/subject/reuse, privacy, atomic rollback, and generated mutation checks remain the linked evidence in the [capability matrix](../../capabilities.md). The full release suite will rerun them at one clean revision. `scripts/check` now includes execution boundaries and the portable reference after the existing checks, sequentially.
 
 All owned ledger and script JVMs exited after verification. A final process listing contained only the existing book preview, configured with a 128 MiB maximum heap. No production throughput, durable restart, arbitrary action-cost, or untrusted-publisher proof is claimed; those boundaries are explicit in the capability matrix.

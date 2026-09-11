@@ -56,5 +56,5 @@ in-memory. Browser reconnection recovers observed state within a running service
 Durable restart, production credential custody, TLS, independent failure domains,
 and production load testing require their own deployment design and evidence.
 
-See [memory limits](verification/15a-memory.md), [runtime compatibility](compatibility.md),
-and [the ordered verification record](progress.md).
+See [memory limits](history/verification/15a-memory.md), [runtime compatibility](compatibility.md),
+and [the ordered verification record](history/progress-through-third.md).

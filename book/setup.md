@@ -59,4 +59,4 @@ Keep one book preview open and replace it when changing the exported book. For a
 HARMONIA_TOOLS_HEAP=128m HARMONIA_BOOK_PORT=56007 scripts/harmonia serve-book .artifacts/book-purchase
 ```
 
-Omit `HARMONIA_BOOK_PORT` to choose an available port. `HARMONIA_TOOLS_HEAP` and `HARMONIA_CANTON_HEAP` override the respective maximum heaps for an explicit local experiment. The default four-participant transfer was verified with the limits above; see [memory verification](../docs/verification/15a-memory.md).
+Omit `HARMONIA_BOOK_PORT` to choose an available port. `HARMONIA_TOOLS_HEAP` and `HARMONIA_CANTON_HEAP` override the respective maximum heaps for an explicit local experiment. The default four-participant transfer was verified with the limits above; see [memory verification](../docs/history/verification/15a-memory.md).
