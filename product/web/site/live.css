@@ -57,3 +57,33 @@ button:disabled {cursor:wait;}
 .composition-record {border-top:1px solid var(--line);margin-top:2rem;padding-top:1rem;overflow-wrap:anywhere;}
 .live-diagnostic {border:2px solid #af702f;padding:1rem;margin:1rem 0;}
 @media(max-width:700px) {.live-grid,.composition-fields {grid-template-columns:1fr;} .live-flow {flex-direction:column;}}
+
+/* Reference composition: the working scene is primary; workspace tools use a drawer. */
+body {background:radial-gradient(ellipse at center,#f7f8fa 30%,#dfe2e6 100%);}
+.live-main {padding:0;max-width:1118px;min-height:868px;margin:76px auto;background:var(--surface);border:1px solid white;border-radius:18px;box-shadow:0 24px 80px #182d4115;}
+.live-main>.financing-scene {padding:34px 31px 36px;}
+.connection-summary {position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);}
+.connection-attention {padding:18px 32px;background:var(--pale);}
+.financing-action {padding:0;margin:38px 0 0;min-height:48px;}
+.private-case {margin:26px auto 0;max-width:650px;text-align:center;}
+.live-main .private-case[open] {text-align:left;}
+.reference-tools .workspace-appearance {position:relative;margin:0;padding:0;}
+.workspace-appearance>summary {display:block;list-style:none;cursor:pointer;}
+.workspace-appearance>summary::-webkit-details-marker {display:none;}
+.workspace-appearance>label {position:absolute;right:0;top:40px;width:220px;background:var(--surface);padding:14px 16px;box-shadow:0 5px 25px #0b243520;border:1px solid var(--line);border-radius:10px;z-index:30;}
+.workspace-appearance>label:last-child {top:108px;}
+.workspace-appearance select {margin-left:8px;}
+.live-main .reference-tools button {border-radius:0;background:none;}
+.live-main .drawer-heading button {border:0;margin:0;padding:0;background:none;}
+.live-main .workspace-nav {margin-top:22px;}
+[data-theme=dark] body {background:#0d1420;}
+[data-theme=dark] .live-main {border-color:#314057;}
+@media(max-width:1150px) and (min-width:701px) {.live-main {margin:24px 16px;}}
+@media(max-width:700px) {
+ body {background:var(--surface);}
+ .live-main {margin:0;border:0;border-radius:0;min-height:100dvh;box-shadow:none;}
+ .live-main>.financing-scene {padding:0 12px 22px;}
+ .live-main .scene-caption {margin:14px -8px 0;padding:16px 25px;background:var(--surface);border:1px solid var(--line);border-radius:17px;box-shadow:0 3px 10px #122e4810;}
+ .financing-action {margin:18px 0 0;}
+ .live-main .private-case {font-size:13px;padding:12px 0;}
+}

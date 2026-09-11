@@ -10,6 +10,8 @@ import org.scalajs.dom
 /** Owns stable workspace regions. Polling never detaches the draft editor or package controls. */
 final class LiveView:
   private val main = element("main", "live-main"); main.id = "main"
+  private val header = element("header", "reference-header")
+  private val drawer = element("dialog", "reader-drawer").asInstanceOf[dom.HTMLDialogElement]
   private val feedback = element("section")
   private val identity = element("p", "live-identity"); identity.id = "live-identity"
   private val financing = new FinancingPanel
@@ -43,13 +45,27 @@ final class LiveView:
   ): Unit =
     if !mounted then
       mounted = true
+      val brand = link("Harmonia", "/book/"); brand.className = "reference-brand"
+      val tools = element("div", "reference-tools")
+      val evidenceButton = button("Evidence", "reference-evidence", "open-workspace-evidence") {
+        WorkspaceNavigation.navigate("evidence")
+      }
+      append(tools, evidenceButton)
+      append(header, brand, tools)
+      append(main, header, feedback)
+      val drawerTitle = element("div", "drawer-heading")
       append(
-        main,
-        element("p", "eyebrow", "HARMONIA / LIVE SANDBOX"),
-        element("h1", text = "A private decision. A shared next step."),
-        feedback,
-        identity
+        drawerTitle,
+        element("h2", text = "Your workspace"),
+        button("×", "", "close-workspace-evidence") { WorkspaceNavigation.navigate("financing") }
       )
+      drawerTitle.querySelector("button").setAttribute("aria-label", "Close workspace")
+      drawer.addEventListener(
+        "cancel",
+        (event: dom.Event) =>
+          event.preventDefault(); WorkspaceNavigation.navigate("financing")
+      )
+      append(drawer, drawerTitle, identity)
       val nav = element("nav", "workspace-nav"); nav.setAttribute("aria-label", "Workspace tasks")
       Vector(
         "Financing" -> "financing",
@@ -58,7 +74,8 @@ final class LiveView:
       ).foreach((title, id) => append(nav, link(title, "?view=" + id)))
       append(nav, packageNavigation, link("The book ↗", "/book/"))
       finance.id = "financing"
-      append(main, nav, finance)
+      append(main, finance)
+      append(drawer, nav)
       append(evidence, jobs, history)
       append(
         composition,
@@ -82,7 +99,7 @@ final class LiveView:
         historyBody
       )
       append(
-        main,
+        drawer,
         composition,
         packageArea,
         evidence,
@@ -92,8 +109,11 @@ final class LiveView:
           "Disposable local sandbox · synthetic data"
         )
       )
+      append(main, drawer)
       val root = dom.document.getElementById("app"); root.textContent = ""; append(root, main)
       new WorkspaceNavigation(nav, () => selectPage())
+      val appearance = nav.querySelector(".workspace-appearance")
+      tools.insertBefore(appearance, evidenceButton)
     val feedbackState = (connection, unconfirmed, submitting, notice)
     if !previousFeedback.contains(feedbackState) then
       previousFeedback = Some(feedbackState)
@@ -106,6 +126,10 @@ final class LiveView:
       val banner = element("p", "live-connection", message); banner.id = "live-connection";
       banner.setAttribute("role", "status")
       append(feedback, banner)
+      feedback.className =
+        if connection == ConnectionState.Connected && !submitting && !unconfirmed && notice.isEmpty
+        then "connection-summary"
+        else "connection-attention"
       if connection != ConnectionState.Connected then
         append(feedback, button("Reconnect", "secondary", "live-refresh")(reconnect()))
       if unconfirmed && !submitting && connection == ConnectionState.Connected then
@@ -155,7 +179,11 @@ final class LiveView:
 
   private def selectPage(): Unit =
     val page = WorkspaceNavigation.page
-    hide(finance, page != "financing")
+    hide(finance, false)
+    if page != "financing" && !drawer.open then drawer.showModal()
+    if page == "financing" && drawer.open then
+      drawer.close()
+      dom.document.getElementById("open-workspace-evidence").asInstanceOf[dom.HTMLElement].focus()
     hide(composition, page != "composer")
     hide(evidence, page != "evidence")
     hide(packageArea, page != "packages" || previous.forall(_.financing.actor != "bank"))

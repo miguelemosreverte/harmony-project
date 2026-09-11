@@ -8,7 +8,11 @@ final class WorkspaceNavigation(nav: dom.HTMLElement, changed: () => Unit):
   private val themes = Vector("light", "dark", "paper")
   private val sizes = Vector("compact", "standard", "large")
   private val appearance = element("details", "workspace-appearance")
-  append(appearance, element("summary", text = "Appearance"))
+  private val appearanceToggle = element("summary", "reference-appearance")
+  appearanceToggle.setAttribute("aria-label", "Appearance")
+  appearanceToggle.innerHTML =
+    """<svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="6.5"/><path d="M16 1v5m0 20v5M1 16h5m20 0h5M5.4 5.4l3.5 3.5m14.2 14.2 3.5 3.5M5.4 26.6l3.5-3.5M23.1 8.9l3.5-3.5"/></svg>"""
+  append(appearance, appearanceToggle)
   Vector("theme" -> themes, "text" -> sizes).foreach { (key, values) =>
     val label = element("label", text = if key == "theme" then "Color " else "Text size ")
     val select = element("select").asInstanceOf[dom.html.Select]
@@ -68,6 +72,12 @@ final class WorkspaceNavigation(nav: dom.HTMLElement, changed: () => Unit):
     changed()
 
 object WorkspaceNavigation:
+  def navigate(page: String): Unit =
+    val url = new dom.URL(dom.window.location.href)
+    url.searchParams.set("view", page)
+    dom.window.history.pushState(null, "", url.toString)
+    dom.window.dispatchEvent(new dom.Event("popstate"))
+
   def page: String =
     Option(new dom.URLSearchParams(dom.window.location.search).get("view"))
       .filter(Set("financing", "composer", "packages", "evidence"))

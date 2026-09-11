@@ -9,28 +9,54 @@ final class SceneView(root: dom.HTMLElement):
   private val map = element("div", "scene-map")
   private val privateArea = element("div", "scene-zone scene-private")
   private val sharedArea = element("div", "scene-zone scene-shared")
-  private val trail = element("div", "scene-trail")
   private val people = element("div", "scene-people")
   private val documents = element("div", "scene-documents")
-  private val artifact = element("div", "scene-artifact")
+  private val approval = document("scene-approval", "Approval", verified = true)
+  private val artifact = document("scene-artifact", "Proposal", verified = false)
+  private val house = SceneArtwork.illustration(SceneArtwork.Illustration.House)
   private val amounts = element("div", "scene-amounts")
   private val caption = element("figcaption", "scene-caption")
   private val title = element("strong", "scene-title")
   private val description = element("p", "scene-description")
   private var previousPeople = Vector.empty[ScenePerson]
 
-  append(privateArea, element("span", "scene-zone-label"))
-  append(sharedArea, element("span", "scene-zone-label"))
+  append(
+    privateArea,
+    SceneArtwork.mark(SceneArtwork.Mark.Bank),
+    element("span", "scene-zone-label")
+  )
+  append(
+    sharedArea,
+    SceneArtwork.mark(SceneArtwork.Mark.House),
+    element("span", "scene-zone-label")
+  )
   append(
     documents,
-    element("span", "document-sheet", "▤"),
+    SceneArtwork.mark(SceneArtwork.Mark.Lock),
     element("span", text = "Private documents")
   )
-  append(artifact, element("span", "document-sheet", "▤"), element("span", "artifact-label"))
-  append(map, privateArea, sharedArea, trail, people, documents, artifact)
+  append(
+    map,
+    privateArea,
+    sharedArea,
+    SceneArtwork.connections(),
+    people,
+    documents,
+    approval,
+    artifact,
+    house
+  )
   append(caption, title, description)
   append(figure, map, amounts, caption)
   append(root, figure)
+
+  private def document(css: String, label: String, verified: Boolean): dom.HTMLElement =
+    val node = element("div", css + " scene-document")
+    val paper = element("span", "document-sheet")
+    (0 until 4).foreach(_ => append(paper, element("i")))
+    if verified then append(paper, element("span", "document-check", "✓"))
+    append(node, paper, element("span", "artifact-label", label))
+    node
 
   def render(frame: SceneFrame): Unit =
     val kind = frame.kind.toString.toLowerCase
@@ -38,16 +64,33 @@ final class SceneView(root: dom.HTMLElement):
     figure.setAttribute("data-phase", frame.phase.max(0).min(4).toString)
     figure.setAttribute("data-refused", frame.refused.toString)
     figure.setAttribute("aria-label", frame.title)
-    privateArea.firstChild.textContent =
+    privateArea.querySelector(".scene-zone-label").textContent =
       if frame.kind == SceneKind.Transfer then "Source custody" else "Financing"
-    sharedArea.firstChild.textContent =
+    sharedArea.querySelector(".scene-zone-label").textContent =
       if frame.kind == SceneKind.Transfer then "Destination custody"
       else if frame.kind == SceneKind.Financing then "Shared workflow"
       else "Property offer"
     hide(documents, frame.kind == SceneKind.Transfer)
-    artifact.querySelector(".artifact-label").textContent = frame.artifact
-    hide(artifact, frame.artifact.isEmpty)
-    title.textContent = frame.title
+    hide(approval, frame.kind == SceneKind.Transfer)
+    hide(house, frame.kind != SceneKind.Purchase)
+    artifact.querySelector(".artifact-label").textContent =
+      if frame.kind == SceneKind.Transfer then frame.artifact
+      else if frame.kind == SceneKind.Financing then "Continuation"
+      else "Proposal"
+    artifact.setAttribute(
+      "aria-label",
+      if frame.artifact.nonEmpty then frame.artifact else "Proposal: not yet created"
+    )
+    hide(artifact, frame.kind == SceneKind.Transfer && frame.artifact.isEmpty)
+    title.textContent = ""
+    val sentence = frame.title.indexOf(". ")
+    if sentence < 0 then title.textContent = frame.title
+    else
+      append(
+        title,
+        element("span", text = frame.title.take(sentence + 1)),
+        element("span", text = frame.title.drop(sentence + 1))
+      )
     description.textContent = frame.caption
     if frame.people != previousPeople then
       people.textContent = ""
@@ -56,8 +99,18 @@ final class SceneView(root: dom.HTMLElement):
         place.setAttribute("data-person", person.id)
         place.setAttribute("data-position", index.toString)
         place.setAttribute("data-icon", person.icon)
-        val icon = element("span", "person-icon", person.name.take(1))
+        val illustration =
+          if person.icon == "bank" then SceneArtwork.Illustration.Bank
+          else if index == 1 then SceneArtwork.Illustration.Alice
+          else if index == 2 && frame.kind == SceneKind.Purchase then SceneArtwork.Illustration.Ben
+          else SceneArtwork.Illustration.Sofia
+        val icon = element("span", "person-icon")
         icon.setAttribute("aria-hidden", "true")
+        append(
+          icon,
+          SceneArtwork.illustration(illustration),
+          element("span", "person-initial", person.name.take(1))
+        )
         append(
           place,
           icon,

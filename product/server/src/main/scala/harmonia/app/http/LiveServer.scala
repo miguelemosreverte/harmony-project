@@ -48,20 +48,23 @@ object LiveServer:
             respond(root, http.getAddress.getPort, sessions, actions, builder, book, exchange)
               .handleErrorWith { error =>
                 val code = if error.isInstanceOf[IllegalArgumentException] then 400 else 503
-                send(
-                  exchange,
-                  code,
-                  "application/json",
-                  Json
-                    .obj(
-                      "error" -> Json.fromString(
-                        if code == 400 then error.getMessage
-                        else "Participant disconnected; refresh to recover current state"
+                // A browser may cancel an illustration after its response has started.
+                if exchange.getResponseCode != -1 then IO.unit
+                else
+                  send(
+                    exchange,
+                    code,
+                    "application/json",
+                    Json
+                      .obj(
+                        "error" -> Json.fromString(
+                          if code == 400 then error.getMessage
+                          else "Participant disconnected; refresh to recover current state"
+                        )
                       )
-                    )
-                    .noSpaces
-                    .getBytes(UTF_8)
-                )
+                      .noSpaces
+                      .getBytes(UTF_8)
+                  )
               }
               .guarantee(IO.blocking(exchange.close()))
           )
@@ -128,6 +131,12 @@ object LiveServer:
               )
           else apiResponse(actor, method, path, actions, builder, exchange)
     else if method != "GET" then send(exchange, 405, "text/plain", Array.emptyByteArray)
+    else if path.startsWith("/assets/") then
+      IO.blocking(
+        StaticFiles.resolve(root.resolve("product/scene/site/assets"), path.stripPrefix("/assets/"))
+      ).flatMap(_.fold(send(exchange, 404, "text/plain", Array.emptyByteArray)) { (file, kind) =>
+        IO.blocking(Files.readAllBytes(file)).flatMap(send(exchange, 200, kind, _))
+      })
     else if path == "/book" then
       IO.blocking(exchange.getResponseHeaders.set("Location", "/book/")) *>
         send(exchange, 302, "text/plain", Array.emptyByteArray)
@@ -152,6 +161,7 @@ object LiveServer:
       )
     else
       val file = path match
+        case "/surface.css" => Some(root.resolve("product/scene/site/surface.css") -> "text/css")
         case "/favicon.ico" | "/favicon.svg" =>
           Some(root.resolve("product/web/site/favicon.svg") -> "image/svg+xml")
         case "/"          => Some(root.resolve("product/web/site/index.html") -> "text/html")

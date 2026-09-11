@@ -5,7 +5,7 @@ import {browser} from './cdp.mjs';
 const b=await browser(process.argv[2]);
 const sessions=JSON.parse(await fs.readFile(process.argv[3],'utf8'));
 const origin=new URL(sessions.bank).origin;
-const directory='design/0.2/infographic/review';await fs.mkdir(directory,{recursive:true});
+const directory='design/0.2/infographic/reference-review';await fs.mkdir(directory,{recursive:true});
 const checks=[];const check=(name,value)=>{assert(value,name);checks.push(name);};
 const click=s=>b.evaluate(`document.querySelector(${JSON.stringify(s)}).click()`);
 async function participant(actor,query='') {
@@ -18,13 +18,19 @@ try {
   await b.viewport(1280,1000);await participant('bank','view=composer&theme=dark&text=large');
   check('Session entry preserves query navigation and strips the capability',await b.evaluate(`location.hash==='' && location.search.includes('view=composer') && !document.querySelector('#composer').hidden && document.documentElement.dataset.theme==='dark'`));
   await b.evaluate(`const input=document.querySelector('#composition-name');input.value='An unfinished human draft';input.dispatchEvent(new Event('input'));`);
-  await click('a[href="?view=financing"]');await b.wait(2200);await click('a[href="?view=composer"]');
+  await click('a[href="?view=financing"]');await b.wait(2200);await click('#open-workspace-evidence');await click('a[href="?view=composer"]');
   check('Polling and navigation preserve the unfinished composition',await b.evaluate(`document.querySelector('#composition-name').value==='An unfinished human draft'`));
-  await b.evaluate(`history.back()`);await b.until(`!document.querySelector('#financing').hidden`);
+  await b.evaluate(`history.back()`);await b.until(`location.search.includes('view=evidence')`);
+  await click('#close-workspace-evidence');
+  check('Closing the live drawer restores focus to Evidence',await b.evaluate(`!document.querySelector('.reader-drawer').open && document.activeElement.id==='open-workspace-evidence'`));
   check('Browser Back restores the previous workspace task',true);
   await b.evaluate(`const select=document.querySelector('#workspace-theme');select.value='light';select.dispatchEvent(new Event('change'));`);
   await b.evaluate(`const sizeSelect=document.querySelector('#workspace-text');sizeSelect.value='standard';sizeSelect.dispatchEvent(new Event('change'));`);
   await b.screenshot(`${directory}/live-bank.png`);
+  const sprite=await fetch(origin+'/assets/illustrations.png');
+  check('The real server supplies the approved illustration sprite',sprite.status===200 && sprite.headers.get('content-type').startsWith('image/png'));
+  const chrome=await fetch(origin+'/surface.css');
+  check('The real server supplies the shared header and drawer CSS',chrome.status===200 && chrome.headers.get('content-type').startsWith('text/css'));
   const bank=await api();check('The bank sees its real private application',bank.actor==='bank'&&!!bank.private_details);
   check('Only the bank approval is offered initially',await b.evaluate(`!!document.querySelector('#live-approve-financing')&&!document.querySelector('#live-publish-approval')`));
   await click('#live-approve-financing');await b.until(`document.querySelector('.scene-title')?.textContent==='Your approval is issued.'`);
@@ -52,8 +58,8 @@ try {
   const blocked=await fetch(origin+'/book/%2e%2e%2fsessions.json');check('Mounted files cannot traverse into private session artifacts',blocked.status===404);
   const svg=await fetch(origin+'/book/source/design/0.2/assets/component-map.svg');
   check('Original SVG is served with an image MIME type',svg.status===200&&svg.headers.get('content-type').startsWith('image/svg+xml'));
-  await fs.writeFile('docs/0.2/infographic-live.json',JSON.stringify({scope:'Actual Scala service, authenticated participant sessions and disposable Canton ledger',checks,errors:b.errors},null,2)+'\n');
+  await fs.writeFile('docs/0.2/reference-live.json',JSON.stringify({scope:'Actual Scala service, authenticated participant sessions and disposable Canton ledger',checks,errors:b.errors},null,2)+'\n');
   check('No browser script or CSP errors',b.errors.filter(e=>!e.includes('favicon.ico')).length===0);
-  await fs.writeFile('docs/0.2/infographic-live.json',JSON.stringify({scope:'Actual Scala service, authenticated participant sessions and disposable Canton ledger',checks,errors:b.errors},null,2)+'\n');
+  await fs.writeFile('docs/0.2/reference-live.json',JSON.stringify({scope:'Actual Scala service, authenticated participant sessions and disposable Canton ledger',checks,errors:b.errors},null,2)+'\n');
   console.log(JSON.stringify({checks:checks.length,errors:b.errors}));
 } finally {b.close();}

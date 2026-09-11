@@ -16,7 +16,7 @@
     s.audience = choose(input.audience, Object.keys(config.journeys), defaults.audience);
     s.theme = choose(input.theme, ['light','dark','paper'], defaults.theme);
     s.text = choose(input.text, ['compact','standard','large'], defaults.text);
-    s.panel = choose(input.panel, ['closed','appearance'], 'closed');
+    s.panel = choose(input.panel, ['closed','appearance','evidence'], 'closed');
     s.nav = choose(input.nav, ['closed','open'], 'closed');
     const ids = new Set([...document.querySelectorAll('[data-disclosure][id]')].map(node => node.id));
     const opened = new Set(String(input.open || '').split(',').filter(id => ids.has(id)));

@@ -3,6 +3,18 @@
   const view = window.HarmoniaView;
   const {config} = view;
   const byId = id => document.getElementById(id);
+  const drawer=byId('reader-drawer'), scenePage=!!byId('story-scene');
+  if (scenePage) {
+    const body=byId('drawer-body');
+    for(const selector of ['.scene-toolbar','.mode-tabs','.live-sandbox-link','#step-inspector','#chapter-read','#chapter-sources','#chapter-evidence']) {
+      const item=document.querySelector(selector);if(item)body.append(item);
+    }
+  }
+  const closeDrawer=()=>view.update({panel:'closed', ...(scenePage?{view:'try'}:{})});
+  byId('open-evidence')?.addEventListener('click',()=>view.update({panel:'evidence'}));
+  byId('close-evidence')?.addEventListener('click',closeDrawer);
+  drawer?.addEventListener('cancel',event=>{event.preventDefault();closeDrawer();});
+  drawer?.addEventListener('click',event=>{if(event.target===drawer){const r=drawer.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)closeDrawer();}});
   const destination = slug => ['coverage','application','sandbox'].includes(slug) ? `${slug}.html` : `chapters/${slug}.html`;
   const label = slug => config.chapters[slug] || {coverage:'Find the original requirements', application:'Workspace design reference', sandbox:'Make a live handoff'}[slug];
   const setPressed = (selector, key, selected) => document.querySelectorAll(selector).forEach(button => {
@@ -37,9 +49,12 @@
       anchor.href = view.href(next ? destination(next) : 'book-overview.html');
       anchor.textContent = next ? `Next: ${label(next)} →` : 'Reading path complete · choose another →';
     });
-    document.querySelectorAll('.mode-panel').forEach(panel => { panel.hidden = panel.dataset.mode !== s.view; });
+    document.querySelectorAll('.mode-panel').forEach(panel => { panel.hidden = scenePage && panel.dataset.mode==='try' ? false : panel.dataset.mode !== (scenePage && s.view==='try'?'evidence':s.view); });
+    const showDrawer=s.panel==='evidence'||(scenePage && s.view!=='try');
+    if(drawer && showDrawer && !drawer.open)drawer.showModal();
+    if(drawer && !showDrawer && drawer.open){drawer.close();byId('open-evidence')?.focus();}
     document.querySelectorAll('[data-view]').forEach(button => {
-      button.classList.toggle('active', button.dataset.view === s.view);
+      button.classList.toggle('active', button.dataset.view === (scenePage&&s.view==='try'?'evidence':s.view));
       if (button.closest('.mode-tabs')) button.setAttribute('aria-current', button.dataset.view === s.view ? 'page' : 'false');
     });
     // Rebuild link preferences on every render, including links opened in a new tab.

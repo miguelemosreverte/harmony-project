@@ -18,7 +18,12 @@
   const names = {'assess-financing':'Assess financing','forge-proposal':'Attempt a direct proposal','open-offer':'Prepare the offer','make-proposal':'Make the proposal','receive-proposal':'Receive the proposal','relay-proposal':'Relay the proposal','agree-trade':'Agree the trade','lock-position':'Lock the position','confirm-source':'Confirm the source','prepare-destination':'Prepare the destination','confirm-destination':'Confirm readiness','withdraw-directly':'Attempt a direct withdrawal',settle:'Settle the trade'};
   const reasons = {'not-visible':'The required private contract is not visible to this actor.',unauthorized:'This actor does not have the required authority.','application-rejected':'The application refused this attempt under its rules.','destination-rejected':'The destination refused receipt. The final transaction rolled back; the earlier source lock remains.'};
   const mainAttempt = u => u.actual.outcome==='committed' || ['rejected-financing','settle'].includes(u.id);
+  const purchaseBeats=['Documents','Approval','Proposal','Offer'];
   let sequence=[];
+  const beatIndex=step=>{
+    const exact=sequence.indexOf(step), next=sequence.findIndex(candidate=>candidate>step);
+    return exact>=0?exact:next>=0?next:sequence.length-1;
+  };
   function frame(story,unit,actor) {
     const transfer=!!story.input.setup.trade, setup=story.input.setup, a=unit?.actual;
     const refused=a?.outcome==='rejected';
@@ -45,7 +50,7 @@
       phase=a?.proposal==='received'?4:a?.proposal==='relayed'?3:a?.proposal==='draft'?2:a?.evidence_available?1:0;
       artifact=phase>=2?'Purchase proposal':phase===1?`Financing · ${a.application}`:'';
       [title,caption]=!unit ? [`${b.buyer} wants to make an offer.`,`Her financing application is with ${b.bank}. The property agents will need a verified result to move the offer forward.`] : ({
-        'assess-financing':a?.application==='approved' ? [`${b.bank} approves the financing.`,`A verified result is available to ${b.buyer}. Her financing documents stay within the financing application.`] : [`${b.bank} declines the financing.`,`The result records a refusal. It cannot authorize a purchase proposal.`],
+        'assess-financing':a?.application==='approved' ? [`${b.bank} approves. ${b.buyer} can make her proposal.`,`A verified result is available to ${b.buyer}. Her financing documents stay within the financing application.`] : [`${b.bank} declines the financing.`,`The result records a refusal. It cannot authorize a purchase proposal.`],
         'open-offer':[`${b.buyer} prepares the offer.`,`The property application is ready to check her financing result.`],
         'make-proposal':[`${b.buyer} makes her proposal.`,`The property application accepts the approved financing result and creates one proposal.`],
         'relay-proposal':[`${o.buyer_agent} relays the proposal.`,`The buyer’s agent passes the proposal to the seller’s agent.`],
@@ -60,19 +65,23 @@
   }
   view.subscribe(s => {
     const story=view.config.stories[s.story], units=story.presentation.units, unit=units[s.step-1];
-    sequence=[0,...units.flatMap((u,i)=>mainAttempt(u)?[i+1]:[])];
-    if (!sequence.includes(s.step)) sequence.push(s.step);
-    sequence.sort((a,b)=>a-b);
-    const current=sequence.indexOf(s.step), end=current===sequence.length-1;
+    const purchase=!story.input.setup.trade;
+    sequence=purchase && s.story==='purchase-approved' ? [0,2,5,8] : [0,...units.flatMap((u,i)=>mainAttempt(u)?[i+1]:[])];
+    const current=beatIndex(s.step);
+    const labels=purchase && s.story==='purchase-approved'?purchaseBeats:sequence.map((step,i)=>step===0?'Start':names[units[step-1].action]||`Step ${i}`);
     node('story-select').value=s.story;
-    renderHarmoniaScene(node('story-scene'),JSON.stringify(frame(story,unit,s.actor)));
+    const currentFrame=frame(story,unit,s.actor);
+    renderHarmoniaScene(node('story-scene'),JSON.stringify(currentFrame));
+    node('story-scene').dataset.follow=s.actor;
+    node('scene-detail').textContent=currentFrame.caption;
     node('recorded-step').textContent=`${current+1} / ${sequence.length}`;
     node('scene-dots').replaceChildren(...sequence.map((step,i)=>{
-      const li=document.createElement('li'),b=document.createElement('button');b.textContent=String(i+1);b.setAttribute('aria-label',step===0?'Scene 1: starting point':`Scene ${i+1}: ${units[step-1].actor} · ${names[units[step-1].action] || units[step-1].action}`);b.setAttribute('aria-current',step===s.step?'step':'false');b.addEventListener('click',()=>view.update({step}));li.append(b);return li;
+      const li=document.createElement('li'),b=document.createElement('button'),label=document.createElement('span');
+      b.textContent=String(i+1);b.setAttribute('aria-label',`Scene ${i+1}: ${labels[i]}`);b.setAttribute('aria-current',i===current?'step':'false');
+      b.addEventListener('click',()=>view.update({step}));label.textContent=labels[i];li.classList.toggle('active',i===current);li.append(b,label);return li;
     }));
-    node('previous-step').hidden=current===0; node('next-step').hidden=end; node('reset-story').hidden=!end;
-    node('story-complete').hidden=!end;
-    node('story-complete').textContent='End of this story. Try another outcome above, or make a live handoff below.';
+    node('previous-step').hidden=false;node('next-step').hidden=false;node('reset-story').hidden=true;
+    node('story-complete').hidden=true;
     const option=(value,label)=>{const o=document.createElement('option');o.value=String(value);o.textContent=label;return o;};
     node('story-actor').replaceChildren(...['all',...new Set(units.map(u=>u.actor))].map(actor=>option(actor,actor==='all'?'Current actor':actor)));node('story-actor').value=s.actor;
     node('evidence-action').replaceChildren(option(0,'Setup'),...units.map((u,i)=>option(i+1,`${i+1}. ${u.actor}: ${names[u.action]||u.action} · ${u.actual.outcome}`)));node('evidence-action').value=String(s.step);
@@ -86,7 +95,7 @@
     node('inspector-caption').textContent={input:'Input supplied to the recorded run.',expected:'Independently committed golden expectation.',observed:'Actual ledger result from the preserved recording.',provenance:'Run identity and artifact fingerprints. Playback submits no new transactions.'}[s.tab];
     document.querySelectorAll('[data-tab]').forEach(b=>{b.id=`evidence-${b.dataset.tab}`;b.tabIndex=b.dataset.tab===s.tab?0:-1;b.setAttribute('aria-selected',String(b.dataset.tab===s.tab));b.classList.toggle('active',b.dataset.tab===s.tab);});node('inspector-panel').setAttribute('aria-labelledby',`evidence-${s.tab}`);
   });
-  const move=delta=>{const i=sequence.indexOf(view.state.step)+delta;if(i>=0&&i<sequence.length)view.update({step:sequence[i]});};
+  const move=delta=>view.update({step:sequence[(beatIndex(view.state.step)+delta+sequence.length)%sequence.length]});
   node('story-select').addEventListener('change',e=>view.update({story:e.target.value,step:0,actor:'all'}));
   node('story-actor').addEventListener('change',e=>view.update({actor:e.target.value}));
   node('evidence-action').addEventListener('change',e=>view.update({step:Number(e.target.value)}));
