@@ -6,7 +6,7 @@ import harmonia.files.ArtifactFiles
 import harmonia.app.http.LiveServer
 import harmonia.ledger.client.LiveLedger
 import harmonia.app.live.{LiveRuntime, LiveParticipant}
-import harmonia.financing.FinancingObservation
+import harmonia.financing.{FinancingObservation, ProgressStatus}
 import harmonia.ledger.client.LedgerSnapshot
 import harmonia.stories.financing.model.FinancingStory
 import harmonia.stories.read.{MarkdownYaml, StoryFormat}
@@ -85,6 +85,9 @@ object CheckLive:
     )
   yield ()
 
+  private def financing(snapshot: LedgerSnapshot): FinancingObservation =
+    FinancingObservation.read(snapshot).fold(throw _, identity)
+
   private def exercise(
       runtime: LiveRuntime,
       server: LiveServer,
@@ -104,7 +107,7 @@ object CheckLive:
         .map(_.fold(e => Status.fromThrowable(e).getCode.toString, _ => "SUCCEEDED"))
       actBypass <- buyer
         .exercise(
-          FinancingObservation(initialBank).application.get,
+          financing(initialBank).application.get.contract,
           "Approve",
           LiveLedger.emptyArgument,
           "buyer-forged-bank",
@@ -146,7 +149,7 @@ object CheckLive:
               awaitCondition(
                 LedgerSnapshot
                   .read(buyer, runtime.catalog)
-                  .map(s => FinancingObservation(s).proof.nonEmpty)
+                  .map(s => financing(s).proof.nonEmpty)
               )
             else IO.unit
           _ <-
@@ -154,7 +157,7 @@ object CheckLive:
               awaitCondition(
                 runtime.participants.values.toVector
                   .traverse(p => LedgerSnapshot.read(p.ledger, runtime.catalog))
-                  .map(_.forall(s => FinancingObservation(s).workflow == "complete"))
+                  .map(_.forall(s => financing(s).workflow == ProgressStatus.Complete))
               )
             else IO.unit
           after <- LedgerSnapshot.read(bank, runtime.catalog)
@@ -165,19 +168,19 @@ object CheckLive:
             "id" -> Json.fromString(step.id),
             "outcome" -> Json.fromString(outcome),
             "application" -> Json.fromString(
-              FinancingObservation(after).application.map(_.text("status")).getOrElse("missing")
+              financing(after).application.map(_.status.wire).getOrElse("missing")
             ),
-            "workflow" -> Json.fromString(FinancingObservation(after).workflow),
+            "workflow" -> Json.fromString(financing(after).workflow.wire),
             "consumed" -> Json.fromBoolean(
-              FinancingObservation(before).application.map(_.id) != FinancingObservation(
+              financing(before).application.map(_.contract.id) != financing(
                 after
-              ).application.map(_.id)
+              ).application.map(_.contract.id)
             ),
             "active_contracts" -> Json.fromInt(
               after.contracts.count(_.template.getModuleName == "PrivateFinancing")
             ),
             "visible_to" -> Json.arr(views.collect {
-              case (name, view) if FinancingObservation(view).application.nonEmpty =>
+              case (name, view) if financing(view).application.nonEmpty =>
                 Json.fromString(labels(name))
             }*)
           ) ++

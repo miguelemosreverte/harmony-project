@@ -26,10 +26,6 @@ import io.circe.Json
 import java.util.concurrent.TimeUnit
 import scala.jdk.CollectionConverters.*
 
-final case class ActiveContract(id: String, template: Value.Identifier, fields: Map[String, Json]):
-  def text(name: String): String =
-    fields.get(name).flatMap(_.hcursor.get[String]("text").toOption).getOrElse("")
-
 final class LiveLedger private (
     connection: ManagedChannel,
     val party: String,

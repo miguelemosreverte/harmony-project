@@ -1,8 +1,7 @@
 package harmonia.composition.ledger
 
 import harmonia.workspace.WorkspaceCommand
-import harmonia.ledger.client.{ActiveContract, LedgerValue as V, LiveLedger}
-import com.daml.ledger.api.v2.ValueOuterClass.Value
+import harmonia.ledger.client.{ActiveContract, LedgerExercise, LedgerValue as V, LiveLedger}
 
 object ComposerCommands:
   def select(
@@ -11,7 +10,7 @@ object ComposerCommands:
       contracts: Vector[ActiveContract],
       party: String,
       parties: Map[String, String]
-  ): Option[(ActiveContract, String, Value)] =
+  ): Option[LedgerExercise] =
     def find(module: String, entity: String, reference: Option[String] = None) = contracts.find(c =>
       c.template.getModuleName == module && c.template.getEntityName == entity && reference.forall(
         _ == c.text("reference")
@@ -28,7 +27,7 @@ object ComposerCommands:
           )
         )
         find("Composer", "Workspace").map(c =>
-          (
+          LedgerExercise(
             c,
             "Propose",
             V.record(
@@ -39,12 +38,16 @@ object ComposerCommands:
           )
         )
       case WorkspaceCommand.Accept(reference) =>
-        find("Composer", "Draft", Some(reference)).map(c => (c, "Accept", LiveLedger.emptyArgument))
+        find("Composer", "Draft", Some(reference)).map(c =>
+          LedgerExercise(c, "Accept", LiveLedger.emptyArgument)
+        )
       case WorkspaceCommand.Cancel(reference) =>
-        find("Composer", "Draft", Some(reference)).map(c => (c, "Cancel", LiveLedger.emptyArgument))
+        find("Composer", "Draft", Some(reference)).map(c =>
+          LedgerExercise(c, "Cancel", LiveLedger.emptyArgument)
+        )
       case WorkspaceCommand.Advance(reference, step) =>
         find("Harmonia.Process.Engine", "ProcessInstance", Some(reference)).map(c =>
-          (
+          LedgerExercise(
             c,
             "AdvanceStep",
             V.record(

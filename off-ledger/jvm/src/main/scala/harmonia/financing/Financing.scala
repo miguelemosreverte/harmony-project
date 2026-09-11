@@ -1,18 +1,19 @@
 package harmonia.financing
 
-import harmonia.ledger.client.{ActiveContract, LiveLedger}
-import com.daml.ledger.api.v2.ValueOuterClass.Value
+import harmonia.ledger.client.{LedgerExercise, LiveLedger}
 
 /** Maps a supported financing operation to its actual application choice. */
 object Financing:
   def select(
       action: FinancingAction,
       snapshot: FinancingObservation
-  ): Option[(ActiveContract, String, Value)] =
+  ): Option[LedgerExercise] =
     action match
       case FinancingAction.Approve =>
-        snapshot.application.map(contract => (contract, "Approve", LiveLedger.emptyArgument))
+        snapshot.application.map(application =>
+          LedgerExercise(application.contract, "Approve", LiveLedger.emptyArgument)
+        )
       case FinancingAction.Continue =>
-        snapshot.progress.map(contract =>
-          (contract, "Continue", LiveLedger.continuation(snapshot.proof))
+        snapshot.progress.map(progress =>
+          LedgerExercise(progress.contract, "Continue", LiveLedger.continuation(snapshot.proof))
         )

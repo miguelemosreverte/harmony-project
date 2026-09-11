@@ -17,7 +17,8 @@ final class Workspace private (runtime: LiveRuntime, submissions: Submissions):
     snapshot <- LedgerSnapshot.read(runtime.participants(actor).ledger, runtime.catalog)
     _ <- submissions.reconcile(actor, snapshot.commits)
     current <- submissions.current(actor)
-  yield FinancingObservation(snapshot)
+    financing <- IO.fromEither(FinancingObservation.read(snapshot))
+  yield financing
     .state(actor)
     .json
     .deepMerge(snapshot.historyJson)
@@ -40,10 +41,13 @@ object Workspace:
     Submissions
       .resource { (actor, request, commandId) =>
         val ledger = runtime.participants(actor).ledger
-        LedgerSnapshot.read(ledger, runtime.catalog).map { snapshot =>
+        for
+          snapshot <- LedgerSnapshot.read(ledger, runtime.catalog)
+          financing <- IO.fromEither(FinancingObservation.read(snapshot))
+        yield
           val selected = request.command match
             case WorkspaceCommand.Financing(action) =>
-              Financing.select(action, FinancingObservation(snapshot))
+              Financing.select(action, financing)
             case command =>
               ComposerCommands.select(
                 command,
@@ -54,10 +58,7 @@ object Workspace:
               )
           PreparedSubmission(
             snapshot.version,
-            selected.map { (contract, choice, argument) =>
-              SubmitChoice(ledger, contract, choice, argument, commandId)
-            }
+            selected.map(operation => SubmitChoice(ledger, operation, commandId))
           )
-        }
       }
       .map(new Workspace(runtime, _))

@@ -1,7 +1,7 @@
 package harmonia.ledger.client
 
 import com.daml.ledger.api.v2.ValueOuterClass as V
-import io.circe.Json
+import io.circe.{Decoder, Json}
 
 /** Typed protobuf construction and verbose Ledger API value decoding. */
 object LedgerValue:
@@ -18,27 +18,46 @@ object LedgerValue:
     values.foreach(value.addElements)
     V.Value.newBuilder().setList(value).build()
   def plain(json: Json): Json =
-    val cursor = json.hcursor
-    json.asObject.flatMap(_.toVector.headOption) match
-      case Some(("record", record)) =>
-        Json.fromFields(
-          record.hcursor.get[Vector[Json]]("fields").getOrElse(Vector.empty).map { field =>
-            field.hcursor.get[String]("label").fold(throw _, identity) -> plain(
-              field.hcursor.downField("value").focus.get
-            )
-          }
-        )
-      case Some(("list", list)) =>
-        Json.arr(list.hcursor.get[Vector[Json]]("elements").getOrElse(Vector.empty).map(plain)*)
-      case Some(("optional", value)) =>
+    val entries = json.asObject.toVector.flatMap(_.toVector)
+    if entries.size != 1 then invalid("value", "expected one Ledger API value variant")
+    entries.head match
+      case ("record", record) =>
+        val fields = repeated(record, "fields").map { field =>
+          required[String](field, "label") -> plain(required[Json](field, "value"))
+        }
+        if fields.map(_._1).distinct.size != fields.size then
+          invalid("record", "duplicate field labels")
+        Json.fromFields(fields)
+      case ("list", list) => Json.arr(repeated(list, "elements").map(plain)*)
+      case ("optional", value) =>
+        objectValue(value)
         value.hcursor.downField("value").focus.fold(Json.Null)(plain)
-      case Some(("variant", value)) =>
+      case ("variant", value) =>
         Json.obj(
-          "constructor" -> value.hcursor.downField("constructor").focus.get,
-          "value" -> plain(value.hcursor.downField("value").focus.get)
+          "constructor" -> Json.fromString(required[String](value, "constructor")),
+          "value" -> plain(required[Json](value, "value"))
         )
-      case Some(("text" | "party" | "contractId" | "int64" | "numeric" | "bool", value)) => value
-      case Some(("unit", _)) => Json.Null
-      case _ => throw IllegalArgumentException("Unsupported or missing Ledger API value")
+      case ("text" | "party" | "contractId" | "int64" | "numeric", value) =>
+        Json.fromString(value.as[String].fold(e => invalid("value", e.getMessage), identity))
+      case ("bool", value) =>
+        Json.fromBoolean(value.as[Boolean].fold(e => invalid("value", e.getMessage), identity))
+      case ("unit", value) => objectValue(value); Json.Null
+      case _               => invalid("value", "unsupported Ledger API value variant")
+
+  private def required[A: Decoder](json: Json, name: String): A =
+    json.hcursor.get[A](name).fold(error => invalid(name, error.getMessage), identity)
+
+  private def repeated(json: Json, name: String): Vector[Json] =
+    objectValue(json)
+    // Protobuf JSON omits empty repeated fields. A malformed present field still fails.
+    if json.hcursor.downField(name).succeeded then required[Vector[Json]](json, name)
+    else Vector.empty
+
+  private def objectValue(json: Json): Unit =
+    if !json.isObject then invalid("value", "expected a Ledger API record object")
+
+  private def invalid(location: String, message: String): Nothing =
+    throw LedgerDecodingFailure(location, message)
+
   def fields(contract: ActiveContract): Json =
     Json.fromFields(contract.fields.map((name, value) => name -> plain(value)))

@@ -40,9 +40,9 @@ These are observed problems in actual entry points, not a reason to move every d
 
 ### TD02 — Make ledger operations and financing observations explicit
 
-- [ ] Replace anonymous exercise tuples with a named operation.
-- [ ] Decode financing observations once and remove empty-string success for missing required ledger fields.
-- [ ] Add focused malformed-observation and decoding checks; compile both targets.
+- [x] Replace anonymous exercise tuples with a named operation.
+- [x] Decode financing observations once and remove empty-string success for missing required ledger fields.
+- [x] Add focused malformed-observation and decoding checks; compile both targets.
 
 ### TD03 — Prove the first complete slice
 
@@ -76,3 +76,7 @@ These are observed problems in actual entry points, not a reason to move every d
 The supported capabilities and all 67 preserved example files remain unchanged. The complete release must contain the same 32 example identities and nine chapters, all matching their independent expectations. New checks establish malformed-data behavior and preservation of the existing transport fields. The third draft must remove the old JSON-driven state paths, rather than leave a second implementation alongside them.
 
 Human readability is the purpose of this pass, not something a successful compiler or test suite alone proves. The final reading guide must show what a reviewer now needs to understand for financing, composition, packages, and book export, and identify remaining intentional boundary code.
+
+## Implementation evidence
+
+TD02 passes 40 Scala tests and JVM/browser compilation (`.artifacts/third-02-build.log`). The new checks distinguish absent contracts from malformed visible payloads, reject malformed collections and competing Ledger API value variants, and retain valid omitted protobuf collections. Named exercises replace the financing/composition tuples.

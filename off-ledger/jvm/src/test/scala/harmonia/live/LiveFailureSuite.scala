@@ -29,7 +29,10 @@ class LiveFailureSuite extends FunSuite:
       .setModuleName("PrivateFinancing")
       .setEntityName("Application")
       .build(),
-    Map("status" -> Json.obj("text" -> Json.fromString("pending")))
+    Map(
+      "status" -> Json.obj("text" -> Json.fromString("pending")),
+      "privateDetails" -> Json.obj("text" -> Json.fromString("synthetic"))
+    )
   )
 
   test(
@@ -117,9 +120,13 @@ class LiveFailureSuite extends FunSuite:
     val accepted = Vector(rogue, application).filter(catalog.accepts)
     assertEquals(accepted, Vector(application))
     assertEquals(
-      FinancingObservation(
-        LedgerSnapshot(Vector(rogue).filter(catalog.accepts), Vector.empty)
-      ).application,
+      FinancingObservation
+        .read(
+          LedgerSnapshot(Vector(rogue).filter(catalog.accepts), Vector.empty)
+        )
+        .toOption
+        .get
+        .application,
       None
     )
   }

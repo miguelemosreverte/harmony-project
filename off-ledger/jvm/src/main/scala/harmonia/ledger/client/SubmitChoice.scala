@@ -1,7 +1,6 @@
 package harmonia.ledger.client
 
 import cats.effect.IO
-import com.daml.ledger.api.v2.ValueOuterClass.Value
 import harmonia.submission.SubmissionResult
 import harmonia.protocol.SubmissionStatus.*
 import io.grpc.Status
@@ -12,13 +11,11 @@ import io.grpc.Status
 object SubmitChoice:
   def apply(
       ledger: ParticipantLedger,
-      contract: ActiveContract,
-      choice: String,
-      argument: Value,
+      operation: LedgerExercise,
       commandId: String
   ): IO[SubmissionResult] =
     ledger
-      .exercise(contract, choice, argument, commandId)
+      .exercise(operation.contract, operation.choice, operation.argument, commandId)
       .map(tx => SubmissionResult(Committed, "Confirmed by the ledger", Some(tx)))
       .handleError { error =>
         val code = Status.fromThrowable(error).getCode
