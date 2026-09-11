@@ -3,9 +3,25 @@ package harmonia.packages.inspect
 import cats.effect.IO
 import harmonia.files.ArtifactFiles
 import harmonia.processes.ManagedProcess
-import io.circe.Json
+import io.circe.{Decoder, Json}
 import java.nio.file.{Files, Path}
 import java.security.MessageDigest
+
+final case class InspectedDar(packageId: String, lf: String, packages: Map[String, Json])
+object InspectedDar:
+  private val metadata = Decoder.forProduct2("main_package_id", "packages")(
+    (id: String, packages: Map[String, Json]) => (id, packages)
+  )
+
+  def read(json: Json, packageId: String, lf: String): Either[Throwable, InspectedDar] = for
+    fields <- metadata.decodeJson(json)
+    (id, packages) = fields
+    _ <- Either.cond(
+      id == packageId,
+      (),
+      RuntimeException("Structured package identity disagrees with compiler metadata")
+    )
+  yield InspectedDar(id, lf, packages)
 
 object InspectDar:
   val maximumBytes = 8 * 1024 * 1024
@@ -22,7 +38,7 @@ object InspectDar:
       .mkString
   }
 
-  def inspect(root: Path, dar: Path, output: Path): IO[Json] = for
+  def inspect(root: Path, dar: Path, output: Path): IO[InspectedDar] = for
     main <- LfArchive.read(dar)
     _ <- ManagedProcess.run(
       List(root.resolve("scripts/daml").toString, "damlc", "inspect-dar", dar.toString, "--json"),
@@ -31,8 +47,5 @@ object InspectDar:
     )
     text <- ArtifactFiles.read(output.resolve("packages.json"))
     json <- IO.fromEither(io.circe.parser.parse(text))
-    inspectedId <- IO.fromEither(json.hcursor.get[String]("main_package_id"))
-    _ <- IO.raiseUnless(inspectedId == main.id)(
-      RuntimeException("Structured package identity disagrees with compiler metadata")
-    )
-  yield json.mapObject(_.add("lf", Json.fromString(main.version)))
+    inspection <- IO.fromEither(InspectedDar.read(json, main.id, main.version))
+  yield inspection

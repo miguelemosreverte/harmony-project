@@ -28,31 +28,31 @@ The earlier proposal is the first branch commit. This expanded plan is the secon
 
 ## FD51 — third actual commit: typed package acquisition and inspection
 
-- [ ] `packages/inspect/InspectDar.scala`
+- [x] `packages/inspect/InspectDar.scala`
   - Return an `InspectedDar` value containing the main package identity, LF version, and retained dependency metadata.
   - Decode compiler output once here, cross-check the main package identity against structured LF, and retain raw `packages.json` for evidence.
   - Keep archive size, hash, and structured LF checks.
-- [ ] `packages/workspace/BuilderInput.scala`
+- [x] `packages/workspace/BuilderInput.scala`
   - Move the existing inspection model to its inspection owner; consume that model directly.
   - Keep UI availability derived from the inspected source and compiled project.
-- [ ] `packages/resolve/ResolvePackages.scala`
+- [x] `packages/resolve/ResolvePackages.scala`
   - Return a map of named `ResolvedPackage` values from `run` and a value from `resolve`.
   - Carry the verified pin, actual file path, and inspection together; render the existing JSON evidence only when writing it.
   - Preserve downloaded/local byte checks, repeated local-source verification, LF checks, bounded downloads, and temporary-file cleanup.
-- [ ] `packages/workspace/PackageBuilder.scala`
+- [x] `packages/workspace/PackageBuilder.scala`
   - Read the resolved path directly and receive inspected facts directly; remove both internal JSON decode steps.
   - Preserve input limits, serialization of package operations, cancellation cleanup, and participant export matching.
-- [ ] `bindings/generate/GenerateBinding.scala`
+- [x] `bindings/generate/GenerateBinding.scala`
   - Select the named resolved package and use its path and verified identity without decoding a JSON result.
   - Preserve the generation manifest's established source fields.
-- [ ] `ledger/client/TemplateCatalog.scala`
+- [x] `ledger/client/TemplateCatalog.scala`
   - Use the inspection result's dependency metadata directly, keeping the unique-package-name check.
-- [ ] `harness/runner/.../packages/verify/CheckPackages.scala`
+- [x] `harness/runner/.../packages/verify/CheckPackages.scala`
   - Adapt resolution consumption and retained evidence writing to the typed result.
   - Preserve independent DAR digest comparison and both fresh-network executions.
-- [ ] Add focused inspection-boundary tests under `product/server/src/test/scala/harmonia/packages/` for valid metadata, malformed required fields, and identity disagreement.
-- [ ] Format, compile product and tools, run Scala tests, then run `packages-check` and `builder-check` sequentially against the existing expectations.
-- [ ] Record this working package slice and commit only after those checks pass. State honestly that these preliminary checks precede the final clean release.
+- [x] Add focused inspection-boundary tests under `product/server/src/test/scala/harmonia/packages/` for valid metadata, malformed required fields, and identity disagreement.
+- [x] Format, compile product and tools, run Scala tests, then run `packages-check` and `builder-check` sequentially against the existing expectations.
+- [x] Record this working package slice and commit only after those checks pass. State honestly that these preliminary checks precede the final clean release.
 
 ## FD52 — fourth actual commit: retain generation facts
 
@@ -110,3 +110,5 @@ The earlier proposal is the first branch commit. This expanded plan is the secon
 - [ ] Write `docs/fifth-draft/measurements.md` and `acceptance.md`, update `docs/release/acceptance.md`, complete the plan, and commit the handoff.
 
 Any necessary adjustment is recorded here before its implementation. Reducing line count never permits weakening an independent expectation, removing a runtime boundary, or hiding a failed check.
+
+FD51 proof: all 52 Scala tests pass (`.artifacts/fifth-51-build.log`); package import/retrieval passes on two fresh networks (`fifth-51-packages.log`); the real builder story matches its original expectation with zero differences (`fifth-51-builder.log`). All three resolution records equal the retained fourth-draft JSON (`fifth-51-resolution-parity.json`). These checks were run before committing the implementation; the final release will record a fresh clean revision.

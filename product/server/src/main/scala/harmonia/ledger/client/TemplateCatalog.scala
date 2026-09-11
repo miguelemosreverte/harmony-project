@@ -26,7 +26,7 @@ object TemplateCatalog:
   )
   def load(root: Path, dar: Path, output: Path): IO[TemplateCatalog] = for
     inspection <- InspectDar.inspect(root, dar, output)
-    entries <- IO.fromEither(inspection.hcursor.get[Map[String, io.circe.Json]]("packages"))
+    entries = inspection.packages
     ids <- owners.values.toVector.distinct.traverse { name =>
       val matching = entries.filter(_._2.hcursor.get[String]("name").contains(name)).keys.toVector
       IO.raiseUnless(matching.size == 1)(

@@ -18,7 +18,10 @@ object CheckPackages:
   def run(root: Path): IO[Unit] = for
     resolved <- ResolvePackages.run(root, root.resolve("product/packages/inputs.md"))
     artifacts <- ArtifactFiles.createRun(root, "packages")
-    _ <- ArtifactFiles.write(artifacts.resolve("resolved.json"), resolved.spaces2)
+    _ <- ArtifactFiles.write(
+      artifacts.resolve("resolved.json"),
+      ResolvePackages.record(root, resolved).spaces2
+    )
     _ <- Vector("metadata-receipts", "package-example").traverse_ { name =>
       ManagedProcess.run(
         List(
@@ -51,9 +54,7 @@ object CheckPackages:
     _ <- ArtifactFiles.write(artifacts.resolve("expected.md"), expectedText)
     _ <- ArtifactFiles.write(artifacts.resolve("input.json"), Json.fromString(reference).noSpaces)
     metadata = root.resolve(".artifacts/packages/inputs/metadata.dar")
-    expectedHash <- IO.fromEither(
-      resolved.hcursor.downField("inputs").downField("metadata").get[String]("sha256")
-    )
+    expectedHash = resolved("metadata").pin.sha256
     _ <- Vector("first", "repeat").traverse_ { label =>
       val run = artifacts.resolve(label)
       CantonNetwork.resource(root, run.resolve("network"), dar, Vector(metadata)).use { network =>

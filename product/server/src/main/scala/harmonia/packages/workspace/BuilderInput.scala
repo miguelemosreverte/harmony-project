@@ -2,17 +2,9 @@ package harmonia.packages.workspace
 
 import harmonia.packages.InspectedPackage
 import harmonia.packages.read.PackageInput
-import io.circe.{Decoder, Json}
+import io.circe.Json
+import harmonia.packages.inspect.InspectedDar
 import java.nio.file.Path
-
-private[workspace] final case class InspectedDar(
-    packageId: String,
-    lf: String,
-    packages: Map[String, Json]
-)
-private[workspace] object InspectedDar:
-  given Decoder[InspectedDar] =
-    Decoder.forProduct3("main_package_id", "lf", "packages")(InspectedDar.apply)
 
 private[workspace] enum SupportedBinding(
     val source: String,

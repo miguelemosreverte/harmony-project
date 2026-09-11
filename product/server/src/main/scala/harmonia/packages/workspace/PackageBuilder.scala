@@ -69,8 +69,7 @@ final class PackageBuilder private (
           IllegalArgumentException("Choose a committed package source")
         )
         resolved <- ResolvePackages.resolve(root, pin)
-        file <- IO.fromEither(resolved.hcursor.get[String]("file"))
-        result <- add(pin.source, IO.blocking(Files.readAllBytes(root.resolve(file))), Some(pin))
+        result <- add(pin.source, IO.blocking(Files.readAllBytes(resolved.file)), Some(pin))
       yield result
   }
 
@@ -136,8 +135,7 @@ final class PackageBuilder private (
         Files.createDirectories(target); Files.write(target.resolve("source.dar"), data); ()
       }
       digest <- InspectDar.digest(target.resolve("source.dar"))
-      rawInspection <- InspectDar.inspect(root, target.resolve("source.dar"), target)
-      inspection <- IO.fromEither(rawInspection.as[InspectedDar])
+      inspection <- InspectDar.inspect(root, target.resolve("source.dar"), target)
       packageId = inspection.packageId
       lf = inspection.lf
       _ <- IO.raiseUnless(Set("2.1", "2.2").contains(lf))(

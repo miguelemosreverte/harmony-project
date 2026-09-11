@@ -26,14 +26,14 @@ object GenerateBinding:
     markdown <- ArtifactFiles.read(mappingPath)
     mapping <- IO.fromEither(BindingFormat.read(markdown).left.map(RuntimeException(_)))
     resolved <- ResolvePackages.run(root, root.resolve("product/packages/inputs.md"))
-    input <- IO.fromOption(resolved.hcursor.downField("inputs").downField(mapping.source).focus)(
+    input <- IO.fromOption(resolved.get(mapping.source))(
       RuntimeException(
         s"Unknown pinned source alias ${mapping.source}; add a reviewed identity to product/packages/inputs.md"
       )
     )
-    sourcePath <- IO.fromEither(input.hcursor.get[String]("file"))
-    digest <- IO.fromEither(input.hcursor.get[String]("sha256"))
-    source <- LfArchive.read(root.resolve(sourcePath))
+    sourcePath = input.file
+    digest = input.pin.sha256
+    source <- LfArchive.read(sourcePath)
     shape <- IO.fromEither(TemplateShapeReader.read(source, mapping).left.map(RuntimeException(_)))
     files <- IO.fromEither(GenerateSources(mapping, shape).left.map(RuntimeException(_)))
     exists <- ArtifactFiles.exists(output)
@@ -51,7 +51,7 @@ object GenerateBinding:
     _ <- files.traverse_(file => ArtifactFiles.write(output.resolve(file.path), file.content))
     _ <- ArtifactFiles.write(output.resolve("mapping.md"), markdown)
     _ <- Vector(
-      root.resolve(sourcePath) -> "source.dar",
+      sourcePath -> "source.dar",
       root.resolve(
         "product/ledger/interfaces/.daml/dist/harmonia-interfaces-0.1.0.dar"
       ) -> "interfaces.dar",
@@ -74,7 +74,7 @@ object GenerateBinding:
           "generator" -> Json.fromString(owner),
           "sdk" -> Json.fromString("3.4.11"),
           "mapping_sha256" -> Json.fromString(hash(markdown)),
-          "source" -> input,
+          "source" -> input.record(root),
           "files" -> Json.fromFields(
             files.map(file => file.path -> Json.fromString(hash(file.content)))
           )
@@ -93,7 +93,7 @@ object GenerateBinding:
         output.resolve(s"build-$name.log")
       )
     }
-    after <- InspectDar.digest(root.resolve(sourcePath))
+    after <- InspectDar.digest(sourcePath)
     copied <- InspectDar.digest(output.resolve("vendor/source.dar"))
     _ <- IO.raiseUnless(after == digest && copied == digest)(
       RuntimeException("Source DAR identity changed during generation")

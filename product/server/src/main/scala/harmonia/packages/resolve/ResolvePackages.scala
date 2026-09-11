@@ -4,7 +4,7 @@ import cats.effect.{IO, Resource}
 import cats.syntax.all.*
 import harmonia.files.ArtifactFiles
 import harmonia.packages.read.{PackageInput, PackageManifest}
-import harmonia.packages.inspect.InspectDar
+import harmonia.packages.inspect.{InspectDar, InspectedDar}
 import io.circe.Json
 import java.net.URI
 import java.net.http.{HttpClient, HttpRequest, HttpResponse}
@@ -12,17 +12,34 @@ import java.nio.file.{Files, Path, StandardCopyOption}
 import java.time.Duration
 import scala.concurrent.duration.*
 
+final case class ResolvedPackage(pin: PackageInput, file: Path, inspection: InspectedDar):
+  def record(root: Path): Json = Json.obj(
+    "source" -> Json.fromString(pin.source),
+    "sha256" -> Json.fromString(pin.sha256),
+    "package_id" -> Json.fromString(inspection.packageId),
+    "lf" -> Json.fromString(inspection.lf),
+    "file" -> Json.fromString(root.relativize(file).toString),
+    "packages" -> Json.fromFields(inspection.packages)
+  )
+
 object ResolvePackages:
-  def run(root: Path, manifest: Path): IO[Json] = for
+  def run(root: Path, manifest: Path): IO[Map[String, ResolvedPackage]] = for
     text <- ArtifactFiles.read(manifest)
     inputs <- IO.fromEither(PackageManifest.read(text).left.map(RuntimeException(_)))
-    records <- inputs.traverse(input => resolve(root, input).map(input.name -> _))
-    result = Json.obj("sdk" -> Json.fromString("3.4.11"), "inputs" -> Json.fromFields(records))
+    resolved <- inputs.traverse(input => resolve(root, input).map(input.name -> _)).map(_.toMap)
+    result = record(root, resolved)
     _ <- ArtifactFiles.write(root.resolve(".artifacts/packages/resolved.json"), result.spaces2)
     _ <- IO.println(s"Resolved ${inputs.size} pinned DAR inputs: .artifacts/packages/resolved.json")
-  yield result
+  yield resolved
 
-  def resolve(root: Path, input: PackageInput): IO[Json] =
+  def record(root: Path, inputs: Map[String, ResolvedPackage]): Json = Json.obj(
+    "sdk" -> Json.fromString("3.4.11"),
+    "inputs" -> Json.fromFields(
+      inputs.toVector.sortBy(_._1).map((name, value) => name -> value.record(root))
+    )
+  )
+
+  def resolve(root: Path, input: PackageInput): IO[ResolvedPackage] =
     val directory = root.resolve(".artifacts/packages/cache").resolve(input.sha256)
     val cached = directory.resolve("source.dar")
     val alias = root.resolve(".artifacts/packages/inputs").resolve(input.name + ".dar")
@@ -50,26 +67,18 @@ object ResolvePackages:
               )
             )
       inspection <- InspectDar.inspect(root, cached, directory)
-      actualId <- IO.fromEither(inspection.hcursor.get[String]("main_package_id"))
-      actualLf <- IO.fromEither(inspection.hcursor.get[String]("lf"))
+      actualId = inspection.packageId
+      actualLf = inspection.lf
       _ <- IO.raiseUnless(actualId == input.packageId && actualLf == input.lf)(
         RuntimeException(
           s"${input.name}: incompatible package. Expected ${input.packageId} / LF ${input.lf}; found $actualId / LF $actualLf"
         )
       )
-      packages <- IO.fromEither(inspection.hcursor.get[Json]("packages"))
       _ <- IO.blocking {
         Files.createDirectories(alias.getParent)
         Files.copy(cached, alias, StandardCopyOption.REPLACE_EXISTING)
       }
-    yield Json.obj(
-      "source" -> Json.fromString(input.source),
-      "sha256" -> Json.fromString(digest),
-      "package_id" -> Json.fromString(actualId),
-      "lf" -> Json.fromString(actualLf),
-      "file" -> Json.fromString(root.relativize(alias).toString),
-      "packages" -> packages
-    )
+    yield ResolvedPackage(input, alias, inspection)
 
   private def acquire(root: Path, input: PackageInput, destination: Path): IO[Unit] =
     val temporary = Resource.make(
