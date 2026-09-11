@@ -4,7 +4,7 @@ The [PRD](../PRD.md) defines the ordered work. This record reports actual commit
 
 ## Current step
 
-Step 15 is complete. A memory correction now bounds JVM heaps, releases sbt before runtime work, and prevents overlapping local ledger environments. The four-participant transfer still passes. Step 17 is complete: real maximum-size ledger cases, one winning concurrent advance, exact package projection, explicit observation failures, bounded streams, and a downloaded project rebuilt/executed from empty build directories. Next: finish the reader/developer guides and verify/package one clean source revision.
+Steps 01–19 are complete. The verified software/book revision is `dd5cf02754241730dc6cfed71e0b92216d657da0`: eleven clean-checkout gate stages, 32 passing recordings, nine chapters, a hashed archive, and working relocated launchers. Step 20 records acceptance and the prepared handoff materials. Public licensing, publication, external feedback, and adoption remain pending.
 
 ## Commit evidence
 
@@ -43,7 +43,9 @@ Actual commit identifiers are recorded in the next commit after they are created
 
 | 18 | `af96e50` | [Complete reader path](verification/18-book.md): nine chapters, 32 recordings, matching experiments, local link audit, and narrow-screen keyboard navigation |
 
-| 19a | This increment | [Release harness](release/packaging.md): compiled clean-checkout runner, sequential gates, bounded launchers, hashed bundle, and provenance verification; the full release gate follows this commit |
+| 19a | `dd5cf02` | [Release harness](release/packaging.md): compiled clean-checkout runner, sequential gates, bounded launchers, hashed bundle, and provenance verification; the full release gate follows this commit |
+
+| 19b | This increment | [Release acceptance proof](verification/19-release.md): clean suite, one-revision bundle, changed-file detection, relocated book/live launchers, and measured process cleanup |
 
 ## External decisions
 

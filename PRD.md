@@ -493,12 +493,12 @@ Deliver this larger step as three ordered, working commits:
 
 ### Commit 19 — `build: package a reproducible software and book release`
 
-- [ ] Assemble one versioned evaluation bundle.
-  - [ ] Package the core, interfaces/bindings, references, builder, book, and required metadata.
-  - [ ] Bundle recorded demo evidence with provenance and include commands for fresh local execution.
-  - [ ] Verify a clean build, required golden suite, both reference workflows, and direct/generated participation paths.
-  - [ ] Produce a release manifest, compatibility statement, changelog, and known limitations.
-  - [ ] **Acceptance:** software, chapters, examples, and evidence identify the same source revision and reproduce the documented behavior.
+- [x] Assemble one versioned evaluation bundle.
+  - [x] Package the core, interfaces/bindings, references, builder, book, and required metadata.
+  - [x] Bundle recorded demo evidence with provenance and include commands for fresh local execution.
+  - [x] Verify a clean build, required golden suite, both reference workflows, and direct/generated participation paths.
+  - [x] Produce a release manifest, compatibility statement, changelog, and known limitations.
+  - [x] **Acceptance:** software, chapters, examples, and evidence identify the same source revision and reproduce the documented behavior.
 
 ### Commit 20 — `docs: record release acceptance and adopter handoff`
 
