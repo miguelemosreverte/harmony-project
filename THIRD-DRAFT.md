@@ -1,6 +1,6 @@
 # Harmonia, third draft
 
-**Status:** implementation in progress.  
+**Status:** TD01–TD06 complete; [verified delivery](docs/third-draft/acceptance.md).  
 **Branch:** `third-draft`  
 **Preserved second draft:** `c97184587c5b68589fd69ddf98e98e404c231a29`  
 **Verified second-draft software:** `b1ed52f38553888696fd512c9558a18f395a0ec5`
@@ -66,10 +66,10 @@ These are observed problems in actual entry points, not a reason to move every d
 ### TD06 — Finish the review path and delivery
 
 - [x] Remove replaced APIs and update the repository guide and concrete reading traces.
-- [ ] Run focused tests and the complete clean-checkout release gate sequentially.
-- [ ] Verify all unchanged examples, fresh book recordings, package identities, archive integrity, relocated launchers, and browser interactions.
-- [ ] Record exact commits, measured memory/process cleanup, and remaining limitations.
-- [ ] Retain one bounded book preview and commit the final handoff.
+- [x] Run focused tests and the complete clean-checkout release gate sequentially.
+- [x] Verify all unchanged examples, fresh book recordings, package identities, archive integrity, relocated launchers, and browser interactions.
+- [x] Record exact commits, measured memory/process cleanup, and remaining limitations.
+- [x] Retain one bounded book preview and commit the final handoff.
 
 ## Acceptance
 
@@ -88,3 +88,18 @@ TD04 constructs a typed workspace throughout the server, with shared codecs at H
 TD04's direct and generated composition goldens both passed with zero differences (`.artifacts/third-04-composer.log`, clean source `3a37771`). TD05 makes package workspace state typed, derives transport flags from its inspected source and compiled project, and makes book projection/export return the shared envelope directly. All 45 Scala tests and both targets pass (`.artifacts/third-05-build.log`). The new missing-observation test retains both the visible absence and the complete independent mismatch through recording encoding.
 
 TD05's actual package-builder check passed (`.artifacts/third-05-builder.log`, clean source `e66dad5`). Exporting the preserved second-release recordings through the typed producer yielded the same full JSON payload for all 32 examples and nine chapters; all source/book links passed. This establishes presentation preservation, with original provenance retained. Fresh third-draft executions belong to the final release gate. The [current reading guide](docs/third-draft/reading-guide.md) explains the implemented paths and remaining deliberate boundaries.
+
+TD06 passed the full clean release at `070f499`: eleven gates, 45 Scala tests, four Daml scripts, 32 fresh recordings, and nine chapters. Archive relocation, deliberate tamper rejection, live/browser execution, package download, and final process cleanup all passed. The [acceptance record](docs/third-draft/acceptance.md) identifies the archive, measurements, evidence paths, and remaining limits. Only the packaged book remains at `http://127.0.0.1:56007/`.
+
+## Commit record
+
+| Commit | Work |
+| --- | --- |
+| `b4074b6` | TD01: principles, observed friction, ordered acceptance plan |
+| `fc2de14` | TD02: named ledger exercises and explicit financing observation |
+| `5eccca1` | TD03: third actual commit records working real-ledger and browser proof |
+| `3a37771` | TD04: typed workspace, composition commands and observations |
+| `e66dad5` | TD05: typed package state and book recording producers |
+| `070f499` | TD06: final reading paths and architecture documentation; verified release source |
+
+The final documentation commit records acceptance after release verification. Git history identifies that handoff without embedding its own hash.

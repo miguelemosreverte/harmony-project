@@ -1,10 +1,12 @@
 # Implementation progress
 
-The [second-draft plan](../SECOND-DRAFT.md) defines the completed refinement; the [PRD](../PRD.md) records the original implementation. This record reports actual commits and evidence, independently of publication or external adoption.
+The [third-draft plan](../THIRD-DRAFT.md) defines the completed refinement; the [PRD](../PRD.md) records the original implementation. This record reports actual commits and evidence, independently of publication or external adoption.
 
 ## Current delivery
 
-SD01–SD11 are complete on `second-draft`. The [second-draft acceptance](second-draft/acceptance.md) identifies verified source `b1ed52f38553888696fd512c9558a18f395a0ec5`, eleven passing clean-checkout gates, 36 Scala tests, 32 fresh recordings, nine chapters, the hashed archive, and relocated launcher checks. The [implementation record](../SECOND-DRAFT.md#implementation-record) maps its ordered work to actual commits. One bounded packaged book remains at `http://127.0.0.1:56007/`.
+TD01–TD06 are complete on `third-draft`. The [third-draft acceptance](third-draft/acceptance.md) identifies verified source `070f499f045b196cfab66c8bd34dd6c86c94dc8f`, eleven passing clean-checkout gates, 45 Scala tests, 32 fresh recordings, nine chapters, the hashed archive, and relocated live/browser checks. The [commit record](../THIRD-DRAFT.md#commit-record) maps the ordered work to actual commits. One bounded packaged book remains at `http://127.0.0.1:56007/`.
+
+SD01–SD11 remain complete and preserved on `second-draft` at `c971845`. Its [acceptance](second-draft/acceptance.md) and [implementation record](../SECOND-DRAFT.md#implementation-record) retain the previous software revision and evidence.
 
 The original Steps 01–20 are complete and preserved on `first-draft` at `d58c113`. The table below and [first-draft acceptance](release/first-draft-acceptance.md) retain their historical scope and evidence. `main` remains at that preserved version. Both checklists cover implementation and verification.
 
