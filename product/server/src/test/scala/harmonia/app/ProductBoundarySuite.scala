@@ -14,6 +14,9 @@ class ProductBoundarySuite extends FunSuite:
     assert(!typeChecks("harmonia.demo.Demo"))
     assert(!typeChecks("harmonia.stories.run.CheckStories"))
     assert(!typeChecks("harmonia.release.CheckRelease"))
+    assert(!typeChecks("harmonia.composition.model.CompositionResult"))
+    assert(!typeChecks("harmonia.packages.workspace.BuilderResult"))
+    assert(!typeChecks("harmonia.ledger.auth.DemoCredentials"))
   }
 
   test("connection configuration requires complete participants and valid local ports") {

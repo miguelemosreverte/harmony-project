@@ -1,25 +1,16 @@
 package harmonia.composition
 
 import harmonia.ui.Elements.*
-import io.circe.Json
-import harmonia.composition.model.{Composition, CompositionAction}
+import harmonia.composition.model.{Composition, CompositionAction, CompositionActor, PlannedStep}
 import org.scalajs.dom
-
-private final case class StepDraft(id: String, role: String, actor: String, action: String):
-  def json: Json = Json.obj(
-    "id" -> Json.fromString(id),
-    "role" -> Json.fromString(role),
-    "actor" -> Json.fromString(actor),
-    "action" -> Json.fromString(action)
-  )
 
 /** This editor owns its DOM so participant polling preserves unfinished input. */
 final class CompositionEditor(propose: Either[String, Composition] => Unit):
   private var name = "Offer checks"
   private var reference = "home-17"
   private var steps = Vector(
-    StepDraft("approval", "lender", "bank", "approve-financing"),
-    StepDraft("review", "reviewer", "buyer", "confirm-review")
+    PlannedStep("approval", "lender", CompositionActor.Bank, CompositionAction.Approve),
+    PlannedStep("review", "reviewer", CompositionActor.Buyer, CompositionAction.Review)
   )
   private var blocked = false
   private var remaining = 8
@@ -28,15 +19,7 @@ final class CompositionEditor(propose: Either[String, Composition] => Unit):
   root.onsubmit = event =>
     event.preventDefault()
     if !blocked && remaining > 0 then
-      propose(
-        Composition.read(
-          Json.obj(
-            "name" -> Json.fromString(name),
-            "reference" -> Json.fromString(reference),
-            "steps" -> Json.arr(steps.map(_.json)*)
-          )
-        )
-      )
+      propose(Composition.validate(Composition(name, reference, steps)))
   rebuild()
 
   def render(disabled: Boolean, proposalsLeft: Int): dom.HTMLElement =
@@ -74,7 +57,8 @@ final class CompositionEditor(propose: Either[String, Composition] => Unit):
       val row = element("fieldset", "composition-step")
       append(row, element("legend", text = s"Action ${index + 1}"))
       val fields = element("div", "composition-fields")
-      def update(f: StepDraft => StepDraft): Unit = steps = steps.updated(index, f(steps(index)))
+      def update(f: PlannedStep => PlannedStep): Unit = steps =
+        steps.updated(index, f(steps(index)))
       append(
         fields,
         textInput("Step name", s"composition-step-$index", step.id, 40)(v =>
@@ -84,15 +68,21 @@ final class CompositionEditor(propose: Either[String, Composition] => Unit):
         select(
           "Who acts?",
           s"composition-actor-$index",
-          step.actor,
+          step.actor.wire,
           Vector("bank" -> "Bank", "buyer" -> "Buyer")
-        )(v => update(_.copy(actor = v))),
+        )(v =>
+          CompositionActor.values.find(_.wire == v).foreach(actor => update(_.copy(actor = actor)))
+        ),
         select(
           "Action",
           s"composition-action-$index",
-          step.action,
+          step.action.wire,
           CompositionAction.values.toVector.map(action => action.wire -> action.label)
-        )(v => update(_.copy(action = v)))
+        )(v =>
+          CompositionAction.values
+            .find(_.wire == v)
+            .foreach(action => update(_.copy(action = action)))
+        )
       )
       append(row, fields)
       def move(offset: Int): Unit =
@@ -109,7 +99,12 @@ final class CompositionEditor(propose: Either[String, Composition] => Unit):
     val add = control("Add action", "composition-add", steps.size == 4) {
       val suffix =
         Iterator.from(1).map(_.toString).find(n => !steps.exists(_.id == "action-" + n)).get
-      steps = steps :+ StepDraft("action-" + suffix, "reviewer", "buyer", "confirm-review")
+      steps = steps :+ PlannedStep(
+        "action-" + suffix,
+        "reviewer",
+        CompositionActor.Buyer,
+        CompositionAction.Review
+      )
       rebuild()
     }
     val submit = element("button", "primary", "Propose workflow").asInstanceOf[dom.html.Button]

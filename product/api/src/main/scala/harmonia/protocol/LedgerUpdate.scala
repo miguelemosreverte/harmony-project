@@ -1,5 +1,6 @@
 package harmonia.protocol
 
+import harmonia.protocol.JsonCodec
 import io.circe.Codec
 
 final case class LedgerUpdate(
@@ -8,7 +9,4 @@ final case class LedgerUpdate(
     events: Vector[String]
 )
 object LedgerUpdate:
-  given Codec.AsObject[LedgerUpdate] =
-    Codec.forProduct3("update_id", "command_id", "events")(LedgerUpdate.apply)(v =>
-      (v.updateId, v.commandId, v.events)
-    )
+  given Codec.AsObject[LedgerUpdate] = JsonCodec.derived[LedgerUpdate]

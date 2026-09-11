@@ -22,7 +22,7 @@ Harmonia coordinates independently owned Daml applications. Contracts authorize 
 
 ## Build and run
 
-From the repository root, `scripts/build-product` builds product contracts, service, and browser. It does not build the book or harness. `scripts/product serve configuration.json` connects to existing local participants; it does not provision them.
+From the repository root, `scripts/build-product` builds product contracts, service, and browser. It does not build the book or harness. `scripts/product serve configuration.json [state-directory]` connects to existing local participants; it does not provision them.
 
 ```json
 {
@@ -36,6 +36,8 @@ From the repository root, `scripts/build-product` builds product contracts, serv
 }
 ```
 
-Ports refer to the supported local Ledger API connections. Token files supply existing participant credentials. The catalog DAR must contain the supported application packages; package exports contain the verified legacy DAR used by package retrieval. Paths resolve from the repository root. The service prints its address and the private file containing browser session links.
+Ports refer to the supported local Ledger API connections. Token files supply existing participant credentials. The catalog DAR must contain the supported application packages; package exports contain the verified legacy DAR used by package retrieval. Paths resolve from the repository root. The optional state directory controls where the service writes its local state; otherwise it creates a fresh run directory. The service prints its address and the private file containing browser session links.
 
 The separate harness command `scripts/demo live` provisions the demonstrated local network. The book and full verification instructions are outside this product directory.
+
+Public case classes use `JsonCodec` to derive the established snake-case HTTP fields. Special envelopes, such as the flattened workspace response, remain explicit. Composition validation operates on the typed plan and is shared by the editor and HTTP boundary.

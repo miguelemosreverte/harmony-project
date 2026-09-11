@@ -5,7 +5,7 @@ import cats.syntax.all.*
 import harmonia.files.ArtifactFiles
 import harmonia.app.http.LiveServer
 import harmonia.ledger.client.LiveLedger
-import harmonia.demo.Demo
+import harmonia.demo.{Demo, ConfiguredService}
 import harmonia.app.Connections
 import harmonia.financing.{FinancingObservation, ProgressStatus}
 import harmonia.ledger.client.LedgerSnapshot
@@ -47,8 +47,8 @@ object CheckLive:
     observed <- Demo
       .resource(root, artifacts.resolve("network"), story)
       .flatMap(runtime =>
-        LiveServer
-          .resource(root, artifacts.resolve("private"), runtime)
+        ConfiguredService
+          .resource(root, artifacts.resolve("network/service.json"), artifacts.resolve("private"))
           .map(server => runtime -> server)
       )
       .use { (runtime, server) =>

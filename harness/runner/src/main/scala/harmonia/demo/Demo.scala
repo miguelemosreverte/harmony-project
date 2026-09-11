@@ -1,11 +1,12 @@
 package harmonia.demo
 
-import harmonia.app.Connections
+import harmonia.app.{Connections, ServerConfig, ParticipantConfig}
+import io.circe.syntax.*
 
 import cats.effect.{IO, Resource}
 import cats.syntax.all.*
 import harmonia.files.ArtifactFiles
-import harmonia.ledger.auth.LocalCredentials
+import harmonia.ledger.auth.{LocalCredentials, DemoCredentials}
 import harmonia.ledger.client.{LiveLedger, ParticipantLedger, TemplateCatalog}
 import harmonia.ledger.DamlScript
 import harmonia.ledger.network.{CantonNetwork, NetworkAuthorization}
@@ -24,10 +25,10 @@ object Demo:
         TemplateCatalog.load(root, dar, artifacts.resolve("template-catalog"))
       )
       normal <- Resource.eval(
-        names.traverse(name => LocalCredentials.create.map(name -> _)).map(_.toMap)
+        names.traverse(name => DemoCredentials.create.map(name -> _)).map(_.toMap)
       )
       bootstrap <- Resource.eval(
-        names.traverse(name => LocalCredentials.create.map(name -> _)).map(_.toMap)
+        names.traverse(name => DemoCredentials.create.map(name -> _)).map(_.toMap)
       )
       tokens <- Resource.eval(
         names.traverse(name => bootstrap(name).token("bootstrap").map(name -> _)).map(_.toMap)
@@ -90,6 +91,30 @@ object Demo:
           )
         yield name -> ledger
       }
+      configured <- Resource.eval(participants.traverse { (name, ledger) =>
+        val tokenFile = artifacts.resolve(name + ".token")
+        normal(name)
+          .token(name)
+          .flatMap(LocalCredentials.privateWrite(tokenFile, _))
+          .as(
+            name -> ParticipantConfig(
+              network.participants(name),
+              ledger.party,
+              name,
+              tokenFile.toString
+            )
+          )
+      })
+      _ <- Resource.eval(
+        LocalCredentials.privateWrite(
+          artifacts.resolve("service.json"),
+          ServerConfig(
+            dar.toString,
+            artifacts.resolve("downloaded").toString,
+            configured.toMap
+          ).asJson.spaces2
+        )
+      )
     yield Connections(participants.toMap, artifacts.resolve("downloaded"), catalog)
 
   def serve(root: Path): IO[Unit] = for

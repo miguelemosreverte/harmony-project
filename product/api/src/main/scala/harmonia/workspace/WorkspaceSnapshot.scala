@@ -1,5 +1,6 @@
 package harmonia.workspace
 
+import harmonia.protocol.JsonCodec
 import harmonia.financing.FinancingState
 import harmonia.composition.CompositionState
 import harmonia.protocol.{SubmissionStatus, LedgerUpdate}
@@ -14,10 +15,7 @@ final case class SubmissionView(
     detail: String
 )
 object SubmissionView:
-  given Codec.AsObject[SubmissionView] =
-    Codec.forProduct5("id", "actor", "action", "outcome", "detail")(SubmissionView.apply)(v =>
-      (v.id, v.actor, v.action, v.outcome, v.detail)
-    )
+  given Codec.AsObject[SubmissionView] = JsonCodec.derived[SubmissionView]
 
 final case class WorkspaceSnapshot(
     financing: FinancingState,

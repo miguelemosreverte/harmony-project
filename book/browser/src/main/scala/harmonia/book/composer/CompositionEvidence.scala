@@ -24,7 +24,7 @@ object CompositionEvidence:
           "Follow the attempts above to see consent, ordering, and each independent source state. The ledger creates sources only when the partner accepts."
       )
     )
-    val flow = element("ol", "live-flow")
+    val flow = element("ol", "recorded-flow")
     val table = element("table")
     val header = element("tr")
     Vector("Action / role", "Actor", "Expected source", "Observed source").foreach(label =>

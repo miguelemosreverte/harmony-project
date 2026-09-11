@@ -76,6 +76,7 @@ lazy val reader = project.in(file("book/browser")).enablePlugins(ScalaJSPlugin).
 )
 lazy val tools = project.in(file("harness/tools")).dependsOn(bookExport).settings(jvmSettings).settings(
   name := "harmonia-tools",
+  exportRuntime := exportRuntime.dependsOn(service / exportRuntime).value,
   Compile / mainClass := Some("harmonia.tools.Main")
 )
 lazy val root = project.in(file(".")).aggregate(service, web, runner, bookExport, reader, tools).settings(

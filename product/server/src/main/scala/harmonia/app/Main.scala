@@ -9,6 +9,8 @@ object Main extends IOApp:
   def run(args: List[String]): IO[ExitCode] =
     val root = Path.of(sys.env.getOrElse("HARMONIA_ROOT", ".")).toAbsolutePath.normalize()
     val operation = args match
+      case List("serve", configuration, directory) =>
+        ServerConfig.serve(root, root.resolve(configuration), Some(root.resolve(directory)))
       case List("serve", configuration) => ServerConfig.serve(root, root.resolve(configuration))
       case List("generate-bindings", mapping, output) =>
         GenerateBinding.run(root, root.resolve(mapping), root.resolve(output))

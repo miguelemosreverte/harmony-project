@@ -14,8 +14,8 @@ object FinancingPanel:
     Vector("Bank approves privately", "Bank issues a signed result", "Buyer continues").zipWithIndex
       .foreach { (label, index) =>
         val done =
-          if index == 2 then state.progress == ProgressStatus.Complete
-          else state.evidenceAvailable || state.progress == ProgressStatus.Complete
+          if index == 2 then state.workflow == ProgressStatus.Complete
+          else state.evidenceAvailable || state.workflow == ProgressStatus.Complete
         append(
           flow,
           element("li", if done then "done" else "waiting", (if done then "✓ " else "○ ") + label)
@@ -23,7 +23,7 @@ object FinancingPanel:
       }
     val panel = element("section", "live-panel")
     append(panel, element("h2", text = "Current state"), element("p", text = state.currentStep))
-    val status = element("p", "live-workflow", s"Workflow: ${state.progress.wire}");
+    val status = element("p", "live-workflow", s"Workflow: ${state.workflow.wire}");
     status.id = "live-workflow"
     append(panel, status)
     state.application.foreach { application =>
@@ -47,7 +47,7 @@ object FinancingPanel:
         element(
           "p",
           text =
-            if state.progress == ProgressStatus.Complete then "This handoff is complete."
+            if state.workflow == ProgressStatus.Complete then "This handoff is complete."
             else "No action is currently available for your session."
         )
       )

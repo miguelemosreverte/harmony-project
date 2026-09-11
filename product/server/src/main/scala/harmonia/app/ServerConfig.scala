@@ -1,19 +1,19 @@
 package harmonia.app
 
-import cats.effect.{IO, Resource}
+import cats.effect.IO
 import cats.syntax.all.*
 import harmonia.app.http.LiveServer
 import harmonia.files.ArtifactFiles
 import harmonia.ledger.client.{LiveLedger, TemplateCatalog}
-import io.circe.Decoder
-import java.nio.file.{Files, Path}
+import io.circe.{Decoder, Encoder}
+import harmonia.protocol.JsonCodec
+import java.nio.file.Path
 
 final case class ParticipantConfig(port: Int, party: String, user: String, tokenFile: String)
 object ParticipantConfig:
-  given Decoder[ParticipantConfig] = Decoder
-    .forProduct4("port", "party", "user", "token_file")(
-      ParticipantConfig.apply
-    )
+  private val fields = JsonCodec.derived[ParticipantConfig]
+  given Encoder.AsObject[ParticipantConfig] = fields
+  given Decoder[ParticipantConfig] = fields
     .emap(p =>
       Either.cond(
         p.port > 0 && p.port <= 65535 && p.party.nonEmpty && p.user.nonEmpty && p.tokenFile.nonEmpty,
@@ -28,10 +28,9 @@ final case class ServerConfig(
     participants: Map[String, ParticipantConfig]
 )
 object ServerConfig:
-  given Decoder[ServerConfig] = Decoder
-    .forProduct3("catalog_dar", "package_exports", "participants")(
-      ServerConfig.apply
-    )
+  private val fields = JsonCodec.derived[ServerConfig]
+  given Encoder.AsObject[ServerConfig] = fields
+  given Decoder[ServerConfig] = fields
     .emap(c =>
       Either.cond(
         c.participants.keySet == Set(
@@ -44,10 +43,10 @@ object ServerConfig:
       )
     )
 
-  def serve(root: Path, path: Path): IO[Unit] = for
+  def serve(root: Path, path: Path, directory: Option[Path] = None): IO[Unit] = for
     text <- ArtifactFiles.read(path)
     config <- IO.fromEither(io.circe.parser.decode[ServerConfig](text))
-    output <- ArtifactFiles.createRun(root, "server")
+    output <- directory.fold(ArtifactFiles.createRun(root, "server"))(IO.pure)
     catalog <- TemplateCatalog.load(
       root,
       root.resolve(config.catalogDar),

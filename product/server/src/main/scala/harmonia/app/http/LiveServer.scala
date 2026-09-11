@@ -125,7 +125,7 @@ object LiveServer:
     else
       val file = path match
         case "/"         => Some(root.resolve("product/web/site/index.html") -> "text/html")
-        case "/book.css" => Some(root.resolve("product/web/site/live.css") -> "text/css")
+        case "/live.css" => Some(root.resolve("product/web/site/live.css") -> "text/css")
         case "/main.js" =>
           Some(
             root.resolve(

@@ -61,3 +61,21 @@ class WorkspaceContractSuite extends FunSuite:
     assertEquals(WorkspaceCommand.read(command.wire, command.parameters), Right(command))
     assert(WorkspaceCommand.read("approve-financing", command.parameters).isLeft)
   }
+
+  test("typed editor plans and HTTP input enforce the same composition constraints") {
+    import harmonia.composition.model.*
+    val step = PlannedStep("approval", "lender", CompositionActor.Bank, CompositionAction.Approve)
+    val plan = Composition("Offer", "offer-1", Vector(step))
+    assertEquals(Composition.validate(plan), Right(plan))
+    assertEquals(Composition.read(plan.json), Right(plan))
+    val invalid = Vector(
+      plan.copy(name = ""),
+      plan.copy(steps = Vector.empty),
+      plan.copy(steps = Vector(step, step)),
+      plan.copy(steps = Vector(step, step.copy(id = "other", actor = CompositionActor.Buyer)))
+    )
+    invalid.foreach { value =>
+      assert(Composition.validate(value).isLeft)
+      assert(Composition.read(value.json).isLeft)
+    }
+  }

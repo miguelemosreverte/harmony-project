@@ -2,7 +2,6 @@ package harmonia.tools
 
 import cats.effect.{ExitCode, IO, IOApp}
 import harmonia.files.ArtifactFiles
-import harmonia.book.{ExportBook, ServeBook}
 import harmonia.ledger.{CantonSandbox, DamlScript}
 import harmonia.ledger.network.CantonNetwork
 import harmonia.stories.run.CheckStories
@@ -10,14 +9,12 @@ import java.nio.file.Path
 
 object Main extends IOApp:
   def run(args: List[String]): IO[ExitCode] =
-    val root = Path.of(sys.env.getOrElse("HARMONIA_ROOT", "..")).toAbsolutePath.normalize()
+    val root = Path.of(sys.env.getOrElse("HARMONIA_ROOT", ".")).toAbsolutePath.normalize()
     args match
       case List("release-check") =>
         harmonia.release.CheckRelease.run(root).as(ExitCode.Success)
       case List("release-verify", directory) =>
         harmonia.release.ReleaseManifest.verify(root.resolve(directory)).as(ExitCode.Success)
-      case List("book-links", directory) =>
-        harmonia.book.verify.CheckBookLinks.run(root, root.resolve(directory)).as(ExitCode.Success)
       case List("portable-check") =>
         harmonia.verification.CheckPortableProject.run(root, None).as(ExitCode.Success)
       case List("portable-check", archive) =>
@@ -32,10 +29,6 @@ object Main extends IOApp:
         harmonia.composition.verify.CheckComposer.run(root).as(ExitCode.Success)
       case List("live")       => harmonia.demo.Demo.serve(root).as(ExitCode.Success)
       case List("live-check") => harmonia.live.verify.CheckLive.run(root).as(ExitCode.Success)
-      case List("generate-bindings", mapping, output) =>
-        harmonia.bindings.generate.GenerateBinding
-          .run(root, root.resolve(mapping), root.resolve(output))
-          .as(ExitCode.Success)
       case List("bindings-check") =>
         harmonia.bindings.verify.CheckBindings.run(root).as(ExitCode.Success)
       case List("bindings-check", mapping, expected, output) =>
@@ -44,24 +37,6 @@ object Main extends IOApp:
           .as(ExitCode.Success)
       case List("packages-check") =>
         harmonia.packages.verify.CheckPackages.run(root).as(ExitCode.Success)
-      case List("resolve-packages") =>
-        harmonia.packages.resolve.ResolvePackages
-          .run(root, root.resolve("product/packages/inputs.md"))
-          .as(ExitCode.Success)
-      case List("resolve-packages", manifest) =>
-        harmonia.packages.resolve.ResolvePackages
-          .run(root, root.resolve(manifest))
-          .as(ExitCode.Success)
-      case List("export-book", run, output) =>
-        ExportBook.write(root, root.resolve(run), root.resolve(output)).as(ExitCode.Success)
-      case List("book", run) =>
-        for
-          output <- ArtifactFiles.createRun(root, "book")
-          _ <- ExportBook.write(root, root.resolve(run), output)
-          _ <- ServeBook.serve(output)
-        yield ExitCode.Success
-      case List("serve-book", directory) =>
-        ServeBook.serve(root.resolve(directory)).as(ExitCode.Success)
       case "check" :: stories => CheckStories.run(root, stories)
       case List("network-smoke") =>
         for

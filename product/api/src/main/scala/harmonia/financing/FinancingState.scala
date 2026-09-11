@@ -1,5 +1,6 @@
 package harmonia.financing
 
+import harmonia.protocol.JsonCodec
 import io.circe.{Codec, Decoder, Encoder, Json}
 import io.circe.syntax.*
 
@@ -37,7 +38,7 @@ object ProgressStatus:
 final case class FinancingState(
     actor: String,
     version: String,
-    progress: ProgressStatus,
+    workflow: ProgressStatus,
     application: Option[ApplicationStatus],
     privateDetails: Option[String],
     evidenceAvailable: Boolean,
@@ -47,24 +48,4 @@ final case class FinancingState(
   def json: Json = this.asJson
 
 object FinancingState:
-  given Codec.AsObject[FinancingState] = Codec.forProduct8(
-    "actor",
-    "version",
-    "workflow",
-    "application",
-    "private_details",
-    "evidence_available",
-    "eligible",
-    "current_step"
-  )(FinancingState.apply)(v =>
-    (
-      v.actor,
-      v.version,
-      v.progress,
-      v.application,
-      v.privateDetails,
-      v.evidenceAvailable,
-      v.eligible,
-      v.currentStep
-    )
-  )
+  given Codec.AsObject[FinancingState] = JsonCodec.derived[FinancingState]

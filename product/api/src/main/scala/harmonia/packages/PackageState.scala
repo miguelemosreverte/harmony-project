@@ -1,11 +1,11 @@
 package harmonia.packages
 
+import harmonia.protocol.JsonCodec
 import io.circe.{Codec, Decoder, Encoder, Json}
 
 final case class PackageSource(id: String, source: String)
 object PackageSource:
-  given Codec.AsObject[PackageSource] =
-    Codec.forProduct2("id", "source")(PackageSource.apply)(v => (v.id, v.source))
+  given Codec.AsObject[PackageSource] = JsonCodec.derived[PackageSource]
 
 final case class InspectedPackage(
     id: String,
@@ -18,39 +18,11 @@ final case class InspectedPackage(
     availableLive: Boolean,
     compiled: Boolean,
     diagnostic: String,
-    includedPackages: Map[String, Json],
+    packages: Map[String, Json],
     generation: Option[Json]
 )
 object InspectedPackage:
-  private val fields: Codec.AsObject[InspectedPackage] = Codec.forProduct12(
-    "id",
-    "origin",
-    "sha256",
-    "package_id",
-    "lf",
-    "matched_source",
-    "can_generate",
-    "available_live",
-    "compiled",
-    "diagnostic",
-    "packages",
-    "generation"
-  )(InspectedPackage.apply)(v =>
-    (
-      v.id,
-      v.origin,
-      v.sha256,
-      v.packageId,
-      v.lf,
-      v.matchedSource,
-      v.canGenerate,
-      v.availableLive,
-      v.compiled,
-      v.diagnostic,
-      v.includedPackages,
-      v.generation
-    )
-  )
+  private val fields = JsonCodec.derived[InspectedPackage]
   given Decoder[InspectedPackage] = fields
   // The existing API publishes a generation manifest only after compilation.
   given Encoder.AsObject[InspectedPackage] = Encoder.AsObject.instance { value =>
@@ -65,7 +37,4 @@ final case class PackageState(
 )
 object PackageState:
   val empty = PackageState(Vector.empty, 8, Vector.empty)
-  given Codec.AsObject[PackageState] =
-    Codec.forProduct3("inputs", "remaining", "sources")(PackageState.apply)(v =>
-      (v.inputs, v.remaining, v.sources)
-    )
+  given Codec.AsObject[PackageState] = JsonCodec.derived[PackageState]
