@@ -1,6 +1,6 @@
 # Fifth draft: easy to understand locally
 
-Status: design proposal; implementation has not started. Branch `fifth-draft` starts from verified fourth-draft handoff `bef8ac5`. The fourth-draft branch and packaged book remain preserved.
+Status: approved for implementation; the [file-level plan](docs/fifth-draft/implementation-plan.md) records the execution order. Branch `fifth-draft` starts from verified fourth-draft handoff `bef8ac5`. The fourth-draft branch and packaged book remain preserved.
 
 ## Purpose
 
@@ -35,13 +35,8 @@ For financing, composition, and package generation, provide a concrete reading t
 
 Retain all 67 original golden files, 32 recording identities, nine chapters, supported HTTP behavior, Daml business rules, and pinned package identities. Verify product compilation and runtime isolation. Run the complete release sequentially, test relocated launchers and real browser interactions, and measure memory without claiming that heap caps equal resident memory.
 
-## Proposed implementation order
+## Implementation order
 
-- [x] FD50: first actual commit records this proposal and preserves the verified fourth draft.
-- [ ] FD51: second actual commit simplifies typed package acquisition and inspection, verified by existing package and malformed-input checks.
-- [ ] FD52: third actual commit carries generation facts through compilation and archive creation and proves a working end-to-end package operation against its original expectations.
-- [ ] FD53: simplify HTTP request handling while preserving its authenticated contract and failure behavior.
-- [ ] FD54: review the three feature traces and remove demonstrated indirection or repetition; document the remaining necessary boundaries.
-- [ ] FD55: run the clean release and browser proofs; record production-only deltas, memory, and a concise reviewer handoff.
+The [expanded plan](docs/fifth-draft/implementation-plan.md) contains the authoritative lists and sublists for each file and its verification. The proposal is commit one; plan expansion is commit two; the first working typed package slice is commit three. Generation, HTTP simplification, reading traces, and the clean release follow in that order.
 
-The brief is a proposal for the next implementation pass. A human readability assessment remains necessary even when every check passes.
+A human readability assessment remains necessary even when every check passes.
