@@ -14,14 +14,16 @@ final class RunStory(root: Path, ledger: CantonSandbox, dar: Path):
       root,
       ledger,
       dar,
-      "Story:run",
+      if story.integration.contains("generated") then "Story:runGenerated" else "Story:run",
       artifacts,
       Some(artifacts.resolve("input.json"))
     )
     raw <- ArtifactFiles.read(path)
     json <- IO.fromEither(io.circe.parser.parse(raw))
     actions <- IO.fromEither(
-      json.asArray.toRight(RuntimeException("Ledger observations must be a list"))
+      (if story.integration.contains("generated") then
+         json.hcursor.get[Vector[Json]]("steps").left.map(error => RuntimeException(error.message))
+       else json.asArray.toRight(RuntimeException("Ledger observations must be a list")))
     )
     normalized <- actions.foldLeft(IO.pure(Vector.empty[Json])) { (acc, action) =>
       for
@@ -29,4 +31,12 @@ final class RunStory(root: Path, ledger: CantonSandbox, dar: Path):
         fields <- IO.fromEither(NormalizeAction(action).left.map(RuntimeException(_)))
       yield preceding :+ fields
     }
-  yield Json.obj("actions" -> Json.fromValues(normalized))
+    result = Json.obj("actions" -> Json.fromValues(normalized))
+    observed <-
+      if !story.integration.contains("generated") then IO.pure(result)
+      else
+        for
+          evidence <- harmonia.bindings.observe.GeneratedEvidence.collect(ledger.port, json)
+          _ <- ArtifactFiles.write(path, json.mapObject(_.add("bank_events", evidence._2)).spaces2)
+        yield result.mapObject(_.add("integration", evidence._1))
+  yield observed

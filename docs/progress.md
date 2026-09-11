@@ -4,7 +4,7 @@ The [PRD](../PRD.md) defines the ordered work. This record reports actual commit
 
 ## Current step
 
-Step 13 generates typed adapters and separate runnable examples from pinned DARs and authored mappings. Both empty and primitive-argument choices pass real ledger checks; Chapter 7 shows the generated code. Next: direct/generated story parity and deliberate regression detection.
+Step 14 verifies direct/generated parity, deterministic generation, and detection of a compiled regression. All twenty-seven real-ledger stories pass. Next: authenticated live sessions for the private approval handoff.
 
 ## Commit evidence
 
@@ -25,7 +25,9 @@ Actual commit identifiers are recorded in the next commit after they are created
 | 11 | `ed9a686` | [Financing-to-offer proof](verification/11-financing-offer.md): nineteen live goldens, scoped single-use evidence, four participant views, and Chapter 5 |
 | 12a | `3136d45` | [Model separation](verification/12a-story-models.md): full build and nineteen unchanged ledger goldens |
 | 12b | `f701344` | [Atomic transfer proof](verification/12-atomic-transfer.md): twenty-five live goldens, exact quantities, transaction evidence, and complete rollback |
-| 13 | This increment | [Binding generation proof](verification/13-binding-generation.md): two compiled and executed generated projects, twenty-two Scala tests, unchanged DARs, and Chapter 7 |
+| 13 | `3e80cfe` | [Binding generation proof](verification/13-binding-generation.md): two compiled and executed generated projects, twenty-two Scala tests, unchanged DARs, and Chapter 7 |
+
+| 14 | This increment | [Participation parity proof](verification/14-participation-parity.md): twenty-seven ledger goldens, two equal business scenarios, deterministic generation, and a caught compiled regression |
 
 ## External decisions
 

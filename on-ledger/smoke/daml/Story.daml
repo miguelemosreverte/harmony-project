@@ -3,6 +3,7 @@ module Story where
 import Daml.Script
 import Story.Application
 import Harmonia.Workflow
+import qualified GeneratedFinancing as Generated
 
 data Attempt = Attempt with
     id : Text
@@ -38,7 +39,19 @@ data Step = Step with
   deriving (Eq, Show)
 
 run : Input -> Script [Step]
-run input = script do
+run input = fst <$> runWithParty input
+
+data GeneratedObservation = GeneratedObservation with steps : [Step]; bank : Party; activeBindings : Int
+  deriving (Eq, Show)
+
+runGenerated : Input -> Script GeneratedObservation
+runGenerated input = script do
+  (steps, bank) <- runWithParty input
+  bindings <- query @Generated.Adapter bank
+  pure GeneratedObservation with steps; bank; activeBindings = length bindings
+
+runWithParty : Input -> Script ([Step], Party)
+runWithParty input = script do
   bank <- allocateParty (input.namespace <> "-" <> input.bankName)
   buyer <- allocateParty (input.namespace <> "-" <> input.buyerName)
   (original, initialAction) <- createApplication input.integration bank buyer input.initialStatus
@@ -49,7 +62,8 @@ run input = script do
         owner = bank; readers = [buyer]; assignee = bank; subject = "application"
         action = initialAction; status = "waiting"
     Some _ -> abort "Unsupported workflow"
-  execute input bank buyer original workflowId input.actions
+  steps <- execute input bank buyer original workflowId input.actions
+  pure (steps, bank)
 
 execute : Input -> Party -> Party -> Reference -> Optional (ContractId WorkflowInstance) -> [Attempt] -> Script [Step]
 execute input bank buyer current workflowId remaining = case remaining of

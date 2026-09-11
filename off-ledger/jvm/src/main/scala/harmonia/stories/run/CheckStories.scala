@@ -147,6 +147,7 @@ object CheckStories:
             )
           }
     _ <- SourceIdentity.verify(root, artifacts)
+    _ <- harmonia.bindings.verify.StoryParity.verify(artifacts, requested.isEmpty)
   yield
     if (ordinaryChecks ++ privateChecks ++ purchaseChecks ++ transferChecks).forall(identity) then
       ExitCode.Success

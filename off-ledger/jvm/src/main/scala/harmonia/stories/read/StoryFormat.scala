@@ -29,9 +29,9 @@ object StoryFormat:
     integration <- root("integration").fold[Either[String, Option[String]]](Right(None)) { value =>
       text(value, "integration").flatMap { name =>
         Either.cond(
-          name == "adapter" && workflow.contains("approval"),
+          Set("adapter", "generated")(name) && workflow.contains("approval"),
           Some(name),
-          "Adapter requires an approval workflow"
+          "Adapter integration requires an approval workflow"
         )
       }
     }
@@ -136,8 +136,34 @@ object StoryFormat:
   yield normalized
 
   private def ordinaryResult(json: Json): Either[String, Json] = for
-    root <- fields(json, "result", Set("actions"), Set("visibility", "definition"))
+    root <- fields(json, "result", Set("actions"), Set("visibility", "definition", "integration"))
     _ <- validateVisibility(root("visibility"))
+    _ <- root("integration").fold[Either[String, Unit]](Right(())) { value =>
+      for
+        integration <- fields(
+          value,
+          "integration",
+          Set("path", "active_bindings", "binding_creations")
+        )
+        _ <- Either.cond(
+          integration("path").get.asString.contains("generated"),
+          (),
+          "Unsupported integration evidence path"
+        )
+        _ <- Vector("active_bindings", "binding_creations").foldLeft[Either[String, Unit]](
+          Right(())
+        ) { (acc, name) =>
+          acc.flatMap(_ =>
+            integration(name).get.asNumber
+              .flatMap(_.toInt)
+              .filter(_ >= 0)
+              .toRight(s"$name must be a nonnegative integer")
+              .map(_ => ())
+          )
+        }
+      yield ()
+    }
+
     _ <- root("definition").fold[Either[String, Unit]](Right(())) { value =>
       for
         definition <- fields(value, "definition", Set("name", "version"))

@@ -149,7 +149,9 @@ final class BookView(
       element(
         "span",
         "small",
-        if story.input.hcursor.get[String]("integration").toOption.contains("adapter") then
+        if story.input.hcursor.get[String]("integration").toOption.contains("generated") then
+          "Generated typed adapter"
+        else if story.input.hcursor.get[String]("integration").toOption.contains("adapter") then
           "Typed adapter"
         else if transfer then "Four-party atomic transfer"
         else if story.input.hcursor.get[String]("workflow").toOption.contains("property-purchase")
@@ -223,6 +225,8 @@ final class BookView(
     append(main, hero, toolbar, panel)
     if transfer then append(main, harmonia.book.transfer.TransferView.render(story, state.step))
     append(main, details)
+    if story.input.hcursor.get[String]("integration").contains("generated") then
+      append(main, harmonia.book.bindings.BindingView.render(story))
     participantEvidence(story, state).foreach(view => append(main, view))
     if story.differences.nonEmpty then
       val differences = element("section", "panel all-differences")

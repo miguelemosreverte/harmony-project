@@ -591,3 +591,5 @@ tr:last-child td {
 .balance-card progress { width: 100%; accent-color: var(--green, #285c4d); }
 .atomic-proof { padding: 0 1.5rem 1.5rem; line-height: 1.6; }
 @media (max-width: 650px) { .balance-grid { grid-template-columns: 1fr; } }
+
+.binding-evidence { margin-top: 1.4rem; }

@@ -61,6 +61,20 @@ The initial bound is a consuming action choice returning a replacement of its ow
 
 The real ledger example verifies an unauthorized reader attempt, authorized execution, source replacement, reader visibility, workflow completion, and rejection of a repeated completed action. Unknown transport or observation failures abort verification. Compilation alone cannot establish source authority, disclosure, or business eligibility.
 
-The source application is not edited or rebuilt by generation. The frozen financing archive retains its original identity, and the copied source bytes are checked again after compilation. Chapter 2's hand-written path remains available for comparison. The next regression increment runs equivalent stories through direct and generated participation paths.
+The source application is not edited or rebuilt by generation. The frozen financing archive retains its original identity, and the copied source bytes are checked again after compilation. Chapter 2's hand-written path remains available for comparison. The regular suite now runs equivalent approval and rejection stories through direct and generated participation paths.
 
 Read the [architecture decision](../docs/architecture/008-binding-generation.md), [Scala generator](../off-ledger/jvm/src/main/scala/harmonia/bindings/generate/GenerateSources.scala), and [verification runner](../off-ledger/jvm/src/main/scala/harmonia/bindings/verify/CheckBinding.scala).
+
+## Compare the two paths
+
+In the story laboratory, compare **Workflow approval** with **Generated workflow approval**, then compare their rollback cases. Their inputs differ only by `integration: generated`. The expected business actions, permission failures, source consumption, application count, and visibility are identical. A separate adapter panel records the generated path's companion contracts: one active binding, with two creation events after success and one after rejection.
+
+The checker compares the actual business results across both paths as well as checking each against its own committed expectation. It retains `parity.md` and the complete per-path recordings. [The compatibility matrix](../docs/compatibility.md) lists demonstrated package and runtime combinations.
+
+## Break the adapter deliberately
+
+`bindings-check` also builds an isolated mutant that replaces the real source exercise with `let replacement = source`. The mutant still compiles and completes its core action, but the application remains pending and its original contract remains active. The independent golden reports both differences. A transport error or failed compilation does not satisfy this experiment: the check requires successful execution followed by the intended business mismatch.
+
+The mutant is kept in an ignored, isolated generated project. The original source DAR and normal generated project remain unchanged. The mutation check fails if the broken adapter matches the expectation. It records the altered source and compiled artifact hashes, raw observations, expected/actual files, and the diff. Run `scripts/harmonia bindings-check` to reproduce it.
+
+The same command generates a second clean project in a fresh directory and compares source, configuration, and compiled DAR hashes. Current generated code also has to match the reviewed specimens embedded above. Ordinary generation never rewrites those specimens or expected results.

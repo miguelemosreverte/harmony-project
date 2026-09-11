@@ -15,4 +15,4 @@ object CheckBindings:
       root.resolve("packages/mappings/approval-expected.md"),
       root.resolve(s".artifacts/$output")
     )
-  }
+  } *> GenerationDeterminism.verify(root) *> BindingMutation.verify(root)

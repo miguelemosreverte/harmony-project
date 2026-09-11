@@ -439,12 +439,12 @@ This item is split into consecutive subcommits: **12a** separates the reference 
 
 ### Commit 14 — `test: establish direct and generated integration parity`
 
-- [ ] Make both participation paths part of the regular regression suite.
-  - [ ] Run equivalent stories through direct implementations and generated bindings.
-  - [ ] Compare shared business outcomes, permissions, and visibility; keep legitimate adapter-specific events explicit.
-  - [ ] Check deterministic code generation for identical input packages and mappings.
-  - [ ] Record supported package-version combinations and fail clearly on mismatches.
-  - [ ] **Acceptance:** CI catches a deliberate generated-binding regression, and Chapter 7 makes the common behavior and path-specific mechanics visible.
+- [x] Make both participation paths part of the regular regression suite.
+  - [x] Run equivalent stories through direct implementations and generated bindings.
+  - [x] Compare shared business outcomes, permissions, and visibility; keep legitimate adapter-specific events explicit.
+  - [x] Check deterministic code generation for identical input packages and mappings.
+  - [x] Record supported package-version combinations and fail clearly on mismatches.
+  - [x] **Acceptance:** The regular CI command catches a deliberate generated-binding regression, and Chapter 7 makes the common behavior and path-specific mechanics visible.
 
 ### Commit 15 — `feat: connect the viewer to live participant-scoped execution`
 

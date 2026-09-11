@@ -19,3 +19,4 @@ data-dependencies:
   - ../source-custody/.daml/dist/harmonia-source-custody-0.1.0.dar
   - ../destination-custody/.daml/dist/harmonia-destination-custody-0.1.0.dar
   - ../transfer/.daml/dist/harmonia-transfer-0.1.0.dar
+  - ../../.artifacts/generated-financing/library/.daml/dist/harmonia-binding-generatedfinancing-0.1.0.dar

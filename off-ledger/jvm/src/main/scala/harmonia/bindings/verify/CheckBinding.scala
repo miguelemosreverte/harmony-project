@@ -2,21 +2,40 @@ package harmonia.bindings.verify
 
 import cats.effect.IO
 import cats.syntax.all.*
-import harmonia.bindings.generate.GenerateBinding
+import harmonia.bindings.generate.{GenerateBinding, GeneratedProject}
 import harmonia.files.ArtifactFiles
 import harmonia.ledger.{CantonSandbox, DamlScript}
 import harmonia.stories.read.MarkdownYaml
-import harmonia.stories.compare.CompareResults
+import harmonia.stories.compare.{CompareResults, Difference}
 import io.circe.Json
 import java.nio.file.Path
+
+final case class BindingObservation(artifacts: Path, differences: Vector[Difference])
 
 object CheckBinding:
   def run(root: Path, mapping: Path, expectedPath: Path, output: Path): IO[Unit] = for
     expectedMarkdown <- ArtifactFiles.read(expectedPath)
+    project <- GenerateBinding.run(root, mapping, output)
+    observed <- verifyBuilt(root, project, expectedMarkdown)
+    _ <- IO.raiseWhen(observed.differences.nonEmpty)(
+      RuntimeException(
+        s"Generated binding differs from its committed expectation. See ${observed.artifacts}/diff.md"
+      )
+    )
+    _ <- IO.println(
+      s"PASS generated binding against unchanged source DAR ${project.sourceDigest}: ${observed.artifacts}"
+    )
+  yield ()
+
+  def verifyBuilt(
+      root: Path,
+      project: GeneratedProject,
+      expectedMarkdown: String
+  ): IO[BindingObservation] = for
     expected <- IO.fromEither(
       MarkdownYaml.read(expectedMarkdown, "Result").left.map(RuntimeException(_))
     )
-    project <- GenerateBinding.run(root, mapping, output)
+    output = project.directory
     artifacts <- ArtifactFiles.createRun(root, "bindings")
     _ <- ArtifactFiles.write(artifacts.resolve("expected.md"), expectedMarkdown)
     inputMarkdown <- ArtifactFiles.read(output.resolve("mapping.md"))
@@ -75,12 +94,4 @@ object CheckBinding:
         )
         .spaces2
     )
-    _ <- IO.raiseWhen(differences.nonEmpty)(
-      RuntimeException(
-        s"Generated binding differs from its committed expectation. See $artifacts/diff.md"
-      )
-    )
-    _ <- IO.println(
-      s"PASS generated binding against unchanged source DAR ${project.sourceDigest}: $artifacts"
-    )
-  yield ()
+  yield BindingObservation(artifacts, differences)
