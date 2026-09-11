@@ -2,7 +2,7 @@ package harmonia.book
 
 import org.scalajs.dom
 
-private[book] object Elements:
+private[harmonia] object Elements:
   def element(tag: String, css: String = "", text: String = ""): dom.HTMLElement =
     val node = dom.document.createElement(tag).asInstanceOf[dom.HTMLElement]
     node.className = css

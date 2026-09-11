@@ -1,0 +1,33 @@
+module LiveSetup where
+
+import Daml.Script
+import qualified PrivateFinancing as Private
+import Harmonia.SharedProgress
+import qualified Privacy
+import qualified Story as S
+
+data Setup = Setup with bank : Party; buyer : Party; reviewer : Party
+  deriving (Eq, Show)
+
+run : S.Input -> Script Setup
+run input = script do
+  let namespace = input.namespace
+  reviewerName <- optional (abort "Reviewer required") pure input.reviewerName
+  privateDetails <- optional (abort "Private details required") pure input.privateDetails
+  bank <- allocatePartyOn (namespace <> "-" <> input.bankName) (ParticipantName "bank")
+  buyer <- allocatePartyOn (namespace <> "-" <> input.buyerName) (ParticipantName "buyer")
+  reviewer <- allocatePartyOn (namespace <> "-" <> reviewerName) (ParticipantName "reviewer")
+  forA ["bank", "buyer", "reviewer"] (\name -> Privacy.await 60 do
+    known <- listKnownPartiesOn (ParticipantName name)
+    pure (all (\party -> elem party (map (.party) known)) [bank, buyer, reviewer]))
+  submit bank do
+    createCmd Private.Application with bank; buyer; reviewers = [reviewer]; subject = "application"; status = input.initialStatus; privateDetails
+  proposal <- submit bank do
+    createCmd ProgressProposal with owner = buyer; issuer = bank; readers = [reviewer]; subject = "application"
+  Privacy.await 60 do visible <- queryContractId buyer proposal; pure (visible /= None)
+  progress <- submit buyer do exerciseCmd proposal Accept
+  Privacy.awaitProgress (Privacy.Actors bank buyer reviewer) progress
+  forA [("bank", bank), ("buyer", buyer), ("reviewer", reviewer)] (\(name, party) -> do
+    userId <- validateUserId name
+    createUserOn (User userId (Some party)) [CanActAs party] (ParticipantName name))
+  pure Setup with bank; buyer; reviewer

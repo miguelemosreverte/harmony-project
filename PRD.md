@@ -448,13 +448,13 @@ This item is split into consecutive subcommits: **12a** separates the reference 
 
 ### Commit 15 — `feat: connect the viewer to live participant-scoped execution`
 
-- [ ] Add live interaction to the existing evidence viewer.
-  - [ ] Read actual current workflow state and submit actions using configured party credentials.
-  - [ ] Show pending, committed, rejected, disconnected, and stale-view states accurately.
-  - [ ] Reuse the story/result format when retaining live demonstration evidence.
-  - [ ] Expose actor, application, current/next steps, completion, and execution history in the inspection view.
-  - [ ] Keep live identity enforcement separate from recorded-demo perspective switching.
-  - [ ] **Acceptance:** two participant sessions can complete a handoff; UI bypass cannot authorize an invalid action and reconnecting recovers the committed state.
+- [x] Add live interaction to the existing evidence viewer.
+  - [x] Read actual current workflow state and submit actions using configured party credentials.
+  - [x] Show pending, committed, rejected, disconnected, and stale-view states accurately.
+  - [x] Reuse the story/result format when retaining live demonstration evidence.
+  - [x] Expose actor, application, current/next steps, completion, and execution history in the inspection view.
+  - [x] Keep live identity enforcement separate from recorded-demo perspective switching.
+  - [x] **Acceptance:** two participant sessions can complete a handoff; UI bypass cannot authorize an invalid action and reconnecting recovers the committed state.
 
 ### Commit 16 — `feat: compose supported workflows and provide DAR inputs`
 

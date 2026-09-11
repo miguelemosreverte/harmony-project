@@ -9,6 +9,12 @@ import java.net.ServerSocket
 import java.nio.file.Path
 import scala.concurrent.duration.*
 
+final case class NetworkAuthorization(
+    configuration: Map[String, String],
+    bootstrapTokens: Map[String, String]
+):
+  override def toString: String = "NetworkAuthorization(<redacted>)"
+
 final case class CantonNetwork(participants: Map[String, Int], configuration: Path)
 
 object CantonNetwork:
@@ -19,7 +25,8 @@ object CantonNetwork:
       artifacts: Path,
       dar: Path,
       inspectDars: Vector[Path] = Vector.empty,
-      participantNames: Vector[String] = names
+      participantNames: Vector[String] = names,
+      authorization: Option[NetworkAuthorization] = None
   ): Resource[IO, CantonNetwork] =
     require(
       participantNames.nonEmpty && participantNames.size <= 4 && participantNames.distinct.size == participantNames.size && participantNames
@@ -45,20 +52,30 @@ object CantonNetwork:
             s"""$name {
              | storage.type = memory
              | ledger-api.port = ${ports(index * 3)}
+             | ledger-api.address = "127.0.0.1"
+             | ${authorization
+                .map(a => "ledger-api.auth-services = " + a.configuration(name))
+                .getOrElse("")}
              | admin-api.port = ${ports(index * 3 + 1)}
+             | admin-api.address = "127.0.0.1"
              | http-ledger-api.port = ${ports(index * 3 + 2)}
+             | http-ledger-api.address = "127.0.0.1"
              |}""".stripMargin
           }
           .mkString("\n")
         val configuration = s"""canton {
           | participants { $participants }
           | sequencers.sequencer1 {
+          |   admin-api.address = "127.0.0.1"
+          |   public-api.address = "127.0.0.1"
           |   storage.type = memory
           |   admin-api.port = ${ports(count * 3)}
           |   public-api.port = ${ports(count * 3 + 1)}
           |   sequencer { type = reference, config.storage.type = memory }
           | }
-          | mediators.mediator1 { storage.type = memory, admin-api.port = ${ports(count * 3 + 2)} }
+          | mediators.mediator1 { admin-api.address = "127.0.0.1", storage.type = memory, admin-api.port = ${ports(
+                                count * 3 + 2
+                              )} }
           |}""".stripMargin
         val retrieval = inspectDars.zipWithIndex
           .map { (source, index) =>
@@ -87,15 +104,21 @@ object CantonNetwork:
                        )}), participants.local.map(p => p.id.toString).mkString("\\n"))
           |""".stripMargin
         val json = Json.obj(
-          "default_participant" -> endpoint(endpoints(first)),
+          "default_participant" -> endpoint(
+            endpoints(first),
+            authorization.map(_.bootstrapTokens(first))
+          ),
           "participants" -> Json.fromFields(
-            endpoints.toVector.map((name, port) => name -> endpoint(port))
+            endpoints.toVector.map((name, port) =>
+              name -> endpoint(port, authorization.map(_.bootstrapTokens(name)))
+            )
           ),
           "party_participants" -> Json.obj()
         )
         IO.blocking(java.nio.file.Files.createDirectories(artifacts.resolve("downloaded"))) *>
-          ArtifactFiles.write(config, configuration) *> ArtifactFiles.write(bootstrap, script) *>
-          ArtifactFiles.write(participantConfig, json.spaces2)
+          harmonia.ledger.auth.LocalCredentials.privateWrite(config, configuration) *> ArtifactFiles
+            .write(bootstrap, script) *>
+          harmonia.ledger.auth.LocalCredentials.privateWrite(participantConfig, json.spaces2)
       }
       process <- ManagedProcess.start(
         List(
@@ -124,6 +147,8 @@ object CantonNetwork:
       }
     yield CantonNetwork(endpoints, participantConfig)
 
-  private def endpoint(port: Int): Json =
-    Json.obj("host" -> Json.fromString("127.0.0.1"), "port" -> Json.fromInt(port))
+  private def endpoint(port: Int, token: Option[String]): Json =
+    Json
+      .obj("host" -> Json.fromString("127.0.0.1"), "port" -> Json.fromInt(port))
+      .deepMerge(token.fold(Json.obj())(t => Json.obj("access_token" -> Json.fromString(t))))
   private def quote(value: String): String = Json.fromString(value).noSpaces

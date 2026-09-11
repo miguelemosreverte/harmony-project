@@ -593,3 +593,24 @@ tr:last-child td {
 @media (max-width: 650px) { .balance-grid { grid-template-columns: 1fr; } }
 
 .binding-evidence { margin-top: 1.4rem; }
+
+/* Authenticated live sessions share the book's typography and palette. */
+.live-main { max-width: 1120px; margin: 0 auto; padding: 3rem 2rem; }
+.live-main h1 { max-width: 850px; font-size: clamp(2rem, 4vw, 3.5rem); }
+.live-main .lede { max-width: 780px; font-size: 1.15rem; }
+.live-identity { font-weight: 700; margin-top: 2rem; }
+.live-connection { padding: .7rem 1rem; border-left: 3px solid #356653; background: #edf2e9; }
+.live-flow { display: flex; gap: 1rem; padding: 0; margin: 2rem 0; list-style: none; }
+.live-flow li { flex: 1; border: 1px solid #c9c8b8; border-radius: 8px; padding: 1rem; }
+.live-flow .done { background: #e7efde; border-color: #47704e; }
+.live-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.live-panel { background: #fffdf6; border: 1px solid #d9d7c9; border-radius: 10px; padding: 1.5rem; margin: 1rem 0; min-width: 0; }
+.live-job { border-bottom: 1px solid #d9d7c9; padding: .6rem 0; }
+.live-job strong { text-transform: uppercase; font-size: .8rem; letter-spacing: .08em; }
+.live-history li { margin-bottom: 1.2rem; }
+.live-history code { overflow-wrap: anywhere; }
+.live-main button { padding: .7rem 1rem; margin: .5rem .5rem .5rem 0; border: 1px solid #356653; border-radius: 6px; cursor: pointer; }
+.live-main button.primary { color: white; background: #285542; }
+.live-main button:disabled { opacity: .55; cursor: wait; }
+.live-footnote { font-size: .85rem; color: #606657; margin-top: 2rem; }
+@media (max-width: 700px) { .live-main { padding: 1.5rem 1rem; } .live-grid { grid-template-columns: 1fr; } .live-flow { flex-direction: column; } }

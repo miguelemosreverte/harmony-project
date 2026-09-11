@@ -12,6 +12,8 @@ object Main extends IOApp:
   def run(args: List[String]): IO[ExitCode] =
     val root = Path.of(sys.env.getOrElse("HARMONIA_ROOT", "..")).toAbsolutePath.normalize()
     args match
+      case List("live")       => harmonia.live.run.LiveRuntime.serve(root).as(ExitCode.Success)
+      case List("live-check") => harmonia.live.verify.CheckLive.run(root).as(ExitCode.Success)
       case List("generate-bindings", mapping, output) =>
         harmonia.bindings.generate.GenerateBinding
           .run(root, root.resolve(mapping), root.resolve(output))
@@ -68,5 +70,5 @@ object Main extends IOApp:
         yield ExitCode.Success
       case _ =>
         IO.println(
-          "Usage: scripts/harmonia generate-bindings mapping output | bindings-check | smoke | network-smoke | resolve-packages [manifest] | packages-check | check [story-directory ...] | book run-directory | export-book run-directory output-directory | serve-book directory"
+          "Usage: scripts/harmonia live | live-check | generate-bindings mapping output | bindings-check | smoke | network-smoke | resolve-packages [manifest] | packages-check | check [story-directory ...] | book run-directory | export-book run-directory output-directory | serve-book directory"
         ).as(ExitCode.Error)

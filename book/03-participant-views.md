@@ -60,3 +60,18 @@ The evaluation bundle contains the collected evidence from all three parties so 
 - [Event observation](../off-ledger/jvm/src/main/scala/harmonia/ledger/events/LedgerEvents.scala): bounded Ledger API history requests.
 
 The local topology has three independently identified participant nodes with separate in-memory stores and API endpoints, one common synchronizer, and one hosting JVM. This proves the demonstrated ledger visibility boundary; it is not a deployment with separate operating-system or administrator trust boundaries.
+
+## Try two live sessions
+
+The recorded perspective selector lets you inspect evidence already captured by
+the checker. The [live walkthrough](../docs/live.md) connects separate bank,
+buyer, and observer sessions to their own authenticated participant clients.
+Approve in the bank tab, continue in the buyer tab, and reload to recover the
+committed state. The private payload stays in the bank's view.
+
+The [live input](../evaluations/live-handoff/input.md) and its
+[expected result](../evaluations/live-handoff/expected.md) use the same Markdown
+story language. `scripts/harmonia live-check` repeats the handoff and tests direct
+API attempts to bypass the displayed controls. Inspect the
+[session architecture](../docs/architecture/009-live-sessions.md) to follow the
+credential and command boundaries.

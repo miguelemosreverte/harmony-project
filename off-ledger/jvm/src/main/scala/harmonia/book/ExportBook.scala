@@ -67,8 +67,8 @@ object ExportBook:
       root.resolve("off-ledger/browser/target/scala-3.3.6/harmonia-book-fastopt/main.js"),
       output.resolve("main.js")
     )
-    _ <- Vector("book", "docs", "stories", "on-ledger", "off-ledger", "packages").traverse_ {
-      directory =>
+    _ <- Vector("book", "docs", "stories", "on-ledger", "off-ledger", "packages", "evaluations")
+      .traverse_ { directory =>
         IO.blocking {
           val stream = Files.walk(root.resolve(directory))
           try
@@ -89,7 +89,7 @@ object ExportBook:
         }.flatMap(
           _.traverse_(path => copy(path, output.resolve("source").resolve(root.relativize(path))))
         )
-    }
+      }
     _ <- Vector("README.md", "PRD.md", "harmonia.md", "harmonia-architecture.html").traverse_(
       name => copy(root.resolve(name), output.resolve("source").resolve(name))
     )

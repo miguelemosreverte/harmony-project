@@ -15,7 +15,11 @@ final case class ViewState(
 )
 
 object BookApp extends IOApp.Simple:
-  def run: IO[Unit] = Dispatcher
+  def run: IO[Unit] =
+    if dom.document.body.getAttribute("data-mode") == "live" then harmonia.live.LiveApp.run
+    else recorded
+
+  private def recorded: IO[Unit] = Dispatcher
     .sequential[IO]
     .use { dispatcher =>
       for

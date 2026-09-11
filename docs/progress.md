@@ -4,7 +4,7 @@ The [PRD](../PRD.md) defines the ordered work. This record reports actual commit
 
 ## Current step
 
-Step 14 verifies direct/generated parity, deterministic generation, and detection of a compiled regression. All twenty-seven real-ledger stories pass. Next: authenticated live sessions for the private approval handoff.
+Step 15 adds authenticated live participant sessions, observed state/history, confirmed command results, and recovery from lost responses. The live acceptance story and direct authority checks pass. Next: the bounded workflow composer and its DAR input path.
 
 ## Commit evidence
 
@@ -27,7 +27,9 @@ Actual commit identifiers are recorded in the next commit after they are created
 | 12b | `f701344` | [Atomic transfer proof](verification/12-atomic-transfer.md): twenty-five live goldens, exact quantities, transaction evidence, and complete rollback |
 | 13 | `3e80cfe` | [Binding generation proof](verification/13-binding-generation.md): two compiled and executed generated projects, twenty-two Scala tests, unchanged DARs, and Chapter 7 |
 
-| 14 | This increment | [Participation parity proof](verification/14-participation-parity.md): twenty-seven ledger goldens, two equal business scenarios, deterministic generation, and a caught compiled regression |
+| 14 | `44cc384` | [Participation parity proof](verification/14-participation-parity.md): twenty-seven ledger goldens, two equal business scenarios, deterministic generation, and a caught compiled regression |
+
+| 15 | This increment | [Authenticated live proof](verification/15-live-sessions.md): separate sessions, direct API permission denial, stale/repeated requests, browser reconnect, and response-loss recovery |
 
 ## External decisions
 
