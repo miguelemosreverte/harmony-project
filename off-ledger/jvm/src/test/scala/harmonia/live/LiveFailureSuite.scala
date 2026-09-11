@@ -3,10 +3,12 @@ package harmonia.live
 import cats.effect.{IO, Ref, Deferred}
 import cats.effect.unsafe.implicits.global
 import cats.syntax.all.*
-import harmonia.live.actions.{LiveActions, ActionRequest}
-import harmonia.live.ledger.{ActiveContract, ParticipantLedger, TemplateCatalog, LiveLedger}
+import harmonia.app.workspace.Workspace
+import harmonia.submission.ActionRequest
+import harmonia.ledger.client.{ActiveContract, ParticipantLedger, TemplateCatalog, LiveLedger}
 import harmonia.live.run.{LiveRuntime, LiveParticipant}
-import harmonia.live.state.LiveSnapshot
+import harmonia.financing.FinancingObservation
+import harmonia.ledger.client.LedgerSnapshot
 import com.daml.ledger.api.v2.ValueOuterClass
 import io.circe.Json
 import harmonia.workspace.WorkspaceCommand
@@ -44,7 +46,7 @@ class LiveFailureSuite extends FunSuite:
           Path.of("unused"),
           catalog
         )
-        result <- LiveActions.resource(runtime).use { actions =>
+        result <- Workspace.resource(runtime).use { actions =>
           for
             initial <- actions.state("bank")
             _ <- failRead.set(true)
@@ -88,7 +90,7 @@ class LiveFailureSuite extends FunSuite:
             Path.of("unused"),
             catalog
           )
-          result <- LiveActions.resource(runtime).use { actions =>
+          result <- Workspace.resource(runtime).use { actions =>
             for
               initial <- actions.state("bank")
               _ <- actions.submit(
@@ -115,12 +117,14 @@ class LiveFailureSuite extends FunSuite:
     val accepted = Vector(rogue, application).filter(catalog.accepts)
     assertEquals(accepted, Vector(application))
     assertEquals(
-      LiveSnapshot(Vector(rogue).filter(catalog.accepts), Vector.empty).application,
+      FinancingObservation(
+        LedgerSnapshot(Vector(rogue).filter(catalog.accepts), Vector.empty)
+      ).application,
       None
     )
   }
 
-  private def finalJob(actions: LiveActions): IO[Json] = actions.state("bank").flatMap { state =>
+  private def finalJob(actions: Workspace): IO[Json] = actions.state("bank").flatMap { state =>
     state.hcursor
       .get[Vector[Json]]("jobs")
       .toOption

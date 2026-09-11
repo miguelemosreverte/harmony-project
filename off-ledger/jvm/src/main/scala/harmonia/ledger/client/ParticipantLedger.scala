@@ -1,4 +1,4 @@
-package harmonia.live.ledger
+package harmonia.ledger.client
 
 import cats.effect.IO
 import com.daml.ledger.api.v2.ValueOuterClass.Value

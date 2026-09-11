@@ -1,6 +1,6 @@
 package harmonia.composition.ledger
 
-import harmonia.live.ledger.{ActiveContract, LedgerValue as V}
+import harmonia.ledger.client.{ActiveContract, LedgerValue as V}
 import io.circe.Json
 
 object ComposerSnapshot:

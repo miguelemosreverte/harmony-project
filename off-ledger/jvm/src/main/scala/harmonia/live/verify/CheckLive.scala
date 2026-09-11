@@ -4,9 +4,10 @@ import cats.effect.IO
 import cats.syntax.all.*
 import harmonia.files.ArtifactFiles
 import harmonia.live.http.LiveServer
-import harmonia.live.ledger.LiveLedger
+import harmonia.ledger.client.LiveLedger
 import harmonia.live.run.{LiveRuntime, LiveParticipant}
-import harmonia.live.state.LiveSnapshot
+import harmonia.financing.FinancingObservation
+import harmonia.ledger.client.LedgerSnapshot
 import harmonia.stories.financing.model.FinancingStory
 import harmonia.stories.read.{MarkdownYaml, StoryFormat}
 import harmonia.stories.compare.CompareResults
@@ -93,7 +94,7 @@ object CheckLive:
     val bank = runtime.participants("bank").ledger
     val buyer = runtime.participants("buyer").ledger
     for
-      initialBank <- LiveSnapshot.read(bank, runtime.catalog)
+      initialBank <- LedgerSnapshot.read(bank, runtime.catalog)
       initialBuyer <- state(server, "buyer")
       readBypass <- buyer
         .active(bank.party)
@@ -101,7 +102,7 @@ object CheckLive:
         .map(_.fold(e => Status.fromThrowable(e).getCode.toString, _ => "SUCCEEDED"))
       actBypass <- buyer
         .exercise(
-          initialBank.application.get,
+          FinancingObservation(initialBank).application.get,
           "Approve",
           LiveLedger.emptyArgument,
           "buyer-forged-bank",
@@ -125,7 +126,7 @@ object CheckLive:
       ) { (acc, step) =>
         for
           previous <- acc
-          before <- LiveSnapshot.read(bank, runtime.catalog)
+          before <- LedgerSnapshot.read(bank, runtime.catalog)
           snapshot <- state(server, sessions(step.actor))
           request = action(
             step.id,
@@ -140,35 +141,42 @@ object CheckLive:
           )
           _ <-
             if outcome == "committed" && step.action == "approve-financing" then
-              awaitCondition(LiveSnapshot.read(buyer, runtime.catalog).map(_.proof.nonEmpty))
+              awaitCondition(
+                LedgerSnapshot
+                  .read(buyer, runtime.catalog)
+                  .map(s => FinancingObservation(s).proof.nonEmpty)
+              )
             else IO.unit
           _ <-
             if outcome == "committed" && step.action == "publish-approval" then
               awaitCondition(
                 runtime.participants.values.toVector
-                  .traverse(p => LiveSnapshot.read(p.ledger, runtime.catalog))
-                  .map(_.forall(_.workflow == "complete"))
+                  .traverse(p => LedgerSnapshot.read(p.ledger, runtime.catalog))
+                  .map(_.forall(s => FinancingObservation(s).workflow == "complete"))
               )
             else IO.unit
-          after <- LiveSnapshot.read(bank, runtime.catalog)
+          after <- LedgerSnapshot.read(bank, runtime.catalog)
           views <- runtime.participants.toVector.sortBy(_._1).traverse { (name, participant) =>
-            LiveSnapshot.read(participant.ledger, runtime.catalog).map(name -> _)
+            LedgerSnapshot.read(participant.ledger, runtime.catalog).map(name -> _)
           }
           fields = Vector(
             "id" -> Json.fromString(step.id),
             "outcome" -> Json.fromString(outcome),
             "application" -> Json.fromString(
-              after.application.map(_.text("status")).getOrElse("missing")
+              FinancingObservation(after).application.map(_.text("status")).getOrElse("missing")
             ),
-            "workflow" -> Json.fromString(after.workflow),
+            "workflow" -> Json.fromString(FinancingObservation(after).workflow),
             "consumed" -> Json.fromBoolean(
-              before.application.map(_.id) != after.application.map(_.id)
+              FinancingObservation(before).application.map(_.id) != FinancingObservation(
+                after
+              ).application.map(_.id)
             ),
             "active_contracts" -> Json.fromInt(
               after.contracts.count(_.template.getModuleName == "PrivateFinancing")
             ),
             "visible_to" -> Json.arr(views.collect {
-              case (name, view) if view.application.nonEmpty => Json.fromString(labels(name))
+              case (name, view) if FinancingObservation(view).application.nonEmpty =>
+                Json.fromString(labels(name))
             }*)
           ) ++
             Option.when(outcome == "rejected")("reason" -> Json.fromString("ledger-rejected"))

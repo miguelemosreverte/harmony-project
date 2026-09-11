@@ -1,17 +1,12 @@
-package harmonia.live.actions
+package harmonia.submission
 
 import cats.effect.{IO, Ref, Resource}
 import cats.effect.std.{Semaphore, Supervisor}
 import cats.syntax.all.*
-import harmonia.live.run.LiveRuntime
-import harmonia.live.state.LiveSnapshot
-import harmonia.live.ledger.LiveLedger
 import harmonia.workspace.WorkspaceCommand
 import harmonia.protocol.SubmissionStatus
 import harmonia.protocol.SubmissionStatus.*
 import io.circe.Json
-import io.grpc.Status
-import harmonia.composition.ledger.{ComposerCommands, ComposerSnapshot}
 
 final case class ActionRequest(
     id: String,
@@ -33,28 +28,21 @@ final case class LiveJob(
     "detail" -> Json.fromString(detail)
   )
 
-final class LiveActions private (
-    runtime: LiveRuntime,
+/** Preparation observes state; the returned effect submits only after the version check. */
+final case class PreparedSubmission(version: String, execute: Option[IO[SubmissionResult]])
+final case class SubmissionResult(
+    outcome: SubmissionStatus,
+    detail: String,
+    transaction: Option[Json] = None
+)
+
+final class Submissions private (
+    prepare: (String, ActionRequest, String) => IO[PreparedSubmission],
     jobs: Ref[IO, Vector[LiveJob]],
     lock: Semaphore[IO],
     supervisor: Supervisor[IO]
 ):
-  def state(actor: String): IO[Json] = for
-    snapshot <- LiveSnapshot.read(runtime.participants(actor).ledger, runtime.catalog)
-    _ <- reconcile(actor, snapshot)
-    current <- jobs.get
-  yield snapshot
-    .json(actor)
-    .deepMerge(
-      Json.obj(
-        "composer" -> ComposerSnapshot.json(
-          snapshot.contracts,
-          runtime.participants.map((name, p) => name -> p.ledger.party),
-          actor
-        )
-      )
-    )
-    .deepMerge(Json.obj("jobs" -> Json.arr(current.filter(_.actor == actor).map(_.json)*)))
+  def current(actor: String): IO[Vector[LiveJob]] = jobs.get.map(_.filter(_.actor == actor))
 
   def submit(actor: String, request: ActionRequest): IO[LiveJob] =
     IO.raiseUnless(
@@ -82,11 +70,10 @@ final class LiveActions private (
       }
 
   private def execute(job: LiveJob): IO[Unit] = lock.permit.use { _ =>
-    val ledger = runtime.participants(job.actor).ledger
     val result = for
-      snapshot <- LiveSnapshot.read(ledger, runtime.catalog)
+      prepared <- prepare(job.actor, job.request, commandId(job))
       next <-
-        if snapshot.version != job.request.version then
+        if prepared.version != job.request.version then
           IO.pure(
             job.copy(
               outcome = Stale,
@@ -94,18 +81,7 @@ final class LiveActions private (
             )
           )
         else
-          val selection = job.request.command match
-            case WorkspaceCommand.Financing(action) =>
-              harmonia.financing.Financing.select(action, snapshot)
-            case command =>
-              ComposerCommands.select(
-                command,
-                job.request.id,
-                snapshot.contracts,
-                ledger.party,
-                runtime.participants.map((name, p) => name -> p.ledger.party)
-              )
-          selection match
+          prepared.execute match
             case None =>
               IO.pure(
                 job.copy(
@@ -113,17 +89,14 @@ final class LiveActions private (
                   detail = "The required contract is not visible to this session"
                 )
               )
-            case Some((contract, choice, argument)) =>
-              ledger
-                .exercise(contract, choice, argument, commandId(job))
-                .map(tx =>
-                  job.copy(
-                    outcome = Committed,
-                    detail = "Confirmed by the ledger",
-                    transaction = Some(tx)
-                  )
+            case Some(execute) =>
+              execute.map(result =>
+                job.copy(
+                  outcome = result.outcome,
+                  detail = result.detail,
+                  transaction = result.transaction
                 )
-                .handleError(error => submissionFailure(job, error))
+              )
     yield next
     result
       .handleError(_ =>
@@ -135,35 +108,14 @@ final class LiveActions private (
       )
       .flatMap(replace)
   }
-  private def submissionFailure(job: LiveJob, error: Throwable): LiveJob =
-    val code = Status.fromThrowable(error).getCode
-    val definite = Set(
-      Status.Code.INVALID_ARGUMENT,
-      Status.Code.FAILED_PRECONDITION,
-      Status.Code.PERMISSION_DENIED,
-      Status.Code.NOT_FOUND,
-      Status.Code.UNAUTHENTICATED
-    ).contains(code)
-    job.copy(
-      outcome = if definite then Rejected else Unconfirmed,
-      detail =
-        if definite then s"Ledger rejected the command ($code)"
-        else "No definitive completion received. Reconnect to reconcile; do not assume failure."
-    )
   private def commandId(job: LiveJob): String = s"live-${job.actor}-${job.request.id}"
   private def replace(next: LiveJob): IO[Unit] = jobs.update(
     _.map(j => if j.actor == next.actor && j.request.id == next.request.id then next else j)
   )
-  private def reconcile(actor: String, snapshot: LiveSnapshot): IO[Unit] =
+  def reconcile(actor: String, commits: Map[String, Json]): IO[Unit] =
     jobs.get.flatMap(_.filter(j => j.actor == actor && j.outcome == Unconfirmed).traverse_ { job =>
-      snapshot.history
-        .find(
-          _.hcursor
-            .downField("transaction")
-            .get[String]("commandId")
-            .toOption
-            .contains(commandId(job))
-        )
+      commits
+        .get(commandId(job))
         .fold(IO.unit)(tx =>
           replace(
             job.copy(
@@ -175,9 +127,11 @@ final class LiveActions private (
         )
     })
 
-object LiveActions:
-  def resource(runtime: LiveRuntime): Resource[IO, LiveActions] = for
+object Submissions:
+  def resource(
+      prepare: (String, ActionRequest, String) => IO[PreparedSubmission]
+  ): Resource[IO, Submissions] = for
     jobs <- Resource.eval(Ref.of[IO, Vector[LiveJob]](Vector.empty))
     lock <- Resource.eval(Semaphore[IO](1))
     supervisor <- Supervisor[IO]
-  yield new LiveActions(runtime, jobs, lock, supervisor)
+  yield new Submissions(prepare, jobs, lock, supervisor)

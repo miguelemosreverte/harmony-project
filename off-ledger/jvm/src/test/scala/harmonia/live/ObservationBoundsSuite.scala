@@ -1,7 +1,7 @@
 package harmonia.live
 
 import com.google.protobuf.StringValue
-import harmonia.live.ledger.BoundedRecords
+import harmonia.ledger.client.BoundedRecords
 import munit.FunSuite
 import scala.jdk.CollectionConverters.*
 

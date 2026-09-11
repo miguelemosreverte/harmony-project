@@ -4,7 +4,7 @@ import cats.effect.{IO, Resource}
 import cats.syntax.all.*
 import harmonia.files.ArtifactFiles
 import harmonia.ledger.auth.LocalCredentials
-import harmonia.live.ledger.{LiveLedger, ParticipantLedger, TemplateCatalog}
+import harmonia.ledger.client.{LiveLedger, ParticipantLedger, TemplateCatalog}
 import harmonia.ledger.DamlScript
 import harmonia.ledger.network.{CantonNetwork, NetworkAuthorization}
 import io.circe.Json

@@ -4,7 +4,8 @@ import cats.effect.{IO, Resource}
 import cats.effect.std.Dispatcher
 import cats.syntax.all.*
 import com.sun.net.httpserver.{HttpExchange, HttpServer}
-import harmonia.live.actions.{ActionRequest, LiveActions}
+import harmonia.app.workspace.Workspace
+import harmonia.submission.ActionRequest
 import harmonia.ledger.auth.LocalCredentials
 import harmonia.live.run.LiveRuntime
 import io.circe.Json
@@ -19,7 +20,7 @@ final case class LiveServer(port: Int, capabilities: Map[String, String]):
 
 object LiveServer:
   def resource(root: Path, artifacts: Path, runtime: LiveRuntime): Resource[IO, LiveServer] = for
-    actions <- LiveActions.resource(runtime)
+    actions <- Workspace.resource(runtime)
     builder <- Resource.eval(
       harmonia.builder.PackageBuilder
         .create(root, artifacts.resolve("builder"), runtime.packageExports)
@@ -80,7 +81,7 @@ object LiveServer:
       root: Path,
       port: Int,
       sessions: Map[String, String],
-      actions: LiveActions,
+      actions: Workspace,
       builder: harmonia.builder.PackageBuilder,
       exchange: HttpExchange
   ): IO[Unit] =
@@ -139,7 +140,7 @@ object LiveServer:
       actor: String,
       method: String,
       path: String,
-      actions: LiveActions,
+      actions: Workspace,
       builder: harmonia.builder.PackageBuilder,
       exchange: HttpExchange
   ): IO[Unit] =

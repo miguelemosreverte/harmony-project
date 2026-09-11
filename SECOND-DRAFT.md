@@ -80,10 +80,10 @@ The first three actual commits on `second-draft` form one acceptance sequence: d
 
 ### SD04 — Separate delivery and resource ownership
 
-- [ ] Extract submission tracking, duplicate protection, stale-view handling, and uncertain-result reconciliation from feature action selection.
-- [ ] Give application wiring explicit ownership of authenticated ledger clients, HTTP servers, subprocesses, and polling.
-- [ ] Preserve bounded queries, exact package identity checks, auth checks, and the distinction between observation failure and definite rejection.
-- [ ] **Acceptance:** the submission lifecycle contains no financing/composer business decisions; fault and cancellation checks still pass with no retained ledger/build processes.
+- [x] Extract submission tracking, duplicate protection, stale-view handling, and uncertain-result reconciliation from feature action selection.
+- [x] Give application wiring explicit ownership of authenticated ledger clients, HTTP servers, subprocesses, and polling.
+- [x] Preserve bounded queries, exact package identity checks, auth checks, and the distinction between observation failure and definite rejection.
+- [x] **Acceptance:** the submission lifecycle contains no financing/composer business decisions; fault and cancellation checks still pass with no retained ledger/build processes.
 
 ### SD05 — Complete composition as a feature
 
@@ -153,3 +153,5 @@ A file-count or line-count reduction alone does not establish readability. Revie
 SD01 (`f40cb17`), SD02 (`eafeea7`), and SD03 are complete. SD03 passed 30 Scala tests, JVM/browser compilation, and the authenticated real-ledger check (approval, wrong actor/API bypass, stale views, deduplication, and reconnect). In the browser the Bank approved, the Buyer continued, the submission was confirmed, and the Buyer could not see the private financing details. Evidence: `.artifacts/second-03-build.log`, `.artifacts/second-03-live.log`, and `.artifacts/live-check-186607939419738880/live-handoff/`; browser capture `second-draft-financing-complete`.
 
 The chapter links distinguish the introductory shared application from the private live handoff. The next steps remove the remaining mixed ownership in `LiveActions` and `LiveSnapshot`, then apply typed boundaries to composition and package inspection. The preserved first-draft book remains available during migration.
+
+SD04 separates `submission/Submissions`, `ledger/client`, `financing/FinancingObservation`, and `app/workspace/Workspace`. Thirty Scala tests pass, including observation failures versus definite submission rejection; JVM and browser builds pass (`.artifacts/second-04-final.log`). HTTP diagnostics retain the actual validation error. The full release gate will repeat the real ledger recovery and resource checks.

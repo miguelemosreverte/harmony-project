@@ -1,4 +1,4 @@
-package harmonia.live.ledger
+package harmonia.ledger.client
 
 import cats.effect.{IO, Resource}
 import com.daml.ledger.api.v2.{

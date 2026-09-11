@@ -1,4 +1,4 @@
-package harmonia.live.ledger
+package harmonia.ledger.client
 
 import com.daml.ledger.api.v2.ValueOuterClass as V
 import io.circe.Json

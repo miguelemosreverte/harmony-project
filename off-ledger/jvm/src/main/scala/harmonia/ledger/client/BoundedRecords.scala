@@ -1,4 +1,4 @@
-package harmonia.live.ledger
+package harmonia.ledger.client
 
 import com.google.protobuf.MessageLite
 

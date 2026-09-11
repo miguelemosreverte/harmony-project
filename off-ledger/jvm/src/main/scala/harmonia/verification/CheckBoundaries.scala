@@ -6,7 +6,7 @@ import harmonia.files.ArtifactFiles
 import harmonia.ledger.{CantonSandbox, DamlScript}
 import harmonia.live.http.LiveServer
 import harmonia.live.run.LiveRuntime
-import harmonia.live.ledger.{LedgerValue as V}
+import harmonia.ledger.client.{LedgerValue as V}
 import harmonia.live.verify.SessionRequests.*
 import harmonia.stories.compare.CompareResults
 import harmonia.stories.read.MarkdownYaml

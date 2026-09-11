@@ -1,7 +1,7 @@
 package harmonia.composition.ledger
 
 import harmonia.workspace.WorkspaceCommand
-import harmonia.live.ledger.{ActiveContract, LedgerValue as V, LiveLedger}
+import harmonia.ledger.client.{ActiveContract, LedgerValue as V, LiveLedger}
 import com.daml.ledger.api.v2.ValueOuterClass.Value
 
 object ComposerCommands:
