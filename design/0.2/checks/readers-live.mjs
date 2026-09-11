@@ -32,6 +32,10 @@ try {
   check('The real server supplies the approved illustration sprite',sprite.status===200 && sprite.headers.get('content-type').startsWith('image/png'));
   const chrome=await fetch(origin+'/surface.css');
   check('The real server supplies the shared header and drawer CSS',chrome.status===200 && chrome.headers.get('content-type').startsWith('text/css'));
+  const {createHash:rendererHash}=await import('node:crypto');
+  const deployedRenderer=Buffer.from(await (await fetch(origin+'/main.js')).arrayBuffer());
+  const localRenderer=await fs.readFile('product/web/target/scala-3.3.6/harmonia-web-fastopt/main.js');
+  check('The actual server runs the current compiled browser renderer',rendererHash('sha256').update(deployedRenderer).digest('hex')===rendererHash('sha256').update(localRenderer).digest('hex'));
   const bank=await api();check('The bank sees its real private application',bank.actor==='bank'&&!!bank.private_details);
   check('Only the bank approval is offered initially',await b.evaluate(`!!document.querySelector('#live-approve-financing')&&!document.querySelector('#live-publish-approval')`));
   await click('#live-approve-financing');await b.until(`document.querySelector('.scene-title')?.textContent==='Your approval is issued.'`);
@@ -107,8 +111,8 @@ try {
   if(generate){await click('#'+generate);await b.until(`document.querySelector('#package-builder [data-node=compile]')?.dataset.state==='complete'`);}
   check('A compiler-confirmed adapter is available as a project download',await b.evaluate(`!!document.querySelector('button[id^="builder-download-"]')`));
   await b.screenshot(`${directory}/live-packages.png`);
-  await fs.writeFile('docs/0.2/reader-live.json',JSON.stringify({scope:'Actual Scala service, financing handoff, consented composition, package compilation, framed book and exact exported sources',checks,errors:b.errors},null,2)+'\n');
+  await fs.writeFile('docs/0.2/reader-live.json',JSON.stringify({scope:'Actual Scala service, financing handoff, consented composition, package compilation, framed book and exact exported sources',source_catalog_files:Object.keys(catalog).length,checks,errors:b.errors},null,2)+'\n');
   check('No browser script or CSP errors',b.errors.filter(e=>!e.includes('favicon.ico')).length===0);
-  await fs.writeFile('docs/0.2/reader-live.json',JSON.stringify({scope:'Actual Scala service, financing handoff, consented composition, package compilation, framed book and exact exported sources',checks,errors:b.errors},null,2)+'\n');
+  await fs.writeFile('docs/0.2/reader-live.json',JSON.stringify({scope:'Actual Scala service, financing handoff, consented composition, package compilation, framed book and exact exported sources',source_catalog_files:Object.keys(catalog).length,checks,errors:b.errors},null,2)+'\n');
   console.log(JSON.stringify({checks:checks.length,errors:b.errors}));
 } finally {b.close();}

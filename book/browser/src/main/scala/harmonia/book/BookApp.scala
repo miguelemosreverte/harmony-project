@@ -18,7 +18,10 @@ final case class ViewState(
     theme: String = "light",
     text: String = "standard",
     embed: Boolean = false,
-    present: Boolean = false
+    present: Boolean = false,
+    artifact: Option[RecordedArtifact] = None,
+    navigation: Boolean = false,
+    appearance: Boolean = false
 )
 
 object BookApp extends IOApp.Simple:

@@ -21,8 +21,12 @@ object BookNavigation:
       "theme" -> state.theme,
       "text" -> state.text,
       "embed" -> (if state.embed then "1" else "0"),
-      "present" -> (if state.present then "1" else "0")
-    ) ++ state.node.map("node" -> _)
+      "present" -> (if state.present then "1" else "0"),
+      "navigation" -> state.navigation.toString,
+      "appearance" -> state.appearance.toString
+    ) ++ state.node.map("node" -> _) ++ state.artifact.map(value =>
+      "artifact" -> value.toString.toLowerCase
+    )
     "?" + (fields ++ selection)
       .map((key, value) => key + "=" + encodeURIComponent(value))
       .mkString("&")
@@ -50,7 +54,9 @@ object BookNavigation:
         theme = choice("theme", Set("light", "dark", "paper"), "light"),
         text = choice("text", Set("compact", "standard", "large"), "standard"),
         embed = values.get("embed").contains("1"),
-        present = values.get("present").contains("1")
+        present = values.get("present").contains("1"),
+        navigation = values.get("navigation").contains("true"),
+        appearance = values.get("appearance").contains("true")
       )
       values.get("story") match
         case Some(id) =>
@@ -65,7 +71,18 @@ object BookNavigation:
               values.get("perspective").filter(p => stories(story).units.exists(_.actor == p)),
             originChapter = origin,
             evidence = values.get("evidence").contains("true"),
-            node = values.get("node")
+            artifact = values.get("artifact").flatMap(RecordedArtifact.read),
+            node = values
+              .get("node")
+              .filter(id =>
+                harmonia.book.diagram
+                  .StoryDiagram(
+                    stories(story),
+                    math.max(0, math.min(step, stories(story).units.size - 1))
+                  )
+                  .nodes
+                  .exists(_.id == id)
+              )
           )
         case None =>
           val chapter = values

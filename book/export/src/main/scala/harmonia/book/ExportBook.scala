@@ -110,7 +110,8 @@ object ExportBook:
     observed <- IO.fromEither(
       StoryFormat.result(actual, kind.resultKind).left.map(RuntimeException(_))
     )
-    _ <- Vector("input.md", "expected.md", "actual.md", "diff.md", "run.json", "observation.json")
+    _ <- RecordedArtifact.values.toVector
+      .map(_.filename)
       .traverse_(name =>
         copy(directory.resolve(name), output.resolve("evidence").resolve(id).resolve(name))
       )

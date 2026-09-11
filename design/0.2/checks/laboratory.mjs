@@ -33,6 +33,15 @@ try {
  await b.evaluate(`document.querySelector('#laboratory-evidence summary').click()`);await b.until(`new URLSearchParams(location.search).get('evidence')==='true'`);
  await b.evaluate(`document.querySelector('a[href="evidence/branch-approved/run.json"]').click()`);await b.until(`document.querySelector('dialog[open] pre').textContent.includes('0014c0d7')`);
  check('Raw provenance opens from the pinned bundle',true);
+ check('The evidence artifact is part of the shared URL',await b.evaluate(`new URLSearchParams(location.search).get('artifact')==='provenance'`));
+ const evidenceUrl=await b.evaluate('location.href');await go(evidenceUrl);await b.until(`document.querySelector('dialog[open] pre')?.textContent.includes('0014c0d7')`);
+ check('A cold evidence URL restores the open provenance file',true);
+ await b.evaluate(`document.querySelector('#inspector-close').click()`);await b.until(`!new URLSearchParams(location.search).has('artifact')&&!document.querySelector('dialog[open]')`);
+ check('Closing evidence restores focus to its link',await b.evaluate(`document.activeElement.getAttribute('href')==='evidence/branch-approved/run.json'`));
+ await b.evaluate(`document.querySelector('.laboratory-appearance summary').click()`);await b.until(`new URLSearchParams(location.search).get('appearance')==='true'`);
+ await b.evaluate(`const select=document.querySelector('select[aria-label="Color"]');select.value='dark';select.dispatchEvent(new Event('change'));`);await b.until(`document.documentElement.dataset.theme==='dark'`);
+ check('Appearance remains open while changing its controls',await b.evaluate(`document.querySelector('.laboratory-appearance').open`));
+
  await go('laboratory.html?story=package-builder&step=2');await capture('laboratory-packages');
  await go('laboratory.html?story=transfer-final-leg-rejected&step=5');await capture('laboratory-transfer');
  await go('laboratory.html?chapter=04-progression.md');

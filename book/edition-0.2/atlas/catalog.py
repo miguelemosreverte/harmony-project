@@ -9,9 +9,9 @@ from pygments.lexers import get_lexer_by_name
 from pygments.token import Comment, Keyword, String, Number, Name, Operator
 
 SCOPES = {'product': 'Production', 'harness': 'Verification harness', 'book': 'Book', 'examples': 'Golden stories', 'scripts': 'Build and run', 'project': 'Build configuration'}
-SUFFIXES = {'.scala', '.daml', '.md', '.json', '.yaml', '.yml', '.sbt', '.py', '.js', '.mjs', '.css', '.sh', '.properties'}
+SUFFIXES = {'.html', '.scala', '.daml', '.md', '.json', '.yaml', '.yml', '.sbt', '.py', '.js', '.mjs', '.css', '.sh', '.properties'}
 EXCLUDED = {'target', '.daml', '.git', '.artifacts', '__pycache__', 'recordings', 'history'}
-LANGUAGES = {'.scala':'scala', '.sbt':'scala', '.daml':'daml', '.md':'markdown', '.yaml':'yaml', '.yml':'yaml', '.json':'json', '.py':'python', '.js':'javascript', '.mjs':'javascript', '.css':'css', '.sh':'bash'}
+LANGUAGES = {'.html':'html', '.scala':'scala', '.sbt':'scala', '.daml':'daml', '.md':'markdown', '.yaml':'yaml', '.yml':'yaml', '.json':'json', '.py':'python', '.js':'javascript', '.mjs':'javascript', '.css':'css', '.sh':'bash'}
 
 
 def source_paths(root):

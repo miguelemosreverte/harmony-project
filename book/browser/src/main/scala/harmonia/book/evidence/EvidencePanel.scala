@@ -14,13 +14,9 @@ object EvidencePanel:
     val content = element("div", "evidence")
     append(content, element("p", text = story.description))
     val links = element("div", "link-list")
-    Vector(
-      "Input" -> "input.md",
-      "Expected" -> "expected.md",
-      "Actual" -> "actual.md",
-      "Diff" -> "diff.md",
-      "Raw observations" -> "observation.json"
-    ).foreach { (name, file) => append(links, link(name, s"evidence/${story.id}/$file")) }
+    RecordedArtifact.values.filterNot(_ == RecordedArtifact.Provenance).foreach { artifact =>
+      append(links, link(artifact.label, s"evidence/${story.id}/${artifact.filename}"))
+    }
     val provenance = element("div", "provenance")
     val revision = text(story.provenance, "revision").take(8)
     val dirty = story.provenance.hcursor.get[Boolean]("worktree_dirty").getOrElse(true)

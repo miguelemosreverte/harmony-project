@@ -18,8 +18,7 @@ import scala.jdk.CollectionConverters.*
 
 /** Exports the designed book as files. The production server only mounts this directory. */
 object FieldGuide:
-  private val evidenceNames =
-    Vector("input.md", "expected.md", "actual.md", "diff.md", "observation.json", "run.json")
+  private val evidenceNames = RecordedArtifact.values.toVector.map(_.filename)
   def evidenceFiles(output: Path, stories: Vector[RecordedStory]): IO[Map[String, String]] =
     stories
       .flatTraverse(story =>

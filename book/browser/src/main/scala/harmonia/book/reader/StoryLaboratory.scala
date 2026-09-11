@@ -66,6 +66,7 @@ final class StoryLaboratory(
           step = math.max(0, math.min(firstDifference, stories(index).units.size - 1)),
           node = None,
           evidence = false,
+          artifact = None,
           perspective = None,
           originChapter = state.originChapter
         )

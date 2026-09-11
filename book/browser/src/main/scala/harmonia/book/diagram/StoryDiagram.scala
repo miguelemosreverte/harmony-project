@@ -213,7 +213,14 @@ object StoryDiagram:
     val states = nodes.map(n => n.id -> n.state).toMap
     WorkflowDiagram(
       unit.actor + " · " + unit.action.replace('-', ' '),
-      "Recorded " + unit.outcomeLabel + ". Select a node to inspect its observed state. Skipped branches are distinct from completed actions.",
+      "Recorded " + unit.outcomeLabel + ". Select a node to inspect its observed state." + (if nodes
+                                                                                                .exists(
+                                                                                                  _.state == DiagramState.Skipped
+                                                                                                )
+                                                                                            then
+                                                                                              " Skipped branches are distinct from completed actions."
+                                                                                            else
+                                                                                              ""),
       nodes,
       links.map((from, to) =>
         DiagramEdge(

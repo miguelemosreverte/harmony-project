@@ -105,7 +105,10 @@ class DiagramSuite extends FunSuite:
       theme = "dark",
       text = "large",
       embed = true,
-      present = true
+      present = true,
+      artifact = Some(RecordedArtifact.Provenance),
+      navigation = true,
+      appearance = true
     )
     assertEquals(
       BookNavigation.read(BookNavigation.address(state, stories, chapters), stories, chapters),
@@ -114,5 +117,24 @@ class DiagramSuite extends FunSuite:
     assertEquals(
       BookNavigation.read("#story=branch-approved&step=999", stories, chapters).step,
       recording("branch-approved").units.size - 1
+    )
+  }
+
+  test("an evidence URL selects only public recording artifacts") {
+    val stories = Examples.all.map(example => recording(example.id))
+    val chapters = Examples.chapters.map(id => BookChapter(id, id, ""))
+    assertEquals(
+      BookNavigation.read("?story=branch-approved&artifact=provenance", stories, chapters).artifact,
+      Some(RecordedArtifact.Provenance)
+    )
+    assertEquals(
+      BookNavigation
+        .read("?story=branch-approved&artifact=../../sessions.json&node=unknown", stories, chapters)
+        .artifact,
+      None
+    )
+    assertEquals(
+      BookNavigation.read("?story=branch-approved&node=unknown", stories, chapters).node,
+      None
     )
   }

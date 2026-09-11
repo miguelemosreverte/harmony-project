@@ -1,5 +1,6 @@
 {
   "scope": "Actual Scala service, financing handoff, consented composition, package compilation, framed book and exact exported sources",
+  "source_catalog_files": 365,
   "checks": [
     "Session entry preserves query navigation and strips the capability",
     "Polling and navigation preserve the unfinished composition",
@@ -7,6 +8,7 @@
     "Browser Back restores the previous workspace task",
     "The real server supplies the approved illustration sprite",
     "The real server supplies the shared header and drawer CSS",
+    "The actual server runs the current compiled browser renderer",
     "The bank sees its real private application",
     "Only the bank approval is offered initially",
     "Approval is an observed committed server result",

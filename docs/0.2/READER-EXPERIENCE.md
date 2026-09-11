@@ -46,7 +46,7 @@ A small custom documentation block on important source files supplies `@book` fi
 comments. Slice documentation supplies the narrative, explicit file references,
 relationships, source citations, and evidence links. Missing referenced files, duplicate
 annotations, unknown slice names, stale exports, and invalid graph references fail the build.
-Unannotated files are visibly described by their owning directory; generated metadata
+Unannotated files receive explicitly labeled context from their documented group; generated metadata
 must never invent a line-by-line explanation of code it has not documented.
 
 ## Linear implementation
@@ -82,15 +82,14 @@ must never invent a line-by-line explanation of code it has not documented.
 
 - `product/scene/` owns the typed scene and diagram renderers, measured arrows, and shared appearance.
 - `product/web/` projects observed financing, composition, and package state into those views.
-- `book/edition-0.2/atlas/` owns source extraction, documentation validation, and the six authored review maps.
+- `book/edition-0.2/atlas/` owns source extraction, documentation validation, six authored reading maps, parsed Daml dependencies, and reviewed execution handoffs.
 - `design/0.2/reader/` owns reader navigation and layout. `files/` and `catalog.js` are generated.
 - `design/0.2/checks/readers.mjs` verifies navigation and layout against a real browser.
 - `book/edition-0.2/presentation.mjs` records the HTML purchase presentation as a four-scene MP4, using an owned local browser and two encoder threads.
 
 Build with `scripts/build-design`; it checks exact quotations and generated source freshness.
 Scala changes also require `scripts/build`. The source browser exports the checkout's actual
-files; important review paths carry explicit annotations. Files without an authored annotation
-say so and identify their owning directory.
+files; important review paths carry explicit annotations. Files without an authored annotation receive a labeled package explanation; all source files belong to a documented group.
 
 For a presentation, open `chapters/03-financing-to-offer.html?present=1&audience=investor`.
 Arrow keys and touch advance it; Play opts into six-second advancement. For a video, run:
@@ -107,7 +106,7 @@ and output directory can be supplied as the second and third arguments. Output g
 ## Verification
 
 The implementation was checked with the pinned Daml build and ledger tests, Scala
-formatting and 52 Scala tests, 24 source/quotation checks, desktop/mobile browser
+formatting and 63 Scala tests, 27 source/quotation checks, desktop/mobile browser
 checks, and authenticated live browser journeys. The live run included buyer consent,
 execution of both assigned composition actions, and real adapter compilation. Every
 exported source file was downloaded from the real server and checked against its catalog hash.
@@ -120,4 +119,23 @@ Evidence: [reader navigation and layouts](reader-browser.json),
 The reader does not increase the product's demonstrated scope: the live financing
 handoff is bank-to-buyer, the full property offer and custody transfer are recorded,
 and the composer is a bounded sequential evaluator. Source annotations explain selected
-review paths; unannotated files identify their owner without an invented explanation.
+review paths; unannotated files receive shared package context without an invented line-by-line explanation.
+
+## Complete recordings and durable navigation
+
+The workflow library includes all 32 registered examples and 130 recorded moments.
+The complete laboratory uses the same scene and diagram components, with direct story,
+step, node, evidence, appearance, and presentation URLs. A public evidence artifact is
+selected from the typed `RecordedArtifact` inventory; arbitrary paths cannot become
+reader artifacts. Closing the evidence dialog restores focus to its source link.
+
+Five manifest views are generated from the 14 production Daml manifests. Execution
+handoffs for financing, composition, and packages are reviewed relationships whose
+source fingerprints must be refreshed after an implementation change. Both are
+labeled separately from the six suggested reading maps. The source browser includes
+29 documented groups, with per-file annotations where a more specific explanation
+has been authored.
+
+Further evidence: [all recording surfaces](laboratory-browser.json),
+[manifest diagrams and package context](relationships-browser.json), and
+[the completion audit](COMPLETION-AUDIT.md).

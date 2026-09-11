@@ -28,6 +28,7 @@ final class BookView(
     laboratory.dispose()
     diagrams.foreach(_.dispose()); diagrams = Vector.empty
     val pageChanged = previousView.exists(p => p.chapter != state.chapter || p.story != state.story)
+    val closedArtifact = previousView.flatMap(_.artifact).filter(_ => state.artifact.isEmpty)
     previousView = Some(state)
     currentChapter.foreach(i => chapterScroll = chapterScroll.updated(i, dom.window.scrollY))
     currentChapter = state.chapter
@@ -36,6 +37,13 @@ final class BookView(
     root.textContent = ""
     val layout = element("div", "layout")
     val sidebar = element("details", "sidebar")
+    if state.navigation then sidebar.setAttribute("open", "")
+    sidebar.addEventListener(
+      "toggle",
+      (_: dom.Event) =>
+        if sidebar.hasAttribute("open") != state.navigation then
+          navigate(state.copy(navigation = sidebar.hasAttribute("open")))
+    )
     append(sidebar, element("summary", text = "Book chapters and recordings"))
     val brand = element("p", "brand")
     append(brand, element("span", "brand-mark"), dom.document.createTextNode("Harmonia"))
@@ -47,7 +55,7 @@ final class BookView(
         "The story laboratory",
         "nav-button" + (if state.chapter.isEmpty then " active" else ""),
         "nav-lab"
-      ) { navigate(state.copy(chapter = None)) }
+      ) { navigate(state.copy(chapter = None, navigation = false, artifact = None)) }
     )
     chapters.zipWithIndex.foreach { (chapter, index) =>
       append(
@@ -56,7 +64,7 @@ final class BookView(
           s"0${index + 1}  ${chapter.title}",
           "nav-button" + (if state.chapter.contains(index) then " active" else ""),
           s"nav-$index"
-        ) { navigate(state.copy(chapter = Some(index))) }
+        ) { navigate(state.copy(chapter = Some(index), navigation = false, artifact = None)) }
       )
     }
     append(
@@ -141,7 +149,13 @@ final class BookView(
       else if path.startsWith("evidence/") then
         anchor.onclick = event =>
           if !event.ctrlKey && !event.metaKey then
-            event.preventDefault(); inspector.open(path, anchor.textContent)
+            event.preventDefault();
+            navigate(
+              state.copy(
+                artifact = RecordedArtifact.values.find(_.filename == path.split('/').last),
+                evidence = true
+              )
+            )
     }
     Option(nav.querySelector(".active")).foreach(_.setAttribute("aria-current", "page"))
     if pageChanged && state.chapter.nonEmpty then
@@ -166,6 +180,22 @@ final class BookView(
             .flatMap(Option(_))
         )
         .foreach(_.asInstanceOf[dom.HTMLElement].focus())
+    state.artifact match
+      case Some(artifact) =>
+        inspector.show(
+          s"evidence/${stories(state.story).id}/${artifact.filename}",
+          artifact.label,
+          () => navigate(state.copy(artifact = None))
+        )
+      case None =>
+        inspector.hide()
+        closedArtifact.foreach { artifact =>
+          Option(
+            root.querySelector(
+              s"a[href='evidence/${stories(state.story).id}/${artifact.filename}']"
+            )
+          ).foreach(_.asInstanceOf[dom.HTMLElement].focus())
+        }
   }
 
   private def guide: String =
@@ -180,6 +210,13 @@ final class BookView(
       element("span", "badge", "●  Recorded execution evidence")
     )
     val appearance = element("details", "laboratory-appearance")
+    if state.appearance then appearance.setAttribute("open", "")
+    appearance.addEventListener(
+      "toggle",
+      (_: dom.Event) =>
+        if appearance.hasAttribute("open") != state.appearance then
+          navigate(state.copy(appearance = appearance.hasAttribute("open")))
+    )
     append(appearance, element("summary", text = "Appearance"))
     def choose(label: String, values: Vector[String], selected: String)(
         change: String => Unit

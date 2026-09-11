@@ -77,3 +77,18 @@ records 133 checks at 304, 390, 768 and 1280 pixels. Both long manifest-path wra
 and connectors that skip a column were corrected from failures in these checks.
 The YAML reader has focused tests for comments, flow lists, duplicate fields and
 invalid dependency types. The Python build now runs 27 source and quotation checks.
+
+## Navigation and final verification
+
+An evidence dialog, its selected public file, open navigation, and appearance controls
+now round-trip through the recording URL. Closing evidence returns keyboard focus to
+the originating link. The inspector works from bundled evidence offline. HTML entry
+files are included in the colored source catalog alongside Scala, Daml, and other
+allowlisted text sources.
+
+The final local checks passed: 63 Scala tests, 27 source/quotation checks, 792 recording
+browser checks, 119 reader regression checks, 133 relationship checks, and 40 live
+browser checks. The live checks exercised actual financing approval and continuation,
+partner consent and both composition actions, DAR retrieval and adapter compilation.
+They also verified that the served production browser matches the current compiled
+renderer. The final delivered book snapshot is checked separately after mounting.
