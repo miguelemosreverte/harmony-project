@@ -4,7 +4,7 @@ The [PRD](../PRD.md) defines the ordered work. This record reports actual commit
 
 ## Current step
 
-Steps 01–20 are complete for the local technical delivery. The [acceptance record](release/acceptance.md) identifies source revision `dd5cf02754241730dc6cfed71e0b92216d657da0`, eleven passing clean-checkout gates, 32 recordings, nine chapters, the hashed archive, and relocated launcher verification. One bounded book process is retained. Public licensing, publication, outside feedback, and adoption remain pending.
+Steps 01–20 are complete for the local technical delivery. The [acceptance record](release/acceptance.md) identifies source revision `dd5cf02754241730dc6cfed71e0b92216d657da0`, eleven passing clean-checkout gates, 32 recordings, nine chapters, the hashed archive, and relocated launcher verification. One bounded book process is retained. The PRD checklist covers implementation and verification only.
 
 ## Commit evidence
 
@@ -47,9 +47,9 @@ Actual commit identifiers are recorded in the next commit after they are created
 
 | 19b | `8189028` | [Release acceptance proof](verification/19-release.md): clean suite, one-revision bundle, changed-file detection, relocated book/live launchers, and measured process cleanup |
 
-| 20 | This increment | [Technical acceptance and adopter handoff](release/acceptance.md): identified delivery, completed technical checklist, prepared demo/feedback/integration materials, and explicit external obligations |
+| 20 | `853ff6c` | [Technical acceptance and adopter handoff](release/acceptance.md): identified delivery, completed technical checklist, prepared demo/feedback/integration materials, and explicit external obligations |
 
-## External decisions
+## Context outside the implementation plan
 
 - Public repository destination and source-code license remain unselected; no publication has occurred.
 - The proposal's imported BPMN/SVG assets were not included in the downloaded files.

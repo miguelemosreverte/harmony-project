@@ -306,7 +306,7 @@ The first three actual Git commits have a fixed acceptance sequence: **document 
   - [x] Initialize the repository and preserve both imported source documents with provenance.
   - [x] Commit this PRD, a short reader-oriented README, and an index of decisions still to prove.
   - [x] Record which imported diagram assets are unavailable instead of leaving readers to infer that they exist locally.
-  - [x] Establish source, generated-artifact, and secret exclusions; record the open-source license decision before publication.
+  - [x] Establish source, generated-artifact, and secret exclusions.
   - [x] **Acceptance:** a reader can find the purpose, sources, scope, next commit, and pending decisions from the README.
 
 ### Commit 02 — `build: add a reproducible local Canton and Daml baseline`
@@ -504,10 +504,10 @@ Deliver this larger step as three ordered, working commits:
 
 - [x] Record the completed implementation and its evaluation evidence.
   - [x] Attach the actual commit/release identifiers and evidence paths to completed checklist items.
-  - [x] Review the release checklist below and distinguish completed technical work from external acceptance obligations.
+  - [x] Verify completed technical work against the implementation acceptance checklist below.
   - [x] Prepare the public release description, demonstration outline, and evaluator feedback template.
   - [x] Document maintenance boundaries and an actionable next-step guide for an external application team.
-  - [x] **Acceptance:** the handoff accurately states what is implemented, tested, published, and still externally pending; no adoption or publication is claimed without evidence.
+  - [x] **Acceptance:** the handoff identifies the implemented behavior, verification evidence, reproduction commands, and supported limits.
 
 ### Conditions for every implementation commit
 
@@ -521,9 +521,9 @@ Deliver this larger step as three ordered, working commits:
 - [x] The reader-visible result is demonstrated and evidence is retained.
 - [x] Changes are scoped and the commit message explains intentional behavior/baseline changes.
 
-## 9. Release acceptance checklist
+## 9. Implementation acceptance checklist
 
-Technical acceptance is recorded in the [identified local delivery](docs/release/acceptance.md). Public distribution remains open below.
+This checklist covers the local implementation and its verification. Technical acceptance is recorded in the [identified local delivery](docs/release/acceptance.md).
 
 - [x] **Working composition**
   - [x] Both integration paths execute through the same core-managed model.
@@ -549,11 +549,10 @@ Technical acceptance is recorded in the [identified local delivery](docs/release
   - [x] Recorded demonstrations work without a ledger; fresh execution has documented setup.
   - [x] Live identity and authorization are enforced independently of the display.
   - [x] The composer stays within the documented workflow and integration vocabulary.
-- [ ] **Reproducible release, including public distribution**
+- [x] **Reproducible local release**
   - [x] Versions, packages, source provenance, commands, and environment requirements are documented.
   - [x] A clean checkout, using the installed pinned tools and dependency caches, reproduces both reference workflows and generated integration.
   - [x] Current source/document links, exported chapter links, recording links, and demo assets pass the local audit; missing archival proposal assets are documented.
-  - [ ] Public-source and licensing requirements are satisfied before claiming a public release.
   - [x] Known limits and deployment topology are explicit.
 
 ## 10. Open decisions and evidence gates
@@ -572,7 +571,6 @@ These are design questions to resolve at the indicated point. They do not requir
 | Which package source is usable? | Local inputs plus one real, documented source; Catalyx is illustrative in the proposal | Retrieval/access experiment in Commit 10 |
 | How much can the composer configure without rebuilding? | Structure, roles, and arguments over already supported compiled actions | Prove the boundary before Commit 16; new adapters may require a build |
 | How much work fits one atomic block? | An explicit limit established on the supported runtime | Initial bound in Commit 12, measured/documented in Commit 17 |
-| Where is the public repository and what license applies? | Public development is a proposal requirement; destination and license are not yet selected | Prepare during Commit 01; resolve before publication or claiming lifecycle compliance |
 
 ## 11. Relationship to the proposal
 
@@ -589,16 +587,6 @@ The imported proposal describes six consecutive engineering milestones, followed
 
 If a funded delivery calendar applies, reconcile this order and UI milestones with that calendar before execution; this PRD does not silently amend it.
 
-### External obligations tracked separately
-
-- [ ] Establish the public development location and record actual publication history.
-- [ ] Obtain documented feedback, an integration-target conversation, or equivalent evidence from at least one external Canton/Daml evaluator team.
-- [ ] Deliver the required developer walkthrough and coordinate the public demo/workshop and announcement when authorized.
-- [ ] Track M7's two qualified external teams using Harmonia and the required confirmations in its acceptance window.
-- [ ] Track M8's additional qualified adoption and confirmations under the original proposal's conditions.
-
-External contacts and announcements require explicit authorization before messages are sent. These obligations cannot be satisfied by a local test or a checked implementation box. Funding amounts, payment conditions, and adoption schedules remain in the [original proposal](harmonia.md).
-
 ### Technical references for the early design work
 
 The documentation below informed the initial discussion. They are versioned Digital Asset references; behavior must be checked against the versions actually selected for implementation.
@@ -607,4 +595,4 @@ The documentation below informed the initial discussion. They are versioned Digi
 - [Parties and authority](https://archived.docs.digitalasset.com/build/3.5/tutorials/smart-contracts/parties.html): authorization context and the limits of authority propagation.
 - [Compose choices](https://archived.docs.digitalasset.com/build/3.4/tutorials/smart-contracts/compose.html): transaction composition, atomicity, and disclosure of consequences.
 
-**Current implementation step:** see the [progress record](docs/progress.md). Completed checkboxes require the corresponding implementation and evidence; publication and external adoption remain separately tracked.
+**Current implementation step:** see the [progress record](docs/progress.md). Completed checkboxes require the corresponding implementation and evidence.

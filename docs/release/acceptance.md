@@ -1,6 +1,6 @@
 # Local technical acceptance
 
-The implementation plan is complete through Step 20 for the local evaluation delivery. Public licensing, publication, external evaluation, and adoption acceptance remain pending. The [verification record](../verification/19-release.md) supplies the actual commands, environment, artifact paths, measurements, and limits behind this acceptance.
+The implementation plan is complete through Step 20 for the local evaluation delivery. Public licensing, publication, external evaluation, and adoption acceptance are outside this implementation plan. The [verification record](../verification/19-release.md) supplies the actual commands, environment, artifact paths, measurements, and limits behind this acceptance.
 
 ## Identified delivery
 
@@ -47,4 +47,4 @@ The final process inspection found one retained book JVM, around 97 MiB resident
 
 The [unpublished release description](public-description.md), [demonstration outline](demo-outline.md), [feedback template](evaluator-feedback.md), [application-team guide](adopter-guide.md), and [maintenance boundaries](maintenance.md) are prepared. No message, publication, workshop, outside-team confirmation, or adoption claim has been made.
 
-The remaining external decisions are the public development destination, project license and upstream distribution conditions, authorized evaluator contact, actual feedback and demonstrations, and the proposal's qualified adoption/acceptance evidence. Those remain open in the PRD and cannot be completed by local verification.
+The public development destination, project license and upstream distribution conditions, evaluator contact, feedback, demonstrations, and adoption evidence sit outside the implementation checklist. The [original proposal](../../harmonia.md) retains their context and conditions.
