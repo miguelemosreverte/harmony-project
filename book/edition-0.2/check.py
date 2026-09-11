@@ -13,6 +13,7 @@ import xml.etree.ElementTree as ET
 from unittest.mock import patch
 from render import markdown, html_fragment
 from atlas.catalog import annotations, colored_lines, build_catalog
+from atlas import relationships
 
 import build
 
@@ -244,6 +245,34 @@ class SourceCatalogChecks(unittest.TestCase):
             for line in colored_lines(text,language):
                 parsed=Text();parsed.feed(line);actual.append(''.join(parsed.parts))
             self.assertEqual(actual,text.splitlines())
+
+    def test_every_source_has_a_documented_package_context(self):
+        catalog,_=build_catalog(build.ROOT)
+        self.assertEqual(set(f['context'] for f in catalog['files'].values()),set(catalog['contexts']))
+        file='product/server/src/main/scala/harmonia/financing/Financing.scala'
+        self.assertEqual(catalog['files'][file]['context'],'financing')
+        self.assertIn(file,catalog['contexts']['financing']['files'])
+
+    def test_dependency_graph_matches_the_current_core_manifest(self):
+        catalog,_=build_catalog(build.ROOT)
+        maps=relationships.build(build.ROOT,catalog['files'],list(catalog['slices'].values()))
+        graph=maps['dependencies']['process']
+        self.assertIn(['product/ledger/interfaces/daml.yaml','product/ledger/core/daml.yaml'],graph['edges'])
+        self.assertFalse(any('applications/' in a and b.endswith('core/daml.yaml') for a,b in graph['edges']))
+        self.assertTrue(all(n['file'] in catalog['files'] for g in maps['dependencies'].values() for n in g['nodes']))
+
+    def test_changed_manifests_and_execution_sources_require_a_new_review(self):
+        catalog,_=build_catalog(build.ROOT)
+        original=Path.read_bytes
+        def changed(path):
+            value=original(path)
+            return value+b' ' if str(path).endswith('product/ledger/core/daml.yaml') else value
+        with patch.object(Path,'read_bytes',changed):
+            with self.assertRaisesRegex(ValueError,'Stale manifest projection'):
+                relationships.build(build.ROOT,catalog['files'],list(catalog['slices'].values()))
+        catalog['files']['product/server/src/main/scala/harmonia/financing/Financing.scala']['sha256']='changed'
+        with self.assertRaisesRegex(ValueError,'Execution map needs source review'):
+            relationships.build(build.ROOT,catalog['files'],list(catalog['slices'].values()))
 
     def test_invalid_slice_references_fail_before_export(self):
         with TemporaryDirectory() as directory:

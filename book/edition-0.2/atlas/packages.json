@@ -1,0 +1,292 @@
+[
+  {
+    "id": "entry",
+    "title": "Repository entry and build",
+    "paths": [
+      "README.md",
+      "build.sbt",
+      "project",
+      "scripts",
+      "harness/README.md",
+      "product/README.md",
+      "product/ledger/README.md"
+    ],
+    "slice": "book",
+    "summary": "Start or verify the repository here. The build keeps the production service separate from the book and evaluation harness; launchers own the pinned tools and bounded processes."
+  },
+  {
+    "id": "financing",
+    "title": "Financing vertical slice",
+    "paths": [
+      "product/api/src/main/scala/harmonia/financing",
+      "product/server/src/main/scala/harmonia/financing",
+      "product/web/src/main/scala/harmonia/financing"
+    ],
+    "slice": "financing",
+    "summary": "The shared model names the available financing actions. The service selects a real application choice and decodes participant-visible state. The browser projects that state into the illustrated handoff."
+  },
+  {
+    "id": "composition",
+    "title": "Composition vertical slice",
+    "paths": [
+      "product/api/src/main/scala/harmonia/composition",
+      "product/server/src/main/scala/harmonia/composition",
+      "product/web/src/main/scala/harmonia/composition",
+      "product/ledger/composition"
+    ],
+    "slice": "composition",
+    "summary": "A proposed sequential plan becomes executable only after partner consent. Shared Scala types carry the plan, Daml choices enforce agreement, and the service and browser expose observed progress."
+  },
+  {
+    "id": "packages",
+    "title": "Package inspection and registration",
+    "paths": [
+      "product/api/src/main/scala/harmonia/packages",
+      "product/server/src/main/scala/harmonia/packages",
+      "product/web/src/main/scala/harmonia/packages",
+      "product/packages"
+    ],
+    "slice": "packages",
+    "summary": "Pinned inputs and mappings enter through package inspection. The builder preserves the distinction between inspecting a DAR, generating an adapter, compiling it, and registering an executable integration."
+  },
+  {
+    "id": "bindings",
+    "title": "Binding generation",
+    "paths": [
+      "product/server/src/main/scala/harmonia/bindings",
+      "product/ledger/bindings"
+    ],
+    "slice": "packages",
+    "summary": "An explicit mapping describes an existing application's choice and authority. The generator emits a bounded Daml wrapper and an example; the hand-written binding provides the reference implementation."
+  },
+  {
+    "id": "transport",
+    "title": "Ledger transport and observation",
+    "paths": [
+      "product/server/src/main/scala/harmonia/ledger"
+    ],
+    "slice": "financing",
+    "summary": "Own authenticated Ledger API connections, typed contract decoding, choice submission, and participant snapshots. Feature code uses these operations to observe what the current participant can actually see."
+  },
+  {
+    "id": "submission",
+    "title": "Submission lifecycle",
+    "paths": [
+      "product/server/src/main/scala/harmonia/submission",
+      "product/api/src/main/scala/harmonia/protocol"
+    ],
+    "slice": "process",
+    "summary": "Track request identity, snapshot versions, pending jobs, and terminal outcomes. A visible action is prepared against current contracts before its ledger effect runs; stale or conflicting requests retain explicit outcomes."
+  },
+  {
+    "id": "service-entry",
+    "title": "Service composition and HTTP boundary",
+    "paths": [
+      "product/server/src/main/scala/harmonia/app",
+      "product/api/src/main/scala/harmonia/workspace"
+    ],
+    "slice": "financing",
+    "summary": "Assemble feature services and expose the local authenticated workspace. HTTP routing handles sessions and static files; the workspace combines financing, composition, submissions, and observed updates."
+  },
+  {
+    "id": "file-operations",
+    "title": "Explicit file and process effects",
+    "paths": [
+      "product/server/src/main/scala/harmonia/files",
+      "product/server/src/main/scala/harmonia/processes"
+    ],
+    "slice": "packages",
+    "summary": "Read structured Markdown, write artifacts, and own external process lifetimes. These operations isolate filesystem and tool effects from the feature models that consume their results."
+  },
+  {
+    "id": "live-browser",
+    "title": "Live browser lifecycle",
+    "paths": [
+      "product/web/src/main/scala/harmonia/live",
+      "product/web/src/main/scala/harmonia/ui",
+      "product/web/site"
+    ],
+    "slice": "financing",
+    "summary": "Own the browser connection, HTTP requests, URL navigation, and shared page elements. Feature panels receive observed workspace state rather than constructing a second copy of ledger behavior."
+  },
+  {
+    "id": "scene",
+    "title": "Shared visual components",
+    "paths": [
+      "product/scene"
+    ],
+    "slice": "book",
+    "summary": "Typed scenes, workflow nodes, and measured connectors serve both the live product and the book. These components render supplied state; they do not decide whether a ledger action is authorized."
+  },
+  {
+    "id": "interfaces",
+    "title": "Application-facing Daml interfaces",
+    "paths": [
+      "product/ledger/interfaces"
+    ],
+    "slice": "process",
+    "summary": "Define the narrow contracts between the core and independent applications: executable actions, scoped results, and transfer responsibilities. Application-specific business rules remain in their implementations."
+  },
+  {
+    "id": "core",
+    "title": "Reusable process core",
+    "paths": [
+      "product/ledger/core"
+    ],
+    "slice": "process",
+    "summary": "Define shared progress and process execution, including branches and joins. The core depends on the interface package and exercises application-provided implementations without importing each application package."
+  },
+  {
+    "id": "financing-contracts",
+    "title": "Financing application examples",
+    "paths": [
+      "product/ledger/applications/financing",
+      "product/ledger/applications/legacy-financing",
+      "product/ledger/applications/private-financing",
+      "product/ledger/applications/property-financing"
+    ],
+    "slice": "financing",
+    "summary": "Compare direct integration, an unchanged legacy application, a private bank-owned application, and a financing result used by the property workflow. Each example owns its own approval authority."
+  },
+  {
+    "id": "property-offer",
+    "title": "Property proposal application",
+    "paths": [
+      "product/ledger/applications/property-offer"
+    ],
+    "slice": "financing",
+    "summary": "Accept a correctly scoped financing result, create the buyer's proposal, and hand it between the property agents. Refusal examples challenge issuer, subject, buyer, continuation, and proof reuse."
+  },
+  {
+    "id": "custody",
+    "title": "Custody and atomic transfer applications",
+    "paths": [
+      "product/ledger/applications/source-custody",
+      "product/ledger/applications/destination-custody",
+      "product/ledger/applications/transfer"
+    ],
+    "slice": "transfer",
+    "summary": "The source reserves a position and the destination prepares receipt. The transfer application combines the eligible final legs in one transaction, leaving prior preparation intact if settlement is refused."
+  },
+  {
+    "id": "review-contracts",
+    "title": "Small review and binding examples",
+    "paths": [
+      "product/ledger/applications/review",
+      "product/ledger/applications/primitive-approval"
+    ],
+    "slice": "composition",
+    "summary": "Provide a separate review responsibility and primitive argument fixtures. These small applications let the harness test composition and generated mappings without hiding behavior in a large application."
+  },
+  {
+    "id": "goldens",
+    "title": "Committed golden examples",
+    "paths": [
+      "examples"
+    ],
+    "slice": "book",
+    "summary": "Each example keeps its readable input beside its committed expectation. Running the example produces an independent observation; the same comparison can be rendered in the book."
+  },
+  {
+    "id": "harness-model",
+    "title": "Example inventory and comparison model",
+    "paths": [
+      "harness/model"
+    ],
+    "slice": "book",
+    "summary": "The typed example inventory names each scenario and its chapter. Shared result models and comparison logic let the runner and reader agree on structure while keeping expected and actual values separate."
+  },
+  {
+    "id": "harness-stories",
+    "title": "Recorded story execution",
+    "paths": [
+      "harness/runner/src/main/scala/harmonia/stories"
+    ],
+    "slice": "book",
+    "summary": "Decode the scenario, run its real operations, collect observations, and compare them with the golden expectation. Purchase and transfer readers preserve their specific input and result schemas."
+  },
+  {
+    "id": "harness-runtime",
+    "title": "Disposable ledger environments",
+    "paths": [
+      "harness/runner/src/main/scala/harmonia/ledger",
+      "harness/runner/src/main/scala/harmonia/demo",
+      "harness/ledger"
+    ],
+    "slice": "process",
+    "summary": "Own local ledger topology, provisioning, and Daml verification assemblies. These files supply evaluation environments and scripts; they are separate from the production server's dependencies."
+  },
+  {
+    "id": "harness-features",
+    "title": "Feature verification",
+    "paths": [
+      "harness/runner"
+    ],
+    "slice": "book",
+    "summary": "Challenge package inspection, generated bindings, live handoffs, composition, and operational boundaries with independent observations. Story execution and runtime ownership have more specific groups within this harness."
+  },
+  {
+    "id": "harness-tools",
+    "title": "Evaluation and release commands",
+    "paths": [
+      "harness/tools"
+    ],
+    "slice": "book",
+    "summary": "Compose the product, evaluation runner, and book exporter into local demonstrations and reproducible release checks. This is development tooling, kept outside the production service."
+  },
+  {
+    "id": "book-model",
+    "title": "Reader evidence model",
+    "paths": [
+      "book/model"
+    ],
+    "slice": "book",
+    "summary": "Represent chapters, recording provenance, and each observed action or verification phase. A recording carries both expectation and actual observation so the reader can explain differences honestly."
+  },
+  {
+    "id": "book-browser",
+    "title": "Interactive recording reader",
+    "paths": [
+      "book/browser",
+      "book/site"
+    ],
+    "slice": "book",
+    "summary": "Navigate chapters and recorded moments through URLs. The reader projects actual observations into shared visual components and opens comparisons and original evidence without submitting commands."
+  },
+  {
+    "id": "book-export",
+    "title": "Self-contained book export",
+    "paths": [
+      "book/export"
+    ],
+    "slice": "book",
+    "summary": "Verify recorded artifacts and package the source, chapters, browser code, and evidence as an independent reader. A local server can mount that directory without depending on book logic."
+  },
+  {
+    "id": "book-edition",
+    "title": "Source-cited field guide",
+    "paths": [
+      "book/edition-0.2"
+    ],
+    "slice": "book",
+    "summary": "Generate the four reader entrances, exact quotations, source catalog, and workflow library. Authored explanations are checked against existing paths, source hashes, and the preserved recording inventory."
+  },
+  {
+    "id": "book-chapters",
+    "title": "Authored implementation guide",
+    "paths": [
+      "book"
+    ],
+    "slice": "book",
+    "summary": "Explain the product through chapters, setup instructions, and generated code examples. These documents become the readable layer beside executable demonstrations and committed evidence."
+  },
+  {
+    "id": "service-tests",
+    "title": "Production boundary tests",
+    "paths": [
+      "product/server/src/test"
+    ],
+    "slice": "process",
+    "summary": "Test production invariants such as typed projections, lifecycle behavior, and dependency boundaries without replacing ledger-backed acceptance evidence."
+  }
+]

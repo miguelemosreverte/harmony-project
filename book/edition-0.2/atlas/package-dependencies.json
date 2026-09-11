@@ -1,0 +1,189 @@
+[
+  {
+    "file" : "product/ledger/applications/destination-custody/daml.yaml",
+    "sha256" : "61fb5db452ec08ca66d6dc355af85160224f404ac50e020934887953f19b4f1d",
+    "name" : "harmonia-destination-custody",
+    "version" : "0.1.0",
+    "dependencies" : [
+      "daml-prim",
+      "daml-stdlib"
+    ],
+    "imports" : [
+      "../../interfaces/.daml/dist/harmonia-interfaces-0.1.0.dar"
+    ]
+  },
+  {
+    "file" : "product/ledger/applications/financing/daml.yaml",
+    "sha256" : "f71a9323de613fe08488805473bd28918207d7e4ef208efcbd658516f573b676",
+    "name" : "harmonia-financing",
+    "version" : "0.1.0",
+    "dependencies" : [
+      "daml-prim",
+      "daml-stdlib"
+    ],
+    "imports" : [
+      "../../interfaces/.daml/dist/harmonia-interfaces-0.1.0.dar"
+    ]
+  },
+  {
+    "file" : "product/ledger/applications/legacy-financing/daml.yaml",
+    "sha256" : "a22dcf679010e7c3c7c46d3f7161e44efca98dcb6f5af8054355c90de3643dd7",
+    "name" : "legacy-financing",
+    "version" : "0.1.0",
+    "dependencies" : [
+      "daml-prim",
+      "daml-stdlib"
+    ],
+    "imports" : [
+    ]
+  },
+  {
+    "file" : "product/ledger/applications/primitive-approval/daml.yaml",
+    "sha256" : "cd3553f67a4ae85dc63eae2bab1da5042ce177bd2390524cd74cb05e251b3960",
+    "name" : "harmonia-binding-fixtures",
+    "version" : "0.1.0",
+    "dependencies" : [
+      "daml-prim",
+      "daml-stdlib"
+    ],
+    "imports" : [
+    ]
+  },
+  {
+    "file" : "product/ledger/applications/private-financing/daml.yaml",
+    "sha256" : "d10177aea4a3dc400f550c6c0be7c2720a941c78a888ac8eca70f73aa9a45860",
+    "name" : "private-financing",
+    "version" : "0.1.0",
+    "dependencies" : [
+      "daml-prim",
+      "daml-stdlib"
+    ],
+    "imports" : [
+      "../../interfaces/.daml/dist/harmonia-interfaces-0.1.0.dar"
+    ]
+  },
+  {
+    "file" : "product/ledger/applications/property-financing/daml.yaml",
+    "sha256" : "4ef8cd39bbfb00a2f58c726fa1669fe668f9d191fdbb070ac5f35b087f939601",
+    "name" : "harmonia-property-financing",
+    "version" : "0.1.0",
+    "dependencies" : [
+      "daml-prim",
+      "daml-stdlib"
+    ],
+    "imports" : [
+      "../../interfaces/.daml/dist/harmonia-interfaces-0.1.0.dar"
+    ]
+  },
+  {
+    "file" : "product/ledger/applications/property-offer/daml.yaml",
+    "sha256" : "d2d520a8071c5473453178216e548ac97ce65d333e69c7649b906970bb6195a8",
+    "name" : "harmonia-property-offer",
+    "version" : "0.1.0",
+    "dependencies" : [
+      "daml-prim",
+      "daml-stdlib"
+    ],
+    "imports" : [
+      "../../interfaces/.daml/dist/harmonia-interfaces-0.1.0.dar"
+    ]
+  },
+  {
+    "file" : "product/ledger/applications/review/daml.yaml",
+    "sha256" : "9934f1ea5a15f462d24b4859cfc99bf0e53e79870a60420b6ff2871e0c30a468",
+    "name" : "harmonia-review",
+    "version" : "0.1.0",
+    "dependencies" : [
+      "daml-prim",
+      "daml-stdlib"
+    ],
+    "imports" : [
+      "../../interfaces/.daml/dist/harmonia-interfaces-0.1.0.dar"
+    ]
+  },
+  {
+    "file" : "product/ledger/applications/source-custody/daml.yaml",
+    "sha256" : "998b0913483c924a5230049e008a3fe829b8fef384d763411e25df26eca276f9",
+    "name" : "harmonia-source-custody",
+    "version" : "0.1.0",
+    "dependencies" : [
+      "daml-prim",
+      "daml-stdlib"
+    ],
+    "imports" : [
+      "../../interfaces/.daml/dist/harmonia-interfaces-0.1.0.dar"
+    ]
+  },
+  {
+    "file" : "product/ledger/applications/transfer/daml.yaml",
+    "sha256" : "f27b59ff53d38c329e1431d4fb290d5bfc27d317e72e3d86bdef5977a3758eb3",
+    "name" : "harmonia-transfer",
+    "version" : "0.1.0",
+    "dependencies" : [
+      "daml-prim",
+      "daml-stdlib"
+    ],
+    "imports" : [
+      "../../interfaces/.daml/dist/harmonia-interfaces-0.1.0.dar",
+      "../source-custody/.daml/dist/harmonia-source-custody-0.1.0.dar",
+      "../destination-custody/.daml/dist/harmonia-destination-custody-0.1.0.dar"
+    ]
+  },
+  {
+    "file" : "product/ledger/bindings/daml.yaml",
+    "sha256" : "72d7aaaaa402e227d7be74495fbcaf2537066c6b1eb5469fe6414a8378157144",
+    "name" : "harmonia-bindings",
+    "version" : "0.1.0",
+    "dependencies" : [
+      "daml-prim",
+      "daml-stdlib"
+    ],
+    "imports" : [
+      "../interfaces/.daml/dist/harmonia-interfaces-0.1.0.dar",
+      "../applications/legacy-financing/.daml/dist/legacy-financing-0.1.0.dar"
+    ]
+  },
+  {
+    "file" : "product/ledger/composition/daml.yaml",
+    "sha256" : "8d1693c5000e37971b8e7e7461027a48333ef1a44e6f50bff2e4df76462af076",
+    "name" : "harmonia-composer",
+    "version" : "0.1.0",
+    "dependencies" : [
+      "daml-prim",
+      "daml-stdlib"
+    ],
+    "imports" : [
+      "../interfaces/.daml/dist/harmonia-interfaces-0.1.0.dar",
+      "../core/.daml/dist/harmonia-core-0.1.0.dar",
+      "../applications/financing/.daml/dist/harmonia-financing-0.1.0.dar",
+      "../applications/legacy-financing/.daml/dist/legacy-financing-0.1.0.dar",
+      "../applications/review/.daml/dist/harmonia-review-0.1.0.dar",
+      "../../../.artifacts/generated-financing/library/.daml/dist/harmonia-binding-generatedfinancing-0.1.0.dar"
+    ]
+  },
+  {
+    "file" : "product/ledger/core/daml.yaml",
+    "sha256" : "9e8c3feff6780d862d888b8812c747b3f09455dd2e96e8c09d6ac720072e29a0",
+    "name" : "harmonia-core",
+    "version" : "0.1.0",
+    "dependencies" : [
+      "daml-prim",
+      "daml-stdlib"
+    ],
+    "imports" : [
+      "../interfaces/.daml/dist/harmonia-interfaces-0.1.0.dar"
+    ]
+  },
+  {
+    "file" : "product/ledger/interfaces/daml.yaml",
+    "sha256" : "8b6f496c46ecb7cc0b569ab7e54416b9fe7487a2bd9430e775eae8f467aaa695",
+    "name" : "harmonia-interfaces",
+    "version" : "0.1.0",
+    "dependencies" : [
+      "daml-prim",
+      "daml-stdlib"
+    ],
+    "imports" : [
+    ]
+  }
+]

@@ -24,7 +24,7 @@ That broader requirement is not proved by four featured recordings or six readin
 - [x] Bring the complete registered recording inventory into the standard book entry.
   - [x] Preserve source provenance and original golden hashes.
   - [x] Provide direct URLs, keyboard/touch controls, and offline playback.
-- [ ] Strengthen package and reviewer context, and connect author companions to it.
+- [x] Strengthen package and reviewer context, and connect author companions to it.
 - [ ] Check every requirement against current rendered and executable evidence.
 
 ## Complete recording library checkpoint
@@ -51,3 +51,29 @@ mobile, offline evidence, source links, and shared author-companion URLs.
 
 Package-level source explanations and the distinction between manifest dependencies,
 runtime handoffs, and reading order are still open in the completion sequence above.
+
+## Reviewer and source context checkpoint
+
+All catalog files now belong to one of 29 documented groups. File annotations remain
+file-specific; inherited package explanations are labeled as shared context. The
+source browser offers links to the other files in the group and its vertical slice.
+
+The reviewer can distinguish three relationships:
+
+- Suggested reading order, authored to explain a slice.
+- Daml dependencies, parsed from all 14 current production manifests with the YAML
+  parser, then checked for inventory and fingerprint drift. Five slice views select
+  relevant packages and their transitive imports. External/generated DAR declarations
+  are labeled explicitly rather than presented as compiled or authorized code.
+- Execution handoffs, reviewed against exact source fingerprints for financing,
+  composition, and package integration. An edited implementation forces a fresh
+  diagram review; separate live checks provide behavioral evidence.
+
+The shared renderer now orders cards by graph dependencies, so narrow layouts retain
+correct direction even when a manifest inventory lists files in another order.
+
+The relationship browser report, [`relationships-browser.json`](relationships-browser.json),
+records 133 checks at 304, 390, 768 and 1280 pixels. Both long manifest-path wrapping
+and connectors that skip a column were corrected from failures in these checks.
+The YAML reader has focused tests for comments, flow lists, duplicate fields and
+invalid dependency types. The Python build now runs 27 source and quotation checks.

@@ -35,7 +35,9 @@
     if(active){const a=active.getBoundingClientRect(),r=pane.getBoundingClientRect();if(a.top<r.top||a.bottom>r.bottom)pane.scrollTop+=a.top-r.top-pane.clientHeight/2;}
   }
   function describe(file,slice) {
-    notes.replaceChildren(node('p',file.owner,'eyebrow'),node('h2',file.annotation.role||file.path.split('/').at(-1)),node('p',file.annotation.summary||'This file belongs to the '+file.owner.toLowerCase()+' area. It has no file-specific @book annotation yet.'));
+    const context=atlas.contexts[file.context];
+    notes.replaceChildren(node('p',file.owner,'eyebrow'),node('h2',file.annotation.role||file.path.split('/').at(-1)),node('p',file.annotation.summary||context.summary));
+    if(context){notes.append(node('h3',context.title),node('p',file.annotation.summary?context.summary:`Package context shared by ${context.files.length} files.`,'reader-footnote'));const related=node('details');related.append(node('summary','Files in this group'));for(const path of context.files)related.append(link(path,query('code.html',{file:path})));notes.append(related);}
     const stats=node('p',`${file.lines.toLocaleString()} lines · ${file.language}`,'reader-footnote');notes.append(stats);
     const download=link('Open the original file ↗','../../'+file.path);download.download=file.path.split('/').at(-1);notes.append(download);
     if(file.annotation.line)notes.append(link('Jump to its documentation',query('code.html',{file:file.path,line:file.annotation.line})));
@@ -44,10 +46,10 @@
   }
   view.subscribe(async s=>{
     fileTree(s);document.getElementById('file-search').value=s.q;document.getElementById('source-scope').value=s.scope;
-    const file=atlas.files[s.file],slice=atlas.slices[file.annotation.slice||file.slices?.[0]];
+    const file=atlas.files[s.file],slice=atlas.slices[file.annotation.slice||file.slices?.[0]||atlas.contexts[file.context]?.slice];
     document.getElementById('source-name').textContent=s.file.split('/').at(-1);
     document.getElementById('source-location').textContent=s.file;
-    document.getElementById('source-counts').textContent=`This checkout: ${atlas.counts.files.toLocaleString()} source files · ${atlas.counts.lines.toLocaleString()} lines · ${atlas.counts.annotated} file annotations. Generated files and private runtime state are excluded.`;
+    document.getElementById('source-counts').textContent=`This checkout: ${atlas.counts.files.toLocaleString()} source files · ${atlas.counts.lines.toLocaleString()} lines · ${atlas.counts.annotated} file annotations · ${Object.keys(atlas.contexts).length} documented groups. Generated files and private runtime state are excluded.`;
     for(const b of document.querySelectorAll('[data-code-tab]')){b.hidden=b.dataset.codeTab==='diagram'&&!slice;b.setAttribute('aria-pressed',String(b.dataset.codeTab===s.codeTab));}
     code.hidden=s.codeTab==='diagram'&&!!slice;map.hidden=!code.hidden;
     describe(file,slice);
@@ -68,5 +70,5 @@
   document.getElementById('file-search').addEventListener('input',e=>view.update({q:e.target.value},{replace:true}));
   document.getElementById('source-scope').addEventListener('change',e=>view.update({scope:e.target.value}));
   for(const button of document.querySelectorAll('[data-code-tab]'))button.addEventListener('click',()=>view.update({codeTab:button.dataset.codeTab}));
-  map.addEventListener('harmonia-select',e=>{const file=atlas.files[view.state.file],slice=atlas.slices[file.annotation.slice||file.slices?.[0]],target=slice.nodes.find(n=>n.id===e.detail);if(target)view.update({file:target.file,line:1,codeTab:'code'});});
+  map.addEventListener('harmonia-select',e=>{const file=atlas.files[view.state.file],slice=atlas.slices[file.annotation.slice||file.slices?.[0]||atlas.contexts[file.context]?.slice],target=slice.nodes.find(n=>n.id===e.detail);if(target)view.update({file:target.file,line:1,codeTab:'code'});});
 })();

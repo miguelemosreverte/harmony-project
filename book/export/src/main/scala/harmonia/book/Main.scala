@@ -8,6 +8,7 @@ object Main extends IOApp:
   def run(args: List[String]): IO[ExitCode] =
     val root = Path.of(sys.env.getOrElse("HARMONIA_ROOT", ".")).toAbsolutePath.normalize()
     val operation = args match
+      case List("package-map", output)   => atlas.PackageManifests.write(root, root.resolve(output))
       case List("serve-book", directory) => ServeBook.serve(root.resolve(directory))
       case List("export-book", run, output) =>
         ExportBook.write(root, root.resolve(run), root.resolve(output))

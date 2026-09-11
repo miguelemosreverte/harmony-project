@@ -5,11 +5,11 @@
   config.stories = Object.fromEntries((config.stories || []).map(key => [key, (window.HarmoniaRunRecordings || {})[key] || window.HarmoniaRecordings[key]]));
   const atlas=window.HarmoniaAtlas;
   const firstStory = Object.keys(config.stories || {})[0] || '';
-  const defaults = {audience:'explorer', theme:'light', text:'standard', panel:'closed', nav:'closed', open:'', view:firstStory ? 'try' : 'read', story:firstStory, step:0, actor:'all', tab:'observed', state:'ready', package:'legacy', phase:1,embed:0,present:0,autoplay:0,file:'product/server/src/main/scala/harmonia/financing/FinancingObservation.scala',line:1,slice:'financing',node:'',source:'proposal',passage:'proposal-1',companion:'diagram',q:'',scope:'all',codeTab:'code',detail:'',task:'financing'};
+  const defaults = {audience:'explorer', theme:'light', text:'standard', panel:'closed', nav:'closed', open:'', view:firstStory ? 'try' : 'read', story:firstStory, step:0, actor:'all', tab:'observed', state:'ready', package:'legacy', phase:1,embed:0,present:0,autoplay:0,file:'product/server/src/main/scala/harmonia/financing/FinancingObservation.scala',line:1,slice:'financing',node:'',source:'proposal',passage:'proposal-1',companion:'diagram',q:'',scope:'all',codeTab:'code',detail:'',task:'financing',relationship:'reading'};
   if (config.kind === 'workspace') Object.assign(defaults, {view:'overview', step:2, actor:'Bank'});
   const allowedViews = config.kind === 'workspace' ? ['overview','applications','history'] : config.kind === 'source' ? ['read','source'] : ['read','sources','evidence', ...(firstStory ? ['try'] : [])];
   const common = ['audience','theme','text','panel','nav','open','embed'];
-  const fields = [...common,...(config.kind==='sandbox'?['task']:[]), ...(config.kind.startsWith('atlas-')?['file','line','slice','node','source','passage','companion','q','scope','codeTab','detail']:[]), ...(firstStory?['present','autoplay']:[]), ...(config.kind === 'workspace' ? ['view','state','step','actor'] : config.kind === 'builder' ? ['package','phase'] : config.kind === 'chapter' || config.kind === 'source' ? ['view', ...(firstStory ? ['story','step','actor','tab'] : [])] : [])];
+  const fields = [...common,...(config.kind==='sandbox'?['task']:[]), ...(config.kind.startsWith('atlas-')?['relationship','file','line','slice','node','source','passage','companion','q','scope','codeTab','detail']:[]), ...(firstStory?['present','autoplay']:[]), ...(config.kind === 'workspace' ? ['view','state','step','actor'] : config.kind === 'builder' ? ['package','phase'] : config.kind === 'chapter' || config.kind === 'source' ? ['view', ...(firstStory ? ['story','step','actor','tab'] : [])] : [])];
   const choose = (value, options, fallback) => options.includes(value) ? value : fallback;
   const integer = (value, min, max, fallback) => /^\d+$/.test(String(value)) ? Math.max(min, Math.min(max, Number(value))) : fallback;
   function normalize(input) {
@@ -41,7 +41,9 @@
     s.file=choose(input.file,Object.keys(atlas.files),defaults.file);
     s.line=integer(input.line,1,atlas.files[s.file]?.lines||1,1);
     s.slice=choose(input.slice,Object.keys(atlas.slices),'financing');
-    s.node=choose(input.node,atlas.slices[s.slice].nodes.map(n=>n.id),'');
+    s.relationship=choose(input.relationship,['reading',...Object.keys(atlas.relationships).filter(key=>atlas.relationships[key][s.slice])],'reading');
+    const graph=s.relationship==='reading'?atlas.slices[s.slice]:atlas.relationships[s.relationship][s.slice];
+    s.node=choose(input.node,graph.nodes.map(n=>n.id),'');
     s.source=choose(input.source,['proposal','architecture'],'proposal');
     const passages=atlas.passages.filter(p=>p.source===s.source);
     s.passage=choose(input.passage,passages.map(p=>p.id),passages[0].id);

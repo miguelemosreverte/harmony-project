@@ -74,6 +74,13 @@ def build_catalog(root):
     slices = json.loads((root/'book/edition-0.2/atlas/slices.json').read_text())
     known = {s['id'] for s in slices}
     if len(known)!=len(slices): raise ValueError('Duplicate slice identity')
+    context_path=root/'book/edition-0.2/atlas/packages.json'
+    contexts=json.loads(context_path.read_text()) if context_path.exists() else []
+    if len({c['id'] for c in contexts})!=len(contexts):raise ValueError('Duplicate package context')
+    for context in contexts:
+        if context['slice'] not in known or not context['summary']:raise ValueError('Invalid package context')
+        for prefix in context['paths']:
+            if not (root/prefix).exists():raise ValueError('Missing package context path: '+prefix)
     source = {}
     outputs = {}
     for path in source_paths(root):
@@ -85,6 +92,13 @@ def build_catalog(root):
         identifier = sha256(name.encode()).hexdigest()[:16]
         language = LANGUAGES.get(path.suffix,'bash' if name.startswith('scripts/') else 'text')
         entry = dict(path=name,id=identifier,sha256=sha256(path.read_bytes()).hexdigest(),lines=len(text.splitlines()),language=language,owner=SCOPES.get(name.split('/')[0],'Repository'),annotation=annotation)
+        matches=[(len(prefix),context) for context in contexts for prefix in context['paths'] if name==prefix or name.startswith(prefix+'/')]
+        if matches:
+            maximum=max(length for length,_ in matches)
+            owners={context['id']:context for length,context in matches if length==maximum}
+            if len(owners)!=1:raise ValueError('Ambiguous package context: '+name)
+            entry['context']=next(iter(owners))
+        elif contexts:raise ValueError('Missing package context: '+name)
         source[name]=entry
         payload = dict(text=text,lines=colored_lines(text,language))
         outputs[f'reader/files/{identifier}.js'] = 'window.HarmoniaSourceFiles = window.HarmoniaSourceFiles || {};\nwindow.HarmoniaSourceFiles['+json.dumps(name)+'] = '+json.dumps(payload,ensure_ascii=False).replace('<','\\u003c')+';\n'
@@ -109,4 +123,4 @@ def build_catalog(root):
             placed|=ready
         if not (root/item['evidence']).is_file():raise ValueError('Missing evidence: '+item['evidence'])
     tree_hash=sha256(''.join(f'{p}:{e["sha256"]}\n' for p,e in source.items()).encode()).hexdigest()
-    return dict(files=source,slices={s['id']:s for s in slices},sha256=tree_hash,counts=dict(files=len(source),lines=sum(f['lines'] for f in source.values()),annotated=sum(bool(f['annotation']) for f in source.values()))), outputs
+    return dict(files=source,contexts={c['id']:{**c,'files':[p for p,f in source.items() if f.get('context')==c['id']]} for c in contexts},slices={s['id']:s for s in slices},sha256=tree_hash,counts=dict(files=len(source),lines=sum(f['lines'] for f in source.values()),annotated=sum(bool(f['annotation']) for f in source.values()))), outputs

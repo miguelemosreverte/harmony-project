@@ -16,6 +16,7 @@ import workspace
 import laboratory
 from atlas.catalog import build_catalog
 from atlas import pages as reader_pages
+from atlas import relationships
 from render import diagram_assets
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -171,6 +172,7 @@ def build_outputs(root=ROOT):
     assignments = validate_assignments(corpus, passages, chapters)
     recordings = load_recordings(root)
     catalog, outputs = build_catalog(root)
+    catalog["relationships"] = relationships.build(root, catalog["files"], list(catalog["slices"].values()))
     outputs.update(laboratory.outputs(root, recordings))
     chapter_slices = {'01-product':'process','02-roles-and-trust':'process','03-financing-to-offer':'financing','04-four-party-transfer':'transfer','05-bring-an-application':'packages','06-compose-a-workflow':'composition','07-evidence-and-boundaries':'book'}
     catalog['passages'] = [dict(id=f'{p.source}-{p.start}',source=p.source,start=p.start,end=p.end,title=p.title,chapter=p.chapter,slice=chapter_slices.get(p.chapter,'')) for p in passages]

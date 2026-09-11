@@ -8,5 +8,6 @@ fi
 if ! "$harmonia_design_python" -c 'from importlib.metadata import version; assert version("markdown-it-py") == "3.0.0" and version("mdurl") == "0.1.2" and version("Pygments") == "2.19.2"' 2>/dev/null; then
   "$harmonia_design_python" -m pip install -r "$harmonia_design_root/book/edition-0.2/requirements.txt"
 fi
+HARMONIA_TOOLS_HEAP=128m "$harmonia_design_root/scripts/run-scala" bookExport harmonia.book.Main package-map book/edition-0.2/atlas/package-dependencies.json
 "$harmonia_design_python" "$harmonia_design_root/book/edition-0.2/build.py"
 "$harmonia_design_python" "$harmonia_design_root/book/edition-0.2/check.py"

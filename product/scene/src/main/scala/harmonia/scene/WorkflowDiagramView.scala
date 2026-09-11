@@ -33,7 +33,7 @@ final class WorkflowDiagramView(root: dom.HTMLElement):
       documentation = value.nodes.map(n => n.id -> n).toMap
       cards.foreach(_.remove())
       val rows = scala.collection.mutable.Map.empty[Int, Int]
-      cards = value.nodes.map { item =>
+      cards = value.nodes.sortBy(item => layers(item.id)).map { item =>
         val card = node("button", "workflow-node").asInstanceOf[dom.html.Button]
         card.`type` = "button"
         card.title = item.detail
@@ -66,7 +66,7 @@ final class WorkflowDiagramView(root: dom.HTMLElement):
       }
       map.style.setProperty("--columns", (layers.values.max + 1).toString)
       map.classList.toggle("workflow-wide", layers.values.max > 3)
-      val indexed = value.nodes.map(_.id).zip(cards).toMap
+      val indexed = cards.map(card => card.getAttribute("data-node") -> card).toMap
       connections.render(
         value.edges.map(edge =>
           ConnectionLayer.Arrow(

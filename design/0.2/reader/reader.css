@@ -96,3 +96,6 @@ html[data-presentation="1"] body {background:var(--surface);}
 [data-text=large] .colored-source {font-size:14px;}
 [data-text=large] .source-notes {font-size:15px;}
 [data-text=compact] .colored-source {font-size:11px;}
+.source-notes details>a,.review-notes .reader-note>a {display:block;overflow-wrap:anywhere;margin-top:10px;}
+.reader-stage .workflow-node strong {overflow-wrap:anywhere;}
+.reader-note p {overflow-wrap:anywhere;}

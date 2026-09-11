@@ -55,12 +55,23 @@ final class ConnectionLayer(root: dom.HTMLElement):
           val box = other.getBoundingClientRect()
           other != arrow.from && other != arrow.to && box.top > a.bottom && box.bottom < b.top
         }
+        val skipColumn = !vertical && (0 until obstacles.length).exists { i =>
+          val box = obstacles(i).asInstanceOf[dom.Element].getBoundingClientRect()
+          box.left > a.right && box.right < b.left
+        }
+        val topLane = (0 until obstacles.length)
+          .map(i => obstacles(i).asInstanceOf[dom.Element].getBoundingClientRect().top - bounds.top)
+          .minOption
+          .map(top => math.max(2.0, top - 10))
+          .getOrElse(2.0)
         val lane = math.min(bounds.width - 4, math.max(a.right, b.right) - bounds.left + 18)
         val endX = if detour then b.right - bounds.left + 8 else x2
         val endY = if detour then b.top - bounds.top + b.height / 2 else y2
         val path = dom.document.createElementNS(namespace, "path")
         val shape =
-          if detour then
+          if skipColumn then
+            s"M$x1 $y1 H${a.right - bounds.left + 18} V$topLane H${b.left - bounds.left - 18} V$y2 H$x2"
+          else if detour then
             s"M${a.right - bounds.left + 8} ${a.top - bounds.top + a.height / 2} H$lane V$endY H$endX"
           else if vertical then s"M$x1 $y1 C$x1 ${(y1 + y2) / 2} $x2 ${(y1 + y2) / 2} $x2 $y2"
           else s"M$x1 $y1 C${(x1 + x2) / 2} $y1 ${(x1 + x2) / 2} $y2 $x2 $y2"

@@ -6,6 +6,9 @@
   const query=(page,values)=>{const u=new URL(view.href(page));for(const [key,value] of Object.entries(values))if(value!==undefined&&value!=='')u.searchParams.set(key,value);return u.href;};
   function diagram(root,key,selected='') {
     const slice=atlas.slices[key];if(!root||!slice)return;
+    diagramValue(root,slice,selected);
+  }
+  function diagramValue(root,slice,selected="") {
     renderHarmoniaDiagram(root,JSON.stringify({title:slice.title,caption:slice.relationship,nodes:slice.nodes.map(n=>({id:n.id,label:n.label,detail:n.detail,actor:n.actor,state:n.id===selected?'current':'pending'})),edges:slice.edges.map(([from,to])=>({from,to,state:to===selected?'current':'pending'}))}));
   }
   function citation(slice){const [source,start,end]=slice.citation;return link(`Original ${source} · lines ${start}–${end}`,`sources/${source}.html?view=source#L${start}`);}
@@ -19,7 +22,7 @@
     }));
     return loading.get(path);
   }
-  window.HarmoniaReader={node,link,query,diagram,citation,source};
+  window.HarmoniaReader={node,link,query,diagram,diagramValue,citation,source};
   view.subscribe(s=>{document.documentElement.dataset.embed=String(s.embed);document.documentElement.dataset.presentation=String(s.present);});
   for(const root of document.querySelectorAll('[data-slice-diagram],[data-chapter-diagram]')) {
     const slice=root.dataset.sliceDiagram||atlas.chapterSlices[root.dataset.chapterDiagram];
