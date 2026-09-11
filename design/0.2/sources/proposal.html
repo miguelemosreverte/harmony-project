@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Original proposal · Harmonia</title><link rel="stylesheet" href="../style.css"><script src="../book.js" defer></script></head>
+<body class=""><a class="skip-link" href="#main">Skip to content</a>
+<aside class="rail"><a class="brand" href="../book-overview.html"><span class="mark" aria-hidden="true"></span><span class="brand-name">Harmonia</span><span class="brand-caption">THE FIELD GUIDE</span></a>
+<button class="mobile-menu" aria-expanded="false" aria-controls="chapter-nav">Chapters</button><nav id="chapter-nav" aria-label="Book chapters"><a class="nav-link " href="../book-overview.html">Overview</a><p class="nav-label">UNDERSTAND</p><a class="nav-link " href="../chapters/01-product.html"><span>01</span>The product</a><a class="nav-link " href="../chapters/02-roles-and-trust.html"><span>02</span>Roles &amp; trust</a><p class="nav-label">EXPLORE</p><a class="nav-link " href="../book-chapter.html"><span>03</span>Financing to offer</a><a class="nav-link " href="../chapters/04-four-party-transfer.html"><span>04</span>Four-party transfer</a><a class="nav-link " href="../chapters/05-bring-an-application.html"><span>05</span>Bring an application</a><a class="nav-link " href="../chapters/06-compose-a-workflow.html"><span>06</span>Compose a workflow</a><p class="nav-label">VERIFY</p><a class="nav-link " href="../chapters/07-evidence-and-boundaries.html"><span>07</span>Evidence &amp; boundaries</a><a class="nav-link " href="../chapters/08-release-and-adoption.html"><span>08</span>Release &amp; adoption</a></nav>
+<div class="rail-footer"><a href="../coverage.html">Original documents ↗</a></div></aside>
+<header class="topbar"><span>The book &nbsp; / &nbsp; Original proposal</span><span class="edition">0.2 · DESIGN PREVIEW</span></header>
+<main id="main" class="content"><h1>Original proposal</h1><p class="note">Pinned SHA-256: 9e33ac476c841151fc4c0bf4b853412d6542e63cec0d27ab36e9171126a1dd27</p><p><a href="../../../docs/proposal/harmonia.md">Open the intact original file ↗</a></p><div class="source-view"><span class="source-line" id="L1"><a href="#L1">1</a>## Development Fund Proposal</span>
+<span class="source-line" id="L2"><a href="#L2">2</a></span>
+<span class="source-line" id="L3"><a href="#L3">3</a>**Author:** Unlockit (luis.marado@unlockit.io)  </span>
+<span class="source-line" id="L4"><a href="#L4">4</a>**Status:** Submitted  </span>
+<span class="source-line" id="L5"><a href="#L5">5</a>**Created:** 2026-08-01  </span>
+<span class="source-line" id="L6"><a href="#L6">6</a>**Label:** financial-workflows-composability  </span>
+<span class="source-line" id="L7"><a href="#L7">7</a>**Champion:** IntellectEU and Jonathan Mayeur  </span>
+<span class="source-line" id="L8"><a href="#L8">8</a></span>
+<span class="source-line" id="L9"><a href="#L9">9</a>---</span>
+<span class="source-line" id="L10"><a href="#L10">10</a></span>
+<span class="source-line" id="L11"><a href="#L11">11</a>## Abstract</span>
+<span class="source-line" id="L12"><a href="#L12">12</a></span>
+<span class="source-line" id="L13"><a href="#L13">13</a>Harmonia lets independently developed Daml applications participate in a single multi-party workflow without bespoke pairwise integration.</span>
+<span class="source-line" id="L14"><a href="#L14">14</a></span>
+<span class="source-line" id="L15"><a href="#L15">15</a>It is an open, reusable on-ledger workflow-management reference implementation for Canton. Harmonia interfaces live in a dedicated Harmonia Binding DAR, which defines the application templates to which each interface applies and how those templates participate in the Harmonia workflow model. A final application DAR may implement those interfaces in a new version where appropriate. For an existing application DAR, `harmonia-builder` generates the project, code, and boilerplate needed to use the interface applicability declarations to bind application templates and choices into the same Core-managed workflow model. Both participation paths converge on the same Core-managed workflow model. Application ownership, party authorization, and privacy boundaries are preserved while composition state remains on-ledger.</span>
+<span class="source-line" id="L16"><a href="#L16">16</a></span>
+<span class="source-line" id="L17"><a href="#L17">17</a>The initial release delivers a narrow, reusable workflow subset, example source applications packaged as DARs, tests, documentation, and a simple visual workflow viewer or composer for evaluation and demonstrations. It does not claim generic BPMN coverage, arbitrary dynamic composition, off-chain orchestration, or a full workflow studio. Imports, dynamic choice calls, package and interface constraints, and multi-party authorization remain explicit design boundaries.</span>
+<span class="source-line" id="L18"><a href="#L18">18</a></span>
+<span class="source-line" id="L19"><a href="#L19">19</a>Harmonia is intended as shared developer infrastructure for Canton. Initial use cases include trade operations, custody coordination, approval flows, and regulated multi-party processes.</span>
+<span class="source-line" id="L20"><a href="#L20">20</a></span>
+<span class="source-line" id="L21"><a href="#L21">21</a>---</span>
+<span class="source-line" id="L22"><a href="#L22">22</a></span>
+<span class="source-line" id="L23"><a href="#L23">23</a>## Specification</span>
+<span class="source-line" id="L24"><a href="#L24">24</a></span>
+<span class="source-line" id="L25"><a href="#L25">25</a>### 1. Objective</span>
+<span class="source-line" id="L26"><a href="#L26">26</a></span>
+<span class="source-line" id="L27"><a href="#L27">27</a>Deliver a reusable on-ledger orchestration layer for Canton-based applications so developers can compose independently developed Daml packages into larger business workflows with explicit participant roles, task progression, proof-driven state transitions, and clear application boundaries. The execution model should support a concrete first step where a project includes source application DARs and a Harmonia DAR, then uses Harmonia templates, interfaces, and choices to coordinate eligible source-application actions. Longer term, the design should identify what would be required for more dynamic composition.</span>
+<span class="source-line" id="L28"><a href="#L28">28</a></span>
+<span class="source-line" id="L29"><a href="#L29">29</a>For the purposes of this proposal, a source application is an independently developed Daml application or package with its own templates, interfaces, choices, authorization model, and ownership. Composition means coordinating one or more of those applications as part of a larger process definition without forcing one team to hardcode all cross-application integration logic. The motivation is comparable to the way Solidity ABIs help developers reason about calling into separately developed smart contracts, but Harmonia is not equivalent to an ABI layer because Canton and Daml package imports, interface visibility, authorization, disclosure, and choice execution impose different constraints.</span>
+<span class="source-line" id="L30"><a href="#L30">30</a></span>
+<span class="source-line" id="L31"><a href="#L31">31</a>The clearest adopters for this work are Canton application teams, Daml development teams, and institutions building workflow-heavy applications in areas such as trade operations, custody coordination, collateral handling, document-driven approvals, and regulated asset servicing. The intention is to make application composition on Canton easier to carry from one product context to another instead of forcing each team to rebuild bespoke integration glue from scratch.</span>
+<span class="source-line" id="L32"><a href="#L32">32</a></span>
+<span class="source-line" id="L33"><a href="#L33">33</a>### 2. Implementation Mechanics</span>
+<span class="source-line" id="L34"><a href="#L34">34</a></span>
+<span class="source-line" id="L35"><a href="#L35">35</a>The implementation will not attempt to make Canton a full generic BPMN engine. The point is to adapt useful workflow semantics to a privacy-aware multi-party ledger model in a reusable way, with a particular focus on composability across organizational and domain boundaries.</span>
+<span class="source-line" id="L36"><a href="#L36">36</a></span>
+<span class="source-line" id="L37"><a href="#L37">37</a>The first executable cut will focus on a narrow supported subset: start and end events, persisted orchestration states, human- or system-executed steps, explicit step assignees or authorized actors, sequential flow, basic branching and joining rules, bounded atomic execution of eligible multi-step paths, progression across multiple parties within the validated authorization scope, and continuation based on outputs produced by another workflow.</span>
+<span class="source-line" id="L38"><a href="#L38">38</a></span>
+<span class="source-line" id="L39"><a href="#L39">39</a>The initial implementation should not claim full BPMN coverage. Timers, escalations, compensation patterns, richer exception handling, reusable subprocess libraries, managed hosting, custom adopter integrations, domain-specific application development, and full visual designer tooling should be treated as later evolution or outside the funded scope.</span>
+<span class="source-line" id="L40"><a href="#L40">40</a></span>
+<span class="source-line" id="L41"><a href="#L41">41</a>The project will produce an open reference implementation with reusable core, evaluation, and reference components for privacy-aware, multi-party workflow composition on Canton. How applications participate in that model, including the direct final-application-DAR interface implementation path and the `harmonia-builder` integration path, is defined once below.</span>
+<span class="source-line" id="L42"><a href="#L42">42</a></span>
+<span class="source-line" id="L43"><a href="#L43">43</a>The descriptions of `harmonia-dapp`, `harmonia-core`, `harmonia-references`, and the supporting `harmonia-builder` tooling below describe proposed logical components. Their final implementation boundaries will be determined during technical design.</span>
+<span class="source-line" id="L44"><a href="#L44">44</a></span>
+<span class="source-line" id="L45"><a href="#L45">45</a>The implementation preserves a modular structure:</span>
+<span class="source-line" id="L46"><a href="#L46">46</a></span>
+<span class="source-line" id="L47"><a href="#L47">47</a>- `harmonia-core` provides reusable on-ledger orchestration patterns, workflow state, and step-execution rules</span>
+<span class="source-line" id="L48"><a href="#L48">48</a>- the dedicated Harmonia Binding DAR defines applicable application templates and their participation in the Harmonia workflow model</span>
+<span class="source-line" id="L49"><a href="#L49">49</a>- `harmonia-dapp` provides the viewer and composer through which users interact with supported workflows</span>
+<span class="source-line" id="L50"><a href="#L50">50</a>- `harmonia-references` provides reference applications, workflows, and examples that demonstrate both participation paths described below</span>
+<span class="source-line" id="L51"><a href="#L51">51</a>- `harmonia-builder` is build-time project-generation tooling</span>
+<span class="source-line" id="L52"><a href="#L52">52</a></span>
+<span class="source-line" id="L53"><a href="#L53">53</a>#### Core Layer: `harmonia-core`</span>
+<span class="source-line" id="L54"><a href="#L54">54</a></span>
+<span class="source-line" id="L55"><a href="#L55">55</a>`harmonia-core` is the Daml package defining reusable on-ledger orchestration templates, choices, patterns, workflow state, and step-execution rules. It manages the common workflow model used through the dedicated Harmonia Binding DAR.</span>
+<span class="source-line" id="L56"><a href="#L56">56</a></span>
+<span class="source-line" id="L57"><a href="#L57">57</a>The Harmonia interfaces and their applicability declarations live in `harmonia-core`. The `Harmonia Binding DAR` is the artefact that binds those interfaces to a source application DAR&#x27;s implementation when the source project of that DAR does not create the binding itself.</span>
+<span class="source-line" id="L58"><a href="#L58">58</a></span>
+<span class="source-line" id="L59"><a href="#L59">59</a>It provides:</span>
+<span class="source-line" id="L60"><a href="#L60">60</a></span>
+<span class="source-line" id="L61"><a href="#L61">61</a>- the common workflow model that the dedicated Harmonia Binding DAR uses to define applicable application templates and their participation</span>
+<span class="source-line" id="L62"><a href="#L62">62</a>- the managed workflow model into which applications and Builder-generated project/code participate through those interface definitions</span>
+<span class="source-line" id="L63"><a href="#L63">63</a>- workflow state that can be queried and inspected</span>
+<span class="source-line" id="L64"><a href="#L64">64</a>- explicit identification of the actor that may execute each step</span>
+<span class="source-line" id="L65"><a href="#L65">65</a>- sequential flow, basic branching and joining rules, and sub-workflow continuation</span>
+<span class="source-line" id="L66"><a href="#L66">66</a>- bounded atomic execution where the workflow structure and required authorizations allow it</span>
+<span class="source-line" id="L67"><a href="#L67">67</a></span>
+<span class="source-line" id="L68"><a href="#L68">68</a>**Step execution rules**</span>
+<span class="source-line" id="L69"><a href="#L69">69</a>Each supported workflow step maps to executable Daml actions, such as contract creation, choice exercise against a known contract or interface view, bounded wait states, exclusive branching, sub-workflow continuation, and atomic execution blocks. Participant roles resolve to concrete party bindings rather than descriptive workflow tasks.</span>
+<span class="source-line" id="L70"><a href="#L70">70</a></span>
+<span class="source-line" id="L71"><a href="#L71">71</a>**Authority from source applications**</span>
+<span class="source-line" id="L72"><a href="#L72">72</a>The core specifies which actor may execute each orchestration step and the authority required from the source application.</span>
+<span class="source-line" id="L73"><a href="#L73">73</a></span>
+<span class="source-line" id="L74"><a href="#L74">74</a>Where all required parties can authorize a transition at once, multiple logical workflow steps may be collapsed into a single atomic execution path. Where that is not possible or desirable, the workflow progresses through explicit staged coordination.</span>
+<span class="source-line" id="L75"><a href="#L75">75</a></span>
+<span class="source-line" id="L76"><a href="#L76">76</a>#### Reference Decentralized Application: `harmonia-dapp`</span>
+<span class="source-line" id="L77"><a href="#L77">77</a></span>
+<span class="source-line" id="L78"><a href="#L78">78</a>`harmonia-dapp` is the lightweight viewer and composer through which users interact with supported Harmonia workflows and sample application DARs. It submits workflow transactions to the Canton Validator / Super Validator and reads supporting package metadata or data from a Package Manager.</span>
+<span class="source-line" id="L79"><a href="#L79">79</a></span>
+<span class="source-line" id="L80"><a href="#L80">80</a>It provides:</span>
+<span class="source-line" id="L81"><a href="#L81">81</a></span>
+<span class="source-line" id="L82"><a href="#L82">82</a>- inspection of workflow state and visible, traceable status for running and completed workflows</span>
+<span class="source-line" id="L83"><a href="#L83">83</a>- definition, authorization, and execution of bounded first-release workflows</span>
+<span class="source-line" id="L84"><a href="#L84">84</a>- a simple visual workflow viewer or composer sufficient for evaluation and onboarding</span>
+<span class="source-line" id="L85"><a href="#L85">85</a>- interaction with workflows involving Harmonia and sample application DARs</span>
+<span class="source-line" id="L86"><a href="#L86">86</a>  - retrieval of application DARs from the Validator node to feed `harmonia-builder`</span>
+<span class="source-line" id="L87"><a href="#L87">87</a></span>
+<span class="source-line" id="L88"><a href="#L88">88</a>`harmonia-dapp` is an evaluation and onboarding surface for the orchestration package. It is not a no-code product commitment, managed hosting, production operations, a full generic workflow studio, BPMN editor, custom adopter integration service, or domain-specific application development project.</span>
+<span class="source-line" id="L89"><a href="#L89">89</a></span>
+<span class="source-line" id="L90"><a href="#L90">90</a>#### Reference Applications: `harmonia-references`</span>
+<span class="source-line" id="L91"><a href="#L91">91</a></span>
+<span class="source-line" id="L92"><a href="#L92">92</a>`harmonia-references` provides reference applications, workflows, examples, a minimal composition framework, and at least two source-application DARs that prove the model in practice.</span>
+<span class="source-line" id="L93"><a href="#L93">93</a></span>
+<span class="source-line" id="L94"><a href="#L94">94</a>It demonstrates:</span>
+<span class="source-line" id="L95"><a href="#L95">95</a></span>
+<span class="source-line" id="L96"><a href="#L96">96</a>- the direct final application DAR interface implementation path</span>
+<span class="source-line" id="L97"><a href="#L97">97</a>- the `harmonia-builder` integration path against an existing application DAR</span>
+<span class="source-line" id="L98"><a href="#L98">98</a>- a four-party token-transfer workflow spanning Buyer, Seller, and two custodians, with a Settler role selected or fulfilled by one of those parties as applicable</span>
+<span class="source-line" id="L99"><a href="#L99">99</a>- a property-financing approval and offer workflow across independently owned domains</span>
+<span class="source-line" id="L100"><a href="#L100">100</a></span>
+<span class="source-line" id="L101"><a href="#L101">101</a>The reference workflows demonstrate bounded, executable composition rather than a generic BPMN engine. They do not require a central workflow operator or one party to own the full process logic.</span>
+<span class="source-line" id="L102"><a href="#L102">102</a></span>
+<span class="source-line" id="L103"><a href="#L103">103</a>#### Project Builder: `harmonia-builder`</span>
+<span class="source-line" id="L104"><a href="#L104">104</a></span>
+<span class="source-line" id="L105"><a href="#L105">105</a>`harmonia-builder` is internal project-generation tooling that creates workflow projects for existing application DARs.</span>
+<span class="source-line" id="L106"><a href="#L106">106</a></span>
+<span class="source-line" id="L107"><a href="#L107">107</a>It provides:</span>
+<span class="source-line" id="L108"><a href="#L108">108</a></span>
+<span class="source-line" id="L109"><a href="#L109">109</a>- direct DAR upload by users</span>
+<span class="source-line" id="L110"><a href="#L110">110</a>- retrieval of required DARs from a Package Manager (for example, Catalyx Package Manager: https://www.catalyx.solutions/catalyx-package-manager) at build time</span>
+<span class="source-line" id="L111"><a href="#L111">111</a>  - consumed application DARs that `harmonia-dapp` retrieves from the Validator node</span>
+<span class="source-line" id="L112"><a href="#L112">112</a>  - output of the `Harmonia Binding DAR` that links Harmonia interfaces to a source application DAR when the source project of the DAR does not create the binding itself</span>
+<span class="source-line" id="L113"><a href="#L113">113</a>- generated project and code that use the dedicated Harmonia Binding DAR&#x27;s applicability declarations with an existing application DAR</span>
+<span class="source-line" id="L114"><a href="#L114">114</a>- the boilerplate needed to bind the applicable application templates and their choices into the `harmonia-core` managed workflow model</span>
+<span class="source-line" id="L115"><a href="#L115">115</a></span>
+<span class="source-line" id="L116"><a href="#L116">116</a>This is project-generation tooling for participation in the Core-managed model, not a separate runtime composition model.</span>
+<span class="source-line" id="L117"><a href="#L117">117</a></span>
+<span class="source-line" id="L118"><a href="#L118">118</a>#### Illustrative Execution Flows</span>
+<span class="source-line" id="L119"><a href="#L119">119</a></span>
+<span class="source-line" id="L120"><a href="#L120">120</a>**Four-party token-transfer workflow**</span>
+<span class="source-line" id="L121"><a href="#L121">121</a></span>
+<span class="source-line" id="L122"><a href="#L122">122</a>1. A Buyer and Seller agree a trade proposal that begins the workflow.</span>
+<span class="source-line" id="L123"><a href="#L123">123</a>2. The source custodian validates that the token position is already locked and eligible for transfer.</span>
+<span class="source-line" id="L124"><a href="#L124">124</a>3. The destination custodian confirms readiness to receive the asset under the required account or lock condition.</span>
+<span class="source-line" id="L125"><a href="#L125">125</a>4. The Settler role is selected or fulfilled by one of the Buyer, Seller, source custodian, or destination custodian as applicable; it is not a separate fifth actor or a fixed identity.</span>
+<span class="source-line" id="L126"><a href="#L126">126</a>5. The workflow engine tracks these as explicit domain-owned steps with clear execution rights, visible progression state, and handoff across independently owned workflow domains.</span>
+<span class="source-line" id="L127"><a href="#L127">127</a>6. Once the required approvals and lock conditions are present, the final transfer path can collapse into one bounded atomic execution rather than remaining a staged sequence.</span>
+<span class="source-line" id="L128"><a href="#L128">128</a>7. The flow demonstrates explicit multi-party progression where needed, with bounded atomic completion only where Canton authorization and workflow structure allow it.</span>
+<span class="source-line" id="L129"><a href="#L129">129</a></span>
+<span class="source-line" id="L130"><a href="#L130">130</a>![Four-party token transfer workflow](assets/img/01-harmonia-transfer.svg)</span>
+<span class="source-line" id="L131"><a href="#L131">131</a>**Canonical source:** [BPMN](assets/bpmn/01-harmonia-transfer.bpmn) | [SVG](assets/img/01-harmonia-transfer.svg)</span>
+<span class="source-line" id="L132"><a href="#L132">132</a></span>
+<span class="source-line" id="L133"><a href="#L133">133</a>**Property-financing approval and offer workflow**</span>
+<span class="source-line" id="L134"><a href="#L134">134</a></span>
+<span class="source-line" id="L135"><a href="#L135">135</a>1. A buyer submits selected documents or credential-backed evidence into the financing workflow.</span>
+<span class="source-line" id="L136"><a href="#L136">136</a>2. A bank or financing domain evaluates those inputs and produces an approval or rejection outcome under its own process rules.</span>
+<span class="source-line" id="L137"><a href="#L137">137</a>3. If financing approval is obtained, the buyer creates a purchase proposal that enters a separate offer workflow.</span>
+<span class="source-line" id="L138"><a href="#L138">138</a>4. Buyer-side and seller-side agents relay the proposal through independently owned workflow domains rather than through one centralized orchestrator.</span>
+<span class="source-line" id="L139"><a href="#L139">139</a>5. The workflow engine keeps the approval and offer domains linked through explicit outputs and continuations, while preserving their separate ownership and execution rights.</span>
+<span class="source-line" id="L140"><a href="#L140">140</a>6. The flow demonstrates coordination of document-derived conditions, approval-gated progression, and multi-party handoff without flattening everything into one hardcoded process.</span>
+<span class="source-line" id="L141"><a href="#L141">141</a></span>
+<span class="source-line" id="L142"><a href="#L142">142</a>![Property-financing approval and offer workflow](assets/img/02-harmonia-approval-offer.svg)</span>
+<span class="source-line" id="L143"><a href="#L143">143</a>**Canonical source:** [BPMN](assets/bpmn/02-harmonia-approval-offer.bpmn) | [SVG](assets/img/02-harmonia-approval-offer.svg)</span>
+<span class="source-line" id="L144"><a href="#L144">144</a></span>
+<span class="source-line" id="L145"><a href="#L145">145</a>#### Proposed Canton Validator / Super Validator Work</span>
+<span class="source-line" id="L146"><a href="#L146">146</a></span>
+<span class="source-line" id="L147"><a href="#L147">147</a>Harmonia intends to support composition with third-party applications on a Canton Validator / Super Validator through a dedicated Harmonia Binding DAR and `harmonia-core` patterns. Any external upstream work remains contingent on the responsible maintainers&#x27; review and applicable governance agreement; this proposal does not assert a partnership, approval, or completed implementation.</span>
+<span class="source-line" id="L148"><a href="#L148">148</a></span>
+<span class="source-line" id="L149"><a href="#L149">149</a>### 3. Architectural Alignment</span>
+<span class="source-line" id="L150"><a href="#L150">150</a></span>
+<span class="source-line" id="L151"><a href="#L151">151</a>This proposal aligns with Canton’s architecture and ecosystem priorities because it builds on:</span>
+<span class="source-line" id="L152"><a href="#L152">152</a></span>
+<span class="source-line" id="L153"><a href="#L153">153</a>- shared coordination without a single trusted operator</span>
+<span class="source-line" id="L154"><a href="#L154">154</a>- strong auditability and traceability</span>
+<span class="source-line" id="L155"><a href="#L155">155</a>- privacy-aware multi-party state transitions</span>
+<span class="source-line" id="L156"><a href="#L156">156</a>- application-layer and on-ledger orchestration middleware reference implementations that can be reused across the ecosystem</span>
+<span class="source-line" id="L157"><a href="#L157">157</a></span>
+<span class="source-line" id="L158"><a href="#L158">158</a>It also fits the Development Fund focus on shared developer tooling, reference implementations, and common-good infrastructure.</span>
+<span class="source-line" id="L159"><a href="#L159">159</a></span>
+<span class="source-line" id="L160"><a href="#L160">160</a>#### Architectural Views</span>
+<span class="source-line" id="L161"><a href="#L161">161</a></span>
+<span class="source-line" id="L162"><a href="#L162">162</a>These diagrams show Harmonia&#x27;s proposed system context and internal architecture. The two participation paths are reflected here: a final application DAR implementing Harmonia interfaces, and `harmonia-builder` as supporting build-time tooling for an existing application DAR. The Container diagram places `harmonia-core` as deployed on the external Canton Validator / Super Validator; the System Context remains focused on the systems&#x27; interactions. Both diagrams show the external Package Manager that `harmonia-builder` uses at build time to retrieve DARs needed to generate workflow projects; the Container diagram gives Catalyx Package Manager (https://www.catalyx.solutions/catalyx-package-manager) as an illustrative source only.</span>
+<span class="source-line" id="L163"><a href="#L163">163</a></span>
+<span class="source-line" id="L164"><a href="#L164">164</a>##### System Context</span>
+<span class="source-line" id="L165"><a href="#L165">165</a></span>
+<span class="source-line" id="L166"><a href="#L166">166</a>The System Context shows Harmonia in its surrounding ecosystem. It identifies the users, the external Canton Validator / Super Validator, a Package Manager, and their system-level relationships to Harmonia.</span>
+<span class="source-line" id="L167"><a href="#L167">167</a></span>
+<span class="source-line" id="L168"><a href="#L168">168</a>```plantuml</span>
+<span class="source-line" id="L169"><a href="#L169">169</a>@startuml</span>
+<span class="source-line" id="L170"><a href="#L170">170</a>!include &lt;C4/C4_Context&gt;</span>
+<span class="source-line" id="L171"><a href="#L171">171</a></span>
+<span class="source-line" id="L172"><a href="#L172">172</a>title Harmonia - Proposed System Context</span>
+<span class="source-line" id="L173"><a href="#L173">173</a></span>
+<span class="source-line" id="L174"><a href="#L174">174</a>LAYOUT_LEFT_RIGHT()</span>
+<span class="source-line" id="L175"><a href="#L175">175</a>skinparam ranksep 180</span>
+<span class="source-line" id="L176"><a href="#L176">176</a>skinparam nodesep 20</span>
+<span class="source-line" id="L177"><a href="#L177">177</a></span>
+<span class="source-line" id="L178"><a href="#L178">178</a>Person(users, &quot;Users&quot;, &quot;Interact with bounded workflows and provide DARs when necessary.&quot;)</span>
+<span class="source-line" id="L179"><a href="#L179">179</a>System(harmonia, &quot;Harmonia&quot;, &quot;Provides reusable on-ledger orchestration for bounded composed workflows.&quot;)</span>
+<span class="source-line" id="L180"><a href="#L180">180</a>System_Ext(validator, &quot;Canton Validator / Super Validator&quot;, &quot;External Canton environment that hosts Harmonia and relevant third-party Daml applications and DARs.&quot;)</span>
+<span class="source-line" id="L181"><a href="#L181">181</a>System_Ext(packageManager, &quot;Package Manager&quot;, &quot;External source of DARs and supporting package metadata or data.&quot;)</span>
+<span class="source-line" id="L182"><a href="#L182">182</a></span>
+<span class="source-line" id="L183"><a href="#L183">183</a>&#x27; Layout-only edges establish the primary system order.</span>
+<span class="source-line" id="L184"><a href="#L184">184</a>users -[hidden]right- harmonia</span>
+<span class="source-line" id="L185"><a href="#L185">185</a>harmonia -[hidden]right- validator</span>
+<span class="source-line" id="L186"><a href="#L186">186</a>validator -[hidden]down- packageManager</span>
+<span class="source-line" id="L187"><a href="#L187">187</a>Lay_L(validator, packageManager)</span>
+<span class="source-line" id="L188"><a href="#L188">188</a>Rel_D(users, harmonia, &quot;Interact with workflows and provide DARs when necessary&quot;)</span>
+<span class="source-line" id="L189"><a href="#L189">189</a>Rel_D(harmonia, validator, &quot;Executes and submits workflow transactions&quot;)</span>
+<span class="source-line" id="L190"><a href="#L190">190</a>Rel_D(harmonia, packageManager, &quot;Reads supporting package metadata or data; harmonia-builder retrieves DARs at build time&quot;)</span>
+<span class="source-line" id="L191"><a href="#L191">191</a></span>
+<span class="source-line" id="L192"><a href="#L192">192</a></span>
+<span class="source-line" id="L193"><a href="#L193">193</a>SHOW_LEGEND()</span>
+<span class="source-line" id="L194"><a href="#L194">194</a>@enduml</span>
+<span class="source-line" id="L195"><a href="#L195">195</a>```</span>
+<span class="source-line" id="L196"><a href="#L196">196</a></span>
+<span class="source-line" id="L197"><a href="#L197">197</a>This view keeps Harmonia&#x27;s workflow-orchestration scope at the system level, separating it from the external validator and the build-time DAR source. The catalog records each system&#x27;s role and the limits on any external relationship.</span>
+<span class="source-line" id="L198"><a href="#L198">198</a></span>
+<span class="source-line" id="L199"><a href="#L199">199</a>###### System Context Box Catalog</span>
+<span class="source-line" id="L200"><a href="#L200">200</a></span>
+<span class="source-line" id="L201"><a href="#L201">201</a>This catalog identifies the systems and records their roles, system-level relationships to Harmonia, and relevant qualifications.</span>
+<span class="source-line" id="L202"><a href="#L202">202</a></span>
+<span class="source-line" id="L203"><a href="#L203">203</a>| Box | Role | Relationship to Harmonia | Qualification |</span>
+<span class="source-line" id="L204"><a href="#L204">204</a>| --- | --- | --- | --- |</span>
+<span class="source-line" id="L205"><a href="#L205">205</a>| Users | People who interact with bounded workflows and provide DARs when necessary. | Interact with workflows and provide DARs when necessary. | Their actions remain within supported workflows. |</span>
+<span class="source-line" id="L206"><a href="#L206">206</a>| Harmonia | The proposed reusable on-ledger workflow-orchestration system. | Provides supported workflow management directly and executes and submits workflow transactions through the Canton Validator / Super Validator. | This proposal describes a proposed system, not a deployment commitment. |</span>
+<span class="source-line" id="L207"><a href="#L207">207</a>| Canton Validator / Super Validator | External Canton environment hosting Harmonia and relevant third-party Daml applications and DARs. | Harmonia executes and submits workflow transactions through it. | Any external work remains subject to responsible maintainer review and applicable governance agreement. |</span>
+<span class="source-line" id="L208"><a href="#L208">208</a>| Package Manager | External source of DARs and supporting package metadata or data. | Harmonia reads supporting package metadata or data; `harmonia-builder` retrieves DARs at build time for workflow projects. | DAR retrieval occurs at build time; no integration, endorsement, or support is implied. |</span>
+<span class="source-line" id="L209"><a href="#L209">209</a></span>
+<span class="source-line" id="L210"><a href="#L210">210</a>##### Container Diagram</span>
+<span class="source-line" id="L211"><a href="#L211">211</a></span>
+<span class="source-line" id="L212"><a href="#L212">212</a>The Container Diagram shows Harmonia&#x27;s proposed logical containers and their external peer integrations. It focuses on each container&#x27;s responsibilities and on how both participation paths target the Core-managed workflow model.</span>
+<span class="source-line" id="L213"><a href="#L213">213</a></span>
+<span class="source-line" id="L214"><a href="#L214">214</a>```plantuml</span>
+<span class="source-line" id="L215"><a href="#L215">215</a>@startuml</span>
+<span class="source-line" id="L216"><a href="#L216">216</a>!include &lt;C4/C4_Container&gt;</span>
+<span class="source-line" id="L217"><a href="#L217">217</a></span>
+<span class="source-line" id="L218"><a href="#L218">218</a>title Harmonia - Proposed Container View</span>
+<span class="source-line" id="L219"><a href="#L219">219</a></span>
+<span class="source-line" id="L220"><a href="#L220">220</a>LAYOUT_TOP_DOWN()</span>
+<span class="source-line" id="L221"><a href="#L221">221</a>skinparam ranksep 90</span>
+<span class="source-line" id="L222"><a href="#L222">222</a>skinparam nodesep 60</span>
+<span class="source-line" id="L223"><a href="#L223">223</a></span>
+<span class="source-line" id="L224"><a href="#L224">224</a>Person(users, &quot;Users&quot;, &quot;Inspect, define, authorize, and execute bounded workflows; upload DARs to harmonia-builder when generated integration code is needed.&quot;)</span>
+<span class="source-line" id="L225"><a href="#L225">225</a></span>
+<span class="source-line" id="L226"><a href="#L226">226</a>System_Boundary(harmoniaBoundary, &quot;Harmonia&quot;) {</span>
+<span class="source-line" id="L227"><a href="#L227">227</a>    Container(dapp, &quot;harmonia-dapp&quot;, &quot;Application&quot;, &quot;Includes the viewer and composer for inspecting and defining bounded workflows.&quot;)</span>
+<span class="source-line" id="L228"><a href="#L228">228</a>    Container(core, &quot;harmonia-core&quot;, &quot;Daml&quot;, &quot;Manages the common workflow model with reusable orchestration patterns, templates, choices, and workflow state.&quot;)</span>
+<span class="source-line" id="L229"><a href="#L229">229</a>    Container(interfaces, &quot;Harmonia Binding DAR&quot;, &quot;Daml&quot;, &quot;Defines applicable application templates and how they participate in the Harmonia workflow model.&quot;)</span>
+<span class="source-line" id="L230"><a href="#L230">230</a>    Container(references, &quot;harmonia-references&quot;, &quot;Daml&quot;, &quot;Provides reference applications, workflows, examples, a minimal composition framework, and sample source-application DARs.&quot;)</span>
+<span class="source-line" id="L231"><a href="#L231">231</a>    Container(builder, &quot;harmonia-builder&quot;, &quot;Internal tooling&quot;, &quot;Accepts DARs and generates the project, code, and boilerplate needed to use interface applicability declarations with existing application DARs.&quot;)</span>
+<span class="source-line" id="L232"><a href="#L232">232</a>}</span>
+<span class="source-line" id="L233"><a href="#L233">233</a></span>
+<span class="source-line" id="L234"><a href="#L234">234</a>System_Ext(validator, &quot;Canton Validator / Super Validator&quot;, &quot;Hosts harmonia-core, the Harmonia Binding DAR, and relevant third-party Daml applications and DARs.&quot;)</span>
+<span class="source-line" id="L235"><a href="#L235">235</a>System_Ext(packageManager, &quot;Package Manager&quot;, &quot;Provides DARs that harmonia-builder retrieves at build time to generate workflow projects.&quot;)</span>
+<span class="source-line" id="L236"><a href="#L236">236</a>    note bottom of packageManager</span>
+<span class="source-line" id="L237"><a href="#L237">237</a>      Example: Catalyx Package Manager</span>
+<span class="source-line" id="L238"><a href="#L238">238</a>      URL: https://www.catalyx.solutions/catalyx-package-manager</span>
+<span class="source-line" id="L239"><a href="#L239">239</a>      Illustrative source only; no integration or support is implied.</span>
+<span class="source-line" id="L240"><a href="#L240">240</a>    end note</span>
+<span class="source-line" id="L241"><a href="#L241">241</a></span>
+<span class="source-line" id="L242"><a href="#L242">242</a>&#x27; Layout-only edges establish the primary container order and place the Validator to the right of Harmonia.</span>
+<span class="source-line" id="L243"><a href="#L243">243</a>users -[hidden]down- dapp</span>
+<span class="source-line" id="L244"><a href="#L244">244</a>dapp -[hidden]right- core</span>
+<span class="source-line" id="L245"><a href="#L245">245</a>core -[hidden]down- interfaces</span>
+<span class="source-line" id="L246"><a href="#L246">246</a>interfaces -[hidden]down- references</span>
+<span class="source-line" id="L247"><a href="#L247">247</a>references -[hidden]right- builder</span>
+<span class="source-line" id="L248"><a href="#L248">248</a>core -[hidden]right- validator</span>
+<span class="source-line" id="L249"><a href="#L249">249</a>validator -[hidden]right- packageManager</span>
+<span class="source-line" id="L250"><a href="#L250">250</a></span>
+<span class="source-line" id="L251"><a href="#L251">251</a>Rel_D(users, dapp, &quot;Inspect, define, authorize, and execute workflows&quot;)</span>
+<span class="source-line" id="L252"><a href="#L252">252</a>Rel_D(users, builder, &quot;Upload DARs when generated integration code is needed&quot;)</span>
+<span class="source-line" id="L253"><a href="#L253">253</a>Rel_R(dapp, core, &quot;Uses orchestration interfaces and workflow state&quot;)</span>
+<span class="source-line" id="L254"><a href="#L254">254</a>Rel_R(dapp, validator, &quot;Submits workflow transactions&quot;)</span>
+<span class="source-line" id="L255"><a href="#L255">255</a>Rel_R(dapp, packageManager, &quot;Reads supporting package metadata or data&quot;)</span>
+<span class="source-line" id="L256"><a href="#L256">256</a>Rel_U(interfaces, core, &quot;Defines application-template participation in the common workflow model&quot;)</span>
+<span class="source-line" id="L257"><a href="#L257">257</a>Rel_U(references, core, &quot;Demonstrates both participation paths through interface definitions&quot;)</span>
+<span class="source-line" id="L258"><a href="#L258">258</a>Rel_L(core, validator, &quot;Deployed on&quot;)</span>
+<span class="source-line" id="L259"><a href="#L259">259</a>Rel_L(interfaces, validator, &quot;Deployed on&quot;)</span>
+<span class="source-line" id="L260"><a href="#L260">260</a>Rel_L(builder, packageManager, &quot;Retrieves DARs needed to generate workflow projects at build time&quot;)</span>
+<span class="source-line" id="L261"><a href="#L261">261</a>Rel_U(builder, interfaces, &quot;Generates project/code using interface applicability declarations&quot;)</span>
+<span class="source-line" id="L262"><a href="#L262">262</a>Rel_U(builder, core, &quot;Targets the core-managed workflow model&quot;)</span>
+<span class="source-line" id="L263"><a href="#L263">263</a></span>
+<span class="source-line" id="L264"><a href="#L264">264</a>SHOW_LEGEND()</span>
+<span class="source-line" id="L265"><a href="#L265">265</a>@enduml</span>
+<span class="source-line" id="L266"><a href="#L266">266</a>```</span>
+<span class="source-line" id="L267"><a href="#L267">267</a></span>
+<span class="source-line" id="L268"><a href="#L268">268</a>The container view keeps reusable workflow orchestration in `harmonia-core`, deployed on the external Canton Validator / Super Validator. `harmonia-dapp` is the user-facing interaction surface. `harmonia-builder` generates the project, code, and boilerplate that bind an existing application DAR into the same Core-managed workflow model.</span>
+<span class="source-line" id="L269"><a href="#L269">269</a></span>
+<span class="source-line" id="L270"><a href="#L270">270</a>###### Container Responsibility Catalog</span>
+<span class="source-line" id="L271"><a href="#L271">271</a></span>
+<span class="source-line" id="L272"><a href="#L272">272</a>This catalog records the containers, their responsibilities, and their integration boundaries.</span>
+<span class="source-line" id="L273"><a href="#L273">273</a></span>
+<span class="source-line" id="L274"><a href="#L274">274</a>| Box | Responsibility | Dependencies or outputs | Explicit boundary |</span>
+<span class="source-line" id="L275"><a href="#L275">275</a>| --- | --- | --- | --- |</span>
+<span class="source-line" id="L276"><a href="#L276">276</a>| `harmonia-dapp` | Provides the viewer and composer for inspecting and defining bounded workflows. | Uses `harmonia-core` orchestration interfaces and workflow state, submits workflow transactions to the Canton Validator / Super Validator, and reads supporting package metadata or data from a Package Manager. | It is the user-facing interaction surface, not the workflow-orchestration layer. |</span>
+<span class="source-line" id="L277"><a href="#L277">277</a>| `harmonia-core` | Manages the common workflow model with reusable orchestration patterns, templates, choices, and workflow state. | Used through the dedicated Harmonia Binding DAR; deployed on the external Canton Validator / Super Validator. | It manages the Core workflow model; it does not define a separate runtime composition model. |</span>
+<span class="source-line" id="L278"><a href="#L278">278</a>| Harmonia Binding DAR | Defines the application templates to which each interface applies and how each applicable template participates in the Harmonia workflow model. | Used by a final application DAR that implements the interfaces where appropriate, or by Builder-generated project/code with an existing application DAR. | Exact package-import direction, template identifier representation, and binding mechanism are design details to be defined. |</span>
+<span class="source-line" id="L279"><a href="#L279">279</a>| `harmonia-references` | Provides reference applications, workflows, examples, a minimal composition framework, and sample source-application DARs. | Demonstrates both participation paths through the dedicated Harmonia Binding DAR and `harmonia-core`. | It is reference material, not a requirement for an external application&#x27;s integration. |</span>
+<span class="source-line" id="L280"><a href="#L280">280</a>| `harmonia-builder` | Generates the project, code, and boilerplate needed to use interface applicability declarations with existing application DARs. | Retrieves DARs from a Package Manager at build time and generates project/code targeting the Core-managed workflow model, and consumes application DARs that `harmonia-dapp` retrieves from the Validator node | It is build-time tooling, not a separate runtime composition model. |</span>
+<span class="source-line" id="L281"><a href="#L281">281</a>| Canton Validator / Super Validator | Hosts deployed `harmonia-core`, the Harmonia Binding DAR, and relevant third-party Daml applications and DARs. | Hosts the Core workflow model and relevant applications. | It is an external system; any upstream work remains subject to maintainer review and applicable governance agreement. |</span>
+<span class="source-line" id="L282"><a href="#L282">282</a>| Package Manager | Provides a build-time source of DARs for `harmonia-builder`. | Supplies DARs needed to generate workflow projects. | Catalyx Package Manager and its URL are illustrative only; no integration, endorsement, or support is implied. |</span>
+<span class="source-line" id="L283"><a href="#L283">283</a></span>
+<span class="source-line" id="L284"><a href="#L284">284</a></span>
+<span class="source-line" id="L285"><a href="#L285">285</a></span>
+<span class="source-line" id="L286"><a href="#L286">286</a>### 4. Backward Compatibility</span>
+<span class="source-line" id="L287"><a href="#L287">287</a></span>
+<span class="source-line" id="L288"><a href="#L288">288</a>No backward compatibility impact is expected at the protocol level. Harmonia is an on-ledger workflow-management reference implementation for composable Daml applications on Canton and does not require breaking changes to existing applications.</span>
+<span class="source-line" id="L289"><a href="#L289">289</a></span>
+<span class="source-line" id="L290"><a href="#L290">290</a>---</span>
+<span class="source-line" id="L291"><a href="#L291">291</a></span>
+<span class="source-line" id="L292"><a href="#L292">292</a>## Milestones and Deliverables</span>
+<span class="source-line" id="L293"><a href="#L293">293</a></span>
+<span class="source-line" id="L294"><a href="#L294">294</a>Following approval, the project will start in the following weeks, ideally at the beginning of a month. If approval arrives late in a month, work may start on the 15th or the following day. M1-M6 run in consecutive one-calendar-month periods from the actual start date: a project starting on the 1st delivers at month end; a project starting on the 15th delivers on the 14th of the following month. “Month N” is the corresponding milestone period, with delivery due at its end. M7 is due one year after M6, and M8 two years after M6.</span>
+<span class="source-line" id="L295"><a href="#L295">295</a></span>
+<span class="source-line" id="L296"><a href="#L296">296</a>### Milestone 1: Design, Core Prototype, and Dapp Baseline</span>
+<span class="source-line" id="L297"><a href="#L297">297</a>**Estimated Delivery:** Month 1  </span>
+<span class="source-line" id="L298"><a href="#L298">298</a>**Focus:** Define the narrow BPMN-like Harmonia workflow scope, establish the initial `harmonia-core` model, and provide a clear visual baseline for `harmonia-dapp`.</span>
+<span class="source-line" id="L299"><a href="#L299">299</a></span>
+<span class="source-line" id="L300"><a href="#L300">300</a>**Deliverables / Value Metrics:**</span>
+<span class="source-line" id="L301"><a href="#L301">301</a>- **Harmonia Design Document**</span>
+<span class="source-line" id="L302"><a href="#L302">302</a>  - Release Scope and Out-of-Scope</span>
+<span class="source-line" id="L303"><a href="#L303">303</a>  - Core Architecture</span>
+<span class="source-line" id="L304"><a href="#L304">304</a>  - Workflow Semantics and Boundaries</span>
+<span class="source-line" id="L305"><a href="#L305">305</a>  - Authorization and Risk Considerations</span>
+<span class="source-line" id="L306"><a href="#L306">306</a>  - Extension Points</span>
+<span class="source-line" id="L307"><a href="#L307">307</a>  - Mapping to Mockups</span>
+<span class="source-line" id="L308"><a href="#L308">308</a>- **Simplified `harmonia-core` prototype**</span>
+<span class="source-line" id="L309"><a href="#L309">309</a>  - `harmonia-core model`</span>
+<span class="source-line" id="L310"><a href="#L310">310</a>  - `simplified reference workflow leveraging harmonia-core`</span>
+<span class="source-line" id="L311"><a href="#L311">311</a>- Clear `harmonia-dapp` mockups covering the intended workflow, execution, and back-office experience.</span>
+<span class="source-line" id="L312"><a href="#L312">312</a>- A shared implementation baseline for subsequent work. No working dapp is expected in this milestone.</span>
+<span class="source-line" id="L313"><a href="#L313">313</a></span>
+<span class="source-line" id="L314"><a href="#L314">314</a>### Milestone 2: First Runnable Workflow and Dapp Implementation Start</span>
+<span class="source-line" id="L315"><a href="#L315">315</a>**Estimated Delivery:** Month 2  </span>
+<span class="source-line" id="L316"><a href="#L316">316</a>**Focus:** Complete the M2 `harmonia-core` and `harmonia-references` scope within this milestone for the first runnable workflow and initial Core hardening. `harmonia-dapp` starts support from the M1 baseline and begins partial M2 support.</span>
+<span class="source-line" id="L317"><a href="#L317">317</a></span>
+<span class="source-line" id="L318"><a href="#L318">318</a>**Deliverables / Value Metrics:**</span>
+<span class="source-line" id="L319"><a href="#L319">319</a>- **Completed M2 `harmonia-core` and `harmonia-references` scope**</span>
+<span class="source-line" id="L320"><a href="#L320">320</a>  - First runnable narrow BPMN-like workflow.</span>
+<span class="source-line" id="L321"><a href="#L321">321</a>  - Initial Core hardening, including branching and joining, persisted states, current and next steps, and workflow-execution/back-office views.</span>
+<span class="source-line" id="L322"><a href="#L322">322</a>  - Reference project imports `harmonia-core.dar`.</span>
+<span class="source-line" id="L323"><a href="#L323">323</a>  - Initial use of a Package Manager as a DAR source.</span>
+<span class="source-line" id="L324"><a href="#L324">324</a>- `harmonia-dapp` starts support from the M1 mockups and design baseline and begins partial support for M2 functionality.</span>
+<span class="source-line" id="L325"><a href="#L325">325</a>- An executable reference path that validates the relationship between the dedicated Harmonia Binding DAR and the Core-managed workflow model.</span>
+<span class="source-line" id="L326"><a href="#L326">326</a></span>
+<span class="source-line" id="L327"><a href="#L327">327</a>### Milestone 3: Complete First Workflow Scope and Begin Sample-App Composition</span>
+<span class="source-line" id="L328"><a href="#L328">328</a>**Estimated Delivery:** Month 3  </span>
+<span class="source-line" id="L329"><a href="#L329">329</a>**Focus:** Complete reference composition of two sample applications and any required `harmonia-core` and `harmonia-references` evolution within this milestone. `harmonia-dapp` completes M2 support and begins partial M3 support.</span>
+<span class="source-line" id="L330"><a href="#L330">330</a></span>
+<span class="source-line" id="L331"><a href="#L331">331</a>**Deliverables / Value Metrics:**</span>
+<span class="source-line" id="L332"><a href="#L332">332</a>- **Completed M3 Core and References scope**</span>
+<span class="source-line" id="L333"><a href="#L333">333</a>  - Reference composition of two sample applications through the direct final-application-DAR interface implementation path.</span>
+<span class="source-line" id="L334"><a href="#L334">334</a>  - Shared Core-managed workflow model across both applications.</span>
+<span class="source-line" id="L335"><a href="#L335">335</a>- `harmonia-dapp` completes M2 support and begins partial support for the M3 sample-application composition scope.</span>
+<span class="source-line" id="L336"><a href="#L336">336</a></span>
+<span class="source-line" id="L337"><a href="#L337">337</a>### Milestone 4: Builder Initiation and Converged Integration Model</span>
+<span class="source-line" id="L338"><a href="#L338">338</a>**Estimated Delivery:** Month 4  </span>
+<span class="source-line" id="L339"><a href="#L339">339</a>**Focus:** Complete Builder-generated project, code, and boilerplate for existing application DARs within this milestone, using the dedicated Harmonia Binding DAR&#x27;s applicability declarations to converge on the Core-managed model. `harmonia-dapp` completes M3 support and begins partial M4 support.</span>
+<span class="source-line" id="L340"><a href="#L340">340</a></span>
+<span class="source-line" id="L341"><a href="#L341">341</a>**Deliverables / Value Metrics:**</span>
+<span class="source-line" id="L342"><a href="#L342">342</a>- **Completed M4 Builder, Core and References scope**</span>
+<span class="source-line" id="L343"><a href="#L343">343</a>  - Generated project, code, and boilerplate from `harmonia-builder` against an existing application DAR.</span>
+<span class="source-line" id="L344"><a href="#L344">344</a>  - Reference coverage for both participation paths.</span>
+<span class="source-line" id="L345"><a href="#L345">345</a>  - Both paths participate in the same `harmonia-core` managed model through the interface definitions.</span>
+<span class="source-line" id="L346"><a href="#L346">346</a>- `harmonia-dapp` completes M3 support and begins partial support for Builder-generated project/code functionality.</span>
+<span class="source-line" id="L347"><a href="#L347">347</a></span>
+<span class="source-line" id="L348"><a href="#L348">348</a>### Milestone 5: Builder Scope Completion and Extension-Boundary Hardening</span>
+<span class="source-line" id="L349"><a href="#L349">349</a>**Estimated Delivery:** Month 5  </span>
+<span class="source-line" id="L350"><a href="#L350">350</a>**Focus:** Complete hardening, coverage and extension-boundary work within this milestone. `harmonia-dapp` completes M4 support and begins partial M5 support.</span>
+<span class="source-line" id="L351"><a href="#L351">351</a></span>
+<span class="source-line" id="L352"><a href="#L352">352</a>**Deliverables / Value Metrics:**</span>
+<span class="source-line" id="L353"><a href="#L353">353</a>- **Completed M5 scope**</span>
+<span class="source-line" id="L354"><a href="#L354">354</a>  - Core hardening and coverage expansion across supported narrow BPMN-like workflow behaviour.</span>
+<span class="source-line" id="L355"><a href="#L355">355</a>  - Defined extension boundaries for `harmonia-core`, `harmonia-references` and `harmonia-builder`.</span>
+<span class="source-line" id="L356"><a href="#L356">356</a>  - Reference validation of interface applicability and Builder-generated project/code boundaries without expanding into generic BPMN scope.</span>
+<span class="source-line" id="L357"><a href="#L357">357</a>- `harmonia-dapp` completes M4 support and begins partial support for M5 hardening, coverage and extension-boundary work.</span>
+<span class="source-line" id="L358"><a href="#L358">358</a></span>
+<span class="source-line" id="L359"><a href="#L359">359</a>### Milestone 6: Release Scope Completion</span>
+<span class="source-line" id="L360"><a href="#L360">360</a>**Estimated Delivery:** Month 6  </span>
+<span class="source-line" id="L361"><a href="#L361">361</a>**Focus:** Complete Harmonia&#x27;s technical release scope and publish the release-ready foundation for M7 and M8. `harmonia-dapp` completes M5 support and all remaining release support.</span>
+<span class="source-line" id="L362"><a href="#L362">362</a></span>
+<span class="source-line" id="L363"><a href="#L363">363</a>**Deliverables / Value Metrics:**</span>
+<span class="source-line" id="L364"><a href="#L364">364</a>- **Completed final release scope**</span>
+<span class="source-line" id="L365"><a href="#L365">365</a>  - Consistent Core-managed workflow model across both participation paths.</span>
+<span class="source-line" id="L366"><a href="#L366">366</a>  - Runnable reference projects using Package Manager DAR sourcing.</span>
+<span class="source-line" id="L367"><a href="#L367">367</a>  - `harmonia-builder` output for an existing application DAR.</span>
+<span class="source-line" id="L368"><a href="#L368">368</a>- `harmonia-dapp` completes M5 support and all remaining release support aligned to the completed Core, References and Builder scope.</span>
+<span class="source-line" id="L369"><a href="#L369">369</a></span>
+<span class="source-line" id="L370"><a href="#L370">370</a>### Milestone 7: Adoption Readiness and Evaluator Enablement</span>
+<span class="source-line" id="L371"><a href="#L371">371</a>**Estimated Delivery:** One year after Milestone 6 is delivered  </span>
+<span class="source-line" id="L372"><a href="#L372">372</a>**Focus:** Validate external adoption through exactly 2 qualified external teams using Harmonia in pilot or production applications</span>
+<span class="source-line" id="L373"><a href="#L373">373</a></span>
+<span class="source-line" id="L374"><a href="#L374">374</a>**Deliverables / Value Metrics:**</span>
+<span class="source-line" id="L375"><a href="#L375">375</a>  - documented use of Harmonia by exactly 2 qualified external teams in pilot or production applications</span>
+<span class="source-line" id="L376"><a href="#L376">376</a>  - confirmation from each adopting team to the Tech &amp; Ops Committee</span>
+<span class="source-line" id="L377"><a href="#L377">377</a>  - documentation showing substantive use of Harmonia&#x27;s core-managed workflow model through the dedicated Harmonia Binding DAR, including application-DAR interface implementation or `harmonia-builder` integration against an existing application DAR</span>
+<span class="source-line" id="L378"><a href="#L378">378</a>  - letters of intent may support evaluation but do not satisfy this milestone</span>
+<span class="source-line" id="L379"><a href="#L379">379</a>  - validation is based on documented evidence of use and adopter confirmation; strict binary package traceability is not required</span>
+<span class="source-line" id="L380"><a href="#L380">380</a></span>
+<span class="source-line" id="L381"><a href="#L381">381</a>### Milestone 8: Reference Uptake, Feedback Synthesis, and Project Closeout</span>
+<span class="source-line" id="L382"><a href="#L382">382</a>**Estimated Delivery:** Two years after Milestone 6 is delivered  </span>
+<span class="source-line" id="L383"><a href="#L383">383</a>**Focus:** Reward additional external adoption beyond Milestone 7</span>
+<span class="source-line" id="L384"><a href="#L384">384</a></span>
+<span class="source-line" id="L385"><a href="#L385">385</a>**Deliverables / Value Metrics:**</span>
+<span class="source-line" id="L386"><a href="#L386">386</a>- up to 10 additional qualified independent external teams beyond Milestone 7, accepted for substantive reuse, adaptation, or extension of Harmonia in pilot or production applications</span>
+<span class="source-line" id="L387"><a href="#L387">387</a>- each accepted additional team qualifies for exactly one mutually exclusive, non-stacking payment: 30,000 CC for a pilot application or 60,000 CC for a production application; a team progressing from pilot to production is capped at 60,000 CC total</span>
+<span class="source-line" id="L388"><a href="#L388">388</a>- one-time, non-duplicative cohort premiums of 50,000 CC upon 5 accepted additional teams and 50,000 CC upon 10 accepted additional teams; these premiums are not per-adopter payments and do not replace individual payments</span>
+<span class="source-line" id="L389"><a href="#L389">389</a>- Tech &amp; Ops Committee confirmation for each accepted additional team and substantial documentation of reuse, adaptation, or extension; letters of intent do not satisfy this milestone</span>
+<span class="source-line" id="L390"><a href="#L390">390</a>- evidence must include documented use, traceability to Harmonia deliverables completed through Milestone 6, and adopter confirmation; strict binary package-level traceability is not required</span>
+<span class="source-line" id="L391"><a href="#L391">391</a></span>
+<span class="source-line" id="L392"><a href="#L392">392</a>---</span>
+<span class="source-line" id="L393"><a href="#L393">393</a></span>
+<span class="source-line" id="L394"><a href="#L394">394</a>## Acceptance Criteria</span>
+<span class="source-line" id="L395"><a href="#L395">395</a></span>
+<span class="source-line" id="L396"><a href="#L396">396</a>The Tech &amp; Ops Committee will evaluate completion based on:</span>
+<span class="source-line" id="L397"><a href="#L397">397</a></span>
+<span class="source-line" id="L398"><a href="#L398">398</a>- Deliverables completed as specified for each milestone</span>
+<span class="source-line" id="L399"><a href="#L399">399</a>- Demonstrated functionality or operational readiness</span>
+<span class="source-line" id="L400"><a href="#L400">400</a>- Documentation and knowledge transfer provided</span>
+<span class="source-line" id="L401"><a href="#L401">401</a>- Alignment with stated value metrics</span>
+<span class="source-line" id="L402"><a href="#L402">402</a></span>
+<span class="source-line" id="L403"><a href="#L403">403</a>The acceptance criteria are based on ecosystem value and adoption readiness, not only delivery of artifacts. For Harmonia, that value is demonstrated by a working on-ledger orchestration reference that evaluator teams can inspect, run, and adapt across independently owned Canton/Daml application domains.</span>
+<span class="source-line" id="L404"><a href="#L404">404</a></span>
+<span class="source-line" id="L405"><a href="#L405">405</a>Project-specific acceptance conditions:</span>
+<span class="source-line" id="L406"><a href="#L406">406</a></span>
+<span class="source-line" id="L407"><a href="#L407">407</a>- the reference implementation must execute decentralized multi-party workflows end-to-end</span>
+<span class="source-line" id="L408"><a href="#L408">408</a>- at least two reproducible example workflows must be available</span>
+<span class="source-line" id="L409"><a href="#L409">409</a>- a simple visual workflow viewer or composer must show the composed applications, current orchestration state, actors, and executable steps</span>
+<span class="source-line" id="L410"><a href="#L410">410</a>- documentation must be sufficient for another team to understand and evaluate adoption</span>
+<span class="source-line" id="L411"><a href="#L411">411</a>- there must be clear evidence that the output is reusable ecosystem infrastructure rather than a one-off demo</span>
+<span class="source-line" id="L412"><a href="#L412">412</a></span>
+<span class="source-line" id="L413"><a href="#L413">413</a>- workflow state progression must be visible and verifiable</span>
+<span class="source-line" id="L414"><a href="#L414">414</a>- participant roles and step ownership must be explicit</span>
+<span class="source-line" id="L415"><a href="#L415">415</a>- composed workflows must show how independently owned workflow domains coordinate without collapsing into one hardcoded flow</span>
+<span class="source-line" id="L416"><a href="#L416">416</a>- the examples must preserve clear domain boundaries rather than flattening everything into one synthetic process</span>
+<span class="source-line" id="L417"><a href="#L417">417</a>- the implementation must make clear when a modeled workflow path is executed through explicit staged progression and when it may be collapsed into one atomic ledger transition</span>
+<span class="source-line" id="L418"><a href="#L418">418</a>- the implementation must clearly state the supported authorization boundary for composition, including whether the validated scope is party-level only or broader cross-party composition</span>
+<span class="source-line" id="L419"><a href="#L419">419</a>- the implementation must document what workflow semantics are supported, what deviates from standard BPMN, and what is intentionally out of scope</span>
+<span class="source-line" id="L420"><a href="#L420">420</a>- the participation paths must show how sample or source application DARs participate in the Harmonia orchestration model through the two paths defined below, in runnable projects and through a bounded evaluation or demo path</span>
+<span class="source-line" id="L421"><a href="#L421">421</a>- the open-source release must remain publicly developed through the project lifecycle and culminate in a stable public release with documentation and knowledge-transfer material</span>
+<span class="source-line" id="L422"><a href="#L422">422</a>- the funded scope must remain bounded: it does not include a full generic workflow studio, BPMN editor, managed hosting, custom adopter integration, or domain-specific application development</span>
+<span class="source-line" id="L423"><a href="#L423">423</a>- the external adoption path must include documented feedback, an integration target conversation, or equivalent evidence from at least one external Canton/Daml builder or evaluator team</span>
+<span class="source-line" id="L424"><a href="#L424">424</a>- future product integration or broader dynamic composition must be framed as a non-committed roadmap path unless separately funded and approved</span>
+<span class="source-line" id="L425"><a href="#L425">425</a></span>
+<span class="source-line" id="L426"><a href="#L426">426</a>---</span>
+<span class="source-line" id="L427"><a href="#L427">427</a></span>
+<span class="source-line" id="L428"><a href="#L428">428</a>## Funding</span>
+<span class="source-line" id="L429"><a href="#L429">429</a></span>
+<span class="source-line" id="L430"><a href="#L430">430</a>**Base Funding Request for M1-M6:** 990,000 CC  </span>
+<span class="source-line" id="L431"><a href="#L431">431</a>**Adoption-Linked Additional Funding for M7-M8:** up to 850,000 CC  </span>
+<span class="source-line" id="L432"><a href="#L432">432</a>**Total Funding Cap:** 1,840,000 CC</span>
+<span class="source-line" id="L433"><a href="#L433">433</a></span>
+<span class="source-line" id="L434"><a href="#L434">434</a>The funding covers design, implementation, hardening, the simple visual workflow viewer or composer, documentation, knowledge transfer, a stable public release, and approved external-adoption scope. The milestone structure is adoption-oriented: the project starts from a concrete builder scenario, proves a reusable on-ledger composition path, packages the result for evaluation, and funds documented external adoption after the release scope is complete.</span>
+<span class="source-line" id="L435"><a href="#L435">435</a></span>
+<span class="source-line" id="L436"><a href="#L436">436</a>### Payment Breakdown by Milestone</span>
+<span class="source-line" id="L437"><a href="#L437">437</a>- M1 _(Design, Core Prototype, and Dapp Baseline)_: 150,000 CC upon committee acceptance</span>
+<span class="source-line" id="L438"><a href="#L438">438</a>- M2 _(First Runnable Workflow and Dapp Implementation Start)_: 180,000 CC upon committee acceptance</span>
+<span class="source-line" id="L439"><a href="#L439">439</a>- M3 _(Complete First Workflow Scope and Begin Sample-App Composition)_: 180,000 CC upon committee acceptance</span>
+<span class="source-line" id="L440"><a href="#L440">440</a>- M4 _(Builder Initiation and Converged Integration Model)_: 180,000 CC upon committee acceptance</span>
+<span class="source-line" id="L441"><a href="#L441">441</a>- M5 _(Builder Scope Completion and Extension-Boundary Hardening)_: 180,000 CC upon committee acceptance</span>
+<span class="source-line" id="L442"><a href="#L442">442</a>- M6 _(Release Scope Completion)_: 120,000 CC upon committee acceptance</span>
+<span class="source-line" id="L443"><a href="#L443">443</a>- M7 _(Adoption Readiness and Evaluator Enablement)_: 150,000 CC upon acceptance within 12 months after M6, validating exactly 2 qualified external teams using Harmonia in pilot or production applications</span>
+<span class="source-line" id="L444"><a href="#L444">444</a>- M8 _(Reference Uptake, Feedback Synthesis, and Project Closeout)_: within a 24-month acceptance window after M6, the M8 objective payout schedule applies for accepted additional external adoption beyond M7: 30,000 CC per accepted pilot team or 60,000 CC per accepted production team, mutually exclusive and non-stacking per team, capped at 60,000 CC for a team progressing from pilot to production, plus one-time 50,000 CC cohort premiums at 5 and 10 accepted additional teams</span>
+<span class="source-line" id="L445"><a href="#L445">445</a></span>
+<span class="source-line" id="L446"><a href="#L446">446</a>### Timeline Accountability</span>
+<span class="source-line" id="L447"><a href="#L447">447</a>For Milestones 1 through 6, a delivery delay means the proposer has not submitted the milestone deliverables by its stated delivery month for reasons under the proposer&#x27;s control. The payout for that milestone should be reduced by **10% for each additional 2-week delivery delay**, capped at **20%** for that milestone. After the capped delay penalty has been exhausted, if delivery delays continue for reasons under the proposer&#x27;s control, become unreasonable, or result in non-delivery, the Foundation or Tech &amp; Ops Committee may refuse acceptance and close the affected milestone, and reserved funds for that milestone return to the Dev Fund pool. If two Milestones 1 through 6 are closed for those reasons, the Foundation or Tech &amp; Ops Committee may terminate the full proposal, and any remaining reserved funds return to the Dev Fund pool.</span>
+<span class="source-line" id="L448"><a href="#L448">448</a></span>
+<span class="source-line" id="L449"><a href="#L449">449</a>After a complete submission, Committee review and acceptance time is governed by Committee process and is not a proposer delivery delay. Delays caused by Committee-requested scope changes, dependency changes imposed by the Canton ecosystem, or other agreed external blockers should not trigger this penalty automatically and should instead be handled through explicit re-planning of delivery schedules; acceptance remains governed by Committee process.</span>
+<span class="source-line" id="L450"><a href="#L450">450</a></span>
+<span class="source-line" id="L451"><a href="#L451">451</a>Milestones 7 and 8 are separate, externally dependent adoption-linked milestones. Lack of independent third-party adoption is not a proposer-controlled delivery delay. M7 and M8 remain subject to their stated acceptance windows and their unaccepted or unearned reserved adoption funds return to the Dev Fund pool at their respective milestone deadlines.</span>
+<span class="source-line" id="L452"><a href="#L452">452</a></span>
+<span class="source-line" id="L453"><a href="#L453">453</a>### Volatility Stipulation</span>
+<span class="source-line" id="L454"><a href="#L454">454</a>The planned engineering and delivery duration is **6 months** for Milestones 1 through 6. Adoption milestones 7 and 8 extend beyond that window and are treated as separate adoption-linked milestones rather than part of the core delivery timeline.</span>
+<span class="source-line" id="L455"><a href="#L455">455</a></span>
+<span class="source-line" id="L456"><a href="#L456">456</a>The listed CC amounts reflect the Canton Coin exchange rate and value at the time this proposal is accepted. Because adoption milestones 7 and 8 may be accepted after the 6-month engineering delivery window, the parties may agree to fix the value of those adoption milestones in fiat currency terms, preferably EUR or otherwise USD, to address material CC valuation fluctuations. Any such adjustment must be approved by the Foundation or Tech &amp; Ops Committee before payment. The approved amount remains capped and ring-fenced, and this stipulation does not create an automatic right to additional funding.</span>
+<span class="source-line" id="L457"><a href="#L457">457</a></span>
+<span class="source-line" id="L458"><a href="#L458">458</a>### Funding Locking</span>
+<span class="source-line" id="L459"><a href="#L459">459</a></span>
+<span class="source-line" id="L460"><a href="#L460">460</a>Unlockit will retain at least 25% of the funding received for non-adoption milestones M1-M6 through the full grant period, and at least 50% of adoption-linked funding received for M7/M8 for one additional year after grant closure. Unlockit may retain more than these minimum amounts. This is a funding-retention commitment, not escrow, third-party custody, or on-ledger locking.</span>
+<span class="source-line" id="L461"><a href="#L461">461</a></span>
+<span class="source-line" id="L462"><a href="#L462">462</a>For this commitment, the grant period runs from approval/start through final milestone closure; grant closure follows final milestone acceptance.</span>
+<span class="source-line" id="L463"><a href="#L463">463</a></span>
+<span class="source-line" id="L464"><a href="#L464">464</a>---</span>
+<span class="source-line" id="L465"><a href="#L465">465</a></span>
+<span class="source-line" id="L466"><a href="#L466">466</a>## Co-Marketing</span>
+<span class="source-line" id="L467"><a href="#L467">467</a></span>
+<span class="source-line" id="L468"><a href="#L468">468</a>Upon release, the implementing entity will work with the Foundation on more than simple visibility for the project. The aim is to help the delivered implementation reach serious technical evaluation and early reuse.</span>
+<span class="source-line" id="L469"><a href="#L469">469</a></span>
+<span class="source-line" id="L470"><a href="#L470">470</a>The released orchestration package and examples should be easy to find, straightforward to assess, and practical to test for teams that may want to adopt, extend, or build on them. That requires clear positioning within the Canton stack, examples and documentation packaged for real evaluation, and coordination with early evaluator teams so external groups can move from interest to technical assessment with limited friction.</span>
+<span class="source-line" id="L471"><a href="#L471">471</a></span>
+<span class="source-line" id="L472"><a href="#L472">472</a>Accordingly, the implementing entity will collaborate with the Foundation on:</span>
+<span class="source-line" id="L473"><a href="#L473">473</a></span>
+<span class="source-line" id="L474"><a href="#L474">474</a>- a coordinated public announcement covering the problem, delivered artifacts, and intended ecosystem value</span>
+<span class="source-line" id="L475"><a href="#L475">475</a>- a technical architecture write-up explaining the on-ledger orchestration model, composition boundary, and key design tradeoffs</span>
+<span class="source-line" id="L476"><a href="#L476">476</a>- at least one recorded developer walkthrough showing how to define, run, inspect, and extend an example workflow using the delivered Harmonia package, reference composition, and visual workflow viewer or composer</span>
+<span class="source-line" id="L477"><a href="#L477">477</a>- publication of the example workflows and reference integration material in a form that other teams can clone, run, and evaluate</span>
+<span class="source-line" id="L478"><a href="#L478">478</a>- a live ecosystem demo or workshop session focused on adoption, implementation constraints, and extension paths for other teams building composed multi-party applications on Canton</span>
+<span class="source-line" id="L479"><a href="#L479">479</a>- coordination with the Foundation to identify and engage early evaluator teams who can test the delivered implementation in relevant Canton composed application use cases</span>
+<span class="source-line" id="L480"><a href="#L480">480</a>- collaboration with the Foundation to disseminate the released work through relevant academic, research, and standards-adjacent networks, including existing connections with [INESC-ID](https://www.inesc-id.pt/), [Nova SBE](https://www.novasbe.unl.pt/en/), and related professional communities</span>
+<span class="source-line" id="L481"><a href="#L481">481</a></span>
+<span class="source-line" id="L482"><a href="#L482">482</a>---</span>
+<span class="source-line" id="L483"><a href="#L483">483</a></span>
+<span class="source-line" id="L484"><a href="#L484">484</a>## Motivation</span>
+<span class="source-line" id="L485"><a href="#L485">485</a></span>
+<span class="source-line" id="L486"><a href="#L486">486</a>Canton is well suited to applications where several parties must coordinate process progression without handing control to one central operator. Yet in practice, multi-application business processes are often split across separate systems and separate business domains. This is especially visible in financial institution coordination, where trade validation, proof generation, asset movement, and settlement are handled as distinct domains by different parties or systems. Similar fragmentation also appears in property closing, where payment or escrow release, contract signing, transaction progression, and compliance checks are handled separately.</span>
+<span class="source-line" id="L487"><a href="#L487">487</a></span>
+<span class="source-line" id="L488"><a href="#L488">488</a>Canton is at a point where the underlying privacy and coordination primitives are already strong, but the application-layer orchestration baseline for composing independent Daml applications is still missing. Closing that gap would shorten the path from architecture to working implementation for composed application use cases and make Canton easier to recognize as a platform for operational coordination as well as asset and contract representation.</span>
+<span class="source-line" id="L489"><a href="#L489">489</a></span>
+<span class="source-line" id="L490"><a href="#L490">490</a>For Unlockit, demand for configurable workflows is well established. The ability for customers to define or adapt their own workflow logic has repeatedly come up across customer conversations and product exploration. Customers do not want every variation in approvals, handoffs, evidence checks, or exception paths to require bespoke engineering work. They want controlled configurability so the product can adapt to their operating model instead of forcing them into one fixed flow.</span>
+<span class="source-line" id="L491"><a href="#L491">491</a></span>
+<span class="source-line" id="L492"><a href="#L492">492</a>Unlockit is approaching this from direct product work with proof-driven, multi-party processes where independently owned participants, privacy constraints, and verifiable progression are baseline requirements. That practical grounding matters, but the intended output is still reusable ecosystem infrastructure rather than a product feature tied only to Unlockit’s immediate market focus.</span>
+<span class="source-line" id="L493"><a href="#L493">493</a></span>
+<span class="source-line" id="L494"><a href="#L494">494</a>This is also not a gap that Unlockit is identifying only in the abstract. It is something the team has already investigated in practice. That work clarified the need: the key issue with the existing approaches was dependence on a central operator. They could support workflow configuration, but only by making one party or one platform the trusted coordinator of execution and composition. That does not match the decentralized trust model required for credible composition across independently owned domains. This is a significant reason why building the framework has become an active product and ecosystem consideration.</span>
+<span class="source-line" id="L495"><a href="#L495">495</a></span>
+<span class="source-line" id="L496"><a href="#L496">496</a>The difficulty is that configurable workflows are already hard in a centralized product, and materially harder in a decentralized one. In a centralized stack, one operator can own the workflow engine, the execution order, and the trust assumptions. In a decentralized ecosystem, that option is not available. If multiple organizations need to compose workflow behavior, the model cannot rely on one shared operator to coordinate execution implicitly. The workflow logic has to remain trustworthy even when the participating parties are independent, their domains are separately owned, and progression depends on explicit authorization, shared state, and verifiable outputs rather than central control.</span>
+<span class="source-line" id="L497"><a href="#L497">497</a></span>
+<span class="source-line" id="L498"><a href="#L498">498</a>Today, those flows are typically connected in a fragmented and fragile manner. Each organization optimizes for its own domain, but composition across organizations is expensive and often custom-built for each use case. A simple example is when a trade between a party and a counterparty is validated in one workflow domain, proofs are generated for both sides, and custodians should only move assets after receiving the right proof and satisfying either an automatic acceptance rule or a human review path. An open orchestration package would address that gap directly by allowing selected source-application behavior to be exposed through explicit Daml interfaces and then composed into larger multi-party processes through a model adapted to decentralized shared-state execution. That would strengthen Canton’s applicability to operational coordination use cases and would create a visible reference implementation that other teams can adopt, extend, or evaluate.</span>
+<span class="source-line" id="L499"><a href="#L499">499</a></span>
+<span class="source-line" id="L500"><a href="#L500">500</a>---</span>
+<span class="source-line" id="L501"><a href="#L501">501</a></span>
+<span class="source-line" id="L502"><a href="#L502">502</a>## Rationale</span>
+<span class="source-line" id="L503"><a href="#L503">503</a></span>
+<span class="source-line" id="L504"><a href="#L504">504</a>The proposal backs a concrete and reusable infrastructure layer rather than an open-ended research track. The orchestration package can be built and validated through clear milestones, and its value can be demonstrated with example applications, composition across independently owned domains, tests, and public documentation.</span>
+<span class="source-line" id="L505"><a href="#L505">505</a></span>
+<span class="source-line" id="L506"><a href="#L506">506</a>The economic case is strongest when this is treated as one focused reference implementation rather than as a broad workflow platform build. Putting effort into execution semantics, validated composition boundaries, and reusable example workflows is a better ecosystem investment than letting similar workflow logic be re-implemented independently across separate teams and domains.</span>
+<span class="source-line" id="L507"><a href="#L507">507</a></span>
+<span class="source-line" id="L508"><a href="#L508">508</a>There is also a sound business rationale behind this proposal. Unlockit expects this kind of framework to enable future product features in areas where customers want configurable process logic without bespoke implementation every time. At the same time, this is not narrow enough to justify solving only as a proprietary product feature for Unlockit’s current market focus. The problem is more horizontal than that. It appears across industries, across workflow-heavy products, and across decentralized coordination scenarios.</span>
+<span class="source-line" id="L509"><a href="#L509">509</a></span>
+<span class="source-line" id="L510"><a href="#L510">510</a>This proposal is not primarily about message transport between parties, nor only about documenting choreography patterns. Its focus is the executable on-ledger orchestration model itself: how composed application flows are defined, progressed, inspected, and coordinated across independently owned domains. Lower-level messaging or choreography mechanisms may be used where needed, but they do not by themselves provide the orchestration model, Daml package, and execution semantics this proposal is intended to deliver.</span>
+<span class="source-line" id="L511"><a href="#L511">511</a></span>
+<span class="source-line" id="L512"><a href="#L512">512</a>The Development Fund fits this work because Unlockit is prepared to initiate it while the intended outcome extends beyond Unlockit itself. The desired result is a reusable framework that other teams can adopt, extend, and evaluate in domains beyond Unlockit’s immediate priorities. If the initial implementation demonstrates value, it should establish a foundation for further contributions, additional orchestration patterns, and future implementations beyond the originating use cases.</span>
+<span class="source-line" id="L513"><a href="#L513">513</a></span>
+<span class="source-line" id="L514"><a href="#L514">514</a>Unlockit is already exploring related ideas through ongoing academic work, but this grant is aimed at delivering a public, reusable implementation on a materially shorter timeline.</span>
+<span class="source-line" id="L515"><a href="#L515">515</a></span>
+<span class="source-line" id="L516"><a href="#L516">516</a>The proposal is also strongly aligned with the Development Fund because:</span>
+<span class="source-line" id="L517"><a href="#L517">517</a></span>
+<span class="source-line" id="L518"><a href="#L518">518</a>- it creates reusable ecosystem infrastructure</span>
+<span class="source-line" id="L519"><a href="#L519">519</a>- it lowers implementation cost for future teams</span>
+<span class="source-line" id="L520"><a href="#L520">520</a>- it is open and reusable</span>
+<span class="source-line" id="L521"><a href="#L521">521</a>- it strengthens Canton’s story in a category where it has architectural strengths but lacks a reusable composition reference</span>
+<span class="source-line" id="L522"><a href="#L522">522</a>- it addresses a coordination problem that appears across multiple domains rather than only one vertical</span>
+<span class="source-line" id="L523"><a href="#L523">523</a></span>
+<span class="source-line" id="L524"><a href="#L524">524</a>The main design choice is to fund a focused reference implementation instead of a full generic workflow platform. That keeps scope realistic while still producing something that the ecosystem can use and build on. It also leaves room for a broader community to extend the framework over time instead of pretending that one funded project should solve the whole workflow problem in one pass.</span>
+<span class="source-line" id="L525"><a href="#L525">525</a></span>
+<span class="source-line" id="L526"><a href="#L526">526</a>Unlockit is also open to align with and contribute to adjacent ecosystem efforts that extend the usability and reach of this work. The visual workflow viewer or composer in this proposal is the supported user-facing surface for inspecting, defining, authorizing, and executing supported workflows built on `harmonia-core`. This proposal is focused on establishing that foundational layer without expanding into a full generic workflow studio.</span>
+<span class="source-line" id="L527"><a href="#L527">527</a></span>
+<span class="source-line" id="L528"><a href="#L528">528</a>A clear orchestration-semantics scope definition is necessary because the initial implementation needs an explicit boundary around which executable composition shapes are supported, where standard BPMN falls short, and what remains intentionally deferred. Existing research on blockchain-oriented business process modeling already points in this direction. [Milani, García-Bañuelos, Filipova, and Markovska (2021)](https://doi.org/10.1108/BPMJ-06-2020-0263) argue that neither BPMN nor CMMN fully and accurately represent certain blockchain-specific patterns, and specifically note gaps around blockchain-oriented modeling concerns. [Guerreiro et al.](https://emisa-journal.org/emisa/article/view/221) report lessons learned about the appropriateness of BPMN for blockchain applications in practice. More recently, [BPMN4BC](https://design.inf.usi.ch/publications/2025/icsoc) proposes an explicit BPMN extension for blockchain-enabled process modeling, which is itself evidence that standard BPMN is not sufficient for these scenarios. A decentralized shared ledger is not naturally represented as a standard BPMN participant, and proof generation, shared-state visibility, and proof-triggered progression do not map cleanly to off-the-shelf BPMN semantics without deviations or extensions. BPMN is therefore better treated here as an inspiration for orchestration vocabulary than as the exact execution contract.</span>
+<span class="source-line" id="L529"><a href="#L529">529</a></span>
+<span class="source-line" id="L530"><a href="#L530">530</a>## Related Projects and Standards</span>
+<span class="source-line" id="L531"><a href="#L531">531</a></span>
+<span class="source-line" id="L532"><a href="#L532">532</a>These references identify potential composition points only. They are not confirmed dependencies, integration commitments, endorsements, or adoption decisions.</span>
+<span class="source-line" id="L533"><a href="#L533">533</a></span>
+<span class="source-line" id="L534"><a href="#L534">534</a>The following projects and standards are grouped by their relevance to Harmonia.</span>
+<span class="source-line" id="L535"><a href="#L535">535</a></span>
+<span class="source-line" id="L536"><a href="#L536">536</a>| Project / standard | Relevance to Harmonia |</span>
+<span class="source-line" id="L537"><a href="#L537">537</a>| --- | --- |</span>
+<span class="source-line" id="L538"><a href="#L538">538</a>| [CantonFlow PR #89](https://github.com/canton-foundation/canton-dev-fund/pull/89) (open) | A visual BPMN builder that compiles workflows into Canton-native Daml applications. |</span>
+<span class="source-line" id="L539"><a href="#L539">539</a>| [Flowryd OS PR #114](https://github.com/canton-foundation/canton-dev-fund/pull/114) (open) | A proposed Canton workflow engine. |</span>
+<span class="source-line" id="L540"><a href="#L540">540</a>| [Canton Multi-Party Workflow Choreography (CMWC) PR #122](https://github.com/canton-foundation/canton-dev-fund/pull/122) (closed historical proposal) | A Canton-native reference implementation for coordinating workflows across parties with separate state visibility. |</span>
+<span class="source-line" id="L541"><a href="#L541">541</a>| [Canton Cross-Domain Messaging (CCDM) PR #117](https://github.com/canton-foundation/canton-dev-fund/pull/117) (closed historical proposal) | A Canton-native reference implementation for asynchronous cross-synchronizer workflow messaging using contract reassignment. |</span>
+<span class="source-line" id="L542"><a href="#L542">542</a>| [Canton Interaction Primitives PR #172](https://github.com/canton-foundation/canton-dev-fund/pull/172) (open) | A minimal Daml primitive set for multi-party interaction lifecycles using intent, consent, and resolution patterns. |</span>
+<span class="source-line" id="L543"><a href="#L543">543</a>| [CCRE, Canton Composition Reasoning Engine, PR #142](https://github.com/canton-foundation/canton-dev-fund/pull/142) (open) | A topology-aware checker for Daml contract interfaces and multi-domain deployment topology. |</span>
+<span class="source-line" id="L544"><a href="#L544">544</a>| [Decentralization Manager PR #298](https://github.com/canton-foundation/canton-dev-fund/pull/298) (merged) | A framework for decentralized parties with topology orchestration and configurable threshold governance. |</span>
+<span class="source-line" id="L545"><a href="#L545">545</a>| [SV Governance dApp PR #223](https://github.com/canton-foundation/canton-dev-fund/pull/223) (merged) | A standalone proposal for non-operational governance voting while retaining one vote per node. |</span>
+<span class="source-line" id="L546"><a href="#L546">546</a>| [Daml Automated Workflow Evaluator PR #400](https://github.com/canton-foundation/canton-dev-fund/pull/400) (open) | A proposal to build and open-source a Daml automated workflow evaluator. |</span>
+<span class="source-line" id="L547"><a href="#L547">547</a>| [Privacy Workflow Simulator &amp; Auditor PR #192](https://github.com/canton-foundation/canton-dev-fund/pull/192) (open) | An interactive suite for simulating privacy-sensitive multi-party workflows and producing privacy audit reports. |</span>
+<span class="source-line" id="L548"><a href="#L548">548</a></span>
+<span class="source-line" id="L549"><a href="#L549">549</a>## Maintenance</span>
+<span class="source-line" id="L550"><a href="#L550">550</a></span>
+<span class="source-line" id="L551"><a href="#L551">551</a>Unlockit will maintain this work throughout the grant period. After grant finalization, continued maintenance is tied to Unlockit&#x27;s continued product use in the Real Estate vertical, where governance and allocation problems are foreseen or already applicable. Unlockit is open to maintaining the work jointly with other interested stakeholders. This does not commit to a fixed post-grant duration, SLA, staffing level, funding, or roadmap.</span></div></main></body></html>

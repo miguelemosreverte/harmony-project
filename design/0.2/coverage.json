@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "scope": "Quotation inclusion, not product implementation or adoption",
+  "documents": [
+    {
+      "id": "proposal",
+      "path": "docs/proposal/harmonia.md",
+      "sha256": "9e33ac476c841151fc4c0bf4b853412d6542e63cec0d27ab36e9171126a1dd27",
+      "units": 386,
+      "quoted_units": 386,
+      "words": 7138,
+      "quoted_words": 7138,
+      "unit_kind": "nonblank Markdown source lines"
+    },
+    {
+      "id": "architecture",
+      "path": "docs/proposal/harmonia-architecture.html",
+      "sha256": "b80f0c65a19e24739b2fef3dd16a406b3bf9a309a0a1db19f1cc62ef9229a8a7",
+      "units": 350,
+      "quoted_units": 350,
+      "words": 972,
+      "quoted_words": 972,
+      "unit_kind": "visible HTML body text nodes"
+    }
+  ],
+  "chapters": [
+    {
+      "id": "01-product",
+      "title": "The product",
+      "quoted_units": 284
+    },
+    {
+      "id": "02-roles-and-trust",
+      "title": "Roles & trust",
+      "quoted_units": 110
+    },
+    {
+      "id": "03-financing-to-offer",
+      "title": "Financing to an offer",
+      "quoted_units": 28
+    },
+    {
+      "id": "04-four-party-transfer",
+      "title": "Four-party transfer",
+      "quoted_units": 31
+    },
+    {
+      "id": "05-bring-an-application",
+      "title": "Bring an application",
+      "quoted_units": 42
+    },
+    {
+      "id": "06-compose-a-workflow",
+      "title": "Compose a workflow",
+      "quoted_units": 9
+    },
+    {
+      "id": "07-evidence-and-boundaries",
+      "title": "Evidence & boundaries",
+      "quoted_units": 72
+    },
+    {
+      "id": "08-release-and-adoption",
+      "title": "Release & adoption",
+      "quoted_units": 96
+    },
+    {
+      "id": "09-proposal-context",
+      "title": "Proposal context",
+      "quoted_units": 33
+    },
+    {
+      "id": "10-context-and-references",
+      "title": "Context & references",
+      "quoted_units": 31
+    }
+  ]
+}

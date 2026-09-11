@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Original architecture · Harmonia</title><link rel="stylesheet" href="../style.css"><script src="../book.js" defer></script></head>
+<body class=""><a class="skip-link" href="#main">Skip to content</a>
+<aside class="rail"><a class="brand" href="../book-overview.html"><span class="mark" aria-hidden="true"></span><span class="brand-name">Harmonia</span><span class="brand-caption">THE FIELD GUIDE</span></a>
+<button class="mobile-menu" aria-expanded="false" aria-controls="chapter-nav">Chapters</button><nav id="chapter-nav" aria-label="Book chapters"><a class="nav-link " href="../book-overview.html">Overview</a><p class="nav-label">UNDERSTAND</p><a class="nav-link " href="../chapters/01-product.html"><span>01</span>The product</a><a class="nav-link " href="../chapters/02-roles-and-trust.html"><span>02</span>Roles &amp; trust</a><p class="nav-label">EXPLORE</p><a class="nav-link " href="../book-chapter.html"><span>03</span>Financing to offer</a><a class="nav-link " href="../chapters/04-four-party-transfer.html"><span>04</span>Four-party transfer</a><a class="nav-link " href="../chapters/05-bring-an-application.html"><span>05</span>Bring an application</a><a class="nav-link " href="../chapters/06-compose-a-workflow.html"><span>06</span>Compose a workflow</a><p class="nav-label">VERIFY</p><a class="nav-link " href="../chapters/07-evidence-and-boundaries.html"><span>07</span>Evidence &amp; boundaries</a><a class="nav-link " href="../chapters/08-release-and-adoption.html"><span>08</span>Release &amp; adoption</a></nav>
+<div class="rail-footer"><a href="../coverage.html">Original documents ↗</a></div></aside>
+<header class="topbar"><span>The book &nbsp; / &nbsp; Original architecture</span><span class="edition">0.2 · DESIGN PREVIEW</span></header>
+<main id="main" class="content"><h1>Original architecture</h1><p class="note">Pinned SHA-256: b80f0c65a19e24739b2fef3dd16a406b3bf9a309a0a1db19f1cc62ef9229a8a7</p><p><a href="../../../docs/proposal/harmonia-architecture.html">Open the intact original file ↗</a></p><div class="source-view"><span class="source-line" id="L1"><a href="#L1">1</a>&lt;!doctype html&gt;</span>
+<span class="source-line" id="L2"><a href="#L2">2</a>&lt;html lang=&quot;en&quot;&gt;</span>
+<span class="source-line" id="L3"><a href="#L3">3</a>&lt;head&gt;</span>
+<span class="source-line" id="L4"><a href="#L4">4</a>&lt;meta charset=&quot;utf-8&quot;&gt;</span>
+<span class="source-line" id="L5"><a href="#L5">5</a>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;</span>
+<span class="source-line" id="L6"><a href="#L6">6</a>&lt;title&gt;Harmonia Architecture&lt;/title&gt;</span>
+<span class="source-line" id="L7"><a href="#L7">7</a>&lt;style&gt;</span>
+<span class="source-line" id="L8"><a href="#L8">8</a>  :root{</span>
+<span class="source-line" id="L9"><a href="#L9">9</a>    --bg:#0b0f14; --panel:#111823; --ink:#e6edf3; --dim:#8fa3b8; --faint:#5b6b7d;</span>
+<span class="source-line" id="L10"><a href="#L10">10</a>    --off:#4cc9f0; --off-bg:#0f1a24; --off-br:#1e3a4f;</span>
+<span class="source-line" id="L11"><a href="#L11">11</a>    --on:#4ade80;  --on-bg:#0d1a14;  --on-br:#1f4a34;</span>
+<span class="source-line" id="L12"><a href="#L12">12</a>    --ext:#f0a04c; --edge:#6c8199; --grid:#1a2430;</span>
+<span class="source-line" id="L13"><a href="#L13">13</a>    --mono:ui-monospace,SFMono-Regular,&quot;SF Mono&quot;,Menlo,Consolas,monospace;</span>
+<span class="source-line" id="L14"><a href="#L14">14</a>  }</span>
+<span class="source-line" id="L15"><a href="#L15">15</a>  *{box-sizing:border-box}</span>
+<span class="source-line" id="L16"><a href="#L16">16</a>  body{margin:0;background:var(--bg);color:var(--ink);</span>
+<span class="source-line" id="L17"><a href="#L17">17</a>       font:14px/1.5 ui-sans-serif,-apple-system,&quot;Segoe UI&quot;,Inter,system-ui,sans-serif;</span>
+<span class="source-line" id="L18"><a href="#L18">18</a>       padding:28px 24px 80px}</span>
+<span class="source-line" id="L19"><a href="#L19">19</a>  .wrap{max-width:1460px;margin:0 auto}</span>
+<span class="source-line" id="L20"><a href="#L20">20</a>  header{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;</span>
+<span class="source-line" id="L21"><a href="#L21">21</a>         border-bottom:1px solid var(--grid);padding-bottom:14px;margin-bottom:26px}</span>
+<span class="source-line" id="L22"><a href="#L22">22</a>  h1{font:600 22px/1.2 var(--mono);margin:0;letter-spacing:-.3px}</span>
+<span class="source-line" id="L23"><a href="#L23">23</a>  header .sub{color:var(--dim);font:12px/1.4 var(--mono)}</span>
+<span class="source-line" id="L24"><a href="#L24">24</a>  header .src{margin-left:auto;color:var(--faint);font:11px/1.4 var(--mono)}</span>
+<span class="source-line" id="L25"><a href="#L25">25</a>  h2{font:600 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;</span>
+<span class="source-line" id="L26"><a href="#L26">26</a>     color:var(--dim);margin:44px 0 14px;display:flex;align-items:center;gap:12px}</span>
+<span class="source-line" id="L27"><a href="#L27">27</a>  h2::after{content:&quot;&quot;;flex:1;height:1px;background:var(--grid)}</span>
+<span class="source-line" id="L28"><a href="#L28">28</a>  figure{margin:0;background:var(--panel);border:1px solid var(--grid);border-radius:12px;</span>
+<span class="source-line" id="L29"><a href="#L29">29</a>         padding:10px;overflow-x:auto}</span>
+<span class="source-line" id="L30"><a href="#L30">30</a>  svg{display:block;width:100%;height:auto;min-width:1080px}</span>
+<span class="source-line" id="L31"><a href="#L31">31</a>  .t{font:600 14px var(--mono);fill:var(--ink)}</span>
+<span class="source-line" id="L32"><a href="#L32">32</a>  .t2{font:600 12px var(--mono);fill:var(--ink)}</span>
+<span class="source-line" id="L33"><a href="#L33">33</a>  .st{font:10.5px var(--mono);fill:var(--faint);letter-spacing:.06em}</span>
+<span class="source-line" id="L34"><a href="#L34">34</a>  .li{font:11.5px var(--mono);fill:var(--dim)}</span>
+<span class="source-line" id="L35"><a href="#L35">35</a>  .lo{font:10.5px var(--mono);fill:#9fb3c8}</span>
+<span class="source-line" id="L36"><a href="#L36">36</a>  .xs{font:9.5px var(--mono);fill:#8fa3b8}</span>
+<span class="source-line" id="L37"><a href="#L37">37</a>  .band{font:700 11px var(--mono);letter-spacing:.2em}</span>
+<span class="source-line" id="L38"><a href="#L38">38</a>  .num{font:700 12px var(--mono)}</span>
+<span class="source-line" id="L39"><a href="#L39">39</a>  .bandoff{fill:var(--off-bg);stroke:var(--off-br)}</span>
+<span class="source-line" id="L40"><a href="#L40">40</a>  .bandon{fill:var(--on-bg);stroke:var(--on-br)}</span>
+<span class="source-line" id="L41"><a href="#L41">41</a>  .node{fill:#16202c;stroke:#2b3a4a;stroke-width:1.2;rx:8}</span>
+<span class="source-line" id="L42"><a href="#L42">42</a>  .nodeoff{fill:#12202c;stroke:#2a4d63}</span>
+<span class="source-line" id="L43"><a href="#L43">43</a>  .nodeon{fill:#102019;stroke:#28553d}</span>
+<span class="source-line" id="L44"><a href="#L44">44</a>  .ext{fill:#1e1810;stroke:#5c451f;stroke-dasharray:5 4}</span>
+<span class="source-line" id="L45"><a href="#L45">45</a>  .sub{fill:#0e1721;stroke:#25333f;rx:5}</span>
+<span class="source-line" id="L46"><a href="#L46">46</a>  .subon{fill:#0c1912;stroke:#22432f;rx:5}</span>
+<span class="source-line" id="L47"><a href="#L47">47</a>  .sw{rx:3}</span>
+<span class="source-line" id="L48"><a href="#L48">48</a>  .e{stroke:var(--edge);stroke-width:1.4;fill:none;marker-end:url(#a)}</span>
+<span class="source-line" id="L49"><a href="#L49">49</a>  .e.build{stroke-dasharray:6 4;stroke:#f0a04c;marker-end:url(#ao)}</span>
+<span class="source-line" id="L50"><a href="#L50">50</a>  .e.deploy{stroke:#f0a04c;stroke-width:1.8;marker-end:url(#ao)}</span>
+<span class="source-line" id="L51"><a href="#L51">51</a>  .e.on{stroke:#4ade80;marker-end:url(#ag)}</span>
+<span class="source-line" id="L52"><a href="#L52">52</a>  .cut{stroke:#3d4f61;stroke-width:1.4;stroke-dasharray:10 7}</span>
+<span class="source-line" id="L53"><a href="#L53">53</a>  table{width:100%;border-collapse:collapse;font:12.5px/1.45 var(--mono);</span>
+<span class="source-line" id="L54"><a href="#L54">54</a>        background:var(--panel);border:1px solid var(--grid);border-radius:10px;overflow:hidden}</span>
+<span class="source-line" id="L55"><a href="#L55">55</a>  th{text-align:left;font-weight:600;color:var(--dim);background:#0e1620;</span>
+<span class="source-line" id="L56"><a href="#L56">56</a>     padding:9px 12px;border-bottom:1px solid var(--grid);white-space:nowrap;</span>
+<span class="source-line" id="L57"><a href="#L57">57</a>     font-size:11px;letter-spacing:.08em;text-transform:uppercase}</span>
+<span class="source-line" id="L58"><a href="#L58">58</a>  td{padding:8px 12px;border-bottom:1px solid #16202c;vertical-align:top;color:#c9d6e2}</span>
+<span class="source-line" id="L59"><a href="#L59">59</a>  tr:last-child td{border-bottom:0}</span>
+<span class="source-line" id="L60"><a href="#L60">60</a>  td.k{color:var(--ink);white-space:nowrap}</span>
+<span class="source-line" id="L61"><a href="#L61">61</a>  .tag{display:inline-block;padding:1px 7px;border-radius:20px;font:10.5px var(--mono);</span>
+<span class="source-line" id="L62"><a href="#L62">62</a>       border:1px solid;letter-spacing:.04em}</span>
+<span class="source-line" id="L63"><a href="#L63">63</a>  .tag.off{color:var(--off);border-color:#1e4a63;background:#0d1e29}</span>
+<span class="source-line" id="L64"><a href="#L64">64</a>  .tag.on{color:var(--on);border-color:#1f4a34;background:#0d1d14}</span>
+<span class="source-line" id="L65"><a href="#L65">65</a>  .tag.ext{color:var(--ext);border-color:#5c451f;background:#1c1610}</span>
+<span class="source-line" id="L66"><a href="#L66">66</a>  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}</span>
+<span class="source-line" id="L67"><a href="#L67">67</a>  .grid2&gt;div&gt;h3{font:600 11px var(--mono);letter-spacing:.14em;</span>
+<span class="source-line" id="L68"><a href="#L68">68</a>       text-transform:uppercase;color:var(--faint);margin:0 0 8px}</span>
+<span class="source-line" id="L69"><a href="#L69">69</a>  .chips{display:flex;flex-wrap:wrap;gap:6px}</span>
+<span class="source-line" id="L70"><a href="#L70">70</a>  .chip{font:11.5px var(--mono);padding:4px 9px;border-radius:6px;</span>
+<span class="source-line" id="L71"><a href="#L71">71</a>        background:#12202c;border:1px solid #2a4d63;color:#bcd4e4}</span>
+<span class="source-line" id="L72"><a href="#L72">72</a>  .chip.no{background:#1c1114;border-color:#5a2a33;color:#e0a9b3;text-decoration:line-through;</span>
+<span class="source-line" id="L73"><a href="#L73">73</a>           text-decoration-color:#7a3a46}</span>
+<span class="source-line" id="L74"><a href="#L74">74</a>  code{font:12px var(--mono);color:#bcd4e4}</span>
+<span class="source-line" id="L75"><a href="#L75">75</a>  @media (max-width:900px){.grid2{grid-template-columns:1fr}}</span>
+<span class="source-line" id="L76"><a href="#L76">76</a>&lt;/style&gt;</span>
+<span class="source-line" id="L77"><a href="#L77">77</a>&lt;/head&gt;</span>
+<span class="source-line" id="L78"><a href="#L78">78</a>&lt;body&gt;</span>
+<span class="source-line" id="L79"><a href="#L79">79</a>&lt;div class=&quot;wrap&quot;&gt;</span>
+<span class="source-line" id="L80"><a href="#L80">80</a></span>
+<span class="source-line" id="L81"><a href="#L81">81</a>&lt;header&gt;</span>
+<span class="source-line" id="L82"><a href="#L82">82</a>  &lt;h1&gt;HARMONIA&lt;/h1&gt;</span>
+<span class="source-line" id="L83"><a href="#L83">83</a>  &lt;span class=&quot;sub&quot;&gt;on-ledger workflow composition · Canton / Daml&lt;/span&gt;</span>
+<span class="source-line" id="L84"><a href="#L84">84</a>  &lt;span class=&quot;src&quot;&gt;unlockitio/canton-dev-fund @ unlockitio-harmonia · proposals/harmonia.md&lt;/span&gt;</span>
+<span class="source-line" id="L85"><a href="#L85">85</a>&lt;/header&gt;</span>
+<span class="source-line" id="L86"><a href="#L86">86</a></span>
+<span class="source-line" id="L87"><a href="#L87">87</a>&lt;!-- ═══════════════ 1. COMPONENT MAP ═══════════════ --&gt;</span>
+<span class="source-line" id="L88"><a href="#L88">88</a>&lt;h2&gt;1 · Component map — off-ledger / on-ledger split&lt;/h2&gt;</span>
+<span class="source-line" id="L89"><a href="#L89">89</a>&lt;figure&gt;</span>
+<span class="source-line" id="L90"><a href="#L90">90</a>&lt;svg viewBox=&quot;0 0 1440 1000&quot; role=&quot;img&quot; aria-label=&quot;Harmonia component map split into off-ledger and on-ledger&quot;&gt;</span>
+<span class="source-line" id="L91"><a href="#L91">91</a>  &lt;defs&gt;</span>
+<span class="source-line" id="L92"><a href="#L92">92</a>    &lt;marker id=&quot;a&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;9&quot; refY=&quot;5&quot; markerWidth=&quot;7&quot; markerHeight=&quot;7&quot; orient=&quot;auto-start-reverse&quot;&gt;</span>
+<span class="source-line" id="L93"><a href="#L93">93</a>      &lt;path d=&quot;M0 0 L10 5 L0 10 z&quot; fill=&quot;#6c8199&quot;/&gt;&lt;/marker&gt;</span>
+<span class="source-line" id="L94"><a href="#L94">94</a>    &lt;marker id=&quot;ao&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;9&quot; refY=&quot;5&quot; markerWidth=&quot;7&quot; markerHeight=&quot;7&quot; orient=&quot;auto-start-reverse&quot;&gt;</span>
+<span class="source-line" id="L95"><a href="#L95">95</a>      &lt;path d=&quot;M0 0 L10 5 L0 10 z&quot; fill=&quot;#f0a04c&quot;/&gt;&lt;/marker&gt;</span>
+<span class="source-line" id="L96"><a href="#L96">96</a>    &lt;marker id=&quot;ag&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;9&quot; refY=&quot;5&quot; markerWidth=&quot;7&quot; markerHeight=&quot;7&quot; orient=&quot;auto-start-reverse&quot;&gt;</span>
+<span class="source-line" id="L97"><a href="#L97">97</a>      &lt;path d=&quot;M0 0 L10 5 L0 10 z&quot; fill=&quot;#4ade80&quot;/&gt;&lt;/marker&gt;</span>
+<span class="source-line" id="L98"><a href="#L98">98</a>  &lt;/defs&gt;</span>
+<span class="source-line" id="L99"><a href="#L99">99</a></span>
+<span class="source-line" id="L100"><a href="#L100">100</a>  &lt;!-- ---------- OFF-LEDGER BAND ---------- --&gt;</span>
+<span class="source-line" id="L101"><a href="#L101">101</a>  &lt;rect class=&quot;bandoff&quot; x=&quot;20&quot; y=&quot;20&quot; width=&quot;1400&quot; height=&quot;470&quot; rx=&quot;14&quot;/&gt;</span>
+<span class="source-line" id="L102"><a href="#L102">102</a>  &lt;text class=&quot;band&quot; x=&quot;42&quot; y=&quot;48&quot; fill=&quot;#4cc9f0&quot;&gt;OFF-LEDGER&lt;/text&gt;</span>
+<span class="source-line" id="L103"><a href="#L103">103</a>  &lt;text class=&quot;st&quot; x=&quot;150&quot; y=&quot;48&quot;&gt;clients · build-time tooling · external services&lt;/text&gt;</span>
+<span class="source-line" id="L104"><a href="#L104">104</a></span>
+<span class="source-line" id="L105"><a href="#L105">105</a>  &lt;!-- Users --&gt;</span>
+<span class="source-line" id="L106"><a href="#L106">106</a>  &lt;rect class=&quot;node nodeoff&quot; x=&quot;40&quot; y=&quot;190&quot; width=&quot;150&quot; height=&quot;130&quot; rx=&quot;8&quot;/&gt;</span>
+<span class="source-line" id="L107"><a href="#L107">107</a>  &lt;text class=&quot;t&quot; x=&quot;115&quot; y=&quot;222&quot; text-anchor=&quot;middle&quot;&gt;Users&lt;/text&gt;</span>
+<span class="source-line" id="L108"><a href="#L108">108</a>  &lt;text class=&quot;st&quot; x=&quot;115&quot; y=&quot;238&quot; text-anchor=&quot;middle&quot;&gt;actors&lt;/text&gt;</span>
+<span class="source-line" id="L109"><a href="#L109">109</a>  &lt;rect class=&quot;sub&quot; x=&quot;54&quot; y=&quot;250&quot; width=&quot;122&quot; height=&quot;24&quot;/&gt;</span>
+<span class="source-line" id="L110"><a href="#L110">110</a>  &lt;text class=&quot;li&quot; x=&quot;115&quot; y=&quot;266&quot; text-anchor=&quot;middle&quot;&gt;workflow actors&lt;/text&gt;</span>
+<span class="source-line" id="L111"><a href="#L111">111</a>  &lt;rect class=&quot;sub&quot; x=&quot;54&quot; y=&quot;280&quot; width=&quot;122&quot; height=&quot;24&quot;/&gt;</span>
+<span class="source-line" id="L112"><a href="#L112">112</a>  &lt;text class=&quot;li&quot; x=&quot;115&quot; y=&quot;296&quot; text-anchor=&quot;middle&quot;&gt;DAR providers&lt;/text&gt;</span>
+<span class="source-line" id="L113"><a href="#L113">113</a></span>
+<span class="source-line" id="L114"><a href="#L114">114</a>  &lt;!-- harmonia-dapp --&gt;</span>
+<span class="source-line" id="L115"><a href="#L115">115</a>  &lt;rect class=&quot;node nodeoff&quot; x=&quot;300&quot; y=&quot;70&quot; width=&quot;520&quot; height=&quot;170&quot; rx=&quot;8&quot;/&gt;</span>
+<span class="source-line" id="L116"><a href="#L116">116</a>  &lt;text class=&quot;t&quot; x=&quot;320&quot; y=&quot;98&quot;&gt;harmonia-dapp&lt;/text&gt;</span>
+<span class="source-line" id="L117"><a href="#L117">117</a>  &lt;text class=&quot;st&quot; x=&quot;320&quot; y=&quot;114&quot;&gt;application · viewer + composer · runtime&lt;/text&gt;</span>
+<span class="source-line" id="L118"><a href="#L118">118</a>  &lt;rect class=&quot;sub&quot; x=&quot;320&quot; y=&quot;128&quot; width=&quot;114&quot; height=&quot;42&quot;/&gt;</span>
+<span class="source-line" id="L119"><a href="#L119">119</a>  &lt;text class=&quot;li&quot; x=&quot;377&quot; y=&quot;146&quot; text-anchor=&quot;middle&quot;&gt;viewer&lt;/text&gt;</span>
+<span class="source-line" id="L120"><a href="#L120">120</a>  &lt;text class=&quot;lo&quot; x=&quot;377&quot; y=&quot;161&quot; text-anchor=&quot;middle&quot;&gt;state · progress&lt;/text&gt;</span>
+<span class="source-line" id="L121"><a href="#L121">121</a>  &lt;rect class=&quot;sub&quot; x=&quot;442&quot; y=&quot;128&quot; width=&quot;114&quot; height=&quot;42&quot;/&gt;</span>
+<span class="source-line" id="L122"><a href="#L122">122</a>  &lt;text class=&quot;li&quot; x=&quot;499&quot; y=&quot;146&quot; text-anchor=&quot;middle&quot;&gt;composer&lt;/text&gt;</span>
+<span class="source-line" id="L123"><a href="#L123">123</a>  &lt;text class=&quot;lo&quot; x=&quot;499&quot; y=&quot;161&quot; text-anchor=&quot;middle&quot;&gt;define · authz&lt;/text&gt;</span>
+<span class="source-line" id="L124"><a href="#L124">124</a>  &lt;rect class=&quot;sub&quot; x=&quot;564&quot; y=&quot;128&quot; width=&quot;114&quot; height=&quot;42&quot;/&gt;</span>
+<span class="source-line" id="L125"><a href="#L125">125</a>  &lt;text class=&quot;li&quot; x=&quot;621&quot; y=&quot;146&quot; text-anchor=&quot;middle&quot;&gt;back-office&lt;/text&gt;</span>
+<span class="source-line" id="L126"><a href="#L126">126</a>  &lt;text class=&quot;lo&quot; x=&quot;621&quot; y=&quot;161&quot; text-anchor=&quot;middle&quot;&gt;exec views&lt;/text&gt;</span>
+<span class="source-line" id="L127"><a href="#L127">127</a>  &lt;rect class=&quot;sub&quot; x=&quot;686&quot; y=&quot;128&quot; width=&quot;114&quot; height=&quot;42&quot;/&gt;</span>
+<span class="source-line" id="L128"><a href="#L128">128</a>  &lt;text class=&quot;li&quot; x=&quot;743&quot; y=&quot;146&quot; text-anchor=&quot;middle&quot;&gt;tx submit&lt;/text&gt;</span>
+<span class="source-line" id="L129"><a href="#L129">129</a>  &lt;text class=&quot;lo&quot; x=&quot;743&quot; y=&quot;161&quot; text-anchor=&quot;middle&quot;&gt;DAR fetch&lt;/text&gt;</span>
+<span class="source-line" id="L130"><a href="#L130">130</a>  &lt;rect class=&quot;sub&quot; x=&quot;320&quot; y=&quot;180&quot; width=&quot;480&quot; height=&quot;42&quot;/&gt;</span>
+<span class="source-line" id="L131"><a href="#L131">131</a>  &lt;text class=&quot;li&quot; x=&quot;560&quot; y=&quot;198&quot; text-anchor=&quot;middle&quot;&gt;reads state + package metadata · writes workflow tx&lt;/text&gt;</span>
+<span class="source-line" id="L132"><a href="#L132">132</a>  &lt;text class=&quot;lo&quot; x=&quot;560&quot; y=&quot;213&quot; text-anchor=&quot;middle&quot;&gt;interaction surface · not the orchestration layer&lt;/text&gt;</span>
+<span class="source-line" id="L133"><a href="#L133">133</a></span>
+<span class="source-line" id="L134"><a href="#L134">134</a>  &lt;!-- harmonia-builder --&gt;</span>
+<span class="source-line" id="L135"><a href="#L135">135</a>  &lt;rect class=&quot;node nodeoff&quot; x=&quot;380&quot; y=&quot;290&quot; width=&quot;440&quot; height=&quot;170&quot; rx=&quot;8&quot;/&gt;</span>
+<span class="source-line" id="L136"><a href="#L136">136</a>  &lt;text class=&quot;t&quot; x=&quot;400&quot; y=&quot;318&quot;&gt;harmonia-builder&lt;/text&gt;</span>
+<span class="source-line" id="L137"><a href="#L137">137</a>  &lt;text class=&quot;st&quot; x=&quot;400&quot; y=&quot;334&quot;&gt;internal tooling · BUILD TIME ONLY&lt;/text&gt;</span>
+<span class="source-line" id="L138"><a href="#L138">138</a>  &lt;rect class=&quot;sub&quot; x=&quot;400&quot; y=&quot;348&quot; width=&quot;128&quot; height=&quot;42&quot;/&gt;</span>
+<span class="source-line" id="L139"><a href="#L139">139</a>  &lt;text class=&quot;li&quot; x=&quot;464&quot; y=&quot;366&quot; text-anchor=&quot;middle&quot;&gt;DAR upload&lt;/text&gt;</span>
+<span class="source-line" id="L140"><a href="#L140">140</a>  &lt;text class=&quot;lo&quot; x=&quot;464&quot; y=&quot;381&quot; text-anchor=&quot;middle&quot;&gt;user-supplied&lt;/text&gt;</span>
+<span class="source-line" id="L141"><a href="#L141">141</a>  &lt;rect class=&quot;sub&quot; x=&quot;536&quot; y=&quot;348&quot; width=&quot;128&quot; height=&quot;42&quot;/&gt;</span>
+<span class="source-line" id="L142"><a href="#L142">142</a>  &lt;text class=&quot;li&quot; x=&quot;600&quot; y=&quot;366&quot; text-anchor=&quot;middle&quot;&gt;DAR retrieval&lt;/text&gt;</span>
+<span class="source-line" id="L143"><a href="#L143">143</a>  &lt;text class=&quot;lo&quot; x=&quot;600&quot; y=&quot;381&quot; text-anchor=&quot;middle&quot;&gt;pkg mgr · validator&lt;/text&gt;</span>
+<span class="source-line" id="L144"><a href="#L144">144</a>  &lt;rect class=&quot;sub&quot; x=&quot;672&quot; y=&quot;348&quot; width=&quot;128&quot; height=&quot;42&quot;/&gt;</span>
+<span class="source-line" id="L145"><a href="#L145">145</a>  &lt;text class=&quot;li&quot; x=&quot;736&quot; y=&quot;366&quot; text-anchor=&quot;middle&quot;&gt;codegen&lt;/text&gt;</span>
+<span class="source-line" id="L146"><a href="#L146">146</a>  &lt;text class=&quot;lo&quot; x=&quot;736&quot; y=&quot;381&quot; text-anchor=&quot;middle&quot;&gt;project + boilerplate&lt;/text&gt;</span>
+<span class="source-line" id="L147"><a href="#L147">147</a>  &lt;rect class=&quot;sub&quot; x=&quot;400&quot; y=&quot;400&quot; width=&quot;400&quot; height=&quot;42&quot;/&gt;</span>
+<span class="source-line" id="L148"><a href="#L148">148</a>  &lt;text class=&quot;li&quot; x=&quot;600&quot; y=&quot;418&quot; text-anchor=&quot;middle&quot;&gt;output → Binding DAR + generated project/code&lt;/text&gt;</span>
+<span class="source-line" id="L149"><a href="#L149">149</a>  &lt;text class=&quot;lo&quot; x=&quot;600&quot; y=&quot;433&quot; text-anchor=&quot;middle&quot;&gt;no separate runtime composition model&lt;/text&gt;</span>
+<span class="source-line" id="L150"><a href="#L150">150</a></span>
+<span class="source-line" id="L151"><a href="#L151">151</a>  &lt;!-- Package Manager --&gt;</span>
+<span class="source-line" id="L152"><a href="#L152">152</a>  &lt;rect class=&quot;node ext&quot; x=&quot;890&quot; y=&quot;290&quot; width=&quot;250&quot; height=&quot;170&quot; rx=&quot;8&quot;/&gt;</span>
+<span class="source-line" id="L153"><a href="#L153">153</a>  &lt;text class=&quot;t&quot; x=&quot;1015&quot; y=&quot;322&quot; text-anchor=&quot;middle&quot; fill=&quot;#f0a04c&quot;&gt;Package Manager&lt;/text&gt;</span>
+<span class="source-line" id="L154"><a href="#L154">154</a>  &lt;text class=&quot;st&quot; x=&quot;1015&quot; y=&quot;338&quot; text-anchor=&quot;middle&quot;&gt;external · e.g. Catalyx&lt;/text&gt;</span>
+<span class="source-line" id="L155"><a href="#L155">155</a>  &lt;rect class=&quot;sub&quot; x=&quot;910&quot; y=&quot;352&quot; width=&quot;210&quot; height=&quot;26&quot;/&gt;</span>
+<span class="source-line" id="L156"><a href="#L156">156</a>  &lt;text class=&quot;li&quot; x=&quot;1015&quot; y=&quot;369&quot; text-anchor=&quot;middle&quot;&gt;DARs&lt;/text&gt;</span>
+<span class="source-line" id="L157"><a href="#L157">157</a>  &lt;rect class=&quot;sub&quot; x=&quot;910&quot; y=&quot;386&quot; width=&quot;210&quot; height=&quot;26&quot;/&gt;</span>
+<span class="source-line" id="L158"><a href="#L158">158</a>  &lt;text class=&quot;li&quot; x=&quot;1015&quot; y=&quot;403&quot; text-anchor=&quot;middle&quot;&gt;package metadata&lt;/text&gt;</span>
+<span class="source-line" id="L159"><a href="#L159">159</a>  &lt;text class=&quot;lo&quot; x=&quot;1015&quot; y=&quot;430&quot; text-anchor=&quot;middle&quot;&gt;illustrative source only&lt;/text&gt;</span>
+<span class="source-line" id="L160"><a href="#L160">160</a>  &lt;text class=&quot;lo&quot; x=&quot;1015&quot; y=&quot;444&quot; text-anchor=&quot;middle&quot;&gt;no integration implied&lt;/text&gt;</span>
+<span class="source-line" id="L161"><a href="#L161">161</a></span>
+<span class="source-line" id="L162"><a href="#L162">162</a>  &lt;!-- Legend --&gt;</span>
+<span class="source-line" id="L163"><a href="#L163">163</a>  &lt;rect class=&quot;node&quot; x=&quot;890&quot; y=&quot;70&quot; width=&quot;490&quot; height=&quot;170&quot; rx=&quot;8&quot; fill=&quot;#0e1620&quot; stroke=&quot;#22303d&quot;/&gt;</span>
+<span class="source-line" id="L164"><a href="#L164">164</a>  &lt;text class=&quot;st&quot; x=&quot;910&quot; y=&quot;94&quot;&gt;LEGEND&lt;/text&gt;</span>
+<span class="source-line" id="L165"><a href="#L165">165</a>  &lt;rect class=&quot;node nodeoff sw&quot; x=&quot;910&quot; y=&quot;106&quot; width=&quot;16&quot; height=&quot;13&quot;/&gt;</span>
+<span class="source-line" id="L166"><a href="#L166">166</a>  &lt;text class=&quot;li&quot; x=&quot;934&quot; y=&quot;117&quot;&gt;Harmonia component&lt;/text&gt;</span>
+<span class="source-line" id="L167"><a href="#L167">167</a>  &lt;rect class=&quot;node ext sw&quot; x=&quot;910&quot; y=&quot;130&quot; width=&quot;16&quot; height=&quot;13&quot;/&gt;</span>
+<span class="source-line" id="L168"><a href="#L168">168</a>  &lt;text class=&quot;li&quot; x=&quot;934&quot; y=&quot;141&quot;&gt;external system&lt;/text&gt;</span>
+<span class="source-line" id="L169"><a href="#L169">169</a>  &lt;rect class=&quot;node nodeon sw&quot; x=&quot;910&quot; y=&quot;154&quot; width=&quot;16&quot; height=&quot;13&quot;/&gt;</span>
+<span class="source-line" id="L170"><a href="#L170">170</a>  &lt;text class=&quot;li&quot; x=&quot;934&quot; y=&quot;165&quot;&gt;Daml package (DAR)&lt;/text&gt;</span>
+<span class="source-line" id="L171"><a href="#L171">171</a>  &lt;path class=&quot;e&quot; d=&quot;M1130 112 L1180 112&quot;/&gt;</span>
+<span class="source-line" id="L172"><a href="#L172">172</a>  &lt;text class=&quot;li&quot; x=&quot;1190&quot; y=&quot;117&quot;&gt;runtime call&lt;/text&gt;</span>
+<span class="source-line" id="L173"><a href="#L173">173</a>  &lt;path class=&quot;e build&quot; d=&quot;M1130 136 L1180 136&quot;/&gt;</span>
+<span class="source-line" id="L174"><a href="#L174">174</a>  &lt;text class=&quot;li&quot; x=&quot;1190&quot; y=&quot;141&quot;&gt;build-time&lt;/text&gt;</span>
+<span class="source-line" id="L175"><a href="#L175">175</a>  &lt;path class=&quot;e on&quot; d=&quot;M1130 160 L1180 160&quot;/&gt;</span>
+<span class="source-line" id="L176"><a href="#L176">176</a>  &lt;text class=&quot;li&quot; x=&quot;1190&quot; y=&quot;165&quot;&gt;on-ledger relation&lt;/text&gt;</span>
+<span class="source-line" id="L177"><a href="#L177">177</a>  &lt;path class=&quot;cut&quot; d=&quot;M910 186 L1360 186&quot;/&gt;</span>
+<span class="source-line" id="L178"><a href="#L178">178</a>  &lt;text class=&quot;lo&quot; x=&quot;910&quot; y=&quot;208&quot;&gt;① direct path · app DAR implements Harmonia interfaces&lt;/text&gt;</span>
+<span class="source-line" id="L179"><a href="#L179">179</a>  &lt;text class=&quot;lo&quot; x=&quot;910&quot; y=&quot;226&quot;&gt;② builder path · existing app DAR + generated binding&lt;/text&gt;</span>
+<span class="source-line" id="L180"><a href="#L180">180</a></span>
+<span class="source-line" id="L181"><a href="#L181">181</a>  &lt;!-- edges: off-ledger --&gt;</span>
+<span class="source-line" id="L182"><a href="#L182">182</a>  &lt;path class=&quot;e&quot; d=&quot;M190 215 L250 215 L250 155 L300 155&quot;/&gt;</span>
+<span class="source-line" id="L183"><a href="#L183">183</a>  &lt;text class=&quot;lo&quot; x=&quot;296&quot; y=&quot;128&quot; text-anchor=&quot;end&quot;&gt;inspect · define&lt;/text&gt;</span>
+<span class="source-line" id="L184"><a href="#L184">184</a>  &lt;text class=&quot;lo&quot; x=&quot;296&quot; y=&quot;142&quot; text-anchor=&quot;end&quot;&gt;authorize · execute&lt;/text&gt;</span>
+<span class="source-line" id="L185"><a href="#L185">185</a>  &lt;path class=&quot;e build&quot; d=&quot;M190 265 L250 265 L250 372 L380 372&quot;/&gt;</span>
+<span class="source-line" id="L186"><a href="#L186">186</a>  &lt;text class=&quot;lo&quot; x=&quot;262&quot; y=&quot;336&quot;&gt;upload DAR&lt;/text&gt;</span>
+<span class="source-line" id="L187"><a href="#L187">187</a>  &lt;path class=&quot;e build&quot; d=&quot;M560 240 L560 290&quot;/&gt;</span>
+<span class="source-line" id="L188"><a href="#L188">188</a>  &lt;text class=&quot;lo&quot; x=&quot;570&quot; y=&quot;268&quot;&gt;app DARs&lt;/text&gt;</span>
+<span class="source-line" id="L189"><a href="#L189">189</a>  &lt;path class=&quot;e build&quot; d=&quot;M820 372 L890 372&quot;/&gt;</span>
+<span class="source-line" id="L190"><a href="#L190">190</a>  &lt;text class=&quot;lo&quot; x=&quot;855&quot; y=&quot;362&quot; text-anchor=&quot;middle&quot;&gt;fetch&lt;/text&gt;</span>
+<span class="source-line" id="L191"><a href="#L191">191</a>  &lt;path class=&quot;e&quot; d=&quot;M820 150 L856 150 L856 330 L890 330&quot;/&gt;</span>
+<span class="source-line" id="L192"><a href="#L192">192</a>  &lt;text class=&quot;lo&quot; x=&quot;850&quot; y=&quot;264&quot; text-anchor=&quot;end&quot;&gt;pkg metadata&lt;/text&gt;</span>
+<span class="source-line" id="L193"><a href="#L193">193</a></span>
+<span class="source-line" id="L194"><a href="#L194">194</a>  &lt;!-- ---------- BOUNDARY ---------- --&gt;</span>
+<span class="source-line" id="L195"><a href="#L195">195</a>  &lt;path class=&quot;cut&quot; d=&quot;M20 505 L1420 505&quot;/&gt;</span>
+<span class="source-line" id="L196"><a href="#L196">196</a>  &lt;rect x=&quot;1050&quot; y=&quot;492&quot; width=&quot;320&quot; height=&quot;26&quot; rx=&quot;13&quot; fill=&quot;#0b0f14&quot; stroke=&quot;#3d4f61&quot;/&gt;</span>
+<span class="source-line" id="L197"><a href="#L197">197</a>  &lt;text class=&quot;band&quot; x=&quot;1210&quot; y=&quot;509&quot; text-anchor=&quot;middle&quot; fill=&quot;#8fa3b8&quot;&gt;LEDGER BOUNDARY · LEDGER API&lt;/text&gt;</span>
+<span class="source-line" id="L198"><a href="#L198">198</a></span>
+<span class="source-line" id="L199"><a href="#L199">199</a>  &lt;!-- ---------- ON-LEDGER BAND ---------- --&gt;</span>
+<span class="source-line" id="L200"><a href="#L200">200</a>  &lt;rect class=&quot;bandon&quot; x=&quot;20&quot; y=&quot;520&quot; width=&quot;1400&quot; height=&quot;460&quot; rx=&quot;14&quot;/&gt;</span>
+<span class="source-line" id="L201"><a href="#L201">201</a>  &lt;text class=&quot;band&quot; x=&quot;42&quot; y=&quot;548&quot; fill=&quot;#4ade80&quot;&gt;ON-LEDGER · DAML&lt;/text&gt;</span>
+<span class="source-line" id="L202"><a href="#L202">202</a>  &lt;text class=&quot;st&quot; x=&quot;220&quot; y=&quot;548&quot;&gt;hosted by Canton Validator / Super Validator (external) · composition state stays on-ledger&lt;/text&gt;</span>
+<span class="source-line" id="L203"><a href="#L203">203</a></span>
+<span class="source-line" id="L204"><a href="#L204">204</a>  &lt;!-- harmonia-core --&gt;</span>
+<span class="source-line" id="L205"><a href="#L205">205</a>  &lt;rect class=&quot;node nodeon&quot; x=&quot;50&quot; y=&quot;600&quot; width=&quot;400&quot; height=&quot;330&quot; rx=&quot;8&quot;/&gt;</span>
+<span class="source-line" id="L206"><a href="#L206">206</a>  &lt;text class=&quot;t&quot; x=&quot;70&quot; y=&quot;628&quot;&gt;harmonia-core&lt;/text&gt;</span>
+<span class="source-line" id="L207"><a href="#L207">207</a>  &lt;text class=&quot;st&quot; x=&quot;70&quot; y=&quot;644&quot;&gt;Daml · the Core-managed workflow model&lt;/text&gt;</span>
+<span class="source-line" id="L208"><a href="#L208">208</a>  &lt;rect class=&quot;subon&quot; x=&quot;70&quot; y=&quot;658&quot; width=&quot;174&quot; height=&quot;40&quot;/&gt;</span>
+<span class="source-line" id="L209"><a href="#L209">209</a>  &lt;text class=&quot;li&quot; x=&quot;157&quot; y=&quot;675&quot; text-anchor=&quot;middle&quot;&gt;orchestration&lt;/text&gt;</span>
+<span class="source-line" id="L210"><a href="#L210">210</a>  &lt;text class=&quot;lo&quot; x=&quot;157&quot; y=&quot;689&quot; text-anchor=&quot;middle&quot;&gt;templates · choices&lt;/text&gt;</span>
+<span class="source-line" id="L211"><a href="#L211">211</a>  &lt;rect class=&quot;subon&quot; x=&quot;256&quot; y=&quot;658&quot; width=&quot;174&quot; height=&quot;40&quot;/&gt;</span>
+<span class="source-line" id="L212"><a href="#L212">212</a>  &lt;text class=&quot;li&quot; x=&quot;343&quot; y=&quot;675&quot; text-anchor=&quot;middle&quot;&gt;interfaces&lt;/text&gt;</span>
+<span class="source-line" id="L213"><a href="#L213">213</a>  &lt;text class=&quot;lo&quot; x=&quot;343&quot; y=&quot;689&quot; text-anchor=&quot;middle&quot;&gt;+ applicability&lt;/text&gt;</span>
+<span class="source-line" id="L214"><a href="#L214">214</a>  &lt;rect class=&quot;subon&quot; x=&quot;70&quot; y=&quot;706&quot; width=&quot;174&quot; height=&quot;40&quot;/&gt;</span>
+<span class="source-line" id="L215"><a href="#L215">215</a>  &lt;text class=&quot;li&quot; x=&quot;157&quot; y=&quot;723&quot; text-anchor=&quot;middle&quot;&gt;workflow state&lt;/text&gt;</span>
+<span class="source-line" id="L216"><a href="#L216">216</a>  &lt;text class=&quot;lo&quot; x=&quot;157&quot; y=&quot;737&quot; text-anchor=&quot;middle&quot;&gt;persisted · queryable&lt;/text&gt;</span>
+<span class="source-line" id="L217"><a href="#L217">217</a>  &lt;rect class=&quot;subon&quot; x=&quot;256&quot; y=&quot;706&quot; width=&quot;174&quot; height=&quot;40&quot;/&gt;</span>
+<span class="source-line" id="L218"><a href="#L218">218</a>  &lt;text class=&quot;li&quot; x=&quot;343&quot; y=&quot;723&quot; text-anchor=&quot;middle&quot;&gt;step-exec rules&lt;/text&gt;</span>
+<span class="source-line" id="L219"><a href="#L219">219</a>  &lt;text class=&quot;lo&quot; x=&quot;343&quot; y=&quot;737&quot; text-anchor=&quot;middle&quot;&gt;actor + authority&lt;/text&gt;</span>
+<span class="source-line" id="L220"><a href="#L220">220</a>  &lt;rect class=&quot;subon&quot; x=&quot;70&quot; y=&quot;754&quot; width=&quot;360&quot; height=&quot;40&quot;/&gt;</span>
+<span class="source-line" id="L221"><a href="#L221">221</a>  &lt;text class=&quot;li&quot; x=&quot;250&quot; y=&quot;771&quot; text-anchor=&quot;middle&quot;&gt;sequential · XOR branch · join · continuation&lt;/text&gt;</span>
+<span class="source-line" id="L222"><a href="#L222">222</a>  &lt;text class=&quot;lo&quot; x=&quot;250&quot; y=&quot;785&quot; text-anchor=&quot;middle&quot;&gt;start event → steps → end event&lt;/text&gt;</span>
+<span class="source-line" id="L223"><a href="#L223">223</a>  &lt;rect class=&quot;subon&quot; x=&quot;70&quot; y=&quot;802&quot; width=&quot;360&quot; height=&quot;40&quot;/&gt;</span>
+<span class="source-line" id="L224"><a href="#L224">224</a>  &lt;text class=&quot;li&quot; x=&quot;250&quot; y=&quot;819&quot; text-anchor=&quot;middle&quot;&gt;bounded atomic execution block&lt;/text&gt;</span>
+<span class="source-line" id="L225"><a href="#L225">225</a>  &lt;text class=&quot;lo&quot; x=&quot;250&quot; y=&quot;833&quot; text-anchor=&quot;middle&quot;&gt;collapse steps when authorizations co-exist&lt;/text&gt;</span>
+<span class="source-line" id="L226"><a href="#L226">226</a>  &lt;rect class=&quot;subon&quot; x=&quot;70&quot; y=&quot;850&quot; width=&quot;360&quot; height=&quot;40&quot;/&gt;</span>
+<span class="source-line" id="L227"><a href="#L227">227</a>  &lt;text class=&quot;li&quot; x=&quot;250&quot; y=&quot;867&quot; text-anchor=&quot;middle&quot;&gt;role → party binding · no central operator&lt;/text&gt;</span>
+<span class="source-line" id="L228"><a href="#L228">228</a>  &lt;text class=&quot;lo&quot; x=&quot;250&quot; y=&quot;881&quot; text-anchor=&quot;middle&quot;&gt;privacy · ownership · authorization preserved&lt;/text&gt;</span>
+<span class="source-line" id="L229"><a href="#L229">229</a></span>
+<span class="source-line" id="L230"><a href="#L230">230</a>  &lt;!-- Binding DAR --&gt;</span>
+<span class="source-line" id="L231"><a href="#L231">231</a>  &lt;rect class=&quot;node nodeon&quot; x=&quot;545&quot; y=&quot;600&quot; width=&quot;305&quot; height=&quot;330&quot; rx=&quot;8&quot;/&gt;</span>
+<span class="source-line" id="L232"><a href="#L232">232</a>  &lt;text class=&quot;t&quot; x=&quot;565&quot; y=&quot;628&quot;&gt;Harmonia Binding DAR&lt;/text&gt;</span>
+<span class="source-line" id="L233"><a href="#L233">233</a>  &lt;text class=&quot;st&quot; x=&quot;565&quot; y=&quot;644&quot;&gt;Daml · interface ⇄ app-template&lt;/text&gt;</span>
+<span class="source-line" id="L234"><a href="#L234">234</a>  &lt;rect class=&quot;subon&quot; x=&quot;565&quot; y=&quot;658&quot; width=&quot;265&quot; height=&quot;44&quot;/&gt;</span>
+<span class="source-line" id="L235"><a href="#L235">235</a>  &lt;text class=&quot;li&quot; x=&quot;698&quot; y=&quot;676&quot; text-anchor=&quot;middle&quot;&gt;applicable app templates&lt;/text&gt;</span>
+<span class="source-line" id="L236"><a href="#L236">236</a>  &lt;text class=&quot;lo&quot; x=&quot;698&quot; y=&quot;691&quot; text-anchor=&quot;middle&quot;&gt;templateId · choice · role&lt;/text&gt;</span>
+<span class="source-line" id="L237"><a href="#L237">237</a>  &lt;rect class=&quot;subon&quot; x=&quot;565&quot; y=&quot;710&quot; width=&quot;265&quot; height=&quot;44&quot;/&gt;</span>
+<span class="source-line" id="L238"><a href="#L238">238</a>  &lt;text class=&quot;li&quot; x=&quot;698&quot; y=&quot;728&quot; text-anchor=&quot;middle&quot;&gt;participation in the model&lt;/text&gt;</span>
+<span class="source-line" id="L239"><a href="#L239">239</a>  &lt;text class=&quot;lo&quot; x=&quot;698&quot; y=&quot;743&quot; text-anchor=&quot;middle&quot;&gt;which step kind a choice fulfils&lt;/text&gt;</span>
+<span class="source-line" id="L240"><a href="#L240">240</a>  &lt;rect class=&quot;subon&quot; x=&quot;565&quot; y=&quot;762&quot; width=&quot;128&quot; height=&quot;58&quot;/&gt;</span>
+<span class="source-line" id="L241"><a href="#L241">241</a>  &lt;text class=&quot;num&quot; x=&quot;629&quot; y=&quot;783&quot; text-anchor=&quot;middle&quot; fill=&quot;#4ade80&quot;&gt;①&lt;/text&gt;</span>
+<span class="source-line" id="L242"><a href="#L242">242</a>  &lt;text class=&quot;lo&quot; x=&quot;629&quot; y=&quot;798&quot; text-anchor=&quot;middle&quot;&gt;authored by&lt;/text&gt;</span>
+<span class="source-line" id="L243"><a href="#L243">243</a>  &lt;text class=&quot;lo&quot; x=&quot;629&quot; y=&quot;811&quot; text-anchor=&quot;middle&quot;&gt;app project&lt;/text&gt;</span>
+<span class="source-line" id="L244"><a href="#L244">244</a>  &lt;rect class=&quot;subon&quot; x=&quot;702&quot; y=&quot;762&quot; width=&quot;128&quot; height=&quot;58&quot;/&gt;</span>
+<span class="source-line" id="L245"><a href="#L245">245</a>  &lt;text class=&quot;num&quot; x=&quot;766&quot; y=&quot;783&quot; text-anchor=&quot;middle&quot; fill=&quot;#f0a04c&quot;&gt;②&lt;/text&gt;</span>
+<span class="source-line" id="L246"><a href="#L246">246</a>  &lt;text class=&quot;lo&quot; x=&quot;766&quot; y=&quot;798&quot; text-anchor=&quot;middle&quot;&gt;emitted by&lt;/text&gt;</span>
+<span class="source-line" id="L247"><a href="#L247">247</a>  &lt;text class=&quot;lo&quot; x=&quot;766&quot; y=&quot;811&quot; text-anchor=&quot;middle&quot;&gt;harmonia-builder&lt;/text&gt;</span>
+<span class="source-line" id="L248"><a href="#L248">248</a>  &lt;rect class=&quot;subon&quot; x=&quot;565&quot; y=&quot;828&quot; width=&quot;265&quot; height=&quot;44&quot;/&gt;</span>
+<span class="source-line" id="L249"><a href="#L249">249</a>  &lt;text class=&quot;xs&quot; x=&quot;698&quot; y=&quot;846&quot; text-anchor=&quot;middle&quot; fill=&quot;#f0a04c&quot;&gt;import direction · templateId repr&lt;/text&gt;</span>
+<span class="source-line" id="L250"><a href="#L250">250</a>  &lt;text class=&quot;xs&quot; x=&quot;698&quot; y=&quot;860&quot; text-anchor=&quot;middle&quot; fill=&quot;#f0a04c&quot;&gt;binding mechanism — UNDECIDED&lt;/text&gt;</span>
+<span class="source-line" id="L251"><a href="#L251">251</a>  &lt;text class=&quot;lo&quot; x=&quot;698&quot; y=&quot;894&quot; text-anchor=&quot;middle&quot;&gt;both paths → one Core-managed model&lt;/text&gt;</span>
+<span class="source-line" id="L252"><a href="#L252">252</a></span>
+<span class="source-line" id="L253"><a href="#L253">253</a>  &lt;!-- App DAR 1 --&gt;</span>
+<span class="source-line" id="L254"><a href="#L254">254</a>  &lt;rect class=&quot;node nodeon&quot; x=&quot;912&quot; y=&quot;600&quot; width=&quot;265&quot; height=&quot;155&quot; rx=&quot;8&quot;/&gt;</span>
+<span class="source-line" id="L255"><a href="#L255">255</a>  &lt;text class=&quot;t2&quot; x=&quot;932&quot; y=&quot;626&quot;&gt;Source App DAR ①&lt;/text&gt;</span>
+<span class="source-line" id="L256"><a href="#L256">256</a>  &lt;text class=&quot;st&quot; x=&quot;932&quot; y=&quot;641&quot;&gt;final DAR · new version&lt;/text&gt;</span>
+<span class="source-line" id="L257"><a href="#L257">257</a>  &lt;rect class=&quot;subon&quot; x=&quot;932&quot; y=&quot;654&quot; width=&quot;225&quot; height=&quot;34&quot;/&gt;</span>
+<span class="source-line" id="L258"><a href="#L258">258</a>  &lt;text class=&quot;li&quot; x=&quot;1044&quot; y=&quot;675&quot; text-anchor=&quot;middle&quot;&gt;implements interfaces&lt;/text&gt;</span>
+<span class="source-line" id="L259"><a href="#L259">259</a>  &lt;rect class=&quot;subon&quot; x=&quot;932&quot; y=&quot;696&quot; width=&quot;225&quot; height=&quot;42&quot;/&gt;</span>
+<span class="source-line" id="L260"><a href="#L260">260</a>  &lt;text class=&quot;li&quot; x=&quot;1044&quot; y=&quot;713&quot; text-anchor=&quot;middle&quot;&gt;own templates · choices&lt;/text&gt;</span>
+<span class="source-line" id="L261"><a href="#L261">261</a>  &lt;text class=&quot;lo&quot; x=&quot;1044&quot; y=&quot;728&quot; text-anchor=&quot;middle&quot;&gt;own authorization + ownership&lt;/text&gt;</span>
+<span class="source-line" id="L262"><a href="#L262">262</a></span>
+<span class="source-line" id="L263"><a href="#L263">263</a>  &lt;!-- App DAR 2 --&gt;</span>
+<span class="source-line" id="L264"><a href="#L264">264</a>  &lt;rect class=&quot;node nodeon&quot; x=&quot;912&quot; y=&quot;775&quot; width=&quot;265&quot; height=&quot;155&quot; rx=&quot;8&quot;/&gt;</span>
+<span class="source-line" id="L265"><a href="#L265">265</a>  &lt;text class=&quot;t2&quot; x=&quot;932&quot; y=&quot;801&quot;&gt;Source App DAR ②&lt;/text&gt;</span>
+<span class="source-line" id="L266"><a href="#L266">266</a>  &lt;text class=&quot;st&quot; x=&quot;932&quot; y=&quot;816&quot;&gt;existing DAR · unchanged&lt;/text&gt;</span>
+<span class="source-line" id="L267"><a href="#L267">267</a>  &lt;rect class=&quot;subon&quot; x=&quot;932&quot; y=&quot;829&quot; width=&quot;225&quot; height=&quot;34&quot;/&gt;</span>
+<span class="source-line" id="L268"><a href="#L268">268</a>  &lt;text class=&quot;li&quot; x=&quot;1044&quot; y=&quot;850&quot; text-anchor=&quot;middle&quot;&gt;bound by generated code&lt;/text&gt;</span>
+<span class="source-line" id="L269"><a href="#L269">269</a>  &lt;rect class=&quot;subon&quot; x=&quot;932&quot; y=&quot;871&quot; width=&quot;225&quot; height=&quot;42&quot;/&gt;</span>
+<span class="source-line" id="L270"><a href="#L270">270</a>  &lt;text class=&quot;li&quot; x=&quot;1044&quot; y=&quot;888&quot; text-anchor=&quot;middle&quot;&gt;own templates · choices&lt;/text&gt;</span>
+<span class="source-line" id="L271"><a href="#L271">271</a>  &lt;text class=&quot;lo&quot; x=&quot;1044&quot; y=&quot;903&quot; text-anchor=&quot;middle&quot;&gt;no source change required&lt;/text&gt;</span>
+<span class="source-line" id="L272"><a href="#L272">272</a></span>
+<span class="source-line" id="L273"><a href="#L273">273</a>  &lt;!-- references --&gt;</span>
+<span class="source-line" id="L274"><a href="#L274">274</a>  &lt;rect class=&quot;node nodeon&quot; x=&quot;1197&quot; y=&quot;600&quot; width=&quot;183&quot; height=&quot;330&quot; rx=&quot;8&quot;/&gt;</span>
+<span class="source-line" id="L275"><a href="#L275">275</a>  &lt;text class=&quot;t2&quot; x=&quot;1288&quot; y=&quot;626&quot; text-anchor=&quot;middle&quot;&gt;harmonia-&lt;/text&gt;</span>
+<span class="source-line" id="L276"><a href="#L276">276</a>  &lt;text class=&quot;t2&quot; x=&quot;1288&quot; y=&quot;642&quot; text-anchor=&quot;middle&quot;&gt;references&lt;/text&gt;</span>
+<span class="source-line" id="L277"><a href="#L277">277</a>  &lt;text class=&quot;st&quot; x=&quot;1288&quot; y=&quot;658&quot; text-anchor=&quot;middle&quot;&gt;Daml · proof&lt;/text&gt;</span>
+<span class="source-line" id="L278"><a href="#L278">278</a>  &lt;rect class=&quot;subon&quot; x=&quot;1213&quot; y=&quot;672&quot; width=&quot;151&quot; height=&quot;30&quot;/&gt;</span>
+<span class="source-line" id="L279"><a href="#L279">279</a>  &lt;text class=&quot;lo&quot; x=&quot;1288&quot; y=&quot;691&quot; text-anchor=&quot;middle&quot;&gt;reference apps&lt;/text&gt;</span>
+<span class="source-line" id="L280"><a href="#L280">280</a>  &lt;rect class=&quot;subon&quot; x=&quot;1213&quot; y=&quot;710&quot; width=&quot;151&quot; height=&quot;30&quot;/&gt;</span>
+<span class="source-line" id="L281"><a href="#L281">281</a>  &lt;text class=&quot;lo&quot; x=&quot;1288&quot; y=&quot;729&quot; text-anchor=&quot;middle&quot;&gt;≥2 sample DARs&lt;/text&gt;</span>
+<span class="source-line" id="L282"><a href="#L282">282</a>  &lt;rect class=&quot;subon&quot; x=&quot;1213&quot; y=&quot;748&quot; width=&quot;151&quot; height=&quot;44&quot;/&gt;</span>
+<span class="source-line" id="L283"><a href="#L283">283</a>  &lt;text class=&quot;lo&quot; x=&quot;1288&quot; y=&quot;767&quot; text-anchor=&quot;middle&quot;&gt;min. composition&lt;/text&gt;</span>
+<span class="source-line" id="L284"><a href="#L284">284</a>  &lt;text class=&quot;lo&quot; x=&quot;1288&quot; y=&quot;781&quot; text-anchor=&quot;middle&quot;&gt;framework&lt;/text&gt;</span>
+<span class="source-line" id="L285"><a href="#L285">285</a>  &lt;rect class=&quot;subon&quot; x=&quot;1213&quot; y=&quot;800&quot; width=&quot;151&quot; height=&quot;44&quot;/&gt;</span>
+<span class="source-line" id="L286"><a href="#L286">286</a>  &lt;text class=&quot;lo&quot; x=&quot;1288&quot; y=&quot;819&quot; text-anchor=&quot;middle&quot;&gt;4-party token&lt;/text&gt;</span>
+<span class="source-line" id="L287"><a href="#L287">287</a>  &lt;text class=&quot;lo&quot; x=&quot;1288&quot; y=&quot;833&quot; text-anchor=&quot;middle&quot;&gt;transfer&lt;/text&gt;</span>
+<span class="source-line" id="L288"><a href="#L288">288</a>  &lt;rect class=&quot;subon&quot; x=&quot;1213&quot; y=&quot;852&quot; width=&quot;151&quot; height=&quot;44&quot;/&gt;</span>
+<span class="source-line" id="L289"><a href="#L289">289</a>  &lt;text class=&quot;lo&quot; x=&quot;1288&quot; y=&quot;871&quot; text-anchor=&quot;middle&quot;&gt;property financing&lt;/text&gt;</span>
+<span class="source-line" id="L290"><a href="#L290">290</a>  &lt;text class=&quot;lo&quot; x=&quot;1288&quot; y=&quot;885&quot; text-anchor=&quot;middle&quot;&gt;+ offer&lt;/text&gt;</span>
+<span class="source-line" id="L291"><a href="#L291">291</a></span>
+<span class="source-line" id="L292"><a href="#L292">292</a>  &lt;!-- crossing edges --&gt;</span>
+<span class="source-line" id="L293"><a href="#L293">293</a>  &lt;path class=&quot;e&quot; d=&quot;M352 240 L352 600&quot;/&gt;</span>
+<span class="source-line" id="L294"><a href="#L294">294</a>  &lt;path class=&quot;e&quot; d=&quot;M325 600 L325 240&quot;/&gt;</span>
+<span class="source-line" id="L295"><a href="#L295">295</a>  &lt;text class=&quot;lo&quot; x=&quot;372&quot; y=&quot;574&quot;&gt;↓ submit workflow transactions&lt;/text&gt;</span>
+<span class="source-line" id="L296"><a href="#L296">296</a>  &lt;text class=&quot;lo&quot; x=&quot;372&quot; y=&quot;588&quot;&gt;↑ workflow state · application DARs&lt;/text&gt;</span>
+<span class="source-line" id="L297"><a href="#L297">297</a>  &lt;path class=&quot;e deploy&quot; d=&quot;M660 460 L660 600&quot;/&gt;</span>
+<span class="source-line" id="L298"><a href="#L298">298</a>  &lt;text class=&quot;lo&quot; x=&quot;674&quot; y=&quot;574&quot;&gt;↓ deploy Harmonia Binding DAR&lt;/text&gt;</span>
+<span class="source-line" id="L299"><a href="#L299">299</a>  &lt;text class=&quot;lo&quot; x=&quot;674&quot; y=&quot;588&quot;&gt;&amp;#160;&amp;#160; + generated project/code&lt;/text&gt;</span>
+<span class="source-line" id="L300"><a href="#L300">300</a></span>
+<span class="source-line" id="L301"><a href="#L301">301</a>  &lt;!-- on-ledger edges --&gt;</span>
+<span class="source-line" id="L302"><a href="#L302">302</a>  &lt;path class=&quot;e on&quot; d=&quot;M545 700 L455 700&quot;/&gt;</span>
+<span class="source-line" id="L303"><a href="#L303">303</a>  &lt;text class=&quot;xs&quot; x=&quot;498&quot; y=&quot;682&quot; text-anchor=&quot;middle&quot;&gt;defines&lt;/text&gt;</span>
+<span class="source-line" id="L304"><a href="#L304">304</a>  &lt;text class=&quot;xs&quot; x=&quot;498&quot; y=&quot;694&quot; text-anchor=&quot;middle&quot;&gt;participation&lt;/text&gt;</span>
+<span class="source-line" id="L305"><a href="#L305">305</a>  &lt;path class=&quot;e on&quot; d=&quot;M450 770 L540 770&quot;/&gt;</span>
+<span class="source-line" id="L306"><a href="#L306">306</a>  &lt;text class=&quot;xs&quot; x=&quot;498&quot; y=&quot;788&quot; text-anchor=&quot;middle&quot;&gt;interfaces +&lt;/text&gt;</span>
+<span class="source-line" id="L307"><a href="#L307">307</a>  &lt;text class=&quot;xs&quot; x=&quot;498&quot; y=&quot;800&quot; text-anchor=&quot;middle&quot;&gt;applicability&lt;/text&gt;</span>
+<span class="source-line" id="L308"><a href="#L308">308</a>  &lt;path class=&quot;e on&quot; d=&quot;M912 672 L857 672&quot;/&gt;</span>
+<span class="source-line" id="L309"><a href="#L309">309</a>  &lt;text class=&quot;xs&quot; x=&quot;905&quot; y=&quot;660&quot; text-anchor=&quot;end&quot;&gt;implements&lt;/text&gt;</span>
+<span class="source-line" id="L310"><a href="#L310">310</a>  &lt;path class=&quot;e deploy&quot; d=&quot;M850 852 L907 852&quot;/&gt;</span>
+<span class="source-line" id="L311"><a href="#L311">311</a>  &lt;text class=&quot;xs&quot; x=&quot;878&quot; y=&quot;840&quot; text-anchor=&quot;middle&quot;&gt;binds&lt;/text&gt;</span>
+<span class="source-line" id="L312"><a href="#L312">312</a>  &lt;path class=&quot;e on&quot; d=&quot;M1288 930 L1288 955 L200 955 L200 930&quot;/&gt;</span>
+<span class="source-line" id="L313"><a href="#L313">313</a>  &lt;text class=&quot;lo&quot; x=&quot;744&quot; y=&quot;950&quot; text-anchor=&quot;middle&quot;&gt;demonstrates ① and ② against one Core-managed workflow model&lt;/text&gt;</span>
+<span class="source-line" id="L314"><a href="#L314">314</a>&lt;/svg&gt;</span>
+<span class="source-line" id="L315"><a href="#L315">315</a>&lt;/figure&gt;</span>
+<span class="source-line" id="L316"><a href="#L316">316</a></span>
+<span class="source-line" id="L317"><a href="#L317">317</a>&lt;!-- ═══════════════ 2. CONTRACT MODEL ═══════════════ --&gt;</span>
+<span class="source-line" id="L318"><a href="#L318">318</a>&lt;h2&gt;2 · On-ledger contract model — templates · interfaces · data&lt;/h2&gt;</span>
+<span class="source-line" id="L319"><a href="#L319">319</a>&lt;figure&gt;</span>
+<span class="source-line" id="L320"><a href="#L320">320</a>&lt;svg viewBox=&quot;0 0 1440 790&quot; role=&quot;img&quot; aria-label=&quot;Harmonia Daml contract model&quot;&gt;</span>
+<span class="source-line" id="L321"><a href="#L321">321</a>  &lt;defs&gt;</span>
+<span class="source-line" id="L322"><a href="#L322">322</a>    &lt;marker id=&quot;b&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;9&quot; refY=&quot;5&quot; markerWidth=&quot;7&quot; markerHeight=&quot;7&quot; orient=&quot;auto-start-reverse&quot;&gt;</span>
+<span class="source-line" id="L323"><a href="#L323">323</a>      &lt;path d=&quot;M0 0 L10 5 L0 10 z&quot; fill=&quot;#4ade80&quot;/&gt;&lt;/marker&gt;</span>
+<span class="source-line" id="L324"><a href="#L324">324</a>  &lt;/defs&gt;</span>
+<span class="source-line" id="L325"><a href="#L325">325</a>  &lt;style&gt;</span>
+<span class="source-line" id="L326"><a href="#L326">326</a>    .cls{fill:#102019;stroke:#28553d;stroke-width:1.2;rx:8}</span>
+<span class="source-line" id="L327"><a href="#L327">327</a>    .iface{fill:#101c26;stroke:#2a4d63;stroke-width:1.2;rx:8}</span>
+<span class="source-line" id="L328"><a href="#L328">328</a>    .dat{fill:#1a1610;stroke:#5c451f;stroke-width:1.2;rx:8}</span>
+<span class="source-line" id="L329"><a href="#L329">329</a>    .cn{font:600 13px var(--mono);fill:#e6edf3}</span>
+<span class="source-line" id="L330"><a href="#L330">330</a>    .cs{font:10px var(--mono);fill:#5b6b7d;letter-spacing:.1em}</span>
+<span class="source-line" id="L331"><a href="#L331">331</a>    .cf{font:11px var(--mono);fill:#9fb3c8}</span>
+<span class="source-line" id="L332"><a href="#L332">332</a>    .cc{font:11px var(--mono);fill:#4ade80}</span>
+<span class="source-line" id="L333"><a href="#L333">333</a>    .sep{stroke:#28553d;stroke-width:1}</span>
+<span class="source-line" id="L334"><a href="#L334">334</a>    .rel{stroke:#4ade80;stroke-width:1.3;fill:none;marker-end:url(#b)}</span>
+<span class="source-line" id="L335"><a href="#L335">335</a>    .relo{stroke:#f0a04c;stroke-width:1.3;fill:none;stroke-dasharray:5 4;marker-end:url(#ao)}</span>
+<span class="source-line" id="L336"><a href="#L336">336</a>    .rl{font:10.5px var(--mono);fill:#8fa3b8}</span>
+<span class="source-line" id="L337"><a href="#L337">337</a>  &lt;/style&gt;</span>
+<span class="source-line" id="L338"><a href="#L338">338</a></span>
+<span class="source-line" id="L339"><a href="#L339">339</a>  &lt;!-- WorkflowDefinition --&gt;</span>
+<span class="source-line" id="L340"><a href="#L340">340</a>  &lt;rect class=&quot;cls&quot; x=&quot;40&quot; y=&quot;80&quot; width=&quot;300&quot; height=&quot;240&quot;/&gt;</span>
+<span class="source-line" id="L341"><a href="#L341">341</a>  &lt;text class=&quot;cs&quot; x=&quot;56&quot; y=&quot;102&quot;&gt;«template» harmonia-core&lt;/text&gt;</span>
+<span class="source-line" id="L342"><a href="#L342">342</a>  &lt;text class=&quot;cn&quot; x=&quot;56&quot; y=&quot;120&quot;&gt;WorkflowDefinition&lt;/text&gt;</span>
+<span class="source-line" id="L343"><a href="#L343">343</a>  &lt;line class=&quot;sep&quot; x1=&quot;40&quot; y1=&quot;132&quot; x2=&quot;340&quot; y2=&quot;132&quot;/&gt;</span>
+<span class="source-line" id="L344"><a href="#L344">344</a>  &lt;text class=&quot;cf&quot; x=&quot;56&quot; y=&quot;150&quot;&gt;definitionId · version&lt;/text&gt;</span>
+<span class="source-line" id="L345"><a href="#L345">345</a>  &lt;text class=&quot;cf&quot; x=&quot;56&quot; y=&quot;168&quot;&gt;startEvent · endEvent&lt;/text&gt;</span>
+<span class="source-line" id="L346"><a href="#L346">346</a>  &lt;text class=&quot;cf&quot; x=&quot;56&quot; y=&quot;186&quot;&gt;steps : [StepSpec]&lt;/text&gt;</span>
+<span class="source-line" id="L347"><a href="#L347">347</a>  &lt;text class=&quot;cf&quot; x=&quot;56&quot; y=&quot;204&quot;&gt;flow : sequential&lt;/text&gt;</span>
+<span class="source-line" id="L348"><a href="#L348">348</a>  &lt;text class=&quot;cf&quot; x=&quot;56&quot; y=&quot;222&quot;&gt;branches : XOR · joins&lt;/text&gt;</span>
+<span class="source-line" id="L349"><a href="#L349">349</a>  &lt;text class=&quot;cf&quot; x=&quot;56&quot; y=&quot;240&quot;&gt;atomicBlocks : [[StepId]]&lt;/text&gt;</span>
+<span class="source-line" id="L350"><a href="#L350">350</a>  &lt;text class=&quot;cf&quot; x=&quot;56&quot; y=&quot;258&quot;&gt;subWorkflows : [DefId]&lt;/text&gt;</span>
+<span class="source-line" id="L351"><a href="#L351">351</a>  &lt;line class=&quot;sep&quot; x1=&quot;40&quot; y1=&quot;270&quot; x2=&quot;340&quot; y2=&quot;270&quot;/&gt;</span>
+<span class="source-line" id="L352"><a href="#L352">352</a>  &lt;text class=&quot;cc&quot; x=&quot;56&quot; y=&quot;288&quot;&gt;◆ Instantiate&lt;/text&gt;</span>
+<span class="source-line" id="L353"><a href="#L353">353</a>  &lt;text class=&quot;cf&quot; x=&quot;56&quot; y=&quot;306&quot;&gt;signatory definer&lt;/text&gt;</span>
+<span class="source-line" id="L354"><a href="#L354">354</a></span>
+<span class="source-line" id="L355"><a href="#L355">355</a>  &lt;!-- WorkflowInstance --&gt;</span>
+<span class="source-line" id="L356"><a href="#L356">356</a>  &lt;rect class=&quot;cls&quot; x=&quot;400&quot; y=&quot;60&quot; width=&quot;330&quot; height=&quot;300&quot;/&gt;</span>
+<span class="source-line" id="L357"><a href="#L357">357</a>  &lt;text class=&quot;cs&quot; x=&quot;416&quot; y=&quot;82&quot;&gt;«template» harmonia-core&lt;/text&gt;</span>
+<span class="source-line" id="L358"><a href="#L358">358</a>  &lt;text class=&quot;cn&quot; x=&quot;416&quot; y=&quot;100&quot;&gt;WorkflowInstance&lt;/text&gt;</span>
+<span class="source-line" id="L359"><a href="#L359">359</a>  &lt;line class=&quot;sep&quot; x1=&quot;400&quot; y1=&quot;112&quot; x2=&quot;730&quot; y2=&quot;112&quot;/&gt;</span>
+<span class="source-line" id="L360"><a href="#L360">360</a>  &lt;text class=&quot;cf&quot; x=&quot;416&quot; y=&quot;130&quot;&gt;definitionId&lt;/text&gt;</span>
+<span class="source-line" id="L361"><a href="#L361">361</a>  &lt;text class=&quot;cf&quot; x=&quot;416&quot; y=&quot;148&quot;&gt;roleBindings : [RoleBinding]&lt;/text&gt;</span>
+<span class="source-line" id="L362"><a href="#L362">362</a>  &lt;text class=&quot;cf&quot; x=&quot;416&quot; y=&quot;166&quot;&gt;state : orchestration state&lt;/text&gt;</span>
+<span class="source-line" id="L363"><a href="#L363">363</a>  &lt;text class=&quot;cf&quot; x=&quot;416&quot; y=&quot;184&quot;&gt;currentSteps · completedSteps&lt;/text&gt;</span>
+<span class="source-line" id="L364"><a href="#L364">364</a>  &lt;text class=&quot;cf&quot; x=&quot;416&quot; y=&quot;202&quot;&gt;outputs : workflow results&lt;/text&gt;</span>
+<span class="source-line" id="L365"><a href="#L365">365</a>  &lt;line class=&quot;sep&quot; x1=&quot;400&quot; y1=&quot;214&quot; x2=&quot;730&quot; y2=&quot;214&quot;/&gt;</span>
+<span class="source-line" id="L366"><a href="#L366">366</a>  &lt;text class=&quot;cc&quot; x=&quot;416&quot; y=&quot;232&quot;&gt;◆ AdvanceStep&lt;/text&gt;</span>
+<span class="source-line" id="L367"><a href="#L367">367</a>  &lt;text class=&quot;cc&quot; x=&quot;416&quot; y=&quot;250&quot;&gt;◆ TakeBranch (XOR) · Join&lt;/text&gt;</span>
+<span class="source-line" id="L368"><a href="#L368">368</a>  &lt;text class=&quot;cc&quot; x=&quot;416&quot; y=&quot;268&quot;&gt;◆ ExecuteAtomic (bounded)&lt;/text&gt;</span>
+<span class="source-line" id="L369"><a href="#L369">369</a>  &lt;text class=&quot;cc&quot; x=&quot;416&quot; y=&quot;286&quot;&gt;◆ Continue → sub-workflow&lt;/text&gt;</span>
+<span class="source-line" id="L370"><a href="#L370">370</a>  &lt;text class=&quot;cc&quot; x=&quot;416&quot; y=&quot;304&quot;&gt;◆ Complete → end event&lt;/text&gt;</span>
+<span class="source-line" id="L371"><a href="#L371">371</a>  &lt;line class=&quot;sep&quot; x1=&quot;400&quot; y1=&quot;316&quot; x2=&quot;730&quot; y2=&quot;316&quot;/&gt;</span>
+<span class="source-line" id="L372"><a href="#L372">372</a>  &lt;text class=&quot;cf&quot; x=&quot;416&quot; y=&quot;334&quot;&gt;signatory bound parties&lt;/text&gt;</span>
+<span class="source-line" id="L373"><a href="#L373">373</a>  &lt;text class=&quot;cf&quot; x=&quot;416&quot; y=&quot;352&quot;&gt;queryable · inspectable&lt;/text&gt;</span>
+<span class="source-line" id="L374"><a href="#L374">374</a></span>
+<span class="source-line" id="L375"><a href="#L375">375</a>  &lt;!-- RoleBinding --&gt;</span>
+<span class="source-line" id="L376"><a href="#L376">376</a>  &lt;rect class=&quot;dat&quot; x=&quot;400&quot; y=&quot;410&quot; width=&quot;160&quot; height=&quot;120&quot;/&gt;</span>
+<span class="source-line" id="L377"><a href="#L377">377</a>  &lt;text class=&quot;cs&quot; x=&quot;416&quot; y=&quot;432&quot;&gt;«data»&lt;/text&gt;</span>
+<span class="source-line" id="L378"><a href="#L378">378</a>  &lt;text class=&quot;cn&quot; x=&quot;416&quot; y=&quot;450&quot;&gt;RoleBinding&lt;/text&gt;</span>
+<span class="source-line" id="L379"><a href="#L379">379</a>  &lt;line class=&quot;sep&quot; x1=&quot;400&quot; y1=&quot;462&quot; x2=&quot;560&quot; y2=&quot;462&quot; stroke=&quot;#5c451f&quot;/&gt;</span>
+<span class="source-line" id="L380"><a href="#L380">380</a>  &lt;text class=&quot;cf&quot; x=&quot;416&quot; y=&quot;480&quot;&gt;role : Text&lt;/text&gt;</span>
+<span class="source-line" id="L381"><a href="#L381">381</a>  &lt;text class=&quot;cf&quot; x=&quot;416&quot; y=&quot;498&quot;&gt;party : Party&lt;/text&gt;</span>
+<span class="source-line" id="L382"><a href="#L382">382</a>  &lt;text class=&quot;cf&quot; x=&quot;416&quot; y=&quot;516&quot;&gt;rights : [StepId]&lt;/text&gt;</span>
+<span class="source-line" id="L383"><a href="#L383">383</a></span>
+<span class="source-line" id="L384"><a href="#L384">384</a>  &lt;!-- Continuation --&gt;</span>
+<span class="source-line" id="L385"><a href="#L385">385</a>  &lt;rect class=&quot;cls&quot; x=&quot;590&quot; y=&quot;410&quot; width=&quot;200&quot; height=&quot;140&quot;/&gt;</span>
+<span class="source-line" id="L386"><a href="#L386">386</a>  &lt;text class=&quot;cs&quot; x=&quot;606&quot; y=&quot;432&quot;&gt;«template» harmonia-core&lt;/text&gt;</span>
+<span class="source-line" id="L387"><a href="#L387">387</a>  &lt;text class=&quot;cn&quot; x=&quot;606&quot; y=&quot;450&quot;&gt;Continuation&lt;/text&gt;</span>
+<span class="source-line" id="L388"><a href="#L388">388</a>  &lt;line class=&quot;sep&quot; x1=&quot;590&quot; y1=&quot;462&quot; x2=&quot;790&quot; y2=&quot;462&quot;/&gt;</span>
+<span class="source-line" id="L389"><a href="#L389">389</a>  &lt;text class=&quot;cf&quot; x=&quot;606&quot; y=&quot;480&quot;&gt;producer : InstanceId&lt;/text&gt;</span>
+<span class="source-line" id="L390"><a href="#L390">390</a>  &lt;text class=&quot;cf&quot; x=&quot;606&quot; y=&quot;498&quot;&gt;consumer : DefinitionId&lt;/text&gt;</span>
+<span class="source-line" id="L391"><a href="#L391">391</a>  &lt;text class=&quot;cf&quot; x=&quot;606&quot; y=&quot;516&quot;&gt;outputs : payload&lt;/text&gt;</span>
+<span class="source-line" id="L392"><a href="#L392">392</a>  &lt;text class=&quot;cf&quot; x=&quot;606&quot; y=&quot;538&quot;&gt;links owned domains&lt;/text&gt;</span>
+<span class="source-line" id="L393"><a href="#L393">393</a></span>
+<span class="source-line" id="L394"><a href="#L394">394</a>  &lt;!-- StepAssignment --&gt;</span>
+<span class="source-line" id="L395"><a href="#L395">395</a>  &lt;rect class=&quot;cls&quot; x=&quot;800&quot; y=&quot;60&quot; width=&quot;330&quot; height=&quot;290&quot;/&gt;</span>
+<span class="source-line" id="L396"><a href="#L396">396</a>  &lt;text class=&quot;cs&quot; x=&quot;816&quot; y=&quot;82&quot;&gt;«template» harmonia-core&lt;/text&gt;</span>
+<span class="source-line" id="L397"><a href="#L397">397</a>  &lt;text class=&quot;cn&quot; x=&quot;816&quot; y=&quot;100&quot;&gt;StepAssignment&lt;/text&gt;</span>
+<span class="source-line" id="L398"><a href="#L398">398</a>  &lt;line class=&quot;sep&quot; x1=&quot;800&quot; y1=&quot;112&quot; x2=&quot;1130&quot; y2=&quot;112&quot;/&gt;</span>
+<span class="source-line" id="L399"><a href="#L399">399</a>  &lt;text class=&quot;cf&quot; x=&quot;816&quot; y=&quot;130&quot;&gt;stepId · instanceId&lt;/text&gt;</span>
+<span class="source-line" id="L400"><a href="#L400">400</a>  &lt;text class=&quot;cf&quot; x=&quot;816&quot; y=&quot;148&quot;&gt;actor : Party ← assignee&lt;/text&gt;</span>
+<span class="source-line" id="L401"><a href="#L401">401</a>  &lt;text class=&quot;cf&quot; x=&quot;816&quot; y=&quot;166&quot;&gt;kind : Create | Exercise | Wait&lt;/text&gt;</span>
+<span class="source-line" id="L402"><a href="#L402">402</a>  &lt;text class=&quot;cf&quot; x=&quot;816&quot; y=&quot;184&quot;&gt;&amp;#160;&amp;#160;&amp;#160;&amp;#160; | Branch | Continue | Atomic&lt;/text&gt;</span>
+<span class="source-line" id="L403"><a href="#L403">403</a>  &lt;text class=&quot;cf&quot; x=&quot;816&quot; y=&quot;202&quot;&gt;target : templateId · choice&lt;/text&gt;</span>
+<span class="source-line" id="L404"><a href="#L404">404</a>  &lt;text class=&quot;cf&quot; x=&quot;816&quot; y=&quot;220&quot;&gt;view : interface view&lt;/text&gt;</span>
+<span class="source-line" id="L405"><a href="#L405">405</a>  &lt;text class=&quot;cf&quot; x=&quot;816&quot; y=&quot;238&quot;&gt;authority : required from app&lt;/text&gt;</span>
+<span class="source-line" id="L406"><a href="#L406">406</a>  &lt;line class=&quot;sep&quot; x1=&quot;800&quot; y1=&quot;250&quot; x2=&quot;1130&quot; y2=&quot;250&quot;/&gt;</span>
+<span class="source-line" id="L407"><a href="#L407">407</a>  &lt;text class=&quot;cc&quot; x=&quot;816&quot; y=&quot;268&quot;&gt;◆ Execute → app choice&lt;/text&gt;</span>
+<span class="source-line" id="L408"><a href="#L408">408</a>  &lt;text class=&quot;cc&quot; x=&quot;816&quot; y=&quot;286&quot;&gt;◆ Reject&lt;/text&gt;</span>
+<span class="source-line" id="L409"><a href="#L409">409</a>  &lt;line class=&quot;sep&quot; x1=&quot;800&quot; y1=&quot;298&quot; x2=&quot;1130&quot; y2=&quot;298&quot;/&gt;</span>
+<span class="source-line" id="L410"><a href="#L410">410</a>  &lt;text class=&quot;cf&quot; x=&quot;816&quot; y=&quot;316&quot;&gt;controller actor&lt;/text&gt;</span>
+<span class="source-line" id="L411"><a href="#L411">411</a>  &lt;text class=&quot;cf&quot; x=&quot;816&quot; y=&quot;334&quot;&gt;human- or system-executed&lt;/text&gt;</span>
+<span class="source-line" id="L412"><a href="#L412">412</a></span>
+<span class="source-line" id="L413"><a href="#L413">413</a>  &lt;!-- Interface --&gt;</span>
+<span class="source-line" id="L414"><a href="#L414">414</a>  &lt;rect class=&quot;iface&quot; x=&quot;800&quot; y=&quot;400&quot; width=&quot;330&quot; height=&quot;180&quot;/&gt;</span>
+<span class="source-line" id="L415"><a href="#L415">415</a>  &lt;text class=&quot;cs&quot; x=&quot;816&quot; y=&quot;422&quot;&gt;«interface» harmonia-core&lt;/text&gt;</span>
+<span class="source-line" id="L416"><a href="#L416">416</a>  &lt;text class=&quot;cn&quot; x=&quot;816&quot; y=&quot;440&quot;&gt;HarmoniaStepAction&lt;/text&gt;</span>
+<span class="source-line" id="L417"><a href="#L417">417</a>  &lt;line class=&quot;sep&quot; x1=&quot;800&quot; y1=&quot;452&quot; x2=&quot;1130&quot; y2=&quot;452&quot; stroke=&quot;#2a4d63&quot;/&gt;</span>
+<span class="source-line" id="L418"><a href="#L418">418</a>  &lt;text class=&quot;cf&quot; x=&quot;816&quot; y=&quot;470&quot;&gt;viewtype StepView&lt;/text&gt;</span>
+<span class="source-line" id="L419"><a href="#L419">419</a>  &lt;text class=&quot;cf&quot; x=&quot;816&quot; y=&quot;488&quot;&gt;&amp;#160;&amp;#160;{ stepId, actor, status }&lt;/text&gt;</span>
+<span class="source-line" id="L420"><a href="#L420">420</a>  &lt;line class=&quot;sep&quot; x1=&quot;800&quot; y1=&quot;500&quot; x2=&quot;1130&quot; y2=&quot;500&quot; stroke=&quot;#2a4d63&quot;/&gt;</span>
+<span class="source-line" id="L421"><a href="#L421">421</a>  &lt;text class=&quot;cc&quot; x=&quot;816&quot; y=&quot;518&quot; fill=&quot;#4cc9f0&quot;&gt;◆ executeStep&lt;/text&gt;</span>
+<span class="source-line" id="L422"><a href="#L422">422</a>  &lt;line class=&quot;sep&quot; x1=&quot;800&quot; y1=&quot;530&quot; x2=&quot;1130&quot; y2=&quot;530&quot; stroke=&quot;#2a4d63&quot;/&gt;</span>
+<span class="source-line" id="L423"><a href="#L423">423</a>  &lt;text class=&quot;cf&quot; x=&quot;816&quot; y=&quot;548&quot;&gt;declared in core&lt;/text&gt;</span>
+<span class="source-line" id="L424"><a href="#L424">424</a>  &lt;text class=&quot;cf&quot; x=&quot;816&quot; y=&quot;566&quot;&gt;disclosure + visibility limits&lt;/text&gt;</span>
+<span class="source-line" id="L425"><a href="#L425">425</a></span>
+<span class="source-line" id="L426"><a href="#L426">426</a>  &lt;!-- Applicability --&gt;</span>
+<span class="source-line" id="L427"><a href="#L427">427</a>  &lt;rect class=&quot;dat&quot; x=&quot;800&quot; y=&quot;630&quot; width=&quot;330&quot; height=&quot;120&quot;/&gt;</span>
+<span class="source-line" id="L428"><a href="#L428">428</a>  &lt;text class=&quot;cs&quot; x=&quot;816&quot; y=&quot;652&quot;&gt;«data» applicability declaration&lt;/text&gt;</span>
+<span class="source-line" id="L429"><a href="#L429">429</a>  &lt;text class=&quot;cn&quot; x=&quot;816&quot; y=&quot;670&quot;&gt;AppliesTo&lt;/text&gt;</span>
+<span class="source-line" id="L430"><a href="#L430">430</a>  &lt;line class=&quot;sep&quot; x1=&quot;800&quot; y1=&quot;682&quot; x2=&quot;1130&quot; y2=&quot;682&quot; stroke=&quot;#5c451f&quot;/&gt;</span>
+<span class="source-line" id="L431"><a href="#L431">431</a>  &lt;text class=&quot;cf&quot; x=&quot;816&quot; y=&quot;700&quot;&gt;templateId · choice&lt;/text&gt;</span>
+<span class="source-line" id="L432"><a href="#L432">432</a>  &lt;text class=&quot;cf&quot; x=&quot;816&quot; y=&quot;718&quot;&gt;stepKind · role&lt;/text&gt;</span>
+<span class="source-line" id="L433"><a href="#L433">433</a>  &lt;text class=&quot;cf&quot; x=&quot;816&quot; y=&quot;736&quot;&gt;carried by the Binding DAR&lt;/text&gt;</span>
+<span class="source-line" id="L434"><a href="#L434">434</a></span>
+<span class="source-line" id="L435"><a href="#L435">435</a>  &lt;!-- Source app template --&gt;</span>
+<span class="source-line" id="L436"><a href="#L436">436</a>  &lt;rect class=&quot;cls&quot; x=&quot;1180&quot; y=&quot;400&quot; width=&quot;220&quot; height=&quot;350&quot;/&gt;</span>
+<span class="source-line" id="L437"><a href="#L437">437</a>  &lt;text class=&quot;cs&quot; x=&quot;1196&quot; y=&quot;422&quot;&gt;«template» source app DAR&lt;/text&gt;</span>
+<span class="source-line" id="L438"><a href="#L438">438</a>  &lt;text class=&quot;cn&quot; x=&quot;1196&quot; y=&quot;440&quot;&gt;AppTemplate&lt;/text&gt;</span>
+<span class="source-line" id="L439"><a href="#L439">439</a>  &lt;line class=&quot;sep&quot; x1=&quot;1180&quot; y1=&quot;452&quot; x2=&quot;1400&quot; y2=&quot;452&quot;/&gt;</span>
+<span class="source-line" id="L440"><a href="#L440">440</a>  &lt;text class=&quot;cf&quot; x=&quot;1196&quot; y=&quot;470&quot;&gt;own fields&lt;/text&gt;</span>
+<span class="source-line" id="L441"><a href="#L441">441</a>  &lt;text class=&quot;cf&quot; x=&quot;1196&quot; y=&quot;488&quot;&gt;own signatories&lt;/text&gt;</span>
+<span class="source-line" id="L442"><a href="#L442">442</a>  &lt;text class=&quot;cf&quot; x=&quot;1196&quot; y=&quot;506&quot;&gt;own observers&lt;/text&gt;</span>
+<span class="source-line" id="L443"><a href="#L443">443</a>  &lt;line class=&quot;sep&quot; x1=&quot;1180&quot; y1=&quot;518&quot; x2=&quot;1400&quot; y2=&quot;518&quot;/&gt;</span>
+<span class="source-line" id="L444"><a href="#L444">444</a>  &lt;text class=&quot;cc&quot; x=&quot;1196&quot; y=&quot;536&quot;&gt;◆ eligible choice A&lt;/text&gt;</span>
+<span class="source-line" id="L445"><a href="#L445">445</a>  &lt;text class=&quot;cc&quot; x=&quot;1196&quot; y=&quot;554&quot;&gt;◆ eligible choice B&lt;/text&gt;</span>
+<span class="source-line" id="L446"><a href="#L446">446</a>  &lt;line class=&quot;sep&quot; x1=&quot;1180&quot; y1=&quot;566&quot; x2=&quot;1400&quot; y2=&quot;566&quot;/&gt;</span>
+<span class="source-line" id="L447"><a href="#L447">447</a>  &lt;text class=&quot;cf&quot; x=&quot;1196&quot; y=&quot;584&quot;&gt;① implements iface&lt;/text&gt;</span>
+<span class="source-line" id="L448"><a href="#L448">448</a>  &lt;text class=&quot;cf&quot; x=&quot;1196&quot; y=&quot;602&quot;&gt;② bound by generated&lt;/text&gt;</span>
+<span class="source-line" id="L449"><a href="#L449">449</a>  &lt;text class=&quot;cf&quot; x=&quot;1196&quot; y=&quot;620&quot;&gt;&amp;#160;&amp;#160; code · unchanged&lt;/text&gt;</span>
+<span class="source-line" id="L450"><a href="#L450">450</a>  &lt;line class=&quot;sep&quot; x1=&quot;1180&quot; y1=&quot;632&quot; x2=&quot;1400&quot; y2=&quot;632&quot;/&gt;</span>
+<span class="source-line" id="L451"><a href="#L451">451</a>  &lt;text class=&quot;cf&quot; x=&quot;1196&quot; y=&quot;650&quot;&gt;ownership preserved&lt;/text&gt;</span>
+<span class="source-line" id="L452"><a href="#L452">452</a>  &lt;text class=&quot;cf&quot; x=&quot;1196&quot; y=&quot;668&quot;&gt;authorization preserved&lt;/text&gt;</span>
+<span class="source-line" id="L453"><a href="#L453">453</a>  &lt;text class=&quot;cf&quot; x=&quot;1196&quot; y=&quot;686&quot;&gt;privacy preserved&lt;/text&gt;</span>
+<span class="source-line" id="L454"><a href="#L454">454</a></span>
+<span class="source-line" id="L455"><a href="#L455">455</a>  &lt;!-- relations --&gt;</span>
+<span class="source-line" id="L456"><a href="#L456">456</a>  &lt;path class=&quot;rel&quot; d=&quot;M340 200 L395 200&quot;/&gt;</span>
+<span class="source-line" id="L457"><a href="#L457">457</a>  &lt;text class=&quot;rl&quot; x=&quot;367&quot; y=&quot;192&quot; text-anchor=&quot;middle&quot;&gt;1 ▸ n&lt;/text&gt;</span>
+<span class="source-line" id="L458"><a href="#L458">458</a>  &lt;text class=&quot;rl&quot; x=&quot;367&quot; y=&quot;216&quot; text-anchor=&quot;middle&quot;&gt;creates&lt;/text&gt;</span>
+<span class="source-line" id="L459"><a href="#L459">459</a></span>
+<span class="source-line" id="L460"><a href="#L460">460</a>  &lt;path class=&quot;rel&quot; d=&quot;M730 170 L795 170&quot;/&gt;</span>
+<span class="source-line" id="L461"><a href="#L461">461</a>  &lt;text class=&quot;rl&quot; x=&quot;762&quot; y=&quot;162&quot; text-anchor=&quot;middle&quot;&gt;1 ▸ n&lt;/text&gt;</span>
+<span class="source-line" id="L462"><a href="#L462">462</a>  &lt;text class=&quot;rl&quot; x=&quot;762&quot; y=&quot;186&quot; text-anchor=&quot;middle&quot;&gt;assigns&lt;/text&gt;</span>
+<span class="source-line" id="L463"><a href="#L463">463</a></span>
+<span class="source-line" id="L464"><a href="#L464">464</a>  &lt;path class=&quot;rel&quot; d=&quot;M480 360 L480 405&quot;/&gt;</span>
+<span class="source-line" id="L465"><a href="#L465">465</a>  &lt;text class=&quot;rl&quot; x=&quot;490&quot; y=&quot;390&quot;&gt;1 ▸ n&lt;/text&gt;</span>
+<span class="source-line" id="L466"><a href="#L466">466</a></span>
+<span class="source-line" id="L467"><a href="#L467">467</a>  &lt;path class=&quot;rel&quot; d=&quot;M690 360 L690 405&quot;/&gt;</span>
+<span class="source-line" id="L468"><a href="#L468">468</a>  &lt;text class=&quot;rl&quot; x=&quot;700&quot; y=&quot;390&quot;&gt;0 ▸ n&lt;/text&gt;</span>
+<span class="source-line" id="L469"><a href="#L469">469</a></span>
+<span class="source-line" id="L470"><a href="#L470">470</a>  &lt;path class=&quot;rel&quot; d=&quot;M700 550 L700 590 L190 590 L190 325&quot;/&gt;</span>
+<span class="source-line" id="L471"><a href="#L471">471</a>  &lt;text class=&quot;rl&quot; x=&quot;420&quot; y=&quot;583&quot; text-anchor=&quot;middle&quot;&gt;continuation feeds the next definition&lt;/text&gt;</span>
+<span class="source-line" id="L472"><a href="#L472">472</a></span>
+<span class="source-line" id="L473"><a href="#L473">473</a>  &lt;path class=&quot;rel&quot; d=&quot;M965 350 L965 395&quot;/&gt;</span>
+<span class="source-line" id="L474"><a href="#L474">474</a>  &lt;text class=&quot;rl&quot; x=&quot;976&quot; y=&quot;378&quot;&gt;exercises via&lt;/text&gt;</span>
+<span class="source-line" id="L475"><a href="#L475">475</a></span>
+<span class="source-line" id="L476"><a href="#L476">476</a>  &lt;path class=&quot;rel&quot; d=&quot;M965 630 L965 585&quot;/&gt;</span>
+<span class="source-line" id="L477"><a href="#L477">477</a>  &lt;text class=&quot;rl&quot; x=&quot;976&quot; y=&quot;612&quot;&gt;qualifies&lt;/text&gt;</span>
+<span class="source-line" id="L478"><a href="#L478">478</a></span>
+<span class="source-line" id="L479"><a href="#L479">479</a>  &lt;path class=&quot;relo&quot; d=&quot;M1130 490 L1175 490&quot;/&gt;</span>
+<span class="source-line" id="L480"><a href="#L480">480</a>  &lt;text class=&quot;rl&quot; x=&quot;1152&quot; y=&quot;480&quot; text-anchor=&quot;middle&quot;&gt;binds&lt;/text&gt;</span>
+<span class="source-line" id="L481"><a href="#L481">481</a></span>
+<span class="source-line" id="L482"><a href="#L482">482</a>  &lt;path class=&quot;relo&quot; d=&quot;M1130 700 L1152 700 L1152 545 L1175 545&quot;/&gt;</span>
+<span class="source-line" id="L483"><a href="#L483">483</a>  &lt;text class=&quot;rl&quot; x=&quot;1120&quot; y=&quot;726&quot; text-anchor=&quot;end&quot;&gt;selects choice&lt;/text&gt;</span>
+<span class="source-line" id="L484"><a href="#L484">484</a>&lt;/svg&gt;</span>
+<span class="source-line" id="L485"><a href="#L485">485</a>&lt;/figure&gt;</span>
+<span class="source-line" id="L486"><a href="#L486">486</a></span>
+<span class="source-line" id="L487"><a href="#L487">487</a>&lt;!-- ═══════════════ 3. CATALOG ═══════════════ --&gt;</span>
+<span class="source-line" id="L488"><a href="#L488">488</a>&lt;h2&gt;3 · Component catalog&lt;/h2&gt;</span>
+<span class="source-line" id="L489"><a href="#L489">489</a>&lt;table&gt;</span>
+<span class="source-line" id="L490"><a href="#L490">490</a>&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Component&lt;/th&gt;&lt;th&gt;Side&lt;/th&gt;&lt;th&gt;Kind&lt;/th&gt;&lt;th&gt;Owns&lt;/th&gt;&lt;th&gt;Boundary&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;</span>
+<span class="source-line" id="L491"><a href="#L491">491</a>&lt;tbody&gt;</span>
+<span class="source-line" id="L492"><a href="#L492">492</a>&lt;tr&gt;&lt;td class=&quot;k&quot;&gt;harmonia-dapp&lt;/td&gt;&lt;td&gt;&lt;span class=&quot;tag off&quot;&gt;off-ledger&lt;/span&gt;&lt;/td&gt;&lt;td&gt;application&lt;/td&gt;&lt;td&gt;viewer · composer · back-office views · tx submission · DAR fetch&lt;/td&gt;&lt;td&gt;interaction surface, not orchestration; no managed hosting, no BPMN editor&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line" id="L493"><a href="#L493">493</a>&lt;tr&gt;&lt;td class=&quot;k&quot;&gt;harmonia-builder&lt;/td&gt;&lt;td&gt;&lt;span class=&quot;tag off&quot;&gt;off-ledger&lt;/span&gt;&lt;/td&gt;&lt;td&gt;build-time tooling&lt;/td&gt;&lt;td&gt;DAR upload · DAR retrieval · codegen → Binding DAR + project/code&lt;/td&gt;&lt;td&gt;build time only; not a runtime composition model&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line" id="L494"><a href="#L494">494</a>&lt;tr&gt;&lt;td class=&quot;k&quot;&gt;Package Manager&lt;/td&gt;&lt;td&gt;&lt;span class=&quot;tag ext&quot;&gt;external&lt;/span&gt;&lt;/td&gt;&lt;td&gt;service&lt;/td&gt;&lt;td&gt;DARs · package metadata&lt;/td&gt;&lt;td&gt;Catalyx illustrative only; no integration implied&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line" id="L495"><a href="#L495">495</a>&lt;tr&gt;&lt;td class=&quot;k&quot;&gt;Canton Validator / Super Validator&lt;/td&gt;&lt;td&gt;&lt;span class=&quot;tag ext&quot;&gt;external&lt;/span&gt;&lt;/td&gt;&lt;td&gt;runtime host&lt;/td&gt;&lt;td&gt;hosts harmonia-core, Binding DAR, third-party DARs&lt;/td&gt;&lt;td&gt;upstream work subject to maintainer review + governance&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line" id="L496"><a href="#L496">496</a>&lt;tr&gt;&lt;td class=&quot;k&quot;&gt;harmonia-core&lt;/td&gt;&lt;td&gt;&lt;span class=&quot;tag on&quot;&gt;on-ledger&lt;/span&gt;&lt;/td&gt;&lt;td&gt;Daml package&lt;/td&gt;&lt;td&gt;workflow model · templates · choices · interfaces + applicability · state · step-exec rules&lt;/td&gt;&lt;td&gt;one Core-managed model; no separate runtime model&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line" id="L497"><a href="#L497">497</a>&lt;tr&gt;&lt;td class=&quot;k&quot;&gt;Harmonia Binding DAR&lt;/td&gt;&lt;td&gt;&lt;span class=&quot;tag on&quot;&gt;on-ledger&lt;/span&gt;&lt;/td&gt;&lt;td&gt;Daml package&lt;/td&gt;&lt;td&gt;applicable app templates · how each participates&lt;/td&gt;&lt;td&gt;import direction · templateId repr · binding mechanism undecided&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line" id="L498"><a href="#L498">498</a>&lt;tr&gt;&lt;td class=&quot;k&quot;&gt;Source App DAR ①&lt;/td&gt;&lt;td&gt;&lt;span class=&quot;tag on&quot;&gt;on-ledger&lt;/span&gt;&lt;/td&gt;&lt;td&gt;Daml package&lt;/td&gt;&lt;td&gt;implements Harmonia interfaces in a new version&lt;/td&gt;&lt;td&gt;app ownership / authorization / privacy preserved&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line" id="L499"><a href="#L499">499</a>&lt;tr&gt;&lt;td class=&quot;k&quot;&gt;Source App DAR ②&lt;/td&gt;&lt;td&gt;&lt;span class=&quot;tag on&quot;&gt;on-ledger&lt;/span&gt;&lt;/td&gt;&lt;td&gt;Daml package&lt;/td&gt;&lt;td&gt;existing DAR bound by generated code&lt;/td&gt;&lt;td&gt;no source change required&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line" id="L500"><a href="#L500">500</a>&lt;tr&gt;&lt;td class=&quot;k&quot;&gt;harmonia-references&lt;/td&gt;&lt;td&gt;&lt;span class=&quot;tag on&quot;&gt;on-ledger&lt;/span&gt;&lt;/td&gt;&lt;td&gt;Daml package&lt;/td&gt;&lt;td&gt;reference apps · ≥2 sample DARs · min. composition framework · 2 workflows&lt;/td&gt;&lt;td&gt;reference material, not required for integration&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line" id="L501"><a href="#L501">501</a>&lt;/tbody&gt;</span>
+<span class="source-line" id="L502"><a href="#L502">502</a>&lt;/table&gt;</span>
+<span class="source-line" id="L503"><a href="#L503">503</a></span>
+<span class="source-line" id="L504"><a href="#L504">504</a>&lt;!-- ═══════════════ 4. REFERENCE ENTITIES ═══════════════ --&gt;</span>
+<span class="source-line" id="L505"><a href="#L505">505</a>&lt;h2&gt;4 · Reference workflows — participants &amp;amp; domains&lt;/h2&gt;</span>
+<span class="source-line" id="L506"><a href="#L506">506</a>&lt;div class=&quot;grid2&quot;&gt;</span>
+<span class="source-line" id="L507"><a href="#L507">507</a>  &lt;div&gt;</span>
+<span class="source-line" id="L508"><a href="#L508">508</a>    &lt;h3&gt;Four-party token transfer&lt;/h3&gt;</span>
+<span class="source-line" id="L509"><a href="#L509">509</a>    &lt;table&gt;</span>
+<span class="source-line" id="L510"><a href="#L510">510</a>    &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Role&lt;/th&gt;&lt;th&gt;Step kind&lt;/th&gt;&lt;th&gt;Owns&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;</span>
+<span class="source-line" id="L511"><a href="#L511">511</a>    &lt;tbody&gt;</span>
+<span class="source-line" id="L512"><a href="#L512">512</a>    &lt;tr&gt;&lt;td class=&quot;k&quot;&gt;Buyer&lt;/td&gt;&lt;td&gt;Create&lt;/td&gt;&lt;td&gt;trade proposal (start event)&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line" id="L513"><a href="#L513">513</a>    &lt;tr&gt;&lt;td class=&quot;k&quot;&gt;Seller&lt;/td&gt;&lt;td&gt;Exercise&lt;/td&gt;&lt;td&gt;trade proposal agreement&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line" id="L514"><a href="#L514">514</a>    &lt;tr&gt;&lt;td class=&quot;k&quot;&gt;Source custodian&lt;/td&gt;&lt;td&gt;Exercise&lt;/td&gt;&lt;td&gt;position locked + eligible&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line" id="L515"><a href="#L515">515</a>    &lt;tr&gt;&lt;td class=&quot;k&quot;&gt;Destination custodian&lt;/td&gt;&lt;td&gt;Exercise&lt;/td&gt;&lt;td&gt;receive readiness / lock condition&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line" id="L516"><a href="#L516">516</a>    &lt;tr&gt;&lt;td class=&quot;k&quot;&gt;Settler&lt;/td&gt;&lt;td&gt;Atomic&lt;/td&gt;&lt;td&gt;fulfilled by one of the four — not a 5th party&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line" id="L517"><a href="#L517">517</a>    &lt;/tbody&gt;</span>
+<span class="source-line" id="L518"><a href="#L518">518</a>    &lt;/table&gt;</span>
+<span class="source-line" id="L519"><a href="#L519">519</a>  &lt;/div&gt;</span>
+<span class="source-line" id="L520"><a href="#L520">520</a>  &lt;div&gt;</span>
+<span class="source-line" id="L521"><a href="#L521">521</a>    &lt;h3&gt;Property financing → offer&lt;/h3&gt;</span>
+<span class="source-line" id="L522"><a href="#L522">522</a>    &lt;table&gt;</span>
+<span class="source-line" id="L523"><a href="#L523">523</a>    &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Domain / role&lt;/th&gt;&lt;th&gt;Step kind&lt;/th&gt;&lt;th&gt;Owns&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;</span>
+<span class="source-line" id="L524"><a href="#L524">524</a>    &lt;tbody&gt;</span>
+<span class="source-line" id="L525"><a href="#L525">525</a>    &lt;tr&gt;&lt;td class=&quot;k&quot;&gt;Buyer&lt;/td&gt;&lt;td&gt;Create&lt;/td&gt;&lt;td&gt;documents / credential-backed evidence&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line" id="L526"><a href="#L526">526</a>    &lt;tr&gt;&lt;td class=&quot;k&quot;&gt;Bank / financing domain&lt;/td&gt;&lt;td&gt;Branch (XOR)&lt;/td&gt;&lt;td&gt;approve | reject under own rules&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line" id="L527"><a href="#L527">527</a>    &lt;tr&gt;&lt;td class=&quot;k&quot;&gt;Buyer&lt;/td&gt;&lt;td&gt;Continue&lt;/td&gt;&lt;td&gt;purchase proposal → offer workflow&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line" id="L528"><a href="#L528">528</a>    &lt;tr&gt;&lt;td class=&quot;k&quot;&gt;Buyer-side agent&lt;/td&gt;&lt;td&gt;Exercise&lt;/td&gt;&lt;td&gt;relay in own domain&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line" id="L529"><a href="#L529">529</a>    &lt;tr&gt;&lt;td class=&quot;k&quot;&gt;Seller-side agent&lt;/td&gt;&lt;td&gt;Exercise&lt;/td&gt;&lt;td&gt;relay in own domain&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line" id="L530"><a href="#L530">530</a>    &lt;/tbody&gt;</span>
+<span class="source-line" id="L531"><a href="#L531">531</a>    &lt;/table&gt;</span>
+<span class="source-line" id="L532"><a href="#L532">532</a>  &lt;/div&gt;</span>
+<span class="source-line" id="L533"><a href="#L533">533</a>&lt;/div&gt;</span>
+<span class="source-line" id="L534"><a href="#L534">534</a></span>
+<span class="source-line" id="L535"><a href="#L535">535</a>&lt;!-- ═══════════════ 5. SCOPE ═══════════════ --&gt;</span>
+<span class="source-line" id="L536"><a href="#L536">536</a>&lt;h2&gt;5 · Workflow subset — in / out&lt;/h2&gt;</span>
+<span class="source-line" id="L537"><a href="#L537">537</a>&lt;div class=&quot;grid2&quot;&gt;</span>
+<span class="source-line" id="L538"><a href="#L538">538</a>  &lt;div&gt;</span>
+<span class="source-line" id="L539"><a href="#L539">539</a>    &lt;h3&gt;Supported (M1–M6)&lt;/h3&gt;</span>
+<span class="source-line" id="L540"><a href="#L540">540</a>    &lt;div class=&quot;chips&quot;&gt;</span>
+<span class="source-line" id="L541"><a href="#L541">541</a>      &lt;span class=&quot;chip&quot;&gt;start event&lt;/span&gt;&lt;span class=&quot;chip&quot;&gt;end event&lt;/span&gt;</span>
+<span class="source-line" id="L542"><a href="#L542">542</a>      &lt;span class=&quot;chip&quot;&gt;persisted orchestration state&lt;/span&gt;&lt;span class=&quot;chip&quot;&gt;human step&lt;/span&gt;</span>
+<span class="source-line" id="L543"><a href="#L543">543</a>      &lt;span class=&quot;chip&quot;&gt;system step&lt;/span&gt;&lt;span class=&quot;chip&quot;&gt;explicit assignee&lt;/span&gt;</span>
+<span class="source-line" id="L544"><a href="#L544">544</a>      &lt;span class=&quot;chip&quot;&gt;sequential flow&lt;/span&gt;&lt;span class=&quot;chip&quot;&gt;XOR branch&lt;/span&gt;</span>
+<span class="source-line" id="L545"><a href="#L545">545</a>      &lt;span class=&quot;chip&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;chip&quot;&gt;bounded wait&lt;/span&gt;</span>
+<span class="source-line" id="L546"><a href="#L546">546</a>      &lt;span class=&quot;chip&quot;&gt;bounded atomic block&lt;/span&gt;&lt;span class=&quot;chip&quot;&gt;multi-party progression&lt;/span&gt;</span>
+<span class="source-line" id="L547"><a href="#L547">547</a>      &lt;span class=&quot;chip&quot;&gt;sub-workflow continuation&lt;/span&gt;&lt;span class=&quot;chip&quot;&gt;role → party binding&lt;/span&gt;</span>
+<span class="source-line" id="L548"><a href="#L548">548</a>    &lt;/div&gt;</span>
+<span class="source-line" id="L549"><a href="#L549">549</a>  &lt;/div&gt;</span>
+<span class="source-line" id="L550"><a href="#L550">550</a>  &lt;div&gt;</span>
+<span class="source-line" id="L551"><a href="#L551">551</a>    &lt;h3&gt;Out of scope&lt;/h3&gt;</span>
+<span class="source-line" id="L552"><a href="#L552">552</a>    &lt;div class=&quot;chips&quot;&gt;</span>
+<span class="source-line" id="L553"><a href="#L553">553</a>      &lt;span class=&quot;chip no&quot;&gt;generic BPMN&lt;/span&gt;&lt;span class=&quot;chip no&quot;&gt;timers&lt;/span&gt;</span>
+<span class="source-line" id="L554"><a href="#L554">554</a>      &lt;span class=&quot;chip no&quot;&gt;escalations&lt;/span&gt;&lt;span class=&quot;chip no&quot;&gt;compensation&lt;/span&gt;</span>
+<span class="source-line" id="L555"><a href="#L555">555</a>      &lt;span class=&quot;chip no&quot;&gt;rich exception handling&lt;/span&gt;&lt;span class=&quot;chip no&quot;&gt;subprocess library&lt;/span&gt;</span>
+<span class="source-line" id="L556"><a href="#L556">556</a>      &lt;span class=&quot;chip no&quot;&gt;managed hosting&lt;/span&gt;&lt;span class=&quot;chip no&quot;&gt;workflow studio&lt;/span&gt;</span>
+<span class="source-line" id="L557"><a href="#L557">557</a>      &lt;span class=&quot;chip no&quot;&gt;BPMN editor&lt;/span&gt;&lt;span class=&quot;chip no&quot;&gt;off-chain orchestration&lt;/span&gt;</span>
+<span class="source-line" id="L558"><a href="#L558">558</a>      &lt;span class=&quot;chip no&quot;&gt;arbitrary dynamic composition&lt;/span&gt;&lt;span class=&quot;chip no&quot;&gt;custom adopter integration&lt;/span&gt;</span>
+<span class="source-line" id="L559"><a href="#L559">559</a>      &lt;span class=&quot;chip no&quot;&gt;domain-specific app dev&lt;/span&gt;&lt;span class=&quot;chip no&quot;&gt;central operator&lt;/span&gt;</span>
+<span class="source-line" id="L560"><a href="#L560">560</a>    &lt;/div&gt;</span>
+<span class="source-line" id="L561"><a href="#L561">561</a>  &lt;/div&gt;</span>
+<span class="source-line" id="L562"><a href="#L562">562</a>&lt;/div&gt;</span>
+<span class="source-line" id="L563"><a href="#L563">563</a></span>
+<span class="source-line" id="L564"><a href="#L564">564</a>&lt;!-- ═══════════════ 6. OPEN ═══════════════ --&gt;</span>
+<span class="source-line" id="L565"><a href="#L565">565</a>&lt;h2&gt;6 · Open design points (stated in the proposal)&lt;/h2&gt;</span>
+<span class="source-line" id="L566"><a href="#L566">566</a>&lt;table&gt;</span>
+<span class="source-line" id="L567"><a href="#L567">567</a>&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Point&lt;/th&gt;&lt;th&gt;Where it sits in the diagrams&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;</span>
+<span class="source-line" id="L568"><a href="#L568">568</a>&lt;tbody&gt;</span>
+<span class="source-line" id="L569"><a href="#L569">569</a>&lt;tr&gt;&lt;td class=&quot;k&quot;&gt;Package-import direction&lt;/td&gt;&lt;td&gt;§1 — the two anti-parallel Binding DAR ⇄ harmonia-core edges&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line" id="L570"><a href="#L570">570</a>&lt;tr&gt;&lt;td class=&quot;k&quot;&gt;templateId representation&lt;/td&gt;&lt;td&gt;§2 — &lt;code&gt;AppliesTo.templateId&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line" id="L571"><a href="#L571">571</a>&lt;tr&gt;&lt;td class=&quot;k&quot;&gt;Binding mechanism&lt;/td&gt;&lt;td&gt;§2 — &lt;code&gt;binds&lt;/code&gt; and &lt;code&gt;selects choice&lt;/code&gt; relations&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line" id="L572"><a href="#L572">572</a>&lt;tr&gt;&lt;td class=&quot;k&quot;&gt;Interfaces: core vs Binding DAR&lt;/td&gt;&lt;td&gt;§1 — “interfaces + applicability” placed in harmonia-core, applicability carried by the Binding DAR; abstract and Core section state it differently&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line" id="L573"><a href="#L573">573</a>&lt;tr&gt;&lt;td class=&quot;k&quot;&gt;Authorization scope: party-level vs cross-party&lt;/td&gt;&lt;td&gt;§2 — &lt;code&gt;StepAssignment.authority&lt;/code&gt;; §1 — bounded atomic execution block&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line" id="L574"><a href="#L574">574</a>&lt;tr&gt;&lt;td class=&quot;k&quot;&gt;Container boundaries&lt;/td&gt;&lt;td&gt;§1 — all Harmonia nodes are “proposed logical components”; final split set at technical design&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line" id="L575"><a href="#L575">575</a>&lt;tr&gt;&lt;td class=&quot;k&quot;&gt;Template &amp;amp; choice names in §2&lt;/td&gt;&lt;td&gt;§2 — derived from the specified semantics; the proposal names no templates&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line" id="L576"><a href="#L576">576</a>&lt;/tbody&gt;</span>
+<span class="source-line" id="L577"><a href="#L577">577</a>&lt;/table&gt;</span>
+<span class="source-line" id="L578"><a href="#L578">578</a></span>
+<span class="source-line" id="L579"><a href="#L579">579</a>&lt;/div&gt;</span>
+<span class="source-line" id="L580"><a href="#L580">580</a>&lt;/body&gt;</span>
+<span class="source-line" id="L581"><a href="#L581">581</a>&lt;/html&gt;</span></div></main></body></html>

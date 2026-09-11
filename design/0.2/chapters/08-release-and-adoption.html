@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Release &amp; adoption · Harmonia</title><link rel="stylesheet" href="../style.css"><script src="../book.js" defer></script></head>
+<body class=""><a class="skip-link" href="#main">Skip to content</a>
+<aside class="rail"><a class="brand" href="../book-overview.html"><span class="mark" aria-hidden="true"></span><span class="brand-name">Harmonia</span><span class="brand-caption">THE FIELD GUIDE</span></a>
+<button class="mobile-menu" aria-expanded="false" aria-controls="chapter-nav">Chapters</button><nav id="chapter-nav" aria-label="Book chapters"><a class="nav-link " href="../book-overview.html">Overview</a><p class="nav-label">UNDERSTAND</p><a class="nav-link " href="../chapters/01-product.html"><span>01</span>The product</a><a class="nav-link " href="../chapters/02-roles-and-trust.html"><span>02</span>Roles &amp; trust</a><p class="nav-label">EXPLORE</p><a class="nav-link " href="../book-chapter.html"><span>03</span>Financing to offer</a><a class="nav-link " href="../chapters/04-four-party-transfer.html"><span>04</span>Four-party transfer</a><a class="nav-link " href="../chapters/05-bring-an-application.html"><span>05</span>Bring an application</a><a class="nav-link " href="../chapters/06-compose-a-workflow.html"><span>06</span>Compose a workflow</a><p class="nav-label">VERIFY</p><a class="nav-link " href="../chapters/07-evidence-and-boundaries.html"><span>07</span>Evidence &amp; boundaries</a><a class="nav-link active" href="../chapters/08-release-and-adoption.html"><span>08</span>Release &amp; adoption</a></nav>
+<div class="rail-footer"><a href="../coverage.html">Original documents ↗</a></div></aside>
+<header class="topbar"><span>The book &nbsp; / &nbsp; Release &amp; adoption</span><span class="edition">0.2 · DESIGN PREVIEW</span></header>
+<main id="main" class="content article"><p class="eyebrow">CHAPTER 08 · SOURCE-CITED DESIGN EDITION</p><h1>Release &amp; adoption</h1><p>Move from a local example to external use</p>
+<p>A useful release can be obtained, run, inspected, and adapted by another team. Its documentation helps that team understand the integration cost and the supported trust boundary.</p>
+<h2>How to read this chapter</h2>
+<p>M1–M6 describe engineering and release deliverables. M7 requires two qualified external teams using the system in pilot or production. M8 concerns additional qualified adoption. The complete original milestone, co-marketing, and maintenance wording follows below.</p>
+<h2>Current evidence and next work</h2>
+<p>The repository contains local release evidence and a blank external-feedback template. Public destination and license remain undecided. No external adoption, funded acceptance, completed workshop, or public release is established by this design.</p>
+<p><a href="../../../docs/release/evaluator-feedback.md">Unfilled evaluator record</a></p><h2 id="quotations">The original words</h2><p class="note">Open a passage to read its full quotation. Source locations and fingerprints remain inspectable. Quoted proposal statements are not claims of completed implementation.</p><details class="source-section" id="proposal-L292"><summary>All eight milestones and their delivery context</summary>
+<a class="citation" href="../sources/proposal.html#L292">Original proposal · lines 292–391 ↗</a>
+<blockquote class="source-quotes"><span class="source-unit" data-unit="proposal-L292">## Milestones and Deliverables</span>
+<span class="source-unit" data-unit="proposal-L294">Following approval, the project will start in the following weeks, ideally at the beginning of a month. If approval arrives late in a month, work may start on the 15th or the following day. M1-M6 run in consecutive one-calendar-month periods from the actual start date: a project starting on the 1st delivers at month end; a project starting on the 15th delivers on the 14th of the following month. “Month N” is the corresponding milestone period, with delivery due at its end. M7 is due one year after M6, and M8 two years after M6.</span>
+<span class="source-unit" data-unit="proposal-L296">### Milestone 1: Design, Core Prototype, and Dapp Baseline</span>
+<span class="source-unit" data-unit="proposal-L297">**Estimated Delivery:** Month 1  </span>
+<span class="source-unit" data-unit="proposal-L298">**Focus:** Define the narrow BPMN-like Harmonia workflow scope, establish the initial `harmonia-core` model, and provide a clear visual baseline for `harmonia-dapp`.</span>
+<span class="source-unit" data-unit="proposal-L300">**Deliverables / Value Metrics:**</span>
+<span class="source-unit" data-unit="proposal-L301">- **Harmonia Design Document**</span>
+<span class="source-unit" data-unit="proposal-L302">  - Release Scope and Out-of-Scope</span>
+<span class="source-unit" data-unit="proposal-L303">  - Core Architecture</span>
+<span class="source-unit" data-unit="proposal-L304">  - Workflow Semantics and Boundaries</span>
+<span class="source-unit" data-unit="proposal-L305">  - Authorization and Risk Considerations</span>
+<span class="source-unit" data-unit="proposal-L306">  - Extension Points</span>
+<span class="source-unit" data-unit="proposal-L307">  - Mapping to Mockups</span>
+<span class="source-unit" data-unit="proposal-L308">- **Simplified `harmonia-core` prototype**</span>
+<span class="source-unit" data-unit="proposal-L309">  - `harmonia-core model`</span>
+<span class="source-unit" data-unit="proposal-L310">  - `simplified reference workflow leveraging harmonia-core`</span>
+<span class="source-unit" data-unit="proposal-L311">- Clear `harmonia-dapp` mockups covering the intended workflow, execution, and back-office experience.</span>
+<span class="source-unit" data-unit="proposal-L312">- A shared implementation baseline for subsequent work. No working dapp is expected in this milestone.</span>
+<span class="source-unit" data-unit="proposal-L314">### Milestone 2: First Runnable Workflow and Dapp Implementation Start</span>
+<span class="source-unit" data-unit="proposal-L315">**Estimated Delivery:** Month 2  </span>
+<span class="source-unit" data-unit="proposal-L316">**Focus:** Complete the M2 `harmonia-core` and `harmonia-references` scope within this milestone for the first runnable workflow and initial Core hardening. `harmonia-dapp` starts support from the M1 baseline and begins partial M2 support.</span>
+<span class="source-unit" data-unit="proposal-L318">**Deliverables / Value Metrics:**</span>
+<span class="source-unit" data-unit="proposal-L319">- **Completed M2 `harmonia-core` and `harmonia-references` scope**</span>
+<span class="source-unit" data-unit="proposal-L320">  - First runnable narrow BPMN-like workflow.</span>
+<span class="source-unit" data-unit="proposal-L321">  - Initial Core hardening, including branching and joining, persisted states, current and next steps, and workflow-execution/back-office views.</span>
+<span class="source-unit" data-unit="proposal-L322">  - Reference project imports `harmonia-core.dar`.</span>
+<span class="source-unit" data-unit="proposal-L323">  - Initial use of a Package Manager as a DAR source.</span>
+<span class="source-unit" data-unit="proposal-L324">- `harmonia-dapp` starts support from the M1 mockups and design baseline and begins partial support for M2 functionality.</span>
+<span class="source-unit" data-unit="proposal-L325">- An executable reference path that validates the relationship between the dedicated Harmonia Binding DAR and the Core-managed workflow model.</span>
+<span class="source-unit" data-unit="proposal-L327">### Milestone 3: Complete First Workflow Scope and Begin Sample-App Composition</span>
+<span class="source-unit" data-unit="proposal-L328">**Estimated Delivery:** Month 3  </span>
+<span class="source-unit" data-unit="proposal-L329">**Focus:** Complete reference composition of two sample applications and any required `harmonia-core` and `harmonia-references` evolution within this milestone. `harmonia-dapp` completes M2 support and begins partial M3 support.</span>
+<span class="source-unit" data-unit="proposal-L331">**Deliverables / Value Metrics:**</span>
+<span class="source-unit" data-unit="proposal-L332">- **Completed M3 Core and References scope**</span>
+<span class="source-unit" data-unit="proposal-L333">  - Reference composition of two sample applications through the direct final-application-DAR interface implementation path.</span>
+<span class="source-unit" data-unit="proposal-L334">  - Shared Core-managed workflow model across both applications.</span>
+<span class="source-unit" data-unit="proposal-L335">- `harmonia-dapp` completes M2 support and begins partial support for the M3 sample-application composition scope.</span>
+<span class="source-unit" data-unit="proposal-L337">### Milestone 4: Builder Initiation and Converged Integration Model</span>
+<span class="source-unit" data-unit="proposal-L338">**Estimated Delivery:** Month 4  </span>
+<span class="source-unit" data-unit="proposal-L339">**Focus:** Complete Builder-generated project, code, and boilerplate for existing application DARs within this milestone, using the dedicated Harmonia Binding DAR&#x27;s applicability declarations to converge on the Core-managed model. `harmonia-dapp` completes M3 support and begins partial M4 support.</span>
+<span class="source-unit" data-unit="proposal-L341">**Deliverables / Value Metrics:**</span>
+<span class="source-unit" data-unit="proposal-L342">- **Completed M4 Builder, Core and References scope**</span>
+<span class="source-unit" data-unit="proposal-L343">  - Generated project, code, and boilerplate from `harmonia-builder` against an existing application DAR.</span>
+<span class="source-unit" data-unit="proposal-L344">  - Reference coverage for both participation paths.</span>
+<span class="source-unit" data-unit="proposal-L345">  - Both paths participate in the same `harmonia-core` managed model through the interface definitions.</span>
+<span class="source-unit" data-unit="proposal-L346">- `harmonia-dapp` completes M3 support and begins partial support for Builder-generated project/code functionality.</span>
+<span class="source-unit" data-unit="proposal-L348">### Milestone 5: Builder Scope Completion and Extension-Boundary Hardening</span>
+<span class="source-unit" data-unit="proposal-L349">**Estimated Delivery:** Month 5  </span>
+<span class="source-unit" data-unit="proposal-L350">**Focus:** Complete hardening, coverage and extension-boundary work within this milestone. `harmonia-dapp` completes M4 support and begins partial M5 support.</span>
+<span class="source-unit" data-unit="proposal-L352">**Deliverables / Value Metrics:**</span>
+<span class="source-unit" data-unit="proposal-L353">- **Completed M5 scope**</span>
+<span class="source-unit" data-unit="proposal-L354">  - Core hardening and coverage expansion across supported narrow BPMN-like workflow behaviour.</span>
+<span class="source-unit" data-unit="proposal-L355">  - Defined extension boundaries for `harmonia-core`, `harmonia-references` and `harmonia-builder`.</span>
+<span class="source-unit" data-unit="proposal-L356">  - Reference validation of interface applicability and Builder-generated project/code boundaries without expanding into generic BPMN scope.</span>
+<span class="source-unit" data-unit="proposal-L357">- `harmonia-dapp` completes M4 support and begins partial support for M5 hardening, coverage and extension-boundary work.</span>
+<span class="source-unit" data-unit="proposal-L359">### Milestone 6: Release Scope Completion</span>
+<span class="source-unit" data-unit="proposal-L360">**Estimated Delivery:** Month 6  </span>
+<span class="source-unit" data-unit="proposal-L361">**Focus:** Complete Harmonia&#x27;s technical release scope and publish the release-ready foundation for M7 and M8. `harmonia-dapp` completes M5 support and all remaining release support.</span>
+<span class="source-unit" data-unit="proposal-L363">**Deliverables / Value Metrics:**</span>
+<span class="source-unit" data-unit="proposal-L364">- **Completed final release scope**</span>
+<span class="source-unit" data-unit="proposal-L365">  - Consistent Core-managed workflow model across both participation paths.</span>
+<span class="source-unit" data-unit="proposal-L366">  - Runnable reference projects using Package Manager DAR sourcing.</span>
+<span class="source-unit" data-unit="proposal-L367">  - `harmonia-builder` output for an existing application DAR.</span>
+<span class="source-unit" data-unit="proposal-L368">- `harmonia-dapp` completes M5 support and all remaining release support aligned to the completed Core, References and Builder scope.</span>
+<span class="source-unit" data-unit="proposal-L370">### Milestone 7: Adoption Readiness and Evaluator Enablement</span>
+<span class="source-unit" data-unit="proposal-L371">**Estimated Delivery:** One year after Milestone 6 is delivered  </span>
+<span class="source-unit" data-unit="proposal-L372">**Focus:** Validate external adoption through exactly 2 qualified external teams using Harmonia in pilot or production applications</span>
+<span class="source-unit" data-unit="proposal-L374">**Deliverables / Value Metrics:**</span>
+<span class="source-unit" data-unit="proposal-L375">  - documented use of Harmonia by exactly 2 qualified external teams in pilot or production applications</span>
+<span class="source-unit" data-unit="proposal-L376">  - confirmation from each adopting team to the Tech &amp; Ops Committee</span>
+<span class="source-unit" data-unit="proposal-L377">  - documentation showing substantive use of Harmonia&#x27;s core-managed workflow model through the dedicated Harmonia Binding DAR, including application-DAR interface implementation or `harmonia-builder` integration against an existing application DAR</span>
+<span class="source-unit" data-unit="proposal-L378">  - letters of intent may support evaluation but do not satisfy this milestone</span>
+<span class="source-unit" data-unit="proposal-L379">  - validation is based on documented evidence of use and adopter confirmation; strict binary package traceability is not required</span>
+<span class="source-unit" data-unit="proposal-L381">### Milestone 8: Reference Uptake, Feedback Synthesis, and Project Closeout</span>
+<span class="source-unit" data-unit="proposal-L382">**Estimated Delivery:** Two years after Milestone 6 is delivered  </span>
+<span class="source-unit" data-unit="proposal-L383">**Focus:** Reward additional external adoption beyond Milestone 7</span>
+<span class="source-unit" data-unit="proposal-L385">**Deliverables / Value Metrics:**</span>
+<span class="source-unit" data-unit="proposal-L386">- up to 10 additional qualified independent external teams beyond Milestone 7, accepted for substantive reuse, adaptation, or extension of Harmonia in pilot or production applications</span>
+<span class="source-unit" data-unit="proposal-L387">- each accepted additional team qualifies for exactly one mutually exclusive, non-stacking payment: 30,000 CC for a pilot application or 60,000 CC for a production application; a team progressing from pilot to production is capped at 60,000 CC total</span>
+<span class="source-unit" data-unit="proposal-L388">- one-time, non-duplicative cohort premiums of 50,000 CC upon 5 accepted additional teams and 50,000 CC upon 10 accepted additional teams; these premiums are not per-adopter payments and do not replace individual payments</span>
+<span class="source-unit" data-unit="proposal-L389">- Tech &amp; Ops Committee confirmation for each accepted additional team and substantial documentation of reuse, adaptation, or extension; letters of intent do not satisfy this milestone</span>
+<span class="source-unit" data-unit="proposal-L390">- evidence must include documented use, traceability to Harmonia deliverables completed through Milestone 6, and adopter confirmation; strict binary package-level traceability is not required</span></blockquote></details>
+<details class="source-section" id="proposal-L466"><summary>Co-marketing and knowledge transfer</summary>
+<a class="citation" href="../sources/proposal.html#L466">Original proposal · lines 466–483 ↗</a>
+<blockquote class="source-quotes"><span class="source-unit" data-unit="proposal-L466">## Co-Marketing</span>
+<span class="source-unit" data-unit="proposal-L468">Upon release, the implementing entity will work with the Foundation on more than simple visibility for the project. The aim is to help the delivered implementation reach serious technical evaluation and early reuse.</span>
+<span class="source-unit" data-unit="proposal-L470">The released orchestration package and examples should be easy to find, straightforward to assess, and practical to test for teams that may want to adopt, extend, or build on them. That requires clear positioning within the Canton stack, examples and documentation packaged for real evaluation, and coordination with early evaluator teams so external groups can move from interest to technical assessment with limited friction.</span>
+<span class="source-unit" data-unit="proposal-L472">Accordingly, the implementing entity will collaborate with the Foundation on:</span>
+<span class="source-unit" data-unit="proposal-L474">- a coordinated public announcement covering the problem, delivered artifacts, and intended ecosystem value</span>
+<span class="source-unit" data-unit="proposal-L475">- a technical architecture write-up explaining the on-ledger orchestration model, composition boundary, and key design tradeoffs</span>
+<span class="source-unit" data-unit="proposal-L476">- at least one recorded developer walkthrough showing how to define, run, inspect, and extend an example workflow using the delivered Harmonia package, reference composition, and visual workflow viewer or composer</span>
+<span class="source-unit" data-unit="proposal-L477">- publication of the example workflows and reference integration material in a form that other teams can clone, run, and evaluate</span>
+<span class="source-unit" data-unit="proposal-L478">- a live ecosystem demo or workshop session focused on adoption, implementation constraints, and extension paths for other teams building composed multi-party applications on Canton</span>
+<span class="source-unit" data-unit="proposal-L479">- coordination with the Foundation to identify and engage early evaluator teams who can test the delivered implementation in relevant Canton composed application use cases</span>
+<span class="source-unit" data-unit="proposal-L480">- collaboration with the Foundation to disseminate the released work through relevant academic, research, and standards-adjacent networks, including existing connections with [INESC-ID](https://www.inesc-id.pt/), [Nova SBE](https://www.novasbe.unl.pt/en/), and related professional communities</span>
+<span class="source-unit" data-unit="proposal-L482">---</span></blockquote></details>
+<details class="source-section" id="proposal-L549"><summary>Maintenance commitment</summary>
+<a class="citation" href="../sources/proposal.html#L549">Original proposal · lines 549–551 ↗</a>
+<blockquote class="source-quotes"><span class="source-unit" data-unit="proposal-L549">## Maintenance</span>
+<span class="source-unit" data-unit="proposal-L551">Unlockit will maintain this work throughout the grant period. After grant finalization, continued maintenance is tied to Unlockit&#x27;s continued product use in the Real Estate vertical, where governance and allocation problems are foreseen or already applicable. Unlockit is open to maintaining the work jointly with other interested stakeholders. This does not commit to a fixed post-grant duration, SLA, staffing level, funding, or roadmap.</span></blockquote></details><div class="appendices"><a href="../coverage.html">View document coverage and all chapter destinations →</a><a href="09-proposal-context.html">Appendix: proposal context</a><a href="10-context-and-references.html">Appendix: context and references</a></div></main></body></html>

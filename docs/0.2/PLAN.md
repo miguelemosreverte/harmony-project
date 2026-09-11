@@ -1,6 +1,6 @@
 # Harmonia 0.2 — from proposal to an understandable product
 
-Status: design and traceability work in progress. Base: fourth draft, `bef8ac5`.
+Status: design prototype and source traceability implemented; verification in progress. Base: fourth draft, `bef8ac5`.
 This plan changes the product evaluation surface and makes the remaining product
 work explicit. It does not treat historical test results as fresh 0.2 results.
 
@@ -48,6 +48,8 @@ the subsequent phase described below, matching the requested design-first sequen
     participant view, input/expectation/observation, and source inspection.
   - [ ] `design/0.2/application.png` and `.html`: workspace, current actor, source
     owners, enabled next action, timeline, and package/binding entry point.
+  - [ ] `design/0.2/application-builder.{png,html}`: the integration journey.
+  - [ ] `design/0.2/coverage.{png,html}`: the source coverage and evidence distinction.
   - [ ] Keep the exact image prompts and original generated files alongside the
     implementation. Capture HTML screenshots and document fidelity limitations.
   - [ ] Share a small local style sheet and simple mock interaction code; avoid

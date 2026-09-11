@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bring an application · Harmonia</title><link rel="stylesheet" href="../style.css"><script src="../book.js" defer></script></head>
+<body class=""><a class="skip-link" href="#main">Skip to content</a>
+<aside class="rail"><a class="brand" href="../book-overview.html"><span class="mark" aria-hidden="true"></span><span class="brand-name">Harmonia</span><span class="brand-caption">THE FIELD GUIDE</span></a>
+<button class="mobile-menu" aria-expanded="false" aria-controls="chapter-nav">Chapters</button><nav id="chapter-nav" aria-label="Book chapters"><a class="nav-link " href="../book-overview.html">Overview</a><p class="nav-label">UNDERSTAND</p><a class="nav-link " href="../chapters/01-product.html"><span>01</span>The product</a><a class="nav-link " href="../chapters/02-roles-and-trust.html"><span>02</span>Roles &amp; trust</a><p class="nav-label">EXPLORE</p><a class="nav-link " href="../book-chapter.html"><span>03</span>Financing to offer</a><a class="nav-link " href="../chapters/04-four-party-transfer.html"><span>04</span>Four-party transfer</a><a class="nav-link active" href="../chapters/05-bring-an-application.html"><span>05</span>Bring an application</a><a class="nav-link " href="../chapters/06-compose-a-workflow.html"><span>06</span>Compose a workflow</a><p class="nav-label">VERIFY</p><a class="nav-link " href="../chapters/07-evidence-and-boundaries.html"><span>07</span>Evidence &amp; boundaries</a><a class="nav-link " href="../chapters/08-release-and-adoption.html"><span>08</span>Release &amp; adoption</a></nav>
+<div class="rail-footer"><a href="../coverage.html">Original documents ↗</a></div></aside>
+<header class="topbar"><span>The book &nbsp; / &nbsp; Bring an application</span><span class="edition">0.2 · DESIGN PREVIEW</span></header>
+<main id="main" class="content article"><p class="eyebrow">CHAPTER 05 · SOURCE-CITED DESIGN EDITION</p><h1>Bring an application</h1><p>Integrate something you own</p>
+<p>Start with a real application archive and one action worth composing. Choose whether the application implements the shared interface directly or an independently compiled adapter connects an unchanged archive.</p>
+<h2>How to read this chapter</h2>
+<p>The builder reads actual package types. A human authors the business mapping: actor, subject, choice, readers, and observation. Generated code must compile and execute under the real source application’s authority. Downloading a package does not install an action into the live catalog.</p>
+<h2>Current evidence and next work</h2>
+<p>Current examples cover specific consuming choices and primitive fields. Pinned GitHub retrieval and owned-participant exports do not establish a general Package Manager integration. A new independent application is the next product proof.</p>
+<p><a href="../../../book/extension-guide.md">Current extension steps and supported shapes</a></p><p><a class="button primary" href="../application.html">Explore the application design →</a></p><h2 id="quotations">The original words</h2><p class="note">Open a passage to read its full quotation. Source locations and fingerprints remain inspectable. Quoted proposal statements are not claims of completed implementation.</p><details class="source-section" id="proposal-L90"><summary>References and both integration paths</summary>
+<a class="citation" href="../sources/proposal.html#L90">Original proposal · lines 90–117 ↗</a>
+<blockquote class="source-quotes"><span class="source-unit" data-unit="proposal-L90">#### Reference Applications: `harmonia-references`</span>
+<span class="source-unit" data-unit="proposal-L92">`harmonia-references` provides reference applications, workflows, examples, a minimal composition framework, and at least two source-application DARs that prove the model in practice.</span>
+<span class="source-unit" data-unit="proposal-L94">It demonstrates:</span>
+<span class="source-unit" data-unit="proposal-L96">- the direct final application DAR interface implementation path</span>
+<span class="source-unit" data-unit="proposal-L97">- the `harmonia-builder` integration path against an existing application DAR</span>
+<span class="source-unit" data-unit="proposal-L98">- a four-party token-transfer workflow spanning Buyer, Seller, and two custodians, with a Settler role selected or fulfilled by one of those parties as applicable</span>
+<span class="source-unit" data-unit="proposal-L99">- a property-financing approval and offer workflow across independently owned domains</span>
+<span class="source-unit" data-unit="proposal-L101">The reference workflows demonstrate bounded, executable composition rather than a generic BPMN engine. They do not require a central workflow operator or one party to own the full process logic.</span>
+<span class="source-unit" data-unit="proposal-L103">#### Project Builder: `harmonia-builder`</span>
+<span class="source-unit" data-unit="proposal-L105">`harmonia-builder` is internal project-generation tooling that creates workflow projects for existing application DARs.</span>
+<span class="source-unit" data-unit="proposal-L107">It provides:</span>
+<span class="source-unit" data-unit="proposal-L109">- direct DAR upload by users</span>
+<span class="source-unit" data-unit="proposal-L110">- retrieval of required DARs from a Package Manager (for example, Catalyx Package Manager: https://www.catalyx.solutions/catalyx-package-manager) at build time</span>
+<span class="source-unit" data-unit="proposal-L111">  - consumed application DARs that `harmonia-dapp` retrieves from the Validator node</span>
+<span class="source-unit" data-unit="proposal-L112">  - output of the `Harmonia Binding DAR` that links Harmonia interfaces to a source application DAR when the source project of the DAR does not create the binding itself</span>
+<span class="source-unit" data-unit="proposal-L113">- generated project and code that use the dedicated Harmonia Binding DAR&#x27;s applicability declarations with an existing application DAR</span>
+<span class="source-unit" data-unit="proposal-L114">- the boilerplate needed to bind the applicable application templates and their choices into the `harmonia-core` managed workflow model</span>
+<span class="source-unit" data-unit="proposal-L116">This is project-generation tooling for participation in the Core-managed model, not a separate runtime composition model.</span></blockquote></details>
+<details class="source-section" id="architecture-L565"><summary>Open design points</summary>
+<a class="citation" href="../sources/architecture.html#L565">Original architecture · lines 565–581 ↗</a>
+<blockquote class="source-quotes"><span class="source-unit" data-unit="architecture-T327">6 · Open design points (stated in the proposal)</span>
+<span class="source-unit" data-unit="architecture-T328">Point</span>
+<span class="source-unit" data-unit="architecture-T329">Where it sits in the diagrams</span>
+<span class="source-unit" data-unit="architecture-T330">Package-import direction</span>
+<span class="source-unit" data-unit="architecture-T331">§1 — the two anti-parallel Binding DAR ⇄ harmonia-core edges</span>
+<span class="source-unit" data-unit="architecture-T332">templateId representation</span>
+<span class="source-unit" data-unit="architecture-T333">§2 —</span>
+<span class="source-unit" data-unit="architecture-T334">AppliesTo.templateId</span>
+<span class="source-unit" data-unit="architecture-T335">Binding mechanism</span>
+<span class="source-unit" data-unit="architecture-T336">§2 —</span>
+<span class="source-unit" data-unit="architecture-T337">binds</span>
+<span class="source-unit" data-unit="architecture-T338">and</span>
+<span class="source-unit" data-unit="architecture-T339">selects choice</span>
+<span class="source-unit" data-unit="architecture-T340">relations</span>
+<span class="source-unit" data-unit="architecture-T341">Interfaces: core vs Binding DAR</span>
+<span class="source-unit" data-unit="architecture-T342">§1 — “interfaces + applicability” placed in harmonia-core, applicability carried by the Binding DAR; abstract and Core section state it differently</span>
+<span class="source-unit" data-unit="architecture-T343">Authorization scope: party-level vs cross-party</span>
+<span class="source-unit" data-unit="architecture-T344">§2 —</span>
+<span class="source-unit" data-unit="architecture-T345">StepAssignment.authority</span>
+<span class="source-unit" data-unit="architecture-T346">; §1 — bounded atomic execution block</span>
+<span class="source-unit" data-unit="architecture-T347">Container boundaries</span>
+<span class="source-unit" data-unit="architecture-T348">§1 — all Harmonia nodes are “proposed logical components”; final split set at technical design</span>
+<span class="source-unit" data-unit="architecture-T349">Template &amp; choice names in §2</span>
+<span class="source-unit" data-unit="architecture-T350">§2 — derived from the specified semantics; the proposal names no templates</span></blockquote></details><div class="appendices"><a href="../coverage.html">View document coverage and all chapter destinations →</a><a href="09-proposal-context.html">Appendix: proposal context</a><a href="10-context-and-references.html">Appendix: context and references</a></div></main></body></html>

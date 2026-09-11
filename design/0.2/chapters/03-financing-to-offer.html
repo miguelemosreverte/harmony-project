@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Financing to an offer · Harmonia</title><link rel="stylesheet" href="../style.css"><script src="../book.js" defer></script></head>
+<body class=""><a class="skip-link" href="#main">Skip to content</a>
+<aside class="rail"><a class="brand" href="../book-overview.html"><span class="mark" aria-hidden="true"></span><span class="brand-name">Harmonia</span><span class="brand-caption">THE FIELD GUIDE</span></a>
+<button class="mobile-menu" aria-expanded="false" aria-controls="chapter-nav">Chapters</button><nav id="chapter-nav" aria-label="Book chapters"><a class="nav-link " href="../book-overview.html">Overview</a><p class="nav-label">UNDERSTAND</p><a class="nav-link " href="../chapters/01-product.html"><span>01</span>The product</a><a class="nav-link " href="../chapters/02-roles-and-trust.html"><span>02</span>Roles &amp; trust</a><p class="nav-label">EXPLORE</p><a class="nav-link active" href="../book-chapter.html"><span>03</span>Financing to offer</a><a class="nav-link " href="../chapters/04-four-party-transfer.html"><span>04</span>Four-party transfer</a><a class="nav-link " href="../chapters/05-bring-an-application.html"><span>05</span>Bring an application</a><a class="nav-link " href="../chapters/06-compose-a-workflow.html"><span>06</span>Compose a workflow</a><p class="nav-label">VERIFY</p><a class="nav-link " href="../chapters/07-evidence-and-boundaries.html"><span>07</span>Evidence &amp; boundaries</a><a class="nav-link " href="../chapters/08-release-and-adoption.html"><span>08</span>Release &amp; adoption</a></nav>
+<div class="rail-footer"><a href="../coverage.html">Original documents ↗</a></div></aside>
+<header class="topbar"><span>The book &nbsp; / &nbsp; Financing to an offer</span><span class="edition">0.2 · DESIGN PREVIEW</span></header>
+<main id="main" class="content article"><p class="eyebrow">CHAPTER 03 · SOURCE-CITED DESIGN EDITION</p><h1>Financing to an offer</h1><p>Follow a real use case</p>
+<p>A bank makes a private decision. A buyer carries only the signed result into a separately owned offer. This chapter follows the boundary between those applications.</p>
+<h2>How to read this chapter</h2>
+<p>Step through evidence, the financing decision, creation of the offer, and seller review. Switch the illustrated participant view to see which information should remain private. The original describes approval and rejection; the design simulation shows the approved path.</p>
+<h2>Current evidence and next work</h2>
+<p>The animation uses sample state. Recorded ledger evidence lives in the existing financing/offer story. The new reader will consume that recording; it must not infer an approval from an animation or client flag.</p>
+<p><a href="../../../book/05-financing-and-offer.md">Existing financing and offer story</a></p><p><a class="button primary" href="../book-chapter.html">Explore the interactive chapter →</a></p><h2 id="quotations">The original words</h2><p class="note">Open a passage to read its full quotation. Source locations and fingerprints remain inspectable. Quoted proposal statements are not claims of completed implementation.</p><details class="source-section" id="proposal-L133"><summary>Financing and offer use case</summary>
+<a class="citation" href="../sources/proposal.html#L133">Original proposal · lines 133–144 ↗</a>
+<blockquote class="source-quotes"><span class="source-unit" data-unit="proposal-L133">**Property-financing approval and offer workflow**</span>
+<span class="source-unit" data-unit="proposal-L135">1. A buyer submits selected documents or credential-backed evidence into the financing workflow.</span>
+<span class="source-unit" data-unit="proposal-L136">2. A bank or financing domain evaluates those inputs and produces an approval or rejection outcome under its own process rules.</span>
+<span class="source-unit" data-unit="proposal-L137">3. If financing approval is obtained, the buyer creates a purchase proposal that enters a separate offer workflow.</span>
+<span class="source-unit" data-unit="proposal-L138">4. Buyer-side and seller-side agents relay the proposal through independently owned workflow domains rather than through one centralized orchestrator.</span>
+<span class="source-unit" data-unit="proposal-L139">5. The workflow engine keeps the approval and offer domains linked through explicit outputs and continuations, while preserving their separate ownership and execution rights.</span>
+<span class="source-unit" data-unit="proposal-L140">6. The flow demonstrates coordination of document-derived conditions, approval-gated progression, and multi-party handoff without flattening everything into one hardcoded process.</span>
+<span class="source-unit" data-unit="proposal-L142">![Property-financing approval and offer workflow](assets/img/02-harmonia-approval-offer.svg)</span>
+<span class="source-unit" data-unit="proposal-L143">**Canonical source:** [BPMN](assets/bpmn/02-harmonia-approval-offer.bpmn) | [SVG](assets/img/02-harmonia-approval-offer.svg)</span></blockquote></details>
+<details class="source-section" id="architecture-L521"><summary>Financing and offer participants</summary>
+<a class="citation" href="../sources/architecture.html#L521">Original architecture · lines 521–535 ↗</a>
+<blockquote class="source-quotes"><span class="source-unit" data-unit="architecture-T277">Property financing → offer</span>
+<span class="source-unit" data-unit="architecture-T278">Domain / role</span>
+<span class="source-unit" data-unit="architecture-T279">Step kind</span>
+<span class="source-unit" data-unit="architecture-T280">Owns</span>
+<span class="source-unit" data-unit="architecture-T281">Buyer</span>
+<span class="source-unit" data-unit="architecture-T282">Create</span>
+<span class="source-unit" data-unit="architecture-T283">documents / credential-backed evidence</span>
+<span class="source-unit" data-unit="architecture-T284">Bank / financing domain</span>
+<span class="source-unit" data-unit="architecture-T285">Branch (XOR)</span>
+<span class="source-unit" data-unit="architecture-T286">approve | reject under own rules</span>
+<span class="source-unit" data-unit="architecture-T287">Buyer</span>
+<span class="source-unit" data-unit="architecture-T288">Continue</span>
+<span class="source-unit" data-unit="architecture-T289">purchase proposal → offer workflow</span>
+<span class="source-unit" data-unit="architecture-T290">Buyer-side agent</span>
+<span class="source-unit" data-unit="architecture-T291">Exercise</span>
+<span class="source-unit" data-unit="architecture-T292">relay in own domain</span>
+<span class="source-unit" data-unit="architecture-T293">Seller-side agent</span>
+<span class="source-unit" data-unit="architecture-T294">Exercise</span>
+<span class="source-unit" data-unit="architecture-T295">relay in own domain</span></blockquote></details><div class="appendices"><a href="../coverage.html">View document coverage and all chapter destinations →</a><a href="09-proposal-context.html">Appendix: proposal context</a><a href="10-context-and-references.html">Appendix: context and references</a></div></main></body></html>

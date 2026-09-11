@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Roles &amp; trust · Harmonia</title><link rel="stylesheet" href="../style.css"><script src="../book.js" defer></script></head>
+<body class=""><a class="skip-link" href="#main">Skip to content</a>
+<aside class="rail"><a class="brand" href="../book-overview.html"><span class="mark" aria-hidden="true"></span><span class="brand-name">Harmonia</span><span class="brand-caption">THE FIELD GUIDE</span></a>
+<button class="mobile-menu" aria-expanded="false" aria-controls="chapter-nav">Chapters</button><nav id="chapter-nav" aria-label="Book chapters"><a class="nav-link " href="../book-overview.html">Overview</a><p class="nav-label">UNDERSTAND</p><a class="nav-link " href="../chapters/01-product.html"><span>01</span>The product</a><a class="nav-link active" href="../chapters/02-roles-and-trust.html"><span>02</span>Roles &amp; trust</a><p class="nav-label">EXPLORE</p><a class="nav-link " href="../book-chapter.html"><span>03</span>Financing to offer</a><a class="nav-link " href="../chapters/04-four-party-transfer.html"><span>04</span>Four-party transfer</a><a class="nav-link " href="../chapters/05-bring-an-application.html"><span>05</span>Bring an application</a><a class="nav-link " href="../chapters/06-compose-a-workflow.html"><span>06</span>Compose a workflow</a><p class="nav-label">VERIFY</p><a class="nav-link " href="../chapters/07-evidence-and-boundaries.html"><span>07</span>Evidence &amp; boundaries</a><a class="nav-link " href="../chapters/08-release-and-adoption.html"><span>08</span>Release &amp; adoption</a></nav>
+<div class="rail-footer"><a href="../coverage.html">Original documents ↗</a></div></aside>
+<header class="topbar"><span>The book &nbsp; / &nbsp; Roles &amp; trust</span><span class="edition">0.2 · DESIGN PREVIEW</span></header>
+<main id="main" class="content article"><p class="eyebrow">CHAPTER 02 · SOURCE-CITED DESIGN EDITION</p><h1>Roles &amp; trust</h1><p>Understand who can act</p>
+<p>Before advancing a workflow, ask who owns the source contract, who may exercise its choice, and who is allowed to rely on the result. A visible button is guidance. The ledger must enforce the action.</p>
+<h2>How to read this chapter</h2>
+<p>The original core description and illustrative contract model follow below. A shared interface does not transfer business authority to the browser or the workflow publisher. Private source details should remain with their entitled parties.</p>
+<h2>Current evidence and next work</h2>
+<p>The publisher and process owner are trusted in the baseline. They can create records they are authorized to sign. We must settle what an independent party may infer from a progress record before claiming stronger provenance.</p>
+<p><a href="../../../docs/capabilities.md">Current authorization and trust boundary</a></p><h2 id="quotations">The original words</h2><p class="note">Open a passage to read its full quotation. Source locations and fingerprints remain inspectable. Quoted proposal statements are not claims of completed implementation.</p><details class="source-section" id="proposal-L53"><summary>Core execution and authority</summary>
+<a class="citation" href="../sources/proposal.html#L53">Original proposal · lines 53–75 ↗</a>
+<blockquote class="source-quotes"><span class="source-unit" data-unit="proposal-L53">#### Core Layer: `harmonia-core`</span>
+<span class="source-unit" data-unit="proposal-L55">`harmonia-core` is the Daml package defining reusable on-ledger orchestration templates, choices, patterns, workflow state, and step-execution rules. It manages the common workflow model used through the dedicated Harmonia Binding DAR.</span>
+<span class="source-unit" data-unit="proposal-L57">The Harmonia interfaces and their applicability declarations live in `harmonia-core`. The `Harmonia Binding DAR` is the artefact that binds those interfaces to a source application DAR&#x27;s implementation when the source project of that DAR does not create the binding itself.</span>
+<span class="source-unit" data-unit="proposal-L59">It provides:</span>
+<span class="source-unit" data-unit="proposal-L61">- the common workflow model that the dedicated Harmonia Binding DAR uses to define applicable application templates and their participation</span>
+<span class="source-unit" data-unit="proposal-L62">- the managed workflow model into which applications and Builder-generated project/code participate through those interface definitions</span>
+<span class="source-unit" data-unit="proposal-L63">- workflow state that can be queried and inspected</span>
+<span class="source-unit" data-unit="proposal-L64">- explicit identification of the actor that may execute each step</span>
+<span class="source-unit" data-unit="proposal-L65">- sequential flow, basic branching and joining rules, and sub-workflow continuation</span>
+<span class="source-unit" data-unit="proposal-L66">- bounded atomic execution where the workflow structure and required authorizations allow it</span>
+<span class="source-unit" data-unit="proposal-L68">**Step execution rules**</span>
+<span class="source-unit" data-unit="proposal-L69">Each supported workflow step maps to executable Daml actions, such as contract creation, choice exercise against a known contract or interface view, bounded wait states, exclusive branching, sub-workflow continuation, and atomic execution blocks. Participant roles resolve to concrete party bindings rather than descriptive workflow tasks.</span>
+<span class="source-unit" data-unit="proposal-L71">**Authority from source applications**</span>
+<span class="source-unit" data-unit="proposal-L72">The core specifies which actor may execute each orchestration step and the authority required from the source application.</span>
+<span class="source-unit" data-unit="proposal-L74">Where all required parties can authorize a transition at once, multiple logical workflow steps may be collapsed into a single atomic execution path. Where that is not possible or desirable, the workflow progresses through explicit staged coordination.</span></blockquote></details>
+<details class="source-section" id="proposal-L145"><summary>External boundaries and decentralized coordination</summary>
+<a class="citation" href="../sources/proposal.html#L145">Original proposal · lines 145–159 ↗</a>
+<blockquote class="source-quotes"><span class="source-unit" data-unit="proposal-L145">#### Proposed Canton Validator / Super Validator Work</span>
+<span class="source-unit" data-unit="proposal-L147">Harmonia intends to support composition with third-party applications on a Canton Validator / Super Validator through a dedicated Harmonia Binding DAR and `harmonia-core` patterns. Any external upstream work remains contingent on the responsible maintainers&#x27; review and applicable governance agreement; this proposal does not assert a partnership, approval, or completed implementation.</span>
+<span class="source-unit" data-unit="proposal-L149">### 3. Architectural Alignment</span>
+<span class="source-unit" data-unit="proposal-L151">This proposal aligns with Canton’s architecture and ecosystem priorities because it builds on:</span>
+<span class="source-unit" data-unit="proposal-L153">- shared coordination without a single trusted operator</span>
+<span class="source-unit" data-unit="proposal-L154">- strong auditability and traceability</span>
+<span class="source-unit" data-unit="proposal-L155">- privacy-aware multi-party state transitions</span>
+<span class="source-unit" data-unit="proposal-L156">- application-layer and on-ledger orchestration middleware reference implementations that can be reused across the ecosystem</span>
+<span class="source-unit" data-unit="proposal-L158">It also fits the Development Fund focus on shared developer tooling, reference implementations, and common-good infrastructure.</span></blockquote></details>
+<details class="source-section" id="architecture-L318"><summary>Illustrative contracts, interfaces, and data</summary>
+<a class="citation" href="../sources/architecture.html#L318">Original architecture · lines 318–487 ↗</a>
+<blockquote class="source-quotes"><span class="source-unit" data-unit="architecture-T120">2 · On-ledger contract model — templates · interfaces · data</span>
+<span class="source-unit" data-unit="architecture-T121">«template» harmonia-core</span>
+<span class="source-unit" data-unit="architecture-T122">WorkflowDefinition</span>
+<span class="source-unit" data-unit="architecture-T123">definitionId · version</span>
+<span class="source-unit" data-unit="architecture-T124">startEvent · endEvent</span>
+<span class="source-unit" data-unit="architecture-T125">steps : [StepSpec]</span>
+<span class="source-unit" data-unit="architecture-T126">flow : sequential</span>
+<span class="source-unit" data-unit="architecture-T127">branches : XOR · joins</span>
+<span class="source-unit" data-unit="architecture-T128">atomicBlocks : [[StepId]]</span>
+<span class="source-unit" data-unit="architecture-T129">subWorkflows : [DefId]</span>
+<span class="source-unit" data-unit="architecture-T130">◆ Instantiate</span>
+<span class="source-unit" data-unit="architecture-T131">signatory definer</span>
+<span class="source-unit" data-unit="architecture-T132">«template» harmonia-core</span>
+<span class="source-unit" data-unit="architecture-T133">WorkflowInstance</span>
+<span class="source-unit" data-unit="architecture-T134">definitionId</span>
+<span class="source-unit" data-unit="architecture-T135">roleBindings : [RoleBinding]</span>
+<span class="source-unit" data-unit="architecture-T136">state : orchestration state</span>
+<span class="source-unit" data-unit="architecture-T137">currentSteps · completedSteps</span>
+<span class="source-unit" data-unit="architecture-T138">outputs : workflow results</span>
+<span class="source-unit" data-unit="architecture-T139">◆ AdvanceStep</span>
+<span class="source-unit" data-unit="architecture-T140">◆ TakeBranch (XOR) · Join</span>
+<span class="source-unit" data-unit="architecture-T141">◆ ExecuteAtomic (bounded)</span>
+<span class="source-unit" data-unit="architecture-T142">◆ Continue → sub-workflow</span>
+<span class="source-unit" data-unit="architecture-T143">◆ Complete → end event</span>
+<span class="source-unit" data-unit="architecture-T144">signatory bound parties</span>
+<span class="source-unit" data-unit="architecture-T145">queryable · inspectable</span>
+<span class="source-unit" data-unit="architecture-T146">«data»</span>
+<span class="source-unit" data-unit="architecture-T147">RoleBinding</span>
+<span class="source-unit" data-unit="architecture-T148">role : Text</span>
+<span class="source-unit" data-unit="architecture-T149">party : Party</span>
+<span class="source-unit" data-unit="architecture-T150">rights : [StepId]</span>
+<span class="source-unit" data-unit="architecture-T151">«template» harmonia-core</span>
+<span class="source-unit" data-unit="architecture-T152">Continuation</span>
+<span class="source-unit" data-unit="architecture-T153">producer : InstanceId</span>
+<span class="source-unit" data-unit="architecture-T154">consumer : DefinitionId</span>
+<span class="source-unit" data-unit="architecture-T155">outputs : payload</span>
+<span class="source-unit" data-unit="architecture-T156">links owned domains</span>
+<span class="source-unit" data-unit="architecture-T157">«template» harmonia-core</span>
+<span class="source-unit" data-unit="architecture-T158">StepAssignment</span>
+<span class="source-unit" data-unit="architecture-T159">stepId · instanceId</span>
+<span class="source-unit" data-unit="architecture-T160">actor : Party ← assignee</span>
+<span class="source-unit" data-unit="architecture-T161">kind : Create | Exercise | Wait</span>
+<span class="source-unit" data-unit="architecture-T162">| Branch | Continue | Atomic</span>
+<span class="source-unit" data-unit="architecture-T163">target : templateId · choice</span>
+<span class="source-unit" data-unit="architecture-T164">view : interface view</span>
+<span class="source-unit" data-unit="architecture-T165">authority : required from app</span>
+<span class="source-unit" data-unit="architecture-T166">◆ Execute → app choice</span>
+<span class="source-unit" data-unit="architecture-T167">◆ Reject</span>
+<span class="source-unit" data-unit="architecture-T168">controller actor</span>
+<span class="source-unit" data-unit="architecture-T169">human- or system-executed</span>
+<span class="source-unit" data-unit="architecture-T170">«interface» harmonia-core</span>
+<span class="source-unit" data-unit="architecture-T171">HarmoniaStepAction</span>
+<span class="source-unit" data-unit="architecture-T172">viewtype StepView</span>
+<span class="source-unit" data-unit="architecture-T173">{ stepId, actor, status }</span>
+<span class="source-unit" data-unit="architecture-T174">◆ executeStep</span>
+<span class="source-unit" data-unit="architecture-T175">declared in core</span>
+<span class="source-unit" data-unit="architecture-T176">disclosure + visibility limits</span>
+<span class="source-unit" data-unit="architecture-T177">«data» applicability declaration</span>
+<span class="source-unit" data-unit="architecture-T178">AppliesTo</span>
+<span class="source-unit" data-unit="architecture-T179">templateId · choice</span>
+<span class="source-unit" data-unit="architecture-T180">stepKind · role</span>
+<span class="source-unit" data-unit="architecture-T181">carried by the Binding DAR</span>
+<span class="source-unit" data-unit="architecture-T182">«template» source app DAR</span>
+<span class="source-unit" data-unit="architecture-T183">AppTemplate</span>
+<span class="source-unit" data-unit="architecture-T184">own fields</span>
+<span class="source-unit" data-unit="architecture-T185">own signatories</span>
+<span class="source-unit" data-unit="architecture-T186">own observers</span>
+<span class="source-unit" data-unit="architecture-T187">◆ eligible choice A</span>
+<span class="source-unit" data-unit="architecture-T188">◆ eligible choice B</span>
+<span class="source-unit" data-unit="architecture-T189">① implements iface</span>
+<span class="source-unit" data-unit="architecture-T190">② bound by generated</span>
+<span class="source-unit" data-unit="architecture-T191">code · unchanged</span>
+<span class="source-unit" data-unit="architecture-T192">ownership preserved</span>
+<span class="source-unit" data-unit="architecture-T193">authorization preserved</span>
+<span class="source-unit" data-unit="architecture-T194">privacy preserved</span>
+<span class="source-unit" data-unit="architecture-T195">1 ▸ n</span>
+<span class="source-unit" data-unit="architecture-T196">creates</span>
+<span class="source-unit" data-unit="architecture-T197">1 ▸ n</span>
+<span class="source-unit" data-unit="architecture-T198">assigns</span>
+<span class="source-unit" data-unit="architecture-T199">1 ▸ n</span>
+<span class="source-unit" data-unit="architecture-T200">0 ▸ n</span>
+<span class="source-unit" data-unit="architecture-T201">continuation feeds the next definition</span>
+<span class="source-unit" data-unit="architecture-T202">exercises via</span>
+<span class="source-unit" data-unit="architecture-T203">qualifies</span>
+<span class="source-unit" data-unit="architecture-T204">binds</span>
+<span class="source-unit" data-unit="architecture-T205">selects choice</span></blockquote></details><div class="appendices"><a href="../coverage.html">View document coverage and all chapter destinations →</a><a href="09-proposal-context.html">Appendix: proposal context</a><a href="10-context-and-references.html">Appendix: context and references</a></div></main></body></html>

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Evidence &amp; boundaries · Harmonia</title><link rel="stylesheet" href="../style.css"><script src="../book.js" defer></script></head>
+<body class=""><a class="skip-link" href="#main">Skip to content</a>
+<aside class="rail"><a class="brand" href="../book-overview.html"><span class="mark" aria-hidden="true"></span><span class="brand-name">Harmonia</span><span class="brand-caption">THE FIELD GUIDE</span></a>
+<button class="mobile-menu" aria-expanded="false" aria-controls="chapter-nav">Chapters</button><nav id="chapter-nav" aria-label="Book chapters"><a class="nav-link " href="../book-overview.html">Overview</a><p class="nav-label">UNDERSTAND</p><a class="nav-link " href="../chapters/01-product.html"><span>01</span>The product</a><a class="nav-link " href="../chapters/02-roles-and-trust.html"><span>02</span>Roles &amp; trust</a><p class="nav-label">EXPLORE</p><a class="nav-link " href="../book-chapter.html"><span>03</span>Financing to offer</a><a class="nav-link " href="../chapters/04-four-party-transfer.html"><span>04</span>Four-party transfer</a><a class="nav-link " href="../chapters/05-bring-an-application.html"><span>05</span>Bring an application</a><a class="nav-link " href="../chapters/06-compose-a-workflow.html"><span>06</span>Compose a workflow</a><p class="nav-label">VERIFY</p><a class="nav-link active" href="../chapters/07-evidence-and-boundaries.html"><span>07</span>Evidence &amp; boundaries</a><a class="nav-link " href="../chapters/08-release-and-adoption.html"><span>08</span>Release &amp; adoption</a></nav>
+<div class="rail-footer"><a href="../coverage.html">Original documents ↗</a></div></aside>
+<header class="topbar"><span>The book &nbsp; / &nbsp; Evidence &amp; boundaries</span><span class="edition">0.2 · DESIGN PREVIEW</span></header>
+<main id="main" class="content article"><p class="eyebrow">CHAPTER 07 · SOURCE-CITED DESIGN EDITION</p><h1>Evidence &amp; boundaries</h1><p>Inspect the promise and its proof</p>
+<p>Keep three things next to one another: a readable input, an independently committed expectation, and the observed result. A disagreement is information to inspect, not a reason to regenerate the baseline.</p>
+<h2>How to read this chapter</h2>
+<p>Quotation coverage answers whether the book includes the original words. Requirement mapping answers where a claim is discussed. Executable evidence answers what a named build actually did. External evaluation answers what another team tried. These are separate measurements.</p>
+<h2>Current evidence and next work</h2>
+<p>The proposal excludes generic BPMN, arbitrary dynamic composition, managed hosting, and a full studio. The original missing diagram attachments have not been recovered. A source quote or a mock interaction cannot close an implementation gap.</p>
+<p><a href="../../../docs/release/acceptance.md">Historical release evidence and limitations</a></p><h2 id="quotations">The original words</h2><p class="note">Open a passage to read its full quotation. Source locations and fingerprints remain inspectable. Quoted proposal statements are not claims of completed implementation.</p><details class="source-section" id="proposal-L33"><summary>Supported mechanics and component boundaries</summary>
+<a class="citation" href="../sources/proposal.html#L33">Original proposal · lines 33–52 ↗</a>
+<blockquote class="source-quotes"><span class="source-unit" data-unit="proposal-L33">### 2. Implementation Mechanics</span>
+<span class="source-unit" data-unit="proposal-L35">The implementation will not attempt to make Canton a full generic BPMN engine. The point is to adapt useful workflow semantics to a privacy-aware multi-party ledger model in a reusable way, with a particular focus on composability across organizational and domain boundaries.</span>
+<span class="source-unit" data-unit="proposal-L37">The first executable cut will focus on a narrow supported subset: start and end events, persisted orchestration states, human- or system-executed steps, explicit step assignees or authorized actors, sequential flow, basic branching and joining rules, bounded atomic execution of eligible multi-step paths, progression across multiple parties within the validated authorization scope, and continuation based on outputs produced by another workflow.</span>
+<span class="source-unit" data-unit="proposal-L39">The initial implementation should not claim full BPMN coverage. Timers, escalations, compensation patterns, richer exception handling, reusable subprocess libraries, managed hosting, custom adopter integrations, domain-specific application development, and full visual designer tooling should be treated as later evolution or outside the funded scope.</span>
+<span class="source-unit" data-unit="proposal-L41">The project will produce an open reference implementation with reusable core, evaluation, and reference components for privacy-aware, multi-party workflow composition on Canton. How applications participate in that model, including the direct final-application-DAR interface implementation path and the `harmonia-builder` integration path, is defined once below.</span>
+<span class="source-unit" data-unit="proposal-L43">The descriptions of `harmonia-dapp`, `harmonia-core`, `harmonia-references`, and the supporting `harmonia-builder` tooling below describe proposed logical components. Their final implementation boundaries will be determined during technical design.</span>
+<span class="source-unit" data-unit="proposal-L45">The implementation preserves a modular structure:</span>
+<span class="source-unit" data-unit="proposal-L47">- `harmonia-core` provides reusable on-ledger orchestration patterns, workflow state, and step-execution rules</span>
+<span class="source-unit" data-unit="proposal-L48">- the dedicated Harmonia Binding DAR defines applicable application templates and their participation in the Harmonia workflow model</span>
+<span class="source-unit" data-unit="proposal-L49">- `harmonia-dapp` provides the viewer and composer through which users interact with supported workflows</span>
+<span class="source-unit" data-unit="proposal-L50">- `harmonia-references` provides reference applications, workflows, and examples that demonstrate both participation paths described below</span>
+<span class="source-unit" data-unit="proposal-L51">- `harmonia-builder` is build-time project-generation tooling</span></blockquote></details>
+<details class="source-section" id="proposal-L286"><summary>Backward compatibility</summary>
+<a class="citation" href="../sources/proposal.html#L286">Original proposal · lines 286–291 ↗</a>
+<blockquote class="source-quotes"><span class="source-unit" data-unit="proposal-L286">### 4. Backward Compatibility</span>
+<span class="source-unit" data-unit="proposal-L288">No backward compatibility impact is expected at the protocol level. Harmonia is an on-ledger workflow-management reference implementation for composable Daml applications on Canton and does not require breaking changes to existing applications.</span>
+<span class="source-unit" data-unit="proposal-L290">---</span></blockquote></details>
+<details class="source-section" id="proposal-L392"><summary>All acceptance criteria</summary>
+<a class="citation" href="../sources/proposal.html#L392">Original proposal · lines 392–425 ↗</a>
+<blockquote class="source-quotes"><span class="source-unit" data-unit="proposal-L392">---</span>
+<span class="source-unit" data-unit="proposal-L394">## Acceptance Criteria</span>
+<span class="source-unit" data-unit="proposal-L396">The Tech &amp; Ops Committee will evaluate completion based on:</span>
+<span class="source-unit" data-unit="proposal-L398">- Deliverables completed as specified for each milestone</span>
+<span class="source-unit" data-unit="proposal-L399">- Demonstrated functionality or operational readiness</span>
+<span class="source-unit" data-unit="proposal-L400">- Documentation and knowledge transfer provided</span>
+<span class="source-unit" data-unit="proposal-L401">- Alignment with stated value metrics</span>
+<span class="source-unit" data-unit="proposal-L403">The acceptance criteria are based on ecosystem value and adoption readiness, not only delivery of artifacts. For Harmonia, that value is demonstrated by a working on-ledger orchestration reference that evaluator teams can inspect, run, and adapt across independently owned Canton/Daml application domains.</span>
+<span class="source-unit" data-unit="proposal-L405">Project-specific acceptance conditions:</span>
+<span class="source-unit" data-unit="proposal-L407">- the reference implementation must execute decentralized multi-party workflows end-to-end</span>
+<span class="source-unit" data-unit="proposal-L408">- at least two reproducible example workflows must be available</span>
+<span class="source-unit" data-unit="proposal-L409">- a simple visual workflow viewer or composer must show the composed applications, current orchestration state, actors, and executable steps</span>
+<span class="source-unit" data-unit="proposal-L410">- documentation must be sufficient for another team to understand and evaluate adoption</span>
+<span class="source-unit" data-unit="proposal-L411">- there must be clear evidence that the output is reusable ecosystem infrastructure rather than a one-off demo</span>
+<span class="source-unit" data-unit="proposal-L413">- workflow state progression must be visible and verifiable</span>
+<span class="source-unit" data-unit="proposal-L414">- participant roles and step ownership must be explicit</span>
+<span class="source-unit" data-unit="proposal-L415">- composed workflows must show how independently owned workflow domains coordinate without collapsing into one hardcoded flow</span>
+<span class="source-unit" data-unit="proposal-L416">- the examples must preserve clear domain boundaries rather than flattening everything into one synthetic process</span>
+<span class="source-unit" data-unit="proposal-L417">- the implementation must make clear when a modeled workflow path is executed through explicit staged progression and when it may be collapsed into one atomic ledger transition</span>
+<span class="source-unit" data-unit="proposal-L418">- the implementation must clearly state the supported authorization boundary for composition, including whether the validated scope is party-level only or broader cross-party composition</span>
+<span class="source-unit" data-unit="proposal-L419">- the implementation must document what workflow semantics are supported, what deviates from standard BPMN, and what is intentionally out of scope</span>
+<span class="source-unit" data-unit="proposal-L420">- the participation paths must show how sample or source application DARs participate in the Harmonia orchestration model through the two paths defined below, in runnable projects and through a bounded evaluation or demo path</span>
+<span class="source-unit" data-unit="proposal-L421">- the open-source release must remain publicly developed through the project lifecycle and culminate in a stable public release with documentation and knowledge-transfer material</span>
+<span class="source-unit" data-unit="proposal-L422">- the funded scope must remain bounded: it does not include a full generic workflow studio, BPMN editor, managed hosting, custom adopter integration, or domain-specific application development</span>
+<span class="source-unit" data-unit="proposal-L423">- the external adoption path must include documented feedback, an integration target conversation, or equivalent evidence from at least one external Canton/Daml builder or evaluator team</span>
+<span class="source-unit" data-unit="proposal-L424">- future product integration or broader dynamic composition must be framed as a non-committed roadmap path unless separately funded and approved</span></blockquote></details>
+<details class="source-section" id="architecture-L536"><summary>Supported subset and excluded features</summary>
+<a class="citation" href="../sources/architecture.html#L536">Original architecture · lines 536–564 ↗</a>
+<blockquote class="source-quotes"><span class="source-unit" data-unit="architecture-T296">5 · Workflow subset — in / out</span>
+<span class="source-unit" data-unit="architecture-T297">Supported (M1–M6)</span>
+<span class="source-unit" data-unit="architecture-T298">start event</span>
+<span class="source-unit" data-unit="architecture-T299">end event</span>
+<span class="source-unit" data-unit="architecture-T300">persisted orchestration state</span>
+<span class="source-unit" data-unit="architecture-T301">human step</span>
+<span class="source-unit" data-unit="architecture-T302">system step</span>
+<span class="source-unit" data-unit="architecture-T303">explicit assignee</span>
+<span class="source-unit" data-unit="architecture-T304">sequential flow</span>
+<span class="source-unit" data-unit="architecture-T305">XOR branch</span>
+<span class="source-unit" data-unit="architecture-T306">join</span>
+<span class="source-unit" data-unit="architecture-T307">bounded wait</span>
+<span class="source-unit" data-unit="architecture-T308">bounded atomic block</span>
+<span class="source-unit" data-unit="architecture-T309">multi-party progression</span>
+<span class="source-unit" data-unit="architecture-T310">sub-workflow continuation</span>
+<span class="source-unit" data-unit="architecture-T311">role → party binding</span>
+<span class="source-unit" data-unit="architecture-T312">Out of scope</span>
+<span class="source-unit" data-unit="architecture-T313">generic BPMN</span>
+<span class="source-unit" data-unit="architecture-T314">timers</span>
+<span class="source-unit" data-unit="architecture-T315">escalations</span>
+<span class="source-unit" data-unit="architecture-T316">compensation</span>
+<span class="source-unit" data-unit="architecture-T317">rich exception handling</span>
+<span class="source-unit" data-unit="architecture-T318">subprocess library</span>
+<span class="source-unit" data-unit="architecture-T319">managed hosting</span>
+<span class="source-unit" data-unit="architecture-T320">workflow studio</span>
+<span class="source-unit" data-unit="architecture-T321">BPMN editor</span>
+<span class="source-unit" data-unit="architecture-T322">off-chain orchestration</span>
+<span class="source-unit" data-unit="architecture-T323">arbitrary dynamic composition</span>
+<span class="source-unit" data-unit="architecture-T324">custom adopter integration</span>
+<span class="source-unit" data-unit="architecture-T325">domain-specific app dev</span>
+<span class="source-unit" data-unit="architecture-T326">central operator</span></blockquote></details><div class="appendices"><a href="../coverage.html">View document coverage and all chapter destinations →</a><a href="09-proposal-context.html">Appendix: proposal context</a><a href="10-context-and-references.html">Appendix: context and references</a></div></main></body></html>

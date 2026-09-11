@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The product · Harmonia</title><link rel="stylesheet" href="../style.css"><script src="../book.js" defer></script></head>
+<body class=""><a class="skip-link" href="#main">Skip to content</a>
+<aside class="rail"><a class="brand" href="../book-overview.html"><span class="mark" aria-hidden="true"></span><span class="brand-name">Harmonia</span><span class="brand-caption">THE FIELD GUIDE</span></a>
+<button class="mobile-menu" aria-expanded="false" aria-controls="chapter-nav">Chapters</button><nav id="chapter-nav" aria-label="Book chapters"><a class="nav-link " href="../book-overview.html">Overview</a><p class="nav-label">UNDERSTAND</p><a class="nav-link active" href="../chapters/01-product.html"><span>01</span>The product</a><a class="nav-link " href="../chapters/02-roles-and-trust.html"><span>02</span>Roles &amp; trust</a><p class="nav-label">EXPLORE</p><a class="nav-link " href="../book-chapter.html"><span>03</span>Financing to offer</a><a class="nav-link " href="../chapters/04-four-party-transfer.html"><span>04</span>Four-party transfer</a><a class="nav-link " href="../chapters/05-bring-an-application.html"><span>05</span>Bring an application</a><a class="nav-link " href="../chapters/06-compose-a-workflow.html"><span>06</span>Compose a workflow</a><p class="nav-label">VERIFY</p><a class="nav-link " href="../chapters/07-evidence-and-boundaries.html"><span>07</span>Evidence &amp; boundaries</a><a class="nav-link " href="../chapters/08-release-and-adoption.html"><span>08</span>Release &amp; adoption</a></nav>
+<div class="rail-footer"><a href="../coverage.html">Original documents ↗</a></div></aside>
+<header class="topbar"><span>The book &nbsp; / &nbsp; The product</span><span class="edition">0.2 · DESIGN PREVIEW</span></header>
+<main id="main" class="content article"><p class="eyebrow">CHAPTER 01 · SOURCE-CITED DESIGN EDITION</p><h1>The product</h1><p>Understand the promise</p>
+<p>Harmonia connects actions across independently owned applications. Each application keeps its own business rules; the shared workflow makes progression visible. Begin with a buyer seeking financing before making an offer. The bank owns the financing decision. The offer belongs to a separate domain.</p>
+<h2>How to read this chapter</h2>
+<p>Read the original abstract and component map below. Both participation paths target the same on-ledger core. Scala services observe and submit; the builder works at build time. The diagram’s component and template names are proposed boundaries, not a requirement to reproduce its labels as source files.</p>
+<h2>Current evidence and next work</h2>
+<p>The fourth draft demonstrates the bounded architecture locally. Reusability for an independent adopter, broader live UI support, and public release still need their own evidence.</p>
+<p><a href="../../../docs/architecture/repository.md">Repository ownership</a></p><h2 id="quotations">The original words</h2><p class="note">Open a passage to read its full quotation. Source locations and fingerprints remain inspectable. Quoted proposal statements are not claims of completed implementation.</p><details class="source-section" id="proposal-L11"><summary>Abstract and objective</summary>
+<a class="citation" href="../sources/proposal.html#L11">Original proposal · lines 11–32 ↗</a>
+<blockquote class="source-quotes"><span class="source-unit" data-unit="proposal-L11">## Abstract</span>
+<span class="source-unit" data-unit="proposal-L13">Harmonia lets independently developed Daml applications participate in a single multi-party workflow without bespoke pairwise integration.</span>
+<span class="source-unit" data-unit="proposal-L15">It is an open, reusable on-ledger workflow-management reference implementation for Canton. Harmonia interfaces live in a dedicated Harmonia Binding DAR, which defines the application templates to which each interface applies and how those templates participate in the Harmonia workflow model. A final application DAR may implement those interfaces in a new version where appropriate. For an existing application DAR, `harmonia-builder` generates the project, code, and boilerplate needed to use the interface applicability declarations to bind application templates and choices into the same Core-managed workflow model. Both participation paths converge on the same Core-managed workflow model. Application ownership, party authorization, and privacy boundaries are preserved while composition state remains on-ledger.</span>
+<span class="source-unit" data-unit="proposal-L17">The initial release delivers a narrow, reusable workflow subset, example source applications packaged as DARs, tests, documentation, and a simple visual workflow viewer or composer for evaluation and demonstrations. It does not claim generic BPMN coverage, arbitrary dynamic composition, off-chain orchestration, or a full workflow studio. Imports, dynamic choice calls, package and interface constraints, and multi-party authorization remain explicit design boundaries.</span>
+<span class="source-unit" data-unit="proposal-L19">Harmonia is intended as shared developer infrastructure for Canton. Initial use cases include trade operations, custody coordination, approval flows, and regulated multi-party processes.</span>
+<span class="source-unit" data-unit="proposal-L21">---</span>
+<span class="source-unit" data-unit="proposal-L23">## Specification</span>
+<span class="source-unit" data-unit="proposal-L25">### 1. Objective</span>
+<span class="source-unit" data-unit="proposal-L27">Deliver a reusable on-ledger orchestration layer for Canton-based applications so developers can compose independently developed Daml packages into larger business workflows with explicit participant roles, task progression, proof-driven state transitions, and clear application boundaries. The execution model should support a concrete first step where a project includes source application DARs and a Harmonia DAR, then uses Harmonia templates, interfaces, and choices to coordinate eligible source-application actions. Longer term, the design should identify what would be required for more dynamic composition.</span>
+<span class="source-unit" data-unit="proposal-L29">For the purposes of this proposal, a source application is an independently developed Daml application or package with its own templates, interfaces, choices, authorization model, and ownership. Composition means coordinating one or more of those applications as part of a larger process definition without forcing one team to hardcode all cross-application integration logic. The motivation is comparable to the way Solidity ABIs help developers reason about calling into separately developed smart contracts, but Harmonia is not equivalent to an ABI layer because Canton and Daml package imports, interface visibility, authorization, disclosure, and choice execution impose different constraints.</span>
+<span class="source-unit" data-unit="proposal-L31">The clearest adopters for this work are Canton application teams, Daml development teams, and institutions building workflow-heavy applications in areas such as trade operations, custody coordination, collateral handling, document-driven approvals, and regulated asset servicing. The intention is to make application composition on Canton easier to carry from one product context to another instead of forcing each team to rebuild bespoke integration glue from scratch.</span></blockquote></details>
+<details class="source-section" id="proposal-L160"><summary>System context, components, diagrams, and catalogs</summary>
+<a class="citation" href="../sources/proposal.html#L160">Original proposal · lines 160–285 ↗</a>
+<blockquote class="source-quotes"><span class="source-unit" data-unit="proposal-L160">#### Architectural Views</span>
+<span class="source-unit" data-unit="proposal-L162">These diagrams show Harmonia&#x27;s proposed system context and internal architecture. The two participation paths are reflected here: a final application DAR implementing Harmonia interfaces, and `harmonia-builder` as supporting build-time tooling for an existing application DAR. The Container diagram places `harmonia-core` as deployed on the external Canton Validator / Super Validator; the System Context remains focused on the systems&#x27; interactions. Both diagrams show the external Package Manager that `harmonia-builder` uses at build time to retrieve DARs needed to generate workflow projects; the Container diagram gives Catalyx Package Manager (https://www.catalyx.solutions/catalyx-package-manager) as an illustrative source only.</span>
+<span class="source-unit" data-unit="proposal-L164">##### System Context</span>
+<span class="source-unit" data-unit="proposal-L166">The System Context shows Harmonia in its surrounding ecosystem. It identifies the users, the external Canton Validator / Super Validator, a Package Manager, and their system-level relationships to Harmonia.</span>
+<span class="source-unit" data-unit="proposal-L168">```plantuml</span>
+<span class="source-unit" data-unit="proposal-L169">@startuml</span>
+<span class="source-unit" data-unit="proposal-L170">!include &lt;C4/C4_Context&gt;</span>
+<span class="source-unit" data-unit="proposal-L172">title Harmonia - Proposed System Context</span>
+<span class="source-unit" data-unit="proposal-L174">LAYOUT_LEFT_RIGHT()</span>
+<span class="source-unit" data-unit="proposal-L175">skinparam ranksep 180</span>
+<span class="source-unit" data-unit="proposal-L176">skinparam nodesep 20</span>
+<span class="source-unit" data-unit="proposal-L178">Person(users, &quot;Users&quot;, &quot;Interact with bounded workflows and provide DARs when necessary.&quot;)</span>
+<span class="source-unit" data-unit="proposal-L179">System(harmonia, &quot;Harmonia&quot;, &quot;Provides reusable on-ledger orchestration for bounded composed workflows.&quot;)</span>
+<span class="source-unit" data-unit="proposal-L180">System_Ext(validator, &quot;Canton Validator / Super Validator&quot;, &quot;External Canton environment that hosts Harmonia and relevant third-party Daml applications and DARs.&quot;)</span>
+<span class="source-unit" data-unit="proposal-L181">System_Ext(packageManager, &quot;Package Manager&quot;, &quot;External source of DARs and supporting package metadata or data.&quot;)</span>
+<span class="source-unit" data-unit="proposal-L183">&#x27; Layout-only edges establish the primary system order.</span>
+<span class="source-unit" data-unit="proposal-L184">users -[hidden]right- harmonia</span>
+<span class="source-unit" data-unit="proposal-L185">harmonia -[hidden]right- validator</span>
+<span class="source-unit" data-unit="proposal-L186">validator -[hidden]down- packageManager</span>
+<span class="source-unit" data-unit="proposal-L187">Lay_L(validator, packageManager)</span>
+<span class="source-unit" data-unit="proposal-L188">Rel_D(users, harmonia, &quot;Interact with workflows and provide DARs when necessary&quot;)</span>
+<span class="source-unit" data-unit="proposal-L189">Rel_D(harmonia, validator, &quot;Executes and submits workflow transactions&quot;)</span>
+<span class="source-unit" data-unit="proposal-L190">Rel_D(harmonia, packageManager, &quot;Reads supporting package metadata or data; harmonia-builder retrieves DARs at build time&quot;)</span>
+<span class="source-unit" data-unit="proposal-L193">SHOW_LEGEND()</span>
+<span class="source-unit" data-unit="proposal-L194">@enduml</span>
+<span class="source-unit" data-unit="proposal-L195">```</span>
+<span class="source-unit" data-unit="proposal-L197">This view keeps Harmonia&#x27;s workflow-orchestration scope at the system level, separating it from the external validator and the build-time DAR source. The catalog records each system&#x27;s role and the limits on any external relationship.</span>
+<span class="source-unit" data-unit="proposal-L199">###### System Context Box Catalog</span>
+<span class="source-unit" data-unit="proposal-L201">This catalog identifies the systems and records their roles, system-level relationships to Harmonia, and relevant qualifications.</span>
+<span class="source-unit" data-unit="proposal-L203">| Box | Role | Relationship to Harmonia | Qualification |</span>
+<span class="source-unit" data-unit="proposal-L204">| --- | --- | --- | --- |</span>
+<span class="source-unit" data-unit="proposal-L205">| Users | People who interact with bounded workflows and provide DARs when necessary. | Interact with workflows and provide DARs when necessary. | Their actions remain within supported workflows. |</span>
+<span class="source-unit" data-unit="proposal-L206">| Harmonia | The proposed reusable on-ledger workflow-orchestration system. | Provides supported workflow management directly and executes and submits workflow transactions through the Canton Validator / Super Validator. | This proposal describes a proposed system, not a deployment commitment. |</span>
+<span class="source-unit" data-unit="proposal-L207">| Canton Validator / Super Validator | External Canton environment hosting Harmonia and relevant third-party Daml applications and DARs. | Harmonia executes and submits workflow transactions through it. | Any external work remains subject to responsible maintainer review and applicable governance agreement. |</span>
+<span class="source-unit" data-unit="proposal-L208">| Package Manager | External source of DARs and supporting package metadata or data. | Harmonia reads supporting package metadata or data; `harmonia-builder` retrieves DARs at build time for workflow projects. | DAR retrieval occurs at build time; no integration, endorsement, or support is implied. |</span>
+<span class="source-unit" data-unit="proposal-L210">##### Container Diagram</span>
+<span class="source-unit" data-unit="proposal-L212">The Container Diagram shows Harmonia&#x27;s proposed logical containers and their external peer integrations. It focuses on each container&#x27;s responsibilities and on how both participation paths target the Core-managed workflow model.</span>
+<span class="source-unit" data-unit="proposal-L214">```plantuml</span>
+<span class="source-unit" data-unit="proposal-L215">@startuml</span>
+<span class="source-unit" data-unit="proposal-L216">!include &lt;C4/C4_Container&gt;</span>
+<span class="source-unit" data-unit="proposal-L218">title Harmonia - Proposed Container View</span>
+<span class="source-unit" data-unit="proposal-L220">LAYOUT_TOP_DOWN()</span>
+<span class="source-unit" data-unit="proposal-L221">skinparam ranksep 90</span>
+<span class="source-unit" data-unit="proposal-L222">skinparam nodesep 60</span>
+<span class="source-unit" data-unit="proposal-L224">Person(users, &quot;Users&quot;, &quot;Inspect, define, authorize, and execute bounded workflows; upload DARs to harmonia-builder when generated integration code is needed.&quot;)</span>
+<span class="source-unit" data-unit="proposal-L226">System_Boundary(harmoniaBoundary, &quot;Harmonia&quot;) {</span>
+<span class="source-unit" data-unit="proposal-L227">    Container(dapp, &quot;harmonia-dapp&quot;, &quot;Application&quot;, &quot;Includes the viewer and composer for inspecting and defining bounded workflows.&quot;)</span>
+<span class="source-unit" data-unit="proposal-L228">    Container(core, &quot;harmonia-core&quot;, &quot;Daml&quot;, &quot;Manages the common workflow model with reusable orchestration patterns, templates, choices, and workflow state.&quot;)</span>
+<span class="source-unit" data-unit="proposal-L229">    Container(interfaces, &quot;Harmonia Binding DAR&quot;, &quot;Daml&quot;, &quot;Defines applicable application templates and how they participate in the Harmonia workflow model.&quot;)</span>
+<span class="source-unit" data-unit="proposal-L230">    Container(references, &quot;harmonia-references&quot;, &quot;Daml&quot;, &quot;Provides reference applications, workflows, examples, a minimal composition framework, and sample source-application DARs.&quot;)</span>
+<span class="source-unit" data-unit="proposal-L231">    Container(builder, &quot;harmonia-builder&quot;, &quot;Internal tooling&quot;, &quot;Accepts DARs and generates the project, code, and boilerplate needed to use interface applicability declarations with existing application DARs.&quot;)</span>
+<span class="source-unit" data-unit="proposal-L232">}</span>
+<span class="source-unit" data-unit="proposal-L234">System_Ext(validator, &quot;Canton Validator / Super Validator&quot;, &quot;Hosts harmonia-core, the Harmonia Binding DAR, and relevant third-party Daml applications and DARs.&quot;)</span>
+<span class="source-unit" data-unit="proposal-L235">System_Ext(packageManager, &quot;Package Manager&quot;, &quot;Provides DARs that harmonia-builder retrieves at build time to generate workflow projects.&quot;)</span>
+<span class="source-unit" data-unit="proposal-L236">    note bottom of packageManager</span>
+<span class="source-unit" data-unit="proposal-L237">      Example: Catalyx Package Manager</span>
+<span class="source-unit" data-unit="proposal-L238">      URL: https://www.catalyx.solutions/catalyx-package-manager</span>
+<span class="source-unit" data-unit="proposal-L239">      Illustrative source only; no integration or support is implied.</span>
+<span class="source-unit" data-unit="proposal-L240">    end note</span>
+<span class="source-unit" data-unit="proposal-L242">&#x27; Layout-only edges establish the primary container order and place the Validator to the right of Harmonia.</span>
+<span class="source-unit" data-unit="proposal-L243">users -[hidden]down- dapp</span>
+<span class="source-unit" data-unit="proposal-L244">dapp -[hidden]right- core</span>
+<span class="source-unit" data-unit="proposal-L245">core -[hidden]down- interfaces</span>
+<span class="source-unit" data-unit="proposal-L246">interfaces -[hidden]down- references</span>
+<span class="source-unit" data-unit="proposal-L247">references -[hidden]right- builder</span>
+<span class="source-unit" data-unit="proposal-L248">core -[hidden]right- validator</span>
+<span class="source-unit" data-unit="proposal-L249">validator -[hidden]right- packageManager</span>
+<span class="source-unit" data-unit="proposal-L251">Rel_D(users, dapp, &quot;Inspect, define, authorize, and execute workflows&quot;)</span>
+<span class="source-unit" data-unit="proposal-L252">Rel_D(users, builder, &quot;Upload DARs when generated integration code is needed&quot;)</span>
+<span class="source-unit" data-unit="proposal-L253">Rel_R(dapp, core, &quot;Uses orchestration interfaces and workflow state&quot;)</span>
+<span class="source-unit" data-unit="proposal-L254">Rel_R(dapp, validator, &quot;Submits workflow transactions&quot;)</span>
+<span class="source-unit" data-unit="proposal-L255">Rel_R(dapp, packageManager, &quot;Reads supporting package metadata or data&quot;)</span>
+<span class="source-unit" data-unit="proposal-L256">Rel_U(interfaces, core, &quot;Defines application-template participation in the common workflow model&quot;)</span>
+<span class="source-unit" data-unit="proposal-L257">Rel_U(references, core, &quot;Demonstrates both participation paths through interface definitions&quot;)</span>
+<span class="source-unit" data-unit="proposal-L258">Rel_L(core, validator, &quot;Deployed on&quot;)</span>
+<span class="source-unit" data-unit="proposal-L259">Rel_L(interfaces, validator, &quot;Deployed on&quot;)</span>
+<span class="source-unit" data-unit="proposal-L260">Rel_L(builder, packageManager, &quot;Retrieves DARs needed to generate workflow projects at build time&quot;)</span>
+<span class="source-unit" data-unit="proposal-L261">Rel_U(builder, interfaces, &quot;Generates project/code using interface applicability declarations&quot;)</span>
+<span class="source-unit" data-unit="proposal-L262">Rel_U(builder, core, &quot;Targets the core-managed workflow model&quot;)</span>
+<span class="source-unit" data-unit="proposal-L264">SHOW_LEGEND()</span>
+<span class="source-unit" data-unit="proposal-L265">@enduml</span>
+<span class="source-unit" data-unit="proposal-L266">```</span>
+<span class="source-unit" data-unit="proposal-L268">The container view keeps reusable workflow orchestration in `harmonia-core`, deployed on the external Canton Validator / Super Validator. `harmonia-dapp` is the user-facing interaction surface. `harmonia-builder` generates the project, code, and boilerplate that bind an existing application DAR into the same Core-managed workflow model.</span>
+<span class="source-unit" data-unit="proposal-L270">###### Container Responsibility Catalog</span>
+<span class="source-unit" data-unit="proposal-L272">This catalog records the containers, their responsibilities, and their integration boundaries.</span>
+<span class="source-unit" data-unit="proposal-L274">| Box | Responsibility | Dependencies or outputs | Explicit boundary |</span>
+<span class="source-unit" data-unit="proposal-L275">| --- | --- | --- | --- |</span>
+<span class="source-unit" data-unit="proposal-L276">| `harmonia-dapp` | Provides the viewer and composer for inspecting and defining bounded workflows. | Uses `harmonia-core` orchestration interfaces and workflow state, submits workflow transactions to the Canton Validator / Super Validator, and reads supporting package metadata or data from a Package Manager. | It is the user-facing interaction surface, not the workflow-orchestration layer. |</span>
+<span class="source-unit" data-unit="proposal-L277">| `harmonia-core` | Manages the common workflow model with reusable orchestration patterns, templates, choices, and workflow state. | Used through the dedicated Harmonia Binding DAR; deployed on the external Canton Validator / Super Validator. | It manages the Core workflow model; it does not define a separate runtime composition model. |</span>
+<span class="source-unit" data-unit="proposal-L278">| Harmonia Binding DAR | Defines the application templates to which each interface applies and how each applicable template participates in the Harmonia workflow model. | Used by a final application DAR that implements the interfaces where appropriate, or by Builder-generated project/code with an existing application DAR. | Exact package-import direction, template identifier representation, and binding mechanism are design details to be defined. |</span>
+<span class="source-unit" data-unit="proposal-L279">| `harmonia-references` | Provides reference applications, workflows, examples, a minimal composition framework, and sample source-application DARs. | Demonstrates both participation paths through the dedicated Harmonia Binding DAR and `harmonia-core`. | It is reference material, not a requirement for an external application&#x27;s integration. |</span>
+<span class="source-unit" data-unit="proposal-L280">| `harmonia-builder` | Generates the project, code, and boilerplate needed to use interface applicability declarations with existing application DARs. | Retrieves DARs from a Package Manager at build time and generates project/code targeting the Core-managed workflow model, and consumes application DARs that `harmonia-dapp` retrieves from the Validator node | It is build-time tooling, not a separate runtime composition model. |</span>
+<span class="source-unit" data-unit="proposal-L281">| Canton Validator / Super Validator | Hosts deployed `harmonia-core`, the Harmonia Binding DAR, and relevant third-party Daml applications and DARs. | Hosts the Core workflow model and relevant applications. | It is an external system; any upstream work remains subject to maintainer review and applicable governance agreement. |</span>
+<span class="source-unit" data-unit="proposal-L282">| Package Manager | Provides a build-time source of DARs for `harmonia-builder`. | Supplies DARs needed to generate workflow projects. | Catalyx Package Manager and its URL are illustrative only; no integration, endorsement, or support is implied. |</span></blockquote></details>
+<details class="source-section" id="proposal-L484"><summary>Motivation and the adoption problem</summary>
+<a class="citation" href="../sources/proposal.html#L484">Original proposal · lines 484–501 ↗</a>
+<blockquote class="source-quotes"><span class="source-unit" data-unit="proposal-L484">## Motivation</span>
+<span class="source-unit" data-unit="proposal-L486">Canton is well suited to applications where several parties must coordinate process progression without handing control to one central operator. Yet in practice, multi-application business processes are often split across separate systems and separate business domains. This is especially visible in financial institution coordination, where trade validation, proof generation, asset movement, and settlement are handled as distinct domains by different parties or systems. Similar fragmentation also appears in property closing, where payment or escrow release, contract signing, transaction progression, and compliance checks are handled separately.</span>
+<span class="source-unit" data-unit="proposal-L488">Canton is at a point where the underlying privacy and coordination primitives are already strong, but the application-layer orchestration baseline for composing independent Daml applications is still missing. Closing that gap would shorten the path from architecture to working implementation for composed application use cases and make Canton easier to recognize as a platform for operational coordination as well as asset and contract representation.</span>
+<span class="source-unit" data-unit="proposal-L490">For Unlockit, demand for configurable workflows is well established. The ability for customers to define or adapt their own workflow logic has repeatedly come up across customer conversations and product exploration. Customers do not want every variation in approvals, handoffs, evidence checks, or exception paths to require bespoke engineering work. They want controlled configurability so the product can adapt to their operating model instead of forcing them into one fixed flow.</span>
+<span class="source-unit" data-unit="proposal-L492">Unlockit is approaching this from direct product work with proof-driven, multi-party processes where independently owned participants, privacy constraints, and verifiable progression are baseline requirements. That practical grounding matters, but the intended output is still reusable ecosystem infrastructure rather than a product feature tied only to Unlockit’s immediate market focus.</span>
+<span class="source-unit" data-unit="proposal-L494">This is also not a gap that Unlockit is identifying only in the abstract. It is something the team has already investigated in practice. That work clarified the need: the key issue with the existing approaches was dependence on a central operator. They could support workflow configuration, but only by making one party or one platform the trusted coordinator of execution and composition. That does not match the decentralized trust model required for credible composition across independently owned domains. This is a significant reason why building the framework has become an active product and ecosystem consideration.</span>
+<span class="source-unit" data-unit="proposal-L496">The difficulty is that configurable workflows are already hard in a centralized product, and materially harder in a decentralized one. In a centralized stack, one operator can own the workflow engine, the execution order, and the trust assumptions. In a decentralized ecosystem, that option is not available. If multiple organizations need to compose workflow behavior, the model cannot rely on one shared operator to coordinate execution implicitly. The workflow logic has to remain trustworthy even when the participating parties are independent, their domains are separately owned, and progression depends on explicit authorization, shared state, and verifiable outputs rather than central control.</span>
+<span class="source-unit" data-unit="proposal-L498">Today, those flows are typically connected in a fragmented and fragile manner. Each organization optimizes for its own domain, but composition across organizations is expensive and often custom-built for each use case. A simple example is when a trade between a party and a counterparty is validated in one workflow domain, proofs are generated for both sides, and custodians should only move assets after receiving the right proof and satisfying either an automatic acceptance rule or a human review path. An open orchestration package would address that gap directly by allowing selected source-application behavior to be exposed through explicit Daml interfaces and then composed into larger multi-party processes through a model adapted to decentralized shared-state execution. That would strengthen Canton’s applicability to operational coordination use cases and would create a visible reference implementation that other teams can adopt, extend, or evaluate.</span>
+<span class="source-unit" data-unit="proposal-L500">---</span></blockquote></details>
+<details class="source-section" id="architecture-L1"><summary>Architecture identity and attribution</summary>
+<a class="citation" href="../sources/architecture.html#L1">Original architecture · lines 1–87 ↗</a>
+<blockquote class="source-quotes"><span class="source-unit" data-unit="architecture-T001">HARMONIA</span>
+<span class="source-unit" data-unit="architecture-T002">on-ledger workflow composition · Canton / Daml</span>
+<span class="source-unit" data-unit="architecture-T003">unlockitio/canton-dev-fund @ unlockitio-harmonia · proposals/harmonia.md</span></blockquote></details>
+<details class="source-section" id="architecture-L88"><summary>Off-ledger and on-ledger component map</summary>
+<a class="citation" href="../sources/architecture.html#L88">Original architecture · lines 88–317 ↗</a>
+<blockquote class="source-quotes"><span class="source-unit" data-unit="architecture-T004">1 · Component map — off-ledger / on-ledger split</span>
+<span class="source-unit" data-unit="architecture-T005">OFF-LEDGER</span>
+<span class="source-unit" data-unit="architecture-T006">clients · build-time tooling · external services</span>
+<span class="source-unit" data-unit="architecture-T007">Users</span>
+<span class="source-unit" data-unit="architecture-T008">actors</span>
+<span class="source-unit" data-unit="architecture-T009">workflow actors</span>
+<span class="source-unit" data-unit="architecture-T010">DAR providers</span>
+<span class="source-unit" data-unit="architecture-T011">harmonia-dapp</span>
+<span class="source-unit" data-unit="architecture-T012">application · viewer + composer · runtime</span>
+<span class="source-unit" data-unit="architecture-T013">viewer</span>
+<span class="source-unit" data-unit="architecture-T014">state · progress</span>
+<span class="source-unit" data-unit="architecture-T015">composer</span>
+<span class="source-unit" data-unit="architecture-T016">define · authz</span>
+<span class="source-unit" data-unit="architecture-T017">back-office</span>
+<span class="source-unit" data-unit="architecture-T018">exec views</span>
+<span class="source-unit" data-unit="architecture-T019">tx submit</span>
+<span class="source-unit" data-unit="architecture-T020">DAR fetch</span>
+<span class="source-unit" data-unit="architecture-T021">reads state + package metadata · writes workflow tx</span>
+<span class="source-unit" data-unit="architecture-T022">interaction surface · not the orchestration layer</span>
+<span class="source-unit" data-unit="architecture-T023">harmonia-builder</span>
+<span class="source-unit" data-unit="architecture-T024">internal tooling · BUILD TIME ONLY</span>
+<span class="source-unit" data-unit="architecture-T025">DAR upload</span>
+<span class="source-unit" data-unit="architecture-T026">user-supplied</span>
+<span class="source-unit" data-unit="architecture-T027">DAR retrieval</span>
+<span class="source-unit" data-unit="architecture-T028">pkg mgr · validator</span>
+<span class="source-unit" data-unit="architecture-T029">codegen</span>
+<span class="source-unit" data-unit="architecture-T030">project + boilerplate</span>
+<span class="source-unit" data-unit="architecture-T031">output → Binding DAR + generated project/code</span>
+<span class="source-unit" data-unit="architecture-T032">no separate runtime composition model</span>
+<span class="source-unit" data-unit="architecture-T033">Package Manager</span>
+<span class="source-unit" data-unit="architecture-T034">external · e.g. Catalyx</span>
+<span class="source-unit" data-unit="architecture-T035">DARs</span>
+<span class="source-unit" data-unit="architecture-T036">package metadata</span>
+<span class="source-unit" data-unit="architecture-T037">illustrative source only</span>
+<span class="source-unit" data-unit="architecture-T038">no integration implied</span>
+<span class="source-unit" data-unit="architecture-T039">LEGEND</span>
+<span class="source-unit" data-unit="architecture-T040">Harmonia component</span>
+<span class="source-unit" data-unit="architecture-T041">external system</span>
+<span class="source-unit" data-unit="architecture-T042">Daml package (DAR)</span>
+<span class="source-unit" data-unit="architecture-T043">runtime call</span>
+<span class="source-unit" data-unit="architecture-T044">build-time</span>
+<span class="source-unit" data-unit="architecture-T045">on-ledger relation</span>
+<span class="source-unit" data-unit="architecture-T046">① direct path · app DAR implements Harmonia interfaces</span>
+<span class="source-unit" data-unit="architecture-T047">② builder path · existing app DAR + generated binding</span>
+<span class="source-unit" data-unit="architecture-T048">inspect · define</span>
+<span class="source-unit" data-unit="architecture-T049">authorize · execute</span>
+<span class="source-unit" data-unit="architecture-T050">upload DAR</span>
+<span class="source-unit" data-unit="architecture-T051">app DARs</span>
+<span class="source-unit" data-unit="architecture-T052">fetch</span>
+<span class="source-unit" data-unit="architecture-T053">pkg metadata</span>
+<span class="source-unit" data-unit="architecture-T054">LEDGER BOUNDARY · LEDGER API</span>
+<span class="source-unit" data-unit="architecture-T055">ON-LEDGER · DAML</span>
+<span class="source-unit" data-unit="architecture-T056">hosted by Canton Validator / Super Validator (external) · composition state stays on-ledger</span>
+<span class="source-unit" data-unit="architecture-T057">harmonia-core</span>
+<span class="source-unit" data-unit="architecture-T058">Daml · the Core-managed workflow model</span>
+<span class="source-unit" data-unit="architecture-T059">orchestration</span>
+<span class="source-unit" data-unit="architecture-T060">templates · choices</span>
+<span class="source-unit" data-unit="architecture-T061">interfaces</span>
+<span class="source-unit" data-unit="architecture-T062">+ applicability</span>
+<span class="source-unit" data-unit="architecture-T063">workflow state</span>
+<span class="source-unit" data-unit="architecture-T064">persisted · queryable</span>
+<span class="source-unit" data-unit="architecture-T065">step-exec rules</span>
+<span class="source-unit" data-unit="architecture-T066">actor + authority</span>
+<span class="source-unit" data-unit="architecture-T067">sequential · XOR branch · join · continuation</span>
+<span class="source-unit" data-unit="architecture-T068">start event → steps → end event</span>
+<span class="source-unit" data-unit="architecture-T069">bounded atomic execution block</span>
+<span class="source-unit" data-unit="architecture-T070">collapse steps when authorizations co-exist</span>
+<span class="source-unit" data-unit="architecture-T071">role → party binding · no central operator</span>
+<span class="source-unit" data-unit="architecture-T072">privacy · ownership · authorization preserved</span>
+<span class="source-unit" data-unit="architecture-T073">Harmonia Binding DAR</span>
+<span class="source-unit" data-unit="architecture-T074">Daml · interface ⇄ app-template</span>
+<span class="source-unit" data-unit="architecture-T075">applicable app templates</span>
+<span class="source-unit" data-unit="architecture-T076">templateId · choice · role</span>
+<span class="source-unit" data-unit="architecture-T077">participation in the model</span>
+<span class="source-unit" data-unit="architecture-T078">which step kind a choice fulfils</span>
+<span class="source-unit" data-unit="architecture-T079">①</span>
+<span class="source-unit" data-unit="architecture-T080">authored by</span>
+<span class="source-unit" data-unit="architecture-T081">app project</span>
+<span class="source-unit" data-unit="architecture-T082">②</span>
+<span class="source-unit" data-unit="architecture-T083">emitted by</span>
+<span class="source-unit" data-unit="architecture-T084">harmonia-builder</span>
+<span class="source-unit" data-unit="architecture-T085">import direction · templateId repr</span>
+<span class="source-unit" data-unit="architecture-T086">binding mechanism — UNDECIDED</span>
+<span class="source-unit" data-unit="architecture-T087">both paths → one Core-managed model</span>
+<span class="source-unit" data-unit="architecture-T088">Source App DAR ①</span>
+<span class="source-unit" data-unit="architecture-T089">final DAR · new version</span>
+<span class="source-unit" data-unit="architecture-T090">implements interfaces</span>
+<span class="source-unit" data-unit="architecture-T091">own templates · choices</span>
+<span class="source-unit" data-unit="architecture-T092">own authorization + ownership</span>
+<span class="source-unit" data-unit="architecture-T093">Source App DAR ②</span>
+<span class="source-unit" data-unit="architecture-T094">existing DAR · unchanged</span>
+<span class="source-unit" data-unit="architecture-T095">bound by generated code</span>
+<span class="source-unit" data-unit="architecture-T096">own templates · choices</span>
+<span class="source-unit" data-unit="architecture-T097">no source change required</span>
+<span class="source-unit" data-unit="architecture-T098">harmonia-</span>
+<span class="source-unit" data-unit="architecture-T099">references</span>
+<span class="source-unit" data-unit="architecture-T100">Daml · proof</span>
+<span class="source-unit" data-unit="architecture-T101">reference apps</span>
+<span class="source-unit" data-unit="architecture-T102">≥2 sample DARs</span>
+<span class="source-unit" data-unit="architecture-T103">min. composition</span>
+<span class="source-unit" data-unit="architecture-T104">framework</span>
+<span class="source-unit" data-unit="architecture-T105">4-party token</span>
+<span class="source-unit" data-unit="architecture-T106">transfer</span>
+<span class="source-unit" data-unit="architecture-T107">property financing</span>
+<span class="source-unit" data-unit="architecture-T108">+ offer</span>
+<span class="source-unit" data-unit="architecture-T109">↓ submit workflow transactions</span>
+<span class="source-unit" data-unit="architecture-T110">↑ workflow state · application DARs</span>
+<span class="source-unit" data-unit="architecture-T111">↓ deploy Harmonia Binding DAR</span>
+<span class="source-unit" data-unit="architecture-T112">+ generated project/code</span>
+<span class="source-unit" data-unit="architecture-T113">defines</span>
+<span class="source-unit" data-unit="architecture-T114">participation</span>
+<span class="source-unit" data-unit="architecture-T115">interfaces +</span>
+<span class="source-unit" data-unit="architecture-T116">applicability</span>
+<span class="source-unit" data-unit="architecture-T117">implements</span>
+<span class="source-unit" data-unit="architecture-T118">binds</span>
+<span class="source-unit" data-unit="architecture-T119">demonstrates ① and ② against one Core-managed workflow model</span></blockquote></details>
+<details class="source-section" id="architecture-L488"><summary>Component catalog</summary>
+<a class="citation" href="../sources/architecture.html#L488">Original architecture · lines 488–504 ↗</a>
+<blockquote class="source-quotes"><span class="source-unit" data-unit="architecture-T206">3 · Component catalog</span>
+<span class="source-unit" data-unit="architecture-T207">Component</span>
+<span class="source-unit" data-unit="architecture-T208">Side</span>
+<span class="source-unit" data-unit="architecture-T209">Kind</span>
+<span class="source-unit" data-unit="architecture-T210">Owns</span>
+<span class="source-unit" data-unit="architecture-T211">Boundary</span>
+<span class="source-unit" data-unit="architecture-T212">harmonia-dapp</span>
+<span class="source-unit" data-unit="architecture-T213">off-ledger</span>
+<span class="source-unit" data-unit="architecture-T214">application</span>
+<span class="source-unit" data-unit="architecture-T215">viewer · composer · back-office views · tx submission · DAR fetch</span>
+<span class="source-unit" data-unit="architecture-T216">interaction surface, not orchestration; no managed hosting, no BPMN editor</span>
+<span class="source-unit" data-unit="architecture-T217">harmonia-builder</span>
+<span class="source-unit" data-unit="architecture-T218">off-ledger</span>
+<span class="source-unit" data-unit="architecture-T219">build-time tooling</span>
+<span class="source-unit" data-unit="architecture-T220">DAR upload · DAR retrieval · codegen → Binding DAR + project/code</span>
+<span class="source-unit" data-unit="architecture-T221">build time only; not a runtime composition model</span>
+<span class="source-unit" data-unit="architecture-T222">Package Manager</span>
+<span class="source-unit" data-unit="architecture-T223">external</span>
+<span class="source-unit" data-unit="architecture-T224">service</span>
+<span class="source-unit" data-unit="architecture-T225">DARs · package metadata</span>
+<span class="source-unit" data-unit="architecture-T226">Catalyx illustrative only; no integration implied</span>
+<span class="source-unit" data-unit="architecture-T227">Canton Validator / Super Validator</span>
+<span class="source-unit" data-unit="architecture-T228">external</span>
+<span class="source-unit" data-unit="architecture-T229">runtime host</span>
+<span class="source-unit" data-unit="architecture-T230">hosts harmonia-core, Binding DAR, third-party DARs</span>
+<span class="source-unit" data-unit="architecture-T231">upstream work subject to maintainer review + governance</span>
+<span class="source-unit" data-unit="architecture-T232">harmonia-core</span>
+<span class="source-unit" data-unit="architecture-T233">on-ledger</span>
+<span class="source-unit" data-unit="architecture-T234">Daml package</span>
+<span class="source-unit" data-unit="architecture-T235">workflow model · templates · choices · interfaces + applicability · state · step-exec rules</span>
+<span class="source-unit" data-unit="architecture-T236">one Core-managed model; no separate runtime model</span>
+<span class="source-unit" data-unit="architecture-T237">Harmonia Binding DAR</span>
+<span class="source-unit" data-unit="architecture-T238">on-ledger</span>
+<span class="source-unit" data-unit="architecture-T239">Daml package</span>
+<span class="source-unit" data-unit="architecture-T240">applicable app templates · how each participates</span>
+<span class="source-unit" data-unit="architecture-T241">import direction · templateId repr · binding mechanism undecided</span>
+<span class="source-unit" data-unit="architecture-T242">Source App DAR ①</span>
+<span class="source-unit" data-unit="architecture-T243">on-ledger</span>
+<span class="source-unit" data-unit="architecture-T244">Daml package</span>
+<span class="source-unit" data-unit="architecture-T245">implements Harmonia interfaces in a new version</span>
+<span class="source-unit" data-unit="architecture-T246">app ownership / authorization / privacy preserved</span>
+<span class="source-unit" data-unit="architecture-T247">Source App DAR ②</span>
+<span class="source-unit" data-unit="architecture-T248">on-ledger</span>
+<span class="source-unit" data-unit="architecture-T249">Daml package</span>
+<span class="source-unit" data-unit="architecture-T250">existing DAR bound by generated code</span>
+<span class="source-unit" data-unit="architecture-T251">no source change required</span>
+<span class="source-unit" data-unit="architecture-T252">harmonia-references</span>
+<span class="source-unit" data-unit="architecture-T253">on-ledger</span>
+<span class="source-unit" data-unit="architecture-T254">Daml package</span>
+<span class="source-unit" data-unit="architecture-T255">reference apps · ≥2 sample DARs · min. composition framework · 2 workflows</span>
+<span class="source-unit" data-unit="architecture-T256">reference material, not required for integration</span></blockquote></details><div class="appendices"><a href="../coverage.html">View document coverage and all chapter destinations →</a><a href="09-proposal-context.html">Appendix: proposal context</a><a href="10-context-and-references.html">Appendix: context and references</a></div></main></body></html>

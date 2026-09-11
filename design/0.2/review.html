@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Concept and HTML review · Harmonia</title><link rel="stylesheet" href="style.css"></head><body>
+<main id="main" style="max-width:1600px;margin:auto;padding:40px"><p class="eyebrow">Harmonia · 0.2 design review</p><h1>From concept to interface.</h1><p class="lead">Compare the generated design with an actual browser rendering. Open the HTML to exercise its controls.</p><p>The composition, palette, hierarchy, and primary controls follow the concepts. Native type rendering, select controls, and some line wrapping differ. <a href="../../docs/0.2/ui-design.md">Read the documented corrections and limitations.</a></p>
+<label class="field"><span>Choose a screen</span><select id="screen"><option value="book-overview">Book overview</option><option value="book-chapter">Interactive chapter</option><option value="application">Application workspace</option><option value="application-builder">Bring an application</option><option value="coverage">Source coverage</option></select></label>
+<div class="actions"><a id="open-html" class="button primary" href="book-overview.html">Open the interactive HTML →</a><a id="open-prompt" href="prompts/book-overview.md">Read the exact image prompt</a><a href="provenance.json">Image provenance</a></div>
+<div class="comparison-grid" style="margin-top:28px"><section><h2>Generated concept</h2><a id="concept-link" href="book-overview.png"><img id="concept" src="book-overview.png" alt="Generated book overview concept"></a></section><section><h2>Rendered HTML</h2><a id="rendered-link" href="book-overview.rendered.png"><img id="rendered" src="book-overview.rendered.png" alt="Actual HTML rendering of the book overview"></a></section></div>
+<p class="note">Both desktop images are 1536 × 1024. Rendering captures are separate files. No concept image is used as the background of an interactive page.</p>
+<details class="source-section"><summary>Responsive reading and application views</summary><div class="comparison-grid"><img src="book-chapter.mobile.png" alt="Book chapter at 390 by 844 pixels" style="max-width:390px"><img src="application.mobile.png" alt="Application at 390 by 844 pixels" style="max-width:390px"></div></details>
+<p><a href="book-overview.html">Enter the field guide →</a> · <a href="coverage.html">Inspect source coverage →</a></p></main>
+<script>
+const choice=document.getElementById('screen');
+choice.addEventListener('change',()=>{
+  const value=choice.value, label=choice.options[choice.selectedIndex].text;
+  document.getElementById('concept').src=`${value}.png`;
+  document.getElementById('concept').alt=`Generated ${label} concept`;
+  document.getElementById('concept-link').href=`${value}.png`;
+  document.getElementById('rendered').src=`${value}.rendered.png`;
+  document.getElementById('rendered').alt=`Actual HTML rendering: ${label}`;
+  document.getElementById('rendered-link').href=`${value}.rendered.png`;
+  document.getElementById('open-html').href=`${value}.html`;
+  document.getElementById('open-prompt').href=`prompts/${value}.md`;
+});
+</script></body></html>

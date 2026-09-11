@@ -1,0 +1,10 @@
+{
+  "proposal": {
+    "path": "docs/proposal/harmonia.md",
+    "sha256": "9e33ac476c841151fc4c0bf4b853412d6542e63cec0d27ab36e9171126a1dd27"
+  },
+  "architecture": {
+    "path": "docs/proposal/harmonia-architecture.html",
+    "sha256": "b80f0c65a19e24739b2fef3dd16a406b3bf9a309a0a1db19f1cc62ef9229a8a7"
+  }
+}

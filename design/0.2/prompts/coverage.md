@@ -1,0 +1,11 @@
+Use case: ui-mockup
+Asset type: Source quotation coverage page in Harmonia's book, desktop 1536 by 1024.
+Input image: book-overview.png is STYLE REFERENCE; same exact 290px sidebar, warm ivory, charcoal, olive, editorial serif titles and quiet hairline tables. No dashboard gimmicks.
+Primary request: make a document coverage page trustworthy and beautifully readable. Header "The book / Source coverage", right "0.2 · DESIGN PREVIEW". Rail same book chapters and footer "Original documents ↗" highlighted.
+Main content x362 to1496 starts y128. Eyebrow "READ THE CLAIM. INSPECT THE SOURCE." Large serif title "Every passage has a place." Below paragraph "Trace the original proposal and architecture into the book. Keep the words, their interpretation, and the evidence distinguishable."
+At y310 three spacious typographic metrics in one row, no cards: "100%" caption "Textual quotation coverage"; "736" caption "Unique source units quoted"; "12" caption "Product claims tracked separately".
+At y405 an olive left-rule note on pale ivory-green: "This score measures exact quotation inclusion in the chapter source panels. It does not measure implementation completeness, quality of explanation, or external adoption."
+At y500 table with column headings "ORIGINAL", "QUOTED UNITS", "QUOTED SOURCE WORDS", "COVERAGE". Two rows: "Proposal / nonblank Markdown source lines", "386 / 386", "7,138 / 7,138", "100%"; next "Architecture / visible HTML body text nodes", "350 / 350", "972 / 972", "100%". Thin horizontal rules.
+At y710 heading "What the denominator includes". Text below "Every nonblank Markdown source line, including headings, tables, diagram code and links. Every visible HTML body text node, including SVG labels." Below muted small note "Markup, CSS, scripts and comments are excluded. Missing diagram attachments remain missing. Both original files are available intact."
+At y870 underlined links "Inspect the machine-readable report" and "Read the authored coverage map". At y950 heading "Chapter destinations" partly beginning next scroll section.
+Constraints: use exact provided verified counts, no invented feature completion or adoption score; this page reports textual quotation inclusion only. Keep original reference style and strong legibility.

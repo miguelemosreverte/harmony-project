@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Four-party transfer · Harmonia</title><link rel="stylesheet" href="../style.css"><script src="../book.js" defer></script></head>
+<body class=""><a class="skip-link" href="#main">Skip to content</a>
+<aside class="rail"><a class="brand" href="../book-overview.html"><span class="mark" aria-hidden="true"></span><span class="brand-name">Harmonia</span><span class="brand-caption">THE FIELD GUIDE</span></a>
+<button class="mobile-menu" aria-expanded="false" aria-controls="chapter-nav">Chapters</button><nav id="chapter-nav" aria-label="Book chapters"><a class="nav-link " href="../book-overview.html">Overview</a><p class="nav-label">UNDERSTAND</p><a class="nav-link " href="../chapters/01-product.html"><span>01</span>The product</a><a class="nav-link " href="../chapters/02-roles-and-trust.html"><span>02</span>Roles &amp; trust</a><p class="nav-label">EXPLORE</p><a class="nav-link " href="../book-chapter.html"><span>03</span>Financing to offer</a><a class="nav-link active" href="../chapters/04-four-party-transfer.html"><span>04</span>Four-party transfer</a><a class="nav-link " href="../chapters/05-bring-an-application.html"><span>05</span>Bring an application</a><a class="nav-link " href="../chapters/06-compose-a-workflow.html"><span>06</span>Compose a workflow</a><p class="nav-label">VERIFY</p><a class="nav-link " href="../chapters/07-evidence-and-boundaries.html"><span>07</span>Evidence &amp; boundaries</a><a class="nav-link " href="../chapters/08-release-and-adoption.html"><span>08</span>Release &amp; adoption</a></nav>
+<div class="rail-footer"><a href="../coverage.html">Original documents ↗</a></div></aside>
+<header class="topbar"><span>The book &nbsp; / &nbsp; Four-party transfer</span><span class="edition">0.2 · DESIGN PREVIEW</span></header>
+<main id="main" class="content article"><p class="eyebrow">CHAPTER 04 · SOURCE-CITED DESIGN EDITION</p><h1>Four-party transfer</h1><p>Follow staged work into one transaction</p>
+<p>Buyer, seller, source custodian, and destination custodian each have work to do. One of these four parties fulfills the Settler role. There is no implied fifth operator.</p>
+<h2>How to read this chapter</h2>
+<p>First establish consent, the source lock, and destination readiness. Only after the required conditions hold may the eligible final path commit atomically. Four animated steps do not by themselves prove four ledger transactions or one atomic transaction.</p>
+<h2>Current evidence and next work</h2>
+<p>The existing reference demonstrates a bounded final transfer. The 0.2 application design must expose each party’s work and the evidence of atomic completion, with refusal and rollback cases beside the successful path.</p>
+<p><a href="../../../book/06-atomic-transfer.md">Existing transfer chapter and golden evidence</a></p><h2 id="quotations">The original words</h2><p class="note">Open a passage to read its full quotation. Source locations and fingerprints remain inspectable. Quoted proposal statements are not claims of completed implementation.</p><details class="source-section" id="proposal-L118"><summary>Transfer use case and original asset references</summary>
+<a class="citation" href="../sources/proposal.html#L118">Original proposal · lines 118–132 ↗</a>
+<blockquote class="source-quotes"><span class="source-unit" data-unit="proposal-L118">#### Illustrative Execution Flows</span>
+<span class="source-unit" data-unit="proposal-L120">**Four-party token-transfer workflow**</span>
+<span class="source-unit" data-unit="proposal-L122">1. A Buyer and Seller agree a trade proposal that begins the workflow.</span>
+<span class="source-unit" data-unit="proposal-L123">2. The source custodian validates that the token position is already locked and eligible for transfer.</span>
+<span class="source-unit" data-unit="proposal-L124">3. The destination custodian confirms readiness to receive the asset under the required account or lock condition.</span>
+<span class="source-unit" data-unit="proposal-L125">4. The Settler role is selected or fulfilled by one of the Buyer, Seller, source custodian, or destination custodian as applicable; it is not a separate fifth actor or a fixed identity.</span>
+<span class="source-unit" data-unit="proposal-L126">5. The workflow engine tracks these as explicit domain-owned steps with clear execution rights, visible progression state, and handoff across independently owned workflow domains.</span>
+<span class="source-unit" data-unit="proposal-L127">6. Once the required approvals and lock conditions are present, the final transfer path can collapse into one bounded atomic execution rather than remaining a staged sequence.</span>
+<span class="source-unit" data-unit="proposal-L128">7. The flow demonstrates explicit multi-party progression where needed, with bounded atomic completion only where Canton authorization and workflow structure allow it.</span>
+<span class="source-unit" data-unit="proposal-L130">![Four-party token transfer workflow](assets/img/01-harmonia-transfer.svg)</span>
+<span class="source-unit" data-unit="proposal-L131">**Canonical source:** [BPMN](assets/bpmn/01-harmonia-transfer.bpmn) | [SVG](assets/img/01-harmonia-transfer.svg)</span></blockquote></details>
+<details class="source-section" id="architecture-L505"><summary>Transfer participants and domains</summary>
+<a class="citation" href="../sources/architecture.html#L505">Original architecture · lines 505–520 ↗</a>
+<blockquote class="source-quotes"><span class="source-unit" data-unit="architecture-T257">4 · Reference workflows — participants &amp; domains</span>
+<span class="source-unit" data-unit="architecture-T258">Four-party token transfer</span>
+<span class="source-unit" data-unit="architecture-T259">Role</span>
+<span class="source-unit" data-unit="architecture-T260">Step kind</span>
+<span class="source-unit" data-unit="architecture-T261">Owns</span>
+<span class="source-unit" data-unit="architecture-T262">Buyer</span>
+<span class="source-unit" data-unit="architecture-T263">Create</span>
+<span class="source-unit" data-unit="architecture-T264">trade proposal (start event)</span>
+<span class="source-unit" data-unit="architecture-T265">Seller</span>
+<span class="source-unit" data-unit="architecture-T266">Exercise</span>
+<span class="source-unit" data-unit="architecture-T267">trade proposal agreement</span>
+<span class="source-unit" data-unit="architecture-T268">Source custodian</span>
+<span class="source-unit" data-unit="architecture-T269">Exercise</span>
+<span class="source-unit" data-unit="architecture-T270">position locked + eligible</span>
+<span class="source-unit" data-unit="architecture-T271">Destination custodian</span>
+<span class="source-unit" data-unit="architecture-T272">Exercise</span>
+<span class="source-unit" data-unit="architecture-T273">receive readiness / lock condition</span>
+<span class="source-unit" data-unit="architecture-T274">Settler</span>
+<span class="source-unit" data-unit="architecture-T275">Atomic</span>
+<span class="source-unit" data-unit="architecture-T276">fulfilled by one of the four — not a 5th party</span></blockquote></details><div class="appendices"><a href="../coverage.html">View document coverage and all chapter destinations →</a><a href="09-proposal-context.html">Appendix: proposal context</a><a href="10-context-and-references.html">Appendix: context and references</a></div></main></body></html>

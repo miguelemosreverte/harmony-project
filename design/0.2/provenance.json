@@ -1,0 +1,86 @@
+{
+  "date": "2026-09-11",
+  "purpose": "UI design concepts and real HTML renderings; not ledger evidence",
+  "screens": [
+    {
+      "screen": "book-overview",
+      "tool": "built-in image_gen.imagegen",
+      "prompt": "prompts/book-overview.md",
+      "original_saved_path": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-023cb36b-2d36-4efa-977b-f60a0f5313e1.png",
+      "image": "book-overview.png",
+      "sha256": "67560d85d7b1bd517623ddd55066962fd8b21cdd223589c36b116c79d02b1fe1",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "style_reference": null,
+      "html": "book-overview.html",
+      "rendered": "book-overview.rendered.png",
+      "rendered_sha256": "ed31d5c11071c631ec76fea7e36780556df937a057d1b738359c3f38c5a2082a"
+    },
+    {
+      "screen": "book-chapter",
+      "tool": "built-in image_gen.imagegen",
+      "prompt": "prompts/book-chapter.md",
+      "original_saved_path": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-8765628b-012d-4b4c-a6b9-279cda94a1be.png",
+      "image": "book-chapter.png",
+      "sha256": "bb68e936704fc91d43a729dbc8602d39941d8de19439ebadbacfba9144a2426e",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "style_reference": "book-overview.png",
+      "html": "book-chapter.html",
+      "rendered": "book-chapter.rendered.png",
+      "rendered_sha256": "66b61f0676030fde8c5a79642b1d6e08ff696be65d6cd21bc8853101782fc36b"
+    },
+    {
+      "screen": "application",
+      "tool": "built-in image_gen.imagegen",
+      "prompt": "prompts/application.md",
+      "original_saved_path": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-ba64f47b-54c9-44fe-9456-224d17b3cba7.png",
+      "image": "application.png",
+      "sha256": "a9f493af22b0c775cdc9ba0707d5a410bb6fb8815f18883820461344140c1c46",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "style_reference": "book-overview.png",
+      "html": "application.html",
+      "rendered": "application.rendered.png",
+      "rendered_sha256": "a750688fca3152b1fb1af3e9f1b17cec3ad882ca4ec270b5eb0245d5d2aab389"
+    },
+    {
+      "screen": "application-builder",
+      "tool": "built-in image_gen.imagegen",
+      "prompt": "prompts/application-builder.md",
+      "original_saved_path": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-fd4f7724-5464-47c6-92a2-a5efe865cb53.png",
+      "image": "application-builder.png",
+      "sha256": "e9d64e497a4dd91867136763144c2b49631a776b2b658eb4a3dd12d0b998308f",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "style_reference": "application.png",
+      "html": "application-builder.html",
+      "rendered": "application-builder.rendered.png",
+      "rendered_sha256": "696745b50619ed72ce987446f2992f6ba0ac383062b307bfe978e8af328f88aa"
+    },
+    {
+      "screen": "coverage",
+      "tool": "built-in image_gen.imagegen",
+      "prompt": "prompts/coverage.md",
+      "original_saved_path": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-66d7a914-f1ee-482d-ae47-951866d32f33.png",
+      "image": "coverage.png",
+      "sha256": "50550f84799c6e4503607e1c8a3e0041b9a0dab9dcac6d35a9a2aaa82b37f26e",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "style_reference": "book-overview.png",
+      "html": "coverage.html",
+      "rendered": "coverage.rendered.png",
+      "rendered_sha256": "c22748fe5b3b68aa95634e03a0cc5c205c6e6379167ca321aa3592e202b70c9f"
+    }
+  ]
+}
