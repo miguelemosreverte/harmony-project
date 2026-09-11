@@ -15,7 +15,7 @@ object LiveView:
       unconfirmed: Boolean,
       submitting: Boolean,
       notice: Option[String],
-      editor: harmonia.composer.CompositionEditor,
+      editor: harmonia.composition.CompositionEditor,
       packages: harmonia.builder.PackagePanel,
       reconnect: () => Unit,
       retry: () => Unit,
@@ -163,7 +163,7 @@ object LiveView:
           Some(observation.composition).foreach { composition =>
             append(
               main,
-              harmonia.composer.ComposerView.render(
+              harmonia.composition.ComposerView.render(
                 composition,
                 pending || unconfirmed || submitting || connection != "Connected",
                 editor,

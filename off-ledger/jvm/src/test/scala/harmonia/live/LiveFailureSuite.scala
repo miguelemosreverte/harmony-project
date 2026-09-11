@@ -9,6 +9,8 @@ import harmonia.live.run.{LiveRuntime, LiveParticipant}
 import harmonia.live.state.LiveSnapshot
 import com.daml.ledger.api.v2.ValueOuterClass
 import io.circe.Json
+import harmonia.workspace.WorkspaceCommand
+import harmonia.financing.FinancingAction
 import io.grpc.Status
 import java.nio.file.Path
 import munit.FunSuite
@@ -50,7 +52,7 @@ class LiveFailureSuite extends FunSuite:
               "bank",
               ActionRequest(
                 "attempt",
-                "approve-financing",
+                WorkspaceCommand.Financing(FinancingAction.Approve),
                 initial.hcursor.get[String]("version").toOption.get
               )
             )
@@ -93,7 +95,7 @@ class LiveFailureSuite extends FunSuite:
                 "bank",
                 ActionRequest(
                   "attempt",
-                  "approve-financing",
+                  WorkspaceCommand.Financing(FinancingAction.Approve),
                   initial.hcursor.get[String]("version").toOption.get
                 )
               )

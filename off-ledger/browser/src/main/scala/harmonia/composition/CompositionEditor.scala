@@ -1,4 +1,4 @@
-package harmonia.composer
+package harmonia.composition
 
 import harmonia.book.Elements.*
 import io.circe.Json

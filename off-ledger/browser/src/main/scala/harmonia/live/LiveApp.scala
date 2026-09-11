@@ -53,7 +53,7 @@ private final class BrowserSession(
   private val storageKey = "harmonia-request-" + capability
   private val packages = new harmonia.builder.PackagePanel(capability, dispatcher)
   private val editor =
-    new harmonia.composer.CompositionEditor(input => submit("compose-propose", Some(input)))
+    new harmonia.composition.CompositionEditor(input => submit("compose-propose", Some(input)))
 
   private def submit(action: String, parameters: Option[Json]): Unit =
     dispatcher.unsafeRunAndForget(state.get.flatMap { current =>

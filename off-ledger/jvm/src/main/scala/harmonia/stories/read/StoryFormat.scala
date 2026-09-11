@@ -135,7 +135,7 @@ object StoryFormat:
       else if json.hcursor.downField("builder").succeeded then
         harmonia.builder.BuilderResult.read(json)
       else if json.hcursor.downField("composition").succeeded then
-        harmonia.composer.model.CompositionResult.read(json)
+        harmonia.composition.model.CompositionResult.read(json)
       else if json.hcursor.downField("settlement_transactions").succeeded then
         harmonia.stories.transfer.read.TransferFormat.result(json)
       else ordinaryResult(json)

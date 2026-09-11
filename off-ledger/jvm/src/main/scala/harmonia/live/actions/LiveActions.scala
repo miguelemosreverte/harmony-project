@@ -6,28 +6,30 @@ import cats.syntax.all.*
 import harmonia.live.run.LiveRuntime
 import harmonia.live.state.LiveSnapshot
 import harmonia.live.ledger.LiveLedger
+import harmonia.workspace.WorkspaceCommand
+import harmonia.protocol.SubmissionStatus
+import harmonia.protocol.SubmissionStatus.*
 import io.circe.Json
 import io.grpc.Status
-import harmonia.composer.ledger.{ComposerCommands, ComposerSnapshot}
+import harmonia.composition.ledger.{ComposerCommands, ComposerSnapshot}
 
 final case class ActionRequest(
     id: String,
-    action: String,
-    version: String,
-    parameters: Option[Json] = None
+    command: WorkspaceCommand,
+    version: String
 )
 final case class LiveJob(
     actor: String,
     request: ActionRequest,
-    outcome: String,
+    outcome: SubmissionStatus,
     detail: String,
     transaction: Option[Json] = None
 ):
   def json: Json = Json.obj(
     "id" -> Json.fromString(request.id),
     "actor" -> Json.fromString(actor),
-    "action" -> Json.fromString(request.action),
-    "outcome" -> Json.fromString(outcome),
+    "action" -> Json.fromString(request.command.wire),
+    "outcome" -> Json.fromString(outcome.wire),
     "detail" -> Json.fromString(detail)
   )
 
@@ -56,32 +58,28 @@ final class LiveActions private (
 
   def submit(actor: String, request: ActionRequest): IO[LiveJob] =
     IO.raiseUnless(
-      request.id.matches("[a-zA-Z0-9-]{1,64}") && request.version.matches("[0-9a-f]{64}") && (Set(
-        "approve-financing",
-        "publish-approval"
-      ).contains(request.action) || ComposerCommands.actions.contains(request.action))
-    )(
-      IllegalArgumentException("Invalid action, request identifier, or snapshot version")
-    ) *> IO.fromEither(
-      (if ComposerCommands.actions.contains(request.action) then ComposerCommands.validate(request)
-       else Either.cond(request.parameters.isEmpty, (), "This action takes no extra input")).left
-        .map(IllegalArgumentException(_))
-    ) *> lock.permit.use { _ =>
-      jobs.get.flatMap { current =>
-        current.find(j => j.actor == actor && j.request.id == request.id) match
-          case Some(existing) =>
-            IO.raiseUnless(existing.request == request)(
-              IllegalArgumentException("Request identifier already belongs to a different command")
-            ).as(existing)
-          case None =>
-            IO.raiseWhen(current.size >= 100)(
-              IllegalArgumentException("This evaluation session has reached its 100-request limit")
-            ) *> {
-              val job = LiveJob(actor, request, "pending", "Waiting for the ledger result")
-              jobs.update(_ :+ job) *> supervisor.supervise(execute(job)).as(job)
-            }
+      request.id.matches("[a-zA-Z0-9-]{1,64}") && request.version.matches("[0-9a-f]{64}")
+    )(IllegalArgumentException("Invalid request identifier or snapshot version")) *> lock.permit
+      .use { _ =>
+        jobs.get.flatMap { current =>
+          current.find(j => j.actor == actor && j.request.id == request.id) match
+            case Some(existing) =>
+              IO.raiseUnless(existing.request == request)(
+                IllegalArgumentException(
+                  "Request identifier already belongs to a different command"
+                )
+              ).as(existing)
+            case None =>
+              IO.raiseWhen(current.size >= 100)(
+                IllegalArgumentException(
+                  "This evaluation session has reached its 100-request limit"
+                )
+              ) *> {
+                val job = LiveJob(actor, request, Pending, "Waiting for the ledger result")
+                jobs.update(_ :+ job) *> supervisor.supervise(execute(job)).as(job)
+              }
+        }
       }
-    }
 
   private def execute(job: LiveJob): IO[Unit] = lock.permit.use { _ =>
     val ledger = runtime.participants(job.actor).ledger
@@ -91,31 +89,27 @@ final class LiveActions private (
         if snapshot.version != job.request.version then
           IO.pure(
             job.copy(
-              outcome = "stale",
+              outcome = Stale,
               detail = "The visible contracts changed. Refresh before trying again."
             )
           )
         else
-          val selection =
-            if ComposerCommands.actions.contains(job.request.action) then
+          val selection = job.request.command match
+            case WorkspaceCommand.Financing(action) =>
+              harmonia.financing.Financing.select(action, snapshot)
+            case command =>
               ComposerCommands.select(
-                job.request,
+                command,
+                job.request.id,
                 snapshot.contracts,
                 ledger.party,
                 runtime.participants.map((name, p) => name -> p.ledger.party)
               )
-            else
-              job.request.action match
-                case "approve-financing" =>
-                  snapshot.application.map(c => (c, "Approve", LiveLedger.emptyArgument))
-                case "publish-approval" =>
-                  snapshot.progress
-                    .map(c => (c, "Continue", LiveLedger.continuation(snapshot.proof)))
           selection match
             case None =>
               IO.pure(
                 job.copy(
-                  outcome = "unavailable",
+                  outcome = Unavailable,
                   detail = "The required contract is not visible to this session"
                 )
               )
@@ -124,7 +118,7 @@ final class LiveActions private (
                 .exercise(contract, choice, argument, commandId(job))
                 .map(tx =>
                   job.copy(
-                    outcome = "committed",
+                    outcome = Committed,
                     detail = "Confirmed by the ledger",
                     transaction = Some(tx)
                   )
@@ -134,7 +128,7 @@ final class LiveActions private (
     result
       .handleError(_ =>
         job.copy(
-          outcome = "disconnected",
+          outcome = Unconfirmed,
           detail =
             "Could not observe the required ledger state. Reconnect before submitting; no business rejection was observed."
         )
@@ -151,7 +145,7 @@ final class LiveActions private (
       Status.Code.UNAUTHENTICATED
     ).contains(code)
     job.copy(
-      outcome = if definite then "rejected" else "disconnected",
+      outcome = if definite then Rejected else Unconfirmed,
       detail =
         if definite then s"Ledger rejected the command ($code)"
         else "No definitive completion received. Reconnect to reconcile; do not assume failure."
@@ -161,25 +155,24 @@ final class LiveActions private (
     _.map(j => if j.actor == next.actor && j.request.id == next.request.id then next else j)
   )
   private def reconcile(actor: String, snapshot: LiveSnapshot): IO[Unit] =
-    jobs.get.flatMap(_.filter(j => j.actor == actor && j.outcome == "disconnected").traverse_ {
-      job =>
-        snapshot.history
-          .find(
-            _.hcursor
-              .downField("transaction")
-              .get[String]("commandId")
-              .toOption
-              .contains(commandId(job))
-          )
-          .fold(IO.unit)(tx =>
-            replace(
-              job.copy(
-                outcome = "committed",
-                detail = "Commit recovered from ledger history after reconnect",
-                transaction = Some(tx)
-              )
+    jobs.get.flatMap(_.filter(j => j.actor == actor && j.outcome == Unconfirmed).traverse_ { job =>
+      snapshot.history
+        .find(
+          _.hcursor
+            .downField("transaction")
+            .get[String]("commandId")
+            .toOption
+            .contains(commandId(job))
+        )
+        .fold(IO.unit)(tx =>
+          replace(
+            job.copy(
+              outcome = Committed,
+              detail = "Commit recovered from ledger history after reconnect",
+              transaction = Some(tx)
             )
           )
+        )
     })
 
 object LiveActions:

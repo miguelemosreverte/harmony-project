@@ -29,7 +29,7 @@ object Main extends IOApp:
       case List("builder-check") =>
         harmonia.builder.verify.CheckBuilder.run(root).as(ExitCode.Success)
       case List("composer-check") =>
-        harmonia.composer.verify.CheckComposer.run(root).as(ExitCode.Success)
+        harmonia.composition.verify.CheckComposer.run(root).as(ExitCode.Success)
       case List("live")       => harmonia.live.run.LiveRuntime.serve(root).as(ExitCode.Success)
       case List("live-check") => harmonia.live.verify.CheckLive.run(root).as(ExitCode.Success)
       case List("generate-bindings", mapping, output) =>

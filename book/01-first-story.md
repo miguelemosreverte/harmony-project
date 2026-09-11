@@ -70,3 +70,7 @@ The [rollback story](../stories/workflow-rejected/input.md) starts with an alrea
 Follow the [common interface](../on-ledger/interfaces/daml/Harmonia/Action.daml), [core transition](../on-ledger/core/daml/Harmonia/Workflow.daml), and financing implementation above. Neither the common interface nor the core imports the financing application.
 
 These examples run on one local participant. Separate-participant privacy requires a different topology and its own observations. An adapter for an unchanged application is the next integration experiment.
+
+## Find the live operation
+
+The private handoff in [Chapter 3](03-participant-views.md) uses the same approval idea with separate participant sessions. Its Scala entry point is [the financing operation](../off-ledger/jvm/src/main/scala/harmonia/financing/Financing.scala). It accepts a [typed financing action and observation](../off-ledger/shared/src/main/scala/harmonia/financing/FinancingState.scala); the authenticated ledger client submits the actual Daml choice. [Workspace command decoding](../off-ledger/shared/src/main/scala/harmonia/workspace/WorkspaceCommand.scala) translates external action names at the API boundary.

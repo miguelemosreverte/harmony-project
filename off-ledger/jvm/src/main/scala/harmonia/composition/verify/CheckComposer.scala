@@ -1,8 +1,8 @@
-package harmonia.composer.verify
+package harmonia.composition.verify
 
 import cats.effect.IO
 import cats.syntax.all.*
-import harmonia.composer.model.{Composition, CompositionResult}
+import harmonia.composition.model.{Composition, CompositionResult}
 import harmonia.files.ArtifactFiles
 import harmonia.live.http.LiveServer
 import harmonia.live.run.LiveRuntime

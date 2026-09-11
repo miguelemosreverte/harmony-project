@@ -8,6 +8,7 @@ import harmonia.live.actions.{ActionRequest, LiveActions}
 import harmonia.ledger.auth.LocalCredentials
 import harmonia.live.run.LiveRuntime
 import io.circe.Json
+import harmonia.workspace.WorkspaceCommand
 import java.net.InetSocketAddress
 import java.nio.charset.StandardCharsets.UTF_8
 import java.nio.file.{Files, Path}
@@ -183,10 +184,13 @@ object LiveServer:
             .fromEither(for
               id <- json.hcursor.get[String]("id")
               action <- json.hcursor.get[String]("action")
+              command <- WorkspaceCommand
+                .read(action, json.hcursor.downField("input").focus)
+                .leftMap(message => io.circe.DecodingFailure(message, json.hcursor.history))
               version <- json.hcursor.get[String]("version")
-            yield ActionRequest(id, action, version, json.hcursor.downField("input").focus))
+            yield ActionRequest(id, command, version))
             .adaptError { case _: io.circe.Error =>
-              IllegalArgumentException("Action fields must be text")
+              IllegalArgumentException("Invalid action input")
             }
           job <- actions.submit(actor, request)
         yield job.json

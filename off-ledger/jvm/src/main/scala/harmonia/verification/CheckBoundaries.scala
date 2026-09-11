@@ -87,7 +87,7 @@ object CheckBoundaries:
       output: Path
   ): IO[Json] =
     val bank = runtime.participants("bank").ledger
-    val parsed = harmonia.composer.model.Composition
+    val parsed = harmonia.composition.model.Composition
       .read(plan)
       .fold(message => throw IllegalArgumentException(message), identity)
     require(

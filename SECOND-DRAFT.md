@@ -73,10 +73,10 @@ The first three actual commits on `second-draft` form one acceptance sequence: d
 
 ### SD03 — Prove the complete financing slice
 
-- [ ] Connect the financing operation, authenticated participant dependency, and typed browser presentation.
-- [ ] Give the first chapter a direct path from one approval attempt to its observation, expectation, and relevant code.
-- [ ] Run actual approval, wrong-actor, and failure/recovery checks with unchanged business expectations; capture the browser result.
-- [ ] **Acceptance:** the third second-draft commit proves a real ledger action and a readable input-to-result path, and records where a reviewer still needs explanation.
+- [x] Connect the financing operation, authenticated participant dependency, and typed browser presentation.
+- [x] Give the first chapter a direct path from one approval attempt to its observation, expectation, and relevant code.
+- [x] Run actual approval, wrong-actor, and failure/recovery checks with unchanged business expectations; capture the browser result.
+- [x] **Acceptance:** the third second-draft commit proves a real ledger action and a readable input-to-result path, and records where a reviewer still needs explanation.
 
 ### SD04 — Separate delivery and resource ownership
 
@@ -150,4 +150,6 @@ A file-count or line-count reduction alone does not establish readability. Revie
 
 ## Progress
 
-SD01 (`f40cb17`) and SD02 are complete. SD02 passed 30 Scala tests and JVM/browser compilation; financing state is decoded before browser rendering. SD03–SD11 remain in progress; the first-draft application and verified book remain available while migration proceeds.
+SD01 (`f40cb17`), SD02 (`eafeea7`), and SD03 are complete. SD03 passed 30 Scala tests, JVM/browser compilation, and the authenticated real-ledger check (approval, wrong actor/API bypass, stale views, deduplication, and reconnect). In the browser the Bank approved, the Buyer continued, the submission was confirmed, and the Buyer could not see the private financing details. Evidence: `.artifacts/second-03-build.log`, `.artifacts/second-03-live.log`, and `.artifacts/live-check-186607939419738880/live-handoff/`; browser capture `second-draft-financing-complete`.
+
+The chapter links distinguish the introductory shared application from the private live handoff. The next steps remove the remaining mixed ownership in `LiveActions` and `LiveSnapshot`, then apply typed boundaries to composition and package inspection. The preserved first-draft book remains available during migration.
