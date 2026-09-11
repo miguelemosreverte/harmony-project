@@ -1,0 +1,112 @@
+{
+  "id": "already-approved",
+  "title": "Approval is a transition",
+  "description": "An approved application cannot be approved again. Even the bank must respect the application's current state.",
+  "input": {
+    "setup": {
+      "application": {
+        "bank": "Northbank",
+        "buyer": "Alice",
+        "status": "approved"
+      }
+    },
+    "actions": [
+      {
+        "id": "repeated-approval",
+        "actor": "Northbank",
+        "action": "approve-financing"
+      }
+    ]
+  },
+  "expected": {
+    "actions": [
+      {
+        "id": "repeated-approval",
+        "outcome": "rejected",
+        "reason": "application-rejected",
+        "application": "approved",
+        "consumed": false,
+        "active_contracts": 1,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ]
+      }
+    ]
+  },
+  "actual": {
+    "actions": [
+      {
+        "id": "repeated-approval",
+        "outcome": "rejected",
+        "application": "approved",
+        "consumed": false,
+        "active_contracts": 1,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ],
+        "reason": "application-rejected"
+      }
+    ]
+  },
+  "provenance": {
+    "mode": "live-canton",
+    "topology": "one participant, one synchronizer, separate party identities",
+    "revision": "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+    "worktree_dirty": false,
+    "recorded_at": "2026-09-11T05:09:34.541207Z",
+    "story_format": 1,
+    "java": "17.0.19+10",
+    "configured_sdk": "3.4.11",
+    "input_sha256": "fee3dd5211960abb0a0ee2bca72a24927ae027605cdd0dd90be74a715d54eb68",
+    "expected_sha256": "9e70968a7ab0715a27e2ad0b21b86d884fc503eb3e0920339596c5d4e3008b46",
+    "dar_sha256": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e",
+    "dars": {
+      "harness/ledger/tests/.daml/dist/harmonia-tests-0.1.0.dar": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e"
+    },
+    "actual_sha256": "4013a649e7ad2894556edf01efad0260cd2562c2d98f3f24d7afedf494256858",
+    "observation_sha256": "07bbec49bf8f73305729e544b0fc6ca677e239064a3ca736029f1fa27aa3eb4f",
+    "matched": true
+  },
+  "presentation": {
+    "kind": "Financing",
+    "subtitle": "Application action",
+    "start": "approved",
+    "start_detail": "Application created",
+    "operation": "product/ledger/applications/financing/daml/Financing.daml",
+    "units": [
+      {
+        "id": "repeated-approval",
+        "actor": "Northbank",
+        "action": "approve-financing",
+        "expected": {
+          "id": "repeated-approval",
+          "outcome": "rejected",
+          "reason": "application-rejected",
+          "application": "approved",
+          "consumed": false,
+          "active_contracts": 1,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ]
+        },
+        "actual": {
+          "id": "repeated-approval",
+          "outcome": "rejected",
+          "application": "approved",
+          "consumed": false,
+          "active_contracts": 1,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "reason": "application-rejected"
+        },
+        "observed_state": "approved",
+        "outcome_label": "rejected"
+      }
+    ]
+  }
+}

@@ -9,12 +9,12 @@
     document.getElementById('author-document').value=s.source;
     for(const section of pane.querySelectorAll('[data-passage]')){section.hidden=section.dataset.document!==s.source;section.classList.toggle('selected-passage',section.dataset.passage===s.passage);}
     if(previous!==s.passage){reveal();previous=s.passage;}
-    const mode=!slice?'chapter':s.companion==='workflow'&&!['financing','transfer'].includes(slice.id)?'diagram':s.companion;
-    for(const b of document.querySelectorAll('[data-companion]')){b.hidden=(!slice&&b.dataset.companion!=='chapter')||(b.dataset.companion==='workflow'&&!['financing','transfer'].includes(slice?.id));b.setAttribute('aria-pressed',String(b.dataset.companion===mode));}
+    const mode=!slice?'chapter':s.companion;
+    for(const b of document.querySelectorAll('[data-companion]')){b.hidden=(!slice&&b.dataset.companion!=='chapter');b.setAttribute('aria-pressed',String(b.dataset.companion===mode));}
     let url;
     if(mode==='diagram')url=query('reviewer.html',{slice:slice.id,embed:1});
     else if(mode==='code')url=query('code.html',{file:slice.nodes[0].file,embed:1});
-    else if(mode==='workflow')url=query(`chapters/${slice.chapter}.html`,{step:0,embed:1});
+    else if(mode==='workflow')url=['financing','transfer'].includes(slice.id)?query(`chapters/${slice.chapter}.html`,{step:0,embed:1}):query('laboratory.html',{story:({process:'branch-approved',composition:'composer-direct',packages:'package-builder',book:'execution-boundaries'})[slice.id],step:0,embed:1});
     else url=query(`chapters/${passage.chapter}.html`,{view:'read',embed:1});
     if(s.detail)url=new URL(s.detail,new URL(view.config.base,location.href)).href;
     const embedded=new URL(url);embedded.searchParams.set('embed','1');for(const [key,fallback] of [['theme','light'],['text','standard'],['audience','explorer']]){if(s[key]===fallback)embedded.searchParams.delete(key);else embedded.searchParams.set(key,s[key]);}url=embedded.href;

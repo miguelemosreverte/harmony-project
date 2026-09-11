@@ -27,45 +27,6 @@
     const exact=sequence.indexOf(step), next=sequence.findIndex(candidate=>candidate>step);
     return exact>=0?exact:next>=0?next:sequence.length-1;
   };
-  function frame(story,unit,actor) {
-    const transfer=!!story.input.setup.trade, setup=story.input.setup, a=unit?.actual;
-    const refused=a?.outcome==='rejected';
-    const person=(id,role,icon='person')=>({id,name:id,role,icon});
-    let people,title,caption,phase=0,artifact='',amounts=[];
-    if (transfer) {
-      const t=setup.trade;
-      people=[person(t.seller,'Owns the position'),person(t.source,'Source custodian','bank'),person(t.buyer,'Receives the asset'),person(t.destination,'Destination custodian','bank')];
-      const available=a?.source.available ?? t.quantity, locked=a?.source.locked ?? '0', received=a?.destination ?? '0';
-      phase=a?.trade==='settled'?4:a?.trade==='ready'?3:a?.source.locked!=='0'&&a?2:a?1:0;
-      artifact=`${phase===4?'Received':Number(locked)>0?'Locked':'Available'} · ${phase===4?received:Number(locked)>0?locked:available} ${t.asset}`;
-      amounts=[['Available at source',available],['Locked at source',locked],['Received at destination',received]].map(([label,value])=>({label,value:`${value} ${t.asset}`,fraction:Number(value)/Number(t.quantity)}));
-      [title,caption]=!unit ? ['One trade. Four responsibilities.',`${t.seller} is transferring ${t.quantity} ${t.asset} to ${t.buyer}. The two custodians must prepare before settlement.`] : ({
-        'agree-trade':['The seller agrees.',`${t.seller} accepts the trade. No assets have moved.`],
-        'lock-position':['The position is locked.',`${t.quantity} ${t.asset} is reserved at the source. It is no longer available for another transfer.`],
-        'confirm-source':['The source is ready.',`${t.source} confirms that the locked position can be withdrawn during settlement.`],
-        'prepare-destination':['The receiving side prepares.',`${t.destination} creates the permission needed to receive the asset.`],
-        'confirm-destination':['Both sides are ready.',`The destination confirms readiness. ${t.settler} can now request settlement.`],
-        settle:['The asset arrives.',`One final transaction withdraws the locked position and records receipt of ${received} ${t.asset}.`]
-      }[unit.action] || ['An additional attempt.',unit.observed_state]);
-    } else {
-      const b=setup.application,o=setup.offer;
-      people=[person(b.bank,'Financing','bank'),person(b.buyer,'Buyer'),person(o.buyer_agent,'Buyer’s agent'),person(o.seller_agent,'Seller’s agent')];
-      phase=a?.proposal==='received'?4:a?.proposal==='relayed'?3:a?.proposal==='draft'?2:a?.evidence_available?1:0;
-      artifact=phase>=2?'Purchase proposal':phase===1?`Financing · ${a.application}`:'';
-      [title,caption]=!unit ? [`${b.buyer} wants to make an offer.`,`Her financing application is with ${b.bank}. The property agents will need a verified result to move the offer forward.`] : ({
-        'assess-financing':a?.application==='approved' ? [`${b.bank} approves. ${b.buyer} can make her proposal.`,`A verified result is available to ${b.buyer}. Her financing documents stay within the financing application.`] : [`${b.bank} declines the financing.`,`The result records a refusal. It cannot authorize a purchase proposal.`],
-        'open-offer':[`${b.buyer} prepares the offer.`,`The property application is ready to check her financing result.`],
-        'make-proposal':[`${b.buyer} makes her proposal.`,`The property application accepts the approved financing result and creates one proposal.`],
-        'relay-proposal':[`${o.buyer_agent} relays the proposal.`,`The buyer’s agent passes the proposal to the seller’s agent.`],
-        'receive-proposal':[`${o.seller_agent} receives the proposal.`,`The financing-to-offer workflow is complete. The property agents receive the proposal, without the private financing documents.`]
-      }[unit.action] || ['An additional attempt.',unit.observed_state]);
-    }
-    if (refused) {
-      title=unit.id==='rejected-financing'?'The offer cannot proceed.':unit.actual.reason==='destination-rejected'?'Settlement rolls back.':'This attempt is refused.';
-      caption=unit.id==='rejected-financing'?'The financing decision is rejected, so the property application creates no proposal.':reasons[unit.actual.reason] || unit.observed_state;
-    }
-    return {kind:transfer?'transfer':'purchase',title,caption,people,phase,focus:actor==='all'?(unit?.actor || people[0].id):actor,artifact,refused,amounts};
-  }
   view.subscribe(s => {
     const story=view.config.stories[s.story], units=story.presentation.units, unit=units[s.step-1];
     const purchase=!story.input.setup.trade;
@@ -73,7 +34,7 @@
     const current=beatIndex(s.step);
     const labels=purchase && s.story==='purchase-approved'?purchaseBeats:sequence.map((step,i)=>step===0?'Start':names[units[step-1].action]||`Step ${i}`);
     node('story-select').value=s.story;
-    const currentFrame=frame(story,unit,s.actor);
+    const currentFrame=JSON.parse(projectHarmoniaRecording(JSON.stringify(story),s.step,s.actor));
     renderHarmoniaScene(node('story-scene'),JSON.stringify(currentFrame));
     node('story-scene').dataset.follow=s.actor;
     node('scene-detail').textContent=currentFrame.caption;

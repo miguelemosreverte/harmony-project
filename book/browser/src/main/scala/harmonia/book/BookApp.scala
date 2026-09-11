@@ -3,6 +3,7 @@ package harmonia.book
 import cats.effect.{IO, IOApp, Resource}
 import cats.effect.std.Dispatcher
 import org.scalajs.dom
+import scala.scalajs.js
 import scala.scalajs.js.Thenable.Implicits.*
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -11,19 +12,24 @@ final case class ViewState(
     step: Int,
     chapter: Option[Int] = None,
     perspective: Option[String] = None,
-    originChapter: Option[Int] = None
+    originChapter: Option[Int] = None,
+    evidence: Boolean = false,
+    node: Option[String] = None,
+    theme: String = "light",
+    text: String = "standard",
+    embed: Boolean = false,
+    present: Boolean = false
 )
 
 object BookApp extends IOApp.Simple:
-  def run: IO[Unit] = Dispatcher
+  def run: IO[Unit] =
+    if dom.document.getElementById("app") == null then IO.unit else reader
+
+  private def reader: IO[Unit] = Dispatcher
     .sequential[IO]
     .use { dispatcher =>
       for
-        response <- IO.fromFuture(IO(dom.fetch("evidence.json").toFuture))
-        _ <- IO.raiseUnless(response.ok)(
-          RuntimeException(s"Evidence request failed: ${response.status}")
-        )
-        text <- IO.fromFuture(IO(response.text().toFuture))
+        text <- evidence
         json <- IO.fromEither(io.circe.parser.parse(text))
         stories <- IO.fromEither(json.hcursor.get[Vector[RecordedStory]]("stories"))
         chapters <- IO.fromEither(json.hcursor.get[Vector[BookChapter]]("chapters"))
@@ -39,13 +45,23 @@ object BookApp extends IOApp.Simple:
                 IO(
                   dom.window.history
                     .pushState(null, "", BookNavigation.address(next, stories, chapters))
-                ) *> view.render(next)
+                ) *> view.render(next) *> IO(
+                  dom.window.dispatchEvent(new dom.Event("harmonia-view"))
+                )
               ),
             inspector
           )
-          def current = BookNavigation.read(dom.window.location.hash, stories, chapters)
+          def current = BookNavigation.read(
+            if dom.window.location.search.nonEmpty then dom.window.location.search
+            else dom.window.location.hash,
+            stories,
+            chapters
+          )
           val onHistory: dom.Event => Unit =
-            _ => dispatcher.unsafeRunAndForget(view.render(current))
+            _ =>
+              dispatcher.unsafeRunAndForget(
+                view.render(current) *> IO(dom.window.dispatchEvent(new dom.Event("harmonia-view")))
+              )
           Resource
             .make(IO(dom.window.addEventListener("popstate", onHistory)))(_ =>
               IO(dom.window.removeEventListener("popstate", onHistory))
@@ -60,3 +76,15 @@ object BookApp extends IOApp.Simple:
           s"Could not open the book: ${error.getMessage}"
       }
     )
+
+  private def evidence: IO[String] =
+    val bundled = js.Dynamic.global.selectDynamic("HarmoniaLaboratoryEvidence")
+    if !js.isUndefined(bundled) then IO.pure(js.JSON.stringify(bundled))
+    else
+      for
+        response <- IO.fromFuture(IO(dom.fetch("evidence.json").toFuture))
+        _ <- IO.raiseUnless(response.ok)(
+          RuntimeException(s"Evidence request failed: ${response.status}")
+        )
+        text <- IO.fromFuture(IO(response.text().toFuture))
+      yield text

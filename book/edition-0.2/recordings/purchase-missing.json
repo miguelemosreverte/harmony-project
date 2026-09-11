@@ -1,0 +1,389 @@
+{
+  "id": "purchase-missing",
+  "title": "The offer rejects missing evidence",
+  "description": "Alice's documents are shared with Northbank. Ben owns the buyer-side offer application; Sofia receives proposals through the seller-side continuation. The evidence selection is explicit so invalid-certificate experiments stay visible.",
+  "input": {
+    "workflow": "property-purchase",
+    "setup": {
+      "application": {
+        "bank": "Northbank",
+        "buyer": "Alice",
+        "status": "pending",
+        "documents": "Income evidence #7",
+        "bank_decision": "approved"
+      },
+      "offer": {
+        "buyer_agent": "Ben",
+        "seller_agent": "Sofia",
+        "property": "riverside-17",
+        "evidence": "missing"
+      }
+    },
+    "actions": [
+      {
+        "id": "bank-assessment",
+        "actor": "Northbank",
+        "action": "assess-financing"
+      },
+      {
+        "id": "open-offer",
+        "actor": "Alice",
+        "action": "open-offer"
+      },
+      {
+        "id": "invalid-evidence",
+        "actor": "Alice",
+        "action": "make-proposal"
+      }
+    ]
+  },
+  "expected": {
+    "actions": [
+      {
+        "id": "bank-assessment",
+        "outcome": "committed",
+        "application": "approved",
+        "offer": "not-opened",
+        "proposal": "none",
+        "proposals": 0,
+        "evidence_available": false,
+        "workflow": "waiting",
+        "completed": [
+          "assessment"
+        ],
+        "consumed": true,
+        "active_contracts": 1,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ]
+      },
+      {
+        "id": "open-offer",
+        "outcome": "committed",
+        "application": "approved",
+        "offer": "waiting",
+        "proposal": "none",
+        "proposals": 0,
+        "evidence_available": false,
+        "workflow": "waiting",
+        "completed": [
+          "assessment"
+        ],
+        "consumed": false,
+        "active_contracts": 2,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ]
+      },
+      {
+        "id": "invalid-evidence",
+        "outcome": "rejected",
+        "reason": "application-rejected",
+        "application": "approved",
+        "offer": "waiting",
+        "proposal": "none",
+        "proposals": 0,
+        "evidence_available": false,
+        "workflow": "waiting",
+        "completed": [
+          "assessment"
+        ],
+        "consumed": false,
+        "active_contracts": 2,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ]
+      }
+    ],
+    "visibility": {
+      "Alice": {
+        "application": true,
+        "progress": true,
+        "private_events": 3,
+        "progress_events": 1,
+        "private_payload_observed": true
+      },
+      "Ben": {
+        "application": false,
+        "progress": true,
+        "private_events": 0,
+        "progress_events": 1,
+        "private_payload_observed": false
+      },
+      "Northbank": {
+        "application": true,
+        "progress": false,
+        "private_events": 3,
+        "progress_events": 0,
+        "private_payload_observed": true
+      },
+      "Sofia": {
+        "application": false,
+        "progress": true,
+        "private_events": 0,
+        "progress_events": 1,
+        "private_payload_observed": false
+      }
+    }
+  },
+  "actual": {
+    "actions": [
+      {
+        "id": "bank-assessment",
+        "outcome": "committed",
+        "application": "approved",
+        "consumed": true,
+        "active_contracts": 1,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ],
+        "workflow": "waiting",
+        "offer": "not-opened",
+        "proposal": "none",
+        "completed": [
+          "assessment"
+        ],
+        "evidence_available": false,
+        "proposals": 0
+      },
+      {
+        "id": "open-offer",
+        "outcome": "committed",
+        "application": "approved",
+        "consumed": false,
+        "active_contracts": 2,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ],
+        "workflow": "waiting",
+        "offer": "waiting",
+        "proposal": "none",
+        "completed": [
+          "assessment"
+        ],
+        "evidence_available": false,
+        "proposals": 0
+      },
+      {
+        "id": "invalid-evidence",
+        "outcome": "rejected",
+        "application": "approved",
+        "consumed": false,
+        "active_contracts": 2,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ],
+        "reason": "application-rejected",
+        "workflow": "waiting",
+        "offer": "waiting",
+        "proposal": "none",
+        "completed": [
+          "assessment"
+        ],
+        "evidence_available": false,
+        "proposals": 0
+      }
+    ],
+    "visibility": {
+      "Northbank": {
+        "application": true,
+        "progress": false,
+        "private_events": 3,
+        "progress_events": 0,
+        "private_payload_observed": true
+      },
+      "Alice": {
+        "application": true,
+        "progress": true,
+        "private_events": 3,
+        "progress_events": 1,
+        "private_payload_observed": true
+      },
+      "Ben": {
+        "application": false,
+        "progress": true,
+        "private_events": 0,
+        "progress_events": 1,
+        "private_payload_observed": false
+      },
+      "Sofia": {
+        "application": false,
+        "progress": true,
+        "private_events": 0,
+        "progress_events": 1,
+        "private_payload_observed": false
+      }
+    }
+  },
+  "provenance": {
+    "mode": "live-canton",
+    "topology": "four independent participant nodes, one local JVM, one common synchronizer",
+    "revision": "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+    "worktree_dirty": false,
+    "recorded_at": "2026-09-11T05:12:38.197369Z",
+    "story_format": 1,
+    "java": "17.0.19+10",
+    "configured_sdk": "3.4.11",
+    "input_sha256": "e3ec26796f0277a6532a552580a291bdf1114025790d9ad3aaa2adc0ae8d3d41",
+    "expected_sha256": "d6adab5267495a9e27a1d0dae3267b734e607bbae84d4bebfd994613892f2e1f",
+    "dar_sha256": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e",
+    "dars": {
+      "harness/ledger/tests/.daml/dist/harmonia-tests-0.1.0.dar": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e"
+    },
+    "actual_sha256": "e5ec33555fb848707e52f3c8bb7853a6a1b49e51059631546cf4c4bb9ac4afd1",
+    "observation_sha256": "ee3b97492bed3c485c3e0acaa5747f1bb6463f4356427f000031332899f2377a",
+    "matched": true
+  },
+  "presentation": {
+    "kind": "Purchase",
+    "subtitle": "Financing → offer → agents",
+    "start": "pending",
+    "start_detail": "Application created",
+    "operation": "product/ledger/applications/property-offer/daml/PropertyOffer.daml",
+    "units": [
+      {
+        "id": "bank-assessment",
+        "actor": "Northbank",
+        "action": "assess-financing",
+        "expected": {
+          "id": "bank-assessment",
+          "outcome": "committed",
+          "application": "approved",
+          "offer": "not-opened",
+          "proposal": "none",
+          "proposals": 0,
+          "evidence_available": false,
+          "workflow": "waiting",
+          "completed": [
+            "assessment"
+          ],
+          "consumed": true,
+          "active_contracts": 1,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ]
+        },
+        "actual": {
+          "id": "bank-assessment",
+          "outcome": "committed",
+          "application": "approved",
+          "consumed": true,
+          "active_contracts": 1,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting",
+          "offer": "not-opened",
+          "proposal": "none",
+          "completed": [
+            "assessment"
+          ],
+          "evidence_available": false,
+          "proposals": 0
+        },
+        "observed_state": "approved",
+        "outcome_label": "committed"
+      },
+      {
+        "id": "open-offer",
+        "actor": "Alice",
+        "action": "open-offer",
+        "expected": {
+          "id": "open-offer",
+          "outcome": "committed",
+          "application": "approved",
+          "offer": "waiting",
+          "proposal": "none",
+          "proposals": 0,
+          "evidence_available": false,
+          "workflow": "waiting",
+          "completed": [
+            "assessment"
+          ],
+          "consumed": false,
+          "active_contracts": 2,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ]
+        },
+        "actual": {
+          "id": "open-offer",
+          "outcome": "committed",
+          "application": "approved",
+          "consumed": false,
+          "active_contracts": 2,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting",
+          "offer": "waiting",
+          "proposal": "none",
+          "completed": [
+            "assessment"
+          ],
+          "evidence_available": false,
+          "proposals": 0
+        },
+        "observed_state": "waiting",
+        "outcome_label": "committed"
+      },
+      {
+        "id": "invalid-evidence",
+        "actor": "Alice",
+        "action": "make-proposal",
+        "expected": {
+          "id": "invalid-evidence",
+          "outcome": "rejected",
+          "reason": "application-rejected",
+          "application": "approved",
+          "offer": "waiting",
+          "proposal": "none",
+          "proposals": 0,
+          "evidence_available": false,
+          "workflow": "waiting",
+          "completed": [
+            "assessment"
+          ],
+          "consumed": false,
+          "active_contracts": 2,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ]
+        },
+        "actual": {
+          "id": "invalid-evidence",
+          "outcome": "rejected",
+          "application": "approved",
+          "consumed": false,
+          "active_contracts": 2,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "reason": "application-rejected",
+          "workflow": "waiting",
+          "offer": "waiting",
+          "proposal": "none",
+          "completed": [
+            "assessment"
+          ],
+          "evidence_available": false,
+          "proposals": 0
+        },
+        "observed_state": "waiting",
+        "outcome_label": "rejected"
+      }
+    ]
+  }
+}

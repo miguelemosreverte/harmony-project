@@ -1,0 +1,572 @@
+{
+  "id": "composer-direct",
+  "title": "Propose, consent, then act",
+  "description": "The bank proposes an approval followed by the buyer's review. No source application exists until the buyer accepts the exact plan. The core then rejects an early review and an action attempted by the wrong party.",
+  "input": {
+    "workflow": "composed-process",
+    "plan": {
+      "name": "Offer checks",
+      "reference": "home-17",
+      "steps": [
+        {
+          "id": "approval",
+          "role": "lender",
+          "actor": "bank",
+          "action": "approve-financing"
+        },
+        {
+          "id": "review",
+          "role": "reviewer",
+          "actor": "buyer",
+          "action": "confirm-review"
+        }
+      ]
+    },
+    "actions": [
+      {
+        "id": "proposal",
+        "actor": "bank",
+        "action": "propose"
+      },
+      {
+        "id": "partner-consent-required",
+        "actor": "bank",
+        "action": "accept"
+      },
+      {
+        "id": "acceptance",
+        "actor": "buyer",
+        "action": "accept"
+      },
+      {
+        "id": "review-too-early",
+        "actor": "buyer",
+        "action": "advance",
+        "step": "review"
+      },
+      {
+        "id": "approval",
+        "actor": "bank",
+        "action": "advance",
+        "step": "approval"
+      },
+      {
+        "id": "wrong-reviewer",
+        "actor": "bank",
+        "action": "advance",
+        "step": "review"
+      },
+      {
+        "id": "review",
+        "actor": "buyer",
+        "action": "advance",
+        "step": "review"
+      }
+    ]
+  },
+  "expected": {
+    "composition": {
+      "name": "Offer checks",
+      "reference": "home-17"
+    },
+    "actions": [
+      {
+        "id": "proposal",
+        "outcome": "committed",
+        "drafts": 1,
+        "instances": 0,
+        "workflow": "not-started",
+        "completed": [],
+        "enabled": [],
+        "sources": {}
+      },
+      {
+        "id": "partner-consent-required",
+        "outcome": "rejected",
+        "reason": "ledger-rejected",
+        "drafts": 1,
+        "instances": 0,
+        "workflow": "not-started",
+        "completed": [],
+        "enabled": [],
+        "sources": {}
+      },
+      {
+        "id": "acceptance",
+        "outcome": "committed",
+        "drafts": 0,
+        "instances": 1,
+        "workflow": "waiting",
+        "completed": [],
+        "enabled": [
+          "approval"
+        ],
+        "sources": {
+          "approval": "pending",
+          "review": "pending"
+        }
+      },
+      {
+        "id": "review-too-early",
+        "outcome": "rejected",
+        "reason": "ledger-rejected",
+        "drafts": 0,
+        "instances": 1,
+        "workflow": "waiting",
+        "completed": [],
+        "enabled": [
+          "approval"
+        ],
+        "sources": {
+          "approval": "pending",
+          "review": "pending"
+        }
+      },
+      {
+        "id": "approval",
+        "outcome": "committed",
+        "drafts": 0,
+        "instances": 1,
+        "workflow": "waiting",
+        "completed": [
+          "approval"
+        ],
+        "enabled": [
+          "review"
+        ],
+        "sources": {
+          "approval": "approved",
+          "review": "pending"
+        }
+      },
+      {
+        "id": "wrong-reviewer",
+        "outcome": "rejected",
+        "reason": "ledger-rejected",
+        "drafts": 0,
+        "instances": 1,
+        "workflow": "waiting",
+        "completed": [
+          "approval"
+        ],
+        "enabled": [
+          "review"
+        ],
+        "sources": {
+          "approval": "approved",
+          "review": "pending"
+        }
+      },
+      {
+        "id": "review",
+        "outcome": "committed",
+        "drafts": 0,
+        "instances": 1,
+        "workflow": "complete",
+        "completed": [
+          "approval",
+          "review"
+        ],
+        "enabled": [],
+        "sources": {
+          "approval": "approved",
+          "review": "confirmed"
+        }
+      }
+    ]
+  },
+  "actual": {
+    "composition": {
+      "name": "Offer checks",
+      "reference": "home-17"
+    },
+    "actions": [
+      {
+        "id": "proposal",
+        "outcome": "committed",
+        "drafts": 1,
+        "instances": 0,
+        "workflow": "not-started",
+        "completed": [],
+        "enabled": [],
+        "sources": {}
+      },
+      {
+        "reason": "ledger-rejected",
+        "id": "partner-consent-required",
+        "outcome": "rejected",
+        "drafts": 1,
+        "instances": 0,
+        "workflow": "not-started",
+        "completed": [],
+        "enabled": [],
+        "sources": {}
+      },
+      {
+        "id": "acceptance",
+        "outcome": "committed",
+        "drafts": 0,
+        "instances": 1,
+        "workflow": "waiting",
+        "completed": [],
+        "enabled": [
+          "approval"
+        ],
+        "sources": {
+          "approval": "pending",
+          "review": "pending"
+        }
+      },
+      {
+        "reason": "ledger-rejected",
+        "id": "review-too-early",
+        "outcome": "rejected",
+        "drafts": 0,
+        "instances": 1,
+        "workflow": "waiting",
+        "completed": [],
+        "enabled": [
+          "approval"
+        ],
+        "sources": {
+          "approval": "pending",
+          "review": "pending"
+        }
+      },
+      {
+        "id": "approval",
+        "outcome": "committed",
+        "drafts": 0,
+        "instances": 1,
+        "workflow": "waiting",
+        "completed": [
+          "approval"
+        ],
+        "enabled": [
+          "review"
+        ],
+        "sources": {
+          "approval": "approved",
+          "review": "pending"
+        }
+      },
+      {
+        "reason": "ledger-rejected",
+        "id": "wrong-reviewer",
+        "outcome": "rejected",
+        "drafts": 0,
+        "instances": 1,
+        "workflow": "waiting",
+        "completed": [
+          "approval"
+        ],
+        "enabled": [
+          "review"
+        ],
+        "sources": {
+          "approval": "approved",
+          "review": "pending"
+        }
+      },
+      {
+        "id": "review",
+        "outcome": "committed",
+        "drafts": 0,
+        "instances": 1,
+        "workflow": "complete",
+        "completed": [
+          "approval",
+          "review"
+        ],
+        "enabled": [],
+        "sources": {
+          "approval": "approved",
+          "review": "confirmed"
+        }
+      }
+    ]
+  },
+  "provenance": {
+    "mode": "live-canton",
+    "topology": "three authenticated participants; bank proposal and buyer consent; core-managed source actions",
+    "revision": "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+    "worktree_dirty": false,
+    "recorded_at": "2026-09-11T05:15:24.634712Z",
+    "story_format": 1,
+    "java": "17.0.19+10",
+    "configured_sdk": "3.4.11",
+    "input_sha256": "de40f51592f1b5f58a154b6e13d05d891ede226e2000d14a3b9177180f109777",
+    "expected_sha256": "8b11e8bf8989bb0d60b03e411c34bf9d183142d8b0fd84a7db476d5dac9bae5f",
+    "dar_sha256": "9e5397148dda311e6bad483f97cfef2949e1c51315d52f02a0a7a2881336e25b",
+    "dars": {
+      "harness/ledger/demo/.daml/dist/harmonia-demo-0.1.0.dar": "9e5397148dda311e6bad483f97cfef2949e1c51315d52f02a0a7a2881336e25b"
+    },
+    "actual_sha256": "17b5a3341946db0f7e2a079e7729f6ce2e3f1756b4762a3ced35ec406af285e2",
+    "observation_sha256": "eae6188cbd30bc79e30740db3307dac15e25a39212738e5e541c093fe500db59",
+    "matched": true
+  },
+  "presentation": {
+    "kind": "Composition",
+    "subtitle": "Propose → consent → core execution",
+    "start": "Empty workspace",
+    "start_detail": "Sources await partner consent",
+    "operation": "product/ledger/composition/daml/Composer.daml",
+    "units": [
+      {
+        "id": "proposal",
+        "actor": "bank",
+        "action": "propose",
+        "expected": {
+          "id": "proposal",
+          "outcome": "committed",
+          "drafts": 1,
+          "instances": 0,
+          "workflow": "not-started",
+          "completed": [],
+          "enabled": [],
+          "sources": {}
+        },
+        "actual": {
+          "id": "proposal",
+          "outcome": "committed",
+          "drafts": 1,
+          "instances": 0,
+          "workflow": "not-started",
+          "completed": [],
+          "enabled": [],
+          "sources": {}
+        },
+        "observed_state": "not-started",
+        "outcome_label": "committed"
+      },
+      {
+        "id": "partner-consent-required",
+        "actor": "bank",
+        "action": "accept",
+        "expected": {
+          "id": "partner-consent-required",
+          "outcome": "rejected",
+          "reason": "ledger-rejected",
+          "drafts": 1,
+          "instances": 0,
+          "workflow": "not-started",
+          "completed": [],
+          "enabled": [],
+          "sources": {}
+        },
+        "actual": {
+          "reason": "ledger-rejected",
+          "id": "partner-consent-required",
+          "outcome": "rejected",
+          "drafts": 1,
+          "instances": 0,
+          "workflow": "not-started",
+          "completed": [],
+          "enabled": [],
+          "sources": {}
+        },
+        "observed_state": "not-started",
+        "outcome_label": "rejected"
+      },
+      {
+        "id": "acceptance",
+        "actor": "buyer",
+        "action": "accept",
+        "expected": {
+          "id": "acceptance",
+          "outcome": "committed",
+          "drafts": 0,
+          "instances": 1,
+          "workflow": "waiting",
+          "completed": [],
+          "enabled": [
+            "approval"
+          ],
+          "sources": {
+            "approval": "pending",
+            "review": "pending"
+          }
+        },
+        "actual": {
+          "id": "acceptance",
+          "outcome": "committed",
+          "drafts": 0,
+          "instances": 1,
+          "workflow": "waiting",
+          "completed": [],
+          "enabled": [
+            "approval"
+          ],
+          "sources": {
+            "approval": "pending",
+            "review": "pending"
+          }
+        },
+        "observed_state": "waiting",
+        "outcome_label": "committed"
+      },
+      {
+        "id": "review-too-early",
+        "actor": "buyer",
+        "action": "advance",
+        "expected": {
+          "id": "review-too-early",
+          "outcome": "rejected",
+          "reason": "ledger-rejected",
+          "drafts": 0,
+          "instances": 1,
+          "workflow": "waiting",
+          "completed": [],
+          "enabled": [
+            "approval"
+          ],
+          "sources": {
+            "approval": "pending",
+            "review": "pending"
+          }
+        },
+        "actual": {
+          "reason": "ledger-rejected",
+          "id": "review-too-early",
+          "outcome": "rejected",
+          "drafts": 0,
+          "instances": 1,
+          "workflow": "waiting",
+          "completed": [],
+          "enabled": [
+            "approval"
+          ],
+          "sources": {
+            "approval": "pending",
+            "review": "pending"
+          }
+        },
+        "observed_state": "waiting",
+        "outcome_label": "rejected"
+      },
+      {
+        "id": "approval",
+        "actor": "bank",
+        "action": "advance",
+        "expected": {
+          "id": "approval",
+          "outcome": "committed",
+          "drafts": 0,
+          "instances": 1,
+          "workflow": "waiting",
+          "completed": [
+            "approval"
+          ],
+          "enabled": [
+            "review"
+          ],
+          "sources": {
+            "approval": "approved",
+            "review": "pending"
+          }
+        },
+        "actual": {
+          "id": "approval",
+          "outcome": "committed",
+          "drafts": 0,
+          "instances": 1,
+          "workflow": "waiting",
+          "completed": [
+            "approval"
+          ],
+          "enabled": [
+            "review"
+          ],
+          "sources": {
+            "approval": "approved",
+            "review": "pending"
+          }
+        },
+        "observed_state": "waiting",
+        "outcome_label": "committed"
+      },
+      {
+        "id": "wrong-reviewer",
+        "actor": "bank",
+        "action": "advance",
+        "expected": {
+          "id": "wrong-reviewer",
+          "outcome": "rejected",
+          "reason": "ledger-rejected",
+          "drafts": 0,
+          "instances": 1,
+          "workflow": "waiting",
+          "completed": [
+            "approval"
+          ],
+          "enabled": [
+            "review"
+          ],
+          "sources": {
+            "approval": "approved",
+            "review": "pending"
+          }
+        },
+        "actual": {
+          "reason": "ledger-rejected",
+          "id": "wrong-reviewer",
+          "outcome": "rejected",
+          "drafts": 0,
+          "instances": 1,
+          "workflow": "waiting",
+          "completed": [
+            "approval"
+          ],
+          "enabled": [
+            "review"
+          ],
+          "sources": {
+            "approval": "approved",
+            "review": "pending"
+          }
+        },
+        "observed_state": "waiting",
+        "outcome_label": "rejected"
+      },
+      {
+        "id": "review",
+        "actor": "buyer",
+        "action": "advance",
+        "expected": {
+          "id": "review",
+          "outcome": "committed",
+          "drafts": 0,
+          "instances": 1,
+          "workflow": "complete",
+          "completed": [
+            "approval",
+            "review"
+          ],
+          "enabled": [],
+          "sources": {
+            "approval": "approved",
+            "review": "confirmed"
+          }
+        },
+        "actual": {
+          "id": "review",
+          "outcome": "committed",
+          "drafts": 0,
+          "instances": 1,
+          "workflow": "complete",
+          "completed": [
+            "approval",
+            "review"
+          ],
+          "enabled": [],
+          "sources": {
+            "approval": "approved",
+            "review": "confirmed"
+          }
+        },
+        "observed_state": "complete",
+        "outcome_label": "committed"
+      }
+    ]
+  }
+}

@@ -50,6 +50,8 @@ final class SceneView(root: dom.HTMLElement):
   append(root, figure)
   private val connections = new ConnectionLayer(map)
 
+  def dispose(): Unit = connections.dispose()
+
   private def document(css: String, label: String, verified: Boolean): dom.HTMLElement =
     val node = element("div", css + " scene-document")
     val paper = element("span", "document-sheet")

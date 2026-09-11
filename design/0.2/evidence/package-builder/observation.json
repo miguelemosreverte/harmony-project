@@ -1,0 +1,752 @@
+{
+  "result" : {
+    "builder" : "package-inputs",
+    "actions" : [
+      {
+        "supported" : true,
+        "available_live" : true,
+        "compiled" : false,
+        "id" : "local",
+        "http" : 200,
+        "inputs" : 1
+      },
+      {
+        "supported" : true,
+        "available_live" : true,
+        "compiled" : false,
+        "id" : "participant",
+        "http" : 200,
+        "inputs" : 2
+      },
+      {
+        "supported" : true,
+        "available_live" : true,
+        "compiled" : true,
+        "id" : "compile",
+        "http" : 200,
+        "inputs" : 2
+      },
+      {
+        "supported" : false,
+        "available_live" : false,
+        "compiled" : false,
+        "id" : "metadata",
+        "http" : 200,
+        "inputs" : 3
+      },
+      {
+        "id" : "unsupported",
+        "http" : 400,
+        "inputs" : 3
+      },
+      {
+        "id" : "wrong-party",
+        "http" : 403,
+        "inputs" : 3
+      },
+      {
+        "id" : "malformed",
+        "http" : 400,
+        "inputs" : 3
+      },
+      {
+        "id" : "oversized",
+        "http" : 400,
+        "inputs" : 3
+      }
+    ],
+    "download" : {
+      "source_unchanged" : true,
+      "compiled_artifacts_match" : true
+    }
+  },
+  "final_state" : {
+    "inputs" : [
+      {
+        "id" : "2b9ca5e6-dad6-40cd-b613-dc9c4ee7489d",
+        "origin" : "local upload",
+        "sha256" : "b77e417dedc16733ef751b79b82df99b063819d514622b8b4e56d16f3ad8cf27",
+        "package_id" : "b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2",
+        "lf" : "2.2",
+        "matched_source" : "legacy-financing",
+        "can_generate" : true,
+        "available_live" : true,
+        "compiled" : false,
+        "diagnostic" : "Reviewed generated approval is available in the workflow action menu.",
+        "packages" : {
+          "590736e6f7bc01492007ecb27f3fe75995c19fbd3d41b384aada69619fd4f76c" : {
+            "name" : "daml-prim",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-590736e6f7bc01492007ecb27f3fe75995c19fbd3d41b384aada69619fd4f76c.dalf",
+            "version" : "0.0.0"
+          },
+          "b70db8369e1c461d5c70f1c86f526a29e9776c655e6ffc2560f95b05ccb8b946" : {
+            "name" : "daml-stdlib-DA-Time-Types",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Time-Types-b70db8369e1c461d5c70f1c86f526a29e9776c655e6ffc2560f95b05ccb8b946.dalf",
+            "version" : "1.0.0"
+          },
+          "f181cd661f7af3a60bdaae4b0285a2a67beb55d6910fc8431dbae21a5825ec0f" : {
+            "name" : "daml-prim-DA-Exception-GeneralError",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-DA-Exception-GeneralError-f181cd661f7af3a60bdaae4b0285a2a67beb55d6910fc8431dbae21a5825ec0f.dalf",
+            "version" : "1.0.0"
+          },
+          "5aee9b21b8e9a4c4975b5f4c4198e6e6e8469df49e2010820e792f393db870f4" : {
+            "name" : "daml-prim-DA-Types",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-DA-Types-5aee9b21b8e9a4c4975b5f4c4198e6e6e8469df49e2010820e792f393db870f4.dalf",
+            "version" : "1.0.0"
+          },
+          "0e4a572ab1fb94744abb02243a6bbed6c78fc6e3c8d3f60c655f057692a62816" : {
+            "name" : "daml-prim-DA-Internal-Erased",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-DA-Internal-Erased-0e4a572ab1fb94744abb02243a6bbed6c78fc6e3c8d3f60c655f057692a62816.dalf",
+            "version" : "1.0.0"
+          },
+          "60c61c542207080e97e378ab447cc355ecc47534b3a3ebbff307c4fb8339bc4d" : {
+            "name" : "daml-stdlib-DA-Stack-Types",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Stack-Types-60c61c542207080e97e378ab447cc355ecc47534b3a3ebbff307c4fb8339bc4d.dalf",
+            "version" : "1.0.0"
+          },
+          "52854220dc199884704958df38befd5492d78384a032fd7558c38f00e3d778a2" : {
+            "name" : "daml-stdlib-DA-Monoid-Types",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Monoid-Types-52854220dc199884704958df38befd5492d78384a032fd7558c38f00e3d778a2.dalf",
+            "version" : "1.0.0"
+          },
+          "e5411f3d75f072b944bd88e652112a14a3d409c491fd9a51f5f6eede6d3a3348" : {
+            "name" : "daml-prim-DA-Internal-NatSyn",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-DA-Internal-NatSyn-e5411f3d75f072b944bd88e652112a14a3d409c491fd9a51f5f6eede6d3a3348.dalf",
+            "version" : "1.0.0"
+          },
+          "9e70a8b3510d617f8a136213f33d6a903a10ca0eeec76bb06ba55d1ed9680f69" : {
+            "name" : "ghc-stdlib-DA-Internal-Template",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Internal-Template-9e70a8b3510d617f8a136213f33d6a903a10ca0eeec76bb06ba55d1ed9680f69.dalf",
+            "version" : "1.0.0"
+          },
+          "91e167fa7a256f21f990c526a0a0df840e99aeef0e67dc1f5415b0309486de74" : {
+            "name" : "daml-prim-DA-Exception-PreconditionFailed",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-DA-Exception-PreconditionFailed-91e167fa7a256f21f990c526a0a0df840e99aeef0e67dc1f5415b0309486de74.dalf",
+            "version" : "1.0.0"
+          },
+          "d095a2ccf6dd36b2415adc4fa676f9191ba63cd39828dc5207b36892ec350cbc" : {
+            "name" : "daml-stdlib-DA-Semigroup-Types",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Semigroup-Types-d095a2ccf6dd36b2415adc4fa676f9191ba63cd39828dc5207b36892ec350cbc.dalf",
+            "version" : "1.0.0"
+          },
+          "e7e0adfa881e7dbbb07da065ae54444da7c4bccebcb8872ab0cb5dcf9f3761ce" : {
+            "name" : "daml-prim-GHC-Types",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-GHC-Types-e7e0adfa881e7dbbb07da065ae54444da7c4bccebcb8872ab0cb5dcf9f3761ce.dalf",
+            "version" : "1.0.0"
+          },
+          "cae345b5500ef6f84645c816f88b9f7a85a9f3c71697984abdf6849f81e80324" : {
+            "name" : "daml-stdlib-DA-Logic-Types",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Logic-Types-cae345b5500ef6f84645c816f88b9f7a85a9f3c71697984abdf6849f81e80324.dalf",
+            "version" : "1.0.0"
+          },
+          "c3bb0c5d04799b3f11bad7c3c102963e115cf53da3e4afcbcfd9f06ebd82b4ff" : {
+            "name" : "daml-stdlib-DA-Set-Types",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Set-Types-c3bb0c5d04799b3f11bad7c3c102963e115cf53da3e4afcbcfd9f06ebd82b4ff.dalf",
+            "version" : "1.0.0"
+          },
+          "86d888f34152dae8729900966b44abcb466b9c111699678de58032de601d2b04" : {
+            "name" : "daml-stdlib-DA-Internal-Down",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Internal-Down-86d888f34152dae8729900966b44abcb466b9c111699678de58032de601d2b04.dalf",
+            "version" : "1.0.0"
+          },
+          "6da1f43a10a179524e840e7288b47bda213339b0552d92e87ae811e52f59fc0e" : {
+            "name" : "daml-prim-DA-Exception-AssertionFailed",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-DA-Exception-AssertionFailed-6da1f43a10a179524e840e7288b47bda213339b0552d92e87ae811e52f59fc0e.dalf",
+            "version" : "1.0.0"
+          },
+          "ee33fb70918e7aaa3d3fc44d64a399fb2bf5bcefc54201b1690ecd448551ba88" : {
+            "name" : "daml-prim-DA-Exception-ArithmeticError",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-DA-Exception-ArithmeticError-ee33fb70918e7aaa3d3fc44d64a399fb2bf5bcefc54201b1690ecd448551ba88.dalf",
+            "version" : "1.0.0"
+          },
+          "a1fa18133ae48cbb616c4c148e78e661666778c3087d099067c7fe1868cbb3a1" : {
+            "name" : "daml-stdlib-DA-Action-State-Type",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Action-State-Type-a1fa18133ae48cbb616c4c148e78e661666778c3087d099067c7fe1868cbb3a1.dalf",
+            "version" : "1.0.0"
+          },
+          "6f8e6085f5769861ae7a40dccd618d6f747297d59b37cab89b93e2fa80b0c024" : {
+            "name" : "ghc-stdlib-DA-Internal-Any",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Internal-Any-6f8e6085f5769861ae7a40dccd618d6f747297d59b37cab89b93e2fa80b0c024.dalf",
+            "version" : "1.0.0"
+          },
+          "ab068e2f920d0e06347975c2a342b71f8b8e3b4be0f02ead9442caac51aa8877" : {
+            "name" : "daml-prim-DA-Internal-PromotedText",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-DA-Internal-PromotedText-ab068e2f920d0e06347975c2a342b71f8b8e3b4be0f02ead9442caac51aa8877.dalf",
+            "version" : "1.0.0"
+          },
+          "19f0df5fdaf5a96e137b6ea885fdb378f37bd3166bd9a47ee11518e33fa09a20" : {
+            "name" : "daml-prim-GHC-Tuple",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-GHC-Tuple-19f0df5fdaf5a96e137b6ea885fdb378f37bd3166bd9a47ee11518e33fa09a20.dalf",
+            "version" : "1.0.0"
+          },
+          "fa79192fe1cce03d7d8db36471dde4cf6c96e6d0f07e1c391dd49e355af9b38c" : {
+            "name" : "daml-stdlib-DA-Date-Types",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Date-Types-fa79192fe1cce03d7d8db36471dde4cf6c96e6d0f07e1c391dd49e355af9b38c.dalf",
+            "version" : "1.0.0"
+          },
+          "bde4bd30749e99603e5afa354706608601029e225d4983324d617825b634253a" : {
+            "name" : "daml-stdlib-DA-NonEmpty-Types",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-NonEmpty-Types-bde4bd30749e99603e5afa354706608601029e225d4983324d617825b634253a.dalf",
+            "version" : "1.0.0"
+          },
+          "fc1d3f6c31caa8cf77688568b66fde20d6c87a92cd480a8b028a2943d04f2dc9" : {
+            "name" : "daml-stdlib",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-3.4.11-fc1d3f6c31caa8cf77688568b66fde20d6c87a92cd480a8b028a2943d04f2dc9.dalf",
+            "version" : "3.4.11"
+          },
+          "7adc4c2d07fa3a51173c843cba36e610c1168b2dbbf53076e20c0092eae8763d" : {
+            "name" : "daml-stdlib-DA-Internal-Fail-Types",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Internal-Fail-Types-7adc4c2d07fa3a51173c843cba36e610c1168b2dbbf53076e20c0092eae8763d.dalf",
+            "version" : "1.0.0"
+          },
+          "fcee8dfc1b81c449b421410edd5041c16ab59c45bbea85bcb094d1b17c3e9df7" : {
+            "name" : "daml-prim-GHC-Prim",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-GHC-Prim-fcee8dfc1b81c449b421410edd5041c16ab59c45bbea85bcb094d1b17c3e9df7.dalf",
+            "version" : "1.0.0"
+          },
+          "b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2" : {
+            "name" : "legacy-financing",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2.dalf",
+            "version" : "0.1.0"
+          },
+          "c280cc3ef501d237efa7b1120ca3ad2d196e089ad596b666bed59a85f3c9a074" : {
+            "name" : "daml-stdlib-DA-Internal-Interface-AnyView-Types",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Internal-Interface-AnyView-Types-c280cc3ef501d237efa7b1120ca3ad2d196e089ad596b666bed59a85f3c9a074.dalf",
+            "version" : "1.0.0"
+          },
+          "bfda48f9aa2c89c895cde538ec4b4946c7085959e031ad61bde616b9849155d7" : {
+            "name" : "daml-stdlib-DA-Random-Types",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Random-Types-bfda48f9aa2c89c895cde538ec4b4946c7085959e031ad61bde616b9849155d7.dalf",
+            "version" : "1.0.0"
+          },
+          "3cde94fe9be5c700fc1d9a8ad2277e2c1214609f8c52a5b4db77e466875b8cb7" : {
+            "name" : "daml-stdlib-DA-Validation-Types",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Validation-Types-3cde94fe9be5c700fc1d9a8ad2277e2c1214609f8c52a5b4db77e466875b8cb7.dalf",
+            "version" : "1.0.0"
+          }
+        }
+      },
+      {
+        "id" : "7eae2b54-9393-4f8a-90d4-74637ef5da80",
+        "origin" : "participant administrator export",
+        "sha256" : "b77e417dedc16733ef751b79b82df99b063819d514622b8b4e56d16f3ad8cf27",
+        "package_id" : "b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2",
+        "lf" : "2.2",
+        "matched_source" : "legacy-financing",
+        "can_generate" : true,
+        "available_live" : true,
+        "compiled" : true,
+        "diagnostic" : "Reviewed generated approval is available in the workflow action menu.",
+        "packages" : {
+          "590736e6f7bc01492007ecb27f3fe75995c19fbd3d41b384aada69619fd4f76c" : {
+            "name" : "daml-prim",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-590736e6f7bc01492007ecb27f3fe75995c19fbd3d41b384aada69619fd4f76c.dalf",
+            "version" : "0.0.0"
+          },
+          "b70db8369e1c461d5c70f1c86f526a29e9776c655e6ffc2560f95b05ccb8b946" : {
+            "name" : "daml-stdlib-DA-Time-Types",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Time-Types-b70db8369e1c461d5c70f1c86f526a29e9776c655e6ffc2560f95b05ccb8b946.dalf",
+            "version" : "1.0.0"
+          },
+          "f181cd661f7af3a60bdaae4b0285a2a67beb55d6910fc8431dbae21a5825ec0f" : {
+            "name" : "daml-prim-DA-Exception-GeneralError",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-DA-Exception-GeneralError-f181cd661f7af3a60bdaae4b0285a2a67beb55d6910fc8431dbae21a5825ec0f.dalf",
+            "version" : "1.0.0"
+          },
+          "5aee9b21b8e9a4c4975b5f4c4198e6e6e8469df49e2010820e792f393db870f4" : {
+            "name" : "daml-prim-DA-Types",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-DA-Types-5aee9b21b8e9a4c4975b5f4c4198e6e6e8469df49e2010820e792f393db870f4.dalf",
+            "version" : "1.0.0"
+          },
+          "0e4a572ab1fb94744abb02243a6bbed6c78fc6e3c8d3f60c655f057692a62816" : {
+            "name" : "daml-prim-DA-Internal-Erased",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-DA-Internal-Erased-0e4a572ab1fb94744abb02243a6bbed6c78fc6e3c8d3f60c655f057692a62816.dalf",
+            "version" : "1.0.0"
+          },
+          "60c61c542207080e97e378ab447cc355ecc47534b3a3ebbff307c4fb8339bc4d" : {
+            "name" : "daml-stdlib-DA-Stack-Types",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Stack-Types-60c61c542207080e97e378ab447cc355ecc47534b3a3ebbff307c4fb8339bc4d.dalf",
+            "version" : "1.0.0"
+          },
+          "52854220dc199884704958df38befd5492d78384a032fd7558c38f00e3d778a2" : {
+            "name" : "daml-stdlib-DA-Monoid-Types",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Monoid-Types-52854220dc199884704958df38befd5492d78384a032fd7558c38f00e3d778a2.dalf",
+            "version" : "1.0.0"
+          },
+          "e5411f3d75f072b944bd88e652112a14a3d409c491fd9a51f5f6eede6d3a3348" : {
+            "name" : "daml-prim-DA-Internal-NatSyn",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-DA-Internal-NatSyn-e5411f3d75f072b944bd88e652112a14a3d409c491fd9a51f5f6eede6d3a3348.dalf",
+            "version" : "1.0.0"
+          },
+          "9e70a8b3510d617f8a136213f33d6a903a10ca0eeec76bb06ba55d1ed9680f69" : {
+            "name" : "ghc-stdlib-DA-Internal-Template",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Internal-Template-9e70a8b3510d617f8a136213f33d6a903a10ca0eeec76bb06ba55d1ed9680f69.dalf",
+            "version" : "1.0.0"
+          },
+          "91e167fa7a256f21f990c526a0a0df840e99aeef0e67dc1f5415b0309486de74" : {
+            "name" : "daml-prim-DA-Exception-PreconditionFailed",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-DA-Exception-PreconditionFailed-91e167fa7a256f21f990c526a0a0df840e99aeef0e67dc1f5415b0309486de74.dalf",
+            "version" : "1.0.0"
+          },
+          "d095a2ccf6dd36b2415adc4fa676f9191ba63cd39828dc5207b36892ec350cbc" : {
+            "name" : "daml-stdlib-DA-Semigroup-Types",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Semigroup-Types-d095a2ccf6dd36b2415adc4fa676f9191ba63cd39828dc5207b36892ec350cbc.dalf",
+            "version" : "1.0.0"
+          },
+          "e7e0adfa881e7dbbb07da065ae54444da7c4bccebcb8872ab0cb5dcf9f3761ce" : {
+            "name" : "daml-prim-GHC-Types",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-GHC-Types-e7e0adfa881e7dbbb07da065ae54444da7c4bccebcb8872ab0cb5dcf9f3761ce.dalf",
+            "version" : "1.0.0"
+          },
+          "cae345b5500ef6f84645c816f88b9f7a85a9f3c71697984abdf6849f81e80324" : {
+            "name" : "daml-stdlib-DA-Logic-Types",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Logic-Types-cae345b5500ef6f84645c816f88b9f7a85a9f3c71697984abdf6849f81e80324.dalf",
+            "version" : "1.0.0"
+          },
+          "c3bb0c5d04799b3f11bad7c3c102963e115cf53da3e4afcbcfd9f06ebd82b4ff" : {
+            "name" : "daml-stdlib-DA-Set-Types",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Set-Types-c3bb0c5d04799b3f11bad7c3c102963e115cf53da3e4afcbcfd9f06ebd82b4ff.dalf",
+            "version" : "1.0.0"
+          },
+          "86d888f34152dae8729900966b44abcb466b9c111699678de58032de601d2b04" : {
+            "name" : "daml-stdlib-DA-Internal-Down",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Internal-Down-86d888f34152dae8729900966b44abcb466b9c111699678de58032de601d2b04.dalf",
+            "version" : "1.0.0"
+          },
+          "6da1f43a10a179524e840e7288b47bda213339b0552d92e87ae811e52f59fc0e" : {
+            "name" : "daml-prim-DA-Exception-AssertionFailed",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-DA-Exception-AssertionFailed-6da1f43a10a179524e840e7288b47bda213339b0552d92e87ae811e52f59fc0e.dalf",
+            "version" : "1.0.0"
+          },
+          "ee33fb70918e7aaa3d3fc44d64a399fb2bf5bcefc54201b1690ecd448551ba88" : {
+            "name" : "daml-prim-DA-Exception-ArithmeticError",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-DA-Exception-ArithmeticError-ee33fb70918e7aaa3d3fc44d64a399fb2bf5bcefc54201b1690ecd448551ba88.dalf",
+            "version" : "1.0.0"
+          },
+          "a1fa18133ae48cbb616c4c148e78e661666778c3087d099067c7fe1868cbb3a1" : {
+            "name" : "daml-stdlib-DA-Action-State-Type",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Action-State-Type-a1fa18133ae48cbb616c4c148e78e661666778c3087d099067c7fe1868cbb3a1.dalf",
+            "version" : "1.0.0"
+          },
+          "6f8e6085f5769861ae7a40dccd618d6f747297d59b37cab89b93e2fa80b0c024" : {
+            "name" : "ghc-stdlib-DA-Internal-Any",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Internal-Any-6f8e6085f5769861ae7a40dccd618d6f747297d59b37cab89b93e2fa80b0c024.dalf",
+            "version" : "1.0.0"
+          },
+          "ab068e2f920d0e06347975c2a342b71f8b8e3b4be0f02ead9442caac51aa8877" : {
+            "name" : "daml-prim-DA-Internal-PromotedText",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-DA-Internal-PromotedText-ab068e2f920d0e06347975c2a342b71f8b8e3b4be0f02ead9442caac51aa8877.dalf",
+            "version" : "1.0.0"
+          },
+          "19f0df5fdaf5a96e137b6ea885fdb378f37bd3166bd9a47ee11518e33fa09a20" : {
+            "name" : "daml-prim-GHC-Tuple",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-GHC-Tuple-19f0df5fdaf5a96e137b6ea885fdb378f37bd3166bd9a47ee11518e33fa09a20.dalf",
+            "version" : "1.0.0"
+          },
+          "fa79192fe1cce03d7d8db36471dde4cf6c96e6d0f07e1c391dd49e355af9b38c" : {
+            "name" : "daml-stdlib-DA-Date-Types",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Date-Types-fa79192fe1cce03d7d8db36471dde4cf6c96e6d0f07e1c391dd49e355af9b38c.dalf",
+            "version" : "1.0.0"
+          },
+          "bde4bd30749e99603e5afa354706608601029e225d4983324d617825b634253a" : {
+            "name" : "daml-stdlib-DA-NonEmpty-Types",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-NonEmpty-Types-bde4bd30749e99603e5afa354706608601029e225d4983324d617825b634253a.dalf",
+            "version" : "1.0.0"
+          },
+          "fc1d3f6c31caa8cf77688568b66fde20d6c87a92cd480a8b028a2943d04f2dc9" : {
+            "name" : "daml-stdlib",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-3.4.11-fc1d3f6c31caa8cf77688568b66fde20d6c87a92cd480a8b028a2943d04f2dc9.dalf",
+            "version" : "3.4.11"
+          },
+          "7adc4c2d07fa3a51173c843cba36e610c1168b2dbbf53076e20c0092eae8763d" : {
+            "name" : "daml-stdlib-DA-Internal-Fail-Types",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Internal-Fail-Types-7adc4c2d07fa3a51173c843cba36e610c1168b2dbbf53076e20c0092eae8763d.dalf",
+            "version" : "1.0.0"
+          },
+          "fcee8dfc1b81c449b421410edd5041c16ab59c45bbea85bcb094d1b17c3e9df7" : {
+            "name" : "daml-prim-GHC-Prim",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-GHC-Prim-fcee8dfc1b81c449b421410edd5041c16ab59c45bbea85bcb094d1b17c3e9df7.dalf",
+            "version" : "1.0.0"
+          },
+          "b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2" : {
+            "name" : "legacy-financing",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2.dalf",
+            "version" : "0.1.0"
+          },
+          "c280cc3ef501d237efa7b1120ca3ad2d196e089ad596b666bed59a85f3c9a074" : {
+            "name" : "daml-stdlib-DA-Internal-Interface-AnyView-Types",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Internal-Interface-AnyView-Types-c280cc3ef501d237efa7b1120ca3ad2d196e089ad596b666bed59a85f3c9a074.dalf",
+            "version" : "1.0.0"
+          },
+          "bfda48f9aa2c89c895cde538ec4b4946c7085959e031ad61bde616b9849155d7" : {
+            "name" : "daml-stdlib-DA-Random-Types",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Random-Types-bfda48f9aa2c89c895cde538ec4b4946c7085959e031ad61bde616b9849155d7.dalf",
+            "version" : "1.0.0"
+          },
+          "3cde94fe9be5c700fc1d9a8ad2277e2c1214609f8c52a5b4db77e466875b8cb7" : {
+            "name" : "daml-stdlib-DA-Validation-Types",
+            "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Validation-Types-3cde94fe9be5c700fc1d9a8ad2277e2c1214609f8c52a5b4db77e466875b8cb7.dalf",
+            "version" : "1.0.0"
+          }
+        },
+        "generation" : {
+          "generator" : "harmonia-typed-binding/v1",
+          "sdk" : "3.4.11",
+          "mapping_sha256" : "c3dd9ccf839ffe18700ec32d87bf78bfb231594e07ee64d30a594b8c7a908450",
+          "source" : {
+            "source" : "product/ledger/applications/legacy-financing/.daml/dist/legacy-financing-0.1.0.dar",
+            "sha256" : "b77e417dedc16733ef751b79b82df99b063819d514622b8b4e56d16f3ad8cf27",
+            "package_id" : "b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2",
+            "lf" : "2.2",
+            "file" : ".artifacts/packages/inputs/legacy-financing.dar",
+            "packages" : {
+              "0e4a572ab1fb94744abb02243a6bbed6c78fc6e3c8d3f60c655f057692a62816" : {
+                "name" : "daml-prim-DA-Internal-Erased",
+                "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-DA-Internal-Erased-0e4a572ab1fb94744abb02243a6bbed6c78fc6e3c8d3f60c655f057692a62816.dalf",
+                "version" : "1.0.0"
+              },
+              "19f0df5fdaf5a96e137b6ea885fdb378f37bd3166bd9a47ee11518e33fa09a20" : {
+                "name" : "daml-prim-GHC-Tuple",
+                "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-GHC-Tuple-19f0df5fdaf5a96e137b6ea885fdb378f37bd3166bd9a47ee11518e33fa09a20.dalf",
+                "version" : "1.0.0"
+              },
+              "3cde94fe9be5c700fc1d9a8ad2277e2c1214609f8c52a5b4db77e466875b8cb7" : {
+                "name" : "daml-stdlib-DA-Validation-Types",
+                "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Validation-Types-3cde94fe9be5c700fc1d9a8ad2277e2c1214609f8c52a5b4db77e466875b8cb7.dalf",
+                "version" : "1.0.0"
+              },
+              "52854220dc199884704958df38befd5492d78384a032fd7558c38f00e3d778a2" : {
+                "name" : "daml-stdlib-DA-Monoid-Types",
+                "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Monoid-Types-52854220dc199884704958df38befd5492d78384a032fd7558c38f00e3d778a2.dalf",
+                "version" : "1.0.0"
+              },
+              "590736e6f7bc01492007ecb27f3fe75995c19fbd3d41b384aada69619fd4f76c" : {
+                "name" : "daml-prim",
+                "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-590736e6f7bc01492007ecb27f3fe75995c19fbd3d41b384aada69619fd4f76c.dalf",
+                "version" : "0.0.0"
+              },
+              "5aee9b21b8e9a4c4975b5f4c4198e6e6e8469df49e2010820e792f393db870f4" : {
+                "name" : "daml-prim-DA-Types",
+                "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-DA-Types-5aee9b21b8e9a4c4975b5f4c4198e6e6e8469df49e2010820e792f393db870f4.dalf",
+                "version" : "1.0.0"
+              },
+              "60c61c542207080e97e378ab447cc355ecc47534b3a3ebbff307c4fb8339bc4d" : {
+                "name" : "daml-stdlib-DA-Stack-Types",
+                "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Stack-Types-60c61c542207080e97e378ab447cc355ecc47534b3a3ebbff307c4fb8339bc4d.dalf",
+                "version" : "1.0.0"
+              },
+              "6da1f43a10a179524e840e7288b47bda213339b0552d92e87ae811e52f59fc0e" : {
+                "name" : "daml-prim-DA-Exception-AssertionFailed",
+                "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-DA-Exception-AssertionFailed-6da1f43a10a179524e840e7288b47bda213339b0552d92e87ae811e52f59fc0e.dalf",
+                "version" : "1.0.0"
+              },
+              "6f8e6085f5769861ae7a40dccd618d6f747297d59b37cab89b93e2fa80b0c024" : {
+                "name" : "ghc-stdlib-DA-Internal-Any",
+                "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Internal-Any-6f8e6085f5769861ae7a40dccd618d6f747297d59b37cab89b93e2fa80b0c024.dalf",
+                "version" : "1.0.0"
+              },
+              "7adc4c2d07fa3a51173c843cba36e610c1168b2dbbf53076e20c0092eae8763d" : {
+                "name" : "daml-stdlib-DA-Internal-Fail-Types",
+                "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Internal-Fail-Types-7adc4c2d07fa3a51173c843cba36e610c1168b2dbbf53076e20c0092eae8763d.dalf",
+                "version" : "1.0.0"
+              },
+              "86d888f34152dae8729900966b44abcb466b9c111699678de58032de601d2b04" : {
+                "name" : "daml-stdlib-DA-Internal-Down",
+                "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Internal-Down-86d888f34152dae8729900966b44abcb466b9c111699678de58032de601d2b04.dalf",
+                "version" : "1.0.0"
+              },
+              "91e167fa7a256f21f990c526a0a0df840e99aeef0e67dc1f5415b0309486de74" : {
+                "name" : "daml-prim-DA-Exception-PreconditionFailed",
+                "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-DA-Exception-PreconditionFailed-91e167fa7a256f21f990c526a0a0df840e99aeef0e67dc1f5415b0309486de74.dalf",
+                "version" : "1.0.0"
+              },
+              "9e70a8b3510d617f8a136213f33d6a903a10ca0eeec76bb06ba55d1ed9680f69" : {
+                "name" : "ghc-stdlib-DA-Internal-Template",
+                "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Internal-Template-9e70a8b3510d617f8a136213f33d6a903a10ca0eeec76bb06ba55d1ed9680f69.dalf",
+                "version" : "1.0.0"
+              },
+              "a1fa18133ae48cbb616c4c148e78e661666778c3087d099067c7fe1868cbb3a1" : {
+                "name" : "daml-stdlib-DA-Action-State-Type",
+                "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Action-State-Type-a1fa18133ae48cbb616c4c148e78e661666778c3087d099067c7fe1868cbb3a1.dalf",
+                "version" : "1.0.0"
+              },
+              "ab068e2f920d0e06347975c2a342b71f8b8e3b4be0f02ead9442caac51aa8877" : {
+                "name" : "daml-prim-DA-Internal-PromotedText",
+                "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-DA-Internal-PromotedText-ab068e2f920d0e06347975c2a342b71f8b8e3b4be0f02ead9442caac51aa8877.dalf",
+                "version" : "1.0.0"
+              },
+              "b70db8369e1c461d5c70f1c86f526a29e9776c655e6ffc2560f95b05ccb8b946" : {
+                "name" : "daml-stdlib-DA-Time-Types",
+                "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Time-Types-b70db8369e1c461d5c70f1c86f526a29e9776c655e6ffc2560f95b05ccb8b946.dalf",
+                "version" : "1.0.0"
+              },
+              "b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2" : {
+                "name" : "legacy-financing",
+                "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2.dalf",
+                "version" : "0.1.0"
+              },
+              "bde4bd30749e99603e5afa354706608601029e225d4983324d617825b634253a" : {
+                "name" : "daml-stdlib-DA-NonEmpty-Types",
+                "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-NonEmpty-Types-bde4bd30749e99603e5afa354706608601029e225d4983324d617825b634253a.dalf",
+                "version" : "1.0.0"
+              },
+              "bfda48f9aa2c89c895cde538ec4b4946c7085959e031ad61bde616b9849155d7" : {
+                "name" : "daml-stdlib-DA-Random-Types",
+                "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Random-Types-bfda48f9aa2c89c895cde538ec4b4946c7085959e031ad61bde616b9849155d7.dalf",
+                "version" : "1.0.0"
+              },
+              "c280cc3ef501d237efa7b1120ca3ad2d196e089ad596b666bed59a85f3c9a074" : {
+                "name" : "daml-stdlib-DA-Internal-Interface-AnyView-Types",
+                "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Internal-Interface-AnyView-Types-c280cc3ef501d237efa7b1120ca3ad2d196e089ad596b666bed59a85f3c9a074.dalf",
+                "version" : "1.0.0"
+              },
+              "c3bb0c5d04799b3f11bad7c3c102963e115cf53da3e4afcbcfd9f06ebd82b4ff" : {
+                "name" : "daml-stdlib-DA-Set-Types",
+                "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Set-Types-c3bb0c5d04799b3f11bad7c3c102963e115cf53da3e4afcbcfd9f06ebd82b4ff.dalf",
+                "version" : "1.0.0"
+              },
+              "cae345b5500ef6f84645c816f88b9f7a85a9f3c71697984abdf6849f81e80324" : {
+                "name" : "daml-stdlib-DA-Logic-Types",
+                "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Logic-Types-cae345b5500ef6f84645c816f88b9f7a85a9f3c71697984abdf6849f81e80324.dalf",
+                "version" : "1.0.0"
+              },
+              "d095a2ccf6dd36b2415adc4fa676f9191ba63cd39828dc5207b36892ec350cbc" : {
+                "name" : "daml-stdlib-DA-Semigroup-Types",
+                "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Semigroup-Types-d095a2ccf6dd36b2415adc4fa676f9191ba63cd39828dc5207b36892ec350cbc.dalf",
+                "version" : "1.0.0"
+              },
+              "e5411f3d75f072b944bd88e652112a14a3d409c491fd9a51f5f6eede6d3a3348" : {
+                "name" : "daml-prim-DA-Internal-NatSyn",
+                "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-DA-Internal-NatSyn-e5411f3d75f072b944bd88e652112a14a3d409c491fd9a51f5f6eede6d3a3348.dalf",
+                "version" : "1.0.0"
+              },
+              "e7e0adfa881e7dbbb07da065ae54444da7c4bccebcb8872ab0cb5dcf9f3761ce" : {
+                "name" : "daml-prim-GHC-Types",
+                "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-GHC-Types-e7e0adfa881e7dbbb07da065ae54444da7c4bccebcb8872ab0cb5dcf9f3761ce.dalf",
+                "version" : "1.0.0"
+              },
+              "ee33fb70918e7aaa3d3fc44d64a399fb2bf5bcefc54201b1690ecd448551ba88" : {
+                "name" : "daml-prim-DA-Exception-ArithmeticError",
+                "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-DA-Exception-ArithmeticError-ee33fb70918e7aaa3d3fc44d64a399fb2bf5bcefc54201b1690ecd448551ba88.dalf",
+                "version" : "1.0.0"
+              },
+              "f181cd661f7af3a60bdaae4b0285a2a67beb55d6910fc8431dbae21a5825ec0f" : {
+                "name" : "daml-prim-DA-Exception-GeneralError",
+                "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-DA-Exception-GeneralError-f181cd661f7af3a60bdaae4b0285a2a67beb55d6910fc8431dbae21a5825ec0f.dalf",
+                "version" : "1.0.0"
+              },
+              "fa79192fe1cce03d7d8db36471dde4cf6c96e6d0f07e1c391dd49e355af9b38c" : {
+                "name" : "daml-stdlib-DA-Date-Types",
+                "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-DA-Date-Types-fa79192fe1cce03d7d8db36471dde4cf6c96e6d0f07e1c391dd49e355af9b38c.dalf",
+                "version" : "1.0.0"
+              },
+              "fc1d3f6c31caa8cf77688568b66fde20d6c87a92cd480a8b028a2943d04f2dc9" : {
+                "name" : "daml-stdlib",
+                "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-stdlib-3.4.11-fc1d3f6c31caa8cf77688568b66fde20d6c87a92cd480a8b028a2943d04f2dc9.dalf",
+                "version" : "3.4.11"
+              },
+              "fcee8dfc1b81c449b421410edd5041c16ab59c45bbea85bcb094d1b17c3e9df7" : {
+                "name" : "daml-prim-GHC-Prim",
+                "path" : "legacy-financing-0.1.0-b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2/daml-prim-GHC-Prim-fcee8dfc1b81c449b421410edd5041c16ab59c45bbea85bcb094d1b17c3e9df7.dalf",
+                "version" : "1.0.0"
+              }
+            }
+          },
+          "files" : {
+            "library/daml/GeneratedFinancing.daml" : "3a5cb69d25b7144e4ad07c88d0abb1c019b9b652acf3e0c071b27c8b82068ca3",
+            "library/daml.yaml" : "83e78c5be3d25eb26ca7561dc25a72672bbec9f0d6b544942b520d907caa0654",
+            "example/daml/Example.daml" : "2312703dc25a7e0df7dcf0b04ed8c4ca9a5defe93edc8816ee60911559c43d46",
+            "example/daml.yaml" : "45beab8d86fe19e98cdfa40544b3d5571e9f042fe4445b8d446c3b880288c680",
+            "README.md" : "4dbc56e1ea6e00d7f211f4af6d7addfddd846469a72eb2527b3f9990cad13b79"
+          },
+          "artifacts" : {
+            "library_dar" : "805a2ca1f141ad7aca97b39582ee72e9f8132a473aa0aa54e21bddf4bf2b0d53",
+            "example_dar" : "c98ba09bd4c25249f5ef4a07660eacc4ceecf54571deaeb76bc31edbe9fed6c3",
+            "interfaces_dar" : "9b318bb3ef934ffeea182b6989c4282f27fa134db066e226325d99f1611e65a6",
+            "core_dar" : "d4be67de0eeb68e11a344dcee0dfd251c3b40083dd82e67a34feb995682e4715"
+          }
+        }
+      },
+      {
+        "id" : "eb923727-4c80-44ae-912b-3f10c53dc727",
+        "origin" : "https://raw.githubusercontent.com/canton-network/splice/4031327bc4fd63362ebd75f47f466c927c81e06e/daml/dars/splice-api-token-metadata-v1-1.0.0.dar",
+        "sha256" : "455eb160cb5abd4ae9918a6fbb9dad471f721adda39f0e5c76feef08d05637fc",
+        "package_id" : "4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f",
+        "lf" : "2.1",
+        "matched_source" : "metadata",
+        "can_generate" : false,
+        "available_live" : false,
+        "compiled" : false,
+        "diagnostic" : "No reviewed executable mapping matches this input. Package inspection does not make an action available; add a pinned source and supported typed mapping, then rebuild.",
+        "packages" : {
+          "b70db8369e1c461d5c70f1c86f526a29e9776c655e6ffc2560f95b05ccb8b946" : {
+            "name" : "daml-stdlib-DA-Time-Types",
+            "path" : "splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f/daml-stdlib-DA-Time-Types-b70db8369e1c461d5c70f1c86f526a29e9776c655e6ffc2560f95b05ccb8b946.dalf",
+            "version" : "1.0.0"
+          },
+          "f181cd661f7af3a60bdaae4b0285a2a67beb55d6910fc8431dbae21a5825ec0f" : {
+            "name" : "daml-prim-DA-Exception-GeneralError",
+            "path" : "splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f/daml-prim-DA-Exception-GeneralError-f181cd661f7af3a60bdaae4b0285a2a67beb55d6910fc8431dbae21a5825ec0f.dalf",
+            "version" : "1.0.0"
+          },
+          "bde4bd30749e99603e5afa354706608601029e225d4983324d617825b634253a" : {
+            "name" : "daml-stdlib-DA-NonEmpty-Types",
+            "path" : "splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f/daml-stdlib-DA-NonEmpty-Types-bde4bd30749e99603e5afa354706608601029e225d4983324d617825b634253a.dalf",
+            "version" : "1.0.0"
+          },
+          "5aee9b21b8e9a4c4975b5f4c4198e6e6e8469df49e2010820e792f393db870f4" : {
+            "name" : "daml-prim-DA-Types",
+            "path" : "splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f/daml-prim-DA-Types-5aee9b21b8e9a4c4975b5f4c4198e6e6e8469df49e2010820e792f393db870f4.dalf",
+            "version" : "1.0.0"
+          },
+          "0e4a572ab1fb94744abb02243a6bbed6c78fc6e3c8d3f60c655f057692a62816" : {
+            "name" : "daml-prim-DA-Internal-Erased",
+            "path" : "splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f/daml-prim-DA-Internal-Erased-0e4a572ab1fb94744abb02243a6bbed6c78fc6e3c8d3f60c655f057692a62816.dalf",
+            "version" : "1.0.0"
+          },
+          "60c61c542207080e97e378ab447cc355ecc47534b3a3ebbff307c4fb8339bc4d" : {
+            "name" : "daml-stdlib-DA-Stack-Types",
+            "path" : "splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f/daml-stdlib-DA-Stack-Types-60c61c542207080e97e378ab447cc355ecc47534b3a3ebbff307c4fb8339bc4d.dalf",
+            "version" : "1.0.0"
+          },
+          "c280cc3ef501d237efa7b1120ca3ad2d196e089ad596b666bed59a85f3c9a074" : {
+            "name" : "daml-stdlib-DA-Internal-Interface-AnyView-Types",
+            "path" : "splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f/daml-stdlib-DA-Internal-Interface-AnyView-Types-c280cc3ef501d237efa7b1120ca3ad2d196e089ad596b666bed59a85f3c9a074.dalf",
+            "version" : "1.0.0"
+          },
+          "e5411f3d75f072b944bd88e652112a14a3d409c491fd9a51f5f6eede6d3a3348" : {
+            "name" : "daml-prim-DA-Internal-NatSyn",
+            "path" : "splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f/daml-prim-DA-Internal-NatSyn-e5411f3d75f072b944bd88e652112a14a3d409c491fd9a51f5f6eede6d3a3348.dalf",
+            "version" : "1.0.0"
+          },
+          "9e70a8b3510d617f8a136213f33d6a903a10ca0eeec76bb06ba55d1ed9680f69" : {
+            "name" : "ghc-stdlib-DA-Internal-Template",
+            "path" : "splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f/daml-stdlib-DA-Internal-Template-9e70a8b3510d617f8a136213f33d6a903a10ca0eeec76bb06ba55d1ed9680f69.dalf",
+            "version" : "1.0.0"
+          },
+          "d095a2ccf6dd36b2415adc4fa676f9191ba63cd39828dc5207b36892ec350cbc" : {
+            "name" : "daml-stdlib-DA-Semigroup-Types",
+            "path" : "splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f/daml-stdlib-DA-Semigroup-Types-d095a2ccf6dd36b2415adc4fa676f9191ba63cd39828dc5207b36892ec350cbc.dalf",
+            "version" : "1.0.0"
+          },
+          "e7e0adfa881e7dbbb07da065ae54444da7c4bccebcb8872ab0cb5dcf9f3761ce" : {
+            "name" : "daml-prim-GHC-Types",
+            "path" : "splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f/daml-prim-GHC-Types-e7e0adfa881e7dbbb07da065ae54444da7c4bccebcb8872ab0cb5dcf9f3761ce.dalf",
+            "version" : "1.0.0"
+          },
+          "cae345b5500ef6f84645c816f88b9f7a85a9f3c71697984abdf6849f81e80324" : {
+            "name" : "daml-stdlib-DA-Logic-Types",
+            "path" : "splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f/daml-stdlib-DA-Logic-Types-cae345b5500ef6f84645c816f88b9f7a85a9f3c71697984abdf6849f81e80324.dalf",
+            "version" : "1.0.0"
+          },
+          "c3bb0c5d04799b3f11bad7c3c102963e115cf53da3e4afcbcfd9f06ebd82b4ff" : {
+            "name" : "daml-stdlib-DA-Set-Types",
+            "path" : "splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f/daml-stdlib-DA-Set-Types-c3bb0c5d04799b3f11bad7c3c102963e115cf53da3e4afcbcfd9f06ebd82b4ff.dalf",
+            "version" : "1.0.0"
+          },
+          "86d888f34152dae8729900966b44abcb466b9c111699678de58032de601d2b04" : {
+            "name" : "daml-stdlib-DA-Internal-Down",
+            "path" : "splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f/daml-stdlib-DA-Internal-Down-86d888f34152dae8729900966b44abcb466b9c111699678de58032de601d2b04.dalf",
+            "version" : "1.0.0"
+          },
+          "6da1f43a10a179524e840e7288b47bda213339b0552d92e87ae811e52f59fc0e" : {
+            "name" : "daml-prim-DA-Exception-AssertionFailed",
+            "path" : "splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f/daml-prim-DA-Exception-AssertionFailed-6da1f43a10a179524e840e7288b47bda213339b0552d92e87ae811e52f59fc0e.dalf",
+            "version" : "1.0.0"
+          },
+          "ee33fb70918e7aaa3d3fc44d64a399fb2bf5bcefc54201b1690ecd448551ba88" : {
+            "name" : "daml-prim-DA-Exception-ArithmeticError",
+            "path" : "splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f/daml-prim-DA-Exception-ArithmeticError-ee33fb70918e7aaa3d3fc44d64a399fb2bf5bcefc54201b1690ecd448551ba88.dalf",
+            "version" : "1.0.0"
+          },
+          "a1fa18133ae48cbb616c4c148e78e661666778c3087d099067c7fe1868cbb3a1" : {
+            "name" : "daml-stdlib-DA-Action-State-Type",
+            "path" : "splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f/daml-stdlib-DA-Action-State-Type-a1fa18133ae48cbb616c4c148e78e661666778c3087d099067c7fe1868cbb3a1.dalf",
+            "version" : "1.0.0"
+          },
+          "6f8e6085f5769861ae7a40dccd618d6f747297d59b37cab89b93e2fa80b0c024" : {
+            "name" : "ghc-stdlib-DA-Internal-Any",
+            "path" : "splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f/daml-stdlib-DA-Internal-Any-6f8e6085f5769861ae7a40dccd618d6f747297d59b37cab89b93e2fa80b0c024.dalf",
+            "version" : "1.0.0"
+          },
+          "ab068e2f920d0e06347975c2a342b71f8b8e3b4be0f02ead9442caac51aa8877" : {
+            "name" : "daml-prim-DA-Internal-PromotedText",
+            "path" : "splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f/daml-prim-DA-Internal-PromotedText-ab068e2f920d0e06347975c2a342b71f8b8e3b4be0f02ead9442caac51aa8877.dalf",
+            "version" : "1.0.0"
+          },
+          "19f0df5fdaf5a96e137b6ea885fdb378f37bd3166bd9a47ee11518e33fa09a20" : {
+            "name" : "daml-prim-GHC-Tuple",
+            "path" : "splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f/daml-prim-GHC-Tuple-19f0df5fdaf5a96e137b6ea885fdb378f37bd3166bd9a47ee11518e33fa09a20.dalf",
+            "version" : "1.0.0"
+          },
+          "fa79192fe1cce03d7d8db36471dde4cf6c96e6d0f07e1c391dd49e355af9b38c" : {
+            "name" : "daml-stdlib-DA-Date-Types",
+            "path" : "splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f/daml-stdlib-DA-Date-Types-fa79192fe1cce03d7d8db36471dde4cf6c96e6d0f07e1c391dd49e355af9b38c.dalf",
+            "version" : "1.0.0"
+          },
+          "7adc4c2d07fa3a51173c843cba36e610c1168b2dbbf53076e20c0092eae8763d" : {
+            "name" : "daml-stdlib-DA-Internal-Fail-Types",
+            "path" : "splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f/daml-stdlib-DA-Internal-Fail-Types-7adc4c2d07fa3a51173c843cba36e610c1168b2dbbf53076e20c0092eae8763d.dalf",
+            "version" : "1.0.0"
+          },
+          "9d1a644e686435cf934f2f3f049138a424863b2a800130046dadc0c994ea5df3" : {
+            "name" : "daml-stdlib",
+            "path" : "splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f/daml-stdlib-3.3.0.20250502.13767.0-9d1a644e686435cf934f2f3f049138a424863b2a800130046dadc0c994ea5df3.dalf",
+            "version" : "3.3.0.20250502.13767.0"
+          },
+          "fcee8dfc1b81c449b421410edd5041c16ab59c45bbea85bcb094d1b17c3e9df7" : {
+            "name" : "daml-prim-GHC-Prim",
+            "path" : "splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f/daml-prim-GHC-Prim-fcee8dfc1b81c449b421410edd5041c16ab59c45bbea85bcb094d1b17c3e9df7.dalf",
+            "version" : "1.0.0"
+          },
+          "4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f" : {
+            "name" : "splice-api-token-metadata-v1",
+            "path" : "splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f/splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f.dalf",
+            "version" : "1.0.0"
+          },
+          "52854220dc199884704958df38befd5492d78384a032fd7558c38f00e3d778a2" : {
+            "name" : "daml-stdlib-DA-Monoid-Types",
+            "path" : "splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f/daml-stdlib-DA-Monoid-Types-52854220dc199884704958df38befd5492d78384a032fd7558c38f00e3d778a2.dalf",
+            "version" : "1.0.0"
+          },
+          "54f85ebfc7dfae18f7d70370015dcc6c6792f60135ab369c44ae52c6fc17c274" : {
+            "name" : "daml-prim",
+            "path" : "splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f/daml-prim-54f85ebfc7dfae18f7d70370015dcc6c6792f60135ab369c44ae52c6fc17c274.dalf",
+            "version" : "0.0.0"
+          },
+          "91e167fa7a256f21f990c526a0a0df840e99aeef0e67dc1f5415b0309486de74" : {
+            "name" : "daml-prim-DA-Exception-PreconditionFailed",
+            "path" : "splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f/daml-prim-DA-Exception-PreconditionFailed-91e167fa7a256f21f990c526a0a0df840e99aeef0e67dc1f5415b0309486de74.dalf",
+            "version" : "1.0.0"
+          },
+          "bfda48f9aa2c89c895cde538ec4b4946c7085959e031ad61bde616b9849155d7" : {
+            "name" : "daml-stdlib-DA-Random-Types",
+            "path" : "splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f/daml-stdlib-DA-Random-Types-bfda48f9aa2c89c895cde538ec4b4946c7085959e031ad61bde616b9849155d7.dalf",
+            "version" : "1.0.0"
+          },
+          "3cde94fe9be5c700fc1d9a8ad2277e2c1214609f8c52a5b4db77e466875b8cb7" : {
+            "name" : "daml-stdlib-DA-Validation-Types",
+            "path" : "splice-api-token-metadata-v1-1.0.0-4ded6b668cb3b64f7a88a30874cd41c75829f5e064b3fbbadf41ec7e8363354f/daml-stdlib-DA-Validation-Types-3cde94fe9be5c700fc1d9a8ad2277e2c1214609f8c52a5b4db77e466875b8cb7.dalf",
+            "version" : "1.0.0"
+          }
+        }
+      }
+    ],
+    "remaining" : 5,
+    "sources" : [
+      {
+        "id" : "legacy-financing",
+        "source" : "product/ledger/applications/legacy-financing/.daml/dist/legacy-financing-0.1.0.dar"
+      },
+      {
+        "id" : "metadata",
+        "source" : "https://raw.githubusercontent.com/canton-network/splice/4031327bc4fd63362ebd75f47f466c927c81e06e/daml/dars/splice-api-token-metadata-v1-1.0.0.dar"
+      },
+      {
+        "id" : "primitive-approval",
+        "source" : "product/ledger/applications/primitive-approval/.daml/dist/harmonia-binding-fixtures-0.1.0.dar"
+      }
+    ]
+  },
+  "download_sha256" : "4493df4f9f589d40cd975e6a0dd718c3f0be87bbf40c1ee028aaa6f575dd2042"
+}

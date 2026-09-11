@@ -1,0 +1,2919 @@
+{
+  "settler" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043",
+  "steps" : [
+    {
+      "activeWorkflows" : 0,
+      "workflow" : "waiting",
+      "rawError" : null,
+      "outcome" : "committed",
+      "id" : "seller-agrees",
+      "destination" : 0E-10,
+      "trade" : "agreed",
+      "locked" : 0E-10,
+      "visibleTo" : [
+        "Alice",
+        "Seller",
+        "Source",
+        "Destination"
+      ],
+      "reason" : null,
+      "releases" : 0,
+      "available" : 7.1250000000
+    },
+    {
+      "activeWorkflows" : 0,
+      "workflow" : "waiting",
+      "rawError" : null,
+      "outcome" : "committed",
+      "id" : "seller-locks",
+      "destination" : 0E-10,
+      "trade" : "agreed",
+      "locked" : 7.1250000000,
+      "visibleTo" : [
+        "Alice",
+        "Seller",
+        "Source",
+        "Destination"
+      ],
+      "reason" : null,
+      "releases" : 0,
+      "available" : 0E-10
+    },
+    {
+      "activeWorkflows" : 0,
+      "workflow" : "waiting",
+      "rawError" : null,
+      "outcome" : "committed",
+      "id" : "source-confirms",
+      "destination" : 0E-10,
+      "trade" : "source-confirmed",
+      "locked" : 7.1250000000,
+      "visibleTo" : [
+        "Alice",
+        "Seller",
+        "Source",
+        "Destination"
+      ],
+      "reason" : null,
+      "releases" : 0,
+      "available" : 0E-10
+    },
+    {
+      "activeWorkflows" : 0,
+      "workflow" : "waiting",
+      "rawError" : null,
+      "outcome" : "committed",
+      "id" : "destination-prepares",
+      "destination" : 0E-10,
+      "trade" : "source-confirmed",
+      "locked" : 7.1250000000,
+      "visibleTo" : [
+        "Alice",
+        "Seller",
+        "Source",
+        "Destination"
+      ],
+      "reason" : null,
+      "releases" : 0,
+      "available" : 0E-10
+    },
+    {
+      "activeWorkflows" : 0,
+      "workflow" : "waiting",
+      "rawError" : null,
+      "outcome" : "committed",
+      "id" : "destination-confirms",
+      "destination" : 0E-10,
+      "trade" : "ready",
+      "locked" : 7.1250000000,
+      "visibleTo" : [
+        "Alice",
+        "Seller",
+        "Source",
+        "Destination"
+      ],
+      "reason" : null,
+      "releases" : 0,
+      "available" : 0E-10
+    },
+    {
+      "activeWorkflows" : 1,
+      "workflow" : "complete",
+      "rawError" : null,
+      "outcome" : "committed",
+      "id" : "settle",
+      "destination" : 7.1250000000,
+      "trade" : "settled",
+      "locked" : 0E-10,
+      "visibleTo" : [
+        "Alice",
+        "Seller",
+        "Source",
+        "Destination"
+      ],
+      "reason" : null,
+      "releases" : 0,
+      "available" : 0E-10
+    }
+  ],
+  "position" : "00e11a6b3f9adeee29e78f42c278237a0d97f2d2614e13bf914cc887c8cd60ae3eca12122091635402856a5f756665ef643966c51f8cfa1fc89cdb1b6f630c69cd7dfdda5b",
+  "settler_events" : [
+    {
+      "transaction" : {
+        "updateId" : "12205c27c430d9bd1c9a50ab8c4d7767c994c29aa792a5108a05be57176fa027fe4f",
+        "commandId" : "0c42d31a-953b-4b6f-99c2-192c4dc079f9",
+        "effectiveAt" : "2026-09-11T05:14:25.738934Z",
+        "events" : [
+          {
+            "created" : {
+              "offset" : "211",
+              "contractId" : "005b097a7d44d605490ea8be721831c9d13546452f83d04924137e7d650987bfb3ca12122045c1e3eeec8a4834f6732bf2507cb7078dbdfa38ce476837d62661888d939cef",
+              "templateId" : {
+                "packageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7",
+                "moduleName" : "SourceCustody",
+                "entityName" : "Allocation"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7",
+                  "moduleName" : "SourceCustody",
+                  "entityName" : "Allocation"
+                },
+                "fields" : [
+                  {
+                    "label" : "terms",
+                    "value" : {
+                      "record" : {
+                        "recordId" : {
+                          "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                          "moduleName" : "Harmonia.Transfer",
+                          "entityName" : "Terms"
+                        },
+                        "fields" : [
+                          {
+                            "label" : "buyer",
+                            "value" : {
+                              "party" : "transfer-source-settler-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "seller",
+                            "value" : {
+                              "party" : "transfer-source-settler-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+                            }
+                          },
+                          {
+                            "label" : "source",
+                            "value" : {
+                              "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "destination",
+                            "value" : {
+                              "party" : "transfer-source-settler-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+                            }
+                          },
+                          {
+                            "label" : "settler",
+                            "value" : {
+                              "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "reference",
+                            "value" : {
+                              "text" : "transfer-source-settler"
+                            }
+                          },
+                          {
+                            "label" : "asset",
+                            "value" : {
+                              "text" : "TEST"
+                            }
+                          },
+                          {
+                            "label" : "quantity",
+                            "value" : {
+                              "numeric" : "7.1250000000"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "signatories" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "observers" : [
+                "transfer-source-settler-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+              ],
+              "createdAt" : "2026-09-11T05:14:25.738934Z",
+              "packageName" : "harmonia-source-custody",
+              "acsDelta" : true,
+              "representativePackageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7"
+            }
+          }
+        ],
+        "offset" : "211",
+        "synchronizerId" : "harmonia::12201ba007ec1b2e9e63e472cbffb90d397a5e149754807f0a6e1b7e732f0b943a34",
+        "traceContext" : {
+          "traceparent" : "00-6a4a81ed66913d10ca466854d30a3b21-7ffa1c51b5e427dd-01"
+        },
+        "recordTime" : "2026-09-11T05:14:25.749485Z"
+      }
+    },
+    {
+      "transaction" : {
+        "updateId" : "1220a50874deda3b7d8707c989ca4183e07a08adff813ebd228f225fe9fd84396d31",
+        "effectiveAt" : "2026-09-11T05:14:26.213816Z",
+        "events" : [
+          {
+            "exercised" : {
+              "offset" : "214",
+              "contractId" : "005b097a7d44d605490ea8be721831c9d13546452f83d04924137e7d650987bfb3ca12122045c1e3eeec8a4834f6732bf2507cb7078dbdfa38ce476837d62661888d939cef",
+              "templateId" : {
+                "packageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7",
+                "moduleName" : "SourceCustody",
+                "entityName" : "Allocation"
+              },
+              "choice" : "AcceptAllocation",
+              "choiceArgument" : {
+                "record" : {
+                  "recordId" : {
+                    "packageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7",
+                    "moduleName" : "SourceCustody",
+                    "entityName" : "AcceptAllocation"
+                  }
+                }
+              },
+              "actingParties" : [
+                "transfer-source-settler-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+              ],
+              "consuming" : true,
+              "witnessParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "lastDescendantNodeId" : 1,
+              "exerciseResult" : {
+                "contractId" : "0075610cb1e955a9805449f3e23907bb55e04d455fd39bbafe7fac51e39d919d4aca12122023e113b43a081963a9af0f381cea932da32965c20a95b1eba53348a20d5f813c"
+              },
+              "packageName" : "harmonia-source-custody",
+              "acsDelta" : true
+            }
+          },
+          {
+            "created" : {
+              "offset" : "214",
+              "nodeId" : 1,
+              "contractId" : "0075610cb1e955a9805449f3e23907bb55e04d455fd39bbafe7fac51e39d919d4aca12122023e113b43a081963a9af0f381cea932da32965c20a95b1eba53348a20d5f813c",
+              "templateId" : {
+                "packageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7",
+                "moduleName" : "SourceCustody",
+                "entityName" : "Holding"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7",
+                  "moduleName" : "SourceCustody",
+                  "entityName" : "Holding"
+                },
+                "fields" : [
+                  {
+                    "label" : "terms",
+                    "value" : {
+                      "record" : {
+                        "recordId" : {
+                          "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                          "moduleName" : "Harmonia.Transfer",
+                          "entityName" : "Terms"
+                        },
+                        "fields" : [
+                          {
+                            "label" : "buyer",
+                            "value" : {
+                              "party" : "transfer-source-settler-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "seller",
+                            "value" : {
+                              "party" : "transfer-source-settler-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+                            }
+                          },
+                          {
+                            "label" : "source",
+                            "value" : {
+                              "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "destination",
+                            "value" : {
+                              "party" : "transfer-source-settler-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+                            }
+                          },
+                          {
+                            "label" : "settler",
+                            "value" : {
+                              "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "reference",
+                            "value" : {
+                              "text" : "transfer-source-settler"
+                            }
+                          },
+                          {
+                            "label" : "asset",
+                            "value" : {
+                              "text" : "TEST"
+                            }
+                          },
+                          {
+                            "label" : "quantity",
+                            "value" : {
+                              "numeric" : "7.1250000000"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "signatories" : [
+                "transfer-source-settler-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c",
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "observers" : [
+                "transfer-source-settler-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6",
+                "transfer-source-settler-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+              ],
+              "createdAt" : "2026-09-11T05:14:26.213816Z",
+              "packageName" : "harmonia-source-custody",
+              "acsDelta" : true,
+              "representativePackageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7"
+            }
+          }
+        ],
+        "offset" : "214",
+        "synchronizerId" : "harmonia::12201ba007ec1b2e9e63e472cbffb90d397a5e149754807f0a6e1b7e732f0b943a34",
+        "traceContext" : {
+          "traceparent" : "00-7351c7b0b57a2abed534ccf5f5d5ad98-b1ccf98e1136c7cc-01"
+        },
+        "recordTime" : "2026-09-11T05:14:26.225881Z"
+      }
+    },
+    {
+      "transaction" : {
+        "updateId" : "1220e41bd49928bdeb8bfe1f624d359cdc825148dc5829062c8504c029e544f820e6",
+        "effectiveAt" : "2026-09-11T05:14:26.981553Z",
+        "events" : [
+          {
+            "created" : {
+              "offset" : "217",
+              "contractId" : "00a2563f76d4178aef063febee7fcd8864f727cdc9a6ee42523b8d6be6de3c5fadca121220babe0573c2408e801ace646df0aa7d72e1adad3361cacb30630b3222dc17a934",
+              "templateId" : {
+                "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                "moduleName" : "AtomicTransfer",
+                "entityName" : "Trade"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                  "moduleName" : "AtomicTransfer",
+                  "entityName" : "Trade"
+                },
+                "fields" : [
+                  {
+                    "label" : "terms",
+                    "value" : {
+                      "record" : {
+                        "recordId" : {
+                          "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                          "moduleName" : "Harmonia.Transfer",
+                          "entityName" : "Terms"
+                        },
+                        "fields" : [
+                          {
+                            "label" : "buyer",
+                            "value" : {
+                              "party" : "transfer-source-settler-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "seller",
+                            "value" : {
+                              "party" : "transfer-source-settler-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+                            }
+                          },
+                          {
+                            "label" : "source",
+                            "value" : {
+                              "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "destination",
+                            "value" : {
+                              "party" : "transfer-source-settler-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+                            }
+                          },
+                          {
+                            "label" : "settler",
+                            "value" : {
+                              "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "reference",
+                            "value" : {
+                              "text" : "transfer-source-settler"
+                            }
+                          },
+                          {
+                            "label" : "asset",
+                            "value" : {
+                              "text" : "TEST"
+                            }
+                          },
+                          {
+                            "label" : "quantity",
+                            "value" : {
+                              "numeric" : "7.1250000000"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "agreed",
+                    "value" : {
+                      "bool" : false
+                    }
+                  },
+                  {
+                    "label" : "sourceConfirmed",
+                    "value" : {
+                      "bool" : false
+                    }
+                  },
+                  {
+                    "label" : "destinationConfirmed",
+                    "value" : {
+                      "bool" : false
+                    }
+                  },
+                  {
+                    "label" : "locked",
+                    "value" : {
+                      "optional" : {
+                        
+                      }
+                    }
+                  },
+                  {
+                    "label" : "permit",
+                    "value" : {
+                      "optional" : {
+                        
+                      }
+                    }
+                  },
+                  {
+                    "label" : "settled",
+                    "value" : {
+                      "bool" : false
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "signatories" : [
+                "transfer-source-settler-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+              ],
+              "observers" : [
+                "transfer-source-settler-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042",
+                "transfer-source-settler-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c",
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "createdAt" : "2026-09-11T05:14:26.981553Z",
+              "packageName" : "harmonia-transfer",
+              "acsDelta" : true,
+              "representativePackageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e"
+            }
+          }
+        ],
+        "offset" : "217",
+        "synchronizerId" : "harmonia::12201ba007ec1b2e9e63e472cbffb90d397a5e149754807f0a6e1b7e732f0b943a34",
+        "traceContext" : {
+          "traceparent" : "00-9d33f29ef352ac39f24724d553e90da8-8f752247ba432b94-01"
+        },
+        "recordTime" : "2026-09-11T05:14:26.990658Z"
+      }
+    },
+    {
+      "transaction" : {
+        "updateId" : "12206faa9231b1bcdb3491398a5806bb0adfad23bd3fab4284e4acab04df0b31cc6f",
+        "commandId" : "de4dbe1a-73fe-4ef6-a7b6-a0b79b3a77b8",
+        "effectiveAt" : "2026-09-11T05:14:27.350502Z",
+        "events" : [
+          {
+            "created" : {
+              "offset" : "219",
+              "contractId" : "00f4a599d612f78bdb1f776cc18c7db42bc186d6a0f84849328a9ec17ddc2da3c0ca12122048f3c70e9ec7b9a13884835bae25942529e4884203e6cfe60336283eceaa1f41",
+              "templateId" : {
+                "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                "moduleName" : "Harmonia.Process.Engine",
+                "entityName" : "PublishedDefinition"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                  "moduleName" : "Harmonia.Process.Engine",
+                  "entityName" : "PublishedDefinition"
+                },
+                "fields" : [
+                  {
+                    "label" : "publisher",
+                    "value" : {
+                      "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                    }
+                  },
+                  {
+                    "label" : "readers",
+                    "value" : {
+                      "list" : {
+                        "elements" : [
+                          {
+                            "party" : "transfer-source-settler-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                          },
+                          {
+                            "party" : "transfer-source-settler-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+                          },
+                          {
+                            "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                          },
+                          {
+                            "party" : "transfer-source-settler-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "definition",
+                    "value" : {
+                      "record" : {
+                        "recordId" : {
+                          "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                          "moduleName" : "Harmonia.Process.Model",
+                          "entityName" : "Definition"
+                        },
+                        "fields" : [
+                          {
+                            "label" : "name",
+                            "value" : {
+                              "text" : "atomic-transfer"
+                            }
+                          },
+                          {
+                            "label" : "version",
+                            "value" : {
+                              "int64" : "1"
+                            }
+                          },
+                          {
+                            "label" : "steps",
+                            "value" : {
+                              "list" : {
+                                "elements" : [
+                                  {
+                                    "record" : {
+                                      "recordId" : {
+                                        "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                                        "moduleName" : "Harmonia.Process.Model",
+                                        "entityName" : "StepSpec"
+                                      },
+                                      "fields" : [
+                                        {
+                                          "label" : "id",
+                                          "value" : {
+                                            "text" : "settlement"
+                                          }
+                                        },
+                                        {
+                                          "label" : "role",
+                                          "value" : {
+                                            "text" : "settler"
+                                          }
+                                        },
+                                        {
+                                          "label" : "prerequisites",
+                                          "value" : {
+                                            "list" : {
+                                              
+                                            }
+                                          }
+                                        },
+                                        {
+                                          "label" : "kind",
+                                          "value" : {
+                                            "variant" : {
+                                              "variantId" : {
+                                                "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                                                "moduleName" : "Harmonia.Process.Model",
+                                                "entityName" : "StepKind"
+                                              },
+                                              "constructor" : "ActionStep",
+                                              "value" : {
+                                                "unit" : {
+                                                  
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "signatories" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "observers" : [
+                "transfer-source-settler-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6",
+                "transfer-source-settler-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042",
+                "transfer-source-settler-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+              ],
+              "createdAt" : "2026-09-11T05:14:27.350502Z",
+              "packageName" : "harmonia-core",
+              "acsDelta" : true,
+              "representativePackageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451"
+            }
+          }
+        ],
+        "offset" : "219",
+        "synchronizerId" : "harmonia::12201ba007ec1b2e9e63e472cbffb90d397a5e149754807f0a6e1b7e732f0b943a34",
+        "traceContext" : {
+          "traceparent" : "00-96d12d66e279d6b743c0030bd912b953-ef39e187cadd936b-01"
+        },
+        "recordTime" : "2026-09-11T05:14:27.362995Z"
+      }
+    },
+    {
+      "transaction" : {
+        "updateId" : "1220cdbf82d54b83b6b6beb4ad4d876fdb60292e0d709fdf48b9fede78d26bc2c4f3",
+        "effectiveAt" : "2026-09-11T05:14:27.725844Z",
+        "events" : [
+          {
+            "exercised" : {
+              "offset" : "222",
+              "contractId" : "00a2563f76d4178aef063febee7fcd8864f727cdc9a6ee42523b8d6be6de3c5fadca121220babe0573c2408e801ace646df0aa7d72e1adad3361cacb30630b3222dc17a934",
+              "templateId" : {
+                "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                "moduleName" : "AtomicTransfer",
+                "entityName" : "Trade"
+              },
+              "choice" : "Agree",
+              "choiceArgument" : {
+                "record" : {
+                  "recordId" : {
+                    "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                    "moduleName" : "AtomicTransfer",
+                    "entityName" : "Agree"
+                  }
+                }
+              },
+              "actingParties" : [
+                "transfer-source-settler-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+              ],
+              "consuming" : true,
+              "witnessParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "lastDescendantNodeId" : 1,
+              "exerciseResult" : {
+                "contractId" : "00fd917225140775cb020c887a3253f7558b6200747d2e158c00528a0429ef0906ca121220eae7a2fc4f9115182503da00455e74a1e965ab74fd87a97a7733b4f79b1074f2"
+              },
+              "packageName" : "harmonia-transfer",
+              "acsDelta" : true
+            }
+          },
+          {
+            "created" : {
+              "offset" : "222",
+              "nodeId" : 1,
+              "contractId" : "00fd917225140775cb020c887a3253f7558b6200747d2e158c00528a0429ef0906ca121220eae7a2fc4f9115182503da00455e74a1e965ab74fd87a97a7733b4f79b1074f2",
+              "templateId" : {
+                "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                "moduleName" : "AtomicTransfer",
+                "entityName" : "Trade"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                  "moduleName" : "AtomicTransfer",
+                  "entityName" : "Trade"
+                },
+                "fields" : [
+                  {
+                    "label" : "terms",
+                    "value" : {
+                      "record" : {
+                        "recordId" : {
+                          "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                          "moduleName" : "Harmonia.Transfer",
+                          "entityName" : "Terms"
+                        },
+                        "fields" : [
+                          {
+                            "label" : "buyer",
+                            "value" : {
+                              "party" : "transfer-source-settler-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "seller",
+                            "value" : {
+                              "party" : "transfer-source-settler-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+                            }
+                          },
+                          {
+                            "label" : "source",
+                            "value" : {
+                              "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "destination",
+                            "value" : {
+                              "party" : "transfer-source-settler-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+                            }
+                          },
+                          {
+                            "label" : "settler",
+                            "value" : {
+                              "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "reference",
+                            "value" : {
+                              "text" : "transfer-source-settler"
+                            }
+                          },
+                          {
+                            "label" : "asset",
+                            "value" : {
+                              "text" : "TEST"
+                            }
+                          },
+                          {
+                            "label" : "quantity",
+                            "value" : {
+                              "numeric" : "7.1250000000"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "agreed",
+                    "value" : {
+                      "bool" : true
+                    }
+                  },
+                  {
+                    "label" : "sourceConfirmed",
+                    "value" : {
+                      "bool" : false
+                    }
+                  },
+                  {
+                    "label" : "destinationConfirmed",
+                    "value" : {
+                      "bool" : false
+                    }
+                  },
+                  {
+                    "label" : "locked",
+                    "value" : {
+                      "optional" : {
+                        
+                      }
+                    }
+                  },
+                  {
+                    "label" : "permit",
+                    "value" : {
+                      "optional" : {
+                        
+                      }
+                    }
+                  },
+                  {
+                    "label" : "settled",
+                    "value" : {
+                      "bool" : false
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "signatories" : [
+                "transfer-source-settler-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6",
+                "transfer-source-settler-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+              ],
+              "observers" : [
+                "transfer-source-settler-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042",
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "createdAt" : "2026-09-11T05:14:27.725844Z",
+              "packageName" : "harmonia-transfer",
+              "acsDelta" : true,
+              "representativePackageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e"
+            }
+          }
+        ],
+        "offset" : "222",
+        "synchronizerId" : "harmonia::12201ba007ec1b2e9e63e472cbffb90d397a5e149754807f0a6e1b7e732f0b943a34",
+        "traceContext" : {
+          "traceparent" : "00-fed8174caef745a8ac4dd748229c3ef0-16aec41a3f8d6991-01"
+        },
+        "recordTime" : "2026-09-11T05:14:27.735411Z"
+      }
+    },
+    {
+      "transaction" : {
+        "updateId" : "1220c61f59b204ebe7087a25e58a9a8648cd3fec1d4e167adf79f95232ec2085eace",
+        "effectiveAt" : "2026-09-11T05:14:28.135251Z",
+        "events" : [
+          {
+            "exercised" : {
+              "offset" : "224",
+              "contractId" : "0075610cb1e955a9805449f3e23907bb55e04d455fd39bbafe7fac51e39d919d4aca12122023e113b43a081963a9af0f381cea932da32965c20a95b1eba53348a20d5f813c",
+              "templateId" : {
+                "packageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7",
+                "moduleName" : "SourceCustody",
+                "entityName" : "Holding"
+              },
+              "choice" : "Lock",
+              "choiceArgument" : {
+                "record" : {
+                  "recordId" : {
+                    "packageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7",
+                    "moduleName" : "SourceCustody",
+                    "entityName" : "Lock"
+                  }
+                }
+              },
+              "actingParties" : [
+                "transfer-source-settler-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+              ],
+              "consuming" : true,
+              "witnessParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "lastDescendantNodeId" : 1,
+              "exerciseResult" : {
+                "contractId" : "00e11a6b3f9adeee29e78f42c278237a0d97f2d2614e13bf914cc887c8cd60ae3eca12122091635402856a5f756665ef643966c51f8cfa1fc89cdb1b6f630c69cd7dfdda5b"
+              },
+              "packageName" : "harmonia-source-custody",
+              "acsDelta" : true
+            }
+          },
+          {
+            "created" : {
+              "offset" : "224",
+              "nodeId" : 1,
+              "contractId" : "00e11a6b3f9adeee29e78f42c278237a0d97f2d2614e13bf914cc887c8cd60ae3eca12122091635402856a5f756665ef643966c51f8cfa1fc89cdb1b6f630c69cd7dfdda5b",
+              "templateId" : {
+                "packageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7",
+                "moduleName" : "SourceCustody",
+                "entityName" : "LockedPosition"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7",
+                  "moduleName" : "SourceCustody",
+                  "entityName" : "LockedPosition"
+                },
+                "fields" : [
+                  {
+                    "label" : "terms",
+                    "value" : {
+                      "record" : {
+                        "recordId" : {
+                          "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                          "moduleName" : "Harmonia.Transfer",
+                          "entityName" : "Terms"
+                        },
+                        "fields" : [
+                          {
+                            "label" : "buyer",
+                            "value" : {
+                              "party" : "transfer-source-settler-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "seller",
+                            "value" : {
+                              "party" : "transfer-source-settler-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+                            }
+                          },
+                          {
+                            "label" : "source",
+                            "value" : {
+                              "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "destination",
+                            "value" : {
+                              "party" : "transfer-source-settler-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+                            }
+                          },
+                          {
+                            "label" : "settler",
+                            "value" : {
+                              "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "reference",
+                            "value" : {
+                              "text" : "transfer-source-settler"
+                            }
+                          },
+                          {
+                            "label" : "asset",
+                            "value" : {
+                              "text" : "TEST"
+                            }
+                          },
+                          {
+                            "label" : "quantity",
+                            "value" : {
+                              "numeric" : "7.1250000000"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "signatories" : [
+                "transfer-source-settler-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c",
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "observers" : [
+                "transfer-source-settler-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6",
+                "transfer-source-settler-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+              ],
+              "createdAt" : "2026-09-11T05:14:28.135251Z",
+              "packageName" : "harmonia-source-custody",
+              "acsDelta" : true,
+              "representativePackageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7"
+            }
+          }
+        ],
+        "offset" : "224",
+        "synchronizerId" : "harmonia::12201ba007ec1b2e9e63e472cbffb90d397a5e149754807f0a6e1b7e732f0b943a34",
+        "traceContext" : {
+          "traceparent" : "00-9ac9f94147d38b1d6ad760895e986396-66250b277ed028b4-01"
+        },
+        "recordTime" : "2026-09-11T05:14:28.144324Z"
+      }
+    },
+    {
+      "transaction" : {
+        "updateId" : "122060d9d932749a2450527b125545123ca4dff6ad1f9b26eb713016ce3906b1cdd7",
+        "commandId" : "4928fbf8-488e-4532-af58-fc14df0f00b0",
+        "effectiveAt" : "2026-09-11T05:14:28.612234Z",
+        "events" : [
+          {
+            "exercised" : {
+              "offset" : "227",
+              "contractId" : "00fd917225140775cb020c887a3253f7558b6200747d2e158c00528a0429ef0906ca121220eae7a2fc4f9115182503da00455e74a1e965ab74fd87a97a7733b4f79b1074f2",
+              "templateId" : {
+                "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                "moduleName" : "AtomicTransfer",
+                "entityName" : "Trade"
+              },
+              "choice" : "ConfirmSource",
+              "choiceArgument" : {
+                "record" : {
+                  "recordId" : {
+                    "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                    "moduleName" : "AtomicTransfer",
+                    "entityName" : "ConfirmSource"
+                  },
+                  "fields" : [
+                    {
+                      "label" : "position",
+                      "value" : {
+                        "optional" : {
+                          "value" : {
+                            "contractId" : "00e11a6b3f9adeee29e78f42c278237a0d97f2d2614e13bf914cc887c8cd60ae3eca12122091635402856a5f756665ef643966c51f8cfa1fc89cdb1b6f630c69cd7dfdda5b"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "actingParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "consuming" : true,
+              "witnessParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "lastDescendantNodeId" : 2,
+              "exerciseResult" : {
+                "contractId" : "00acb98044d910c575aac080ad2de08f947b43d4de59efb5adca4393cc04848ea7ca12122090a66cdf9f9891cacc668521c97b0621f8c412bf3247caabe291917a7300e0c7"
+              },
+              "packageName" : "harmonia-transfer",
+              "acsDelta" : true
+            }
+          },
+          {
+            "created" : {
+              "offset" : "227",
+              "nodeId" : 2,
+              "contractId" : "00acb98044d910c575aac080ad2de08f947b43d4de59efb5adca4393cc04848ea7ca12122090a66cdf9f9891cacc668521c97b0621f8c412bf3247caabe291917a7300e0c7",
+              "templateId" : {
+                "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                "moduleName" : "AtomicTransfer",
+                "entityName" : "Trade"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                  "moduleName" : "AtomicTransfer",
+                  "entityName" : "Trade"
+                },
+                "fields" : [
+                  {
+                    "label" : "terms",
+                    "value" : {
+                      "record" : {
+                        "recordId" : {
+                          "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                          "moduleName" : "Harmonia.Transfer",
+                          "entityName" : "Terms"
+                        },
+                        "fields" : [
+                          {
+                            "label" : "buyer",
+                            "value" : {
+                              "party" : "transfer-source-settler-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "seller",
+                            "value" : {
+                              "party" : "transfer-source-settler-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+                            }
+                          },
+                          {
+                            "label" : "source",
+                            "value" : {
+                              "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "destination",
+                            "value" : {
+                              "party" : "transfer-source-settler-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+                            }
+                          },
+                          {
+                            "label" : "settler",
+                            "value" : {
+                              "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "reference",
+                            "value" : {
+                              "text" : "transfer-source-settler"
+                            }
+                          },
+                          {
+                            "label" : "asset",
+                            "value" : {
+                              "text" : "TEST"
+                            }
+                          },
+                          {
+                            "label" : "quantity",
+                            "value" : {
+                              "numeric" : "7.1250000000"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "agreed",
+                    "value" : {
+                      "bool" : true
+                    }
+                  },
+                  {
+                    "label" : "sourceConfirmed",
+                    "value" : {
+                      "bool" : true
+                    }
+                  },
+                  {
+                    "label" : "destinationConfirmed",
+                    "value" : {
+                      "bool" : false
+                    }
+                  },
+                  {
+                    "label" : "locked",
+                    "value" : {
+                      "optional" : {
+                        "value" : {
+                          "contractId" : "00e11a6b3f9adeee29e78f42c278237a0d97f2d2614e13bf914cc887c8cd60ae3eca12122091635402856a5f756665ef643966c51f8cfa1fc89cdb1b6f630c69cd7dfdda5b"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "label" : "permit",
+                    "value" : {
+                      "optional" : {
+                        
+                      }
+                    }
+                  },
+                  {
+                    "label" : "settled",
+                    "value" : {
+                      "bool" : false
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "signatories" : [
+                "transfer-source-settler-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6",
+                "transfer-source-settler-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c",
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "observers" : [
+                "transfer-source-settler-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+              ],
+              "createdAt" : "2026-09-11T05:14:28.612234Z",
+              "packageName" : "harmonia-transfer",
+              "acsDelta" : true,
+              "representativePackageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e"
+            }
+          }
+        ],
+        "offset" : "227",
+        "synchronizerId" : "harmonia::12201ba007ec1b2e9e63e472cbffb90d397a5e149754807f0a6e1b7e732f0b943a34",
+        "traceContext" : {
+          "traceparent" : "00-966646d3912e5268cc1423857565518a-ea06d752510f2e09-01"
+        },
+        "recordTime" : "2026-09-11T05:14:28.621264Z"
+      }
+    },
+    {
+      "transaction" : {
+        "updateId" : "12206ffe1af9bbd608af0a07b0a6c809e28861f69af44833058237d5beec19055c9a",
+        "effectiveAt" : "2026-09-11T05:14:29.095267Z",
+        "events" : [
+          {
+            "created" : {
+              "offset" : "230",
+              "contractId" : "0061ca3c05e0650c7f6e055530093732dd021b4148464116806a88ea435fd60bfaca121220e00c12917e966b506778dcc1e10cd495704c13d346533a80d0c1f0fdd7faf535",
+              "templateId" : {
+                "packageId" : "a68ebce0bfcab3962dcef8b7ebaf2977a676b1b896e0aab635a83e73bfd94c33",
+                "moduleName" : "DestinationCustody",
+                "entityName" : "ReceivingPermit"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "a68ebce0bfcab3962dcef8b7ebaf2977a676b1b896e0aab635a83e73bfd94c33",
+                  "moduleName" : "DestinationCustody",
+                  "entityName" : "ReceivingPermit"
+                },
+                "fields" : [
+                  {
+                    "label" : "terms",
+                    "value" : {
+                      "record" : {
+                        "recordId" : {
+                          "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                          "moduleName" : "Harmonia.Transfer",
+                          "entityName" : "Terms"
+                        },
+                        "fields" : [
+                          {
+                            "label" : "buyer",
+                            "value" : {
+                              "party" : "transfer-source-settler-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "seller",
+                            "value" : {
+                              "party" : "transfer-source-settler-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+                            }
+                          },
+                          {
+                            "label" : "source",
+                            "value" : {
+                              "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "destination",
+                            "value" : {
+                              "party" : "transfer-source-settler-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+                            }
+                          },
+                          {
+                            "label" : "settler",
+                            "value" : {
+                              "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "reference",
+                            "value" : {
+                              "text" : "transfer-source-settler"
+                            }
+                          },
+                          {
+                            "label" : "asset",
+                            "value" : {
+                              "text" : "TEST"
+                            }
+                          },
+                          {
+                            "label" : "quantity",
+                            "value" : {
+                              "numeric" : "7.1250000000"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "receipts",
+                    "value" : {
+                      "text" : "accept"
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "signatories" : [
+                "transfer-source-settler-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6",
+                "transfer-source-settler-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+              ],
+              "observers" : [
+                "transfer-source-settler-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c",
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "createdAt" : "2026-09-11T05:14:29.095267Z",
+              "packageName" : "harmonia-destination-custody",
+              "acsDelta" : true,
+              "representativePackageId" : "a68ebce0bfcab3962dcef8b7ebaf2977a676b1b896e0aab635a83e73bfd94c33"
+            }
+          }
+        ],
+        "offset" : "230",
+        "synchronizerId" : "harmonia::12201ba007ec1b2e9e63e472cbffb90d397a5e149754807f0a6e1b7e732f0b943a34",
+        "traceContext" : {
+          "traceparent" : "00-7f0d4afd679062b7d8d0ceebecb128bf-611c6fa224e8be86-01"
+        },
+        "recordTime" : "2026-09-11T05:14:29.106146Z"
+      }
+    },
+    {
+      "transaction" : {
+        "updateId" : "1220a2570a9ba7ba3bb7366740084c2639abe8f9b7bfd10b344eb78f33476be23b73",
+        "effectiveAt" : "2026-09-11T05:14:29.578232Z",
+        "events" : [
+          {
+            "exercised" : {
+              "offset" : "232",
+              "contractId" : "00acb98044d910c575aac080ad2de08f947b43d4de59efb5adca4393cc04848ea7ca12122090a66cdf9f9891cacc668521c97b0621f8c412bf3247caabe291917a7300e0c7",
+              "templateId" : {
+                "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                "moduleName" : "AtomicTransfer",
+                "entityName" : "Trade"
+              },
+              "choice" : "ConfirmDestination",
+              "choiceArgument" : {
+                "record" : {
+                  "recordId" : {
+                    "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                    "moduleName" : "AtomicTransfer",
+                    "entityName" : "ConfirmDestination"
+                  },
+                  "fields" : [
+                    {
+                      "label" : "readiness",
+                      "value" : {
+                        "optional" : {
+                          "value" : {
+                            "contractId" : "0061ca3c05e0650c7f6e055530093732dd021b4148464116806a88ea435fd60bfaca121220e00c12917e966b506778dcc1e10cd495704c13d346533a80d0c1f0fdd7faf535"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "actingParties" : [
+                "transfer-source-settler-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+              ],
+              "consuming" : true,
+              "witnessParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "lastDescendantNodeId" : 2,
+              "exerciseResult" : {
+                "contractId" : "00951bf20d8004213b18b0851a2d3721f01e423d252c13daccb734896f81604532ca1212206c8fd29ab21d58e656e1f88b2efe6af53dd1540c46f00e1b910faa29c2b18bdf"
+              },
+              "packageName" : "harmonia-transfer",
+              "acsDelta" : true
+            }
+          },
+          {
+            "created" : {
+              "offset" : "232",
+              "nodeId" : 2,
+              "contractId" : "00951bf20d8004213b18b0851a2d3721f01e423d252c13daccb734896f81604532ca1212206c8fd29ab21d58e656e1f88b2efe6af53dd1540c46f00e1b910faa29c2b18bdf",
+              "templateId" : {
+                "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                "moduleName" : "AtomicTransfer",
+                "entityName" : "Trade"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                  "moduleName" : "AtomicTransfer",
+                  "entityName" : "Trade"
+                },
+                "fields" : [
+                  {
+                    "label" : "terms",
+                    "value" : {
+                      "record" : {
+                        "recordId" : {
+                          "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                          "moduleName" : "Harmonia.Transfer",
+                          "entityName" : "Terms"
+                        },
+                        "fields" : [
+                          {
+                            "label" : "buyer",
+                            "value" : {
+                              "party" : "transfer-source-settler-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "seller",
+                            "value" : {
+                              "party" : "transfer-source-settler-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+                            }
+                          },
+                          {
+                            "label" : "source",
+                            "value" : {
+                              "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "destination",
+                            "value" : {
+                              "party" : "transfer-source-settler-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+                            }
+                          },
+                          {
+                            "label" : "settler",
+                            "value" : {
+                              "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "reference",
+                            "value" : {
+                              "text" : "transfer-source-settler"
+                            }
+                          },
+                          {
+                            "label" : "asset",
+                            "value" : {
+                              "text" : "TEST"
+                            }
+                          },
+                          {
+                            "label" : "quantity",
+                            "value" : {
+                              "numeric" : "7.1250000000"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "agreed",
+                    "value" : {
+                      "bool" : true
+                    }
+                  },
+                  {
+                    "label" : "sourceConfirmed",
+                    "value" : {
+                      "bool" : true
+                    }
+                  },
+                  {
+                    "label" : "destinationConfirmed",
+                    "value" : {
+                      "bool" : true
+                    }
+                  },
+                  {
+                    "label" : "locked",
+                    "value" : {
+                      "optional" : {
+                        "value" : {
+                          "contractId" : "00e11a6b3f9adeee29e78f42c278237a0d97f2d2614e13bf914cc887c8cd60ae3eca12122091635402856a5f756665ef643966c51f8cfa1fc89cdb1b6f630c69cd7dfdda5b"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "label" : "permit",
+                    "value" : {
+                      "optional" : {
+                        "value" : {
+                          "contractId" : "0061ca3c05e0650c7f6e055530093732dd021b4148464116806a88ea435fd60bfaca121220e00c12917e966b506778dcc1e10cd495704c13d346533a80d0c1f0fdd7faf535"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "label" : "settled",
+                    "value" : {
+                      "bool" : false
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "signatories" : [
+                "transfer-source-settler-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6",
+                "transfer-source-settler-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042",
+                "transfer-source-settler-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c",
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "createdAt" : "2026-09-11T05:14:29.578232Z",
+              "packageName" : "harmonia-transfer",
+              "acsDelta" : true,
+              "representativePackageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e"
+            }
+          }
+        ],
+        "offset" : "232",
+        "synchronizerId" : "harmonia::12201ba007ec1b2e9e63e472cbffb90d397a5e149754807f0a6e1b7e732f0b943a34",
+        "traceContext" : {
+          "traceparent" : "00-5e3b0ad99115ede407d2d24dea1a3371-a64dd29d9142eb08-01"
+        },
+        "recordTime" : "2026-09-11T05:14:29.588336Z"
+      }
+    },
+    {
+      "transaction" : {
+        "updateId" : "12200fe172769fcbb917e5a1d585dbc3dae18b3080b88f0d8913788f9df3c71c4cc2",
+        "commandId" : "70409390-84f8-4123-bd4a-975843394753",
+        "effectiveAt" : "2026-09-11T05:14:30.067170Z",
+        "events" : [
+          {
+            "exercised" : {
+              "offset" : "235",
+              "contractId" : "00f4a599d612f78bdb1f776cc18c7db42bc186d6a0f84849328a9ec17ddc2da3c0ca12122048f3c70e9ec7b9a13884835bae25942529e4884203e6cfe60336283eceaa1f41",
+              "templateId" : {
+                "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                "moduleName" : "Harmonia.Process.Engine",
+                "entityName" : "PublishedDefinition"
+              },
+              "choice" : "StartAndAdvance",
+              "choiceArgument" : {
+                "record" : {
+                  "recordId" : {
+                    "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                    "moduleName" : "Harmonia.Process.Engine",
+                    "entityName" : "StartAndAdvance"
+                  },
+                  "fields" : [
+                    {
+                      "label" : "owner",
+                      "value" : {
+                        "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                      }
+                    },
+                    {
+                      "label" : "reference",
+                      "value" : {
+                        "text" : "transfer-source-settler"
+                      }
+                    },
+                    {
+                      "label" : "subject",
+                      "value" : {
+                        "text" : "transfer-source-settler"
+                      }
+                    },
+                    {
+                      "label" : "roles",
+                      "value" : {
+                        "list" : {
+                          "elements" : [
+                            {
+                              "record" : {
+                                "recordId" : {
+                                  "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                                  "moduleName" : "Harmonia.Process.Model",
+                                  "entityName" : "Role"
+                                },
+                                "fields" : [
+                                  {
+                                    "label" : "name",
+                                    "value" : {
+                                      "text" : "settler"
+                                    }
+                                  },
+                                  {
+                                    "label" : "party",
+                                    "value" : {
+                                      "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "label" : "bindings",
+                      "value" : {
+                        "list" : {
+                          "elements" : [
+                            {
+                              "record" : {
+                                "recordId" : {
+                                  "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                                  "moduleName" : "Harmonia.Process.Model",
+                                  "entityName" : "ActionBinding"
+                                },
+                                "fields" : [
+                                  {
+                                    "label" : "step",
+                                    "value" : {
+                                      "text" : "settlement"
+                                    }
+                                  },
+                                  {
+                                    "label" : "action",
+                                    "value" : {
+                                      "contractId" : "00951bf20d8004213b18b0851a2d3721f01e423d252c13daccb734896f81604532ca1212206c8fd29ab21d58e656e1f88b2efe6af53dd1540c46f00e1b910faa29c2b18bdf"
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "label" : "step",
+                      "value" : {
+                        "text" : "settlement"
+                      }
+                    },
+                    {
+                      "label" : "request",
+                      "value" : {
+                        "text" : "settle"
+                      }
+                    }
+                  ]
+                }
+              },
+              "actingParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "witnessParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "lastDescendantNodeId" : 17,
+              "exerciseResult" : {
+                "contractId" : "008d2a2c748781c09ab6a73bc950ef41a463e3b1f8ab5ac92bb6d747e4bec76236ca12122091b8b1a647958ed54fe91ccc8b00cc85250c2d210fc5dca39d95f04ec3044bac"
+              },
+              "packageName" : "harmonia-core"
+            }
+          },
+          {
+            "exercised" : {
+              "offset" : "235",
+              "nodeId" : 1,
+              "contractId" : "00f4a599d612f78bdb1f776cc18c7db42bc186d6a0f84849328a9ec17ddc2da3c0ca12122048f3c70e9ec7b9a13884835bae25942529e4884203e6cfe60336283eceaa1f41",
+              "templateId" : {
+                "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                "moduleName" : "Harmonia.Process.Engine",
+                "entityName" : "PublishedDefinition"
+              },
+              "choice" : "Start",
+              "choiceArgument" : {
+                "record" : {
+                  "recordId" : {
+                    "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                    "moduleName" : "Harmonia.Process.Engine",
+                    "entityName" : "Start"
+                  },
+                  "fields" : [
+                    {
+                      "label" : "owner",
+                      "value" : {
+                        "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                      }
+                    },
+                    {
+                      "label" : "reference",
+                      "value" : {
+                        "text" : "transfer-source-settler"
+                      }
+                    },
+                    {
+                      "label" : "subject",
+                      "value" : {
+                        "text" : "transfer-source-settler"
+                      }
+                    },
+                    {
+                      "label" : "roles",
+                      "value" : {
+                        "list" : {
+                          "elements" : [
+                            {
+                              "record" : {
+                                "recordId" : {
+                                  "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                                  "moduleName" : "Harmonia.Process.Model",
+                                  "entityName" : "Role"
+                                },
+                                "fields" : [
+                                  {
+                                    "label" : "name",
+                                    "value" : {
+                                      "text" : "settler"
+                                    }
+                                  },
+                                  {
+                                    "label" : "party",
+                                    "value" : {
+                                      "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "label" : "bindings",
+                      "value" : {
+                        "list" : {
+                          "elements" : [
+                            {
+                              "record" : {
+                                "recordId" : {
+                                  "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                                  "moduleName" : "Harmonia.Process.Model",
+                                  "entityName" : "ActionBinding"
+                                },
+                                "fields" : [
+                                  {
+                                    "label" : "step",
+                                    "value" : {
+                                      "text" : "settlement"
+                                    }
+                                  },
+                                  {
+                                    "label" : "action",
+                                    "value" : {
+                                      "contractId" : "00951bf20d8004213b18b0851a2d3721f01e423d252c13daccb734896f81604532ca1212206c8fd29ab21d58e656e1f88b2efe6af53dd1540c46f00e1b910faa29c2b18bdf"
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "actingParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "witnessParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "lastDescendantNodeId" : 3,
+              "exerciseResult" : {
+                "contractId" : "004867965e04034d481c19931ac598db10502dd333d2c7c73f54629513ae1218efca121220c7f239e781f5ee159a5a9ec60dff5fb4c13333fc5937cb4c73703f6c7d986cf0"
+              },
+              "packageName" : "harmonia-core"
+            }
+          },
+          {
+            "created" : {
+              "offset" : "235",
+              "nodeId" : 3,
+              "contractId" : "004867965e04034d481c19931ac598db10502dd333d2c7c73f54629513ae1218efca121220c7f239e781f5ee159a5a9ec60dff5fb4c13333fc5937cb4c73703f6c7d986cf0",
+              "templateId" : {
+                "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                "moduleName" : "Harmonia.Process.Engine",
+                "entityName" : "ProcessInstance"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                  "moduleName" : "Harmonia.Process.Engine",
+                  "entityName" : "ProcessInstance"
+                },
+                "fields" : [
+                  {
+                    "label" : "engine",
+                    "value" : {
+                      "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                    }
+                  },
+                  {
+                    "label" : "owner",
+                    "value" : {
+                      "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                    }
+                  },
+                  {
+                    "label" : "reference",
+                    "value" : {
+                      "text" : "transfer-source-settler"
+                    }
+                  },
+                  {
+                    "label" : "subject",
+                    "value" : {
+                      "text" : "transfer-source-settler"
+                    }
+                  },
+                  {
+                    "label" : "published",
+                    "value" : {
+                      "contractId" : "00f4a599d612f78bdb1f776cc18c7db42bc186d6a0f84849328a9ec17ddc2da3c0ca12122048f3c70e9ec7b9a13884835bae25942529e4884203e6cfe60336283eceaa1f41"
+                    }
+                  },
+                  {
+                    "label" : "definition",
+                    "value" : {
+                      "record" : {
+                        "recordId" : {
+                          "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                          "moduleName" : "Harmonia.Process.Model",
+                          "entityName" : "Definition"
+                        },
+                        "fields" : [
+                          {
+                            "label" : "name",
+                            "value" : {
+                              "text" : "atomic-transfer"
+                            }
+                          },
+                          {
+                            "label" : "version",
+                            "value" : {
+                              "int64" : "1"
+                            }
+                          },
+                          {
+                            "label" : "steps",
+                            "value" : {
+                              "list" : {
+                                "elements" : [
+                                  {
+                                    "record" : {
+                                      "recordId" : {
+                                        "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                                        "moduleName" : "Harmonia.Process.Model",
+                                        "entityName" : "StepSpec"
+                                      },
+                                      "fields" : [
+                                        {
+                                          "label" : "id",
+                                          "value" : {
+                                            "text" : "settlement"
+                                          }
+                                        },
+                                        {
+                                          "label" : "role",
+                                          "value" : {
+                                            "text" : "settler"
+                                          }
+                                        },
+                                        {
+                                          "label" : "prerequisites",
+                                          "value" : {
+                                            "list" : {
+                                              
+                                            }
+                                          }
+                                        },
+                                        {
+                                          "label" : "kind",
+                                          "value" : {
+                                            "variant" : {
+                                              "variantId" : {
+                                                "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                                                "moduleName" : "Harmonia.Process.Model",
+                                                "entityName" : "StepKind"
+                                              },
+                                              "constructor" : "ActionStep",
+                                              "value" : {
+                                                "unit" : {
+                                                  
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "roles",
+                    "value" : {
+                      "list" : {
+                        "elements" : [
+                          {
+                            "record" : {
+                              "recordId" : {
+                                "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                                "moduleName" : "Harmonia.Process.Model",
+                                "entityName" : "Role"
+                              },
+                              "fields" : [
+                                {
+                                  "label" : "name",
+                                  "value" : {
+                                    "text" : "settler"
+                                  }
+                                },
+                                {
+                                  "label" : "party",
+                                  "value" : {
+                                    "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "bindings",
+                    "value" : {
+                      "list" : {
+                        "elements" : [
+                          {
+                            "record" : {
+                              "recordId" : {
+                                "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                                "moduleName" : "Harmonia.Process.Model",
+                                "entityName" : "ActionBinding"
+                              },
+                              "fields" : [
+                                {
+                                  "label" : "step",
+                                  "value" : {
+                                    "text" : "settlement"
+                                  }
+                                },
+                                {
+                                  "label" : "action",
+                                  "value" : {
+                                    "contractId" : "00951bf20d8004213b18b0851a2d3721f01e423d252c13daccb734896f81604532ca1212206c8fd29ab21d58e656e1f88b2efe6af53dd1540c46f00e1b910faa29c2b18bdf"
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "completed",
+                    "value" : {
+                      "list" : {
+                        
+                      }
+                    }
+                  },
+                  {
+                    "label" : "receipts",
+                    "value" : {
+                      "list" : {
+                        
+                      }
+                    }
+                  },
+                  {
+                    "label" : "selections",
+                    "value" : {
+                      "list" : {
+                        
+                      }
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "signatories" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "createdAt" : "2026-09-11T05:14:30.067170Z",
+              "packageName" : "harmonia-core",
+              "representativePackageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451"
+            }
+          },
+          {
+            "exercised" : {
+              "offset" : "235",
+              "nodeId" : 4,
+              "contractId" : "004867965e04034d481c19931ac598db10502dd333d2c7c73f54629513ae1218efca121220c7f239e781f5ee159a5a9ec60dff5fb4c13333fc5937cb4c73703f6c7d986cf0",
+              "templateId" : {
+                "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                "moduleName" : "Harmonia.Process.Engine",
+                "entityName" : "ProcessInstance"
+              },
+              "choice" : "AdvanceStep",
+              "choiceArgument" : {
+                "record" : {
+                  "recordId" : {
+                    "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                    "moduleName" : "Harmonia.Process.Engine",
+                    "entityName" : "AdvanceStep"
+                  },
+                  "fields" : [
+                    {
+                      "label" : "step",
+                      "value" : {
+                        "text" : "settlement"
+                      }
+                    },
+                    {
+                      "label" : "actor",
+                      "value" : {
+                        "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                      }
+                    },
+                    {
+                      "label" : "request",
+                      "value" : {
+                        "text" : "settle"
+                      }
+                    }
+                  ]
+                }
+              },
+              "actingParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "witnessParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "lastDescendantNodeId" : 17,
+              "exerciseResult" : {
+                "contractId" : "008d2a2c748781c09ab6a73bc950ef41a463e3b1f8ab5ac92bb6d747e4bec76236ca12122091b8b1a647958ed54fe91ccc8b00cc85250c2d210fc5dca39d95f04ec3044bac"
+              },
+              "packageName" : "harmonia-core"
+            }
+          },
+          {
+            "exercised" : {
+              "offset" : "235",
+              "nodeId" : 7,
+              "contractId" : "00951bf20d8004213b18b0851a2d3721f01e423d252c13daccb734896f81604532ca1212206c8fd29ab21d58e656e1f88b2efe6af53dd1540c46f00e1b910faa29c2b18bdf",
+              "templateId" : {
+                "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                "moduleName" : "AtomicTransfer",
+                "entityName" : "Trade"
+              },
+              "interfaceId" : {
+                "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                "moduleName" : "Harmonia.Action",
+                "entityName" : "StepAction"
+              },
+              "choice" : "ExecuteAction",
+              "choiceArgument" : {
+                "record" : {
+                  "recordId" : {
+                    "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                    "moduleName" : "Harmonia.Action",
+                    "entityName" : "ExecuteAction"
+                  }
+                }
+              },
+              "actingParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "witnessParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "lastDescendantNodeId" : 15,
+              "exerciseResult" : {
+                "contractId" : "00114fbeed7c698c219c32fb1a434bc6bb300a38164760f9843a95b2c9f4f7c3edca12122098ba09e241dffa53a5f20491efae75a5154952b4a44e5de346218f60ef7f1b43"
+              },
+              "packageName" : "harmonia-transfer"
+            }
+          },
+          {
+            "exercised" : {
+              "offset" : "235",
+              "nodeId" : 8,
+              "contractId" : "00951bf20d8004213b18b0851a2d3721f01e423d252c13daccb734896f81604532ca1212206c8fd29ab21d58e656e1f88b2efe6af53dd1540c46f00e1b910faa29c2b18bdf",
+              "templateId" : {
+                "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                "moduleName" : "AtomicTransfer",
+                "entityName" : "Trade"
+              },
+              "choice" : "Settle",
+              "choiceArgument" : {
+                "record" : {
+                  "recordId" : {
+                    "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                    "moduleName" : "AtomicTransfer",
+                    "entityName" : "Settle"
+                  }
+                }
+              },
+              "actingParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "consuming" : true,
+              "witnessParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "lastDescendantNodeId" : 15,
+              "exerciseResult" : {
+                "contractId" : "00114fbeed7c698c219c32fb1a434bc6bb300a38164760f9843a95b2c9f4f7c3edca12122098ba09e241dffa53a5f20491efae75a5154952b4a44e5de346218f60ef7f1b43"
+              },
+              "packageName" : "harmonia-transfer",
+              "acsDelta" : true
+            }
+          },
+          {
+            "exercised" : {
+              "offset" : "235",
+              "nodeId" : 9,
+              "contractId" : "00e11a6b3f9adeee29e78f42c278237a0d97f2d2614e13bf914cc887c8cd60ae3eca12122091635402856a5f756665ef643966c51f8cfa1fc89cdb1b6f630c69cd7dfdda5b",
+              "templateId" : {
+                "packageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7",
+                "moduleName" : "SourceCustody",
+                "entityName" : "LockedPosition"
+              },
+              "choice" : "Withdraw",
+              "choiceArgument" : {
+                "record" : {
+                  "recordId" : {
+                    "packageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7",
+                    "moduleName" : "SourceCustody",
+                    "entityName" : "Withdraw"
+                  }
+                }
+              },
+              "actingParties" : [
+                "transfer-source-settler-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6",
+                "transfer-source-settler-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042",
+                "transfer-source-settler-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c",
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "consuming" : true,
+              "witnessParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "lastDescendantNodeId" : 10,
+              "exerciseResult" : {
+                "contractId" : "00aa5839ff7cbfce8270709e18ea92ff65f20c82b8c3828d63a27deede0cf7e758ca121220489fcc4d660cfc0abe3557d36865b8ed0d306a5d1aa4d022daf2c206358deb8e"
+              },
+              "packageName" : "harmonia-source-custody",
+              "acsDelta" : true
+            }
+          },
+          {
+            "created" : {
+              "offset" : "235",
+              "nodeId" : 10,
+              "contractId" : "00aa5839ff7cbfce8270709e18ea92ff65f20c82b8c3828d63a27deede0cf7e758ca121220489fcc4d660cfc0abe3557d36865b8ed0d306a5d1aa4d022daf2c206358deb8e",
+              "templateId" : {
+                "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                "moduleName" : "Harmonia.Transfer",
+                "entityName" : "Release"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                  "moduleName" : "Harmonia.Transfer",
+                  "entityName" : "Release"
+                },
+                "fields" : [
+                  {
+                    "label" : "terms",
+                    "value" : {
+                      "record" : {
+                        "recordId" : {
+                          "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                          "moduleName" : "Harmonia.Transfer",
+                          "entityName" : "Terms"
+                        },
+                        "fields" : [
+                          {
+                            "label" : "buyer",
+                            "value" : {
+                              "party" : "transfer-source-settler-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "seller",
+                            "value" : {
+                              "party" : "transfer-source-settler-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+                            }
+                          },
+                          {
+                            "label" : "source",
+                            "value" : {
+                              "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "destination",
+                            "value" : {
+                              "party" : "transfer-source-settler-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+                            }
+                          },
+                          {
+                            "label" : "settler",
+                            "value" : {
+                              "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "reference",
+                            "value" : {
+                              "text" : "transfer-source-settler"
+                            }
+                          },
+                          {
+                            "label" : "asset",
+                            "value" : {
+                              "text" : "TEST"
+                            }
+                          },
+                          {
+                            "label" : "quantity",
+                            "value" : {
+                              "numeric" : "7.1250000000"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "signatories" : [
+                "transfer-source-settler-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c",
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "observers" : [
+                "transfer-source-settler-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6",
+                "transfer-source-settler-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+              ],
+              "createdAt" : "2026-09-11T05:14:30.067170Z",
+              "packageName" : "harmonia-interfaces",
+              "representativePackageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23"
+            }
+          },
+          {
+            "exercised" : {
+              "offset" : "235",
+              "nodeId" : 11,
+              "contractId" : "0061ca3c05e0650c7f6e055530093732dd021b4148464116806a88ea435fd60bfaca121220e00c12917e966b506778dcc1e10cd495704c13d346533a80d0c1f0fdd7faf535",
+              "templateId" : {
+                "packageId" : "a68ebce0bfcab3962dcef8b7ebaf2977a676b1b896e0aab635a83e73bfd94c33",
+                "moduleName" : "DestinationCustody",
+                "entityName" : "ReceivingPermit"
+              },
+              "choice" : "Receive",
+              "choiceArgument" : {
+                "record" : {
+                  "recordId" : {
+                    "packageId" : "a68ebce0bfcab3962dcef8b7ebaf2977a676b1b896e0aab635a83e73bfd94c33",
+                    "moduleName" : "DestinationCustody",
+                    "entityName" : "Receive"
+                  },
+                  "fields" : [
+                    {
+                      "label" : "release",
+                      "value" : {
+                        "contractId" : "00aa5839ff7cbfce8270709e18ea92ff65f20c82b8c3828d63a27deede0cf7e758ca121220489fcc4d660cfc0abe3557d36865b8ed0d306a5d1aa4d022daf2c206358deb8e"
+                      }
+                    }
+                  ]
+                }
+              },
+              "actingParties" : [
+                "transfer-source-settler-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6",
+                "transfer-source-settler-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042",
+                "transfer-source-settler-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c",
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "consuming" : true,
+              "witnessParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "lastDescendantNodeId" : 14,
+              "exerciseResult" : {
+                "contractId" : "0009941386ce7ecef8e01e70a1e4dcd40d12137e6b02a88f51986eb6e6e16baf7cca12122084eafd7f907fec6f350c195a01f6e479346d2d81753a267cf4e58db930d10c7f"
+              },
+              "packageName" : "harmonia-destination-custody",
+              "acsDelta" : true
+            }
+          },
+          {
+            "exercised" : {
+              "offset" : "235",
+              "nodeId" : 13,
+              "contractId" : "00aa5839ff7cbfce8270709e18ea92ff65f20c82b8c3828d63a27deede0cf7e758ca121220489fcc4d660cfc0abe3557d36865b8ed0d306a5d1aa4d022daf2c206358deb8e",
+              "templateId" : {
+                "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                "moduleName" : "Harmonia.Transfer",
+                "entityName" : "Release"
+              },
+              "choice" : "ReceiveRelease",
+              "choiceArgument" : {
+                "record" : {
+                  "recordId" : {
+                    "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                    "moduleName" : "Harmonia.Transfer",
+                    "entityName" : "ReceiveRelease"
+                  }
+                }
+              },
+              "actingParties" : [
+                "transfer-source-settler-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+              ],
+              "consuming" : true,
+              "witnessParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "lastDescendantNodeId" : 13,
+              "exerciseResult" : {
+                "unit" : {
+                  
+                }
+              },
+              "packageName" : "harmonia-interfaces"
+            }
+          },
+          {
+            "created" : {
+              "offset" : "235",
+              "nodeId" : 14,
+              "contractId" : "0009941386ce7ecef8e01e70a1e4dcd40d12137e6b02a88f51986eb6e6e16baf7cca12122084eafd7f907fec6f350c195a01f6e479346d2d81753a267cf4e58db930d10c7f",
+              "templateId" : {
+                "packageId" : "a68ebce0bfcab3962dcef8b7ebaf2977a676b1b896e0aab635a83e73bfd94c33",
+                "moduleName" : "DestinationCustody",
+                "entityName" : "Holding"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "a68ebce0bfcab3962dcef8b7ebaf2977a676b1b896e0aab635a83e73bfd94c33",
+                  "moduleName" : "DestinationCustody",
+                  "entityName" : "Holding"
+                },
+                "fields" : [
+                  {
+                    "label" : "terms",
+                    "value" : {
+                      "record" : {
+                        "recordId" : {
+                          "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                          "moduleName" : "Harmonia.Transfer",
+                          "entityName" : "Terms"
+                        },
+                        "fields" : [
+                          {
+                            "label" : "buyer",
+                            "value" : {
+                              "party" : "transfer-source-settler-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "seller",
+                            "value" : {
+                              "party" : "transfer-source-settler-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+                            }
+                          },
+                          {
+                            "label" : "source",
+                            "value" : {
+                              "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "destination",
+                            "value" : {
+                              "party" : "transfer-source-settler-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+                            }
+                          },
+                          {
+                            "label" : "settler",
+                            "value" : {
+                              "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "reference",
+                            "value" : {
+                              "text" : "transfer-source-settler"
+                            }
+                          },
+                          {
+                            "label" : "asset",
+                            "value" : {
+                              "text" : "TEST"
+                            }
+                          },
+                          {
+                            "label" : "quantity",
+                            "value" : {
+                              "numeric" : "7.1250000000"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "signatories" : [
+                "transfer-source-settler-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6",
+                "transfer-source-settler-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+              ],
+              "observers" : [
+                "transfer-source-settler-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c",
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "createdAt" : "2026-09-11T05:14:30.067170Z",
+              "packageName" : "harmonia-destination-custody",
+              "acsDelta" : true,
+              "representativePackageId" : "a68ebce0bfcab3962dcef8b7ebaf2977a676b1b896e0aab635a83e73bfd94c33"
+            }
+          },
+          {
+            "created" : {
+              "offset" : "235",
+              "nodeId" : 15,
+              "contractId" : "00114fbeed7c698c219c32fb1a434bc6bb300a38164760f9843a95b2c9f4f7c3edca12122098ba09e241dffa53a5f20491efae75a5154952b4a44e5de346218f60ef7f1b43",
+              "templateId" : {
+                "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                "moduleName" : "AtomicTransfer",
+                "entityName" : "Trade"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                  "moduleName" : "AtomicTransfer",
+                  "entityName" : "Trade"
+                },
+                "fields" : [
+                  {
+                    "label" : "terms",
+                    "value" : {
+                      "record" : {
+                        "recordId" : {
+                          "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                          "moduleName" : "Harmonia.Transfer",
+                          "entityName" : "Terms"
+                        },
+                        "fields" : [
+                          {
+                            "label" : "buyer",
+                            "value" : {
+                              "party" : "transfer-source-settler-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "seller",
+                            "value" : {
+                              "party" : "transfer-source-settler-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+                            }
+                          },
+                          {
+                            "label" : "source",
+                            "value" : {
+                              "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "destination",
+                            "value" : {
+                              "party" : "transfer-source-settler-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+                            }
+                          },
+                          {
+                            "label" : "settler",
+                            "value" : {
+                              "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "reference",
+                            "value" : {
+                              "text" : "transfer-source-settler"
+                            }
+                          },
+                          {
+                            "label" : "asset",
+                            "value" : {
+                              "text" : "TEST"
+                            }
+                          },
+                          {
+                            "label" : "quantity",
+                            "value" : {
+                              "numeric" : "7.1250000000"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "agreed",
+                    "value" : {
+                      "bool" : true
+                    }
+                  },
+                  {
+                    "label" : "sourceConfirmed",
+                    "value" : {
+                      "bool" : true
+                    }
+                  },
+                  {
+                    "label" : "destinationConfirmed",
+                    "value" : {
+                      "bool" : true
+                    }
+                  },
+                  {
+                    "label" : "locked",
+                    "value" : {
+                      "optional" : {
+                        "value" : {
+                          "contractId" : "00e11a6b3f9adeee29e78f42c278237a0d97f2d2614e13bf914cc887c8cd60ae3eca12122091635402856a5f756665ef643966c51f8cfa1fc89cdb1b6f630c69cd7dfdda5b"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "label" : "permit",
+                    "value" : {
+                      "optional" : {
+                        "value" : {
+                          "contractId" : "0061ca3c05e0650c7f6e055530093732dd021b4148464116806a88ea435fd60bfaca121220e00c12917e966b506778dcc1e10cd495704c13d346533a80d0c1f0fdd7faf535"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "label" : "settled",
+                    "value" : {
+                      "bool" : true
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "signatories" : [
+                "transfer-source-settler-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6",
+                "transfer-source-settler-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042",
+                "transfer-source-settler-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c",
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "createdAt" : "2026-09-11T05:14:30.067170Z",
+              "packageName" : "harmonia-transfer",
+              "acsDelta" : true,
+              "representativePackageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e"
+            }
+          },
+          {
+            "exercised" : {
+              "offset" : "235",
+              "nodeId" : 16,
+              "contractId" : "004867965e04034d481c19931ac598db10502dd333d2c7c73f54629513ae1218efca121220c7f239e781f5ee159a5a9ec60dff5fb4c13333fc5937cb4c73703f6c7d986cf0",
+              "templateId" : {
+                "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                "moduleName" : "Harmonia.Process.Engine",
+                "entityName" : "ProcessInstance"
+              },
+              "choice" : "Archive",
+              "choiceArgument" : {
+                "record" : {
+                  "recordId" : {
+                    "packageId" : "9e70a8b3510d617f8a136213f33d6a903a10ca0eeec76bb06ba55d1ed9680f69",
+                    "moduleName" : "DA.Internal.Template",
+                    "entityName" : "Archive"
+                  }
+                }
+              },
+              "actingParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "consuming" : true,
+              "witnessParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "lastDescendantNodeId" : 16,
+              "exerciseResult" : {
+                "unit" : {
+                  
+                }
+              },
+              "packageName" : "harmonia-core"
+            }
+          },
+          {
+            "created" : {
+              "offset" : "235",
+              "nodeId" : 17,
+              "contractId" : "008d2a2c748781c09ab6a73bc950ef41a463e3b1f8ab5ac92bb6d747e4bec76236ca12122091b8b1a647958ed54fe91ccc8b00cc85250c2d210fc5dca39d95f04ec3044bac",
+              "templateId" : {
+                "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                "moduleName" : "Harmonia.Process.Engine",
+                "entityName" : "ProcessInstance"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                  "moduleName" : "Harmonia.Process.Engine",
+                  "entityName" : "ProcessInstance"
+                },
+                "fields" : [
+                  {
+                    "label" : "engine",
+                    "value" : {
+                      "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                    }
+                  },
+                  {
+                    "label" : "owner",
+                    "value" : {
+                      "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                    }
+                  },
+                  {
+                    "label" : "reference",
+                    "value" : {
+                      "text" : "transfer-source-settler"
+                    }
+                  },
+                  {
+                    "label" : "subject",
+                    "value" : {
+                      "text" : "transfer-source-settler"
+                    }
+                  },
+                  {
+                    "label" : "published",
+                    "value" : {
+                      "contractId" : "00f4a599d612f78bdb1f776cc18c7db42bc186d6a0f84849328a9ec17ddc2da3c0ca12122048f3c70e9ec7b9a13884835bae25942529e4884203e6cfe60336283eceaa1f41"
+                    }
+                  },
+                  {
+                    "label" : "definition",
+                    "value" : {
+                      "record" : {
+                        "recordId" : {
+                          "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                          "moduleName" : "Harmonia.Process.Model",
+                          "entityName" : "Definition"
+                        },
+                        "fields" : [
+                          {
+                            "label" : "name",
+                            "value" : {
+                              "text" : "atomic-transfer"
+                            }
+                          },
+                          {
+                            "label" : "version",
+                            "value" : {
+                              "int64" : "1"
+                            }
+                          },
+                          {
+                            "label" : "steps",
+                            "value" : {
+                              "list" : {
+                                "elements" : [
+                                  {
+                                    "record" : {
+                                      "recordId" : {
+                                        "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                                        "moduleName" : "Harmonia.Process.Model",
+                                        "entityName" : "StepSpec"
+                                      },
+                                      "fields" : [
+                                        {
+                                          "label" : "id",
+                                          "value" : {
+                                            "text" : "settlement"
+                                          }
+                                        },
+                                        {
+                                          "label" : "role",
+                                          "value" : {
+                                            "text" : "settler"
+                                          }
+                                        },
+                                        {
+                                          "label" : "prerequisites",
+                                          "value" : {
+                                            "list" : {
+                                              
+                                            }
+                                          }
+                                        },
+                                        {
+                                          "label" : "kind",
+                                          "value" : {
+                                            "variant" : {
+                                              "variantId" : {
+                                                "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                                                "moduleName" : "Harmonia.Process.Model",
+                                                "entityName" : "StepKind"
+                                              },
+                                              "constructor" : "ActionStep",
+                                              "value" : {
+                                                "unit" : {
+                                                  
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "roles",
+                    "value" : {
+                      "list" : {
+                        "elements" : [
+                          {
+                            "record" : {
+                              "recordId" : {
+                                "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                                "moduleName" : "Harmonia.Process.Model",
+                                "entityName" : "Role"
+                              },
+                              "fields" : [
+                                {
+                                  "label" : "name",
+                                  "value" : {
+                                    "text" : "settler"
+                                  }
+                                },
+                                {
+                                  "label" : "party",
+                                  "value" : {
+                                    "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "bindings",
+                    "value" : {
+                      "list" : {
+                        "elements" : [
+                          {
+                            "record" : {
+                              "recordId" : {
+                                "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                                "moduleName" : "Harmonia.Process.Model",
+                                "entityName" : "ActionBinding"
+                              },
+                              "fields" : [
+                                {
+                                  "label" : "step",
+                                  "value" : {
+                                    "text" : "settlement"
+                                  }
+                                },
+                                {
+                                  "label" : "action",
+                                  "value" : {
+                                    "contractId" : "00114fbeed7c698c219c32fb1a434bc6bb300a38164760f9843a95b2c9f4f7c3edca12122098ba09e241dffa53a5f20491efae75a5154952b4a44e5de346218f60ef7f1b43"
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "completed",
+                    "value" : {
+                      "list" : {
+                        "elements" : [
+                          {
+                            "text" : "settlement"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "receipts",
+                    "value" : {
+                      "list" : {
+                        "elements" : [
+                          {
+                            "record" : {
+                              "recordId" : {
+                                "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                                "moduleName" : "Harmonia.Process.Model",
+                                "entityName" : "Receipt"
+                              },
+                              "fields" : [
+                                {
+                                  "label" : "request",
+                                  "value" : {
+                                    "text" : "settle"
+                                  }
+                                },
+                                {
+                                  "label" : "step",
+                                  "value" : {
+                                    "text" : "settlement"
+                                  }
+                                },
+                                {
+                                  "label" : "actor",
+                                  "value" : {
+                                    "party" : "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "selections",
+                    "value" : {
+                      "list" : {
+                        
+                      }
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "signatories" : [
+                "transfer-source-settler-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "createdAt" : "2026-09-11T05:14:30.067170Z",
+              "packageName" : "harmonia-core",
+              "acsDelta" : true,
+              "representativePackageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451"
+            }
+          }
+        ],
+        "offset" : "235",
+        "synchronizerId" : "harmonia::12201ba007ec1b2e9e63e472cbffb90d397a5e149754807f0a6e1b7e732f0b943a34",
+        "traceContext" : {
+          "traceparent" : "00-9d37135e13dc932b9d8e353e92f73c4f-35808c05d89d26a8-01"
+        },
+        "recordTime" : "2026-09-11T05:14:30.083687Z"
+      }
+    }
+  ],
+  "settlement_transaction_ids" : [
+    "12200fe172769fcbb917e5a1d585dbc3dae18b3080b88f0d8913788f9df3c71c4cc2"
+  ]
+}

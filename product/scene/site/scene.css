@@ -168,3 +168,7 @@
  .workflow-symbol {width:30px;height:30px;font-size:16px;}
  .workflow-actor {font-size:10px;}.workflow-title {font-size:17px;}.workflow-caption {font-size:12px;}
 }
+
+.workflow-node[data-state=skipped] {border-style:dashed;opacity:.66;}
+.workflow-node[data-state=skipped] .workflow-symbol {background:#e5e8ed;color:#667386;}
+.workflow-node[aria-pressed=true] {outline:2px solid #168aff;outline-offset:3px;}

@@ -31,22 +31,26 @@ final class Inspector(dispatcher: Dispatcher[IO]):
     content.textContent = "Reading the recorded file…"
     dialog.asInstanceOf[js.Dynamic].showModal()
     close.focus()
-    val request = Resource
-      .make(IO(new dom.AbortController()))(c => IO(c.abort()))
-      .use { controller =>
-        for
-          response <- IO.fromFuture(
-            IO(dom.fetch(path, new dom.RequestInit { signal = controller.signal }).toFuture)
-          )
-          _ <- IO.raiseUnless(response.ok)(
-            RuntimeException(s"File unavailable (HTTP ${response.status})")
-          )
-          text <- IO.fromFuture(IO(response.text().toFuture))
-          _ <- IO { content.textContent = text }
-        yield ()
-      }
-      .timeout(15.seconds)
-      .handleErrorWith(e => IO { content.textContent = e.getMessage })
+    val bundled = js.Dynamic.global.selectDynamic("HarmoniaEvidenceFiles")
+    val local = if js.isUndefined(bundled) then js.undefined else bundled.selectDynamic(path)
+    val request = if !js.isUndefined(local) then IO { content.textContent = local.toString }
+    else
+      Resource
+        .make(IO(new dom.AbortController()))(c => IO(c.abort()))
+        .use { controller =>
+          for
+            response <- IO.fromFuture(
+              IO(dom.fetch(path, new dom.RequestInit { signal = controller.signal }).toFuture)
+            )
+            _ <- IO.raiseUnless(response.ok)(
+              RuntimeException(s"File unavailable (HTTP ${response.status})")
+            )
+            text <- IO.fromFuture(IO(response.text().toFuture))
+            _ <- IO { content.textContent = text }
+          yield ()
+        }
+        .timeout(15.seconds)
+        .handleErrorWith(e => IO { content.textContent = e.getMessage })
     val stop = dispatcher.unsafeRunCancelable(request)
     cancel = () => { stop(); () }
 

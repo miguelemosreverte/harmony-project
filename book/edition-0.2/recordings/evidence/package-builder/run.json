@@ -1,0 +1,19 @@
+{
+  "mode" : "live-canton",
+  "topology" : "authenticated builder; actual uploaded and participant-exported DARs; compiled downloadable project",
+  "revision" : "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+  "worktree_dirty" : false,
+  "recorded_at" : "2026-09-11T05:16:27.620451Z",
+  "story_format" : 1,
+  "java" : "17.0.19+10",
+  "configured_sdk" : "3.4.11",
+  "input_sha256" : "747bdc7bbad62eaac4899a8332b0a5d2093d6887107386f9543e0ee85cb204aa",
+  "expected_sha256" : "d5b9bbbb4a2efcda580ade8d133b7bf545bd17b6753b7d9345439c5f18a478e9",
+  "dar_sha256" : "9e5397148dda311e6bad483f97cfef2949e1c51315d52f02a0a7a2881336e25b",
+  "dars" : {
+    "harness/ledger/demo/.daml/dist/harmonia-demo-0.1.0.dar" : "9e5397148dda311e6bad483f97cfef2949e1c51315d52f02a0a7a2881336e25b"
+  },
+  "actual_sha256" : "83baee243eb130b95c4d960b1a671a92561587286fe3e4966be4efac31b9404a",
+  "observation_sha256" : "db7c2b4ea4b1d427973b4b7ca256a233b9e0e4a53ae269dceaeb41d235be2fa0",
+  "matched" : true
+}

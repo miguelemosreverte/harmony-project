@@ -1,0 +1,25 @@
+[{
+  "application": "pending",
+  "workflow": "waiting",
+  "rawError": "Authorization failure: DAML_AUTHORIZATION_ERROR(8,a4e86be8): Interpretation error: Error: node NodeId(0) (6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451:Harmonia.Workflow:WorkflowInstance) requires authorizers workflow-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc, but only workflow-approved-Alice-9b3970be::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc were given",
+  "consumed": false,
+  "outcome": "rejected",
+  "activeContracts": 1,
+  "id": "buyer-attempt",
+  "outputContract": "DirectApplication 00538608719844b36ef94913b1bc2ea7b58530472925cbe61245962872158a270bca12122039dab5ba99eec3b86600840c19c948df1d9155ec9873b36b738ab59c1c7f0535",
+  "visibleTo": ["Alice", "Northbank"],
+  "reason": "unauthorized",
+  "inputContract": "DirectApplication 00538608719844b36ef94913b1bc2ea7b58530472925cbe61245962872158a270bca12122039dab5ba99eec3b86600840c19c948df1d9155ec9873b36b738ab59c1c7f0535"
+}, {
+  "application": "approved",
+  "workflow": "complete",
+  "rawError": null,
+  "consumed": true,
+  "outcome": "committed",
+  "activeContracts": 1,
+  "id": "bank-approval",
+  "outputContract": "DirectApplication 0073022b47a7f91c2fea4694cafdd303247bf9a622afe441920861dd7ae84ef4ebca121220cd82d5b28280acda39600479b1e5b17f525f5ddfde435561cca69dba9363f69f",
+  "visibleTo": ["Alice", "Northbank"],
+  "reason": null,
+  "inputContract": "DirectApplication 00538608719844b36ef94913b1bc2ea7b58530472925cbe61245962872158a270bca12122039dab5ba99eec3b86600840c19c948df1d9155ec9873b36b738ab59c1c7f0535"
+}]

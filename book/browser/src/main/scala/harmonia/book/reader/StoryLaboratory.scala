@@ -5,6 +5,8 @@ import harmonia.book.ui.Elements.*
 import io.circe.Json
 import org.scalajs.dom
 import harmonia.examples.ExampleKind
+import harmonia.scene.{WorkflowDiagramView, SceneView}
+import harmonia.book.diagram.{StoryDiagram, RecordedScene}
 import harmonia.book.evidence.*
 import harmonia.book.evidence.EvidenceValues.*
 
@@ -13,7 +15,10 @@ final class StoryLaboratory(
     chapters: Vector[BookChapter],
     navigate: ViewState => Unit
 ):
+  private var cleanup: () => Unit = () => ()
+  def dispose(): Unit = cleanup()
   def render(main: dom.HTMLElement, state: ViewState): Unit =
+    dispose()
     val story = stories(state.story)
     state.originChapter.foreach { index =>
       append(
@@ -30,11 +35,10 @@ final class StoryLaboratory(
     append(
       hero,
       element("div", "eyebrow", "The story laboratory"),
-      element("h1", text = "Follow the action.\nSee the proof."),
+      element("h1", text = story.title),
       element(
         "p",
-        text =
-          "Walk through a real execution, one attempt at a time. Compare what we committed to expect with the observed result."
+        text = story.description
       )
     )
     val toolbar = element("div", "toolbar")
@@ -57,9 +61,12 @@ final class StoryLaboratory(
         .flatMap(_.path.stripPrefix("$.actions[").takeWhile(_ != ']').toIntOption)
         .getOrElse(0)
       navigate(
-        ViewState(
-          index,
-          math.max(0, math.min(firstDifference, stories(index).units.size - 1)),
+        state.copy(
+          story = index,
+          step = math.max(0, math.min(firstDifference, stories(index).units.size - 1)),
+          node = None,
+          evidence = false,
+          perspective = None,
           originChapter = state.originChapter
         )
       )
@@ -75,65 +82,69 @@ final class StoryLaboratory(
     badge.setAttribute("role", "status")
     append(toolbar, label, badge)
     val panel = element("section", "panel")
-    val head = element("div", "panel-head")
-    append(
-      head,
-      element("h2", text = story.title),
-      element(
-        "span",
-        "small",
-        story.presentation.subtitle
+    val graph = element("div", "laboratory-stage")
+    graph.id = "laboratory-stage"; graph.tabIndex = 0
+    if story.kind == ExampleKind.Purchase || story.kind == ExampleKind.Transfer then
+      val view = new SceneView(graph)
+      view.render(RecordedScene(story, state.step + 1, state.perspective.getOrElse("all")))
+      cleanup = () => view.dispose()
+    else
+      val view = new WorkflowDiagramView(graph)
+      view.render(StoryDiagram(story, state.step))
+      state.node.foreach(view.select)
+      graph.addEventListener(
+        "harmonia-select",
+        (event: dom.Event) =>
+          navigate(state.copy(node = Some(event.asInstanceOf[dom.CustomEvent].detail.toString)))
       )
+      cleanup = () => view.dispose()
+    def move(delta: Int): Unit = navigate(
+      state.copy(step = (state.step + delta + story.units.size) % story.units.size, node = None)
     )
-    val graph = element("div", "graph")
-    graph.setAttribute("aria-label", "Observed progression; select an attempt to inspect it")
-    val setup = story.input.hcursor.downField("setup").downField("application")
-    val start = element("div", "node")
-    append(
-      start,
-      element("span", "eyebrow", "Starting point"),
-      element(
-        "strong",
-        text = story.presentation.start
-      ),
-      element("span", text = story.presentation.startDetail)
+    graph.onkeydown = event =>
+      if event.key == "ArrowLeft" || event.key == "ArrowRight" then
+        event.preventDefault(); move(if event.key == "ArrowLeft" then -1 else 1)
+    var touch = Option.empty[(Double, Double)]
+    graph.addEventListener(
+      "touchstart",
+      (event: dom.Event) =>
+        val e = event.asInstanceOf[dom.TouchEvent]
+        if e.touches.length == 1 then touch = Some(e.touches(0).clientX -> e.touches(0).clientY)
     )
-    append(graph, start)
-    story.units.zipWithIndex.foreach { (action, index) =>
-      val actual = story.actualActions.lift(index).getOrElse(Json.Null)
-      val node =
-        button("", "node" + (if state.step == index then " selected" else ""), s"step-$index") {
-          navigate(state.copy(step = index))
-        }
-      node.setAttribute("aria-pressed", (state.step == index).toString)
-      append(
-        node,
-        element("span", text = s"${index + 1}. ${action.actor}"),
-        element("span", "small", action.action.replace('-', ' ')),
-        element("strong", text = action.observedState),
-        element(
-          "span",
-          if text(actual, "outcome") == "rejected" then "rejected" else "",
-          action.outcomeLabel
-        )
-      )
-      append(graph, node)
-    }
+    graph.addEventListener(
+      "touchend",
+      (event: dom.Event) =>
+        val e = event.asInstanceOf[dom.TouchEvent]
+        if e.changedTouches.length > 0 then
+          touch.foreach { (x, y) =>
+            val dx = e.changedTouches(0).clientX - x
+            if math.abs(dx) > 55 && math.abs(e.changedTouches(0).clientY - y) < 70 then
+              move(if dx < 0 then 1 else -1)
+          }
+        touch = None
+    )
     val controls = element("div", "controls")
     val buttons = element("div", "buttons")
     val previous = button("← Previous", "button", "previous") {
-      navigate(state.copy(step = state.step - 1))
+      move(-1)
     }
-    previous.disabled = state.step <= 0
     val next = button(
       if story.isBoundaryReport then "Next phase →" else "Next attempt →",
       "button primary",
       "next"
     ) {
-      navigate(state.copy(step = state.step + 1))
+      move(1)
     }
-    next.disabled = state.step >= story.units.size - 1
-    append(buttons, previous, next)
+    val attempts = element("select").asInstanceOf[dom.html.Select]
+    attempts.id = "attempt-select"; attempts.setAttribute("aria-label", "Recorded attempt")
+    story.units.zipWithIndex.foreach { (unit, i) =>
+      val option =
+        element("option", text = s"${i + 1}. ${unit.actor}: ${unit.action} · ${unit.outcomeLabel}")
+          .asInstanceOf[dom.html.Option]
+      option.value = i.toString; option.selected = i == state.step; append(attempts, option)
+    }
+    attempts.onchange = _ => navigate(state.copy(step = attempts.value.toInt, node = None))
+    append(buttons, previous, attempts, next)
     val progress = element(
       "span",
       "small",
@@ -141,20 +152,31 @@ final class StoryLaboratory(
     )
     progress.setAttribute("aria-live", "polite")
     append(controls, progress, buttons)
-    append(panel, head, graph, controls)
+    append(panel, graph, controls)
     val details = element("div", "details-grid")
     append(details, ComparisonView.render(story, state.step), EvidencePanel.render(story))
-    append(main, hero, toolbar, panel)
+    val evidence = element("details", "laboratory-evidence")
+    evidence.id = "laboratory-evidence"
+    if state.evidence then evidence.setAttribute("open", "")
+    append(evidence, element("summary", text = "Evidence and other observations"))
+    evidence.addEventListener(
+      "toggle",
+      (_: dom.Event) =>
+        if evidence.hasAttribute("open") != state.evidence then
+          navigate(state.copy(evidence = evidence.hasAttribute("open")))
+    )
+    append(main, hero, toolbar, panel, evidence)
     if composition then
-      append(main, harmonia.book.composer.CompositionEvidence.render(story, state.step))
-    if builder then append(main, harmonia.book.builder.BuilderEvidence.render(story, state.step))
+      append(evidence, harmonia.book.composer.CompositionEvidence.render(story, state.step))
+    if builder then
+      append(evidence, harmonia.book.builder.BuilderEvidence.render(story, state.step))
     if story.isBoundaryReport then
-      append(main, harmonia.book.chapters.BoundaryEvidence.render(story, state.step))
-    if transfer then append(main, harmonia.book.transfer.TransferView.render(story, state.step))
-    append(main, details)
+      append(evidence, harmonia.book.chapters.BoundaryEvidence.render(story, state.step))
+    if transfer then append(evidence, harmonia.book.transfer.TransferView.render(story, state.step))
+    append(evidence, details)
     if story.kind == ExampleKind.Generated then
-      append(main, harmonia.book.bindings.BindingView.render(story))
-    ParticipantEvidence.render(story, state, navigate).foreach(view => append(main, view))
+      append(evidence, harmonia.book.bindings.BindingView.render(story))
+    ParticipantEvidence.render(story, state, navigate).foreach(view => append(evidence, view))
     if story.differences.nonEmpty then
       val differences = element("section", "panel all-differences")
       val heading = element("div", "panel-head")
@@ -176,4 +198,4 @@ final class StoryLaboratory(
         append(table, row)
       }
       append(differences, heading, table)
-      append(main, differences)
+      append(evidence, differences)

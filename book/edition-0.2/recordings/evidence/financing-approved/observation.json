@@ -1,0 +1,25 @@
+[{
+  "application": "pending",
+  "workflow": null,
+  "rawError": "Authorization failure: DAML_AUTHORIZATION_ERROR(8,01dbeb57): Interpretation error: Error: node NodeId(0) (606ffc3d50332588e17faa6bd87880b0e808b4ea4456bd6825c1544dd36ce20a:Financing:Application) requires authorizers financing-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc, but only financing-approved-Alice-9b3970be::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc were given",
+  "consumed": false,
+  "outcome": "rejected",
+  "activeContracts": 1,
+  "id": "buyer-attempt",
+  "outputContract": "DirectApplication 000149f57e2d55623d7a6c16338d62c3facf9f07342ea51e8339960fd6e2fba4ffca121220ce3e7ea8681e7762053c8449770ff4a1bce0e4ad3dca7cec198d9e62ba032bf2",
+  "visibleTo": ["Alice", "Northbank"],
+  "reason": "unauthorized",
+  "inputContract": "DirectApplication 000149f57e2d55623d7a6c16338d62c3facf9f07342ea51e8339960fd6e2fba4ffca121220ce3e7ea8681e7762053c8449770ff4a1bce0e4ad3dca7cec198d9e62ba032bf2"
+}, {
+  "application": "approved",
+  "workflow": null,
+  "rawError": null,
+  "consumed": true,
+  "outcome": "committed",
+  "activeContracts": 1,
+  "id": "bank-approval",
+  "outputContract": "DirectApplication 0088be8ba840c4789c98341575db3b72e849fd48f7c9d641c901c11540d4e699c4ca12122065b79bac933bb4b312a9779f3f63865da82eaa9af03612fe97615ab4a9da586c",
+  "visibleTo": ["Alice", "Northbank"],
+  "reason": null,
+  "inputContract": "DirectApplication 000149f57e2d55623d7a6c16338d62c3facf9f07342ea51e8339960fd6e2fba4ffca121220ce3e7ea8681e7762053c8449770ff4a1bce0e4ad3dca7cec198d9e62ba032bf2"
+}]

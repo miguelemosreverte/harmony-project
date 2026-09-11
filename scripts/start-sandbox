@@ -2,6 +2,6 @@
 set -euo pipefail
 source "$(dirname "${BASH_SOURCE[0]}")/environment"
 cd "$HARMONIA_ROOT"
-sbt -J-Xms64m -J-Xmx768m --batch 'scene/fastLinkJS' 'web/fastLinkJS'
+sbt -J-Xms64m -J-Xmx768m --batch 'scene/fastLinkJS' 'web/fastLinkJS' 'reader/fastLinkJS'
 scripts/build-design
 exec scripts/harmonia live

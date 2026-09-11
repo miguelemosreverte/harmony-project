@@ -23,12 +23,14 @@ final class WorkflowDiagramView(root: dom.HTMLElement):
   root.appendChild(figure)
   private val connections = new ConnectionLayer(map)
   private var cards = Vector.empty[dom.HTMLElement]
+  private var documentation = Map.empty[String, DiagramNode]
 
   def dispose(): Unit = connections.dispose()
 
   def render(value: WorkflowDiagram): Unit = value.layers match
     case Left(error) => title.textContent = error
     case Right(layers) =>
+      documentation = value.nodes.map(n => n.id -> n).toMap
       cards.foreach(_.remove())
       val rows = scala.collection.mutable.Map.empty[Int, Int]
       cards = value.nodes.map { item =>
@@ -45,14 +47,14 @@ final class WorkflowDiagramView(root: dom.HTMLElement):
         card.style.setProperty("--row", row.toString)
         val badge = node("span", "workflow-symbol")
         badge.textContent =
-          if item.state == DiagramState.Complete then "✓" else (layer + 1).toString
+          if item.state == DiagramState.Complete then "✓"
+          else if item.state == DiagramState.Skipped then "–"
+          else (layer + 1).toString
         val heading = node("strong", ""); heading.textContent = item.label
         val actor = node("span", "workflow-actor"); actor.textContent = item.actor
         Vector(badge, heading, actor).foreach(card.appendChild)
         card.onclick = _ =>
-          title.textContent = item.label
-          caption.textContent = item.detail
-          cards.foreach(other => other.setAttribute("aria-pressed", (other == card).toString))
+          select(item.id)
           root.dispatchEvent(
             new dom.CustomEvent(
               "harmonia-select",
@@ -77,6 +79,14 @@ final class WorkflowDiagramView(root: dom.HTMLElement):
       )
       title.textContent = value.title
       caption.textContent = value.caption
+
+  def select(id: String): Unit = documentation.get(id).foreach { item =>
+    title.textContent = item.label
+    caption.textContent = item.detail
+    cards.foreach(card =>
+      card.setAttribute("aria-pressed", (card.getAttribute("data-node") == id).toString)
+    )
+  }
 
   private def node(tag: String, css: String): dom.HTMLElement =
     val result = dom.document.createElement(tag).asInstanceOf[dom.HTMLElement]

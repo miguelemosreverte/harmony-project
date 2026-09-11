@@ -1,0 +1,1189 @@
+{
+  "id": "branch-approved",
+  "title": "The approved branch waits for both applications",
+  "description": "The bank selects one path. The join waits for every required action in that path. Unselected application contracts remain unchanged.",
+  "input": {
+    "workflow": "branching-approval",
+    "setup": {
+      "application": {
+        "bank": "Northbank",
+        "buyer": "Alice",
+        "status": "pending"
+      }
+    },
+    "actions": [
+      {
+        "id": "join-before-decision",
+        "actor": "Alice",
+        "action": "complete-join"
+      },
+      {
+        "id": "choose-approval",
+        "actor": "Northbank",
+        "action": "choose-approve",
+        "request": "decision-1"
+      },
+      {
+        "id": "cannot-change-decision",
+        "actor": "Northbank",
+        "action": "choose-decline",
+        "request": "decision-1"
+      },
+      {
+        "id": "unselected-closure",
+        "actor": "Northbank",
+        "action": "close-application"
+      },
+      {
+        "id": "bank-approval",
+        "actor": "Northbank",
+        "action": "approve-financing"
+      },
+      {
+        "id": "join-still-waits",
+        "actor": "Alice",
+        "action": "complete-join"
+      },
+      {
+        "id": "buyer-review",
+        "actor": "Alice",
+        "action": "confirm-review"
+      },
+      {
+        "id": "join-completes",
+        "actor": "Alice",
+        "action": "complete-join",
+        "request": "join-1"
+      },
+      {
+        "id": "join-retry",
+        "actor": "Alice",
+        "action": "complete-join",
+        "request": "join-1"
+      },
+      {
+        "id": "new-join-request",
+        "actor": "Alice",
+        "action": "complete-join"
+      }
+    ]
+  },
+  "expected": {
+    "definition": {
+      "name": "decision-review",
+      "version": 1
+    },
+    "actions": [
+      {
+        "id": "join-before-decision",
+        "outcome": "rejected",
+        "reason": "application-rejected",
+        "application": "pending",
+        "review": "pending",
+        "closure": "pending",
+        "branch": "undecided",
+        "workflow": "waiting",
+        "completed": [],
+        "skipped": [],
+        "enabled": [
+          "decision"
+        ],
+        "consumed": false,
+        "active_contracts": 3,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ]
+      },
+      {
+        "id": "choose-approval",
+        "outcome": "committed",
+        "application": "pending",
+        "review": "pending",
+        "closure": "pending",
+        "branch": "approve",
+        "workflow": "waiting",
+        "completed": [
+          "decision"
+        ],
+        "skipped": [
+          "closure"
+        ],
+        "enabled": [
+          "financing",
+          "review"
+        ],
+        "consumed": false,
+        "active_contracts": 3,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ]
+      },
+      {
+        "id": "cannot-change-decision",
+        "outcome": "rejected",
+        "reason": "application-rejected",
+        "application": "pending",
+        "review": "pending",
+        "closure": "pending",
+        "branch": "approve",
+        "workflow": "waiting",
+        "completed": [
+          "decision"
+        ],
+        "skipped": [
+          "closure"
+        ],
+        "enabled": [
+          "financing",
+          "review"
+        ],
+        "consumed": false,
+        "active_contracts": 3,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ]
+      },
+      {
+        "id": "unselected-closure",
+        "outcome": "rejected",
+        "reason": "application-rejected",
+        "application": "pending",
+        "review": "pending",
+        "closure": "pending",
+        "branch": "approve",
+        "workflow": "waiting",
+        "completed": [
+          "decision"
+        ],
+        "skipped": [
+          "closure"
+        ],
+        "enabled": [
+          "financing",
+          "review"
+        ],
+        "consumed": false,
+        "active_contracts": 3,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ]
+      },
+      {
+        "id": "bank-approval",
+        "outcome": "committed",
+        "application": "approved",
+        "review": "pending",
+        "closure": "pending",
+        "branch": "approve",
+        "workflow": "waiting",
+        "completed": [
+          "decision",
+          "financing"
+        ],
+        "skipped": [
+          "closure"
+        ],
+        "enabled": [
+          "review"
+        ],
+        "consumed": true,
+        "active_contracts": 3,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ]
+      },
+      {
+        "id": "join-still-waits",
+        "outcome": "rejected",
+        "reason": "application-rejected",
+        "application": "approved",
+        "review": "pending",
+        "closure": "pending",
+        "branch": "approve",
+        "workflow": "waiting",
+        "completed": [
+          "decision",
+          "financing"
+        ],
+        "skipped": [
+          "closure"
+        ],
+        "enabled": [
+          "review"
+        ],
+        "consumed": false,
+        "active_contracts": 3,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ]
+      },
+      {
+        "id": "buyer-review",
+        "outcome": "committed",
+        "application": "approved",
+        "review": "confirmed",
+        "closure": "pending",
+        "branch": "approve",
+        "workflow": "waiting",
+        "completed": [
+          "decision",
+          "financing",
+          "review"
+        ],
+        "skipped": [
+          "closure"
+        ],
+        "enabled": [
+          "join"
+        ],
+        "consumed": false,
+        "active_contracts": 3,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ]
+      },
+      {
+        "id": "join-completes",
+        "outcome": "committed",
+        "application": "approved",
+        "review": "confirmed",
+        "closure": "pending",
+        "branch": "approve",
+        "workflow": "complete",
+        "completed": [
+          "decision",
+          "financing",
+          "review",
+          "join"
+        ],
+        "skipped": [
+          "closure"
+        ],
+        "enabled": [],
+        "consumed": false,
+        "active_contracts": 3,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ]
+      },
+      {
+        "id": "join-retry",
+        "outcome": "duplicate",
+        "application": "approved",
+        "review": "confirmed",
+        "closure": "pending",
+        "branch": "approve",
+        "workflow": "complete",
+        "completed": [
+          "decision",
+          "financing",
+          "review",
+          "join"
+        ],
+        "skipped": [
+          "closure"
+        ],
+        "enabled": [],
+        "consumed": false,
+        "active_contracts": 3,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ]
+      },
+      {
+        "id": "new-join-request",
+        "outcome": "rejected",
+        "reason": "application-rejected",
+        "application": "approved",
+        "review": "confirmed",
+        "closure": "pending",
+        "branch": "approve",
+        "workflow": "complete",
+        "completed": [
+          "decision",
+          "financing",
+          "review",
+          "join"
+        ],
+        "skipped": [
+          "closure"
+        ],
+        "enabled": [],
+        "consumed": false,
+        "active_contracts": 3,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ]
+      }
+    ]
+  },
+  "actual": {
+    "definition": {
+      "name": "decision-review",
+      "version": 1
+    },
+    "actions": [
+      {
+        "id": "join-before-decision",
+        "outcome": "rejected",
+        "application": "pending",
+        "consumed": false,
+        "active_contracts": 3,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ],
+        "reason": "application-rejected",
+        "workflow": "waiting",
+        "review": "pending",
+        "completed": [],
+        "enabled": [
+          "decision"
+        ],
+        "branch": "undecided",
+        "closure": "pending",
+        "skipped": []
+      },
+      {
+        "id": "choose-approval",
+        "outcome": "committed",
+        "application": "pending",
+        "consumed": false,
+        "active_contracts": 3,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ],
+        "workflow": "waiting",
+        "review": "pending",
+        "completed": [
+          "decision"
+        ],
+        "enabled": [
+          "financing",
+          "review"
+        ],
+        "branch": "approve",
+        "closure": "pending",
+        "skipped": [
+          "closure"
+        ]
+      },
+      {
+        "id": "cannot-change-decision",
+        "outcome": "rejected",
+        "application": "pending",
+        "consumed": false,
+        "active_contracts": 3,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ],
+        "reason": "application-rejected",
+        "workflow": "waiting",
+        "review": "pending",
+        "completed": [
+          "decision"
+        ],
+        "enabled": [
+          "financing",
+          "review"
+        ],
+        "branch": "approve",
+        "closure": "pending",
+        "skipped": [
+          "closure"
+        ]
+      },
+      {
+        "id": "unselected-closure",
+        "outcome": "rejected",
+        "application": "pending",
+        "consumed": false,
+        "active_contracts": 3,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ],
+        "reason": "application-rejected",
+        "workflow": "waiting",
+        "review": "pending",
+        "completed": [
+          "decision"
+        ],
+        "enabled": [
+          "financing",
+          "review"
+        ],
+        "branch": "approve",
+        "closure": "pending",
+        "skipped": [
+          "closure"
+        ]
+      },
+      {
+        "id": "bank-approval",
+        "outcome": "committed",
+        "application": "approved",
+        "consumed": true,
+        "active_contracts": 3,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ],
+        "workflow": "waiting",
+        "review": "pending",
+        "completed": [
+          "decision",
+          "financing"
+        ],
+        "enabled": [
+          "review"
+        ],
+        "branch": "approve",
+        "closure": "pending",
+        "skipped": [
+          "closure"
+        ]
+      },
+      {
+        "id": "join-still-waits",
+        "outcome": "rejected",
+        "application": "approved",
+        "consumed": false,
+        "active_contracts": 3,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ],
+        "reason": "application-rejected",
+        "workflow": "waiting",
+        "review": "pending",
+        "completed": [
+          "decision",
+          "financing"
+        ],
+        "enabled": [
+          "review"
+        ],
+        "branch": "approve",
+        "closure": "pending",
+        "skipped": [
+          "closure"
+        ]
+      },
+      {
+        "id": "buyer-review",
+        "outcome": "committed",
+        "application": "approved",
+        "consumed": false,
+        "active_contracts": 3,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ],
+        "workflow": "waiting",
+        "review": "confirmed",
+        "completed": [
+          "decision",
+          "financing",
+          "review"
+        ],
+        "enabled": [
+          "join"
+        ],
+        "branch": "approve",
+        "closure": "pending",
+        "skipped": [
+          "closure"
+        ]
+      },
+      {
+        "id": "join-completes",
+        "outcome": "committed",
+        "application": "approved",
+        "consumed": false,
+        "active_contracts": 3,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ],
+        "workflow": "complete",
+        "review": "confirmed",
+        "completed": [
+          "decision",
+          "financing",
+          "review",
+          "join"
+        ],
+        "enabled": [],
+        "branch": "approve",
+        "closure": "pending",
+        "skipped": [
+          "closure"
+        ]
+      },
+      {
+        "id": "join-retry",
+        "outcome": "duplicate",
+        "application": "approved",
+        "consumed": false,
+        "active_contracts": 3,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ],
+        "workflow": "complete",
+        "review": "confirmed",
+        "completed": [
+          "decision",
+          "financing",
+          "review",
+          "join"
+        ],
+        "enabled": [],
+        "branch": "approve",
+        "closure": "pending",
+        "skipped": [
+          "closure"
+        ]
+      },
+      {
+        "id": "new-join-request",
+        "outcome": "rejected",
+        "application": "approved",
+        "consumed": false,
+        "active_contracts": 3,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ],
+        "reason": "application-rejected",
+        "workflow": "complete",
+        "review": "confirmed",
+        "completed": [
+          "decision",
+          "financing",
+          "review",
+          "join"
+        ],
+        "enabled": [],
+        "branch": "approve",
+        "closure": "pending",
+        "skipped": [
+          "closure"
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "mode": "live-canton",
+    "topology": "one participant, one synchronizer, separate party identities",
+    "revision": "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+    "worktree_dirty": false,
+    "recorded_at": "2026-09-11T05:10:31.900778Z",
+    "story_format": 1,
+    "java": "17.0.19+10",
+    "configured_sdk": "3.4.11",
+    "input_sha256": "6b35a1b3782804f2deb9885681459fae86370ac6ffee069f417f4fe0e46d2d4d",
+    "expected_sha256": "14117de9fae8dce16708d2ca772e13505bfcad3d2a338c00bdbbe80f102b6f19",
+    "dar_sha256": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e",
+    "dars": {
+      "harness/ledger/tests/.daml/dist/harmonia-tests-0.1.0.dar": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e"
+    },
+    "actual_sha256": "faf4ab7eba2405de62f40c9939394628b5d1f550c331c2ca1d47aea3b85cbcaa",
+    "observation_sha256": "67f3f687216e5e82757a42f0dc6673a1577c9bcaa6333def69698aef0cc19d17",
+    "matched": true
+  },
+  "presentation": {
+    "kind": "Progression",
+    "subtitle": "Versioned progression, branches, and joins",
+    "start": "pending",
+    "start_detail": "Application created",
+    "operation": "product/ledger/core/daml/Harmonia/Process/Engine.daml",
+    "units": [
+      {
+        "id": "join-before-decision",
+        "actor": "Alice",
+        "action": "complete-join",
+        "expected": {
+          "id": "join-before-decision",
+          "outcome": "rejected",
+          "reason": "application-rejected",
+          "application": "pending",
+          "review": "pending",
+          "closure": "pending",
+          "branch": "undecided",
+          "workflow": "waiting",
+          "completed": [],
+          "skipped": [],
+          "enabled": [
+            "decision"
+          ],
+          "consumed": false,
+          "active_contracts": 3,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ]
+        },
+        "actual": {
+          "id": "join-before-decision",
+          "outcome": "rejected",
+          "application": "pending",
+          "consumed": false,
+          "active_contracts": 3,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "reason": "application-rejected",
+          "workflow": "waiting",
+          "review": "pending",
+          "completed": [],
+          "enabled": [
+            "decision"
+          ],
+          "branch": "undecided",
+          "closure": "pending",
+          "skipped": []
+        },
+        "observed_state": "pending",
+        "outcome_label": "rejected"
+      },
+      {
+        "id": "choose-approval",
+        "actor": "Northbank",
+        "action": "choose-approve",
+        "expected": {
+          "id": "choose-approval",
+          "outcome": "committed",
+          "application": "pending",
+          "review": "pending",
+          "closure": "pending",
+          "branch": "approve",
+          "workflow": "waiting",
+          "completed": [
+            "decision"
+          ],
+          "skipped": [
+            "closure"
+          ],
+          "enabled": [
+            "financing",
+            "review"
+          ],
+          "consumed": false,
+          "active_contracts": 3,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ]
+        },
+        "actual": {
+          "id": "choose-approval",
+          "outcome": "committed",
+          "application": "pending",
+          "consumed": false,
+          "active_contracts": 3,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting",
+          "review": "pending",
+          "completed": [
+            "decision"
+          ],
+          "enabled": [
+            "financing",
+            "review"
+          ],
+          "branch": "approve",
+          "closure": "pending",
+          "skipped": [
+            "closure"
+          ]
+        },
+        "observed_state": "pending",
+        "outcome_label": "committed"
+      },
+      {
+        "id": "cannot-change-decision",
+        "actor": "Northbank",
+        "action": "choose-decline",
+        "expected": {
+          "id": "cannot-change-decision",
+          "outcome": "rejected",
+          "reason": "application-rejected",
+          "application": "pending",
+          "review": "pending",
+          "closure": "pending",
+          "branch": "approve",
+          "workflow": "waiting",
+          "completed": [
+            "decision"
+          ],
+          "skipped": [
+            "closure"
+          ],
+          "enabled": [
+            "financing",
+            "review"
+          ],
+          "consumed": false,
+          "active_contracts": 3,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ]
+        },
+        "actual": {
+          "id": "cannot-change-decision",
+          "outcome": "rejected",
+          "application": "pending",
+          "consumed": false,
+          "active_contracts": 3,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "reason": "application-rejected",
+          "workflow": "waiting",
+          "review": "pending",
+          "completed": [
+            "decision"
+          ],
+          "enabled": [
+            "financing",
+            "review"
+          ],
+          "branch": "approve",
+          "closure": "pending",
+          "skipped": [
+            "closure"
+          ]
+        },
+        "observed_state": "pending",
+        "outcome_label": "rejected"
+      },
+      {
+        "id": "unselected-closure",
+        "actor": "Northbank",
+        "action": "close-application",
+        "expected": {
+          "id": "unselected-closure",
+          "outcome": "rejected",
+          "reason": "application-rejected",
+          "application": "pending",
+          "review": "pending",
+          "closure": "pending",
+          "branch": "approve",
+          "workflow": "waiting",
+          "completed": [
+            "decision"
+          ],
+          "skipped": [
+            "closure"
+          ],
+          "enabled": [
+            "financing",
+            "review"
+          ],
+          "consumed": false,
+          "active_contracts": 3,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ]
+        },
+        "actual": {
+          "id": "unselected-closure",
+          "outcome": "rejected",
+          "application": "pending",
+          "consumed": false,
+          "active_contracts": 3,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "reason": "application-rejected",
+          "workflow": "waiting",
+          "review": "pending",
+          "completed": [
+            "decision"
+          ],
+          "enabled": [
+            "financing",
+            "review"
+          ],
+          "branch": "approve",
+          "closure": "pending",
+          "skipped": [
+            "closure"
+          ]
+        },
+        "observed_state": "pending",
+        "outcome_label": "rejected"
+      },
+      {
+        "id": "bank-approval",
+        "actor": "Northbank",
+        "action": "approve-financing",
+        "expected": {
+          "id": "bank-approval",
+          "outcome": "committed",
+          "application": "approved",
+          "review": "pending",
+          "closure": "pending",
+          "branch": "approve",
+          "workflow": "waiting",
+          "completed": [
+            "decision",
+            "financing"
+          ],
+          "skipped": [
+            "closure"
+          ],
+          "enabled": [
+            "review"
+          ],
+          "consumed": true,
+          "active_contracts": 3,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ]
+        },
+        "actual": {
+          "id": "bank-approval",
+          "outcome": "committed",
+          "application": "approved",
+          "consumed": true,
+          "active_contracts": 3,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting",
+          "review": "pending",
+          "completed": [
+            "decision",
+            "financing"
+          ],
+          "enabled": [
+            "review"
+          ],
+          "branch": "approve",
+          "closure": "pending",
+          "skipped": [
+            "closure"
+          ]
+        },
+        "observed_state": "approved",
+        "outcome_label": "committed"
+      },
+      {
+        "id": "join-still-waits",
+        "actor": "Alice",
+        "action": "complete-join",
+        "expected": {
+          "id": "join-still-waits",
+          "outcome": "rejected",
+          "reason": "application-rejected",
+          "application": "approved",
+          "review": "pending",
+          "closure": "pending",
+          "branch": "approve",
+          "workflow": "waiting",
+          "completed": [
+            "decision",
+            "financing"
+          ],
+          "skipped": [
+            "closure"
+          ],
+          "enabled": [
+            "review"
+          ],
+          "consumed": false,
+          "active_contracts": 3,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ]
+        },
+        "actual": {
+          "id": "join-still-waits",
+          "outcome": "rejected",
+          "application": "approved",
+          "consumed": false,
+          "active_contracts": 3,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "reason": "application-rejected",
+          "workflow": "waiting",
+          "review": "pending",
+          "completed": [
+            "decision",
+            "financing"
+          ],
+          "enabled": [
+            "review"
+          ],
+          "branch": "approve",
+          "closure": "pending",
+          "skipped": [
+            "closure"
+          ]
+        },
+        "observed_state": "approved",
+        "outcome_label": "rejected"
+      },
+      {
+        "id": "buyer-review",
+        "actor": "Alice",
+        "action": "confirm-review",
+        "expected": {
+          "id": "buyer-review",
+          "outcome": "committed",
+          "application": "approved",
+          "review": "confirmed",
+          "closure": "pending",
+          "branch": "approve",
+          "workflow": "waiting",
+          "completed": [
+            "decision",
+            "financing",
+            "review"
+          ],
+          "skipped": [
+            "closure"
+          ],
+          "enabled": [
+            "join"
+          ],
+          "consumed": false,
+          "active_contracts": 3,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ]
+        },
+        "actual": {
+          "id": "buyer-review",
+          "outcome": "committed",
+          "application": "approved",
+          "consumed": false,
+          "active_contracts": 3,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting",
+          "review": "confirmed",
+          "completed": [
+            "decision",
+            "financing",
+            "review"
+          ],
+          "enabled": [
+            "join"
+          ],
+          "branch": "approve",
+          "closure": "pending",
+          "skipped": [
+            "closure"
+          ]
+        },
+        "observed_state": "approved",
+        "outcome_label": "committed"
+      },
+      {
+        "id": "join-completes",
+        "actor": "Alice",
+        "action": "complete-join",
+        "expected": {
+          "id": "join-completes",
+          "outcome": "committed",
+          "application": "approved",
+          "review": "confirmed",
+          "closure": "pending",
+          "branch": "approve",
+          "workflow": "complete",
+          "completed": [
+            "decision",
+            "financing",
+            "review",
+            "join"
+          ],
+          "skipped": [
+            "closure"
+          ],
+          "enabled": [],
+          "consumed": false,
+          "active_contracts": 3,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ]
+        },
+        "actual": {
+          "id": "join-completes",
+          "outcome": "committed",
+          "application": "approved",
+          "consumed": false,
+          "active_contracts": 3,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "complete",
+          "review": "confirmed",
+          "completed": [
+            "decision",
+            "financing",
+            "review",
+            "join"
+          ],
+          "enabled": [],
+          "branch": "approve",
+          "closure": "pending",
+          "skipped": [
+            "closure"
+          ]
+        },
+        "observed_state": "approved",
+        "outcome_label": "committed"
+      },
+      {
+        "id": "join-retry",
+        "actor": "Alice",
+        "action": "complete-join",
+        "expected": {
+          "id": "join-retry",
+          "outcome": "duplicate",
+          "application": "approved",
+          "review": "confirmed",
+          "closure": "pending",
+          "branch": "approve",
+          "workflow": "complete",
+          "completed": [
+            "decision",
+            "financing",
+            "review",
+            "join"
+          ],
+          "skipped": [
+            "closure"
+          ],
+          "enabled": [],
+          "consumed": false,
+          "active_contracts": 3,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ]
+        },
+        "actual": {
+          "id": "join-retry",
+          "outcome": "duplicate",
+          "application": "approved",
+          "consumed": false,
+          "active_contracts": 3,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "complete",
+          "review": "confirmed",
+          "completed": [
+            "decision",
+            "financing",
+            "review",
+            "join"
+          ],
+          "enabled": [],
+          "branch": "approve",
+          "closure": "pending",
+          "skipped": [
+            "closure"
+          ]
+        },
+        "observed_state": "approved",
+        "outcome_label": "duplicate"
+      },
+      {
+        "id": "new-join-request",
+        "actor": "Alice",
+        "action": "complete-join",
+        "expected": {
+          "id": "new-join-request",
+          "outcome": "rejected",
+          "reason": "application-rejected",
+          "application": "approved",
+          "review": "confirmed",
+          "closure": "pending",
+          "branch": "approve",
+          "workflow": "complete",
+          "completed": [
+            "decision",
+            "financing",
+            "review",
+            "join"
+          ],
+          "skipped": [
+            "closure"
+          ],
+          "enabled": [],
+          "consumed": false,
+          "active_contracts": 3,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ]
+        },
+        "actual": {
+          "id": "new-join-request",
+          "outcome": "rejected",
+          "application": "approved",
+          "consumed": false,
+          "active_contracts": 3,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "reason": "application-rejected",
+          "workflow": "complete",
+          "review": "confirmed",
+          "completed": [
+            "decision",
+            "financing",
+            "review",
+            "join"
+          ],
+          "enabled": [],
+          "branch": "approve",
+          "closure": "pending",
+          "skipped": [
+            "closure"
+          ]
+        },
+        "observed_state": "approved",
+        "outcome_label": "rejected"
+      }
+    ]
+  }
+}

@@ -1,0 +1,453 @@
+{
+  "id": "private-approval",
+  "title": "A private approval, a shared next step",
+  "description": "Northbank keeps its application details private. Alice needs the bank's signed approval to continue, while Olivia can observe shared progress. Each party is hosted on a separate participant node.",
+  "input": {
+    "workflow": "private-approval",
+    "setup": {
+      "application": {
+        "bank": "Northbank",
+        "buyer": "Alice",
+        "reviewer": "Olivia",
+        "status": "pending",
+        "private_details": "Synthetic income: 90000; internal rating: B"
+      }
+    },
+    "actions": [
+      {
+        "id": "cannot-forge-completion",
+        "actor": "Alice",
+        "action": "forge-completion"
+      },
+      {
+        "id": "buyer-cannot-read-or-approve",
+        "actor": "Alice",
+        "action": "approve-financing"
+      },
+      {
+        "id": "approval-is-required",
+        "actor": "Alice",
+        "action": "publish-approval"
+      },
+      {
+        "id": "bank-approval",
+        "actor": "Northbank",
+        "action": "approve-financing"
+      },
+      {
+        "id": "reviewer-cannot-continue",
+        "actor": "Olivia",
+        "action": "publish-approval"
+      },
+      {
+        "id": "buyer-continuation",
+        "actor": "Alice",
+        "action": "publish-approval"
+      }
+    ]
+  },
+  "expected": {
+    "actions": [
+      {
+        "id": "cannot-forge-completion",
+        "outcome": "rejected",
+        "reason": "unauthorized",
+        "application": "pending",
+        "workflow": "waiting",
+        "consumed": false,
+        "active_contracts": 1,
+        "visible_to": [
+          "Northbank"
+        ]
+      },
+      {
+        "id": "buyer-cannot-read-or-approve",
+        "outcome": "rejected",
+        "reason": "not-visible",
+        "application": "pending",
+        "workflow": "waiting",
+        "consumed": false,
+        "active_contracts": 1,
+        "visible_to": [
+          "Northbank"
+        ]
+      },
+      {
+        "id": "approval-is-required",
+        "outcome": "rejected",
+        "reason": "application-rejected",
+        "application": "pending",
+        "workflow": "waiting",
+        "consumed": false,
+        "active_contracts": 1,
+        "visible_to": [
+          "Northbank"
+        ]
+      },
+      {
+        "id": "bank-approval",
+        "outcome": "committed",
+        "application": "approved",
+        "workflow": "waiting",
+        "consumed": true,
+        "active_contracts": 1,
+        "visible_to": [
+          "Northbank"
+        ]
+      },
+      {
+        "id": "reviewer-cannot-continue",
+        "outcome": "rejected",
+        "reason": "unauthorized",
+        "application": "approved",
+        "workflow": "waiting",
+        "consumed": false,
+        "active_contracts": 1,
+        "visible_to": [
+          "Northbank"
+        ]
+      },
+      {
+        "id": "buyer-continuation",
+        "outcome": "committed",
+        "application": "approved",
+        "workflow": "complete",
+        "consumed": false,
+        "active_contracts": 1,
+        "visible_to": [
+          "Northbank"
+        ]
+      }
+    ],
+    "visibility": {
+      "Northbank": {
+        "application": true,
+        "progress": true,
+        "private_events": 2,
+        "progress_events": 2,
+        "private_payload_observed": true
+      },
+      "Alice": {
+        "application": false,
+        "progress": true,
+        "private_events": 0,
+        "progress_events": 2,
+        "private_payload_observed": false
+      },
+      "Olivia": {
+        "application": false,
+        "progress": true,
+        "private_events": 0,
+        "progress_events": 2,
+        "private_payload_observed": false
+      }
+    }
+  },
+  "actual": {
+    "actions": [
+      {
+        "id": "cannot-forge-completion",
+        "outcome": "rejected",
+        "application": "pending",
+        "consumed": false,
+        "active_contracts": 1,
+        "visible_to": [
+          "Northbank"
+        ],
+        "reason": "unauthorized",
+        "workflow": "waiting"
+      },
+      {
+        "id": "buyer-cannot-read-or-approve",
+        "outcome": "rejected",
+        "application": "pending",
+        "consumed": false,
+        "active_contracts": 1,
+        "visible_to": [
+          "Northbank"
+        ],
+        "reason": "not-visible",
+        "workflow": "waiting"
+      },
+      {
+        "id": "approval-is-required",
+        "outcome": "rejected",
+        "application": "pending",
+        "consumed": false,
+        "active_contracts": 1,
+        "visible_to": [
+          "Northbank"
+        ],
+        "reason": "application-rejected",
+        "workflow": "waiting"
+      },
+      {
+        "id": "bank-approval",
+        "outcome": "committed",
+        "application": "approved",
+        "consumed": true,
+        "active_contracts": 1,
+        "visible_to": [
+          "Northbank"
+        ],
+        "workflow": "waiting"
+      },
+      {
+        "id": "reviewer-cannot-continue",
+        "outcome": "rejected",
+        "application": "approved",
+        "consumed": false,
+        "active_contracts": 1,
+        "visible_to": [
+          "Northbank"
+        ],
+        "reason": "unauthorized",
+        "workflow": "waiting"
+      },
+      {
+        "id": "buyer-continuation",
+        "outcome": "committed",
+        "application": "approved",
+        "consumed": false,
+        "active_contracts": 1,
+        "visible_to": [
+          "Northbank"
+        ],
+        "workflow": "complete"
+      }
+    ],
+    "visibility": {
+      "Northbank": {
+        "application": true,
+        "progress": true,
+        "private_events": 2,
+        "progress_events": 2,
+        "private_payload_observed": true
+      },
+      "Alice": {
+        "application": false,
+        "progress": true,
+        "private_events": 0,
+        "progress_events": 2,
+        "private_payload_observed": false
+      },
+      "Olivia": {
+        "application": false,
+        "progress": true,
+        "private_events": 0,
+        "progress_events": 2,
+        "private_payload_observed": false
+      }
+    }
+  },
+  "provenance": {
+    "mode": "live-canton",
+    "topology": "three independent participant nodes, one local JVM, one common synchronizer",
+    "revision": "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+    "worktree_dirty": false,
+    "recorded_at": "2026-09-11T05:12:04.657193Z",
+    "story_format": 1,
+    "java": "17.0.19+10",
+    "configured_sdk": "3.4.11",
+    "input_sha256": "8cedeed6f724419eee545886d5939c87f48bb340a478f8e0b53c5a917e3a9165",
+    "expected_sha256": "d6d078859d384e2543be943a2ebad6228b081ff0ab441928a3641187a7fa3b12",
+    "dar_sha256": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e",
+    "dars": {
+      "harness/ledger/tests/.daml/dist/harmonia-tests-0.1.0.dar": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e"
+    },
+    "actual_sha256": "66c6211ed3e06501d79878a8e3fd308fe194952d30c8ec8111cec0f4046c24b7",
+    "observation_sha256": "543e11b24ff1d7e1a6296a8fdc62b10da1fe39762efeb4228228239278ba1d78",
+    "matched": true
+  },
+  "presentation": {
+    "kind": "Private",
+    "subtitle": "Signed result handoff",
+    "start": "pending",
+    "start_detail": "Application created",
+    "operation": "product/server/src/main/scala/harmonia/financing/Financing.scala",
+    "units": [
+      {
+        "id": "cannot-forge-completion",
+        "actor": "Alice",
+        "action": "forge-completion",
+        "expected": {
+          "id": "cannot-forge-completion",
+          "outcome": "rejected",
+          "reason": "unauthorized",
+          "application": "pending",
+          "workflow": "waiting",
+          "consumed": false,
+          "active_contracts": 1,
+          "visible_to": [
+            "Northbank"
+          ]
+        },
+        "actual": {
+          "id": "cannot-forge-completion",
+          "outcome": "rejected",
+          "application": "pending",
+          "consumed": false,
+          "active_contracts": 1,
+          "visible_to": [
+            "Northbank"
+          ],
+          "reason": "unauthorized",
+          "workflow": "waiting"
+        },
+        "observed_state": "pending",
+        "outcome_label": "rejected"
+      },
+      {
+        "id": "buyer-cannot-read-or-approve",
+        "actor": "Alice",
+        "action": "approve-financing",
+        "expected": {
+          "id": "buyer-cannot-read-or-approve",
+          "outcome": "rejected",
+          "reason": "not-visible",
+          "application": "pending",
+          "workflow": "waiting",
+          "consumed": false,
+          "active_contracts": 1,
+          "visible_to": [
+            "Northbank"
+          ]
+        },
+        "actual": {
+          "id": "buyer-cannot-read-or-approve",
+          "outcome": "rejected",
+          "application": "pending",
+          "consumed": false,
+          "active_contracts": 1,
+          "visible_to": [
+            "Northbank"
+          ],
+          "reason": "not-visible",
+          "workflow": "waiting"
+        },
+        "observed_state": "pending",
+        "outcome_label": "rejected"
+      },
+      {
+        "id": "approval-is-required",
+        "actor": "Alice",
+        "action": "publish-approval",
+        "expected": {
+          "id": "approval-is-required",
+          "outcome": "rejected",
+          "reason": "application-rejected",
+          "application": "pending",
+          "workflow": "waiting",
+          "consumed": false,
+          "active_contracts": 1,
+          "visible_to": [
+            "Northbank"
+          ]
+        },
+        "actual": {
+          "id": "approval-is-required",
+          "outcome": "rejected",
+          "application": "pending",
+          "consumed": false,
+          "active_contracts": 1,
+          "visible_to": [
+            "Northbank"
+          ],
+          "reason": "application-rejected",
+          "workflow": "waiting"
+        },
+        "observed_state": "pending",
+        "outcome_label": "rejected"
+      },
+      {
+        "id": "bank-approval",
+        "actor": "Northbank",
+        "action": "approve-financing",
+        "expected": {
+          "id": "bank-approval",
+          "outcome": "committed",
+          "application": "approved",
+          "workflow": "waiting",
+          "consumed": true,
+          "active_contracts": 1,
+          "visible_to": [
+            "Northbank"
+          ]
+        },
+        "actual": {
+          "id": "bank-approval",
+          "outcome": "committed",
+          "application": "approved",
+          "consumed": true,
+          "active_contracts": 1,
+          "visible_to": [
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "observed_state": "approved",
+        "outcome_label": "committed"
+      },
+      {
+        "id": "reviewer-cannot-continue",
+        "actor": "Olivia",
+        "action": "publish-approval",
+        "expected": {
+          "id": "reviewer-cannot-continue",
+          "outcome": "rejected",
+          "reason": "unauthorized",
+          "application": "approved",
+          "workflow": "waiting",
+          "consumed": false,
+          "active_contracts": 1,
+          "visible_to": [
+            "Northbank"
+          ]
+        },
+        "actual": {
+          "id": "reviewer-cannot-continue",
+          "outcome": "rejected",
+          "application": "approved",
+          "consumed": false,
+          "active_contracts": 1,
+          "visible_to": [
+            "Northbank"
+          ],
+          "reason": "unauthorized",
+          "workflow": "waiting"
+        },
+        "observed_state": "approved",
+        "outcome_label": "rejected"
+      },
+      {
+        "id": "buyer-continuation",
+        "actor": "Alice",
+        "action": "publish-approval",
+        "expected": {
+          "id": "buyer-continuation",
+          "outcome": "committed",
+          "application": "approved",
+          "workflow": "complete",
+          "consumed": false,
+          "active_contracts": 1,
+          "visible_to": [
+            "Northbank"
+          ]
+        },
+        "actual": {
+          "id": "buyer-continuation",
+          "outcome": "committed",
+          "application": "approved",
+          "consumed": false,
+          "active_contracts": 1,
+          "visible_to": [
+            "Northbank"
+          ],
+          "workflow": "complete"
+        },
+        "observed_state": "approved",
+        "outcome_label": "committed"
+      }
+    ]
+  }
+}

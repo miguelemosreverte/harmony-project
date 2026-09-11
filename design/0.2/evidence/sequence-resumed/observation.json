@@ -1,0 +1,251 @@
+{
+  "setup" : {
+    "reference" : "sequence-resumed",
+    "bankName" : "Northbank",
+    "published" : "007e7c62e42282cf23733a284b8c202a9e841f99960258cb2dd4abff3872f11b78ca1212205c1a32d91f060c696eb7b9eff1709b2c2412cd366d7d150f153f0fcdc9f17525",
+    "buyerName" : "Alice",
+    "bank" : "sequence-resumed-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc",
+    "buyer" : "sequence-resumed-Alice-9b3970be::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc",
+    "engine" : "sequence-resumed-DefinitionPublisher-4f1df03a::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+  },
+  "attempts" : [
+    {
+      "review" : "pending",
+      "step" : {
+        "application" : "pending",
+        "workflow" : "waiting",
+        "rawError" : "Authorization failure: DAML_AUTHORIZATION_ERROR(8,d7d00f8d): Interpretation error: Error: node NodeId(0) (6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451:Harmonia.Process.Engine:ProcessInstance) requires authorizers sequence-resumed-DefinitionPublisher-4f1df03a::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc,sequence-resumed-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc, but only sequence-resumed-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc we...",
+        "consumed" : false,
+        "outcome" : "rejected",
+        "activeContracts" : 2,
+        "id" : "forged-completion",
+        "outputContract" : "00343a4c8a581880fbf79500f79b6838a869276472b53d3cf0e50fd84e6714f07cca121220983f1f7cddea37b9f6c5372964b02c7a825ab6cb26fe73a81706f5d69ec38869",
+        "visibleTo" : [
+          "Northbank",
+          "Alice"
+        ],
+        "reason" : "unauthorized",
+        "inputContract" : "00343a4c8a581880fbf79500f79b6838a869276472b53d3cf0e50fd84e6714f07cca121220983f1f7cddea37b9f6c5372964b02c7a825ab6cb26fe73a81706f5d69ec38869"
+      },
+      "enabled" : [
+        "financing"
+      ],
+      "completed" : [
+      ],
+      "definition" : {
+        "name" : "approval-review",
+        "version" : 1
+      },
+      "processContract" : "00248ecadff3002bebece3fd07205a7ed7e25bbb4f241620399afa93c15a822184ca121220c8ed8a9fd1624a503d673d203e4f55250afb4bc138dc899d38d2b0f647464804"
+    },
+    {
+      "review" : "pending",
+      "step" : {
+        "application" : "pending",
+        "workflow" : "waiting",
+        "rawError" : "Failed with Status: FailureStatus {errorId = \"UNHANDLED_EXCEPTION/DA.Exception.AssertionFailed:AssertionFailed\", category = InvalidGivenCurrentSystemStateOther, message = \"Step must be enabled\", meta = TextMap []}",
+        "consumed" : false,
+        "outcome" : "rejected",
+        "activeContracts" : 2,
+        "id" : "premature-review",
+        "outputContract" : "00343a4c8a581880fbf79500f79b6838a869276472b53d3cf0e50fd84e6714f07cca121220983f1f7cddea37b9f6c5372964b02c7a825ab6cb26fe73a81706f5d69ec38869",
+        "visibleTo" : [
+          "Northbank",
+          "Alice"
+        ],
+        "reason" : "application-rejected",
+        "inputContract" : "00343a4c8a581880fbf79500f79b6838a869276472b53d3cf0e50fd84e6714f07cca121220983f1f7cddea37b9f6c5372964b02c7a825ab6cb26fe73a81706f5d69ec38869"
+      },
+      "enabled" : [
+        "financing"
+      ],
+      "completed" : [
+      ],
+      "definition" : {
+        "name" : "approval-review",
+        "version" : 1
+      },
+      "processContract" : "00248ecadff3002bebece3fd07205a7ed7e25bbb4f241620399afa93c15a822184ca121220c8ed8a9fd1624a503d673d203e4f55250afb4bc138dc899d38d2b0f647464804"
+    },
+    {
+      "review" : "pending",
+      "step" : {
+        "application" : "approved",
+        "workflow" : "waiting",
+        "rawError" : null,
+        "consumed" : true,
+        "outcome" : "committed",
+        "activeContracts" : 2,
+        "id" : "bank-approval",
+        "outputContract" : "0082531d412329b8cad65b8aa30c62beb3da273e4ae192a8477f23c53fab64d28fca12122065387f9a07eedcd48224e55772336ede007d0e08033203959db8151fc980f6c0",
+        "visibleTo" : [
+          "Northbank",
+          "Alice"
+        ],
+        "reason" : null,
+        "inputContract" : "00343a4c8a581880fbf79500f79b6838a869276472b53d3cf0e50fd84e6714f07cca121220983f1f7cddea37b9f6c5372964b02c7a825ab6cb26fe73a81706f5d69ec38869"
+      },
+      "enabled" : [
+        "review"
+      ],
+      "completed" : [
+        "financing"
+      ],
+      "definition" : {
+        "name" : "approval-review",
+        "version" : 1
+      },
+      "processContract" : "003b331a82916c217e77e002864f4077884dec90bb90c1257e65b069e4a078fc41ca121220f9e3cad11d31ce8517f1a20ffbc1ba4fe0da8b5e5d8b36c193db43da61dfc7b8"
+    },
+    {
+      "review" : "pending",
+      "step" : {
+        "application" : "approved",
+        "workflow" : "waiting",
+        "rawError" : null,
+        "consumed" : false,
+        "outcome" : "duplicate",
+        "activeContracts" : 2,
+        "id" : "same-request-again",
+        "outputContract" : "0082531d412329b8cad65b8aa30c62beb3da273e4ae192a8477f23c53fab64d28fca12122065387f9a07eedcd48224e55772336ede007d0e08033203959db8151fc980f6c0",
+        "visibleTo" : [
+          "Northbank",
+          "Alice"
+        ],
+        "reason" : null,
+        "inputContract" : "0082531d412329b8cad65b8aa30c62beb3da273e4ae192a8477f23c53fab64d28fca12122065387f9a07eedcd48224e55772336ede007d0e08033203959db8151fc980f6c0"
+      },
+      "enabled" : [
+        "review"
+      ],
+      "completed" : [
+        "financing"
+      ],
+      "definition" : {
+        "name" : "approval-review",
+        "version" : 1
+      },
+      "processContract" : "003b331a82916c217e77e002864f4077884dec90bb90c1257e65b069e4a078fc41ca121220f9e3cad11d31ce8517f1a20ffbc1ba4fe0da8b5e5d8b36c193db43da61dfc7b8"
+    },
+    {
+      "review" : "pending",
+      "step" : {
+        "application" : "approved",
+        "workflow" : "waiting",
+        "rawError" : "Failed with Status: FailureStatus {errorId = \"UNHANDLED_EXCEPTION/DA.Exception.AssertionFailed:AssertionFailed\", category = InvalidGivenCurrentSystemStateOther, message = \"Step must be enabled\", meta = TextMap []}",
+        "consumed" : false,
+        "outcome" : "rejected",
+        "activeContracts" : 2,
+        "id" : "completed-step-again",
+        "outputContract" : "0082531d412329b8cad65b8aa30c62beb3da273e4ae192a8477f23c53fab64d28fca12122065387f9a07eedcd48224e55772336ede007d0e08033203959db8151fc980f6c0",
+        "visibleTo" : [
+          "Northbank",
+          "Alice"
+        ],
+        "reason" : "application-rejected",
+        "inputContract" : "0082531d412329b8cad65b8aa30c62beb3da273e4ae192a8477f23c53fab64d28fca12122065387f9a07eedcd48224e55772336ede007d0e08033203959db8151fc980f6c0"
+      },
+      "enabled" : [
+        "review"
+      ],
+      "completed" : [
+        "financing"
+      ],
+      "definition" : {
+        "name" : "approval-review",
+        "version" : 1
+      },
+      "processContract" : "003b331a82916c217e77e002864f4077884dec90bb90c1257e65b069e4a078fc41ca121220f9e3cad11d31ce8517f1a20ffbc1ba4fe0da8b5e5d8b36c193db43da61dfc7b8"
+    },
+    {
+      "review" : "pending",
+      "step" : {
+        "application" : "approved",
+        "workflow" : "waiting",
+        "rawError" : null,
+        "consumed" : false,
+        "outcome" : "observed",
+        "activeContracts" : 2,
+        "id" : "waiting-for-alice",
+        "outputContract" : "0082531d412329b8cad65b8aa30c62beb3da273e4ae192a8477f23c53fab64d28fca12122065387f9a07eedcd48224e55772336ede007d0e08033203959db8151fc980f6c0",
+        "visibleTo" : [
+          "Northbank",
+          "Alice"
+        ],
+        "reason" : null,
+        "inputContract" : "0082531d412329b8cad65b8aa30c62beb3da273e4ae192a8477f23c53fab64d28fca12122065387f9a07eedcd48224e55772336ede007d0e08033203959db8151fc980f6c0"
+      },
+      "enabled" : [
+        "review"
+      ],
+      "completed" : [
+        "financing"
+      ],
+      "definition" : {
+        "name" : "approval-review",
+        "version" : 1
+      },
+      "processContract" : "003b331a82916c217e77e002864f4077884dec90bb90c1257e65b069e4a078fc41ca121220f9e3cad11d31ce8517f1a20ffbc1ba4fe0da8b5e5d8b36c193db43da61dfc7b8"
+    },
+    {
+      "review" : "pending",
+      "step" : {
+        "application" : "approved",
+        "workflow" : "waiting",
+        "rawError" : null,
+        "consumed" : false,
+        "outcome" : "observed",
+        "activeContracts" : 2,
+        "id" : "fresh-client",
+        "outputContract" : "0082531d412329b8cad65b8aa30c62beb3da273e4ae192a8477f23c53fab64d28fca12122065387f9a07eedcd48224e55772336ede007d0e08033203959db8151fc980f6c0",
+        "visibleTo" : [
+          "Northbank",
+          "Alice"
+        ],
+        "reason" : null,
+        "inputContract" : "0082531d412329b8cad65b8aa30c62beb3da273e4ae192a8477f23c53fab64d28fca12122065387f9a07eedcd48224e55772336ede007d0e08033203959db8151fc980f6c0"
+      },
+      "enabled" : [
+        "review"
+      ],
+      "completed" : [
+        "financing"
+      ],
+      "definition" : {
+        "name" : "approval-review",
+        "version" : 1
+      },
+      "processContract" : "003b331a82916c217e77e002864f4077884dec90bb90c1257e65b069e4a078fc41ca121220f9e3cad11d31ce8517f1a20ffbc1ba4fe0da8b5e5d8b36c193db43da61dfc7b8"
+    },
+    {
+      "review" : "confirmed",
+      "step" : {
+        "application" : "approved",
+        "workflow" : "complete",
+        "rawError" : null,
+        "consumed" : false,
+        "outcome" : "committed",
+        "activeContracts" : 2,
+        "id" : "buyer-review",
+        "outputContract" : "0082531d412329b8cad65b8aa30c62beb3da273e4ae192a8477f23c53fab64d28fca12122065387f9a07eedcd48224e55772336ede007d0e08033203959db8151fc980f6c0",
+        "visibleTo" : [
+          "Northbank",
+          "Alice"
+        ],
+        "reason" : null,
+        "inputContract" : "0082531d412329b8cad65b8aa30c62beb3da273e4ae192a8477f23c53fab64d28fca12122065387f9a07eedcd48224e55772336ede007d0e08033203959db8151fc980f6c0"
+      },
+      "enabled" : [
+      ],
+      "completed" : [
+        "financing",
+        "review"
+      ],
+      "definition" : {
+        "name" : "approval-review",
+        "version" : 1
+      },
+      "processContract" : "00886e05a51b9c503b9ba0019117e22033db6c7d852b60f6fa5a89e3b7b477f5f9ca1212208aef978c962c65d9c9662e1d93aab5d1fcdd5e8054c9317e5130fa6c316151c1"
+    }
+  ]
+}

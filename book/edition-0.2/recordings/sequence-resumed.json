@@ -1,0 +1,759 @@
+{
+  "id": "sequence-resumed",
+  "title": "A workflow survives retries and a restart",
+  "description": "A forged completion and a premature review must fail. The bank's request can be retried safely. Alice then reconnects and completes her review using progress recovered from the ledger.",
+  "input": {
+    "workflow": "sequential-approval",
+    "setup": {
+      "application": {
+        "bank": "Northbank",
+        "buyer": "Alice",
+        "status": "pending"
+      }
+    },
+    "actions": [
+      {
+        "id": "forged-completion",
+        "actor": "Northbank",
+        "action": "forge-completion"
+      },
+      {
+        "id": "premature-review",
+        "actor": "Alice",
+        "action": "confirm-review"
+      },
+      {
+        "id": "bank-approval",
+        "actor": "Northbank",
+        "action": "approve-financing",
+        "request": "approval-1"
+      },
+      {
+        "id": "same-request-again",
+        "actor": "Northbank",
+        "action": "approve-financing",
+        "request": "approval-1"
+      },
+      {
+        "id": "completed-step-again",
+        "actor": "Northbank",
+        "action": "approve-financing"
+      },
+      {
+        "id": "waiting-for-alice",
+        "actor": "Alice",
+        "action": "wait"
+      },
+      {
+        "id": "fresh-client",
+        "actor": "Alice",
+        "action": "reconnect"
+      },
+      {
+        "id": "buyer-review",
+        "actor": "Alice",
+        "action": "confirm-review"
+      }
+    ]
+  },
+  "expected": {
+    "definition": {
+      "name": "approval-review",
+      "version": 1
+    },
+    "actions": [
+      {
+        "id": "forged-completion",
+        "outcome": "rejected",
+        "reason": "unauthorized",
+        "application": "pending",
+        "review": "pending",
+        "workflow": "waiting",
+        "completed": [],
+        "enabled": [
+          "financing"
+        ],
+        "consumed": false,
+        "active_contracts": 2,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ]
+      },
+      {
+        "id": "premature-review",
+        "outcome": "rejected",
+        "reason": "application-rejected",
+        "application": "pending",
+        "review": "pending",
+        "workflow": "waiting",
+        "completed": [],
+        "enabled": [
+          "financing"
+        ],
+        "consumed": false,
+        "active_contracts": 2,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ]
+      },
+      {
+        "id": "bank-approval",
+        "outcome": "committed",
+        "application": "approved",
+        "review": "pending",
+        "workflow": "waiting",
+        "completed": [
+          "financing"
+        ],
+        "enabled": [
+          "review"
+        ],
+        "consumed": true,
+        "active_contracts": 2,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ]
+      },
+      {
+        "id": "same-request-again",
+        "outcome": "duplicate",
+        "application": "approved",
+        "review": "pending",
+        "workflow": "waiting",
+        "completed": [
+          "financing"
+        ],
+        "enabled": [
+          "review"
+        ],
+        "consumed": false,
+        "active_contracts": 2,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ]
+      },
+      {
+        "id": "completed-step-again",
+        "outcome": "rejected",
+        "reason": "application-rejected",
+        "application": "approved",
+        "review": "pending",
+        "workflow": "waiting",
+        "completed": [
+          "financing"
+        ],
+        "enabled": [
+          "review"
+        ],
+        "consumed": false,
+        "active_contracts": 2,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ]
+      },
+      {
+        "id": "waiting-for-alice",
+        "outcome": "observed",
+        "application": "approved",
+        "review": "pending",
+        "workflow": "waiting",
+        "completed": [
+          "financing"
+        ],
+        "enabled": [
+          "review"
+        ],
+        "consumed": false,
+        "active_contracts": 2,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ]
+      },
+      {
+        "id": "fresh-client",
+        "outcome": "observed",
+        "application": "approved",
+        "review": "pending",
+        "workflow": "waiting",
+        "completed": [
+          "financing"
+        ],
+        "enabled": [
+          "review"
+        ],
+        "consumed": false,
+        "active_contracts": 2,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ]
+      },
+      {
+        "id": "buyer-review",
+        "outcome": "committed",
+        "application": "approved",
+        "review": "confirmed",
+        "workflow": "complete",
+        "completed": [
+          "financing",
+          "review"
+        ],
+        "enabled": [],
+        "consumed": false,
+        "active_contracts": 2,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ]
+      }
+    ]
+  },
+  "actual": {
+    "definition": {
+      "name": "approval-review",
+      "version": 1
+    },
+    "actions": [
+      {
+        "id": "forged-completion",
+        "outcome": "rejected",
+        "application": "pending",
+        "consumed": false,
+        "active_contracts": 2,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ],
+        "reason": "unauthorized",
+        "workflow": "waiting",
+        "review": "pending",
+        "completed": [],
+        "enabled": [
+          "financing"
+        ]
+      },
+      {
+        "id": "premature-review",
+        "outcome": "rejected",
+        "application": "pending",
+        "consumed": false,
+        "active_contracts": 2,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ],
+        "reason": "application-rejected",
+        "workflow": "waiting",
+        "review": "pending",
+        "completed": [],
+        "enabled": [
+          "financing"
+        ]
+      },
+      {
+        "id": "bank-approval",
+        "outcome": "committed",
+        "application": "approved",
+        "consumed": true,
+        "active_contracts": 2,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ],
+        "workflow": "waiting",
+        "review": "pending",
+        "completed": [
+          "financing"
+        ],
+        "enabled": [
+          "review"
+        ]
+      },
+      {
+        "id": "same-request-again",
+        "outcome": "duplicate",
+        "application": "approved",
+        "consumed": false,
+        "active_contracts": 2,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ],
+        "workflow": "waiting",
+        "review": "pending",
+        "completed": [
+          "financing"
+        ],
+        "enabled": [
+          "review"
+        ]
+      },
+      {
+        "id": "completed-step-again",
+        "outcome": "rejected",
+        "application": "approved",
+        "consumed": false,
+        "active_contracts": 2,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ],
+        "reason": "application-rejected",
+        "workflow": "waiting",
+        "review": "pending",
+        "completed": [
+          "financing"
+        ],
+        "enabled": [
+          "review"
+        ]
+      },
+      {
+        "id": "waiting-for-alice",
+        "outcome": "observed",
+        "application": "approved",
+        "consumed": false,
+        "active_contracts": 2,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ],
+        "workflow": "waiting",
+        "review": "pending",
+        "completed": [
+          "financing"
+        ],
+        "enabled": [
+          "review"
+        ]
+      },
+      {
+        "id": "fresh-client",
+        "outcome": "observed",
+        "application": "approved",
+        "consumed": false,
+        "active_contracts": 2,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ],
+        "workflow": "waiting",
+        "review": "pending",
+        "completed": [
+          "financing"
+        ],
+        "enabled": [
+          "review"
+        ]
+      },
+      {
+        "id": "buyer-review",
+        "outcome": "committed",
+        "application": "approved",
+        "consumed": false,
+        "active_contracts": 2,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ],
+        "workflow": "complete",
+        "review": "confirmed",
+        "completed": [
+          "financing",
+          "review"
+        ],
+        "enabled": []
+      }
+    ]
+  },
+  "provenance": {
+    "mode": "live-canton",
+    "topology": "one participant, one synchronizer, separate party identities",
+    "revision": "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+    "worktree_dirty": false,
+    "recorded_at": "2026-09-11T05:11:34.481439Z",
+    "story_format": 1,
+    "java": "17.0.19+10",
+    "configured_sdk": "3.4.11",
+    "input_sha256": "caf64898158d957289cfd9e1f7159979900e9ac0c538e19262e188855e0b7baa",
+    "expected_sha256": "8cf9605b1f35d84bb542246c1c8d1661eb3416bcb4c74033ddd4c2703562bcdc",
+    "dar_sha256": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e",
+    "dars": {
+      "harness/ledger/tests/.daml/dist/harmonia-tests-0.1.0.dar": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e"
+    },
+    "actual_sha256": "710535fe711cd3e71a7e3206c800498101beb4add4a2bf37f746eacd491a0cc8",
+    "observation_sha256": "7883baa1da28582503c187b7bbd36daeff6cb3ded901787283413088e78a19fe",
+    "matched": true
+  },
+  "presentation": {
+    "kind": "Progression",
+    "subtitle": "Versioned progression, branches, and joins",
+    "start": "pending",
+    "start_detail": "Application created",
+    "operation": "product/ledger/core/daml/Harmonia/Process/Engine.daml",
+    "units": [
+      {
+        "id": "forged-completion",
+        "actor": "Northbank",
+        "action": "forge-completion",
+        "expected": {
+          "id": "forged-completion",
+          "outcome": "rejected",
+          "reason": "unauthorized",
+          "application": "pending",
+          "review": "pending",
+          "workflow": "waiting",
+          "completed": [],
+          "enabled": [
+            "financing"
+          ],
+          "consumed": false,
+          "active_contracts": 2,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ]
+        },
+        "actual": {
+          "id": "forged-completion",
+          "outcome": "rejected",
+          "application": "pending",
+          "consumed": false,
+          "active_contracts": 2,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "reason": "unauthorized",
+          "workflow": "waiting",
+          "review": "pending",
+          "completed": [],
+          "enabled": [
+            "financing"
+          ]
+        },
+        "observed_state": "pending",
+        "outcome_label": "rejected"
+      },
+      {
+        "id": "premature-review",
+        "actor": "Alice",
+        "action": "confirm-review",
+        "expected": {
+          "id": "premature-review",
+          "outcome": "rejected",
+          "reason": "application-rejected",
+          "application": "pending",
+          "review": "pending",
+          "workflow": "waiting",
+          "completed": [],
+          "enabled": [
+            "financing"
+          ],
+          "consumed": false,
+          "active_contracts": 2,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ]
+        },
+        "actual": {
+          "id": "premature-review",
+          "outcome": "rejected",
+          "application": "pending",
+          "consumed": false,
+          "active_contracts": 2,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "reason": "application-rejected",
+          "workflow": "waiting",
+          "review": "pending",
+          "completed": [],
+          "enabled": [
+            "financing"
+          ]
+        },
+        "observed_state": "pending",
+        "outcome_label": "rejected"
+      },
+      {
+        "id": "bank-approval",
+        "actor": "Northbank",
+        "action": "approve-financing",
+        "expected": {
+          "id": "bank-approval",
+          "outcome": "committed",
+          "application": "approved",
+          "review": "pending",
+          "workflow": "waiting",
+          "completed": [
+            "financing"
+          ],
+          "enabled": [
+            "review"
+          ],
+          "consumed": true,
+          "active_contracts": 2,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ]
+        },
+        "actual": {
+          "id": "bank-approval",
+          "outcome": "committed",
+          "application": "approved",
+          "consumed": true,
+          "active_contracts": 2,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting",
+          "review": "pending",
+          "completed": [
+            "financing"
+          ],
+          "enabled": [
+            "review"
+          ]
+        },
+        "observed_state": "approved",
+        "outcome_label": "committed"
+      },
+      {
+        "id": "same-request-again",
+        "actor": "Northbank",
+        "action": "approve-financing",
+        "expected": {
+          "id": "same-request-again",
+          "outcome": "duplicate",
+          "application": "approved",
+          "review": "pending",
+          "workflow": "waiting",
+          "completed": [
+            "financing"
+          ],
+          "enabled": [
+            "review"
+          ],
+          "consumed": false,
+          "active_contracts": 2,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ]
+        },
+        "actual": {
+          "id": "same-request-again",
+          "outcome": "duplicate",
+          "application": "approved",
+          "consumed": false,
+          "active_contracts": 2,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting",
+          "review": "pending",
+          "completed": [
+            "financing"
+          ],
+          "enabled": [
+            "review"
+          ]
+        },
+        "observed_state": "approved",
+        "outcome_label": "duplicate"
+      },
+      {
+        "id": "completed-step-again",
+        "actor": "Northbank",
+        "action": "approve-financing",
+        "expected": {
+          "id": "completed-step-again",
+          "outcome": "rejected",
+          "reason": "application-rejected",
+          "application": "approved",
+          "review": "pending",
+          "workflow": "waiting",
+          "completed": [
+            "financing"
+          ],
+          "enabled": [
+            "review"
+          ],
+          "consumed": false,
+          "active_contracts": 2,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ]
+        },
+        "actual": {
+          "id": "completed-step-again",
+          "outcome": "rejected",
+          "application": "approved",
+          "consumed": false,
+          "active_contracts": 2,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "reason": "application-rejected",
+          "workflow": "waiting",
+          "review": "pending",
+          "completed": [
+            "financing"
+          ],
+          "enabled": [
+            "review"
+          ]
+        },
+        "observed_state": "approved",
+        "outcome_label": "rejected"
+      },
+      {
+        "id": "waiting-for-alice",
+        "actor": "Alice",
+        "action": "wait",
+        "expected": {
+          "id": "waiting-for-alice",
+          "outcome": "observed",
+          "application": "approved",
+          "review": "pending",
+          "workflow": "waiting",
+          "completed": [
+            "financing"
+          ],
+          "enabled": [
+            "review"
+          ],
+          "consumed": false,
+          "active_contracts": 2,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ]
+        },
+        "actual": {
+          "id": "waiting-for-alice",
+          "outcome": "observed",
+          "application": "approved",
+          "consumed": false,
+          "active_contracts": 2,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting",
+          "review": "pending",
+          "completed": [
+            "financing"
+          ],
+          "enabled": [
+            "review"
+          ]
+        },
+        "observed_state": "approved",
+        "outcome_label": "observed"
+      },
+      {
+        "id": "fresh-client",
+        "actor": "Alice",
+        "action": "reconnect",
+        "expected": {
+          "id": "fresh-client",
+          "outcome": "observed",
+          "application": "approved",
+          "review": "pending",
+          "workflow": "waiting",
+          "completed": [
+            "financing"
+          ],
+          "enabled": [
+            "review"
+          ],
+          "consumed": false,
+          "active_contracts": 2,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ]
+        },
+        "actual": {
+          "id": "fresh-client",
+          "outcome": "observed",
+          "application": "approved",
+          "consumed": false,
+          "active_contracts": 2,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting",
+          "review": "pending",
+          "completed": [
+            "financing"
+          ],
+          "enabled": [
+            "review"
+          ]
+        },
+        "observed_state": "approved",
+        "outcome_label": "observed"
+      },
+      {
+        "id": "buyer-review",
+        "actor": "Alice",
+        "action": "confirm-review",
+        "expected": {
+          "id": "buyer-review",
+          "outcome": "committed",
+          "application": "approved",
+          "review": "confirmed",
+          "workflow": "complete",
+          "completed": [
+            "financing",
+            "review"
+          ],
+          "enabled": [],
+          "consumed": false,
+          "active_contracts": 2,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ]
+        },
+        "actual": {
+          "id": "buyer-review",
+          "outcome": "committed",
+          "application": "approved",
+          "consumed": false,
+          "active_contracts": 2,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "complete",
+          "review": "confirmed",
+          "completed": [
+            "financing",
+            "review"
+          ],
+          "enabled": []
+        },
+        "observed_state": "approved",
+        "outcome_label": "committed"
+      }
+    ]
+  }
+}

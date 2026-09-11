@@ -1,0 +1,655 @@
+{
+  "steps" : [
+    {
+      "application" : "pending",
+      "workflow" : "waiting",
+      "rawError" : "Authorization failure: DAML_AUTHORIZATION_ERROR(8,49d2075e): Interpretation error: Error: node NodeId(0) (6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451:Harmonia.Workflow:WorkflowInstance) requires authorizers generated-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc, but only generated-approved-Alice-9b3970be::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc were given",
+      "consumed" : false,
+      "outcome" : "rejected",
+      "activeContracts" : 1,
+      "id" : "buyer-attempt",
+      "outputContract" : "GeneratedApplication 00f0223dfd41eed9789ff9bdc33cb32f4dfb0a7ffffd3203780c7742d949cbe2d8ca1212203f31f58d6faffbfaf20ead0137ccda3df386d62028460c59e6179e85ef959f2a",
+      "visibleTo" : [
+        "Alice",
+        "Northbank"
+      ],
+      "reason" : "unauthorized",
+      "inputContract" : "GeneratedApplication 00f0223dfd41eed9789ff9bdc33cb32f4dfb0a7ffffd3203780c7742d949cbe2d8ca1212203f31f58d6faffbfaf20ead0137ccda3df386d62028460c59e6179e85ef959f2a"
+    },
+    {
+      "application" : "approved",
+      "workflow" : "complete",
+      "rawError" : null,
+      "consumed" : true,
+      "outcome" : "committed",
+      "activeContracts" : 1,
+      "id" : "bank-approval",
+      "outputContract" : "GeneratedApplication 00ab668461982c9142db0e40625b2198c317dfb2bebb76fbb3c69f9c33ec6e79e5ca121220abb0634393edf36139a0deed7b14e4ea9f78fc8b863cff96f98ce4e7b113b0da",
+      "visibleTo" : [
+        "Alice",
+        "Northbank"
+      ],
+      "reason" : null,
+      "inputContract" : "GeneratedApplication 00f0223dfd41eed9789ff9bdc33cb32f4dfb0a7ffffd3203780c7742d949cbe2d8ca1212203f31f58d6faffbfaf20ead0137ccda3df386d62028460c59e6179e85ef959f2a"
+    }
+  ],
+  "bank" : "generated-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc",
+  "activeBindings" : 1,
+  "bank_events" : [
+    {
+      "transaction" : {
+        "updateId" : "12200cc0ee54d7f523d291735c297537834ce2dbf9c0751dcb2c7e452fd65cc363e5",
+        "commandId" : "be91cf1a-241e-4a71-99b4-24c7334385a3",
+        "effectiveAt" : "2026-09-11T05:11:37.198775Z",
+        "events" : [
+          {
+            "created" : {
+              "offset" : "221",
+              "contractId" : "00f0223dfd41eed9789ff9bdc33cb32f4dfb0a7ffffd3203780c7742d949cbe2d8ca1212203f31f58d6faffbfaf20ead0137ccda3df386d62028460c59e6179e85ef959f2a",
+              "templateId" : {
+                "packageId" : "b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2",
+                "moduleName" : "LegacyFinancing",
+                "entityName" : "Application"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2",
+                  "moduleName" : "LegacyFinancing",
+                  "entityName" : "Application"
+                },
+                "fields" : [
+                  {
+                    "label" : "bank",
+                    "value" : {
+                      "party" : "generated-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+                    }
+                  },
+                  {
+                    "label" : "buyer",
+                    "value" : {
+                      "party" : "generated-approved-Alice-9b3970be::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+                    }
+                  },
+                  {
+                    "label" : "reference",
+                    "value" : {
+                      "text" : "application"
+                    }
+                  },
+                  {
+                    "label" : "status",
+                    "value" : {
+                      "text" : "pending"
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "generated-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+              ],
+              "signatories" : [
+                "generated-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+              ],
+              "observers" : [
+                "generated-approved-Alice-9b3970be::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+              ],
+              "createdAt" : "2026-09-11T05:11:37.198775Z",
+              "packageName" : "legacy-financing",
+              "acsDelta" : true,
+              "representativePackageId" : "b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2"
+            }
+          }
+        ],
+        "offset" : "221",
+        "synchronizerId" : "mysynchronizer::1220aef57a146bb7a21a69197587d90cc52b17514f7e432bb3ded88737483b3122f7",
+        "traceContext" : {
+          "traceparent" : "00-0ecbfed82fc7c061167b3c34e47fa24b-26b48c2cef3907aa-01"
+        },
+        "recordTime" : "2026-09-11T05:11:37.207747Z"
+      }
+    },
+    {
+      "transaction" : {
+        "updateId" : "122079e55c8d21334c3bc1aaed83cd778396753980e98bdebdc8c6eadcc5600e40be",
+        "commandId" : "edc9b58d-5fa2-4a63-921f-c597a4bd24ad",
+        "effectiveAt" : "2026-09-11T05:11:37.571593Z",
+        "events" : [
+          {
+            "created" : {
+              "offset" : "224",
+              "contractId" : "008e4ebffd12b53b8a8ea9e455ffad4a695350e13ea119ac343fbc0462e1953e65ca1212206578c3788c4d038173bf2504ccfa15cfa085df3471a4e45ac7230e0d26eebde2",
+              "templateId" : {
+                "packageId" : "fab2284d02e402774ac6996e5ec46cc3ba0631572c098b36400f7bbc4a70c6e5",
+                "moduleName" : "GeneratedFinancing",
+                "entityName" : "Adapter"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "fab2284d02e402774ac6996e5ec46cc3ba0631572c098b36400f7bbc4a70c6e5",
+                  "moduleName" : "GeneratedFinancing",
+                  "entityName" : "Adapter"
+                },
+                "fields" : [
+                  {
+                    "label" : "actor",
+                    "value" : {
+                      "party" : "generated-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+                    }
+                  },
+                  {
+                    "label" : "readers",
+                    "value" : {
+                      "list" : {
+                        "elements" : [
+                          {
+                            "party" : "generated-approved-Alice-9b3970be::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "subject",
+                    "value" : {
+                      "text" : "application"
+                    }
+                  },
+                  {
+                    "label" : "source",
+                    "value" : {
+                      "contractId" : "00f0223dfd41eed9789ff9bdc33cb32f4dfb0a7ffffd3203780c7742d949cbe2d8ca1212203f31f58d6faffbfaf20ead0137ccda3df386d62028460c59e6179e85ef959f2a"
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "generated-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+              ],
+              "signatories" : [
+                "generated-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+              ],
+              "observers" : [
+                "generated-approved-Alice-9b3970be::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+              ],
+              "createdAt" : "2026-09-11T05:11:37.571593Z",
+              "packageName" : "harmonia-binding-generatedfinancing",
+              "acsDelta" : true,
+              "representativePackageId" : "fab2284d02e402774ac6996e5ec46cc3ba0631572c098b36400f7bbc4a70c6e5"
+            }
+          }
+        ],
+        "offset" : "224",
+        "synchronizerId" : "mysynchronizer::1220aef57a146bb7a21a69197587d90cc52b17514f7e432bb3ded88737483b3122f7",
+        "traceContext" : {
+          "traceparent" : "00-55235f3e865b1005983c3a36ca053d4d-84fdb91d81429110-01"
+        },
+        "recordTime" : "2026-09-11T05:11:37.632861Z"
+      }
+    },
+    {
+      "transaction" : {
+        "updateId" : "1220ea3115e3b7485dfd17e36509f2ac5564d8b70328a1b0d440c3b5e62a3d9632b7",
+        "commandId" : "2cdeb571-a6d3-4316-a413-d8a6bba48c34",
+        "effectiveAt" : "2026-09-11T05:11:38.003933Z",
+        "events" : [
+          {
+            "created" : {
+              "offset" : "227",
+              "contractId" : "0085043fbc945ad4417e3083af3adec270007592fd26573523f66e2f7660b56fc7ca121220cbf67468a2c097101073fd7612c27eb7bbb457c64c6d899b8697379e25565a1b",
+              "templateId" : {
+                "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                "moduleName" : "Harmonia.Workflow",
+                "entityName" : "WorkflowInstance"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                  "moduleName" : "Harmonia.Workflow",
+                  "entityName" : "WorkflowInstance"
+                },
+                "fields" : [
+                  {
+                    "label" : "owner",
+                    "value" : {
+                      "party" : "generated-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+                    }
+                  },
+                  {
+                    "label" : "readers",
+                    "value" : {
+                      "list" : {
+                        "elements" : [
+                          {
+                            "party" : "generated-approved-Alice-9b3970be::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "assignee",
+                    "value" : {
+                      "party" : "generated-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+                    }
+                  },
+                  {
+                    "label" : "subject",
+                    "value" : {
+                      "text" : "application"
+                    }
+                  },
+                  {
+                    "label" : "action",
+                    "value" : {
+                      "contractId" : "008e4ebffd12b53b8a8ea9e455ffad4a695350e13ea119ac343fbc0462e1953e65ca1212206578c3788c4d038173bf2504ccfa15cfa085df3471a4e45ac7230e0d26eebde2"
+                    }
+                  },
+                  {
+                    "label" : "status",
+                    "value" : {
+                      "text" : "waiting"
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "generated-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+              ],
+              "signatories" : [
+                "generated-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+              ],
+              "observers" : [
+                "generated-approved-Alice-9b3970be::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+              ],
+              "createdAt" : "2026-09-11T05:11:38.003933Z",
+              "packageName" : "harmonia-core",
+              "acsDelta" : true,
+              "representativePackageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451"
+            }
+          }
+        ],
+        "offset" : "227",
+        "synchronizerId" : "mysynchronizer::1220aef57a146bb7a21a69197587d90cc52b17514f7e432bb3ded88737483b3122f7",
+        "traceContext" : {
+          "traceparent" : "00-0b807b06de98f1d57104f8e0cf340f1c-5d740ce9fbda225c-01"
+        },
+        "recordTime" : "2026-09-11T05:11:38.013265Z"
+      }
+    },
+    {
+      "transaction" : {
+        "updateId" : "122038963beb78cf0017f532954daaef6301e20d39e021f477fb9455f9c4b85c8252",
+        "commandId" : "5cb27b43-afe7-4830-a9ae-06d9b15100fa",
+        "effectiveAt" : "2026-09-11T05:11:38.464177Z",
+        "events" : [
+          {
+            "exercised" : {
+              "offset" : "230",
+              "contractId" : "0085043fbc945ad4417e3083af3adec270007592fd26573523f66e2f7660b56fc7ca121220cbf67468a2c097101073fd7612c27eb7bbb457c64c6d899b8697379e25565a1b",
+              "templateId" : {
+                "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                "moduleName" : "Harmonia.Workflow",
+                "entityName" : "WorkflowInstance"
+              },
+              "choice" : "Advance",
+              "choiceArgument" : {
+                "record" : {
+                  "recordId" : {
+                    "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                    "moduleName" : "Harmonia.Workflow",
+                    "entityName" : "Advance"
+                  }
+                }
+              },
+              "actingParties" : [
+                "generated-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+              ],
+              "consuming" : true,
+              "witnessParties" : [
+                "generated-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+              ],
+              "lastDescendantNodeId" : 8,
+              "exerciseResult" : {
+                "record" : {
+                  "recordId" : {
+                    "packageId" : "5aee9b21b8e9a4c4975b5f4c4198e6e6e8469df49e2010820e792f393db870f4",
+                    "moduleName" : "DA.Types",
+                    "entityName" : "Tuple2"
+                  },
+                  "fields" : [
+                    {
+                      "label" : "_1",
+                      "value" : {
+                        "contractId" : "00a3d40e1ef6ac64d09484ee074905eb453dfe952b0f31b25e9383cf722e5da969ca1212205dd9b4fe80515886238b96190ffa63150290711c41108c403a64effb14ec0e02"
+                      }
+                    },
+                    {
+                      "label" : "_2",
+                      "value" : {
+                        "contractId" : "0095b6cb3b526aaca75c0b675e3d6b88aca4adfa91a33b39390098dd5e6f81ddc0ca121220ce6223764b043bb3cf91cb0f61b7c3b8d7692b4b5fc73c3d16a975cf16a7265c"
+                      }
+                    }
+                  ]
+                }
+              },
+              "packageName" : "harmonia-core",
+              "acsDelta" : true
+            }
+          },
+          {
+            "exercised" : {
+              "offset" : "230",
+              "nodeId" : 2,
+              "contractId" : "008e4ebffd12b53b8a8ea9e455ffad4a695350e13ea119ac343fbc0462e1953e65ca1212206578c3788c4d038173bf2504ccfa15cfa085df3471a4e45ac7230e0d26eebde2",
+              "templateId" : {
+                "packageId" : "fab2284d02e402774ac6996e5ec46cc3ba0631572c098b36400f7bbc4a70c6e5",
+                "moduleName" : "GeneratedFinancing",
+                "entityName" : "Adapter"
+              },
+              "interfaceId" : {
+                "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                "moduleName" : "Harmonia.Action",
+                "entityName" : "StepAction"
+              },
+              "choice" : "ExecuteAction",
+              "choiceArgument" : {
+                "record" : {
+                  "recordId" : {
+                    "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                    "moduleName" : "Harmonia.Action",
+                    "entityName" : "ExecuteAction"
+                  }
+                }
+              },
+              "actingParties" : [
+                "generated-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+              ],
+              "witnessParties" : [
+                "generated-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+              ],
+              "lastDescendantNodeId" : 7,
+              "exerciseResult" : {
+                "contractId" : "0095b6cb3b526aaca75c0b675e3d6b88aca4adfa91a33b39390098dd5e6f81ddc0ca121220ce6223764b043bb3cf91cb0f61b7c3b8d7692b4b5fc73c3d16a975cf16a7265c"
+              },
+              "packageName" : "harmonia-binding-generatedfinancing"
+            }
+          },
+          {
+            "exercised" : {
+              "offset" : "230",
+              "nodeId" : 3,
+              "contractId" : "008e4ebffd12b53b8a8ea9e455ffad4a695350e13ea119ac343fbc0462e1953e65ca1212206578c3788c4d038173bf2504ccfa15cfa085df3471a4e45ac7230e0d26eebde2",
+              "templateId" : {
+                "packageId" : "fab2284d02e402774ac6996e5ec46cc3ba0631572c098b36400f7bbc4a70c6e5",
+                "moduleName" : "GeneratedFinancing",
+                "entityName" : "Adapter"
+              },
+              "choice" : "Apply",
+              "choiceArgument" : {
+                "record" : {
+                  "recordId" : {
+                    "packageId" : "fab2284d02e402774ac6996e5ec46cc3ba0631572c098b36400f7bbc4a70c6e5",
+                    "moduleName" : "GeneratedFinancing",
+                    "entityName" : "Apply"
+                  }
+                }
+              },
+              "actingParties" : [
+                "generated-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+              ],
+              "consuming" : true,
+              "witnessParties" : [
+                "generated-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+              ],
+              "lastDescendantNodeId" : 7,
+              "exerciseResult" : {
+                "contractId" : "0095b6cb3b526aaca75c0b675e3d6b88aca4adfa91a33b39390098dd5e6f81ddc0ca121220ce6223764b043bb3cf91cb0f61b7c3b8d7692b4b5fc73c3d16a975cf16a7265c"
+              },
+              "packageName" : "harmonia-binding-generatedfinancing",
+              "acsDelta" : true
+            }
+          },
+          {
+            "exercised" : {
+              "offset" : "230",
+              "nodeId" : 5,
+              "contractId" : "00f0223dfd41eed9789ff9bdc33cb32f4dfb0a7ffffd3203780c7742d949cbe2d8ca1212203f31f58d6faffbfaf20ead0137ccda3df386d62028460c59e6179e85ef959f2a",
+              "templateId" : {
+                "packageId" : "b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2",
+                "moduleName" : "LegacyFinancing",
+                "entityName" : "Application"
+              },
+              "choice" : "Approve",
+              "choiceArgument" : {
+                "record" : {
+                  "recordId" : {
+                    "packageId" : "b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2",
+                    "moduleName" : "LegacyFinancing",
+                    "entityName" : "Approve"
+                  }
+                }
+              },
+              "actingParties" : [
+                "generated-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+              ],
+              "consuming" : true,
+              "witnessParties" : [
+                "generated-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+              ],
+              "lastDescendantNodeId" : 6,
+              "exerciseResult" : {
+                "contractId" : "00ab668461982c9142db0e40625b2198c317dfb2bebb76fbb3c69f9c33ec6e79e5ca121220abb0634393edf36139a0deed7b14e4ea9f78fc8b863cff96f98ce4e7b113b0da"
+              },
+              "packageName" : "legacy-financing",
+              "acsDelta" : true
+            }
+          },
+          {
+            "created" : {
+              "offset" : "230",
+              "nodeId" : 6,
+              "contractId" : "00ab668461982c9142db0e40625b2198c317dfb2bebb76fbb3c69f9c33ec6e79e5ca121220abb0634393edf36139a0deed7b14e4ea9f78fc8b863cff96f98ce4e7b113b0da",
+              "templateId" : {
+                "packageId" : "b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2",
+                "moduleName" : "LegacyFinancing",
+                "entityName" : "Application"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2",
+                  "moduleName" : "LegacyFinancing",
+                  "entityName" : "Application"
+                },
+                "fields" : [
+                  {
+                    "label" : "bank",
+                    "value" : {
+                      "party" : "generated-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+                    }
+                  },
+                  {
+                    "label" : "buyer",
+                    "value" : {
+                      "party" : "generated-approved-Alice-9b3970be::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+                    }
+                  },
+                  {
+                    "label" : "reference",
+                    "value" : {
+                      "text" : "application"
+                    }
+                  },
+                  {
+                    "label" : "status",
+                    "value" : {
+                      "text" : "approved"
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "generated-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+              ],
+              "signatories" : [
+                "generated-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+              ],
+              "observers" : [
+                "generated-approved-Alice-9b3970be::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+              ],
+              "createdAt" : "2026-09-11T05:11:38.464177Z",
+              "packageName" : "legacy-financing",
+              "acsDelta" : true,
+              "representativePackageId" : "b89073854cc6ab806ddc283646f794285684a2402d8301a127fb43270b6afbd2"
+            }
+          },
+          {
+            "created" : {
+              "offset" : "230",
+              "nodeId" : 7,
+              "contractId" : "0095b6cb3b526aaca75c0b675e3d6b88aca4adfa91a33b39390098dd5e6f81ddc0ca121220ce6223764b043bb3cf91cb0f61b7c3b8d7692b4b5fc73c3d16a975cf16a7265c",
+              "templateId" : {
+                "packageId" : "fab2284d02e402774ac6996e5ec46cc3ba0631572c098b36400f7bbc4a70c6e5",
+                "moduleName" : "GeneratedFinancing",
+                "entityName" : "Adapter"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "fab2284d02e402774ac6996e5ec46cc3ba0631572c098b36400f7bbc4a70c6e5",
+                  "moduleName" : "GeneratedFinancing",
+                  "entityName" : "Adapter"
+                },
+                "fields" : [
+                  {
+                    "label" : "actor",
+                    "value" : {
+                      "party" : "generated-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+                    }
+                  },
+                  {
+                    "label" : "readers",
+                    "value" : {
+                      "list" : {
+                        "elements" : [
+                          {
+                            "party" : "generated-approved-Alice-9b3970be::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "subject",
+                    "value" : {
+                      "text" : "application"
+                    }
+                  },
+                  {
+                    "label" : "source",
+                    "value" : {
+                      "contractId" : "00ab668461982c9142db0e40625b2198c317dfb2bebb76fbb3c69f9c33ec6e79e5ca121220abb0634393edf36139a0deed7b14e4ea9f78fc8b863cff96f98ce4e7b113b0da"
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "generated-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+              ],
+              "signatories" : [
+                "generated-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+              ],
+              "observers" : [
+                "generated-approved-Alice-9b3970be::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+              ],
+              "createdAt" : "2026-09-11T05:11:38.464177Z",
+              "packageName" : "harmonia-binding-generatedfinancing",
+              "acsDelta" : true,
+              "representativePackageId" : "fab2284d02e402774ac6996e5ec46cc3ba0631572c098b36400f7bbc4a70c6e5"
+            }
+          },
+          {
+            "created" : {
+              "offset" : "230",
+              "nodeId" : 8,
+              "contractId" : "00a3d40e1ef6ac64d09484ee074905eb453dfe952b0f31b25e9383cf722e5da969ca1212205dd9b4fe80515886238b96190ffa63150290711c41108c403a64effb14ec0e02",
+              "templateId" : {
+                "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                "moduleName" : "Harmonia.Workflow",
+                "entityName" : "WorkflowInstance"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                  "moduleName" : "Harmonia.Workflow",
+                  "entityName" : "WorkflowInstance"
+                },
+                "fields" : [
+                  {
+                    "label" : "owner",
+                    "value" : {
+                      "party" : "generated-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+                    }
+                  },
+                  {
+                    "label" : "readers",
+                    "value" : {
+                      "list" : {
+                        "elements" : [
+                          {
+                            "party" : "generated-approved-Alice-9b3970be::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "assignee",
+                    "value" : {
+                      "party" : "generated-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+                    }
+                  },
+                  {
+                    "label" : "subject",
+                    "value" : {
+                      "text" : "application"
+                    }
+                  },
+                  {
+                    "label" : "action",
+                    "value" : {
+                      "contractId" : "0095b6cb3b526aaca75c0b675e3d6b88aca4adfa91a33b39390098dd5e6f81ddc0ca121220ce6223764b043bb3cf91cb0f61b7c3b8d7692b4b5fc73c3d16a975cf16a7265c"
+                    }
+                  },
+                  {
+                    "label" : "status",
+                    "value" : {
+                      "text" : "complete"
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "generated-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+              ],
+              "signatories" : [
+                "generated-approved-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+              ],
+              "observers" : [
+                "generated-approved-Alice-9b3970be::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+              ],
+              "createdAt" : "2026-09-11T05:11:38.464177Z",
+              "packageName" : "harmonia-core",
+              "acsDelta" : true,
+              "representativePackageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451"
+            }
+          }
+        ],
+        "offset" : "230",
+        "synchronizerId" : "mysynchronizer::1220aef57a146bb7a21a69197587d90cc52b17514f7e432bb3ded88737483b3122f7",
+        "traceContext" : {
+          "traceparent" : "00-eb7bdd262f25929c1c283193797a9acf-9e5314ac2b291cd2-01"
+        },
+        "recordTime" : "2026-09-11T05:11:38.474198Z"
+      }
+    }
+  ]
+}

@@ -1,0 +1,354 @@
+{
+  "id": "composer-generated",
+  "title": "Change the order and use an unchanged application",
+  "description": "The buyer reviews first. The bank then approves through a generated adapter against the unchanged legacy application. A reader chooses these actions and their order; no generated Daml needs editing.",
+  "input": {
+    "workflow": "composed-process",
+    "plan": {
+      "name": "Review before legacy approval",
+      "reference": "home-18",
+      "steps": [
+        {
+          "id": "inspection",
+          "role": "inspector",
+          "actor": "buyer",
+          "action": "confirm-review"
+        },
+        {
+          "id": "financing",
+          "role": "lender",
+          "actor": "bank",
+          "action": "approve-generated"
+        }
+      ]
+    },
+    "actions": [
+      {
+        "id": "proposal",
+        "actor": "bank",
+        "action": "propose"
+      },
+      {
+        "id": "acceptance",
+        "actor": "buyer",
+        "action": "accept"
+      },
+      {
+        "id": "inspection",
+        "actor": "buyer",
+        "action": "advance",
+        "step": "inspection"
+      },
+      {
+        "id": "financing",
+        "actor": "bank",
+        "action": "advance",
+        "step": "financing"
+      }
+    ]
+  },
+  "expected": {
+    "composition": {
+      "name": "Review before legacy approval",
+      "reference": "home-18"
+    },
+    "actions": [
+      {
+        "id": "proposal",
+        "outcome": "committed",
+        "drafts": 1,
+        "instances": 0,
+        "workflow": "not-started",
+        "completed": [],
+        "enabled": [],
+        "sources": {}
+      },
+      {
+        "id": "acceptance",
+        "outcome": "committed",
+        "drafts": 0,
+        "instances": 1,
+        "workflow": "waiting",
+        "completed": [],
+        "enabled": [
+          "inspection"
+        ],
+        "sources": {
+          "inspection": "pending",
+          "financing": "pending"
+        }
+      },
+      {
+        "id": "inspection",
+        "outcome": "committed",
+        "drafts": 0,
+        "instances": 1,
+        "workflow": "waiting",
+        "completed": [
+          "inspection"
+        ],
+        "enabled": [
+          "financing"
+        ],
+        "sources": {
+          "inspection": "confirmed",
+          "financing": "pending"
+        }
+      },
+      {
+        "id": "financing",
+        "outcome": "committed",
+        "drafts": 0,
+        "instances": 1,
+        "workflow": "complete",
+        "completed": [
+          "inspection",
+          "financing"
+        ],
+        "enabled": [],
+        "sources": {
+          "inspection": "confirmed",
+          "financing": "approved"
+        }
+      }
+    ]
+  },
+  "actual": {
+    "composition": {
+      "name": "Review before legacy approval",
+      "reference": "home-18"
+    },
+    "actions": [
+      {
+        "id": "proposal",
+        "outcome": "committed",
+        "drafts": 1,
+        "instances": 0,
+        "workflow": "not-started",
+        "completed": [],
+        "enabled": [],
+        "sources": {}
+      },
+      {
+        "id": "acceptance",
+        "outcome": "committed",
+        "drafts": 0,
+        "instances": 1,
+        "workflow": "waiting",
+        "completed": [],
+        "enabled": [
+          "inspection"
+        ],
+        "sources": {
+          "inspection": "pending",
+          "financing": "pending"
+        }
+      },
+      {
+        "id": "inspection",
+        "outcome": "committed",
+        "drafts": 0,
+        "instances": 1,
+        "workflow": "waiting",
+        "completed": [
+          "inspection"
+        ],
+        "enabled": [
+          "financing"
+        ],
+        "sources": {
+          "inspection": "confirmed",
+          "financing": "pending"
+        }
+      },
+      {
+        "id": "financing",
+        "outcome": "committed",
+        "drafts": 0,
+        "instances": 1,
+        "workflow": "complete",
+        "completed": [
+          "inspection",
+          "financing"
+        ],
+        "enabled": [],
+        "sources": {
+          "inspection": "confirmed",
+          "financing": "approved"
+        }
+      }
+    ]
+  },
+  "provenance": {
+    "mode": "live-canton",
+    "topology": "three authenticated participants; bank proposal and buyer consent; core-managed source actions",
+    "revision": "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+    "worktree_dirty": false,
+    "recorded_at": "2026-09-11T05:15:50.342666Z",
+    "story_format": 1,
+    "java": "17.0.19+10",
+    "configured_sdk": "3.4.11",
+    "input_sha256": "fd7a4abbf217b77db334e158302c7874553c3eea0c1af4f333be6b86810f44d8",
+    "expected_sha256": "51f1f1e59264fe8531b8f3e0e68338ad711133fa72d054693309d2cfdbe2f37d",
+    "dar_sha256": "9e5397148dda311e6bad483f97cfef2949e1c51315d52f02a0a7a2881336e25b",
+    "dars": {
+      "harness/ledger/demo/.daml/dist/harmonia-demo-0.1.0.dar": "9e5397148dda311e6bad483f97cfef2949e1c51315d52f02a0a7a2881336e25b"
+    },
+    "actual_sha256": "b31c6a50acc165ee810fad451457796783e2925781e6cc97e2fa905aa5728238",
+    "observation_sha256": "a75004613c5819ddc7f0bec7ed2accb434d363c3b11fc1f1eecbcd3762a5108d",
+    "matched": true
+  },
+  "presentation": {
+    "kind": "Composition",
+    "subtitle": "Propose → consent → core execution",
+    "start": "Empty workspace",
+    "start_detail": "Sources await partner consent",
+    "operation": "product/ledger/composition/daml/Composer.daml",
+    "units": [
+      {
+        "id": "proposal",
+        "actor": "bank",
+        "action": "propose",
+        "expected": {
+          "id": "proposal",
+          "outcome": "committed",
+          "drafts": 1,
+          "instances": 0,
+          "workflow": "not-started",
+          "completed": [],
+          "enabled": [],
+          "sources": {}
+        },
+        "actual": {
+          "id": "proposal",
+          "outcome": "committed",
+          "drafts": 1,
+          "instances": 0,
+          "workflow": "not-started",
+          "completed": [],
+          "enabled": [],
+          "sources": {}
+        },
+        "observed_state": "not-started",
+        "outcome_label": "committed"
+      },
+      {
+        "id": "acceptance",
+        "actor": "buyer",
+        "action": "accept",
+        "expected": {
+          "id": "acceptance",
+          "outcome": "committed",
+          "drafts": 0,
+          "instances": 1,
+          "workflow": "waiting",
+          "completed": [],
+          "enabled": [
+            "inspection"
+          ],
+          "sources": {
+            "inspection": "pending",
+            "financing": "pending"
+          }
+        },
+        "actual": {
+          "id": "acceptance",
+          "outcome": "committed",
+          "drafts": 0,
+          "instances": 1,
+          "workflow": "waiting",
+          "completed": [],
+          "enabled": [
+            "inspection"
+          ],
+          "sources": {
+            "inspection": "pending",
+            "financing": "pending"
+          }
+        },
+        "observed_state": "waiting",
+        "outcome_label": "committed"
+      },
+      {
+        "id": "inspection",
+        "actor": "buyer",
+        "action": "advance",
+        "expected": {
+          "id": "inspection",
+          "outcome": "committed",
+          "drafts": 0,
+          "instances": 1,
+          "workflow": "waiting",
+          "completed": [
+            "inspection"
+          ],
+          "enabled": [
+            "financing"
+          ],
+          "sources": {
+            "inspection": "confirmed",
+            "financing": "pending"
+          }
+        },
+        "actual": {
+          "id": "inspection",
+          "outcome": "committed",
+          "drafts": 0,
+          "instances": 1,
+          "workflow": "waiting",
+          "completed": [
+            "inspection"
+          ],
+          "enabled": [
+            "financing"
+          ],
+          "sources": {
+            "inspection": "confirmed",
+            "financing": "pending"
+          }
+        },
+        "observed_state": "waiting",
+        "outcome_label": "committed"
+      },
+      {
+        "id": "financing",
+        "actor": "bank",
+        "action": "advance",
+        "expected": {
+          "id": "financing",
+          "outcome": "committed",
+          "drafts": 0,
+          "instances": 1,
+          "workflow": "complete",
+          "completed": [
+            "inspection",
+            "financing"
+          ],
+          "enabled": [],
+          "sources": {
+            "inspection": "confirmed",
+            "financing": "approved"
+          }
+        },
+        "actual": {
+          "id": "financing",
+          "outcome": "committed",
+          "drafts": 0,
+          "instances": 1,
+          "workflow": "complete",
+          "completed": [
+            "inspection",
+            "financing"
+          ],
+          "enabled": [],
+          "sources": {
+            "inspection": "confirmed",
+            "financing": "approved"
+          }
+        },
+        "observed_state": "complete",
+        "outcome_label": "committed"
+      }
+    ]
+  }
+}

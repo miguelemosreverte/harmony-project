@@ -1,0 +1,19 @@
+{
+  "mode" : "live-canton",
+  "topology" : "three authenticated participants; bank proposal and buyer consent; core-managed source actions",
+  "revision" : "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+  "worktree_dirty" : false,
+  "recorded_at" : "2026-09-11T05:15:50.342666Z",
+  "story_format" : 1,
+  "java" : "17.0.19+10",
+  "configured_sdk" : "3.4.11",
+  "input_sha256" : "fd7a4abbf217b77db334e158302c7874553c3eea0c1af4f333be6b86810f44d8",
+  "expected_sha256" : "51f1f1e59264fe8531b8f3e0e68338ad711133fa72d054693309d2cfdbe2f37d",
+  "dar_sha256" : "9e5397148dda311e6bad483f97cfef2949e1c51315d52f02a0a7a2881336e25b",
+  "dars" : {
+    "harness/ledger/demo/.daml/dist/harmonia-demo-0.1.0.dar" : "9e5397148dda311e6bad483f97cfef2949e1c51315d52f02a0a7a2881336e25b"
+  },
+  "actual_sha256" : "b31c6a50acc165ee810fad451457796783e2925781e6cc97e2fa905aa5728238",
+  "observation_sha256" : "a75004613c5819ddc7f0bec7ed2accb434d363c3b11fc1f1eecbcd3762a5108d",
+  "matched" : true
+}

@@ -35,9 +35,28 @@ def author(passages,corpus):
     return pages.shell('Read the original beside the product',f'<main id="main" class="reader-content">{body}</main>',slug='author',kind='atlas-author')
 
 
-def workflows():
+def workflows(recordings):
     cards=[('Alice makes an offer','Northbank’s decision lets Alice prepare her proposal. Ben and Sofia carry it into the property application.','Recorded ledger workflow','chapters/03-financing-to-offer.html?step=0','financing'),('A private financing handoff','Act as the bank, then the buyer. The live server submits real commands to the disposable ledger.','Live sandbox','sandbox.html','financing'),('A transfer across four parties','Two custodians prepare their side before one eligible settlement transaction. Explore the refusal as well.','Recorded ledger workflow','chapters/04-four-party-transfer.html?step=0','transfer'),('A plan both parties accept','The bank proposes supported actions. The buyer accepts, then the assigned parties execute them.','Live bounded composer','sandbox.html?task=composer','composition')]
     tiles=''.join(f'<a class="workflow-story" href="{url}"><span class="story-symbol">{i+1}</span><span class="evidence-kind">{kind}</span><h2>{title}</h2><p>{description}</p><span class="story-open">Follow this workflow →</span></a>' for i,(title,description,kind,url,slice) in enumerate(cards))
     body=toolbar('Follow the handoff.','Independent applications keep their authority. Harmonia coordinates the work between them.')+f'<div class="workflow-stories">{tiles}</div>'
     body+='''<section class="reader-note"><h2>What makes the diagram executable?</h2><div id="mechanism-diagram" data-slice-diagram="process"></div><p>Daml templates define the contracts and their stakeholders. Choice controllers define who may act. DARs carry compiled Daml-LF packages to Canton participants. The Scala service submits a supported choice through the Ledger API; it observes the resulting contracts before updating the browser.</p><p>A result’s issuer, consumer, subject, and continuation matter. Seeing an approval is not enough to use it in an unrelated workflow. Multi-party preparation can span transactions; only the final eligible transfer is atomic in the transfer example.</p><p><a href="reviewer.html?slice=process">Review the enforcing contracts →</a> · <a href="chapters/08-release-and-adoption.html">See release and adoption boundaries →</a></p></section><section class="reader-note"><h2>Present the product</h2><p>Use the four-scene purchase story as a clean slideshow. Advance with the arrows, keyboard, or touch. Play starts a timed presentation; it does not submit transactions.</p><a class="button primary" href="chapters/03-financing-to-offer.html?present=1&audience=investor">Open the presentation →</a></section>'''
+    families = {
+        'Financing': ('A bank decision', 'Northbank approves or refuses Alice’s financing under the application’s own rules.'),
+        'Workflow': ('A direct application handoff', 'A typed Daml interface lets the core request an application choice and observe its result.'),
+        'Adapter': ('A legacy application joins', 'A wrapper preserves the original financing authority while exposing the shared interface.'),
+        'Private': ('Share progress, keep documents private', 'Alice uses a scoped result. The workflow sees progress without receiving the bank’s private application.'),
+        'Progression': ('Choose a route, then join', 'Northbank chooses a branch. The join waits for the selected obligations; skipped work is never shown as completed.'),
+        'Purchase': ('Alice makes a property offer', 'Ben and Sofia pass a proposal that is backed by Alice’s financing result. Explore the refusal and proof-reuse cases.'),
+        'Transfer': ('Four parties settle one trade', 'Two custodians prepare independently. The final Daml transaction either completes both legs or rolls back.'),
+        'Generated': ('Use a generated binding', 'A reviewed mapping becomes an adapter that is tested against the same application behavior.'),
+        'Composition': ('Agree on the plan', 'The bank proposes actions. The buyer consents before application sources and shared execution are created.'),
+        'Packages': ('Inspect before integrating', 'Inspect a DAR, review a bounded mapping, and distinguish a generated project from a compiled and registered package.'),
+        'Boundaries': ('Challenge the limits', 'Read the ledger and race observations that establish bounded behavior. These are verification phases, not user actions.')
+    }
+    body += '<section class="workflow-library"><h2>Explore every recorded workflow</h2><p>32 committed examples, grouped by the question they answer. Each opens a carousel of observed results, with its original provenance and golden comparison.</p>'
+    for kind,(title,description) in families.items():
+        items = [(key,story) for key,story in recordings.items() if story['presentation']['kind']==kind]
+        links = ''.join(f'<li><a href="laboratory.html?story={key}">{escape(story["title"])}</a></li>' for key,story in items)
+        body += f'<details class="reader-note"><summary>{title} · {len(items)} examples</summary><p>{description}</p><ul>{links}</ul></details>'
+    body += '</section>'
     return pages.shell('Workflow demonstrations',f'<main id="main" class="reader-content">{body}</main>',slug='workflows',kind='atlas-workflows')

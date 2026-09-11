@@ -1,0 +1,159 @@
+{
+  "setup" : {
+    "reference" : "branch-declined",
+    "bankName" : "Northbank",
+    "published" : "00a4fe622595772f2984bdac87a1f561ab09892f3913f8c7cb6ccfebc988e0c189ca121220afc2d53b2d3973f3c3d108a42dbc217cf6d5abc6567d3c6c008e09939f8fd887",
+    "buyerName" : "Alice",
+    "bank" : "branch-declined-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc",
+    "buyer" : "branch-declined-Alice-9b3970be::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc",
+    "engine" : "branch-declined-DefinitionPublisher-4f1df03a::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+  },
+  "attempts" : [
+    {
+      "review" : "pending",
+      "step" : {
+        "application" : "pending",
+        "workflow" : "waiting",
+        "rawError" : null,
+        "consumed" : false,
+        "outcome" : "committed",
+        "activeContracts" : 3,
+        "id" : "choose-decline",
+        "outputContract" : "0037561acd5a7d52bca4386ee0142838af841cfb93304bd3f6ef6fcb9e1d8577d0ca1212204c48d65c9ee6f0cbfd68ac9bdd70bdde7bb5096018aeddb056b600b3f36bc043",
+        "visibleTo" : [
+          "Northbank",
+          "Alice"
+        ],
+        "reason" : null,
+        "inputContract" : "0037561acd5a7d52bca4386ee0142838af841cfb93304bd3f6ef6fcb9e1d8577d0ca1212204c48d65c9ee6f0cbfd68ac9bdd70bdde7bb5096018aeddb056b600b3f36bc043"
+      },
+      "skipped" : [
+        "financing",
+        "review"
+      ],
+      "closure" : "pending",
+      "completed" : [
+        "decision"
+      ],
+      "definition" : {
+        "name" : "decision-review",
+        "version" : 1
+      },
+      "processContract" : "00b7f80d677417c909540e252a8a48f607430951bde6bab37c930cabc1df7334beca121220dc16053625cab663b624b907d6dd7712b9f3dd0abf20cc270d94f3f12c40641f",
+      "enabled" : [
+        "closure"
+      ],
+      "branch" : "decline"
+    },
+    {
+      "review" : "pending",
+      "step" : {
+        "application" : "pending",
+        "workflow" : "waiting",
+        "rawError" : "Failed with Status: FailureStatus {errorId = \"UNHANDLED_EXCEPTION/DA.Exception.AssertionFailed:AssertionFailed\", category = InvalidGivenCurrentSystemStateOther, message = \"Step must be enabled\", meta = TextMap []}",
+        "consumed" : false,
+        "outcome" : "rejected",
+        "activeContracts" : 3,
+        "id" : "unselected-financing",
+        "outputContract" : "0037561acd5a7d52bca4386ee0142838af841cfb93304bd3f6ef6fcb9e1d8577d0ca1212204c48d65c9ee6f0cbfd68ac9bdd70bdde7bb5096018aeddb056b600b3f36bc043",
+        "visibleTo" : [
+          "Northbank",
+          "Alice"
+        ],
+        "reason" : "application-rejected",
+        "inputContract" : "0037561acd5a7d52bca4386ee0142838af841cfb93304bd3f6ef6fcb9e1d8577d0ca1212204c48d65c9ee6f0cbfd68ac9bdd70bdde7bb5096018aeddb056b600b3f36bc043"
+      },
+      "skipped" : [
+        "financing",
+        "review"
+      ],
+      "closure" : "pending",
+      "completed" : [
+        "decision"
+      ],
+      "definition" : {
+        "name" : "decision-review",
+        "version" : 1
+      },
+      "processContract" : "00b7f80d677417c909540e252a8a48f607430951bde6bab37c930cabc1df7334beca121220dc16053625cab663b624b907d6dd7712b9f3dd0abf20cc270d94f3f12c40641f",
+      "enabled" : [
+        "closure"
+      ],
+      "branch" : "decline"
+    },
+    {
+      "review" : "pending",
+      "step" : {
+        "application" : "pending",
+        "workflow" : "waiting",
+        "rawError" : null,
+        "consumed" : false,
+        "outcome" : "committed",
+        "activeContracts" : 3,
+        "id" : "record-closure",
+        "outputContract" : "0037561acd5a7d52bca4386ee0142838af841cfb93304bd3f6ef6fcb9e1d8577d0ca1212204c48d65c9ee6f0cbfd68ac9bdd70bdde7bb5096018aeddb056b600b3f36bc043",
+        "visibleTo" : [
+          "Northbank",
+          "Alice"
+        ],
+        "reason" : null,
+        "inputContract" : "0037561acd5a7d52bca4386ee0142838af841cfb93304bd3f6ef6fcb9e1d8577d0ca1212204c48d65c9ee6f0cbfd68ac9bdd70bdde7bb5096018aeddb056b600b3f36bc043"
+      },
+      "skipped" : [
+        "financing",
+        "review"
+      ],
+      "closure" : "confirmed",
+      "completed" : [
+        "decision",
+        "closure"
+      ],
+      "definition" : {
+        "name" : "decision-review",
+        "version" : 1
+      },
+      "processContract" : "005724e2de9dec6846a0c5fbb42391c29981ac95ad9e642b36ceb0c1f5bc61d9c6ca121220dc653544581d33782049b5f75b5bd060cf3e9e6d9f1d34461646d8e4134834e8",
+      "enabled" : [
+        "join"
+      ],
+      "branch" : "decline"
+    },
+    {
+      "review" : "pending",
+      "step" : {
+        "application" : "pending",
+        "workflow" : "complete",
+        "rawError" : null,
+        "consumed" : false,
+        "outcome" : "committed",
+        "activeContracts" : 3,
+        "id" : "join-completes",
+        "outputContract" : "0037561acd5a7d52bca4386ee0142838af841cfb93304bd3f6ef6fcb9e1d8577d0ca1212204c48d65c9ee6f0cbfd68ac9bdd70bdde7bb5096018aeddb056b600b3f36bc043",
+        "visibleTo" : [
+          "Northbank",
+          "Alice"
+        ],
+        "reason" : null,
+        "inputContract" : "0037561acd5a7d52bca4386ee0142838af841cfb93304bd3f6ef6fcb9e1d8577d0ca1212204c48d65c9ee6f0cbfd68ac9bdd70bdde7bb5096018aeddb056b600b3f36bc043"
+      },
+      "skipped" : [
+        "financing",
+        "review"
+      ],
+      "closure" : "confirmed",
+      "completed" : [
+        "decision",
+        "closure",
+        "join"
+      ],
+      "definition" : {
+        "name" : "decision-review",
+        "version" : 1
+      },
+      "processContract" : "009d7d9a836a92242d760b461c7434cbccef3f6ce0656b630b149f55549fc6c2d6ca121220e6f2ca21bfb89e70cabd6c41246b6edab6529145997f5ca0427b171eed0a1c05",
+      "enabled" : [
+      ],
+      "branch" : "decline"
+    }
+  ]
+}

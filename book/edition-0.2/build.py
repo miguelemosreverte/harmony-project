@@ -13,6 +13,7 @@ import re
 
 import pages
 import workspace
+import laboratory
 from atlas.catalog import build_catalog
 from atlas import pages as reader_pages
 from render import diagram_assets
@@ -144,16 +145,21 @@ def load_recordings(root):
             raise ValueError(f"Recording changed: {key}")
         story = json.loads(data)
         for kind in ["input", "expected"]:
-            digest = sha256((root / "examples/stories" / key / f"{kind}.md").read_bytes()).hexdigest()
+            digest = sha256((root / "examples" / pin["collection"] / key / f"{kind}.md").read_bytes()).hexdigest()
             if digest != pin[f"{kind}_sha256"] or digest != story["provenance"][f"{kind}_sha256"]:
                 raise ValueError(f"Recording no longer matches committed {kind}: {key}")
         if story["provenance"]["revision"] != pin["revision"] or story["expected"] != story["actual"] or not story["provenance"]["matched"]:
             raise ValueError(f"Recording does not support its stated result: {key}")
         units = story["presentation"]["units"]
-        if [u["actual"] for u in units] != story["actual"]["actions"] or [u["expected"] for u in units] != story["expected"]["actions"]:
-            raise ValueError(f"Playback differs from the recorded golden comparison: {key}")
-        if len(units) != len(story["input"]["actions"]):
+        for kind in ["actual", "expected"]:
+            projected = ([story[kind][u["id"]] for u in units] if story["presentation"]["kind"] == "Boundaries" else story[kind]["actions"])
+            if [u[kind] for u in units] != projected:
+                raise ValueError(f"Playback differs from the recorded golden comparison: {key}")
+        if story["presentation"]["kind"] != "Boundaries" and len(units) != len(story["input"]["actions"]):
             raise ValueError(f"Playback does not account for every supplied action: {key}")
+        for name, digest in pin["artifacts"].items():
+            if sha256((directory / "evidence" / key / name).read_bytes()).hexdigest() != digest:
+                raise ValueError(f"Recorded artifact changed: {key}/{name}")
         recordings[key] = story
     return recordings
 
@@ -165,6 +171,7 @@ def build_outputs(root=ROOT):
     assignments = validate_assignments(corpus, passages, chapters)
     recordings = load_recordings(root)
     catalog, outputs = build_catalog(root)
+    outputs.update(laboratory.outputs(root, recordings))
     chapter_slices = {'01-product':'process','02-roles-and-trust':'process','03-financing-to-offer':'financing','04-four-party-transfer':'transfer','05-bring-an-application':'packages','06-compose-a-workflow':'composition','07-evidence-and-boundaries':'book'}
     catalog['passages'] = [dict(id=f'{p.source}-{p.start}',source=p.source,start=p.start,end=p.end,title=p.title,chapter=p.chapter,slice=chapter_slices.get(p.chapter,'')) for p in passages]
     catalog['chapterSlices'] = chapter_slices
@@ -173,7 +180,7 @@ def build_outputs(root=ROOT):
     outputs['code.html'] = reader_pages.code()
     outputs['reviewer.html'] = reader_pages.reviewer()
     outputs['author.html'] = reader_pages.author(passages,corpus)
-    outputs['workflows.html'] = reader_pages.workflows()
+    outputs['workflows.html'] = reader_pages.workflows(recordings)
     report = {"schema": 1, "scope": "Quotation inclusion, not product implementation or adoption", "documents": [], "chapters": []}
     for name, (pin, text, units) in corpus.items():
         report["documents"].append({"id": name, **pin, "units": len(units), "quoted_units": len(units),
@@ -183,7 +190,7 @@ def build_outputs(root=ROOT):
     for slug, text in chapters.items():
         count = sum(p.chapter == slug for p in assignments.values())
         report["chapters"].append({"id": slug, "title": pages.CHAPTERS[slug], "quoted_units": count})
-        stories = {key: value for key,value in recordings.items() if (slug.startswith("03") and key.startswith("purchase")) or (slug.startswith("04") and key.startswith("transfer"))}
+        stories = {key: recordings[key] for key in (["purchase-approved", "purchase-rejected"] if slug.startswith("03") else ["transfer-approved", "transfer-final-leg-rejected"] if slug.startswith("04") else [])}
         outputs[f"chapters/{slug}.html"] = pages.chapter(slug, text, passages, corpus, stories)
     outputs["recordings.js"] = "window.HarmoniaRecordings = " + pages.json_script(recordings) + ";\n"
     outputs["sandbox.html"] = pages.sandbox()
@@ -194,7 +201,7 @@ def build_outputs(root=ROOT):
     outputs["application.html"] = workspace.application()
     outputs["application-builder.html"] = workspace.builder()
     outputs["book-chapter.html"] = '''<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Alice buys a home · Harmonia</title><script src="chapter-redirect.js" defer></script></head><body><p>This chapter has one home: <a href="chapters/03-financing-to-offer.html">Alice buys a home</a>.</p></body></html>\n'''
-    return {name: "\n".join(line.rstrip() for line in text.splitlines()) + "\n" for name, text in outputs.items()}
+    return {name: text if name.startswith("evidence/") else "\n".join(line.rstrip() for line in text.splitlines()) + "\n" for name, text in outputs.items()}
 
 
 def main():

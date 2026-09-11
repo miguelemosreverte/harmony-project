@@ -55,8 +55,18 @@ object ExportBook:
         .obj("stories" -> stories.asJson, "chapters" -> chapters.asJson)
         .spaces2
     )
+    raw <- FieldGuide.evidenceFiles(output, stories)
+    _ <- ArtifactFiles.write(
+      output.resolve("evidence.js"),
+      "window.HarmoniaLaboratoryEvidence = " + Json
+        .obj("stories" -> stories.asJson, "chapters" -> chapters.asJson)
+        .noSpaces
+        .replace("<", "\\u003c") + ";\nwindow.HarmoniaEvidenceFiles = " + raw.asJson.noSpaces
+        .replace("<", "\\u003c") + ";"
+    )
     _ <- copy(root.resolve("book/site/index.html"), output.resolve("laboratory.html"))
     _ <- copy(root.resolve("book/site/book.css"), output.resolve("book.css"))
+    _ <- copy(root.resolve("book/site/laboratory.js"), output.resolve("laboratory.js"))
     _ <- copy(
       root.resolve("book/browser/target/scala-3.3.6/harmonia-reader-fastopt/main.js"),
       output.resolve("main.js")

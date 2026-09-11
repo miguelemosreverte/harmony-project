@@ -1,0 +1,1547 @@
+{
+  "settler" : "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6",
+  "steps" : [
+    {
+      "activeWorkflows" : 0,
+      "workflow" : "waiting",
+      "rawError" : null,
+      "outcome" : "committed",
+      "id" : "seller-agrees",
+      "destination" : 0E-10,
+      "trade" : "agreed",
+      "locked" : 0E-10,
+      "visibleTo" : [
+        "Alice",
+        "Seller",
+        "Source",
+        "Destination"
+      ],
+      "reason" : null,
+      "releases" : 0,
+      "available" : 10.0000000000
+    },
+    {
+      "activeWorkflows" : 0,
+      "workflow" : "waiting",
+      "rawError" : null,
+      "outcome" : "committed",
+      "id" : "seller-locks",
+      "destination" : 0E-10,
+      "trade" : "agreed",
+      "locked" : 10.0000000000,
+      "visibleTo" : [
+        "Alice",
+        "Seller",
+        "Source",
+        "Destination"
+      ],
+      "reason" : null,
+      "releases" : 0,
+      "available" : 0E-10
+    },
+    {
+      "activeWorkflows" : 0,
+      "workflow" : "waiting",
+      "rawError" : null,
+      "outcome" : "committed",
+      "id" : "source-confirms",
+      "destination" : 0E-10,
+      "trade" : "source-confirmed",
+      "locked" : 10.0000000000,
+      "visibleTo" : [
+        "Alice",
+        "Seller",
+        "Source",
+        "Destination"
+      ],
+      "reason" : null,
+      "releases" : 0,
+      "available" : 0E-10
+    },
+    {
+      "activeWorkflows" : 0,
+      "workflow" : "waiting",
+      "rawError" : null,
+      "outcome" : "committed",
+      "id" : "destination-prepares",
+      "destination" : 0E-10,
+      "trade" : "source-confirmed",
+      "locked" : 10.0000000000,
+      "visibleTo" : [
+        "Alice",
+        "Seller",
+        "Source",
+        "Destination"
+      ],
+      "reason" : null,
+      "releases" : 0,
+      "available" : 0E-10
+    },
+    {
+      "activeWorkflows" : 0,
+      "workflow" : "waiting",
+      "rawError" : null,
+      "outcome" : "committed",
+      "id" : "destination-confirms",
+      "destination" : 0E-10,
+      "trade" : "ready",
+      "locked" : 10.0000000000,
+      "visibleTo" : [
+        "Alice",
+        "Seller",
+        "Source",
+        "Destination"
+      ],
+      "reason" : null,
+      "releases" : 0,
+      "available" : 0E-10
+    },
+    {
+      "activeWorkflows" : 0,
+      "workflow" : "waiting",
+      "rawError" : "Failed with Status: FailureStatus {errorId = \"UNHANDLED_EXCEPTION/DA.Exception.AssertionFailed:AssertionFailed\", category = InvalidGivenCurrentSystemStateOther, message = \"Destination rejected receipt\", meta = TextMap []}",
+      "outcome" : "rejected",
+      "id" : "settle",
+      "destination" : 0E-10,
+      "trade" : "ready",
+      "locked" : 10.0000000000,
+      "visibleTo" : [
+        "Alice",
+        "Seller",
+        "Source",
+        "Destination"
+      ],
+      "reason" : "application-rejected",
+      "releases" : 0,
+      "available" : 0E-10
+    }
+  ],
+  "position" : "00506684b680beb0f379cf36cfa7633228ad8c1cc05f15aaf2c74094edc058abf0ca121220b1d7829a20cae56f142832d8a95cff8d856998df89445c23955022b8a9617c09",
+  "settler_events" : [
+    {
+      "transaction" : {
+        "updateId" : "1220db874ad91654dd4a18456fdfc073d4fe0265f94998e5fae39b23274e3a640ad0",
+        "effectiveAt" : "2026-09-11T05:13:58.748512Z",
+        "events" : [
+          {
+            "created" : {
+              "offset" : "70",
+              "contractId" : "00ec250b35074386a64ae2eda9374feff811705909fbc2fba809cf266f84d42fb7ca1212201d4b1366cf1e4e254533201a85e2b77a62121e9044f9ff758c6ecaeb5dbe9937",
+              "templateId" : {
+                "packageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7",
+                "moduleName" : "SourceCustody",
+                "entityName" : "Holding"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7",
+                  "moduleName" : "SourceCustody",
+                  "entityName" : "Holding"
+                },
+                "fields" : [
+                  {
+                    "label" : "terms",
+                    "value" : {
+                      "record" : {
+                        "recordId" : {
+                          "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                          "moduleName" : "Harmonia.Transfer",
+                          "entityName" : "Terms"
+                        },
+                        "fields" : [
+                          {
+                            "label" : "buyer",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "seller",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+                            }
+                          },
+                          {
+                            "label" : "source",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "destination",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+                            }
+                          },
+                          {
+                            "label" : "settler",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "reference",
+                            "value" : {
+                              "text" : "transfer-final-leg-rejected"
+                            }
+                          },
+                          {
+                            "label" : "asset",
+                            "value" : {
+                              "text" : "TEST"
+                            }
+                          },
+                          {
+                            "label" : "quantity",
+                            "value" : {
+                              "numeric" : "10.0000000000"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+              ],
+              "signatories" : [
+                "transfer-final-leg-rejected-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c",
+                "transfer-final-leg-rejected-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "observers" : [
+                "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6",
+                "transfer-final-leg-rejected-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+              ],
+              "createdAt" : "2026-09-11T05:13:58.748512Z",
+              "packageName" : "harmonia-source-custody",
+              "acsDelta" : true,
+              "representativePackageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7"
+            }
+          }
+        ],
+        "offset" : "70",
+        "synchronizerId" : "harmonia::12201ba007ec1b2e9e63e472cbffb90d397a5e149754807f0a6e1b7e732f0b943a34",
+        "traceContext" : {
+          "traceparent" : "00-cc7a770a8974318e75c7062410ff4ef8-1ab007b7ebf30585-01"
+        },
+        "recordTime" : "2026-09-11T05:13:58.762701Z"
+      }
+    },
+    {
+      "transaction" : {
+        "updateId" : "1220045469d085aad895d58ef22890b299d8c61995ef3f855c58b5d1b602ed8e0b4d",
+        "commandId" : "add1f3d1-2a92-44ef-a044-e893451a9816",
+        "effectiveAt" : "2026-09-11T05:13:59.150877Z",
+        "events" : [
+          {
+            "created" : {
+              "offset" : "72",
+              "contractId" : "004c5d1da751645cef9217e866ae5029f2bb6e8e50eac04199f295c2e815e2ab68ca121220448858ec226db0365b4e5754e30eb6eeccf06a39ef723a1c1afcaa03b9a87ded",
+              "templateId" : {
+                "packageId" : "a68ebce0bfcab3962dcef8b7ebaf2977a676b1b896e0aab635a83e73bfd94c33",
+                "moduleName" : "DestinationCustody",
+                "entityName" : "ReceivingRequest"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "a68ebce0bfcab3962dcef8b7ebaf2977a676b1b896e0aab635a83e73bfd94c33",
+                  "moduleName" : "DestinationCustody",
+                  "entityName" : "ReceivingRequest"
+                },
+                "fields" : [
+                  {
+                    "label" : "terms",
+                    "value" : {
+                      "record" : {
+                        "recordId" : {
+                          "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                          "moduleName" : "Harmonia.Transfer",
+                          "entityName" : "Terms"
+                        },
+                        "fields" : [
+                          {
+                            "label" : "buyer",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "seller",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+                            }
+                          },
+                          {
+                            "label" : "source",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "destination",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+                            }
+                          },
+                          {
+                            "label" : "settler",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "reference",
+                            "value" : {
+                              "text" : "transfer-final-leg-rejected"
+                            }
+                          },
+                          {
+                            "label" : "asset",
+                            "value" : {
+                              "text" : "TEST"
+                            }
+                          },
+                          {
+                            "label" : "quantity",
+                            "value" : {
+                              "numeric" : "10.0000000000"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "receipts",
+                    "value" : {
+                      "text" : "reject"
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+              ],
+              "signatories" : [
+                "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+              ],
+              "observers" : [
+                "transfer-final-leg-rejected-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+              ],
+              "createdAt" : "2026-09-11T05:13:59.150877Z",
+              "packageName" : "harmonia-destination-custody",
+              "acsDelta" : true,
+              "representativePackageId" : "a68ebce0bfcab3962dcef8b7ebaf2977a676b1b896e0aab635a83e73bfd94c33"
+            }
+          }
+        ],
+        "offset" : "72",
+        "synchronizerId" : "harmonia::12201ba007ec1b2e9e63e472cbffb90d397a5e149754807f0a6e1b7e732f0b943a34",
+        "traceContext" : {
+          "traceparent" : "00-2677a8ab42d714ea3b404dc6a98695d7-29310095805d3d62-01"
+        },
+        "recordTime" : "2026-09-11T05:13:59.161390Z"
+      }
+    },
+    {
+      "transaction" : {
+        "updateId" : "1220e75f9e6fad439b17947a11c38466027a2580b6f77abc0224466ccd32e2f9ef3e",
+        "commandId" : "8017f549-55df-46ff-9a28-1daf861cfce4",
+        "effectiveAt" : "2026-09-11T05:13:59.506615Z",
+        "events" : [
+          {
+            "created" : {
+              "offset" : "75",
+              "contractId" : "0002f55905b494f9bfb533659e6947e5eeb3c34f0f60ae34f93530dc7c14da89deca121220910583fe769ace920b91b00aebc716a1679be9420175f51e028bbc1eb5c47c90",
+              "templateId" : {
+                "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                "moduleName" : "AtomicTransfer",
+                "entityName" : "Trade"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                  "moduleName" : "AtomicTransfer",
+                  "entityName" : "Trade"
+                },
+                "fields" : [
+                  {
+                    "label" : "terms",
+                    "value" : {
+                      "record" : {
+                        "recordId" : {
+                          "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                          "moduleName" : "Harmonia.Transfer",
+                          "entityName" : "Terms"
+                        },
+                        "fields" : [
+                          {
+                            "label" : "buyer",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "seller",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+                            }
+                          },
+                          {
+                            "label" : "source",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "destination",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+                            }
+                          },
+                          {
+                            "label" : "settler",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "reference",
+                            "value" : {
+                              "text" : "transfer-final-leg-rejected"
+                            }
+                          },
+                          {
+                            "label" : "asset",
+                            "value" : {
+                              "text" : "TEST"
+                            }
+                          },
+                          {
+                            "label" : "quantity",
+                            "value" : {
+                              "numeric" : "10.0000000000"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "agreed",
+                    "value" : {
+                      "bool" : false
+                    }
+                  },
+                  {
+                    "label" : "sourceConfirmed",
+                    "value" : {
+                      "bool" : false
+                    }
+                  },
+                  {
+                    "label" : "destinationConfirmed",
+                    "value" : {
+                      "bool" : false
+                    }
+                  },
+                  {
+                    "label" : "locked",
+                    "value" : {
+                      "optional" : {
+                        
+                      }
+                    }
+                  },
+                  {
+                    "label" : "permit",
+                    "value" : {
+                      "optional" : {
+                        
+                      }
+                    }
+                  },
+                  {
+                    "label" : "settled",
+                    "value" : {
+                      "bool" : false
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+              ],
+              "signatories" : [
+                "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+              ],
+              "observers" : [
+                "transfer-final-leg-rejected-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042",
+                "transfer-final-leg-rejected-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c",
+                "transfer-final-leg-rejected-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "createdAt" : "2026-09-11T05:13:59.506615Z",
+              "packageName" : "harmonia-transfer",
+              "acsDelta" : true,
+              "representativePackageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e"
+            }
+          }
+        ],
+        "offset" : "75",
+        "synchronizerId" : "harmonia::12201ba007ec1b2e9e63e472cbffb90d397a5e149754807f0a6e1b7e732f0b943a34",
+        "traceContext" : {
+          "traceparent" : "00-7217e87f4d55853f4512c7b2fbbfa258-3ca2b8347430de49-01"
+        },
+        "recordTime" : "2026-09-11T05:13:59.518267Z"
+      }
+    },
+    {
+      "transaction" : {
+        "updateId" : "1220387e7a2c037b11a94d88d50e5c56911ab0cf422acd67f5de036e99f2c23bfac4",
+        "effectiveAt" : "2026-09-11T05:13:59.869824Z",
+        "events" : [
+          {
+            "created" : {
+              "offset" : "78",
+              "contractId" : "006559c81e732ccc914e330e5814ef21ebebb347b6b4c123a6bb03acbbd1bf33fdca121220a6ec02f4b143014f1f8b38bafc01da64e3592ad3204ae4e205fb39a664f6af73",
+              "templateId" : {
+                "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                "moduleName" : "Harmonia.Process.Engine",
+                "entityName" : "PublishedDefinition"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                  "moduleName" : "Harmonia.Process.Engine",
+                  "entityName" : "PublishedDefinition"
+                },
+                "fields" : [
+                  {
+                    "label" : "publisher",
+                    "value" : {
+                      "party" : "transfer-final-leg-rejected-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                    }
+                  },
+                  {
+                    "label" : "readers",
+                    "value" : {
+                      "list" : {
+                        "elements" : [
+                          {
+                            "party" : "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                          },
+                          {
+                            "party" : "transfer-final-leg-rejected-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+                          },
+                          {
+                            "party" : "transfer-final-leg-rejected-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                          },
+                          {
+                            "party" : "transfer-final-leg-rejected-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "definition",
+                    "value" : {
+                      "record" : {
+                        "recordId" : {
+                          "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                          "moduleName" : "Harmonia.Process.Model",
+                          "entityName" : "Definition"
+                        },
+                        "fields" : [
+                          {
+                            "label" : "name",
+                            "value" : {
+                              "text" : "atomic-transfer"
+                            }
+                          },
+                          {
+                            "label" : "version",
+                            "value" : {
+                              "int64" : "1"
+                            }
+                          },
+                          {
+                            "label" : "steps",
+                            "value" : {
+                              "list" : {
+                                "elements" : [
+                                  {
+                                    "record" : {
+                                      "recordId" : {
+                                        "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                                        "moduleName" : "Harmonia.Process.Model",
+                                        "entityName" : "StepSpec"
+                                      },
+                                      "fields" : [
+                                        {
+                                          "label" : "id",
+                                          "value" : {
+                                            "text" : "settlement"
+                                          }
+                                        },
+                                        {
+                                          "label" : "role",
+                                          "value" : {
+                                            "text" : "settler"
+                                          }
+                                        },
+                                        {
+                                          "label" : "prerequisites",
+                                          "value" : {
+                                            "list" : {
+                                              
+                                            }
+                                          }
+                                        },
+                                        {
+                                          "label" : "kind",
+                                          "value" : {
+                                            "variant" : {
+                                              "variantId" : {
+                                                "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                                                "moduleName" : "Harmonia.Process.Model",
+                                                "entityName" : "StepKind"
+                                              },
+                                              "constructor" : "ActionStep",
+                                              "value" : {
+                                                "unit" : {
+                                                  
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+              ],
+              "signatories" : [
+                "transfer-final-leg-rejected-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "observers" : [
+                "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6",
+                "transfer-final-leg-rejected-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042",
+                "transfer-final-leg-rejected-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+              ],
+              "createdAt" : "2026-09-11T05:13:59.869824Z",
+              "packageName" : "harmonia-core",
+              "acsDelta" : true,
+              "representativePackageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451"
+            }
+          }
+        ],
+        "offset" : "78",
+        "synchronizerId" : "harmonia::12201ba007ec1b2e9e63e472cbffb90d397a5e149754807f0a6e1b7e732f0b943a34",
+        "traceContext" : {
+          "traceparent" : "00-e54d3c27383d9ff3e91ce1852f8d1bbe-ff0eebbd399c5797-01"
+        },
+        "recordTime" : "2026-09-11T05:13:59.882660Z"
+      }
+    },
+    {
+      "transaction" : {
+        "updateId" : "12206538f7f9c20245d497964429c3bf74e0585b32a0ac28fd8d80df0ea4eb1fd239",
+        "effectiveAt" : "2026-09-11T05:14:00.258398Z",
+        "events" : [
+          {
+            "exercised" : {
+              "offset" : "80",
+              "contractId" : "0002f55905b494f9bfb533659e6947e5eeb3c34f0f60ae34f93530dc7c14da89deca121220910583fe769ace920b91b00aebc716a1679be9420175f51e028bbc1eb5c47c90",
+              "templateId" : {
+                "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                "moduleName" : "AtomicTransfer",
+                "entityName" : "Trade"
+              },
+              "choice" : "Agree",
+              "choiceArgument" : {
+                "record" : {
+                  "recordId" : {
+                    "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                    "moduleName" : "AtomicTransfer",
+                    "entityName" : "Agree"
+                  }
+                }
+              },
+              "actingParties" : [
+                "transfer-final-leg-rejected-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+              ],
+              "consuming" : true,
+              "witnessParties" : [
+                "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+              ],
+              "lastDescendantNodeId" : 1,
+              "exerciseResult" : {
+                "contractId" : "006de502b0061d5ed2713751bc4eba34c98c45843d24c20c5f678aba65182ce0c8ca1212205b3abdf20a757fea38bfa147c5b239c02b311facd0e832c6b186ad13d36481ab"
+              },
+              "packageName" : "harmonia-transfer",
+              "acsDelta" : true
+            }
+          },
+          {
+            "created" : {
+              "offset" : "80",
+              "nodeId" : 1,
+              "contractId" : "006de502b0061d5ed2713751bc4eba34c98c45843d24c20c5f678aba65182ce0c8ca1212205b3abdf20a757fea38bfa147c5b239c02b311facd0e832c6b186ad13d36481ab",
+              "templateId" : {
+                "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                "moduleName" : "AtomicTransfer",
+                "entityName" : "Trade"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                  "moduleName" : "AtomicTransfer",
+                  "entityName" : "Trade"
+                },
+                "fields" : [
+                  {
+                    "label" : "terms",
+                    "value" : {
+                      "record" : {
+                        "recordId" : {
+                          "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                          "moduleName" : "Harmonia.Transfer",
+                          "entityName" : "Terms"
+                        },
+                        "fields" : [
+                          {
+                            "label" : "buyer",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "seller",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+                            }
+                          },
+                          {
+                            "label" : "source",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "destination",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+                            }
+                          },
+                          {
+                            "label" : "settler",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "reference",
+                            "value" : {
+                              "text" : "transfer-final-leg-rejected"
+                            }
+                          },
+                          {
+                            "label" : "asset",
+                            "value" : {
+                              "text" : "TEST"
+                            }
+                          },
+                          {
+                            "label" : "quantity",
+                            "value" : {
+                              "numeric" : "10.0000000000"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "agreed",
+                    "value" : {
+                      "bool" : true
+                    }
+                  },
+                  {
+                    "label" : "sourceConfirmed",
+                    "value" : {
+                      "bool" : false
+                    }
+                  },
+                  {
+                    "label" : "destinationConfirmed",
+                    "value" : {
+                      "bool" : false
+                    }
+                  },
+                  {
+                    "label" : "locked",
+                    "value" : {
+                      "optional" : {
+                        
+                      }
+                    }
+                  },
+                  {
+                    "label" : "permit",
+                    "value" : {
+                      "optional" : {
+                        
+                      }
+                    }
+                  },
+                  {
+                    "label" : "settled",
+                    "value" : {
+                      "bool" : false
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+              ],
+              "signatories" : [
+                "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6",
+                "transfer-final-leg-rejected-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+              ],
+              "observers" : [
+                "transfer-final-leg-rejected-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042",
+                "transfer-final-leg-rejected-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "createdAt" : "2026-09-11T05:14:00.258398Z",
+              "packageName" : "harmonia-transfer",
+              "acsDelta" : true,
+              "representativePackageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e"
+            }
+          }
+        ],
+        "offset" : "80",
+        "synchronizerId" : "harmonia::12201ba007ec1b2e9e63e472cbffb90d397a5e149754807f0a6e1b7e732f0b943a34",
+        "traceContext" : {
+          "traceparent" : "00-262cf3cf6158f929d13341e29df353df-54da65b8dde422e3-01"
+        },
+        "recordTime" : "2026-09-11T05:14:00.269049Z"
+      }
+    },
+    {
+      "transaction" : {
+        "updateId" : "1220d56d93a036d3673371fc1d165b592aa6c95119a89a006e0e295be98d540db68a",
+        "effectiveAt" : "2026-09-11T05:14:00.685045Z",
+        "events" : [
+          {
+            "exercised" : {
+              "offset" : "83",
+              "contractId" : "00ec250b35074386a64ae2eda9374feff811705909fbc2fba809cf266f84d42fb7ca1212201d4b1366cf1e4e254533201a85e2b77a62121e9044f9ff758c6ecaeb5dbe9937",
+              "templateId" : {
+                "packageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7",
+                "moduleName" : "SourceCustody",
+                "entityName" : "Holding"
+              },
+              "choice" : "Lock",
+              "choiceArgument" : {
+                "record" : {
+                  "recordId" : {
+                    "packageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7",
+                    "moduleName" : "SourceCustody",
+                    "entityName" : "Lock"
+                  }
+                }
+              },
+              "actingParties" : [
+                "transfer-final-leg-rejected-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+              ],
+              "consuming" : true,
+              "witnessParties" : [
+                "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+              ],
+              "lastDescendantNodeId" : 1,
+              "exerciseResult" : {
+                "contractId" : "00506684b680beb0f379cf36cfa7633228ad8c1cc05f15aaf2c74094edc058abf0ca121220b1d7829a20cae56f142832d8a95cff8d856998df89445c23955022b8a9617c09"
+              },
+              "packageName" : "harmonia-source-custody",
+              "acsDelta" : true
+            }
+          },
+          {
+            "created" : {
+              "offset" : "83",
+              "nodeId" : 1,
+              "contractId" : "00506684b680beb0f379cf36cfa7633228ad8c1cc05f15aaf2c74094edc058abf0ca121220b1d7829a20cae56f142832d8a95cff8d856998df89445c23955022b8a9617c09",
+              "templateId" : {
+                "packageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7",
+                "moduleName" : "SourceCustody",
+                "entityName" : "LockedPosition"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7",
+                  "moduleName" : "SourceCustody",
+                  "entityName" : "LockedPosition"
+                },
+                "fields" : [
+                  {
+                    "label" : "terms",
+                    "value" : {
+                      "record" : {
+                        "recordId" : {
+                          "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                          "moduleName" : "Harmonia.Transfer",
+                          "entityName" : "Terms"
+                        },
+                        "fields" : [
+                          {
+                            "label" : "buyer",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "seller",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+                            }
+                          },
+                          {
+                            "label" : "source",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "destination",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+                            }
+                          },
+                          {
+                            "label" : "settler",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "reference",
+                            "value" : {
+                              "text" : "transfer-final-leg-rejected"
+                            }
+                          },
+                          {
+                            "label" : "asset",
+                            "value" : {
+                              "text" : "TEST"
+                            }
+                          },
+                          {
+                            "label" : "quantity",
+                            "value" : {
+                              "numeric" : "10.0000000000"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+              ],
+              "signatories" : [
+                "transfer-final-leg-rejected-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c",
+                "transfer-final-leg-rejected-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "observers" : [
+                "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6",
+                "transfer-final-leg-rejected-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+              ],
+              "createdAt" : "2026-09-11T05:14:00.685045Z",
+              "packageName" : "harmonia-source-custody",
+              "acsDelta" : true,
+              "representativePackageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7"
+            }
+          }
+        ],
+        "offset" : "83",
+        "synchronizerId" : "harmonia::12201ba007ec1b2e9e63e472cbffb90d397a5e149754807f0a6e1b7e732f0b943a34",
+        "traceContext" : {
+          "traceparent" : "00-ee4ef59adfea781679238abcf2286341-a4932d188033ea40-01"
+        },
+        "recordTime" : "2026-09-11T05:14:00.697468Z"
+      }
+    },
+    {
+      "transaction" : {
+        "updateId" : "1220fe34139c57812123fe5d3bc7aee631cfa83a6cb85063c913d578aab35d184349",
+        "effectiveAt" : "2026-09-11T05:14:01.171077Z",
+        "events" : [
+          {
+            "exercised" : {
+              "offset" : "85",
+              "contractId" : "006de502b0061d5ed2713751bc4eba34c98c45843d24c20c5f678aba65182ce0c8ca1212205b3abdf20a757fea38bfa147c5b239c02b311facd0e832c6b186ad13d36481ab",
+              "templateId" : {
+                "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                "moduleName" : "AtomicTransfer",
+                "entityName" : "Trade"
+              },
+              "choice" : "ConfirmSource",
+              "choiceArgument" : {
+                "record" : {
+                  "recordId" : {
+                    "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                    "moduleName" : "AtomicTransfer",
+                    "entityName" : "ConfirmSource"
+                  },
+                  "fields" : [
+                    {
+                      "label" : "position",
+                      "value" : {
+                        "optional" : {
+                          "value" : {
+                            "contractId" : "00506684b680beb0f379cf36cfa7633228ad8c1cc05f15aaf2c74094edc058abf0ca121220b1d7829a20cae56f142832d8a95cff8d856998df89445c23955022b8a9617c09"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "actingParties" : [
+                "transfer-final-leg-rejected-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "consuming" : true,
+              "witnessParties" : [
+                "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+              ],
+              "lastDescendantNodeId" : 2,
+              "exerciseResult" : {
+                "contractId" : "008de6037ddc075783cf0924e188431dcf400968492985d8d26735c6eee1b502f6ca121220a4455150a3aae374ed104e7bcdc2a99eac1a40873701b3de53e86613445ef89e"
+              },
+              "packageName" : "harmonia-transfer",
+              "acsDelta" : true
+            }
+          },
+          {
+            "created" : {
+              "offset" : "85",
+              "nodeId" : 2,
+              "contractId" : "008de6037ddc075783cf0924e188431dcf400968492985d8d26735c6eee1b502f6ca121220a4455150a3aae374ed104e7bcdc2a99eac1a40873701b3de53e86613445ef89e",
+              "templateId" : {
+                "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                "moduleName" : "AtomicTransfer",
+                "entityName" : "Trade"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                  "moduleName" : "AtomicTransfer",
+                  "entityName" : "Trade"
+                },
+                "fields" : [
+                  {
+                    "label" : "terms",
+                    "value" : {
+                      "record" : {
+                        "recordId" : {
+                          "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                          "moduleName" : "Harmonia.Transfer",
+                          "entityName" : "Terms"
+                        },
+                        "fields" : [
+                          {
+                            "label" : "buyer",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "seller",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+                            }
+                          },
+                          {
+                            "label" : "source",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "destination",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+                            }
+                          },
+                          {
+                            "label" : "settler",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "reference",
+                            "value" : {
+                              "text" : "transfer-final-leg-rejected"
+                            }
+                          },
+                          {
+                            "label" : "asset",
+                            "value" : {
+                              "text" : "TEST"
+                            }
+                          },
+                          {
+                            "label" : "quantity",
+                            "value" : {
+                              "numeric" : "10.0000000000"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "agreed",
+                    "value" : {
+                      "bool" : true
+                    }
+                  },
+                  {
+                    "label" : "sourceConfirmed",
+                    "value" : {
+                      "bool" : true
+                    }
+                  },
+                  {
+                    "label" : "destinationConfirmed",
+                    "value" : {
+                      "bool" : false
+                    }
+                  },
+                  {
+                    "label" : "locked",
+                    "value" : {
+                      "optional" : {
+                        "value" : {
+                          "contractId" : "00506684b680beb0f379cf36cfa7633228ad8c1cc05f15aaf2c74094edc058abf0ca121220b1d7829a20cae56f142832d8a95cff8d856998df89445c23955022b8a9617c09"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "label" : "permit",
+                    "value" : {
+                      "optional" : {
+                        
+                      }
+                    }
+                  },
+                  {
+                    "label" : "settled",
+                    "value" : {
+                      "bool" : false
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+              ],
+              "signatories" : [
+                "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6",
+                "transfer-final-leg-rejected-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c",
+                "transfer-final-leg-rejected-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "observers" : [
+                "transfer-final-leg-rejected-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+              ],
+              "createdAt" : "2026-09-11T05:14:01.171077Z",
+              "packageName" : "harmonia-transfer",
+              "acsDelta" : true,
+              "representativePackageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e"
+            }
+          }
+        ],
+        "offset" : "85",
+        "synchronizerId" : "harmonia::12201ba007ec1b2e9e63e472cbffb90d397a5e149754807f0a6e1b7e732f0b943a34",
+        "traceContext" : {
+          "traceparent" : "00-738332f6f896c27f8aa96732c618b17d-66f067528d6d2acb-01"
+        },
+        "recordTime" : "2026-09-11T05:14:01.183901Z"
+      }
+    },
+    {
+      "transaction" : {
+        "updateId" : "12208eb373cce27018efc282be1439d23d15ef783bb95edd66e5e00f1d3f4b430f67",
+        "effectiveAt" : "2026-09-11T05:14:01.645925Z",
+        "events" : [
+          {
+            "exercised" : {
+              "offset" : "88",
+              "contractId" : "004c5d1da751645cef9217e866ae5029f2bb6e8e50eac04199f295c2e815e2ab68ca121220448858ec226db0365b4e5754e30eb6eeccf06a39ef723a1c1afcaa03b9a87ded",
+              "templateId" : {
+                "packageId" : "a68ebce0bfcab3962dcef8b7ebaf2977a676b1b896e0aab635a83e73bfd94c33",
+                "moduleName" : "DestinationCustody",
+                "entityName" : "ReceivingRequest"
+              },
+              "choice" : "Prepare",
+              "choiceArgument" : {
+                "record" : {
+                  "recordId" : {
+                    "packageId" : "a68ebce0bfcab3962dcef8b7ebaf2977a676b1b896e0aab635a83e73bfd94c33",
+                    "moduleName" : "DestinationCustody",
+                    "entityName" : "Prepare"
+                  }
+                }
+              },
+              "actingParties" : [
+                "transfer-final-leg-rejected-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+              ],
+              "consuming" : true,
+              "witnessParties" : [
+                "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+              ],
+              "lastDescendantNodeId" : 1,
+              "exerciseResult" : {
+                "contractId" : "00a4f1d682a55a35f60e72b1ca9c6b1f572f2876e0a10ede04dd76934ae2877da4ca121220d5455a1ca7d35f0a3e2ac0813e94aa9dbc15e4bb2bcda86ae4519c678d7bfe7b"
+              },
+              "packageName" : "harmonia-destination-custody",
+              "acsDelta" : true
+            }
+          },
+          {
+            "created" : {
+              "offset" : "88",
+              "nodeId" : 1,
+              "contractId" : "00a4f1d682a55a35f60e72b1ca9c6b1f572f2876e0a10ede04dd76934ae2877da4ca121220d5455a1ca7d35f0a3e2ac0813e94aa9dbc15e4bb2bcda86ae4519c678d7bfe7b",
+              "templateId" : {
+                "packageId" : "a68ebce0bfcab3962dcef8b7ebaf2977a676b1b896e0aab635a83e73bfd94c33",
+                "moduleName" : "DestinationCustody",
+                "entityName" : "ReceivingPermit"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "a68ebce0bfcab3962dcef8b7ebaf2977a676b1b896e0aab635a83e73bfd94c33",
+                  "moduleName" : "DestinationCustody",
+                  "entityName" : "ReceivingPermit"
+                },
+                "fields" : [
+                  {
+                    "label" : "terms",
+                    "value" : {
+                      "record" : {
+                        "recordId" : {
+                          "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                          "moduleName" : "Harmonia.Transfer",
+                          "entityName" : "Terms"
+                        },
+                        "fields" : [
+                          {
+                            "label" : "buyer",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "seller",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+                            }
+                          },
+                          {
+                            "label" : "source",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "destination",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+                            }
+                          },
+                          {
+                            "label" : "settler",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "reference",
+                            "value" : {
+                              "text" : "transfer-final-leg-rejected"
+                            }
+                          },
+                          {
+                            "label" : "asset",
+                            "value" : {
+                              "text" : "TEST"
+                            }
+                          },
+                          {
+                            "label" : "quantity",
+                            "value" : {
+                              "numeric" : "10.0000000000"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "receipts",
+                    "value" : {
+                      "text" : "reject"
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+              ],
+              "signatories" : [
+                "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6",
+                "transfer-final-leg-rejected-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+              ],
+              "observers" : [
+                "transfer-final-leg-rejected-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c",
+                "transfer-final-leg-rejected-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "createdAt" : "2026-09-11T05:14:01.645925Z",
+              "packageName" : "harmonia-destination-custody",
+              "acsDelta" : true,
+              "representativePackageId" : "a68ebce0bfcab3962dcef8b7ebaf2977a676b1b896e0aab635a83e73bfd94c33"
+            }
+          }
+        ],
+        "offset" : "88",
+        "synchronizerId" : "harmonia::12201ba007ec1b2e9e63e472cbffb90d397a5e149754807f0a6e1b7e732f0b943a34",
+        "traceContext" : {
+          "traceparent" : "00-0c054e1ff9595ace43844c6163974362-e5103ad984766061-01"
+        },
+        "recordTime" : "2026-09-11T05:14:01.658775Z"
+      }
+    },
+    {
+      "transaction" : {
+        "updateId" : "1220f6943467a3c357e3fecf0794d0beef4f187997205a2fc067f1c16dbc93da05ce",
+        "effectiveAt" : "2026-09-11T05:14:02.151067Z",
+        "events" : [
+          {
+            "exercised" : {
+              "offset" : "91",
+              "contractId" : "008de6037ddc075783cf0924e188431dcf400968492985d8d26735c6eee1b502f6ca121220a4455150a3aae374ed104e7bcdc2a99eac1a40873701b3de53e86613445ef89e",
+              "templateId" : {
+                "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                "moduleName" : "AtomicTransfer",
+                "entityName" : "Trade"
+              },
+              "choice" : "ConfirmDestination",
+              "choiceArgument" : {
+                "record" : {
+                  "recordId" : {
+                    "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                    "moduleName" : "AtomicTransfer",
+                    "entityName" : "ConfirmDestination"
+                  },
+                  "fields" : [
+                    {
+                      "label" : "readiness",
+                      "value" : {
+                        "optional" : {
+                          "value" : {
+                            "contractId" : "00a4f1d682a55a35f60e72b1ca9c6b1f572f2876e0a10ede04dd76934ae2877da4ca121220d5455a1ca7d35f0a3e2ac0813e94aa9dbc15e4bb2bcda86ae4519c678d7bfe7b"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "actingParties" : [
+                "transfer-final-leg-rejected-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+              ],
+              "consuming" : true,
+              "witnessParties" : [
+                "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+              ],
+              "lastDescendantNodeId" : 2,
+              "exerciseResult" : {
+                "contractId" : "004c76979bf7f1eea6c1b89977b052472730dff915191b20a69b2f687ab34fed3bca121220f0f8bdf23b378d91424416b5000019b201408cd9d5dc46567ce287d4dbc78346"
+              },
+              "packageName" : "harmonia-transfer",
+              "acsDelta" : true
+            }
+          },
+          {
+            "created" : {
+              "offset" : "91",
+              "nodeId" : 2,
+              "contractId" : "004c76979bf7f1eea6c1b89977b052472730dff915191b20a69b2f687ab34fed3bca121220f0f8bdf23b378d91424416b5000019b201408cd9d5dc46567ce287d4dbc78346",
+              "templateId" : {
+                "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                "moduleName" : "AtomicTransfer",
+                "entityName" : "Trade"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                  "moduleName" : "AtomicTransfer",
+                  "entityName" : "Trade"
+                },
+                "fields" : [
+                  {
+                    "label" : "terms",
+                    "value" : {
+                      "record" : {
+                        "recordId" : {
+                          "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                          "moduleName" : "Harmonia.Transfer",
+                          "entityName" : "Terms"
+                        },
+                        "fields" : [
+                          {
+                            "label" : "buyer",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "seller",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+                            }
+                          },
+                          {
+                            "label" : "source",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "destination",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+                            }
+                          },
+                          {
+                            "label" : "settler",
+                            "value" : {
+                              "party" : "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "reference",
+                            "value" : {
+                              "text" : "transfer-final-leg-rejected"
+                            }
+                          },
+                          {
+                            "label" : "asset",
+                            "value" : {
+                              "text" : "TEST"
+                            }
+                          },
+                          {
+                            "label" : "quantity",
+                            "value" : {
+                              "numeric" : "10.0000000000"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "agreed",
+                    "value" : {
+                      "bool" : true
+                    }
+                  },
+                  {
+                    "label" : "sourceConfirmed",
+                    "value" : {
+                      "bool" : true
+                    }
+                  },
+                  {
+                    "label" : "destinationConfirmed",
+                    "value" : {
+                      "bool" : true
+                    }
+                  },
+                  {
+                    "label" : "locked",
+                    "value" : {
+                      "optional" : {
+                        "value" : {
+                          "contractId" : "00506684b680beb0f379cf36cfa7633228ad8c1cc05f15aaf2c74094edc058abf0ca121220b1d7829a20cae56f142832d8a95cff8d856998df89445c23955022b8a9617c09"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "label" : "permit",
+                    "value" : {
+                      "optional" : {
+                        "value" : {
+                          "contractId" : "00a4f1d682a55a35f60e72b1ca9c6b1f572f2876e0a10ede04dd76934ae2877da4ca121220d5455a1ca7d35f0a3e2ac0813e94aa9dbc15e4bb2bcda86ae4519c678d7bfe7b"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "label" : "settled",
+                    "value" : {
+                      "bool" : false
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+              ],
+              "signatories" : [
+                "transfer-final-leg-rejected-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6",
+                "transfer-final-leg-rejected-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042",
+                "transfer-final-leg-rejected-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c",
+                "transfer-final-leg-rejected-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "createdAt" : "2026-09-11T05:14:02.151067Z",
+              "packageName" : "harmonia-transfer",
+              "acsDelta" : true,
+              "representativePackageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e"
+            }
+          }
+        ],
+        "offset" : "91",
+        "synchronizerId" : "harmonia::12201ba007ec1b2e9e63e472cbffb90d397a5e149754807f0a6e1b7e732f0b943a34",
+        "traceContext" : {
+          "traceparent" : "00-ecc741956f92d3e95bc09027a54d8954-15c54a7f648fb952-01"
+        },
+        "recordTime" : "2026-09-11T05:14:02.162231Z"
+      }
+    }
+  ],
+  "settlement_transaction_ids" : [
+  ]
+}

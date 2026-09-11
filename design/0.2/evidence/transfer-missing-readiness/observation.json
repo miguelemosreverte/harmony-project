@@ -1,0 +1,1176 @@
+{
+  "settler" : "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6",
+  "steps" : [
+    {
+      "activeWorkflows" : 0,
+      "workflow" : "waiting",
+      "rawError" : null,
+      "outcome" : "committed",
+      "id" : "seller-agrees",
+      "destination" : 0E-10,
+      "trade" : "agreed",
+      "locked" : 0E-10,
+      "visibleTo" : [
+        "Alice",
+        "Seller",
+        "Source",
+        "Destination"
+      ],
+      "reason" : null,
+      "releases" : 0,
+      "available" : 10.0000000000
+    },
+    {
+      "activeWorkflows" : 0,
+      "workflow" : "waiting",
+      "rawError" : null,
+      "outcome" : "committed",
+      "id" : "seller-locks",
+      "destination" : 0E-10,
+      "trade" : "agreed",
+      "locked" : 10.0000000000,
+      "visibleTo" : [
+        "Alice",
+        "Seller",
+        "Source",
+        "Destination"
+      ],
+      "reason" : null,
+      "releases" : 0,
+      "available" : 0E-10
+    },
+    {
+      "activeWorkflows" : 0,
+      "workflow" : "waiting",
+      "rawError" : null,
+      "outcome" : "committed",
+      "id" : "source-confirms",
+      "destination" : 0E-10,
+      "trade" : "source-confirmed",
+      "locked" : 10.0000000000,
+      "visibleTo" : [
+        "Alice",
+        "Seller",
+        "Source",
+        "Destination"
+      ],
+      "reason" : null,
+      "releases" : 0,
+      "available" : 0E-10
+    },
+    {
+      "activeWorkflows" : 0,
+      "workflow" : "waiting",
+      "rawError" : "Failed with Status: FailureStatus {errorId = \"UNHANDLED_EXCEPTION/DA.Exception.GeneralError:GeneralError\", category = InvalidGivenCurrentSystemStateOther, message = \"Destination readiness is required\", meta = TextMap []}",
+      "outcome" : "rejected",
+      "id" : "destination-without-permit",
+      "destination" : 0E-10,
+      "trade" : "source-confirmed",
+      "locked" : 10.0000000000,
+      "visibleTo" : [
+        "Alice",
+        "Seller",
+        "Source",
+        "Destination"
+      ],
+      "reason" : "application-rejected",
+      "releases" : 0,
+      "available" : 0E-10
+    },
+    {
+      "activeWorkflows" : 0,
+      "workflow" : "waiting",
+      "rawError" : "Failed with Status: FailureStatus {errorId = \"UNHANDLED_EXCEPTION/DA.Exception.AssertionFailed:AssertionFailed\", category = InvalidGivenCurrentSystemStateOther, message = \"All four parties must have consented\", meta = TextMap []}",
+      "outcome" : "rejected",
+      "id" : "settle",
+      "destination" : 0E-10,
+      "trade" : "source-confirmed",
+      "locked" : 10.0000000000,
+      "visibleTo" : [
+        "Alice",
+        "Seller",
+        "Source",
+        "Destination"
+      ],
+      "reason" : "application-rejected",
+      "releases" : 0,
+      "available" : 0E-10
+    }
+  ],
+  "position" : "003ea1141a514d653c32e68d904acfedcfb887649ebc25bbdab98c565875781da5ca121220604b6dd54b819841a63019acb9ef442f01ac8ae0e534eb27128d5502bf4106ca",
+  "settler_events" : [
+    {
+      "transaction" : {
+        "updateId" : "1220ca8e5f4f9b17b9dc2078ec58dbe51782515b4e87b36776114d65e1506f9b28e1",
+        "effectiveAt" : "2026-09-11T05:14:19.019899Z",
+        "events" : [
+          {
+            "created" : {
+              "offset" : "155",
+              "contractId" : "00599245e2532cfdcf4833c0d899a775800e36ab5c86e394486f357da765ffa74dca121220f221ed34f54c283ad4ff83a244dc43ece14c0fb1a55f20a74e7f027d3dffd8c1",
+              "templateId" : {
+                "packageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7",
+                "moduleName" : "SourceCustody",
+                "entityName" : "Holding"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7",
+                  "moduleName" : "SourceCustody",
+                  "entityName" : "Holding"
+                },
+                "fields" : [
+                  {
+                    "label" : "terms",
+                    "value" : {
+                      "record" : {
+                        "recordId" : {
+                          "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                          "moduleName" : "Harmonia.Transfer",
+                          "entityName" : "Terms"
+                        },
+                        "fields" : [
+                          {
+                            "label" : "buyer",
+                            "value" : {
+                              "party" : "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "seller",
+                            "value" : {
+                              "party" : "transfer-missing-readiness-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+                            }
+                          },
+                          {
+                            "label" : "source",
+                            "value" : {
+                              "party" : "transfer-missing-readiness-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "destination",
+                            "value" : {
+                              "party" : "transfer-missing-readiness-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+                            }
+                          },
+                          {
+                            "label" : "settler",
+                            "value" : {
+                              "party" : "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "reference",
+                            "value" : {
+                              "text" : "transfer-missing-readiness"
+                            }
+                          },
+                          {
+                            "label" : "asset",
+                            "value" : {
+                              "text" : "TEST"
+                            }
+                          },
+                          {
+                            "label" : "quantity",
+                            "value" : {
+                              "numeric" : "10.0000000000"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+              ],
+              "signatories" : [
+                "transfer-missing-readiness-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c",
+                "transfer-missing-readiness-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "observers" : [
+                "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6",
+                "transfer-missing-readiness-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+              ],
+              "createdAt" : "2026-09-11T05:14:19.019899Z",
+              "packageName" : "harmonia-source-custody",
+              "acsDelta" : true,
+              "representativePackageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7"
+            }
+          }
+        ],
+        "offset" : "155",
+        "synchronizerId" : "harmonia::12201ba007ec1b2e9e63e472cbffb90d397a5e149754807f0a6e1b7e732f0b943a34",
+        "traceContext" : {
+          "traceparent" : "00-af6006088f8c90b9856641323404164f-fcae43dd29db52bd-01"
+        },
+        "recordTime" : "2026-09-11T05:14:19.030492Z"
+      }
+    },
+    {
+      "transaction" : {
+        "updateId" : "1220772cc3149e615ba06804d8dcdf2bed60498de2d77532923da89fa67e8fc91f64",
+        "commandId" : "a3e121c6-5e63-4996-808e-0644fdc7beed",
+        "effectiveAt" : "2026-09-11T05:14:19.441904Z",
+        "events" : [
+          {
+            "created" : {
+              "offset" : "157",
+              "contractId" : "005aba8fc9940a8b66310051462866fdf359a838123f019724a7be29c3d92f0e9cca12122045992fbbcc7d690978651b417dc1be5e0bc3df62665e38fda038a78ce4ee622e",
+              "templateId" : {
+                "packageId" : "a68ebce0bfcab3962dcef8b7ebaf2977a676b1b896e0aab635a83e73bfd94c33",
+                "moduleName" : "DestinationCustody",
+                "entityName" : "ReceivingRequest"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "a68ebce0bfcab3962dcef8b7ebaf2977a676b1b896e0aab635a83e73bfd94c33",
+                  "moduleName" : "DestinationCustody",
+                  "entityName" : "ReceivingRequest"
+                },
+                "fields" : [
+                  {
+                    "label" : "terms",
+                    "value" : {
+                      "record" : {
+                        "recordId" : {
+                          "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                          "moduleName" : "Harmonia.Transfer",
+                          "entityName" : "Terms"
+                        },
+                        "fields" : [
+                          {
+                            "label" : "buyer",
+                            "value" : {
+                              "party" : "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "seller",
+                            "value" : {
+                              "party" : "transfer-missing-readiness-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+                            }
+                          },
+                          {
+                            "label" : "source",
+                            "value" : {
+                              "party" : "transfer-missing-readiness-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "destination",
+                            "value" : {
+                              "party" : "transfer-missing-readiness-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+                            }
+                          },
+                          {
+                            "label" : "settler",
+                            "value" : {
+                              "party" : "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "reference",
+                            "value" : {
+                              "text" : "transfer-missing-readiness"
+                            }
+                          },
+                          {
+                            "label" : "asset",
+                            "value" : {
+                              "text" : "TEST"
+                            }
+                          },
+                          {
+                            "label" : "quantity",
+                            "value" : {
+                              "numeric" : "10.0000000000"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "receipts",
+                    "value" : {
+                      "text" : "accept"
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+              ],
+              "signatories" : [
+                "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+              ],
+              "observers" : [
+                "transfer-missing-readiness-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+              ],
+              "createdAt" : "2026-09-11T05:14:19.441904Z",
+              "packageName" : "harmonia-destination-custody",
+              "acsDelta" : true,
+              "representativePackageId" : "a68ebce0bfcab3962dcef8b7ebaf2977a676b1b896e0aab635a83e73bfd94c33"
+            }
+          }
+        ],
+        "offset" : "157",
+        "synchronizerId" : "harmonia::12201ba007ec1b2e9e63e472cbffb90d397a5e149754807f0a6e1b7e732f0b943a34",
+        "traceContext" : {
+          "traceparent" : "00-e820944517a31a414989d2dde171a7a1-22b2e485e05c0c64-01"
+        },
+        "recordTime" : "2026-09-11T05:14:19.454298Z"
+      }
+    },
+    {
+      "transaction" : {
+        "updateId" : "1220a6a4a4455512d90590ff875f4eb094c11d7849fea5f9f7ba55ca63944f1ca2cb",
+        "commandId" : "d907fae3-aa60-475a-b7ee-983226922641",
+        "effectiveAt" : "2026-09-11T05:14:19.783457Z",
+        "events" : [
+          {
+            "created" : {
+              "offset" : "160",
+              "contractId" : "00b975210d36897500aac76c8eae8b0862c2664293546b58c95164ba886f1a3723ca121220ecb699cf9a7b4fd76d4809d4e92fc3d5dd584aa99dd362864234782b4a88d766",
+              "templateId" : {
+                "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                "moduleName" : "AtomicTransfer",
+                "entityName" : "Trade"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                  "moduleName" : "AtomicTransfer",
+                  "entityName" : "Trade"
+                },
+                "fields" : [
+                  {
+                    "label" : "terms",
+                    "value" : {
+                      "record" : {
+                        "recordId" : {
+                          "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                          "moduleName" : "Harmonia.Transfer",
+                          "entityName" : "Terms"
+                        },
+                        "fields" : [
+                          {
+                            "label" : "buyer",
+                            "value" : {
+                              "party" : "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "seller",
+                            "value" : {
+                              "party" : "transfer-missing-readiness-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+                            }
+                          },
+                          {
+                            "label" : "source",
+                            "value" : {
+                              "party" : "transfer-missing-readiness-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "destination",
+                            "value" : {
+                              "party" : "transfer-missing-readiness-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+                            }
+                          },
+                          {
+                            "label" : "settler",
+                            "value" : {
+                              "party" : "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "reference",
+                            "value" : {
+                              "text" : "transfer-missing-readiness"
+                            }
+                          },
+                          {
+                            "label" : "asset",
+                            "value" : {
+                              "text" : "TEST"
+                            }
+                          },
+                          {
+                            "label" : "quantity",
+                            "value" : {
+                              "numeric" : "10.0000000000"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "agreed",
+                    "value" : {
+                      "bool" : false
+                    }
+                  },
+                  {
+                    "label" : "sourceConfirmed",
+                    "value" : {
+                      "bool" : false
+                    }
+                  },
+                  {
+                    "label" : "destinationConfirmed",
+                    "value" : {
+                      "bool" : false
+                    }
+                  },
+                  {
+                    "label" : "locked",
+                    "value" : {
+                      "optional" : {
+                        
+                      }
+                    }
+                  },
+                  {
+                    "label" : "permit",
+                    "value" : {
+                      "optional" : {
+                        
+                      }
+                    }
+                  },
+                  {
+                    "label" : "settled",
+                    "value" : {
+                      "bool" : false
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+              ],
+              "signatories" : [
+                "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+              ],
+              "observers" : [
+                "transfer-missing-readiness-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042",
+                "transfer-missing-readiness-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c",
+                "transfer-missing-readiness-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "createdAt" : "2026-09-11T05:14:19.783457Z",
+              "packageName" : "harmonia-transfer",
+              "acsDelta" : true,
+              "representativePackageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e"
+            }
+          }
+        ],
+        "offset" : "160",
+        "synchronizerId" : "harmonia::12201ba007ec1b2e9e63e472cbffb90d397a5e149754807f0a6e1b7e732f0b943a34",
+        "traceContext" : {
+          "traceparent" : "00-23f8a35a563225afea72ba298149e8d8-db72fbd686925e55-01"
+        },
+        "recordTime" : "2026-09-11T05:14:19.795475Z"
+      }
+    },
+    {
+      "transaction" : {
+        "updateId" : "1220a5c48f52dd561c0c186cd541441692be170daf0c18a286cc562e45f545cdc655",
+        "effectiveAt" : "2026-09-11T05:14:20.151388Z",
+        "events" : [
+          {
+            "created" : {
+              "offset" : "163",
+              "contractId" : "00f73768844d45e628919edbb431ab5af099b30f73ee2bde91c0572b38b2ae76bcca121220658d066d61a596201f11324de7fcfbefdc0544d0e244beef03ac35d4f52d124d",
+              "templateId" : {
+                "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                "moduleName" : "Harmonia.Process.Engine",
+                "entityName" : "PublishedDefinition"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                  "moduleName" : "Harmonia.Process.Engine",
+                  "entityName" : "PublishedDefinition"
+                },
+                "fields" : [
+                  {
+                    "label" : "publisher",
+                    "value" : {
+                      "party" : "transfer-missing-readiness-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                    }
+                  },
+                  {
+                    "label" : "readers",
+                    "value" : {
+                      "list" : {
+                        "elements" : [
+                          {
+                            "party" : "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                          },
+                          {
+                            "party" : "transfer-missing-readiness-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+                          },
+                          {
+                            "party" : "transfer-missing-readiness-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                          },
+                          {
+                            "party" : "transfer-missing-readiness-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "definition",
+                    "value" : {
+                      "record" : {
+                        "recordId" : {
+                          "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                          "moduleName" : "Harmonia.Process.Model",
+                          "entityName" : "Definition"
+                        },
+                        "fields" : [
+                          {
+                            "label" : "name",
+                            "value" : {
+                              "text" : "atomic-transfer"
+                            }
+                          },
+                          {
+                            "label" : "version",
+                            "value" : {
+                              "int64" : "1"
+                            }
+                          },
+                          {
+                            "label" : "steps",
+                            "value" : {
+                              "list" : {
+                                "elements" : [
+                                  {
+                                    "record" : {
+                                      "recordId" : {
+                                        "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                                        "moduleName" : "Harmonia.Process.Model",
+                                        "entityName" : "StepSpec"
+                                      },
+                                      "fields" : [
+                                        {
+                                          "label" : "id",
+                                          "value" : {
+                                            "text" : "settlement"
+                                          }
+                                        },
+                                        {
+                                          "label" : "role",
+                                          "value" : {
+                                            "text" : "settler"
+                                          }
+                                        },
+                                        {
+                                          "label" : "prerequisites",
+                                          "value" : {
+                                            "list" : {
+                                              
+                                            }
+                                          }
+                                        },
+                                        {
+                                          "label" : "kind",
+                                          "value" : {
+                                            "variant" : {
+                                              "variantId" : {
+                                                "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                                                "moduleName" : "Harmonia.Process.Model",
+                                                "entityName" : "StepKind"
+                                              },
+                                              "constructor" : "ActionStep",
+                                              "value" : {
+                                                "unit" : {
+                                                  
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+              ],
+              "signatories" : [
+                "transfer-missing-readiness-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "observers" : [
+                "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6",
+                "transfer-missing-readiness-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042",
+                "transfer-missing-readiness-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+              ],
+              "createdAt" : "2026-09-11T05:14:20.151388Z",
+              "packageName" : "harmonia-core",
+              "acsDelta" : true,
+              "representativePackageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451"
+            }
+          }
+        ],
+        "offset" : "163",
+        "synchronizerId" : "harmonia::12201ba007ec1b2e9e63e472cbffb90d397a5e149754807f0a6e1b7e732f0b943a34",
+        "traceContext" : {
+          "traceparent" : "00-f2b6a0f0b74c6229394eaaff4164df90-23e2d2e5718ae726-01"
+        },
+        "recordTime" : "2026-09-11T05:14:20.162954Z"
+      }
+    },
+    {
+      "transaction" : {
+        "updateId" : "1220233a399ef20cf8462f2da2465aa65abdae88d3d1e680b7006451541b3045687b",
+        "effectiveAt" : "2026-09-11T05:14:20.522871Z",
+        "events" : [
+          {
+            "exercised" : {
+              "offset" : "165",
+              "contractId" : "00b975210d36897500aac76c8eae8b0862c2664293546b58c95164ba886f1a3723ca121220ecb699cf9a7b4fd76d4809d4e92fc3d5dd584aa99dd362864234782b4a88d766",
+              "templateId" : {
+                "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                "moduleName" : "AtomicTransfer",
+                "entityName" : "Trade"
+              },
+              "choice" : "Agree",
+              "choiceArgument" : {
+                "record" : {
+                  "recordId" : {
+                    "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                    "moduleName" : "AtomicTransfer",
+                    "entityName" : "Agree"
+                  }
+                }
+              },
+              "actingParties" : [
+                "transfer-missing-readiness-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+              ],
+              "consuming" : true,
+              "witnessParties" : [
+                "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+              ],
+              "lastDescendantNodeId" : 1,
+              "exerciseResult" : {
+                "contractId" : "00d5aabc3b4f9b4cffdbe6922646718f2901d4ab5db45f1248ffd1e369c284f48aca1212207164454cc518a2cee00eefe1016681a3d1d1f2e6f90b841906b5ceb2b3eb03b7"
+              },
+              "packageName" : "harmonia-transfer",
+              "acsDelta" : true
+            }
+          },
+          {
+            "created" : {
+              "offset" : "165",
+              "nodeId" : 1,
+              "contractId" : "00d5aabc3b4f9b4cffdbe6922646718f2901d4ab5db45f1248ffd1e369c284f48aca1212207164454cc518a2cee00eefe1016681a3d1d1f2e6f90b841906b5ceb2b3eb03b7",
+              "templateId" : {
+                "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                "moduleName" : "AtomicTransfer",
+                "entityName" : "Trade"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                  "moduleName" : "AtomicTransfer",
+                  "entityName" : "Trade"
+                },
+                "fields" : [
+                  {
+                    "label" : "terms",
+                    "value" : {
+                      "record" : {
+                        "recordId" : {
+                          "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                          "moduleName" : "Harmonia.Transfer",
+                          "entityName" : "Terms"
+                        },
+                        "fields" : [
+                          {
+                            "label" : "buyer",
+                            "value" : {
+                              "party" : "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "seller",
+                            "value" : {
+                              "party" : "transfer-missing-readiness-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+                            }
+                          },
+                          {
+                            "label" : "source",
+                            "value" : {
+                              "party" : "transfer-missing-readiness-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "destination",
+                            "value" : {
+                              "party" : "transfer-missing-readiness-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+                            }
+                          },
+                          {
+                            "label" : "settler",
+                            "value" : {
+                              "party" : "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "reference",
+                            "value" : {
+                              "text" : "transfer-missing-readiness"
+                            }
+                          },
+                          {
+                            "label" : "asset",
+                            "value" : {
+                              "text" : "TEST"
+                            }
+                          },
+                          {
+                            "label" : "quantity",
+                            "value" : {
+                              "numeric" : "10.0000000000"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "agreed",
+                    "value" : {
+                      "bool" : true
+                    }
+                  },
+                  {
+                    "label" : "sourceConfirmed",
+                    "value" : {
+                      "bool" : false
+                    }
+                  },
+                  {
+                    "label" : "destinationConfirmed",
+                    "value" : {
+                      "bool" : false
+                    }
+                  },
+                  {
+                    "label" : "locked",
+                    "value" : {
+                      "optional" : {
+                        
+                      }
+                    }
+                  },
+                  {
+                    "label" : "permit",
+                    "value" : {
+                      "optional" : {
+                        
+                      }
+                    }
+                  },
+                  {
+                    "label" : "settled",
+                    "value" : {
+                      "bool" : false
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+              ],
+              "signatories" : [
+                "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6",
+                "transfer-missing-readiness-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+              ],
+              "observers" : [
+                "transfer-missing-readiness-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042",
+                "transfer-missing-readiness-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "createdAt" : "2026-09-11T05:14:20.522871Z",
+              "packageName" : "harmonia-transfer",
+              "acsDelta" : true,
+              "representativePackageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e"
+            }
+          }
+        ],
+        "offset" : "165",
+        "synchronizerId" : "harmonia::12201ba007ec1b2e9e63e472cbffb90d397a5e149754807f0a6e1b7e732f0b943a34",
+        "traceContext" : {
+          "traceparent" : "00-f2a85fa1da83a457f1399e819fad933e-70644a6b243ee344-01"
+        },
+        "recordTime" : "2026-09-11T05:14:20.533294Z"
+      }
+    },
+    {
+      "transaction" : {
+        "updateId" : "12201d7ae1ec1230bc37c0266ce062ce65d8833744e15599d8eba0479487a7d99ccf",
+        "effectiveAt" : "2026-09-11T05:14:20.940791Z",
+        "events" : [
+          {
+            "exercised" : {
+              "offset" : "168",
+              "contractId" : "00599245e2532cfdcf4833c0d899a775800e36ab5c86e394486f357da765ffa74dca121220f221ed34f54c283ad4ff83a244dc43ece14c0fb1a55f20a74e7f027d3dffd8c1",
+              "templateId" : {
+                "packageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7",
+                "moduleName" : "SourceCustody",
+                "entityName" : "Holding"
+              },
+              "choice" : "Lock",
+              "choiceArgument" : {
+                "record" : {
+                  "recordId" : {
+                    "packageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7",
+                    "moduleName" : "SourceCustody",
+                    "entityName" : "Lock"
+                  }
+                }
+              },
+              "actingParties" : [
+                "transfer-missing-readiness-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+              ],
+              "consuming" : true,
+              "witnessParties" : [
+                "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+              ],
+              "lastDescendantNodeId" : 1,
+              "exerciseResult" : {
+                "contractId" : "003ea1141a514d653c32e68d904acfedcfb887649ebc25bbdab98c565875781da5ca121220604b6dd54b819841a63019acb9ef442f01ac8ae0e534eb27128d5502bf4106ca"
+              },
+              "packageName" : "harmonia-source-custody",
+              "acsDelta" : true
+            }
+          },
+          {
+            "created" : {
+              "offset" : "168",
+              "nodeId" : 1,
+              "contractId" : "003ea1141a514d653c32e68d904acfedcfb887649ebc25bbdab98c565875781da5ca121220604b6dd54b819841a63019acb9ef442f01ac8ae0e534eb27128d5502bf4106ca",
+              "templateId" : {
+                "packageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7",
+                "moduleName" : "SourceCustody",
+                "entityName" : "LockedPosition"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7",
+                  "moduleName" : "SourceCustody",
+                  "entityName" : "LockedPosition"
+                },
+                "fields" : [
+                  {
+                    "label" : "terms",
+                    "value" : {
+                      "record" : {
+                        "recordId" : {
+                          "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                          "moduleName" : "Harmonia.Transfer",
+                          "entityName" : "Terms"
+                        },
+                        "fields" : [
+                          {
+                            "label" : "buyer",
+                            "value" : {
+                              "party" : "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "seller",
+                            "value" : {
+                              "party" : "transfer-missing-readiness-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+                            }
+                          },
+                          {
+                            "label" : "source",
+                            "value" : {
+                              "party" : "transfer-missing-readiness-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "destination",
+                            "value" : {
+                              "party" : "transfer-missing-readiness-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+                            }
+                          },
+                          {
+                            "label" : "settler",
+                            "value" : {
+                              "party" : "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "reference",
+                            "value" : {
+                              "text" : "transfer-missing-readiness"
+                            }
+                          },
+                          {
+                            "label" : "asset",
+                            "value" : {
+                              "text" : "TEST"
+                            }
+                          },
+                          {
+                            "label" : "quantity",
+                            "value" : {
+                              "numeric" : "10.0000000000"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+              ],
+              "signatories" : [
+                "transfer-missing-readiness-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c",
+                "transfer-missing-readiness-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "observers" : [
+                "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6",
+                "transfer-missing-readiness-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+              ],
+              "createdAt" : "2026-09-11T05:14:20.940791Z",
+              "packageName" : "harmonia-source-custody",
+              "acsDelta" : true,
+              "representativePackageId" : "9e7967c08526678c405bb2b8a8f00a2ffe51d04d8dc3270e0a9ce96435c11ed7"
+            }
+          }
+        ],
+        "offset" : "168",
+        "synchronizerId" : "harmonia::12201ba007ec1b2e9e63e472cbffb90d397a5e149754807f0a6e1b7e732f0b943a34",
+        "traceContext" : {
+          "traceparent" : "00-6be1af69bf86909c71f5e30cef24a92f-20cc1f483ddef8d1-01"
+        },
+        "recordTime" : "2026-09-11T05:14:20.950245Z"
+      }
+    },
+    {
+      "transaction" : {
+        "updateId" : "122016f68fb3c95ba5e952d86215b81718e466f762f2a63470b6ea957506b9904058",
+        "effectiveAt" : "2026-09-11T05:14:21.423796Z",
+        "events" : [
+          {
+            "exercised" : {
+              "offset" : "170",
+              "contractId" : "00d5aabc3b4f9b4cffdbe6922646718f2901d4ab5db45f1248ffd1e369c284f48aca1212207164454cc518a2cee00eefe1016681a3d1d1f2e6f90b841906b5ceb2b3eb03b7",
+              "templateId" : {
+                "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                "moduleName" : "AtomicTransfer",
+                "entityName" : "Trade"
+              },
+              "choice" : "ConfirmSource",
+              "choiceArgument" : {
+                "record" : {
+                  "recordId" : {
+                    "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                    "moduleName" : "AtomicTransfer",
+                    "entityName" : "ConfirmSource"
+                  },
+                  "fields" : [
+                    {
+                      "label" : "position",
+                      "value" : {
+                        "optional" : {
+                          "value" : {
+                            "contractId" : "003ea1141a514d653c32e68d904acfedcfb887649ebc25bbdab98c565875781da5ca121220604b6dd54b819841a63019acb9ef442f01ac8ae0e534eb27128d5502bf4106ca"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "actingParties" : [
+                "transfer-missing-readiness-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "consuming" : true,
+              "witnessParties" : [
+                "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+              ],
+              "lastDescendantNodeId" : 2,
+              "exerciseResult" : {
+                "contractId" : "0099192050019671319c2a96f2f69904f519c279b5c0452da086b241b847de70cbca121220255c8378f9aa471c35d92a091db5134babf6678830112320ecdb86890415c067"
+              },
+              "packageName" : "harmonia-transfer",
+              "acsDelta" : true
+            }
+          },
+          {
+            "created" : {
+              "offset" : "170",
+              "nodeId" : 2,
+              "contractId" : "0099192050019671319c2a96f2f69904f519c279b5c0452da086b241b847de70cbca121220255c8378f9aa471c35d92a091db5134babf6678830112320ecdb86890415c067",
+              "templateId" : {
+                "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                "moduleName" : "AtomicTransfer",
+                "entityName" : "Trade"
+              },
+              "createArguments" : {
+                "recordId" : {
+                  "packageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e",
+                  "moduleName" : "AtomicTransfer",
+                  "entityName" : "Trade"
+                },
+                "fields" : [
+                  {
+                    "label" : "terms",
+                    "value" : {
+                      "record" : {
+                        "recordId" : {
+                          "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                          "moduleName" : "Harmonia.Transfer",
+                          "entityName" : "Terms"
+                        },
+                        "fields" : [
+                          {
+                            "label" : "buyer",
+                            "value" : {
+                              "party" : "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "seller",
+                            "value" : {
+                              "party" : "transfer-missing-readiness-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c"
+                            }
+                          },
+                          {
+                            "label" : "source",
+                            "value" : {
+                              "party" : "transfer-missing-readiness-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+                            }
+                          },
+                          {
+                            "label" : "destination",
+                            "value" : {
+                              "party" : "transfer-missing-readiness-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+                            }
+                          },
+                          {
+                            "label" : "settler",
+                            "value" : {
+                              "party" : "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+                            }
+                          },
+                          {
+                            "label" : "reference",
+                            "value" : {
+                              "text" : "transfer-missing-readiness"
+                            }
+                          },
+                          {
+                            "label" : "asset",
+                            "value" : {
+                              "text" : "TEST"
+                            }
+                          },
+                          {
+                            "label" : "quantity",
+                            "value" : {
+                              "numeric" : "10.0000000000"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "label" : "agreed",
+                    "value" : {
+                      "bool" : true
+                    }
+                  },
+                  {
+                    "label" : "sourceConfirmed",
+                    "value" : {
+                      "bool" : true
+                    }
+                  },
+                  {
+                    "label" : "destinationConfirmed",
+                    "value" : {
+                      "bool" : false
+                    }
+                  },
+                  {
+                    "label" : "locked",
+                    "value" : {
+                      "optional" : {
+                        "value" : {
+                          "contractId" : "003ea1141a514d653c32e68d904acfedcfb887649ebc25bbdab98c565875781da5ca121220604b6dd54b819841a63019acb9ef442f01ac8ae0e534eb27128d5502bf4106ca"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "label" : "permit",
+                    "value" : {
+                      "optional" : {
+                        
+                      }
+                    }
+                  },
+                  {
+                    "label" : "settled",
+                    "value" : {
+                      "bool" : false
+                    }
+                  }
+                ]
+              },
+              "witnessParties" : [
+                "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6"
+              ],
+              "signatories" : [
+                "transfer-missing-readiness-Alice-d4d95138::12202c197a2990f0bb2bc3e42695fb4d6531ef670754f46eaea406c7eb07c921f5a6",
+                "transfer-missing-readiness-Seller-9b3970be::1220603cf459d97568bd11c7d2a79a83151a65f6dfe6ad21f0be431b151cabfa791c",
+                "transfer-missing-readiness-Source-4f1df03a::122078c9c435cf4aac77a302c76c07b473f5ade09d3ba2b93e012574c3c5b75cd043"
+              ],
+              "observers" : [
+                "transfer-missing-readiness-Destination-1df42503::1220e1035b771f1529c11cbca62b43e451eb74bed92dde82f938099fa432824ad042"
+              ],
+              "createdAt" : "2026-09-11T05:14:21.423796Z",
+              "packageName" : "harmonia-transfer",
+              "acsDelta" : true,
+              "representativePackageId" : "7c41036f16ee39914f3baab186c66486592e2cbc1676accad6156c4ea9fee53e"
+            }
+          }
+        ],
+        "offset" : "170",
+        "synchronizerId" : "harmonia::12201ba007ec1b2e9e63e472cbffb90d397a5e149754807f0a6e1b7e732f0b943a34",
+        "traceContext" : {
+          "traceparent" : "00-ef79bab3833e2f71a39b8cb6178a0417-3aefc97928b850e4-01"
+        },
+        "recordTime" : "2026-09-11T05:14:21.433761Z"
+      }
+    }
+  ],
+  "settlement_transaction_ids" : [
+  ]
+}

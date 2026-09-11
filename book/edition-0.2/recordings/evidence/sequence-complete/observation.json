@@ -1,0 +1,73 @@
+{
+  "setup" : {
+    "reference" : "sequence-complete",
+    "bankName" : "Northbank",
+    "published" : "002ae0064865b571ce266ce3929afe77d6c54c30dad413a4994c55ef3d8ba90929ca12122040bb257939d7517925a9bb265e2a00614ab4a3c257d408625ad8da39a4733751",
+    "buyerName" : "Alice",
+    "bank" : "sequence-complete-Northbank-d4d95138::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc",
+    "buyer" : "sequence-complete-Alice-9b3970be::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc",
+    "engine" : "sequence-complete-DefinitionPublisher-4f1df03a::122061ed40f2037b76ba9bae005383e47888481fb3de96b6196d727173cc6f438ccc"
+  },
+  "attempts" : [
+    {
+      "review" : "pending",
+      "step" : {
+        "application" : "approved",
+        "workflow" : "waiting",
+        "rawError" : null,
+        "consumed" : true,
+        "outcome" : "committed",
+        "activeContracts" : 2,
+        "id" : "bank-approval",
+        "outputContract" : "0022cf06c101aa0a4d454e48d9d8e948fbea806eae620d688f012e3991e2daf54fca1212202581c0393408cd4286fe6bd993902d37e32bff4f8277bde217178d788258f7fe",
+        "visibleTo" : [
+          "Northbank",
+          "Alice"
+        ],
+        "reason" : null,
+        "inputContract" : "009f53d7065d5adcc45af4a08c60962724403d9123314d75fb71f81be793b77fd3ca1212205039d158111ce2b893f957055874c9c846221c17c01cd1b8eaf80c53b9cc5855"
+      },
+      "enabled" : [
+        "review"
+      ],
+      "completed" : [
+        "financing"
+      ],
+      "definition" : {
+        "name" : "approval-review",
+        "version" : 1
+      },
+      "processContract" : "00dcc00fee2fd551b129cdf884c5cd149367a3b8590bb18b516031c800f9aae3ddca1212200e5aee7fff5251cff9dedc16677aecba53fb1e6d585d3212107439375d2ee802"
+    },
+    {
+      "review" : "confirmed",
+      "step" : {
+        "application" : "approved",
+        "workflow" : "complete",
+        "rawError" : null,
+        "consumed" : false,
+        "outcome" : "committed",
+        "activeContracts" : 2,
+        "id" : "buyer-review",
+        "outputContract" : "0022cf06c101aa0a4d454e48d9d8e948fbea806eae620d688f012e3991e2daf54fca1212202581c0393408cd4286fe6bd993902d37e32bff4f8277bde217178d788258f7fe",
+        "visibleTo" : [
+          "Northbank",
+          "Alice"
+        ],
+        "reason" : null,
+        "inputContract" : "0022cf06c101aa0a4d454e48d9d8e948fbea806eae620d688f012e3991e2daf54fca1212202581c0393408cd4286fe6bd993902d37e32bff4f8277bde217178d788258f7fe"
+      },
+      "enabled" : [
+      ],
+      "completed" : [
+        "financing",
+        "review"
+      ],
+      "definition" : {
+        "name" : "approval-review",
+        "version" : 1
+      },
+      "processContract" : "006bb7b027381e1ad4bc888362bbfb85e36f8ff7ed30b2f38f239bb0cd4df52327ca1212209c3345a038f4aef4ef4ec9aaf18a3349e3fb0f5a3815dad197a7362426f29197"
+    }
+  ]
+}

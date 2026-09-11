@@ -3,6 +3,8 @@ package harmonia.book
 import harmonia.book.ui.Elements
 import cats.effect.IO
 import org.scalajs.dom
+import scala.scalajs.js
+import scala.scalajs.js.URIUtils.encodeURIComponent
 import Elements.*
 
 final class BookView(
@@ -12,10 +14,19 @@ final class BookView(
     inspector: Inspector
 ):
   private val laboratory = new harmonia.book.reader.StoryLaboratory(stories, chapters, navigate)
+  private var diagrams = Vector.empty[harmonia.scene.WorkflowDiagramView]
   private var previousView: Option[ViewState] = None
   private var currentChapter: Option[Int] = None
   private var chapterScroll = Map.empty[Int, Double]
   def render(state: ViewState): IO[Unit] = IO {
+    Vector(
+      "theme" -> state.theme,
+      "text" -> state.text,
+      "embed" -> (if state.embed then "1" else "0"),
+      "presentation" -> (if state.present then "1" else "0")
+    ).foreach((key, value) => dom.document.documentElement.setAttribute("data-" + key, value))
+    laboratory.dispose()
+    diagrams.foreach(_.dispose()); diagrams = Vector.empty
     val pageChanged = previousView.exists(p => p.chapter != state.chapter || p.story != state.story)
     previousView = Some(state)
     currentChapter.foreach(i => chapterScroll = chapterScroll.updated(i, dom.window.scrollY))
@@ -24,7 +35,8 @@ final class BookView(
     val root = dom.document.getElementById("app")
     root.textContent = ""
     val layout = element("div", "layout")
-    val sidebar = element("aside", "sidebar")
+    val sidebar = element("details", "sidebar")
+    append(sidebar, element("summary", text = "Book chapters and recordings"))
     val brand = element("p", "brand")
     append(brand, element("span", "brand-mark"), dom.document.createTextNode("Harmonia"))
     val nav = element("nav")
@@ -62,13 +74,13 @@ final class BookView(
     val main = element("main", "main")
     main.id = "main"
     main.tabIndex = -1
-    append(main, topLine())
+    append(main, topLine(state))
     state.chapter match
       case Some(index) =>
         val chapter = element("article", "chapter")
         // The exporter escapes raw HTML and sanitizes URLs before this content reaches the browser.
         chapter.innerHTML = chapters(index).html
-        harmonia.book.diagram.ChapterDiagram.render(chapter)
+        diagrams = harmonia.book.diagram.ChapterDiagram.render(chapter)
         val scrollRegions = chapter.querySelectorAll("pre, table")
         (0 until scrollRegions.length).foreach { i =>
           val region = scrollRegions(i).asInstanceOf[dom.HTMLElement]
@@ -76,7 +88,11 @@ final class BookView(
           region.setAttribute("aria-label", "Code or table; scroll horizontally if needed")
         }
         append(main, chapter)
-        val experiments = harmonia.book.chapters.ChapterStories.render(index, stories, navigate)
+        val experiments = harmonia.book.chapters.ChapterStories.render(
+          index,
+          stories,
+          next => navigate(next.copy(theme = state.theme, text = state.text, embed = state.embed))
+        )
         Option(chapter.querySelector("h2")) match
           case Some(firstSection) => chapter.insertBefore(experiments, firstSection)
           case None               => append(chapter, experiments)
@@ -112,21 +128,22 @@ final class BookView(
     (0 until sourceLinks.length).foreach { index =>
       val anchor = sourceLinks(index).asInstanceOf[dom.html.Anchor]
       val path = anchor.getAttribute("href")
-      if path.startsWith("source/") || path.startsWith("evidence/") then
+      if path.startsWith("source/") then
+        val file = new dom.URL(path, "https://source.invalid/").pathname.stripPrefix("/source/")
+        val atlas = js.Dynamic.global.selectDynamic("HarmoniaAtlas")
+        val known = !js.isUndefined(atlas) && !js.isUndefined(atlas.files.selectDynamic(file))
+        anchor.href =
+          if known then
+            guide + "code.html?file=" + encodeURIComponent(
+              file
+            ) + "&theme=" + state.theme + "&text=" + state.text
+          else guide + "../../" + file
+      else if path.startsWith("evidence/") then
         anchor.onclick = event =>
           if !event.ctrlKey && !event.metaKey then
             event.preventDefault(); inspector.open(path, anchor.textContent)
     }
     Option(nav.querySelector(".active")).foreach(_.setAttribute("aria-current", "page"))
-    Option(root.querySelector(".graph")).foreach { graphNode =>
-      val graph = graphNode.asInstanceOf[dom.HTMLElement]
-      Option(graph.querySelector(".selected")).foreach { selected =>
-        graph.scrollLeft += selected.getBoundingClientRect().left - graph
-          .getBoundingClientRect()
-          .left -
-          (graph.clientWidth - selected.getBoundingClientRect().width) / 2
-      }
-    }
     if pageChanged && state.chapter.nonEmpty then
       main.focus();
       dom.window.scrollTo(0, state.chapter.flatMap(chapterScroll.get).getOrElse(0.0).toInt)
@@ -151,11 +168,44 @@ final class BookView(
         .foreach(_.asInstanceOf[dom.HTMLElement].focus())
   }
 
-  private def topLine(): dom.HTMLElement =
+  private def guide: String =
+    val value = js.Dynamic.global.selectDynamic("HarmoniaGuide")
+    if js.isUndefined(value) then "source/design/0.2/" else value.toString
+
+  private def topLine(state: ViewState): dom.HTMLElement =
     val row = element("div", "topline")
     append(
       row,
-      element("span", text = "APPLICATIONS, WORKING TOGETHER"),
+      link("Harmonia · The field guide", guide + "workflows.html"),
       element("span", "badge", "●  Recorded execution evidence")
     )
+    val appearance = element("details", "laboratory-appearance")
+    append(appearance, element("summary", text = "Appearance"))
+    def choose(label: String, values: Vector[String], selected: String)(
+        change: String => Unit
+    ): Unit =
+      val select = element("select").asInstanceOf[dom.html.Select]
+      select.setAttribute("aria-label", label)
+      values.foreach { value =>
+        val option = element("option", text = value.capitalize).asInstanceOf[dom.html.Option]
+        option.value = value; option.selected = value == selected; append(select, option)
+      }
+      select.onchange = _ => change(select.value)
+      append(appearance, select)
+    choose("Color", Vector("light", "dark", "paper"), state.theme)(value =>
+      navigate(state.copy(theme = value))
+    )
+    choose("Text size", Vector("compact", "standard", "large"), state.text)(value =>
+      navigate(state.copy(text = value))
+    )
+    append(
+      appearance,
+      button("Print / save PDF", "button", "print-reader")(dom.window.print()),
+      button(
+        if state.present then "Leave presentation" else "Present this story",
+        "button",
+        "present-reader"
+      )(navigate(state.copy(present = !state.present)))
+    )
+    append(row, appearance)
     row

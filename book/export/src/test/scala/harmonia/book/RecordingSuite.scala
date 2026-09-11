@@ -99,3 +99,25 @@ class RecordingSuite extends FunSuite:
     assert(recording.differences.nonEmpty)
     assertEquals(recording.asJson.as[RecordedStory], Right(recording))
   }
+
+  test("pinned recordings and source chapters cover the compiler-owned example inventory exactly") {
+    val directory = root.resolve("book/edition-0.2/recordings")
+    val manifest = io.circe.parser
+      .parse(Files.readString(directory.resolve("manifest.json")))
+      .toOption
+      .get
+      .hcursor
+      .downField("stories")
+      .focus
+      .get
+      .asObject
+      .get
+    assertEquals(manifest.keys.toSet, Examples.all.map(_.id).toSet)
+    Examples.all.foreach { example =>
+      val story = io.circe.parser
+        .decode[RecordedStory](Files.readString(directory.resolve(example.id + ".json")))
+        .toOption
+        .get
+      assertEquals(story.kind, example.kind, example.id)
+    }
+  }

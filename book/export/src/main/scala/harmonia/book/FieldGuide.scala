@@ -18,6 +18,18 @@ import scala.jdk.CollectionConverters.*
 
 /** Exports the designed book as files. The production server only mounts this directory. */
 object FieldGuide:
+  private val evidenceNames =
+    Vector("input.md", "expected.md", "actual.md", "diff.md", "observation.json", "run.json")
+  def evidenceFiles(output: Path, stories: Vector[RecordedStory]): IO[Map[String, String]] =
+    stories
+      .flatTraverse(story =>
+        evidenceNames.traverse { name =>
+          val relative = s"evidence/${story.id}/$name"
+          ArtifactFiles.read(output.resolve(relative)).map(relative -> _)
+        }
+      )
+      .map(_.toMap)
+
   def write(root: Path, output: Path, stories: Vector[RecordedStory] = Vector.empty): IO[Unit] = for
     _ <- Vector(
       "book",
@@ -37,6 +49,10 @@ object FieldGuide:
       root.resolve("product/scene/target/scala-3.3.6/harmonia-scene-fastopt/main.js"),
       output.resolve("source/product/scene/target/scala-3.3.6/harmonia-scene-fastopt/main.js")
     )
+    _ <- copy(
+      root.resolve("book/browser/target/scala-3.3.6/harmonia-reader-fastopt/main.js"),
+      output.resolve("source/book/browser/target/scala-3.3.6/harmonia-reader-fastopt/main.js")
+    )
     _ <- ArtifactFiles.write(
       output.resolve("index.html"),
       """<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Harmonia field guide</title><script src="guide-entry.js" defer></script></head><body><a href="source/design/0.2/book-overview.html">Open the field guide →</a></body></html>"""
@@ -45,27 +61,24 @@ object FieldGuide:
       output.resolve("guide-entry.js"),
       "location.replace('source/design/0.2/book-overview.html' + location.search + location.hash);"
     )
+    raw <- evidenceFiles(output, stories)
+    _ <- raw.toVector.traverse_((name, text) =>
+      ArtifactFiles.write(output.resolve("source/design/0.2").resolve(name), text)
+    )
     _ <- ArtifactFiles.write(
       output.resolve("source/design/0.2/run-recordings.js"),
       "window.HarmoniaRunRecordings = " + stories
-        .filter(s =>
-          Set(
-            "purchase-approved",
-            "purchase-rejected",
-            "transfer-approved",
-            "transfer-final-leg-rejected"
-          )(s.id)
-        )
         .map(s => s.id -> s)
         .toMap
         .asJson
         .noSpaces
+        .replace("<", "\\u003c") + ";\nwindow.HarmoniaRunEvidenceFiles = " + raw.asJson.noSpaces
         .replace("<", "\\u003c") + ";"
     )
     _ <- IO.whenA(stories.nonEmpty)(
       ArtifactFiles.write(
         output.resolve("source/design/0.2/context.js"),
-        "window.HarmoniaLiveRoot = null; window.HarmoniaLaboratory = '../../../laboratory.html';"
+        "window.HarmoniaLiveRoot = null; window.HarmoniaLaboratory = 'laboratory.html?story=financing-approved';"
       )
     )
   yield ()

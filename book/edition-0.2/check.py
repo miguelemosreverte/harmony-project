@@ -194,7 +194,7 @@ class CoverageChecks(unittest.TestCase):
         self.assertEqual(rendered, "<h3>Readable</h3><p>A &amp; B</p>")
 
     def test_preserved_recordings_match_current_committed_goldens(self):
-        self.assertEqual(len(build.load_recordings(build.ROOT)), 4)
+        self.assertEqual(len(build.load_recordings(build.ROOT)), 32)
 
     def test_changed_recording_fails_before_it_can_be_presented(self):
         original = Path.read_bytes

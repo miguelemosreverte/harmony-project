@@ -4,7 +4,7 @@ import io.circe.{Codec, Decoder, Encoder}
 
 /** A view of a plan or observation. This model has no command or ledger authority. */
 enum DiagramState:
-  case Pending, Current, Complete, Refused
+  case Pending, Current, Complete, Refused, Skipped
 object DiagramState:
   given Encoder[DiagramState] = Encoder.encodeString.contramap(_.toString.toLowerCase)
   given Decoder[DiagramState] = Decoder.decodeString.emap(value =>

@@ -74,8 +74,9 @@ lazy val bookExport = project.in(file("book/export")).dependsOn(runner).settings
   Compile / unmanagedSourceDirectories += file("book/model/src/main/scala").getAbsoluteFile,
   libraryDependencies += "org.commonmark" % "commonmark" % "0.24.0"
 )
-lazy val reader = project.in(file("book/browser")).enablePlugins(ScalaJSPlugin).settings(browserSettings).settings(
+lazy val reader = project.in(file("book/browser")).dependsOn(scene).enablePlugins(ScalaJSPlugin).settings(browserSettings).settings(
   name := "harmonia-reader",
+  libraryDependencies += "org.scalameta" %%% "munit" % "1.0.4" % Test,
   Compile / mainClass := Some("harmonia.book.BookApp"),
   Compile / unmanagedSourceDirectories ++= Seq(file("book/model/src/main/scala").getAbsoluteFile, file("harness/model/src/main/scala").getAbsoluteFile)
 )

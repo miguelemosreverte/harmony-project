@@ -1,0 +1,13 @@
+[{
+  "application": "approved",
+  "workflow": "waiting",
+  "rawError": "Failed with Status: FailureStatus {errorId = \"UNHANDLED_EXCEPTION/DA.Exception.AssertionFailed:AssertionFailed\", category = InvalidGivenCurrentSystemStateOther, message = \"Application must be pending\", meta = TextMap []}",
+  "consumed": false,
+  "outcome": "rejected",
+  "activeContracts": 1,
+  "id": "repeated-approval",
+  "outputContract": "DirectApplication 00075dc647a09568c701d4ece145f86467ba29efe8d9e27102f5b3b3fe118c1ec4ca1212204258075d729537418e4470461861a077c65366f7363a98f5c06476c42514289a",
+  "visibleTo": ["Alice", "Northbank"],
+  "reason": "application-rejected",
+  "inputContract": "DirectApplication 00075dc647a09568c701d4ece145f86467ba29efe8d9e27102f5b3b3fe118c1ec4ca1212204258075d729537418e4470461861a077c65366f7363a98f5c06476c42514289a"
+}]

@@ -1,0 +1,19 @@
+{
+  "mode" : "live-canton",
+  "topology" : "four independent participant nodes, one local JVM, one common synchronizer",
+  "revision" : "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+  "worktree_dirty" : false,
+  "recorded_at" : "2026-09-11T05:12:55.997076Z",
+  "story_format" : 1,
+  "java" : "17.0.19+10",
+  "configured_sdk" : "3.4.11",
+  "input_sha256" : "48d2b0573a2e1b412019e0307c86639986fe57f6490f9ef2b7777369995d35a9",
+  "expected_sha256" : "a012d3f39002dee31e3f07e5bde68f84ae57eb9a765e1107a99931e310eaf7f2",
+  "dar_sha256" : "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e",
+  "dars" : {
+    "harness/ledger/tests/.daml/dist/harmonia-tests-0.1.0.dar" : "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e"
+  },
+  "actual_sha256" : "abeda99f3101d59930715db48b2dbd74636d48820e3327d17a938bc8da48ab47",
+  "observation_sha256" : "863ea51eff3d036a5182ab6a2f9bfa6eb01ea33e60c61b90956176c9fff545cb",
+  "matched" : true
+}

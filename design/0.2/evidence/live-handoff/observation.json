@@ -1,0 +1,1792 @@
+{
+  "actual" : {
+    "actions" : [
+      {
+        "id" : "approval-required",
+        "outcome" : "rejected",
+        "application" : "pending",
+        "workflow" : "waiting",
+        "consumed" : false,
+        "active_contracts" : 1,
+        "visible_to" : [
+          "Northbank"
+        ],
+        "reason" : "ledger-rejected"
+      },
+      {
+        "id" : "bank-approval",
+        "outcome" : "committed",
+        "application" : "approved",
+        "workflow" : "waiting",
+        "consumed" : true,
+        "active_contracts" : 1,
+        "visible_to" : [
+          "Northbank"
+        ]
+      },
+      {
+        "id" : "observer-cannot-continue",
+        "outcome" : "rejected",
+        "application" : "approved",
+        "workflow" : "waiting",
+        "consumed" : false,
+        "active_contracts" : 1,
+        "visible_to" : [
+          "Northbank"
+        ],
+        "reason" : "ledger-rejected"
+      },
+      {
+        "id" : "buyer-continuation",
+        "outcome" : "committed",
+        "application" : "approved",
+        "workflow" : "complete",
+        "consumed" : false,
+        "active_contracts" : 1,
+        "visible_to" : [
+          "Northbank"
+        ]
+      }
+    ]
+  },
+  "security" : {
+    "buyer_read_as_bank" : "PERMISSION_DENIED",
+    "buyer_act_as_bank" : "PERMISSION_DENIED",
+    "missing_session_http" : 401,
+    "actor_override_http" : 400,
+    "stale_submission" : "stale",
+    "repeated_request" : "committed",
+    "repeated_request_added_transactions" : 0,
+    "reconnected_workflow" : "complete",
+    "private_payload_visible_to" : [
+      "bank"
+    ]
+  },
+  "participant_events" : {
+    "bank" : [
+      {
+        "transaction" : {
+          "updateId" : "1220cd00bbb3406e6fa5518ed5189c8fe1ee651986626edb902822d9329993d77c06",
+          "commandId" : "725b6b33-d1fd-45da-95b4-dac72efc4e40",
+          "effectiveAt" : "2026-09-11T05:14:51.722289Z",
+          "events" : [
+            {
+              "created" : {
+                "offset" : "36",
+                "contractId" : "007f88022cbe817550c4bbd801f9742b108eac7956d061e6cc4111cd3eb2583e16ca12122029d01b2b7c683d8820dc790d7927a1bb770d4c961e82cdb2b9408bf878f9684c",
+                "templateId" : {
+                  "packageId" : "4851237fae04e392fa05353c91f37f4e45ec793b4d71e1bd2a92d48b5ea3d178",
+                  "moduleName" : "PrivateFinancing",
+                  "entityName" : "Application"
+                },
+                "createArguments" : {
+                  "recordId" : {
+                    "packageId" : "4851237fae04e392fa05353c91f37f4e45ec793b4d71e1bd2a92d48b5ea3d178",
+                    "moduleName" : "PrivateFinancing",
+                    "entityName" : "Application"
+                  },
+                  "fields" : [
+                    {
+                      "label" : "bank",
+                      "value" : {
+                        "party" : "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                      }
+                    },
+                    {
+                      "label" : "buyer",
+                      "value" : {
+                        "party" : "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                      }
+                    },
+                    {
+                      "label" : "reviewers",
+                      "value" : {
+                        "list" : {
+                          "elements" : [
+                            {
+                              "party" : "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "label" : "subject",
+                      "value" : {
+                        "text" : "application"
+                      }
+                    },
+                    {
+                      "label" : "status",
+                      "value" : {
+                        "text" : "pending"
+                      }
+                    },
+                    {
+                      "label" : "privateDetails",
+                      "value" : {
+                        "text" : "Synthetic income: 90000; internal rating: B"
+                      }
+                    }
+                  ]
+                },
+                "witnessParties" : [
+                  "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                ],
+                "signatories" : [
+                  "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                ],
+                "createdAt" : "2026-09-11T05:14:51.722289Z",
+                "packageName" : "private-financing",
+                "acsDelta" : true,
+                "representativePackageId" : "4851237fae04e392fa05353c91f37f4e45ec793b4d71e1bd2a92d48b5ea3d178"
+              }
+            }
+          ],
+          "offset" : "36",
+          "synchronizerId" : "harmonia::122055c954ed3176efcbe7b70604b9d53f7315b89654b56268a01e3962756f47891b",
+          "traceContext" : {
+            "traceparent" : "00-b205c627e49d569847ad7437530596d7-756a25527ba4c831-01"
+          },
+          "recordTime" : "2026-09-11T05:14:51.866887Z"
+        }
+      },
+      {
+        "transaction" : {
+          "updateId" : "12205a7759dbedef3ba048a5a40c0857d2b704decb93b944984c736e42fd35eee793",
+          "commandId" : "e59daaab-af9f-4533-a3e0-bb8d8190946d",
+          "effectiveAt" : "2026-09-11T05:14:52.415294Z",
+          "events" : [
+            {
+              "created" : {
+                "offset" : "39",
+                "contractId" : "005a04112ef6862ef5be641d04989bf7508d602e9f46b40abc4958de82c75d17bfca12122014d38448ab03d09a15b46b957094d73edfb19912ed8ec743b4884204993deac3",
+                "templateId" : {
+                  "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                  "moduleName" : "Harmonia.SharedProgress",
+                  "entityName" : "ProgressProposal"
+                },
+                "createArguments" : {
+                  "recordId" : {
+                    "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                    "moduleName" : "Harmonia.SharedProgress",
+                    "entityName" : "ProgressProposal"
+                  },
+                  "fields" : [
+                    {
+                      "label" : "issuer",
+                      "value" : {
+                        "party" : "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                      }
+                    },
+                    {
+                      "label" : "owner",
+                      "value" : {
+                        "party" : "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                      }
+                    },
+                    {
+                      "label" : "readers",
+                      "value" : {
+                        "list" : {
+                          "elements" : [
+                            {
+                              "party" : "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "label" : "subject",
+                      "value" : {
+                        "text" : "application"
+                      }
+                    }
+                  ]
+                },
+                "witnessParties" : [
+                  "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                ],
+                "signatories" : [
+                  "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                ],
+                "observers" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2",
+                  "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                ],
+                "createdAt" : "2026-09-11T05:14:52.415294Z",
+                "packageName" : "harmonia-core",
+                "acsDelta" : true,
+                "representativePackageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451"
+              }
+            }
+          ],
+          "offset" : "39",
+          "synchronizerId" : "harmonia::122055c954ed3176efcbe7b70604b9d53f7315b89654b56268a01e3962756f47891b",
+          "traceContext" : {
+            "traceparent" : "00-43791deeaea1498abdaef8fe49b0ccdb-50d6a50b9e4ec3d8-01"
+          },
+          "recordTime" : "2026-09-11T05:14:52.504411Z"
+        }
+      },
+      {
+        "transaction" : {
+          "updateId" : "12200bc7980ad64330c49600df3c6c2edebf8c4978de038ca760db56f3f44a25253b",
+          "effectiveAt" : "2026-09-11T05:14:53.029110Z",
+          "events" : [
+            {
+              "exercised" : {
+                "offset" : "42",
+                "contractId" : "005a04112ef6862ef5be641d04989bf7508d602e9f46b40abc4958de82c75d17bfca12122014d38448ab03d09a15b46b957094d73edfb19912ed8ec743b4884204993deac3",
+                "templateId" : {
+                  "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                  "moduleName" : "Harmonia.SharedProgress",
+                  "entityName" : "ProgressProposal"
+                },
+                "choice" : "Accept",
+                "choiceArgument" : {
+                  "record" : {
+                    "recordId" : {
+                      "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                      "moduleName" : "Harmonia.SharedProgress",
+                      "entityName" : "Accept"
+                    }
+                  }
+                },
+                "actingParties" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                ],
+                "consuming" : true,
+                "witnessParties" : [
+                  "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                ],
+                "lastDescendantNodeId" : 1,
+                "exerciseResult" : {
+                  "contractId" : "00d9e78e086ed40a4bb605cd546059dbeb4db81a06ad3703b6b41a7916acf03185ca12122089fde67d9a37862e0f859b603b8e12453bbf1db05bd7d5e931ab6029518a9340"
+                },
+                "packageName" : "harmonia-core",
+                "acsDelta" : true
+              }
+            },
+            {
+              "created" : {
+                "offset" : "42",
+                "nodeId" : 1,
+                "contractId" : "00d9e78e086ed40a4bb605cd546059dbeb4db81a06ad3703b6b41a7916acf03185ca12122089fde67d9a37862e0f859b603b8e12453bbf1db05bd7d5e931ab6029518a9340",
+                "templateId" : {
+                  "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                  "moduleName" : "Harmonia.SharedProgress",
+                  "entityName" : "SharedProgress"
+                },
+                "createArguments" : {
+                  "recordId" : {
+                    "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                    "moduleName" : "Harmonia.SharedProgress",
+                    "entityName" : "SharedProgress"
+                  },
+                  "fields" : [
+                    {
+                      "label" : "owner",
+                      "value" : {
+                        "party" : "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                      }
+                    },
+                    {
+                      "label" : "issuer",
+                      "value" : {
+                        "party" : "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                      }
+                    },
+                    {
+                      "label" : "readers",
+                      "value" : {
+                        "list" : {
+                          "elements" : [
+                            {
+                              "party" : "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "label" : "subject",
+                      "value" : {
+                        "text" : "application"
+                      }
+                    },
+                    {
+                      "label" : "status",
+                      "value" : {
+                        "text" : "waiting"
+                      }
+                    }
+                  ]
+                },
+                "witnessParties" : [
+                  "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                ],
+                "signatories" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2",
+                  "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                ],
+                "observers" : [
+                  "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                ],
+                "createdAt" : "2026-09-11T05:14:53.029110Z",
+                "packageName" : "harmonia-core",
+                "acsDelta" : true,
+                "representativePackageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451"
+              }
+            }
+          ],
+          "offset" : "42",
+          "synchronizerId" : "harmonia::122055c954ed3176efcbe7b70604b9d53f7315b89654b56268a01e3962756f47891b",
+          "traceContext" : {
+            "traceparent" : "00-9be74190e70b61dcbc06e024e1d6a6fa-e9ac7e4fb78a4924-01"
+          },
+          "recordTime" : "2026-09-11T05:14:53.045316Z"
+        }
+      },
+      {
+        "transaction" : {
+          "updateId" : "1220526310c9b19b6e8a3a49ed3005caa2c879baf3cfa54af546387f610a646a9fa0",
+          "commandId" : "5fb80bd6-d8a8-47e2-a0a3-c23cef6f7263",
+          "effectiveAt" : "2026-09-11T05:14:53.521732Z",
+          "events" : [
+            {
+              "created" : {
+                "offset" : "45",
+                "contractId" : "00e5dcca97b8328ecb6d37b9f630a4e19cb440ccefc18a901d5b43b73f5e5ebf9eca12122087628cbcdc0853faae0e350be5eaa4e9cc0ef38e237cc02c29d843ba71a76af1",
+                "templateId" : {
+                  "packageId" : "3b542c12d74c7227c7b021f4a55c86ac70be0f0ed801f6117ba41ab29681610f",
+                  "moduleName" : "Composer",
+                  "entityName" : "Workspace"
+                },
+                "createArguments" : {
+                  "recordId" : {
+                    "packageId" : "3b542c12d74c7227c7b021f4a55c86ac70be0f0ed801f6117ba41ab29681610f",
+                    "moduleName" : "Composer",
+                    "entityName" : "Workspace"
+                  },
+                  "fields" : [
+                    {
+                      "label" : "bank",
+                      "value" : {
+                        "party" : "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                      }
+                    },
+                    {
+                      "label" : "buyer",
+                      "value" : {
+                        "party" : "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                      }
+                    },
+                    {
+                      "label" : "references",
+                      "value" : {
+                        "list" : {
+                          
+                        }
+                      }
+                    }
+                  ]
+                },
+                "witnessParties" : [
+                  "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                ],
+                "signatories" : [
+                  "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                ],
+                "observers" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                ],
+                "createdAt" : "2026-09-11T05:14:53.521732Z",
+                "packageName" : "harmonia-composer",
+                "acsDelta" : true,
+                "representativePackageId" : "3b542c12d74c7227c7b021f4a55c86ac70be0f0ed801f6117ba41ab29681610f"
+              }
+            }
+          ],
+          "offset" : "45",
+          "synchronizerId" : "harmonia::122055c954ed3176efcbe7b70604b9d53f7315b89654b56268a01e3962756f47891b",
+          "traceContext" : {
+            "traceparent" : "00-7af0e9e3146df69e00cdb5b2c4ece25f-23926b2f23df9ecb-01"
+          },
+          "recordTime" : "2026-09-11T05:14:53.608368Z"
+        }
+      },
+      {
+        "transaction" : {
+          "updateId" : "1220b8cdc8e613d609a7307f49cb15a94f23d6841f173c08db5c0843421517a0e369",
+          "commandId" : "live-bank-bank-approval",
+          "effectiveAt" : "2026-09-11T05:14:56.679205Z",
+          "events" : [
+            {
+              "exercised" : {
+                "offset" : "48",
+                "contractId" : "007f88022cbe817550c4bbd801f9742b108eac7956d061e6cc4111cd3eb2583e16ca12122029d01b2b7c683d8820dc790d7927a1bb770d4c961e82cdb2b9408bf878f9684c",
+                "templateId" : {
+                  "packageId" : "4851237fae04e392fa05353c91f37f4e45ec793b4d71e1bd2a92d48b5ea3d178",
+                  "moduleName" : "PrivateFinancing",
+                  "entityName" : "Application"
+                },
+                "choice" : "Approve",
+                "choiceArgument" : {
+                  "record" : {
+                    "recordId" : {
+                      "packageId" : "4851237fae04e392fa05353c91f37f4e45ec793b4d71e1bd2a92d48b5ea3d178",
+                      "moduleName" : "PrivateFinancing",
+                      "entityName" : "Approve"
+                    }
+                  }
+                },
+                "actingParties" : [
+                  "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                ],
+                "consuming" : true,
+                "witnessParties" : [
+                  "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                ],
+                "lastDescendantNodeId" : 2,
+                "exerciseResult" : {
+                  "record" : {
+                    "recordId" : {
+                      "packageId" : "5aee9b21b8e9a4c4975b5f4c4198e6e6e8469df49e2010820e792f393db870f4",
+                      "moduleName" : "DA.Types",
+                      "entityName" : "Tuple2"
+                    },
+                    "fields" : [
+                      {
+                        "label" : "_1",
+                        "value" : {
+                          "contractId" : "00d67867f454d6b812063915617bb0dff35e074aac4c25f90a6bb3a70bae486a43ca1212201b97d1ee30e647e88a0f2a411c8b7dc02884ad51bc2f95b582141681f3139e6e"
+                        }
+                      },
+                      {
+                        "label" : "_2",
+                        "value" : {
+                          "contractId" : "00bfd516e861b9e331b2a71a7b95bca60752113e9cc3731550ccdadeda12b1f32cca1212204dd0a957abc0947ee0b7b6db65bb4cacebc0bf163a8c1633ccc3cf19b915a587"
+                        }
+                      }
+                    ]
+                  }
+                },
+                "packageName" : "private-financing",
+                "acsDelta" : true
+              }
+            },
+            {
+              "created" : {
+                "offset" : "48",
+                "nodeId" : 1,
+                "contractId" : "00d67867f454d6b812063915617bb0dff35e074aac4c25f90a6bb3a70bae486a43ca1212201b97d1ee30e647e88a0f2a411c8b7dc02884ad51bc2f95b582141681f3139e6e",
+                "templateId" : {
+                  "packageId" : "4851237fae04e392fa05353c91f37f4e45ec793b4d71e1bd2a92d48b5ea3d178",
+                  "moduleName" : "PrivateFinancing",
+                  "entityName" : "Application"
+                },
+                "createArguments" : {
+                  "recordId" : {
+                    "packageId" : "4851237fae04e392fa05353c91f37f4e45ec793b4d71e1bd2a92d48b5ea3d178",
+                    "moduleName" : "PrivateFinancing",
+                    "entityName" : "Application"
+                  },
+                  "fields" : [
+                    {
+                      "label" : "bank",
+                      "value" : {
+                        "party" : "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                      }
+                    },
+                    {
+                      "label" : "buyer",
+                      "value" : {
+                        "party" : "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                      }
+                    },
+                    {
+                      "label" : "reviewers",
+                      "value" : {
+                        "list" : {
+                          "elements" : [
+                            {
+                              "party" : "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "label" : "subject",
+                      "value" : {
+                        "text" : "application"
+                      }
+                    },
+                    {
+                      "label" : "status",
+                      "value" : {
+                        "text" : "approved"
+                      }
+                    },
+                    {
+                      "label" : "privateDetails",
+                      "value" : {
+                        "text" : "Synthetic income: 90000; internal rating: B"
+                      }
+                    }
+                  ]
+                },
+                "witnessParties" : [
+                  "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                ],
+                "signatories" : [
+                  "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                ],
+                "createdAt" : "2026-09-11T05:14:56.679205Z",
+                "packageName" : "private-financing",
+                "acsDelta" : true,
+                "representativePackageId" : "4851237fae04e392fa05353c91f37f4e45ec793b4d71e1bd2a92d48b5ea3d178"
+              }
+            },
+            {
+              "created" : {
+                "offset" : "48",
+                "nodeId" : 2,
+                "contractId" : "00bfd516e861b9e331b2a71a7b95bca60752113e9cc3731550ccdadeda12b1f32cca1212204dd0a957abc0947ee0b7b6db65bb4cacebc0bf163a8c1633ccc3cf19b915a587",
+                "templateId" : {
+                  "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                  "moduleName" : "Harmonia.Result",
+                  "entityName" : "VerifiedResult"
+                },
+                "createArguments" : {
+                  "recordId" : {
+                    "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                    "moduleName" : "Harmonia.Result",
+                    "entityName" : "VerifiedResult"
+                  },
+                  "fields" : [
+                    {
+                      "label" : "issuer",
+                      "value" : {
+                        "party" : "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                      }
+                    },
+                    {
+                      "label" : "consumer",
+                      "value" : {
+                        "party" : "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                      }
+                    },
+                    {
+                      "label" : "readers",
+                      "value" : {
+                        "list" : {
+                          "elements" : [
+                            {
+                              "party" : "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "label" : "subject",
+                      "value" : {
+                        "text" : "application"
+                      }
+                    },
+                    {
+                      "label" : "decision",
+                      "value" : {
+                        "text" : "approved"
+                      }
+                    },
+                    {
+                      "label" : "continuation",
+                      "value" : {
+                        "text" : "shared-progress:application"
+                      }
+                    }
+                  ]
+                },
+                "witnessParties" : [
+                  "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                ],
+                "signatories" : [
+                  "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                ],
+                "observers" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2",
+                  "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                ],
+                "createdAt" : "2026-09-11T05:14:56.679205Z",
+                "packageName" : "harmonia-interfaces",
+                "acsDelta" : true,
+                "representativePackageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23"
+              }
+            }
+          ],
+          "offset" : "48",
+          "synchronizerId" : "harmonia::122055c954ed3176efcbe7b70604b9d53f7315b89654b56268a01e3962756f47891b",
+          "traceContext" : {
+            "traceparent" : "00-b900b3e32d90b30fe5f900fa874fbd97-55c0fcf458e29e63-01"
+          },
+          "recordTime" : "2026-09-11T05:14:56.699534Z"
+        }
+      },
+      {
+        "transaction" : {
+          "updateId" : "1220da63683ba78d54165e57301bffdfc93989881b349f8b4d7e9cfb5c59d52b90e1",
+          "effectiveAt" : "2026-09-11T05:14:57.442033Z",
+          "events" : [
+            {
+              "exercised" : {
+                "offset" : "51",
+                "contractId" : "00d9e78e086ed40a4bb605cd546059dbeb4db81a06ad3703b6b41a7916acf03185ca12122089fde67d9a37862e0f859b603b8e12453bbf1db05bd7d5e931ab6029518a9340",
+                "templateId" : {
+                  "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                  "moduleName" : "Harmonia.SharedProgress",
+                  "entityName" : "SharedProgress"
+                },
+                "choice" : "Continue",
+                "choiceArgument" : {
+                  "record" : {
+                    "recordId" : {
+                      "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                      "moduleName" : "Harmonia.SharedProgress",
+                      "entityName" : "Continue"
+                    },
+                    "fields" : [
+                      {
+                        "label" : "result",
+                        "value" : {
+                          "optional" : {
+                            "value" : {
+                              "contractId" : "00bfd516e861b9e331b2a71a7b95bca60752113e9cc3731550ccdadeda12b1f32cca1212204dd0a957abc0947ee0b7b6db65bb4cacebc0bf163a8c1633ccc3cf19b915a587"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "actingParties" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                ],
+                "consuming" : true,
+                "witnessParties" : [
+                  "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                ],
+                "lastDescendantNodeId" : 3,
+                "exerciseResult" : {
+                  "contractId" : "000a92e8ac5771a2e86bf11aa25ae1ca4895f3e3f33d3d67df5ca0baec0db3ead0ca1212209ec9002f8b2be4a2a9abb8f61197390eba1390f0dd0e27cace911548b58ed35c"
+                },
+                "packageName" : "harmonia-core",
+                "acsDelta" : true
+              }
+            },
+            {
+              "exercised" : {
+                "offset" : "51",
+                "nodeId" : 2,
+                "contractId" : "00bfd516e861b9e331b2a71a7b95bca60752113e9cc3731550ccdadeda12b1f32cca1212204dd0a957abc0947ee0b7b6db65bb4cacebc0bf163a8c1633ccc3cf19b915a587",
+                "templateId" : {
+                  "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                  "moduleName" : "Harmonia.Result",
+                  "entityName" : "VerifiedResult"
+                },
+                "choice" : "Consume",
+                "choiceArgument" : {
+                  "record" : {
+                    "recordId" : {
+                      "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                      "moduleName" : "Harmonia.Result",
+                      "entityName" : "Consume"
+                    }
+                  }
+                },
+                "actingParties" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                ],
+                "consuming" : true,
+                "witnessParties" : [
+                  "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                ],
+                "lastDescendantNodeId" : 2,
+                "exerciseResult" : {
+                  "unit" : {
+                    
+                  }
+                },
+                "packageName" : "harmonia-interfaces",
+                "acsDelta" : true
+              }
+            },
+            {
+              "created" : {
+                "offset" : "51",
+                "nodeId" : 3,
+                "contractId" : "000a92e8ac5771a2e86bf11aa25ae1ca4895f3e3f33d3d67df5ca0baec0db3ead0ca1212209ec9002f8b2be4a2a9abb8f61197390eba1390f0dd0e27cace911548b58ed35c",
+                "templateId" : {
+                  "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                  "moduleName" : "Harmonia.SharedProgress",
+                  "entityName" : "SharedProgress"
+                },
+                "createArguments" : {
+                  "recordId" : {
+                    "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                    "moduleName" : "Harmonia.SharedProgress",
+                    "entityName" : "SharedProgress"
+                  },
+                  "fields" : [
+                    {
+                      "label" : "owner",
+                      "value" : {
+                        "party" : "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                      }
+                    },
+                    {
+                      "label" : "issuer",
+                      "value" : {
+                        "party" : "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                      }
+                    },
+                    {
+                      "label" : "readers",
+                      "value" : {
+                        "list" : {
+                          "elements" : [
+                            {
+                              "party" : "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "label" : "subject",
+                      "value" : {
+                        "text" : "application"
+                      }
+                    },
+                    {
+                      "label" : "status",
+                      "value" : {
+                        "text" : "complete"
+                      }
+                    }
+                  ]
+                },
+                "witnessParties" : [
+                  "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                ],
+                "signatories" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2",
+                  "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                ],
+                "observers" : [
+                  "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                ],
+                "createdAt" : "2026-09-11T05:14:57.442033Z",
+                "packageName" : "harmonia-core",
+                "acsDelta" : true,
+                "representativePackageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451"
+              }
+            }
+          ],
+          "offset" : "51",
+          "synchronizerId" : "harmonia::122055c954ed3176efcbe7b70604b9d53f7315b89654b56268a01e3962756f47891b",
+          "traceContext" : {
+            "traceparent" : "00-6e54210651ea7c3ac620600f85f8142d-839400ef05da10b2-01"
+          },
+          "recordTime" : "2026-09-11T05:14:57.457475Z"
+        }
+      }
+    ],
+    "buyer" : [
+      {
+        "transaction" : {
+          "updateId" : "12205a7759dbedef3ba048a5a40c0857d2b704decb93b944984c736e42fd35eee793",
+          "effectiveAt" : "2026-09-11T05:14:52.415294Z",
+          "events" : [
+            {
+              "created" : {
+                "offset" : "23",
+                "contractId" : "005a04112ef6862ef5be641d04989bf7508d602e9f46b40abc4958de82c75d17bfca12122014d38448ab03d09a15b46b957094d73edfb19912ed8ec743b4884204993deac3",
+                "templateId" : {
+                  "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                  "moduleName" : "Harmonia.SharedProgress",
+                  "entityName" : "ProgressProposal"
+                },
+                "createArguments" : {
+                  "recordId" : {
+                    "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                    "moduleName" : "Harmonia.SharedProgress",
+                    "entityName" : "ProgressProposal"
+                  },
+                  "fields" : [
+                    {
+                      "label" : "issuer",
+                      "value" : {
+                        "party" : "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                      }
+                    },
+                    {
+                      "label" : "owner",
+                      "value" : {
+                        "party" : "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                      }
+                    },
+                    {
+                      "label" : "readers",
+                      "value" : {
+                        "list" : {
+                          "elements" : [
+                            {
+                              "party" : "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "label" : "subject",
+                      "value" : {
+                        "text" : "application"
+                      }
+                    }
+                  ]
+                },
+                "witnessParties" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                ],
+                "signatories" : [
+                  "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                ],
+                "observers" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2",
+                  "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                ],
+                "createdAt" : "2026-09-11T05:14:52.415294Z",
+                "packageName" : "harmonia-core",
+                "acsDelta" : true,
+                "representativePackageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451"
+              }
+            }
+          ],
+          "offset" : "23",
+          "synchronizerId" : "harmonia::122055c954ed3176efcbe7b70604b9d53f7315b89654b56268a01e3962756f47891b",
+          "traceContext" : {
+            "traceparent" : "00-43791deeaea1498abdaef8fe49b0ccdb-ceca32646a072cf6-01"
+          },
+          "recordTime" : "2026-09-11T05:14:52.504411Z"
+        }
+      },
+      {
+        "transaction" : {
+          "updateId" : "12200bc7980ad64330c49600df3c6c2edebf8c4978de038ca760db56f3f44a25253b",
+          "commandId" : "428d8b34-0d41-481d-aca5-47b4f304f626",
+          "effectiveAt" : "2026-09-11T05:14:53.029110Z",
+          "events" : [
+            {
+              "exercised" : {
+                "offset" : "25",
+                "contractId" : "005a04112ef6862ef5be641d04989bf7508d602e9f46b40abc4958de82c75d17bfca12122014d38448ab03d09a15b46b957094d73edfb19912ed8ec743b4884204993deac3",
+                "templateId" : {
+                  "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                  "moduleName" : "Harmonia.SharedProgress",
+                  "entityName" : "ProgressProposal"
+                },
+                "choice" : "Accept",
+                "choiceArgument" : {
+                  "record" : {
+                    "recordId" : {
+                      "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                      "moduleName" : "Harmonia.SharedProgress",
+                      "entityName" : "Accept"
+                    }
+                  }
+                },
+                "actingParties" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                ],
+                "consuming" : true,
+                "witnessParties" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                ],
+                "lastDescendantNodeId" : 1,
+                "exerciseResult" : {
+                  "contractId" : "00d9e78e086ed40a4bb605cd546059dbeb4db81a06ad3703b6b41a7916acf03185ca12122089fde67d9a37862e0f859b603b8e12453bbf1db05bd7d5e931ab6029518a9340"
+                },
+                "packageName" : "harmonia-core",
+                "acsDelta" : true
+              }
+            },
+            {
+              "created" : {
+                "offset" : "25",
+                "nodeId" : 1,
+                "contractId" : "00d9e78e086ed40a4bb605cd546059dbeb4db81a06ad3703b6b41a7916acf03185ca12122089fde67d9a37862e0f859b603b8e12453bbf1db05bd7d5e931ab6029518a9340",
+                "templateId" : {
+                  "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                  "moduleName" : "Harmonia.SharedProgress",
+                  "entityName" : "SharedProgress"
+                },
+                "createArguments" : {
+                  "recordId" : {
+                    "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                    "moduleName" : "Harmonia.SharedProgress",
+                    "entityName" : "SharedProgress"
+                  },
+                  "fields" : [
+                    {
+                      "label" : "owner",
+                      "value" : {
+                        "party" : "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                      }
+                    },
+                    {
+                      "label" : "issuer",
+                      "value" : {
+                        "party" : "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                      }
+                    },
+                    {
+                      "label" : "readers",
+                      "value" : {
+                        "list" : {
+                          "elements" : [
+                            {
+                              "party" : "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "label" : "subject",
+                      "value" : {
+                        "text" : "application"
+                      }
+                    },
+                    {
+                      "label" : "status",
+                      "value" : {
+                        "text" : "waiting"
+                      }
+                    }
+                  ]
+                },
+                "witnessParties" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                ],
+                "signatories" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2",
+                  "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                ],
+                "observers" : [
+                  "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                ],
+                "createdAt" : "2026-09-11T05:14:53.029110Z",
+                "packageName" : "harmonia-core",
+                "acsDelta" : true,
+                "representativePackageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451"
+              }
+            }
+          ],
+          "offset" : "25",
+          "synchronizerId" : "harmonia::122055c954ed3176efcbe7b70604b9d53f7315b89654b56268a01e3962756f47891b",
+          "traceContext" : {
+            "traceparent" : "00-9be74190e70b61dcbc06e024e1d6a6fa-ea18bf9976e80531-01"
+          },
+          "recordTime" : "2026-09-11T05:14:53.045316Z"
+        }
+      },
+      {
+        "transaction" : {
+          "updateId" : "1220526310c9b19b6e8a3a49ed3005caa2c879baf3cfa54af546387f610a646a9fa0",
+          "effectiveAt" : "2026-09-11T05:14:53.521732Z",
+          "events" : [
+            {
+              "created" : {
+                "offset" : "28",
+                "contractId" : "00e5dcca97b8328ecb6d37b9f630a4e19cb440ccefc18a901d5b43b73f5e5ebf9eca12122087628cbcdc0853faae0e350be5eaa4e9cc0ef38e237cc02c29d843ba71a76af1",
+                "templateId" : {
+                  "packageId" : "3b542c12d74c7227c7b021f4a55c86ac70be0f0ed801f6117ba41ab29681610f",
+                  "moduleName" : "Composer",
+                  "entityName" : "Workspace"
+                },
+                "createArguments" : {
+                  "recordId" : {
+                    "packageId" : "3b542c12d74c7227c7b021f4a55c86ac70be0f0ed801f6117ba41ab29681610f",
+                    "moduleName" : "Composer",
+                    "entityName" : "Workspace"
+                  },
+                  "fields" : [
+                    {
+                      "label" : "bank",
+                      "value" : {
+                        "party" : "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                      }
+                    },
+                    {
+                      "label" : "buyer",
+                      "value" : {
+                        "party" : "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                      }
+                    },
+                    {
+                      "label" : "references",
+                      "value" : {
+                        "list" : {
+                          
+                        }
+                      }
+                    }
+                  ]
+                },
+                "witnessParties" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                ],
+                "signatories" : [
+                  "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                ],
+                "observers" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                ],
+                "createdAt" : "2026-09-11T05:14:53.521732Z",
+                "packageName" : "harmonia-composer",
+                "acsDelta" : true,
+                "representativePackageId" : "3b542c12d74c7227c7b021f4a55c86ac70be0f0ed801f6117ba41ab29681610f"
+              }
+            }
+          ],
+          "offset" : "28",
+          "synchronizerId" : "harmonia::122055c954ed3176efcbe7b70604b9d53f7315b89654b56268a01e3962756f47891b",
+          "traceContext" : {
+            "traceparent" : "00-7af0e9e3146df69e00cdb5b2c4ece25f-e16a824062b20f70-01"
+          },
+          "recordTime" : "2026-09-11T05:14:53.608368Z"
+        }
+      },
+      {
+        "transaction" : {
+          "updateId" : "1220b8cdc8e613d609a7307f49cb15a94f23d6841f173c08db5c0843421517a0e369",
+          "effectiveAt" : "2026-09-11T05:14:56.679205Z",
+          "events" : [
+            {
+              "created" : {
+                "offset" : "30",
+                "contractId" : "00bfd516e861b9e331b2a71a7b95bca60752113e9cc3731550ccdadeda12b1f32cca1212204dd0a957abc0947ee0b7b6db65bb4cacebc0bf163a8c1633ccc3cf19b915a587",
+                "templateId" : {
+                  "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                  "moduleName" : "Harmonia.Result",
+                  "entityName" : "VerifiedResult"
+                },
+                "createArguments" : {
+                  "recordId" : {
+                    "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                    "moduleName" : "Harmonia.Result",
+                    "entityName" : "VerifiedResult"
+                  },
+                  "fields" : [
+                    {
+                      "label" : "issuer",
+                      "value" : {
+                        "party" : "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                      }
+                    },
+                    {
+                      "label" : "consumer",
+                      "value" : {
+                        "party" : "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                      }
+                    },
+                    {
+                      "label" : "readers",
+                      "value" : {
+                        "list" : {
+                          "elements" : [
+                            {
+                              "party" : "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "label" : "subject",
+                      "value" : {
+                        "text" : "application"
+                      }
+                    },
+                    {
+                      "label" : "decision",
+                      "value" : {
+                        "text" : "approved"
+                      }
+                    },
+                    {
+                      "label" : "continuation",
+                      "value" : {
+                        "text" : "shared-progress:application"
+                      }
+                    }
+                  ]
+                },
+                "witnessParties" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                ],
+                "signatories" : [
+                  "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                ],
+                "observers" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2",
+                  "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                ],
+                "createdAt" : "2026-09-11T05:14:56.679205Z",
+                "packageName" : "harmonia-interfaces",
+                "acsDelta" : true,
+                "representativePackageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23"
+              }
+            }
+          ],
+          "offset" : "30",
+          "synchronizerId" : "harmonia::122055c954ed3176efcbe7b70604b9d53f7315b89654b56268a01e3962756f47891b",
+          "traceContext" : {
+            "traceparent" : "00-b900b3e32d90b30fe5f900fa874fbd97-4d1afa6dec7ee78a-01"
+          },
+          "recordTime" : "2026-09-11T05:14:56.699534Z"
+        }
+      },
+      {
+        "transaction" : {
+          "updateId" : "1220da63683ba78d54165e57301bffdfc93989881b349f8b4d7e9cfb5c59d52b90e1",
+          "commandId" : "live-buyer-buyer-continuation",
+          "effectiveAt" : "2026-09-11T05:14:57.442033Z",
+          "events" : [
+            {
+              "exercised" : {
+                "offset" : "32",
+                "contractId" : "00d9e78e086ed40a4bb605cd546059dbeb4db81a06ad3703b6b41a7916acf03185ca12122089fde67d9a37862e0f859b603b8e12453bbf1db05bd7d5e931ab6029518a9340",
+                "templateId" : {
+                  "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                  "moduleName" : "Harmonia.SharedProgress",
+                  "entityName" : "SharedProgress"
+                },
+                "choice" : "Continue",
+                "choiceArgument" : {
+                  "record" : {
+                    "recordId" : {
+                      "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                      "moduleName" : "Harmonia.SharedProgress",
+                      "entityName" : "Continue"
+                    },
+                    "fields" : [
+                      {
+                        "label" : "result",
+                        "value" : {
+                          "optional" : {
+                            "value" : {
+                              "contractId" : "00bfd516e861b9e331b2a71a7b95bca60752113e9cc3731550ccdadeda12b1f32cca1212204dd0a957abc0947ee0b7b6db65bb4cacebc0bf163a8c1633ccc3cf19b915a587"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "actingParties" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                ],
+                "consuming" : true,
+                "witnessParties" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                ],
+                "lastDescendantNodeId" : 3,
+                "exerciseResult" : {
+                  "contractId" : "000a92e8ac5771a2e86bf11aa25ae1ca4895f3e3f33d3d67df5ca0baec0db3ead0ca1212209ec9002f8b2be4a2a9abb8f61197390eba1390f0dd0e27cace911548b58ed35c"
+                },
+                "packageName" : "harmonia-core",
+                "acsDelta" : true
+              }
+            },
+            {
+              "exercised" : {
+                "offset" : "32",
+                "nodeId" : 2,
+                "contractId" : "00bfd516e861b9e331b2a71a7b95bca60752113e9cc3731550ccdadeda12b1f32cca1212204dd0a957abc0947ee0b7b6db65bb4cacebc0bf163a8c1633ccc3cf19b915a587",
+                "templateId" : {
+                  "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                  "moduleName" : "Harmonia.Result",
+                  "entityName" : "VerifiedResult"
+                },
+                "choice" : "Consume",
+                "choiceArgument" : {
+                  "record" : {
+                    "recordId" : {
+                      "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                      "moduleName" : "Harmonia.Result",
+                      "entityName" : "Consume"
+                    }
+                  }
+                },
+                "actingParties" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                ],
+                "consuming" : true,
+                "witnessParties" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                ],
+                "lastDescendantNodeId" : 2,
+                "exerciseResult" : {
+                  "unit" : {
+                    
+                  }
+                },
+                "packageName" : "harmonia-interfaces",
+                "acsDelta" : true
+              }
+            },
+            {
+              "created" : {
+                "offset" : "32",
+                "nodeId" : 3,
+                "contractId" : "000a92e8ac5771a2e86bf11aa25ae1ca4895f3e3f33d3d67df5ca0baec0db3ead0ca1212209ec9002f8b2be4a2a9abb8f61197390eba1390f0dd0e27cace911548b58ed35c",
+                "templateId" : {
+                  "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                  "moduleName" : "Harmonia.SharedProgress",
+                  "entityName" : "SharedProgress"
+                },
+                "createArguments" : {
+                  "recordId" : {
+                    "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                    "moduleName" : "Harmonia.SharedProgress",
+                    "entityName" : "SharedProgress"
+                  },
+                  "fields" : [
+                    {
+                      "label" : "owner",
+                      "value" : {
+                        "party" : "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                      }
+                    },
+                    {
+                      "label" : "issuer",
+                      "value" : {
+                        "party" : "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                      }
+                    },
+                    {
+                      "label" : "readers",
+                      "value" : {
+                        "list" : {
+                          "elements" : [
+                            {
+                              "party" : "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "label" : "subject",
+                      "value" : {
+                        "text" : "application"
+                      }
+                    },
+                    {
+                      "label" : "status",
+                      "value" : {
+                        "text" : "complete"
+                      }
+                    }
+                  ]
+                },
+                "witnessParties" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                ],
+                "signatories" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2",
+                  "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                ],
+                "observers" : [
+                  "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                ],
+                "createdAt" : "2026-09-11T05:14:57.442033Z",
+                "packageName" : "harmonia-core",
+                "acsDelta" : true,
+                "representativePackageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451"
+              }
+            }
+          ],
+          "offset" : "32",
+          "synchronizerId" : "harmonia::122055c954ed3176efcbe7b70604b9d53f7315b89654b56268a01e3962756f47891b",
+          "traceContext" : {
+            "traceparent" : "00-6e54210651ea7c3ac620600f85f8142d-d72eec2661c8722b-01"
+          },
+          "recordTime" : "2026-09-11T05:14:57.457475Z"
+        }
+      }
+    ],
+    "reviewer" : [
+      {
+        "transaction" : {
+          "updateId" : "12205a7759dbedef3ba048a5a40c0857d2b704decb93b944984c736e42fd35eee793",
+          "effectiveAt" : "2026-09-11T05:14:52.415294Z",
+          "events" : [
+            {
+              "created" : {
+                "offset" : "26",
+                "contractId" : "005a04112ef6862ef5be641d04989bf7508d602e9f46b40abc4958de82c75d17bfca12122014d38448ab03d09a15b46b957094d73edfb19912ed8ec743b4884204993deac3",
+                "templateId" : {
+                  "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                  "moduleName" : "Harmonia.SharedProgress",
+                  "entityName" : "ProgressProposal"
+                },
+                "createArguments" : {
+                  "recordId" : {
+                    "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                    "moduleName" : "Harmonia.SharedProgress",
+                    "entityName" : "ProgressProposal"
+                  },
+                  "fields" : [
+                    {
+                      "label" : "issuer",
+                      "value" : {
+                        "party" : "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                      }
+                    },
+                    {
+                      "label" : "owner",
+                      "value" : {
+                        "party" : "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                      }
+                    },
+                    {
+                      "label" : "readers",
+                      "value" : {
+                        "list" : {
+                          "elements" : [
+                            {
+                              "party" : "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "label" : "subject",
+                      "value" : {
+                        "text" : "application"
+                      }
+                    }
+                  ]
+                },
+                "witnessParties" : [
+                  "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                ],
+                "signatories" : [
+                  "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                ],
+                "observers" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2",
+                  "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                ],
+                "createdAt" : "2026-09-11T05:14:52.415294Z",
+                "packageName" : "harmonia-core",
+                "acsDelta" : true,
+                "representativePackageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451"
+              }
+            }
+          ],
+          "offset" : "26",
+          "synchronizerId" : "harmonia::122055c954ed3176efcbe7b70604b9d53f7315b89654b56268a01e3962756f47891b",
+          "traceContext" : {
+            "traceparent" : "00-43791deeaea1498abdaef8fe49b0ccdb-9fdb9ba331d1d964-01"
+          },
+          "recordTime" : "2026-09-11T05:14:52.504411Z"
+        }
+      },
+      {
+        "transaction" : {
+          "updateId" : "12200bc7980ad64330c49600df3c6c2edebf8c4978de038ca760db56f3f44a25253b",
+          "effectiveAt" : "2026-09-11T05:14:53.029110Z",
+          "events" : [
+            {
+              "exercised" : {
+                "offset" : "28",
+                "contractId" : "005a04112ef6862ef5be641d04989bf7508d602e9f46b40abc4958de82c75d17bfca12122014d38448ab03d09a15b46b957094d73edfb19912ed8ec743b4884204993deac3",
+                "templateId" : {
+                  "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                  "moduleName" : "Harmonia.SharedProgress",
+                  "entityName" : "ProgressProposal"
+                },
+                "choice" : "Accept",
+                "choiceArgument" : {
+                  "record" : {
+                    "recordId" : {
+                      "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                      "moduleName" : "Harmonia.SharedProgress",
+                      "entityName" : "Accept"
+                    }
+                  }
+                },
+                "actingParties" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                ],
+                "consuming" : true,
+                "witnessParties" : [
+                  "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                ],
+                "lastDescendantNodeId" : 1,
+                "exerciseResult" : {
+                  "contractId" : "00d9e78e086ed40a4bb605cd546059dbeb4db81a06ad3703b6b41a7916acf03185ca12122089fde67d9a37862e0f859b603b8e12453bbf1db05bd7d5e931ab6029518a9340"
+                },
+                "packageName" : "harmonia-core",
+                "acsDelta" : true
+              }
+            },
+            {
+              "created" : {
+                "offset" : "28",
+                "nodeId" : 1,
+                "contractId" : "00d9e78e086ed40a4bb605cd546059dbeb4db81a06ad3703b6b41a7916acf03185ca12122089fde67d9a37862e0f859b603b8e12453bbf1db05bd7d5e931ab6029518a9340",
+                "templateId" : {
+                  "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                  "moduleName" : "Harmonia.SharedProgress",
+                  "entityName" : "SharedProgress"
+                },
+                "createArguments" : {
+                  "recordId" : {
+                    "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                    "moduleName" : "Harmonia.SharedProgress",
+                    "entityName" : "SharedProgress"
+                  },
+                  "fields" : [
+                    {
+                      "label" : "owner",
+                      "value" : {
+                        "party" : "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                      }
+                    },
+                    {
+                      "label" : "issuer",
+                      "value" : {
+                        "party" : "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                      }
+                    },
+                    {
+                      "label" : "readers",
+                      "value" : {
+                        "list" : {
+                          "elements" : [
+                            {
+                              "party" : "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "label" : "subject",
+                      "value" : {
+                        "text" : "application"
+                      }
+                    },
+                    {
+                      "label" : "status",
+                      "value" : {
+                        "text" : "waiting"
+                      }
+                    }
+                  ]
+                },
+                "witnessParties" : [
+                  "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                ],
+                "signatories" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2",
+                  "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                ],
+                "observers" : [
+                  "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                ],
+                "createdAt" : "2026-09-11T05:14:53.029110Z",
+                "packageName" : "harmonia-core",
+                "acsDelta" : true,
+                "representativePackageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451"
+              }
+            }
+          ],
+          "offset" : "28",
+          "synchronizerId" : "harmonia::122055c954ed3176efcbe7b70604b9d53f7315b89654b56268a01e3962756f47891b",
+          "traceContext" : {
+            "traceparent" : "00-9be74190e70b61dcbc06e024e1d6a6fa-2d09478624a6de4a-01"
+          },
+          "recordTime" : "2026-09-11T05:14:53.045316Z"
+        }
+      },
+      {
+        "transaction" : {
+          "updateId" : "1220b8cdc8e613d609a7307f49cb15a94f23d6841f173c08db5c0843421517a0e369",
+          "effectiveAt" : "2026-09-11T05:14:56.679205Z",
+          "events" : [
+            {
+              "created" : {
+                "offset" : "30",
+                "contractId" : "00bfd516e861b9e331b2a71a7b95bca60752113e9cc3731550ccdadeda12b1f32cca1212204dd0a957abc0947ee0b7b6db65bb4cacebc0bf163a8c1633ccc3cf19b915a587",
+                "templateId" : {
+                  "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                  "moduleName" : "Harmonia.Result",
+                  "entityName" : "VerifiedResult"
+                },
+                "createArguments" : {
+                  "recordId" : {
+                    "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                    "moduleName" : "Harmonia.Result",
+                    "entityName" : "VerifiedResult"
+                  },
+                  "fields" : [
+                    {
+                      "label" : "issuer",
+                      "value" : {
+                        "party" : "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                      }
+                    },
+                    {
+                      "label" : "consumer",
+                      "value" : {
+                        "party" : "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                      }
+                    },
+                    {
+                      "label" : "readers",
+                      "value" : {
+                        "list" : {
+                          "elements" : [
+                            {
+                              "party" : "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "label" : "subject",
+                      "value" : {
+                        "text" : "application"
+                      }
+                    },
+                    {
+                      "label" : "decision",
+                      "value" : {
+                        "text" : "approved"
+                      }
+                    },
+                    {
+                      "label" : "continuation",
+                      "value" : {
+                        "text" : "shared-progress:application"
+                      }
+                    }
+                  ]
+                },
+                "witnessParties" : [
+                  "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                ],
+                "signatories" : [
+                  "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                ],
+                "observers" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2",
+                  "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                ],
+                "createdAt" : "2026-09-11T05:14:56.679205Z",
+                "packageName" : "harmonia-interfaces",
+                "acsDelta" : true,
+                "representativePackageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23"
+              }
+            }
+          ],
+          "offset" : "30",
+          "synchronizerId" : "harmonia::122055c954ed3176efcbe7b70604b9d53f7315b89654b56268a01e3962756f47891b",
+          "traceContext" : {
+            "traceparent" : "00-b900b3e32d90b30fe5f900fa874fbd97-f4fcecbff481ad1f-01"
+          },
+          "recordTime" : "2026-09-11T05:14:56.699534Z"
+        }
+      },
+      {
+        "transaction" : {
+          "updateId" : "1220da63683ba78d54165e57301bffdfc93989881b349f8b4d7e9cfb5c59d52b90e1",
+          "effectiveAt" : "2026-09-11T05:14:57.442033Z",
+          "events" : [
+            {
+              "exercised" : {
+                "offset" : "32",
+                "contractId" : "00d9e78e086ed40a4bb605cd546059dbeb4db81a06ad3703b6b41a7916acf03185ca12122089fde67d9a37862e0f859b603b8e12453bbf1db05bd7d5e931ab6029518a9340",
+                "templateId" : {
+                  "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                  "moduleName" : "Harmonia.SharedProgress",
+                  "entityName" : "SharedProgress"
+                },
+                "choice" : "Continue",
+                "choiceArgument" : {
+                  "record" : {
+                    "recordId" : {
+                      "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                      "moduleName" : "Harmonia.SharedProgress",
+                      "entityName" : "Continue"
+                    },
+                    "fields" : [
+                      {
+                        "label" : "result",
+                        "value" : {
+                          "optional" : {
+                            "value" : {
+                              "contractId" : "00bfd516e861b9e331b2a71a7b95bca60752113e9cc3731550ccdadeda12b1f32cca1212204dd0a957abc0947ee0b7b6db65bb4cacebc0bf163a8c1633ccc3cf19b915a587"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "actingParties" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                ],
+                "consuming" : true,
+                "witnessParties" : [
+                  "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                ],
+                "lastDescendantNodeId" : 3,
+                "exerciseResult" : {
+                  "contractId" : "000a92e8ac5771a2e86bf11aa25ae1ca4895f3e3f33d3d67df5ca0baec0db3ead0ca1212209ec9002f8b2be4a2a9abb8f61197390eba1390f0dd0e27cace911548b58ed35c"
+                },
+                "packageName" : "harmonia-core",
+                "acsDelta" : true
+              }
+            },
+            {
+              "exercised" : {
+                "offset" : "32",
+                "nodeId" : 2,
+                "contractId" : "00bfd516e861b9e331b2a71a7b95bca60752113e9cc3731550ccdadeda12b1f32cca1212204dd0a957abc0947ee0b7b6db65bb4cacebc0bf163a8c1633ccc3cf19b915a587",
+                "templateId" : {
+                  "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                  "moduleName" : "Harmonia.Result",
+                  "entityName" : "VerifiedResult"
+                },
+                "choice" : "Consume",
+                "choiceArgument" : {
+                  "record" : {
+                    "recordId" : {
+                      "packageId" : "66335be20dde06f58aed0ac3a9a3b9a3c6fcadc624afb5ce3d9a4f46d5580f23",
+                      "moduleName" : "Harmonia.Result",
+                      "entityName" : "Consume"
+                    }
+                  }
+                },
+                "actingParties" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                ],
+                "consuming" : true,
+                "witnessParties" : [
+                  "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                ],
+                "lastDescendantNodeId" : 2,
+                "exerciseResult" : {
+                  "unit" : {
+                    
+                  }
+                },
+                "packageName" : "harmonia-interfaces",
+                "acsDelta" : true
+              }
+            },
+            {
+              "created" : {
+                "offset" : "32",
+                "nodeId" : 3,
+                "contractId" : "000a92e8ac5771a2e86bf11aa25ae1ca4895f3e3f33d3d67df5ca0baec0db3ead0ca1212209ec9002f8b2be4a2a9abb8f61197390eba1390f0dd0e27cace911548b58ed35c",
+                "templateId" : {
+                  "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                  "moduleName" : "Harmonia.SharedProgress",
+                  "entityName" : "SharedProgress"
+                },
+                "createArguments" : {
+                  "recordId" : {
+                    "packageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451",
+                    "moduleName" : "Harmonia.SharedProgress",
+                    "entityName" : "SharedProgress"
+                  },
+                  "fields" : [
+                    {
+                      "label" : "owner",
+                      "value" : {
+                        "party" : "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2"
+                      }
+                    },
+                    {
+                      "label" : "issuer",
+                      "value" : {
+                        "party" : "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                      }
+                    },
+                    {
+                      "label" : "readers",
+                      "value" : {
+                        "list" : {
+                          "elements" : [
+                            {
+                              "party" : "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "label" : "subject",
+                      "value" : {
+                        "text" : "application"
+                      }
+                    },
+                    {
+                      "label" : "status",
+                      "value" : {
+                        "text" : "complete"
+                      }
+                    }
+                  ]
+                },
+                "witnessParties" : [
+                  "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                ],
+                "signatories" : [
+                  "live-1ad3c188-Alice-9b3970be::1220d0b6921ba728906f4a483ea2c94f4d0e35543fa6d2ae887d00a51359b787dfe2",
+                  "live-1ad3c188-Northbank-d4d95138::1220b1b908bd31d6ad873e9855f9161eae3c0e4bb6a2821a287bb6744adab5d3db1d"
+                ],
+                "observers" : [
+                  "live-1ad3c188-Olivia-4f1df03a::12206016e2ed005185d2959d08cc7d8b938e290897180b8dd83f4c687906f9b90cd6"
+                ],
+                "createdAt" : "2026-09-11T05:14:57.442033Z",
+                "packageName" : "harmonia-core",
+                "acsDelta" : true,
+                "representativePackageId" : "6f1db5f887059079bbf00f448b229b9a33be28bd1616832b1734ca5faddd9451"
+              }
+            }
+          ],
+          "offset" : "32",
+          "synchronizerId" : "harmonia::122055c954ed3176efcbe7b70604b9d53f7315b89654b56268a01e3962756f47891b",
+          "traceContext" : {
+            "traceparent" : "00-6e54210651ea7c3ac620600f85f8142d-bd51d6dcda59c235-01"
+          },
+          "recordTime" : "2026-09-11T05:14:57.457475Z"
+        }
+      }
+    ]
+  }
+}
