@@ -1,6 +1,6 @@
 # Fifth-draft measurements
 
-Counts include comments and blank lines. Baseline: fourth-draft `bef8ac5`; fifth-draft implementation frozen after FD54. Source count compares tracked Scala files, with tests separated from production. All 47 Daml files and all examples remain byte-identical to draft four.
+Counts include comments and blank lines. Baseline: fourth-draft `bef8ac5`; fifth-draft verified implementation `75ff1c0a524ae69b5df29eb93c4a59c0b70a0f74`. Source count compares tracked Scala files, with tests separated from production. All 47 Daml files and all examples remain byte-identical to draft four.
 
 ## Source size
 
@@ -45,10 +45,10 @@ Git reports 214 inserted and 231 deleted production Scala lines: **17 net remove
 
 ## Fewer internal representations
 
-Six immediate recoveries of facts already held by the producer are removed:
+Seven immediate recoveries of facts already held by the producer are removed:
 
 - Two JSON resolution reads: generation and package retrieval now use `ResolvedPackage` directly.
-- Two JSON inspection decodes: builder and template catalog now consume `InspectedDar`.
+- Three JSON inspection reads: resolution, builder, and template catalog now consume `InspectedDar`.
 - Two write/read cycles: generation retains its initial manifest while adding compiled artifacts, and the builder uses the returned final manifest.
 
 Two further internal field scans disappear: archive assembly uses generated member names, and browser retry reconciliation reads `ActionRequest.id`. Transaction JSON is no longer duplicated in submission jobs; four redundant `json` forwarding methods are removed. External compiler/ledger metadata, saved inputs, and independent artifact verification still decode at their boundaries.
@@ -65,4 +65,4 @@ These are my judgments against the same principles, not measured developer resea
 | Minimalism | 7/10 | 8/10 | Less duplicate state; only 0.4% fewer production lines |
 | Evidence quality | 9/10 | 9/10 | Same independent goldens with focused boundary coverage |
 
-A senior developer should still review the reading traces. More draft branches alone would not justify a higher score. Final clean-release, browser, and memory evidence is recorded in acceptance after verification.
+A senior developer should still review the reading traces. More draft branches alone would not justify a higher score. The [acceptance record](acceptance.md) contains the completed clean-release, browser, and memory evidence.

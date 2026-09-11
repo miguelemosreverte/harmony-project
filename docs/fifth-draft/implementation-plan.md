@@ -116,12 +116,13 @@ The earlier proposal is the first branch commit. This expanded plan is the secon
 
 ## FD55 — final acceptance and handoff
 
-- [ ] Run `scripts/harmonia release-check`: clean build, Daml tests, Scala tests, packages, generated bindings, regular stories, live service, composer, builder, boundaries, and portable rebuilding.
-- [ ] Preserve all 67 original golden files, 32 matching fresh recordings, nine chapters, and pinned DAR identities. Compare Daml source bytes with draft four.
-- [ ] Verify the archive digest and payload, extract into a path with spaces, and test rejection/restoration of a deliberately changed payload file.
-- [ ] Exercise relocated `run-product`, `run-live`, and `run-book`; perform real browser handoff, consented composition, package compilation/download, source inspection, and desktop/mobile book checks.
-- [ ] Sample Java RSS and process ownership during sequential verification. Keep only the bounded book preview after all owned ledger processes stop.
-- [ ] Write `docs/fifth-draft/measurements.md` and `acceptance.md`, update `docs/release/acceptance.md`, complete the plan, and commit the handoff.
+- [x] Run `scripts/harmonia release-check`: clean build, Daml tests, Scala tests, packages, generated bindings, regular stories, live service, composer, builder, boundaries, and portable rebuilding.
+- [x] Preserve all 67 original golden files, 32 matching fresh recordings, nine chapters, and pinned DAR identities. Compare Daml source bytes with draft four.
+- [x] Verify the archive digest and payload, extract into a path with spaces, and test rejection/restoration of a deliberately changed payload file.
+- [x] Exercise relocated `run-product`, `run-live`, and `run-book`; perform real browser handoff, consented composition, package compilation/download, source inspection, and desktop/mobile book checks.
+- [x] Sample Java RSS and process ownership during sequential verification. Keep only the bounded book preview after all owned ledger processes stop.
+- [x] Write `docs/fifth-draft/measurements.md` and `acceptance.md`, update `docs/release/acceptance.md`, complete the plan, and commit the handoff.
+- [x] Final documentation review: update `docs/history/README.md` to name the fifth draft as current and index the preserved fourth-draft record.
 
 Any necessary adjustment is recorded here before its implementation. Reducing line count never permits weakening an independent expectation, removing a runtime boundary, or hiding a failed check.
 
@@ -132,3 +133,5 @@ FD52 proof: all 53 Scala tests pass (`.artifacts/fifth-52-build.log`). Determini
 FD53 proof: all 57 Scala tests pass, including literal HTTP-format and bounded request-reading cases; the live Scala.js browser compiles (`.artifacts/fifth-53-build.log`). The authenticated live gate preserves authority, stale views, repeats, and reconnect; the builder golden still has zero differences (`fifth-53-live.log`, `fifth-53-builder.log`). The browser now retains a shared `ActionRequest` instead of an untyped JSON request.
 
 FD54 proof: all 57 Scala tests and the linked live browser pass (`.artifacts/fifth-54-build.log`); authenticated ledger handoff, stale/repeat protection, and reconnect pass after removing unused submission copies (`fifth-54-live.log`). All source links, nine exported chapters, and recording links pass (`fifth-54-book.log`). The preliminary book intentionally uses retained fourth-draft recordings; FD55 generates all evidence afresh from the clean implementation commit. Production is 4,235 lines versus 4,252.
+
+FD55 proof: clean software `75ff1c0a524ae69b5df29eb93c4a59c0b70a0f74` passes all eleven gates, 57 Scala tests, four Daml scripts, and all 32 fresh recordings. Relocated launchers, real browser interactions, source inspection, desktop/mobile playback, tamper rejection/restoration, and process cleanup pass. [Acceptance](acceptance.md) records the exact archive and evidence. Only the 128 MiB book preview remains.

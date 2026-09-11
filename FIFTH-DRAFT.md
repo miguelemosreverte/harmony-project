@@ -1,6 +1,6 @@
 # Fifth draft: easy to understand locally
 
-Status: implementation complete; final clean-release and relocated browser acceptance pending; the [file-level plan](docs/fifth-draft/implementation-plan.md) records the execution order. Branch `fifth-draft` starts from verified fourth-draft handoff `bef8ac5`. The fourth-draft branch and packaged book remain preserved.
+Status: complete; [clean-release and relocated browser acceptance](docs/fifth-draft/acceptance.md) passed; the [file-level plan](docs/fifth-draft/implementation-plan.md) records the execution order. Branch `fifth-draft` starts from verified fourth-draft handoff `bef8ac5`. The fourth-draft branch and packaged book remain preserved.
 
 ## Purpose
 
