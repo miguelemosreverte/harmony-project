@@ -614,3 +614,5 @@ tr:last-child td {
 .live-main button:disabled { opacity: .55; cursor: wait; }
 .live-footnote { font-size: .85rem; color: #606657; margin-top: 2rem; }
 @media (max-width: 700px) { .live-main { padding: 1.5rem 1rem; } .live-grid { grid-template-columns: 1fr; } .live-flow { flex-direction: column; } }
+
+.composition-evidence { padding: 1.5rem; overflow-x: auto; }

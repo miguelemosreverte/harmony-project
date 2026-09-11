@@ -130,7 +130,9 @@ object StoryFormat:
   def result(markdown: String): Either[String, Json] = for
     json <- MarkdownYaml.read(markdown, "Result")
     normalized <-
-      if json.hcursor.downField("settlement_transactions").succeeded then
+      if json.hcursor.downField("composition").succeeded then
+        harmonia.composer.model.CompositionResult.read(json)
+      else if json.hcursor.downField("settlement_transactions").succeeded then
         harmonia.stories.transfer.read.TransferFormat.result(json)
       else ordinaryResult(json)
   yield normalized

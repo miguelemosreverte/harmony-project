@@ -1,0 +1,38 @@
+module Composer.Model where
+
+import DA.List
+import qualified DA.Text as Text
+import qualified Harmonia.Process.Model as Core
+
+data PlannedStep = PlannedStep with
+    id : Text
+    role : Text
+    actor : Party
+    action : Text
+  deriving (Eq, Show)
+
+validText : Int -> Text -> Bool
+validText limit value = value /= "" && Text.length value <= limit
+
+validPlan : Party -> Party -> Text -> Text -> [PlannedStep] -> Bool
+validPlan bank buyer name reference steps =
+  bank /= buyer && validText 80 name && validText 80 reference &&
+  length steps >= 1 && length steps <= 4 &&
+  length (dedup (map (.id) steps)) == length steps &&
+  all (\step -> validText 40 step.id && validText 40 step.role &&
+    elem step.actor [bank, buyer] &&
+    elem step.action ["approve-financing", "confirm-review", "approve-generated"] &&
+    all (\other -> other.role /= step.role || other.actor == step.actor) steps) steps
+
+specifications : [PlannedStep] -> [Core.StepSpec]
+specifications = following None
+
+following : Optional Text -> [PlannedStep] -> [Core.StepSpec]
+following previous remaining = case remaining of
+  [] -> []
+  step :: rest -> Core.StepSpec step.id step.role (optional [] (\id -> [id]) previous) Core.ActionStep None :: following (Some step.id) rest
+
+roles : [PlannedStep] -> [Core.Role]
+roles steps = case steps of
+  [] -> []
+  step :: rest -> Core.Role step.role step.actor :: roles (filter (\other -> other.role /= step.role) rest)

@@ -31,7 +31,9 @@ Actual commit identifiers are recorded in the next commit after they are created
 
 | 15 | `a452054` | [Authenticated live proof](verification/15-live-sessions.md): separate sessions, direct API permission denial, stale/repeated requests, browser reconnect, and response-loss recovery |
 
-| 15a | This increment | [Memory proof](verification/15a-memory.md): direct JVM launch, one ledger environment, bounded heaps, successful four-party transfer, and one retained preview |
+| 15a | `b6ee9d0` | [Memory proof](verification/15a-memory.md): direct JVM launch, one ledger environment, bounded heaps, successful four-party transfer, and one retained preview |
+
+| 16a | This increment | [Composition foundation](verification/16a-composition.md): two authenticated goldens, partner consent, core-managed direct/generated actions, and recorded source states |
 
 ## External decisions
 

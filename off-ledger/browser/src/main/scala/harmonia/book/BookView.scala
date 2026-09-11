@@ -96,6 +96,7 @@ final class BookView(
 
   private def laboratory(main: dom.HTMLElement, state: ViewState): Unit =
     val story = stories(state.story)
+    val composition = story.input.hcursor.get[String]("workflow").contains("composed-process")
     val transfer = story.input.hcursor.get[String]("workflow").contains("atomic-transfer")
     val hero = element("header", "hero")
     append(
@@ -153,6 +154,7 @@ final class BookView(
           "Generated typed adapter"
         else if story.input.hcursor.get[String]("integration").toOption.contains("adapter") then
           "Typed adapter"
+        else if composition then "Propose → consent → core execution"
         else if transfer then "Four-party atomic transfer"
         else if story.input.hcursor.get[String]("workflow").toOption.contains("property-purchase")
         then "Financing → offer → agents"
@@ -174,11 +176,17 @@ final class BookView(
       element("span", "eyebrow", "Starting point"),
       element(
         "strong",
-        text = if transfer then "proposed" else setup.get[String]("status").getOrElse("Unknown")
+        text =
+          if composition then "Empty workspace"
+          else if transfer then "proposed"
+          else setup.get[String]("status").getOrElse("Unknown")
       ),
       element(
         "span",
-        text = if transfer then "Trade and source position created" else "Application created"
+        text =
+          if composition then "Sources await partner consent"
+          else if transfer then "Trade and source position created"
+          else "Application created"
       )
     )
     append(graph, start)
@@ -223,6 +231,8 @@ final class BookView(
     val details = element("div", "details-grid")
     append(details, comparison(story, state.step), evidence(story))
     append(main, hero, toolbar, panel)
+    if composition then
+      append(main, harmonia.book.composer.CompositionEvidence.render(story, state.step))
     if transfer then append(main, harmonia.book.transfer.TransferView.render(story, state.step))
     append(main, details)
     if story.input.hcursor.get[String]("integration").contains("generated") then
@@ -393,6 +403,8 @@ final class BookView(
         .getOrElse("Unknown")
     else if story.input.hcursor.get[String]("workflow").contains("atomic-transfer") then
       text(actual, "trade")
+    else if story.input.hcursor.get[String]("workflow").contains("composed-process") then
+      text(actual, "workflow")
     else text(actual, "application")
 
   private def text(json: Json, field: String): String =

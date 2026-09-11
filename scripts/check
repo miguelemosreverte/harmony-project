@@ -5,6 +5,6 @@ source "$(dirname "${BASH_SOURCE[0]}")/environment"
 "$HARMONIA_ROOT/scripts/daml" test --package-root "$HARMONIA_ROOT/on-ledger/smoke"
 cd "$HARMONIA_ROOT/off-ledger"
 sbt --batch jvm/test
-for harmonia_check in packages-check bindings-check check live-check; do
+for harmonia_check in packages-check bindings-check check live-check composer-check; do
   "$HARMONIA_ROOT/scripts/harmonia" "$harmonia_check"
 done

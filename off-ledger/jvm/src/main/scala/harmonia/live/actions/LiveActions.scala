@@ -8,8 +8,14 @@ import harmonia.live.state.LiveSnapshot
 import harmonia.live.ledger.LiveLedger
 import io.circe.Json
 import io.grpc.Status
+import harmonia.composer.ledger.{ComposerCommands, ComposerSnapshot}
 
-final case class ActionRequest(id: String, action: String, version: String)
+final case class ActionRequest(
+    id: String,
+    action: String,
+    version: String,
+    parameters: Option[Json] = None
+)
 final case class LiveJob(
     actor: String,
     request: ActionRequest,
@@ -37,16 +43,29 @@ final class LiveActions private (
     current <- jobs.get
   yield snapshot
     .json(actor)
+    .deepMerge(
+      Json.obj(
+        "composer" -> ComposerSnapshot.json(
+          snapshot.contracts,
+          runtime.participants.map((name, p) => name -> p.ledger.party),
+          actor
+        )
+      )
+    )
     .deepMerge(Json.obj("jobs" -> Json.arr(current.filter(_.actor == actor).map(_.json)*)))
 
   def submit(actor: String, request: ActionRequest): IO[LiveJob] =
     IO.raiseUnless(
-      request.id.matches("[a-zA-Z0-9-]{1,64}") && request.version.matches("[0-9a-f]{64}") && Set(
+      request.id.matches("[a-zA-Z0-9-]{1,64}") && request.version.matches("[0-9a-f]{64}") && (Set(
         "approve-financing",
         "publish-approval"
-      ).contains(request.action)
+      ).contains(request.action) || ComposerCommands.actions.contains(request.action))
     )(
       IllegalArgumentException("Invalid action, request identifier, or snapshot version")
+    ) *> IO.fromEither(
+      (if ComposerCommands.actions.contains(request.action) then ComposerCommands.validate(request)
+       else Either.cond(request.parameters.isEmpty, (), "This action takes no extra input")).left
+        .map(IllegalArgumentException(_))
     ) *> lock.permit.use { _ =>
       jobs.get.flatMap { current =>
         current.find(j => j.actor == actor && j.request.id == request.id) match
@@ -77,11 +96,21 @@ final class LiveActions private (
             )
           )
         else
-          val selection = job.request.action match
-            case "approve-financing" =>
-              snapshot.application.map(c => (c, "Approve", LiveLedger.emptyArgument))
-            case "publish-approval" =>
-              snapshot.progress.map(c => (c, "Continue", LiveLedger.continuation(snapshot.proof)))
+          val selection =
+            if ComposerCommands.actions.contains(job.request.action) then
+              ComposerCommands.select(
+                job.request,
+                snapshot.contracts,
+                ledger.party,
+                runtime.participants.map((name, p) => name -> p.ledger.party)
+              )
+            else
+              job.request.action match
+                case "approve-financing" =>
+                  snapshot.application.map(c => (c, "Approve", LiveLedger.emptyArgument))
+                case "publish-approval" =>
+                  snapshot.progress
+                    .map(c => (c, "Continue", LiveLedger.continuation(snapshot.proof)))
           selection match
             case None =>
               IO.pure(

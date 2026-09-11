@@ -5,6 +5,7 @@ import qualified PrivateFinancing as Private
 import Harmonia.SharedProgress
 import qualified Privacy
 import qualified Story as S
+import qualified Composer
 
 data Setup = Setup with bank : Party; buyer : Party; reviewer : Party
   deriving (Eq, Show)
@@ -30,4 +31,5 @@ run input = script do
   forA [("bank", bank), ("buyer", buyer), ("reviewer", reviewer)] (\(name, party) -> do
     userId <- validateUserId name
     createUserOn (User userId (Some party)) [CanActAs party] (ParticipantName name))
+  submit bank do createCmd Composer.Workspace with bank; buyer; references = []
   pure Setup with bank; buyer; reviewer

@@ -112,14 +112,22 @@ object LiveServer:
                     .leftMap(_ => IllegalArgumentException("Invalid JSON"))
                 )
                 _ <- IO.raiseUnless(
-                  json.asObject.exists(_.keys.toSet == Set("id", "action", "version"))
-                )(IllegalArgumentException("Expected only id, action, and version"))
+                  json.asObject.exists(obj =>
+                    Set("id", "action", "version").subsetOf(
+                      obj.keys.toSet
+                    ) && (obj.keys.toSet -- Set("id", "action", "version", "input")).isEmpty
+                  )
+                )(
+                  IllegalArgumentException(
+                    "Expected id, action, version, and optional composition input"
+                  )
+                )
                 request <- IO
                   .fromEither(for
                     id <- json.hcursor.get[String]("id")
                     action <- json.hcursor.get[String]("action")
                     version <- json.hcursor.get[String]("version")
-                  yield ActionRequest(id, action, version))
+                  yield ActionRequest(id, action, version, json.hcursor.downField("input").focus))
                   .adaptError { case _: io.circe.Error =>
                     IllegalArgumentException("Action fields must be text")
                   }

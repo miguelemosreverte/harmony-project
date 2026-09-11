@@ -1,0 +1,75 @@
+module Composer where
+
+import DA.List
+import Composer.Model
+import Harmonia.Action
+import qualified Harmonia.Process.Model as Core
+import qualified Harmonia.Process.Engine as Core
+import qualified Financing
+import qualified Review
+import qualified LegacyFinancing
+import qualified GeneratedFinancing
+
+-- The two evaluation parties consent separately before creating source contracts.
+template Workspace with
+    bank : Party
+    buyer : Party
+    references : [Text]
+  where
+    signatory bank
+    observer buyer
+    ensure bank /= buyer && length references <= 8 && dedup references == references
+
+    choice Propose : (ContractId Workspace, ContractId Draft)
+      with name : Text; reference : Text; steps : [PlannedStep]
+      controller bank
+      do
+        assertMsg "Use one to four supported actions, distinct IDs, and consistent roles bound to these two parties" (validPlan bank buyer name reference steps)
+        assertMsg "Use a new reference; this workspace supports eight proposals" (length references < 8 && not (elem reference references))
+        draft <- create Draft with bank; buyer; name; reference; steps
+        next <- create this with references = references <> [reference]
+        pure (next, draft)
+
+template Draft with
+    bank : Party
+    buyer : Party
+    name : Text
+    reference : Text
+    steps : [PlannedStep]
+  where
+    signatory bank
+    observer buyer
+    ensure validPlan bank buyer name reference steps
+
+    choice Accept : ContractId Core.ProcessInstance
+      controller buyer
+      do
+        bindings <- forA steps (\step -> do
+          action <- createAction bank buyer reference step
+          pure (Core.ActionBinding step.id action))
+        published <- create Core.PublishedDefinition with
+          publisher = bank; readers = [buyer]
+          definition = Core.Definition name 1 (specifications steps)
+        exercise published Core.Start with
+          owner = bank; reference; subject = reference; roles = roles steps; bindings
+
+    choice Cancel : ()
+      controller bank
+      do pure ()
+
+createAction : Party -> Party -> Text -> PlannedStep -> Update (ContractId StepAction)
+createAction bank buyer reference step = do
+  let actor = step.actor
+      reader = if actor == bank then buyer else bank
+  case step.action of
+    "approve-financing" -> do
+      cid <- create Financing.Application with bank = actor; buyer = reader; reference; status = "pending"
+      pure (toInterfaceContractId @StepAction cid)
+    "confirm-review" -> do
+      cid <- create Review.Review with owner = actor; reader; subject = reference; status = "pending"
+      pure (toInterfaceContractId @StepAction cid)
+    "approve-generated" -> do
+      source <- create LegacyFinancing.Application with bank = actor; buyer = reader; reference; status = "pending"
+      cid <- create GeneratedFinancing.Adapter with actor; readers = [reader]; subject = reference; source
+      pure (toInterfaceContractId @StepAction cid)
+    _ -> abort "Unsupported composer action"

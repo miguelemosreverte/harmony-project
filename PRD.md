@@ -458,6 +458,13 @@ This item is split into consecutive subcommits: **12a** separates the reference 
 
 ### Commit 16 — `feat: compose supported workflows and provide DAR inputs`
 
+Deliver this larger step as three ordered, working commits:
+
+- [x] **16a:** ledger proposal/consent, core instantiation, authenticated commands, two committed goldens, and recorded source-state playback. Evidence: [composition foundation](docs/verification/16a-composition.md).
+- [ ] **16b:** accessible live editor, partner consent, execution controls, and observed source states.
+- [ ] **16c:** bounded DAR input/inspection and supported mapping diagnostics, with Chapter 8's complete walkthrough.
+
+
 - [ ] Complete the bounded evaluation composer.
   - [ ] Let a user define a small workflow from supported actions and bind its roles and inputs.
   - [ ] Validate the definition and submit its authorized instantiation through the core.
