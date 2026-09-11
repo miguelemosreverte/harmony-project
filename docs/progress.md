@@ -41,7 +41,9 @@ Actual commit identifiers are recorded in the next commit after they are created
 
 | 17 | `b8a8520` | [Execution boundary proof](verification/17-boundaries.md): upper bounds, disclosure/stale/retry checks, concurrent commands, twenty-seven Scala tests, and portable project reproduction |
 
-| 18 | This increment | [Complete reader path](verification/18-book.md): nine chapters, 32 recordings, matching experiments, local link audit, and narrow-screen keyboard navigation |
+| 18 | `af96e50` | [Complete reader path](verification/18-book.md): nine chapters, 32 recordings, matching experiments, local link audit, and narrow-screen keyboard navigation |
+
+| 19a | This increment | [Release harness](release/packaging.md): compiled clean-checkout runner, sequential gates, bounded launchers, hashed bundle, and provenance verification; the full release gate follows this commit |
 
 ## External decisions
 

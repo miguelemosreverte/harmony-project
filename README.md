@@ -36,3 +36,5 @@ Off-ledger application code is Scala with Cats Effect `IO`. On-ledger contracts 
 ## Publication
 
 Development currently takes place in this local repository. Public repository destination and licensing must be settled before publication. Imported source documents retain their original attribution; see the provenance record.
+
+Build a versioned local delivery with the [release packaging guide](docs/release/packaging.md).

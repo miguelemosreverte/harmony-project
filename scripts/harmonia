@@ -31,5 +31,7 @@ if [[ ! -f "$harmonia_jar" || ! -f "$harmonia_stamp" || "$(cat "$harmonia_stamp"
   fi
   printf '%s' "$harmonia_fingerprint" > "$harmonia_stamp"
 fi
-exec "${JAVA_HOME:-/usr}/bin/java" -Xms32m -Xmx"${HARMONIA_TOOLS_HEAP:-512m}" -XX:ActiveProcessorCount=4 \
+harmonia_default_heap=512m
+if [[ "${1:-}" == release-check ]]; then harmonia_default_heap=128m; fi
+exec "${JAVA_HOME:-/usr}/bin/java" -Xms32m -Xmx"${HARMONIA_TOOLS_HEAP:-$harmonia_default_heap}" -XX:ActiveProcessorCount=4 \
   -classpath "$(cat "$harmonia_manifest")" harmonia.app.Main "$@"

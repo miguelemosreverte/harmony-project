@@ -12,6 +12,10 @@ object Main extends IOApp:
   def run(args: List[String]): IO[ExitCode] =
     val root = Path.of(sys.env.getOrElse("HARMONIA_ROOT", "..")).toAbsolutePath.normalize()
     args match
+      case List("release-check") =>
+        harmonia.release.CheckRelease.run(root).as(ExitCode.Success)
+      case List("release-verify", directory) =>
+        harmonia.release.ReleaseManifest.verify(root.resolve(directory)).as(ExitCode.Success)
       case List("book-links", directory) =>
         harmonia.book.verify.CheckBookLinks.run(root, root.resolve(directory)).as(ExitCode.Success)
       case List("portable-check") =>
@@ -84,5 +88,5 @@ object Main extends IOApp:
         yield ExitCode.Success
       case _ =>
         IO.println(
-          "Usage: scripts/harmonia live | live-check | composer-check | builder-check | boundaries-check | portable-check [archive] | generate-bindings mapping output | bindings-check | smoke | network-smoke | resolve-packages [manifest] | packages-check | check [story-directory ...] | book run-directory | export-book run-directory output-directory | serve-book directory"
+          "Usage: scripts/harmonia release-check | release-verify directory | book-links directory | live | live-check | composer-check | builder-check | boundaries-check | portable-check [archive] | generate-bindings mapping output | bindings-check | smoke | network-smoke | resolve-packages [manifest] | packages-check | check [story-directory ...] | book run-directory | export-book run-directory output-directory | serve-book directory"
         ).as(ExitCode.Error)
