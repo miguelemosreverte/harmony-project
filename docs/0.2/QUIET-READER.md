@@ -52,8 +52,8 @@ reproduces it. Previous/Next never wraps silently to the start.
 - [x] Commit 4: simplify live entry, financing, composition and package journeys.
   - [x] Keep each live step within two interactions without hiding a dashboard.
   - [x] Exercise real commands and recovery against one disposable network.
-- [ ] Commit 5: navigate the complete routes, capture screenshots and write page notes.
-  - [ ] Inspect desktop and mobile: purpose, caption, next action, destination, spacing.
-  - [ ] Count interactions, including links, inputs, disclosures and embedded controls.
-  - [ ] Check cold URLs, Back/Forward, keyboard, static reading and PDF output.
-  - [ ] Commit and push the verified delivery with an accessible entry point.
+- [x] Commit 5: navigate the complete routes, capture screenshots and write page notes.
+  - [x] Inspect desktop and mobile: purpose, caption, next action, destination, spacing.
+  - [x] Count interactions, including links, inputs, disclosures and embedded controls.
+  - [x] Check cold URLs, Back/Forward, keyboard, static reading and PDF output.
+  - [x] Commit and push the verified delivery with an accessible entry point.

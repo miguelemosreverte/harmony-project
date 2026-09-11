@@ -1,0 +1,16 @@
+{
+  "book": "http://127.0.0.1:60693/",
+  "product": "http://127.0.0.1:60692/",
+  "sourceFiles": 382,
+  "checks": [
+    "Separate book serves the original drawing",
+    "Every exported source matches its source-catalog fingerprint",
+    "financing entry links to separate product",
+    "composer entry links to separate product",
+    "packages entry links to separate product",
+    "Product has no book route",
+    "The written chapter remains readable without JavaScript",
+    "No browser errors"
+  ],
+  "errors": []
+}

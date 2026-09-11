@@ -1,0 +1,28 @@
+{
+  "states": {
+    "bank": {
+      "actor": "bank",
+      "application": "pending",
+      "workflow": "waiting",
+      "private": true,
+      "eligible": [
+        "approve-financing"
+      ]
+    },
+    "buyer": {
+      "actor": "buyer",
+      "application": null,
+      "workflow": "waiting",
+      "private": false,
+      "eligible": []
+    },
+    "reviewer": {
+      "actor": "reviewer",
+      "application": null,
+      "workflow": "waiting",
+      "private": false,
+      "eligible": []
+    }
+  },
+  "mutatingCommandsSubmitted": 0
+}

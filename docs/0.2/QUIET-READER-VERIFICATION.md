@@ -56,3 +56,16 @@ check downloads every catalogued source from the served export and compares its 
 The JSON reports alongside this document list individual assertions and observed
 browser errors. Older `reader-*` and `reference-*` reports retain their historical
 meaning and describe the controls present at those earlier checkpoints.
+
+## Delivery
+
+The final separate book host served all **382 catalogued source files** with matching
+SHA-256 fingerprints. Its original-document companion loaded correctly and all
+three sandbox task links point to the separate product host. The product's book
+route returns 404. See `quiet-delivery.json`.
+
+After the mutating walkthrough, its disposable network was stopped. The delivered
+network has a pending Bank case, no private Bank details in Buyer or Reviewer
+observations, and no commands submitted by the final delivery check. See
+`quiet-fresh-sandbox.json`. One product/book launcher JVM and its one Canton JVM
+remain running; no build JVM is retained.
