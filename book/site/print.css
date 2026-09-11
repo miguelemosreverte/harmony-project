@@ -1,0 +1,8 @@
+/* A fixed paper content width lets measured SVG connectors share the printed layout. */
+@page {size:A4;margin:12mm;}
+@media print {
+  html,body {width:186mm;max-width:186mm;margin:0;padding:0;}
+  .reference-shell,.layout {width:100%;max-width:100%;margin:0;box-shadow:none;}
+  .workflow-node {appearance:none;box-shadow:none!important;background:#fff!important;}
+  .reader-bar label {display:none;}
+}
