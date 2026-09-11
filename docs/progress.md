@@ -1,12 +1,12 @@
 # Implementation progress
 
-The [PRD](../PRD.md) defines the ordered work. This record reports actual commits and evidence, independently of publication or external adoption.
+The [second-draft plan](../SECOND-DRAFT.md) defines the completed refinement; the [PRD](../PRD.md) records the original implementation. This record reports actual commits and evidence, independently of publication or external adoption.
 
-## Current step
+## Current delivery
 
-The active refinement work is on `second-draft`; see its [principles and ordered plan](../SECOND-DRAFT.md). The implementation record below describes the completed first draft, preserved on `first-draft` at `d58c113`.
+SD01–SD11 are complete on `second-draft`. The [second-draft acceptance](second-draft/acceptance.md) identifies verified source `b1ed52f38553888696fd512c9558a18f395a0ec5`, eleven passing clean-checkout gates, 36 Scala tests, 32 fresh recordings, nine chapters, the hashed archive, and relocated launcher checks. The [implementation record](../SECOND-DRAFT.md#implementation-record) maps its ordered work to actual commits. One bounded packaged book remains at `http://127.0.0.1:56007/`.
 
-Steps 01–20 are complete for the local technical delivery. The [acceptance record](release/acceptance.md) identifies source revision `dd5cf02754241730dc6cfed71e0b92216d657da0`, eleven passing clean-checkout gates, 32 recordings, nine chapters, the hashed archive, and relocated launcher verification. One bounded book process is retained. The PRD checklist covers implementation and verification only.
+The original Steps 01–20 are complete and preserved on `first-draft` at `d58c113`. The table below and [first-draft acceptance](release/first-draft-acceptance.md) retain their historical scope and evidence. `main` remains at that preserved version. Both checklists cover implementation and verification.
 
 ## Commit evidence
 
@@ -49,7 +49,7 @@ Actual commit identifiers are recorded in the next commit after they are created
 
 | 19b | `8189028` | [Release acceptance proof](verification/19-release.md): clean suite, one-revision bundle, changed-file detection, relocated book/live launchers, and measured process cleanup |
 
-| 20 | `853ff6c` | [Technical acceptance and adopter handoff](release/acceptance.md): identified delivery, completed technical checklist, prepared demo/feedback/integration materials, and explicit external obligations |
+| 20 | `853ff6c` | [Technical acceptance and adopter handoff](release/first-draft-acceptance.md): identified delivery, completed technical checklist, prepared demo/feedback/integration materials, and explicit external obligations |
 
 ## Context outside the implementation plan
 

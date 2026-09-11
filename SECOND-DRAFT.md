@@ -1,17 +1,18 @@
 # Harmonia, second draft
 
-**Status:** implementation authorized as one continuous pass, following this documented target.  
+**Status:** SD01–SD11 complete; implementation, clean-release verification, and relocated launchers accepted.  
 **Working branch:** `second-draft`  
 **Preserved first draft:** `first-draft` at `d58c1136b1b90180bb36bc5b69ac43131051003e`  
+**Verified second release:** `b1ed52f38553888696fd512c9558a18f395a0ec5`  
 **Verified first release:** `dd5cf02754241730dc6cfed71e0b92216d657da0`
 
 The second draft makes Harmonia straightforward to read, explain, and extend while preserving its demonstrated behavior. Its intended reviewer is a senior developer who understands software engineering and has limited time to learn this particular system. Search tools and compiler feedback help development; they are not the measure of whether the design explains itself.
 
-This is the active plan for the second draft. The completed [first implementation PRD](PRD.md), [release evidence](docs/verification/19-release.md), and existing [capability matrix](docs/capabilities.md) establish its behavioral baseline. Checkboxes here cover implementation, documentation, and verification.
+This is the completed implementation plan for the second draft. The completed [first implementation PRD](PRD.md), [release evidence](docs/verification/19-release.md), and existing [capability matrix](docs/capabilities.md) establish its behavioral baseline. Checkboxes here cover implementation, documentation, and verification.
 
 ## The final version
 
-A reader opens the book at one concrete story: a bank makes a private decision, and a buyer uses its result in a shared process. The reader can step through what happened, inspect who observed it, compare the committed expectation with the actual result, and open the code that owns the action. Deeper chapters develop composition, separate applications, generated bindings, and atomic transfer using the same interaction vocabulary.
+A reader opens the book at one concrete story: a bank approves a financing application. The reader can step through what happened, inspect who observed it, compare the committed expectation with the actual result, and open the code that owns the action. Deeper chapters introduce private result handoff, composition, separate applications, generated bindings, and atomic transfer using the same interaction vocabulary.
 
 A developer following that story finds a named operation, its meaningful inputs and outcomes, the ledger boundary it uses, and its independent golden. Feature names are consistent across Scala models, JVM operations, browser presentation, tests, and chapter links. The Daml choice remains the authority for the business transition.
 
@@ -39,7 +40,7 @@ The final local release includes all currently demonstrated capabilities, a cohe
 | [Book and live experience](docs/second-draft/reader.md) | Navigation, progressive explanation, visual language, state ownership, and interaction checks |
 | This plan | Principles, ordered commits, review evidence, and final acceptance |
 
-The architecture and screen layouts describe the target. They are not claims that the migration is already implemented. Existing architecture notes describe the first draft until their corresponding migration step updates them.
+The architecture and reader documents describe the implemented design. The [operation traces](docs/second-draft/reading-traces.md) identify its source owners, and the [acceptance record](docs/second-draft/acceptance.md) supplies the final verification evidence.
 
 ## Behavior carried forward
 
@@ -89,7 +90,7 @@ The first three actual commits on `second-draft` form one acceptance sequence: d
 
 - [x] Group proposal, acceptance, cancellation, execution, and observations under consistent composition ownership.
 - [x] Decode composition state once; keep the editor's draft state separate from refreshed server observations.
-- [ ] Use the shared delivery lifecycle and prove both direct and generated composer stories.
+- [x] Use the shared delivery lifecycle and prove both direct and generated composer stories.
 - [x] **Acceptance:** a developer can follow consent and execution from the feature entry points, and refresh preserves the reader's unfinished input and focus.
 
 ### SD06 — Clarify package and binding responsibilities
@@ -97,7 +98,7 @@ The first three actual commits on `second-draft` form one acceptance sequence: d
 - [x] Give package acquisition/inspection and reviewed binding generation explicit APIs and an acyclic dependency direction.
 - [x] Replace formatted compiler-text matching with structured LF metadata for supported binding shapes.
 - [x] Keep compilation, archive creation, and downloads owned and bounded; expose typed progress and diagnostics to the workspace.
-- [ ] Reproduce package identities, both generated projects, determinism, the deliberate regression check, and portable output.
+- [x] Reproduce package identities, both generated projects, determinism, the deliberate regression check, and portable output.
 - [x] **Acceptance:** the feature trace explains exactly what is acquired, validated, generated, compiled, and downloaded; unsupported shapes remain explicit.
 
 ### SD07 — Separate observations from reader presentation
@@ -130,10 +131,10 @@ The first three actual commits on `second-draft` form one acceptance sequence: d
 
 ### SD11 — Produce the second-draft release
 
-- [ ] Run the complete required gate sequentially from a clean source revision, retaining independent outputs and diffs.
-- [ ] Package software, book, example inventory, and fresh evidence from that same revision; verify hashes and relocated launchers.
-- [ ] Record current memory/process measurements, supported limits, exact commits, and the source-reading walkthrough.
-- [ ] **Acceptance:** both reference workflows and integration paths still work, every required baseline example is present, the book matches the code, and the release is reproducible with the documented environment.
+- [x] Run the complete required gate sequentially from a clean source revision, retaining independent outputs and diffs.
+- [x] Package software, book, example inventory, and fresh evidence from that same revision; verify hashes and relocated launchers.
+- [x] Record current memory/process measurements, supported limits, exact commits, and the source-reading walkthrough.
+- [x] **Acceptance:** both reference workflows and integration paths still work, every required baseline example is present, the book matches the code, and the release is reproducible with the documented environment.
 
 ## How we judge the finished version
 
@@ -148,24 +149,25 @@ The first three actual commits on `second-draft` form one acceptance sequence: d
 
 A file-count or line-count reduction alone does not establish readability. Review notes must explain which indirections, mixed responsibilities, repeated interpretations, or misleading names were removed. Any claimed human-review outcome requires an actual review; the local deliverable includes the material needed for that review.
 
-## Progress
+## Implementation record
 
-SD01 (`f40cb17`), SD02 (`eafeea7`), and SD03 are complete. SD03 passed 30 Scala tests, JVM/browser compilation, and the authenticated real-ledger check (approval, wrong actor/API bypass, stale views, deduplication, and reconnect). In the browser the Bank approved, the Buyer continued, the submission was confirmed, and the Buyer could not see the private financing details. Evidence: `.artifacts/second-03-build.log`, `.artifacts/second-03-live.log`, and `.artifacts/live-check-186607939419738880/live-handoff/`; browser capture `second-draft-financing-complete`.
+The first three actual commits preserved the agreed sequence: design, typed financing, then a working ledger-and-browser slice. Later migration steps share commits where one type or inventory change necessarily crosses targets. Git history identifies the exact files in each commit.
 
-The chapter links distinguish the introductory shared application from the private live handoff. That initial financing slice established the pattern for the later ownership migration. The preserved first-draft book remained available throughout.
+| Steps | Commit | Result and evidence |
+| --- | --- | --- |
+| SD01 | `f40cb17` | Principles, architecture, reader design, ordered plan, and preserved first-draft branch |
+| SD02 | `eafeea7` | Typed financing and submission states; strict boundary decoding; 30 Scala tests |
+| SD03 | `485aba4` | Actual authenticated financing, wrong-actor/recovery checks, and Bank/Buyer browser proof; `.artifacts/second-03-live.log` |
+| SD04 | `7ff5cbf` | Delivery lifecycle separated from business selection; explicit ledger and application ownership |
+| SD05 | `78853e1` | Typed composition plans, shared commands, and browser observations |
+| SD06–SD09 | `9536732` | Structured LF inspection, explicit examples, organized ledger packages, reader projection, and stable live components |
+| SD09–SD10 | `68c96a2` | Focused book navigation/playback/evidence owners, operation links, 36 tests, and completed interaction walkthrough |
+| SD10 refinement | `fd79b03` | Sandbox rotation logs stay in the owned run directory; real passing/failing golden recordings retain clean provenance |
+| SD11 correction and verified source | `b1ed52f` | Correct fixture lookup; complete clean-checkout gate and fresh release pass |
+| SD11 handoff | This documentation commit | Acceptance record, checked plan, relocated launchers, fresh browser walkthrough, and final process inspection |
 
-SD04 separates `submission/Submissions`, `ledger/client`, `financing/FinancingObservation`, and `app/workspace/Workspace`. Thirty Scala tests pass, including observation failures versus definite submission rejection; JVM and browser builds pass (`.artifacts/second-04-final.log`). HTTP diagnostics retain the actual validation error. The full release gate will repeat the real ledger recovery and resource checks.
+The [final verification record](docs/second-draft/acceptance.md) identifies all eleven passing gates, 36 Scala tests, four Daml scripts, 32 fresh recordings, nine chapters, archive identity, and measured cleanup. Both dedicated composition stories and portable generation pass at the exact release revision. All 67 moved example files and both pinned source DAR digests remain unchanged.
 
-SD05 implements typed composition plans, observations, and browser commands. Thirty Scala tests and both compilation targets pass (`.artifacts/second-05-verified.log`). Shared UI primitives now live in `harmonia.ui`. The direct/generated ledger proofs and the stable-component browser walkthrough remain scheduled for the release gate and SD09.
+The [interaction record](docs/second-draft/interaction-checks.md) covers editing through polling, focus, lost-reply recovery, consented generated composition, package compilation/download, participant privacy, and visible golden failures. The relocated release was separately exercised through authenticated approval and continuation. Its book rendered all fresh examples and their operation links at the retained URL.
 
-SD06–SD08 share one migration commit because the explicit example kind joins result decoding, reader projection, and inventory coverage. Structured LF inspection passes 31 Scala tests; both generated applications, source/DAR determinism, and deliberate compiled-regression detection pass (`.artifacts/second-06-bindings.log`). Portable reproduction remains in the full release gate. Formatting and both Scala targets pass (`.artifacts/second-08.log`).
-
-All example input/expectation bytes are preserved in `examples/`; `docs/second-draft/example-moves.json` records their old/new locations and hashes. Applications now have a grouped ledger owner. The live setup is an independent `demo` package, and the former broad smoke assembly is named `tests`. The shared inventory defines all 32 recordings and nine chapters. Reader projectors no longer infer verification phases from a script name or select a result schema by JSON field presence.
-
-SD09–SD10 implement the chapter-first reader, stable navigation, a cancellable code/evidence inspector, typed connection state, and mounted live editor/package regions. All 32 baseline recordings render successfully in the browser and all source/exported links pass. The first-draft archive is used only for this presentation check, with its original provenance displayed; the second release will contain fresh executions. All 18 ledger packages build, both pinned source DAR digests are unchanged, and 35 Scala tests pass (`.artifacts/second-09-verified.log`, `.artifacts/second-08-ledger.log`).
-
-The updated repository map, Scala guide, and three operation traces describe the actual implementation. The remaining work is the live/mobile interaction walkthrough and the complete clean-revision release gate.
-
-The implementation and source organization are now complete through SD10 (`9536732` plus the final reader/focus refinement). The live walkthrough passed private handoff, lost-reply recovery, reordered consented composition, generated approval, package inspection/compilation/download, and observer visibility; see [interaction checks](docs/second-draft/interaction-checks.md). The owned live network is stopped. The final build passes 36 Scala tests and browser linking (`.artifacts/second-candidate.log`). Book navigation/evidence files are separated by responsibility, and each recording links its actual operation. Ad-hoc wrong-expectation experiments remain supported without changing the required release inventory.
-
-Only the clean-revision gate and release packaging remain. SD05's dedicated direct/generated checks and SD06's portable reproduction are included in that gate; their acceptance boxes stay pending until it finishes.
+The preserved first-draft preview remained available during implementation. The final handoff replaces it with the second-draft packaged book at `http://127.0.0.1:56007/`. Only that bounded book JVM remains; the verification and live ledger processes are stopped. Human review can now assess the three source-reading traces against the documented principles.
