@@ -33,3 +33,9 @@ had been produced on the new branches.
 shared HTML infographic scenes and verified integration with the existing live
 financing server. Its [verification](0.2/verification-3.md) distinguishes live
 commands, recorded stories, and the remaining 0.2 release work. `main` is unchanged.
+
+`v0.2.0-reference.1` implements the approved desktop and mobile composition using
+the original illustration pixels, a four-beat purchase carousel, and shared book/live
+header and evidence drawers. Its [visual contract and checks](0.2/REFERENCE-FIDELITY.md)
+include side-by-side browser captures and a real financing handoff. This remains a
+checkpoint on `version/0.2.0`; it does not change `main` or declare a stable release.

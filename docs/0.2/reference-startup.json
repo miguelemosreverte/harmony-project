@@ -1,0 +1,15 @@
+{
+  "checks": [
+    "Fresh bank session strips its capability from the URL",
+    "A fresh approval is available",
+    "The fresh ledger has not been exercised",
+    "Illustration route returns PNG",
+    "Shared header stylesheet is served",
+    "Asset traversal is rejected",
+    "Requests still succeed after an image response is cancelled",
+    "The freshly exported book uses the approved four-beat view",
+    "The exported book opens the native evidence drawer",
+    "No browser errors in the fresh sandbox"
+  ],
+  "errors": []
+}

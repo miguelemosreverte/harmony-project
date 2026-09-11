@@ -8,7 +8,9 @@ The active work revisits the original product requirements from the fourth-draft
 baseline. Read the [linear plan](docs/0.2/PLAN.md), [product contract](docs/0.2/product-contract.md),
 and [numbered Git history](docs/versions.md). The field guide now uses interactive
 HTML infographics; the Scala workspace connects those visuals to the real financing API.
-See the [experience contract](docs/0.2/INFOGRAPHIC.md) and [verification](docs/0.2/verification-3.md).
+See the [approved visual contract and verification](docs/0.2/REFERENCE-FIDELITY.md),
+[reference comparison](design/0.2/infographic/reference-review/compare.html), and
+[experience contract](docs/0.2/INFOGRAPHIC.md).
 
 After the [runtime setup](book/setup.md) and initial `scripts/build`, run
 `scripts/start-sandbox`. Open the private `open.html` launcher printed by the command:
