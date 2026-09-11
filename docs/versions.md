@@ -21,7 +21,8 @@ draft, as requested. `version/0.2.0` branches from that fourth-draft commit.
 The fifth draft remains independently available; its code is not silently merged.
 
 The active build is `0.2.0-SNAPSHOT`. A future `v0.2.0` tag requires actual release
-validation. There is no `v0.2.0` release tag yet. Review the [0.2 plan](0.2/PLAN.md)
+validation. `v0.2.0-design.1` identifies the verified design and quotation checkpoint.
+There is no `v0.2.0` stable release tag yet. Review the [0.2 plan](0.2/PLAN.md)
 for the distinction between design completion and runtime implementation.
 
 Historical documents retain their original branch names and evidence revisions.

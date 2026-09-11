@@ -1,0 +1,233 @@
+{
+  "verified_at": "2026-09-11 07:30:06 UTC",
+  "implementation_commit": "562849d",
+  "scope": "Design DOM interactions and document quotation coverage; no runtime or adoption claims",
+  "desktop": [
+    {
+      "page": "book-overview.html",
+      "test": "layout",
+      "result": {
+        "width": 1536,
+        "height": 1024,
+        "overflow": false
+      }
+    },
+    {
+      "page": "book-chapter.html",
+      "test": "chapter",
+      "result": {
+        "checks": 7,
+        "width": 1536,
+        "height": 1024,
+        "overflow": false,
+        "simulation": true
+      }
+    },
+    {
+      "page": "application.html",
+      "test": "application",
+      "result": {
+        "checks": 9,
+        "width": 1536,
+        "height": 1024,
+        "overflow": false,
+        "simulation": true
+      }
+    },
+    {
+      "page": "application.html",
+      "test": "refusal",
+      "result": {
+        "checks": 3,
+        "width": 1536,
+        "height": 1024,
+        "overflow": false,
+        "simulation": true
+      }
+    },
+    {
+      "page": "application-builder.html",
+      "test": "builder",
+      "result": {
+        "checks": 5,
+        "width": 1536,
+        "height": 1024,
+        "overflow": false,
+        "simulation": true
+      }
+    },
+    {
+      "page": "coverage.html",
+      "test": "coverage",
+      "result": {
+        "checks": 3,
+        "width": 1536,
+        "height": 1024,
+        "overflow": false,
+        "htmlUnits": 350,
+        "htmlWords": 972
+      }
+    }
+  ],
+  "mobile": [
+    {
+      "page": "book-overview.html",
+      "result": {
+        "checks": 2,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "page": "book-chapter.html",
+      "result": {
+        "checks": 2,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "page": "application.html",
+      "result": {
+        "checks": 2,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "page": "application-builder.html",
+      "result": {
+        "checks": 2,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "page": "coverage.html",
+      "result": {
+        "checks": 2,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "page": "chapters/01-product.html",
+      "result": {
+        "checks": 2,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "page": "chapters/02-roles-and-trust.html",
+      "result": {
+        "checks": 2,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "page": "chapters/03-financing-to-offer.html",
+      "result": {
+        "checks": 2,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "page": "chapters/04-four-party-transfer.html",
+      "result": {
+        "checks": 2,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "page": "chapters/05-bring-an-application.html",
+      "result": {
+        "checks": 2,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "page": "chapters/06-compose-a-workflow.html",
+      "result": {
+        "checks": 2,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "page": "chapters/07-evidence-and-boundaries.html",
+      "result": {
+        "checks": 2,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "page": "chapters/08-release-and-adoption.html",
+      "result": {
+        "checks": 2,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "page": "chapters/09-proposal-context.html",
+      "result": {
+        "checks": 2,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "page": "chapters/10-context-and-references.html",
+      "result": {
+        "checks": 2,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "page": "sources/proposal.html",
+      "result": {
+        "checks": 2,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "page": "sources/architecture.html",
+      "result": {
+        "checks": 2,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    }
+  ],
+  "review": {
+    "width": 390,
+    "height": 844,
+    "overflow": false,
+    "screenSelection": true
+  }
+}

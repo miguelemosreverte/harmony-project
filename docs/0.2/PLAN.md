@@ -1,6 +1,6 @@
 # Harmonia 0.2 — from proposal to an understandable product
 
-Status: design prototype and source traceability implemented; verification in progress. Base: fourth draft, `bef8ac5`.
+Status: design and source traceability checkpoint complete. Runtime work remains planned. Base: fourth draft, `bef8ac5`.
 This plan changes the product evaluation surface and makes the remaining product
 work explicit. It does not treat historical test results as fresh 0.2 results.
 
@@ -36,39 +36,42 @@ the subsequent phase described below, matching the requested design-first sequen
 
 ## Linear commit plan
 
-- [ ] 01 — Establish the 0.2 product baseline.
-  - [ ] Preserve five drafts as numbered archive branches and annotated tags.
-  - [ ] Fast-forward `main` to draft four and branch `version/0.2.0` from it.
-  - [ ] Record the branch mapping in `docs/versions.md`; set `build.sbt` to
+- [x] 01 — Establish the 0.2 product baseline.
+  - [x] Preserve five drafts as numbered archive branches and annotated tags.
+  - [x] Fast-forward `main` to draft four and branch `version/0.2.0` from it.
+  - [x] Record the branch mapping in `docs/versions.md`; set `build.sbt` to
     `0.2.0-SNAPSHOT`; introduce this plan and the product contract.
-  - [ ] Update the root and book entry points to identify the new design work.
-- [ ] 02 — Design the book and application before runtime work.
-  - [ ] `design/0.2/book-overview.png` and `.html`: audience, journey, chapter entry.
-  - [ ] `design/0.2/book-chapter.png` and `.html`: quoted claim, interactive story,
+  - [x] Update the root and book entry points to identify the new design work.
+- [x] 02 — Design the book and application before runtime work.
+  - [x] `design/0.2/book-overview.png` and `.html`: audience, journey, chapter entry.
+  - [x] `design/0.2/book-chapter.png` and `.html`: quoted claim, interactive story,
     participant view, input/expectation/observation, and source inspection.
-  - [ ] `design/0.2/application.png` and `.html`: workspace, current actor, source
+  - [x] `design/0.2/application.png` and `.html`: workspace, current actor, source
     owners, enabled next action, timeline, and package/binding entry point.
-  - [ ] `design/0.2/application-builder.{png,html}`: the integration journey.
-  - [ ] `design/0.2/coverage.{png,html}`: the source coverage and evidence distinction.
-  - [ ] Keep the exact image prompts and original generated files alongside the
+  - [x] `design/0.2/application-builder.{png,html}`: the integration journey.
+  - [x] `design/0.2/coverage.{png,html}`: the source coverage and evidence distinction.
+  - [x] Keep the exact image prompts and original generated files alongside the
     implementation. Capture HTML screenshots and document fidelity limitations.
-  - [ ] Share a small local style sheet and simple mock interaction code; avoid
+  - [x] Share a small local style sheet and simple mock interaction code; avoid
     introducing a production design framework or a new dependency tree.
-- [ ] 03 — Prove document traceability and prototype behavior.
-  - [ ] `book/edition-0.2/coverage-map.md`: readable source ranges assigned once to
+- [x] 03 — Prove document traceability and prototype behavior.
+  - [x] `book/edition-0.2/coverage-map.md`: readable source ranges assigned once to
     use-case chapters or clearly named context appendices.
-  - [ ] `book/edition-0.2/chapters/`: original narrative, user questions, evidence
+  - [x] `book/edition-0.2/chapters/`: original narrative, user questions, evidence
     links, interpretation, and explicit limitations for each destination.
-  - [ ] `book/edition-0.2/build.py`: standard-library-only document extraction,
+  - [x] `book/edition-0.2/build.py`: standard-library-only document extraction,
     exact quote rendering, source links, and deterministic coverage output.
-  - [ ] `book/edition-0.2/check.py`: stale source, missing assignment, duplicate
+  - [x] `book/edition-0.2/check.py`: stale source, missing assignment, duplicate
     range, altered quote, incomplete HTML extraction, and missing destination checks.
-  - [ ] `design/0.2/coverage.html`: visible per-document quotation totals and
+  - [x] `design/0.2/coverage.html`: visible per-document quotation totals and
     separately listed product claims with their evidence status.
-  - [ ] Review all screens at desktop and narrow widths; exercise controls and
+  - [x] Review all screens at desktop and narrow widths; exercise controls and
     source links; store results under `docs/0.2/verification.md`.
-  - [ ] Commit only after this design/coverage slice demonstrably works. Do not
+  - [x] Commit only after this design/coverage slice demonstrably works. Do not
     mark any of the runtime commits below complete from prototype evidence.
+
+Evidence: [verification](verification.md), [browser results](browser-results.json), and
+[concept/render comparison](../../design/0.2/review.html).
 
 ## Following runtime commits
 
