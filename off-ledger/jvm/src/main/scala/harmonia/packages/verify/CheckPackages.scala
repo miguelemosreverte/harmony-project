@@ -25,7 +25,7 @@ object CheckPackages:
           root.resolve("scripts/daml").toString,
           "build",
           "--package-root",
-          root.resolve("on-ledger").resolve(name).toString
+          root.resolve("on-ledger/fixtures").resolve(name).toString
         ),
         root,
         artifacts.resolve(s"build-$name.log")
