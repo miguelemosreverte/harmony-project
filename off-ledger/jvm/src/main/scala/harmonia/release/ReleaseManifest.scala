@@ -4,6 +4,7 @@ import cats.effect.IO
 import cats.syntax.all.*
 import harmonia.files.ArtifactFiles
 import harmonia.examples.Examples
+import harmonia.book.{RecordedStory, BookChapter}
 import io.circe.Json
 import java.nio.file.{Files, Path}
 import scala.jdk.CollectionConverters.*
@@ -56,18 +57,19 @@ object ReleaseManifest:
         )
     }
     evidence <- read(bundle.resolve("book/evidence.json"))
-    stories <- IO.fromEither(evidence.hcursor.get[Vector[Json]]("stories"))
-    chapters <- IO.fromEither(evidence.hcursor.get[Vector[Json]]("chapters"))
+    stories <- IO.fromEither(evidence.hcursor.get[Vector[RecordedStory]]("stories"))
+    chapters <- IO.fromEither(evidence.hcursor.get[Vector[BookChapter]]("chapters"))
     _ <- IO.raiseUnless(
-      stories.flatMap(_.hcursor.get[String]("id").toOption).toSet == Examples.ids &&
-        stories.size == Examples.all.size && chapters.flatMap(
-          _.hcursor.get[String]("id").toOption
-        ) == Examples.chapters
+      stories.map(_.id).toSet == Examples.ids &&
+        stories.size == Examples.all.size && chapters.map(_.id) == Examples.chapters
     )(
       RuntimeException("Incomplete release book")
     )
+    _ <- IO.raiseUnless(stories.forall(_.differences.isEmpty))(
+      RuntimeException("A release recording differs from its independent expectation")
+    )
     _ <- stories.traverse_ { story =>
-      val id = story.hcursor.get[String]("id").toOption.get
+      val id = story.id
       read(bundle.resolve(s"book/evidence/$id/run.json")).flatMap { run =>
         IO.raiseUnless(
           run.hcursor.get[String]("revision").contains(revision) &&

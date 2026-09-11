@@ -7,3 +7,5 @@ The Scala application includes authenticated live participant sessions, a consen
 Runtime processes now have explicit lifetimes and heap limits. The recorded book runs directly in one 128 MiB JVM; build tools exit before applications start. A workspace lease prevents overlapping local ledger environments.
 
 This is a local evaluation edition. Public publication, a project source-code license, outside-team feedback, and adoption acceptance are not completed by this delivery.
+
+The second draft separates typed financing/composition operations from submission delivery, replaces pretty-printed LF parsing with structured protobuf inspection, and groups independently owned applications, live setup, tests, and examples. The reader opens at Chapter 1, keeps navigation context, and provides an evidence/source inspector. Live editors stay mounted through refresh. Golden contents and pinned source DAR bytes are preserved. The second-draft acceptance record identifies its fresh complete release evidence.

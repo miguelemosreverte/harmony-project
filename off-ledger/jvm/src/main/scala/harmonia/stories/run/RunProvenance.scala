@@ -1,6 +1,7 @@
 package harmonia.stories.run
 
 import cats.effect.IO
+import cats.syntax.all.*
 import harmonia.files.ArtifactFiles
 import harmonia.processes.ManagedProcess
 import io.circe.Json
@@ -15,7 +16,8 @@ object RunProvenance:
       dar: Path,
       artifacts: Path,
       matched: Boolean,
-      topology: String
+      topology: String,
+      additionalDars: Vector[Path] = Vector.empty
   ): IO[Unit] = for
     _ <- ManagedProcess.run(
       List("git", "rev-parse", "HEAD"),
@@ -32,6 +34,9 @@ object RunProvenance:
     inputHash <- digest(input)
     expectedHash <- digest(expected)
     darHash <- digest(dar)
+    dars <- (dar +: additionalDars).distinct.traverse(path =>
+      digest(path).map(hash => root.relativize(path).toString -> Json.fromString(hash))
+    )
     actualHash <- digest(artifacts.resolve("actual.md"))
     observationHash <- digest(artifacts.resolve("observation.json"))
     timestamp <- IO.realTimeInstant
@@ -50,6 +55,7 @@ object RunProvenance:
           "input_sha256" -> Json.fromString(inputHash),
           "expected_sha256" -> Json.fromString(expectedHash),
           "dar_sha256" -> Json.fromString(darHash),
+          "dars" -> Json.fromFields(dars),
           "actual_sha256" -> Json.fromString(actualHash),
           "observation_sha256" -> Json.fromString(observationHash),
           "matched" -> Json.fromBoolean(matched)

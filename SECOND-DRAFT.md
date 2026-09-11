@@ -90,7 +90,7 @@ The first three actual commits on `second-draft` form one acceptance sequence: d
 - [x] Group proposal, acceptance, cancellation, execution, and observations under consistent composition ownership.
 - [x] Decode composition state once; keep the editor's draft state separate from refreshed server observations.
 - [ ] Use the shared delivery lifecycle and prove both direct and generated composer stories.
-- [ ] **Acceptance:** a developer can follow consent and execution from the feature entry points, and refresh preserves the reader's unfinished input and focus.
+- [x] **Acceptance:** a developer can follow consent and execution from the feature entry points, and refresh preserves the reader's unfinished input and focus.
 
 ### SD06 — Clarify package and binding responsibilities
 
@@ -119,7 +119,7 @@ The first three actual commits on `second-draft` form one acceptance sequence: d
 - [x] Apply the [reader design](docs/second-draft/reader.md) across all chapters and demonstrations, with a shared visual vocabulary and stable component lifetimes.
 - [x] Provide contextual code/evidence inspection, navigable reader state, and a clear return to the story.
 - [x] Give the live workspace clear financing, composition, and package tasks under its authenticated session.
-- [ ] **Acceptance:** desktop and narrow-screen walkthroughs cover keyboard access, focus, editing, refresh, pending/uncertain/rejected states, and all baseline recordings.
+- [x] **Acceptance:** desktop and narrow-screen walkthroughs cover keyboard access, focus, editing, refresh, pending/uncertain/rejected states, and all baseline recordings.
 
 ### SD10 — Remove migration scaffolding and finish the reading guide
 
@@ -152,7 +152,7 @@ A file-count or line-count reduction alone does not establish readability. Revie
 
 SD01 (`f40cb17`), SD02 (`eafeea7`), and SD03 are complete. SD03 passed 30 Scala tests, JVM/browser compilation, and the authenticated real-ledger check (approval, wrong actor/API bypass, stale views, deduplication, and reconnect). In the browser the Bank approved, the Buyer continued, the submission was confirmed, and the Buyer could not see the private financing details. Evidence: `.artifacts/second-03-build.log`, `.artifacts/second-03-live.log`, and `.artifacts/live-check-186607939419738880/live-handoff/`; browser capture `second-draft-financing-complete`.
 
-The chapter links distinguish the introductory shared application from the private live handoff. The next steps remove the remaining mixed ownership in `LiveActions` and `LiveSnapshot`, then apply typed boundaries to composition and package inspection. The preserved first-draft book remains available during migration.
+The chapter links distinguish the introductory shared application from the private live handoff. That initial financing slice established the pattern for the later ownership migration. The preserved first-draft book remained available throughout.
 
 SD04 separates `submission/Submissions`, `ledger/client`, `financing/FinancingObservation`, and `app/workspace/Workspace`. Thirty Scala tests pass, including observation failures versus definite submission rejection; JVM and browser builds pass (`.artifacts/second-04-final.log`). HTTP diagnostics retain the actual validation error. The full release gate will repeat the real ledger recovery and resource checks.
 
@@ -165,3 +165,7 @@ All example input/expectation bytes are preserved in `examples/`; `docs/second-d
 SD09–SD10 implement the chapter-first reader, stable navigation, a cancellable code/evidence inspector, typed connection state, and mounted live editor/package regions. All 32 baseline recordings render successfully in the browser and all source/exported links pass. The first-draft archive is used only for this presentation check, with its original provenance displayed; the second release will contain fresh executions. All 18 ledger packages build, both pinned source DAR digests are unchanged, and 35 Scala tests pass (`.artifacts/second-09-verified.log`, `.artifacts/second-08-ledger.log`).
 
 The updated repository map, Scala guide, and three operation traces describe the actual implementation. The remaining work is the live/mobile interaction walkthrough and the complete clean-revision release gate.
+
+The implementation and source organization are now complete through SD10 (`9536732` plus the final reader/focus refinement). The live walkthrough passed private handoff, lost-reply recovery, reordered consented composition, generated approval, package inspection/compilation/download, and observer visibility; see [interaction checks](docs/second-draft/interaction-checks.md). The owned live network is stopped. The final build passes 36 Scala tests and browser linking (`.artifacts/second-candidate.log`). Book navigation/evidence files are separated by responsibility, and each recording links its actual operation. Ad-hoc wrong-expectation experiments remain supported without changing the required release inventory.
+
+Only the clean-revision gate and release packaging remain. SD05's dedicated direct/generated checks and SD06's portable reproduction are included in that gate; their acceptance boxes stay pending until it finishes.

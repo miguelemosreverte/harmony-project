@@ -1,7 +1,7 @@
 package harmonia.book
 
 import munit.FunSuite
-import harmonia.book.project.PresentStory
+import harmonia.book.project.{PresentStory, RecordingKind}
 import harmonia.examples.{Examples, ExampleKind}
 import harmonia.stories.read.{MarkdownYaml, StoryFormat}
 import io.circe.Json
@@ -58,4 +58,14 @@ class RecordingSuite extends FunSuite:
         .mkString
       assertEquals(actual, expected, path)
     }
+  }
+
+  test("an ad-hoc regression experiment uses its validated scenario declaration") {
+    val input = Files.readString(root.resolve("examples/stories/workflow-approved/input.md"))
+    assertEquals(RecordingKind.read("wrong-workflow", input), Right(ExampleKind.Workflow))
+    assert(
+      RecordingKind
+        .read("unknown", input.replace("workflow: approval", "workflow: invented"))
+        .isLeft
+    )
   }

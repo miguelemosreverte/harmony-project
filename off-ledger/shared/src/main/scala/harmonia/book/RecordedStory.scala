@@ -30,11 +30,14 @@ final case class StoryPresentation(
     subtitle: String,
     start: String,
     startDetail: String,
+    operation: String,
     units: Vector[StoryUnit]
 )
 object StoryPresentation:
   given Decoder[StoryPresentation] = Decoder
-    .forProduct5("kind", "subtitle", "start", "start_detail", "units")(StoryPresentation.apply)
+    .forProduct6("kind", "subtitle", "start", "start_detail", "operation", "units")(
+      StoryPresentation.apply
+    )
     .emap(p =>
       Either.cond(
         p.units.nonEmpty && p.units.map(_.id).distinct.size == p.units.size,

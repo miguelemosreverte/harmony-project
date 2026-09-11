@@ -4,7 +4,7 @@ import cats.effect.IO
 import cats.syntax.all.*
 import harmonia.files.ArtifactFiles
 import harmonia.examples.Examples
-import harmonia.book.project.PresentStory
+import harmonia.book.project.{PresentStory, RecordingKind}
 import harmonia.stories.read.{MarkdownYaml, StoryFormat}
 import io.circe.Json
 import java.nio.file.{Files, Path, StandardCopyOption}
@@ -122,14 +122,12 @@ object ExportBook:
     }
     scenario <- IO.fromEither(MarkdownYaml.read(input, "Scenario").left.map(RuntimeException(_)))
     id = directory.getFileName.toString
-    example <- IO.fromOption(Examples.find(id))(
-      RuntimeException(s"Recording is missing from the example inventory: $id")
-    )
+    kind <- IO.fromEither(RecordingKind.read(id, input).left.map(RuntimeException(_)))
     baseline <- IO.fromEither(
-      StoryFormat.result(expected, example.kind.resultKind).left.map(RuntimeException(_))
+      StoryFormat.result(expected, kind.resultKind).left.map(RuntimeException(_))
     )
     observed <- IO.fromEither(
-      StoryFormat.result(actual, example.kind.resultKind).left.map(RuntimeException(_))
+      StoryFormat.result(actual, kind.resultKind).left.map(RuntimeException(_))
     )
     _ <- Vector("input.md", "expected.md", "actual.md", "diff.md", "run.json", "observation.json")
       .traverse_(name =>
@@ -137,7 +135,10 @@ object ExportBook:
       )
   yield Json.obj(
     "id" -> Json.fromString(id),
-    "title" -> Json.fromString(input.linesIterator.next().stripPrefix("# ")),
+    "title" -> Json.fromString(
+      input.linesIterator.next().stripPrefix("# ") + (if Examples.find(id).isDefined then ""
+                                                      else s" · $id")
+    ),
     "description" -> Json.fromString(
       input.linesIterator.drop(1).takeWhile(_ != "## Scenario").mkString(" ").trim
     ),
@@ -145,7 +146,7 @@ object ExportBook:
     "expected" -> baseline,
     "actual" -> observed,
     "provenance" -> provenance,
-    "presentation" -> PresentStory(example.kind, scenario, baseline, observed)
+    "presentation" -> PresentStory(kind, scenario, baseline, observed)
   )
 
   private def copy(source: Path, target: Path): IO[Unit] = IO.blocking {

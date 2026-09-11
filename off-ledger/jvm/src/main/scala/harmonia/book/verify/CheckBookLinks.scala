@@ -61,6 +61,9 @@ object CheckBookLinks:
       )
       evidence.hcursor.get[Vector[Json]]("stories").getOrElse(Vector.empty).foreach { story =>
         val id = story.hcursor.get[String]("id").toOption.get
+        val operation =
+          story.hcursor.downField("presentation").get[String]("operation").fold(throw _, identity)
+        check(book, "source/" + operation, "recording operation", problems)
         Vector("input.md", "expected.md", "actual.md", "diff.md", "observation.json", "run.json")
           .foreach(name => check(book, s"evidence/$id/$name", "recorded story", problems))
       }

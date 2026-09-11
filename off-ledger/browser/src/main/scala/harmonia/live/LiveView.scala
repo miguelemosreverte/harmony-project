@@ -16,6 +16,7 @@ final class LiveView:
   private val composition = element("section", "live-panel"); composition.id = "composer"
   private val draft = element("div")
   private val composed = element("div")
+  private val packageNavigation = link("Application packages", "#package-builder")
   private val packageArea = element("div")
   private val history = element("details", "live-panel")
   private val historyBody = element("div")
@@ -54,9 +55,9 @@ final class LiveView:
       val nav = element("nav", "workspace-nav"); nav.setAttribute("aria-label", "Workspace tasks")
       Vector(
         "Financing" -> "financing",
-        "Compose a workflow" -> "composer",
-        "Application packages" -> "package-builder"
+        "Compose a workflow" -> "composer"
       ).foreach((title, id) => append(nav, link(title, "#" + id)))
+      append(nav, packageNavigation)
       finance.id = "financing"
       append(main, nav, finance, jobs)
       append(
@@ -152,6 +153,7 @@ final class LiveView:
             composed,
             harmonia.composition.ComposerView.render(compositionState, blocked, submit)
           )
+        packageNavigation.style.display = if actor == "bank" then "" else "none"
         packageArea.style.display = if actor == "bank" then "" else "none"
         if actor == "bank" then
           val panel = packages.render()
@@ -163,9 +165,11 @@ final class LiveView:
     val focused =
       Option(dom.document.activeElement).filter(parent.contains).map(_.id).filter(_.nonEmpty)
     parent.textContent = ""; append(parent, child)
-    focused
-      .flatMap(id => Option(dom.document.getElementById(id)))
-      .foreach(_.asInstanceOf[dom.HTMLElement].focus())
+    focused.foreach { id =>
+      Option(dom.document.getElementById(id)).filterNot(_.hasAttribute("disabled")) match
+        case Some(node) => node.asInstanceOf[dom.HTMLElement].focus()
+        case None       => parent.tabIndex = -1; parent.focus()
+    }
 
   private def renderJobs(values: Vector[SubmissionView]): Unit =
     jobs.textContent = ""; append(jobs, element("h2", text = "Your submissions"))

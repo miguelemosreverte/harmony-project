@@ -74,7 +74,8 @@ object CheckBoundaries:
       dar,
       output,
       differences.isEmpty,
-      "real ledger boundary script; two concurrent authenticated Ledger API commands against one process contract"
+      "real ledger boundary script; two concurrent authenticated Ledger API commands against one process contract",
+      additionalDars = Vector(root.resolve("on-ledger/demo/.daml/dist/harmonia-demo-0.1.0.dar"))
     )
     _ <- IO.raiseUnless(differences.isEmpty)(
       RuntimeException(s"Execution boundary mismatch: $output/diff.md")

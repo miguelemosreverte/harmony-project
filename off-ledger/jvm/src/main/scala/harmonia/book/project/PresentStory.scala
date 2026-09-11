@@ -36,6 +36,19 @@ object PresentStory:
           required(input.hcursor.downField("setup").downField("application").focus.get, "status"),
           "Application created"
         )
+    val operation = kind match
+      case Financing | Workflow => "on-ledger/applications/financing/daml/Financing.daml"
+      case Private => "off-ledger/jvm/src/main/scala/harmonia/financing/Financing.scala"
+      case Adapter => "on-ledger/bindings/daml/FinancingBinding.daml"
+      case Generated =>
+        "off-ledger/jvm/src/main/scala/harmonia/bindings/generate/GenerateSources.scala"
+      case Progression => "on-ledger/core/daml/Harmonia/Process/Engine.daml"
+      case Purchase    => "on-ledger/applications/property-offer/daml/PropertyOffer.daml"
+      case Transfer    => "on-ledger/applications/transfer/daml/AtomicTransfer.daml"
+      case Composition => "on-ledger/composition/daml/Composer.daml"
+      case Packages =>
+        "off-ledger/jvm/src/main/scala/harmonia/packages/workspace/PackageBuilder.scala"
+      case Boundaries => "on-ledger/tests/daml/Boundaries.daml"
     val units =
       if kind == Boundaries then BoundaryPhases(expected, actual)
       else
@@ -67,6 +80,7 @@ object PresentStory:
       "subtitle" -> Json.fromString(subtitle),
       "start" -> Json.fromString(start),
       "start_detail" -> Json.fromString(detail),
+      "operation" -> Json.fromString(operation),
       "units" -> Json.arr(units*)
     )
 
