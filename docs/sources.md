@@ -20,4 +20,4 @@ Public-repository destination and licensing are open publication decisions. The 
 
 ## Pinned package input
 
-The Splice metadata DAR is a build-time input with explicit upstream revision, archive digest, package ID, compiler compatibility, and Apache-2.0 attribution in [the package manifest](../packages/inputs.md). It is fetched into ignored build artifacts; the package guide describes reproduction and the administrator retrieval boundary.
+The Splice metadata DAR is a build-time input with explicit upstream revision, archive digest, package ID, compiler compatibility, and Apache-2.0 attribution in [the package manifest](../product/packages/inputs.md). It is fetched into ignored build artifacts; the package guide describes reproduction and the administrator retrieval boundary.

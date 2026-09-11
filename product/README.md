@@ -1,0 +1,41 @@
+# The product
+
+Harmonia coordinates independently owned Daml applications. Contracts authorize the actions; the Scala service observes participant state, submits supported commands, and exposes a typed HTTP interface. The live browser is a client of that interface.
+
+| Directory | Read it for |
+| --- | --- |
+| `ledger/` | Interfaces, process execution, application choices, consent, and adapters |
+| `api/` | Public commands, observations, and response types shared with the browser |
+| `server/` | Feature operations, ledger transport, request handling, and package generation |
+| `web/` | Live financing, workflow editor, and package interface |
+| `packages/` | Pinned application identities and reviewed mappings |
+
+## Follow one operation
+
+1. `api/.../financing/FinancingState.scala` names the supported actions and observations.
+2. `server/.../financing/FinancingObservation.scala` decodes visible contracts.
+3. `server/.../financing/Financing.scala` selects the ledger choice.
+4. `server/.../app/workspace/Workspace.scala` supplies connections and owns submission coordination.
+5. `server/.../app/http/LiveServer.scala` encodes the response for the browser.
+
+`Connections` contains supplied ledger clients and their catalog. It does not create a network or read a story. `Resource` closes the clients, HTTP executor, and submission supervisor when their owner stops.
+
+## Build and run
+
+From the repository root, `scripts/build-product` builds product contracts, service, and browser. It does not build the book or harness. `scripts/product serve configuration.json` connects to existing local participants; it does not provision them.
+
+```json
+{
+  "catalog_dar": "path/to/application-assembly.dar",
+  "package_exports": "path/to/verified-dar-exports",
+  "participants": {
+    "bank": {"port": 5001, "party": "bank-party", "user": "bank-user", "token_file": "bank.token"},
+    "buyer": {"port": 5002, "party": "buyer-party", "user": "buyer-user", "token_file": "buyer.token"},
+    "reviewer": {"port": 5003, "party": "reviewer-party", "user": "reviewer-user", "token_file": "reviewer.token"}
+  }
+}
+```
+
+Ports refer to the supported local Ledger API connections. Token files supply existing participant credentials. The catalog DAR must contain the supported application packages; package exports contain the verified legacy DAR used by package retrieval. Paths resolve from the repository root. The service prints its address and the private file containing browser session links.
+
+The separate harness command `scripts/demo live` provisions the demonstrated local network. The book and full verification instructions are outside this product directory.

@@ -1,37 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
-source "$(dirname "${BASH_SOURCE[0]}")/environment"
-cd "$HARMONIA_ROOT/off-ledger"
-
-# Build only when source or build configuration changes. Each running program
-# retains its own immutable JAR; the build tool exits before the program starts.
-harmonia_source_fingerprint() {
-  local harmonia_source
-  local harmonia_sources=()
-  while IFS= read -r harmonia_source; do
-    harmonia_sources+=("$harmonia_source")
-  done < <(rg --files jvm/src/main shared/src/main project | LC_ALL=C sort)
-  harmonia_sources+=(build.sbt .jvmopts)
-  shasum -a 256 "${harmonia_sources[@]}" | shasum -a 256
-}
-harmonia_fingerprint="$(harmonia_source_fingerprint)"
-harmonia_manifest=target/runtime-classpath
-harmonia_stamp=target/runtime-fingerprint
-harmonia_jar=""
-if [[ -f "$harmonia_manifest" ]]; then
-  harmonia_classpath="$(cat "$harmonia_manifest")"
-  harmonia_jar="${harmonia_classpath%%:*}"
-fi
-if [[ ! -f "$harmonia_jar" || ! -f "$harmonia_stamp" || "$(cat "$harmonia_stamp")" != "$harmonia_fingerprint" ]]; then
-  sbt --batch jvm/exportRuntime
-  harmonia_after="$(harmonia_source_fingerprint)"
-  if [[ "$harmonia_after" != "$harmonia_fingerprint" ]]; then
-    printf 'Sources changed during compilation; run this command again.\n' >&2
-    exit 1
-  fi
-  printf '%s' "$harmonia_fingerprint" > "$harmonia_stamp"
-fi
-harmonia_default_heap=512m
-if [[ "${1:-}" == release-check ]]; then harmonia_default_heap=128m; fi
-exec "${JAVA_HOME:-/usr}/bin/java" -Xms32m -Xmx"${HARMONIA_TOOLS_HEAP:-$harmonia_default_heap}" -XX:ActiveProcessorCount=4 \
-  -classpath "$(cat "$harmonia_manifest")" harmonia.app.Main "$@"
+harmonia_scripts="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+case "${1:-}" in
+  serve|generate-bindings|resolve-packages) exec "$harmonia_scripts/run-scala" service harmonia.app.Main "$@" ;;
+  book|export-book|serve-book|book-links) exec "$harmonia_scripts/run-scala" bookExport harmonia.book.Main "$@" ;;
+  *) exec "$harmonia_scripts/run-scala" tools harmonia.tools.Main "$@" ;;
+esac

@@ -1,0 +1,23 @@
+sdk-version: 3.4.11
+name: harmonia-tests
+version: 0.1.0
+source: daml
+dependencies:
+  - daml-prim
+  - daml-stdlib
+  - daml-script
+data-dependencies:
+  - ../../../product/ledger/interfaces/.daml/dist/harmonia-interfaces-0.1.0.dar
+  - ../../../product/ledger/core/.daml/dist/harmonia-core-0.1.0.dar
+  - ../../../product/ledger/applications/financing/.daml/dist/harmonia-financing-0.1.0.dar
+  - ../../../product/ledger/applications/legacy-financing/.daml/dist/legacy-financing-0.1.0.dar
+  - ../../../product/ledger/bindings/.daml/dist/harmonia-bindings-0.1.0.dar
+  - ../../../product/ledger/applications/private-financing/.daml/dist/private-financing-0.1.0.dar
+  - ../../../product/ledger/applications/review/.daml/dist/harmonia-review-0.1.0.dar
+  - ../../../product/ledger/applications/property-financing/.daml/dist/harmonia-property-financing-0.1.0.dar
+  - ../../../product/ledger/applications/property-offer/.daml/dist/harmonia-property-offer-0.1.0.dar
+  - ../../../product/ledger/applications/source-custody/.daml/dist/harmonia-source-custody-0.1.0.dar
+  - ../../../product/ledger/applications/destination-custody/.daml/dist/harmonia-destination-custody-0.1.0.dar
+  - ../../../product/ledger/applications/transfer/.daml/dist/harmonia-transfer-0.1.0.dar
+  - ../../../.artifacts/generated-financing/library/.daml/dist/harmonia-binding-generatedfinancing-0.1.0.dar
+  - ../../../product/ledger/composition/.daml/dist/harmonia-composer-0.1.0.dar

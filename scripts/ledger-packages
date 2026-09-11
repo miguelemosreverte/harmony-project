@@ -1,9 +1,10 @@
-# Dependency order, shared by the build and test wrappers.
+# Dependency order; product contracts precede harness assemblies.
 harmonia_base_packages=(
-  interfaces core
-  applications/financing applications/legacy-financing fixtures/primitive-approval bindings
-  applications/private-financing applications/review
-  applications/property-financing applications/property-offer
-  applications/source-custody applications/destination-custody applications/transfer
+  product/ledger/interfaces product/ledger/core
+  product/ledger/applications/financing product/ledger/applications/legacy-financing
+  product/ledger/applications/primitive-approval product/ledger/bindings
+  product/ledger/applications/private-financing product/ledger/applications/review
+  product/ledger/applications/property-financing product/ledger/applications/property-offer
+  product/ledger/applications/source-custody product/ledger/applications/destination-custody product/ledger/applications/transfer
 )
-harmonia_assembly_packages=(composition demo tests fixtures/metadata-receipts fixtures/package-example)
+harmonia_assembly_packages=(harness/ledger/demo harness/ledger/tests harness/ledger/fixtures/metadata-receipts harness/ledger/fixtures/package-example)

@@ -50,11 +50,11 @@ The private handoff from [Chapter 3](03-participant-views.md) uses the same prin
 
 ## Follow the code
 
-- [Definition model](../on-ledger/core/daml/Harmonia/Process/Model.daml): versioned steps, prerequisites, roles, and receipts.
-- [Process engine](../on-ledger/core/daml/Harmonia/Process/Engine.daml): checked creation, authorization, idempotency, and atomic advancement.
-- [Review application](../on-ledger/applications/review/daml/Review.daml): Alice's independent application action.
-- [Fresh-client script](../on-ledger/tests/daml/Sequence.daml): queries and submits one attempt per invocation.
-- [Scala runner](../off-ledger/jvm/src/main/scala/harmonia/stories/run/process/RunProcessStory.scala): owns execution and artifacts through `IO`.
+- [Definition model](../product/ledger/core/daml/Harmonia/Process/Model.daml): versioned steps, prerequisites, roles, and receipts.
+- [Process engine](../product/ledger/core/daml/Harmonia/Process/Engine.daml): checked creation, authorization, idempotency, and atomic advancement.
+- [Review application](../product/ledger/applications/review/daml/Review.daml): Alice's independent application action.
+- [Fresh-client script](../harness/ledger/tests/daml/Sequence.daml): queries and submits one attempt per invocation.
+- [Scala runner](../harness/runner/src/main/scala/harmonia/stories/run/process/RunProcessStory.scala): owns execution and artifacts through `IO`.
 
 Definitions are immutable, and active instances retain their chosen version. The publisher must keep the referenced definition available while instances are active.
 
@@ -84,6 +84,6 @@ Inspect the [approval expectation](../examples/stories/branch-approved/expected.
 
 This edition supports acyclic action dependencies, or one exclusive decision with two to four options, conditional application actions, and one exhaustive join. A decision's selected option is persisted and cannot change. Actions in each branch may have ordered dependencies or run independently. Every conditional action must explicitly require the decision; dependencies across different options are rejected.
 
-The join must name all conditional actions. Each option must contain an action, and every prerequisite must name an earlier step. These rules reject cycles, missing references, incomplete joins, empty options, nested decisions, and unsupported branch shapes before an instance can start. The definition has at most sixteen steps. [Definition checks](../on-ledger/tests/daml/DefinitionTests.daml) attempt to publish eleven malformed definitions and require rejection.
+The join must name all conditional actions. Each option must contain an action, and every prerequisite must name an earlier step. These rules reject cycles, missing references, incomplete joins, empty options, nested decisions, and unsupported branch shapes before an instance can start. The definition has at most sixteen steps. [Definition checks](../harness/ledger/tests/daml/DefinitionTests.daml) attempt to publish eleven malformed definitions and require rejection.
 
 The diagram displays possible routes. The laboratory's completed, skipped, enabled, and selected-branch fields show the actual recorded route. Layout is presentation; prerequisite edges and the ledger observations determine causality.

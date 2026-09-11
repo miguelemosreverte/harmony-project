@@ -1,16 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 source "$(dirname "${BASH_SOURCE[0]}")/environment"
-harmonia_root="$HARMONIA_ROOT"
-source "$harmonia_root/scripts/ledger-packages"
-for harmonia_package in "${harmonia_base_packages[@]}"; do
-  cd "$harmonia_root/on-ledger/$harmonia_package"
-  "$harmonia_root/scripts/daml" build
-done
-cd "$harmonia_root/off-ledger"
-sbt --batch 'scalafmtCheckAll' 'jvm/compile' 'browser/fastLinkJS'
-"$harmonia_root/scripts/harmonia" generate-bindings packages/mappings/financing.md .artifacts/generated-financing
-
+"$HARMONIA_ROOT/scripts/build-product"
+source "$HARMONIA_ROOT/scripts/ledger-packages"
+cd "$HARMONIA_ROOT"
+sbt --batch 'scalafmtCheckAll' 'tools/compile' 'reader/fastLinkJS'
 for harmonia_package in "${harmonia_assembly_packages[@]}"; do
-  "$harmonia_root/scripts/daml" build --package-root "$harmonia_root/on-ledger/$harmonia_package"
+  scripts/daml build --package-root "$harmonia_package"
 done

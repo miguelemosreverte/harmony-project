@@ -53,11 +53,11 @@ The evaluation bundle contains the collected evidence from all three parties so 
 
 ## Follow the implementation
 
-- [Private application](../on-ledger/applications/private-financing/daml/PrivateFinancing.daml): bank ownership and the private approval action.
-- [Signed result](../on-ledger/interfaces/daml/Harmonia/Result.daml): the issuer, designated consumer, and single-use choice.
-- [Shared progress](../on-ledger/core/daml/Harmonia/SharedProgress.daml): validation and continuation owned by Alice.
-- [Multi-participant script](../on-ledger/tests/daml/Privacy.daml): submissions and synchronized party-specific queries.
-- [Event observation](../off-ledger/jvm/src/main/scala/harmonia/ledger/events/LedgerEvents.scala): bounded Ledger API history requests.
+- [Private application](../product/ledger/applications/private-financing/daml/PrivateFinancing.daml): bank ownership and the private approval action.
+- [Signed result](../product/ledger/interfaces/daml/Harmonia/Result.daml): the issuer, designated consumer, and single-use choice.
+- [Shared progress](../product/ledger/core/daml/Harmonia/SharedProgress.daml): validation and continuation owned by Alice.
+- [Multi-participant script](../harness/ledger/tests/daml/Privacy.daml): submissions and synchronized party-specific queries.
+- [Event observation](../product/server/src/main/scala/harmonia/ledger/events/LedgerEvents.scala): bounded Ledger API history requests.
 
 The local topology has three independently identified participant nodes with separate in-memory stores and API endpoints, one common synchronizer, and one hosting JVM. This proves the demonstrated ledger visibility boundary; it is not a deployment with separate operating-system or administrator trust boundaries.
 

@@ -4,7 +4,7 @@ Chapter 2 integrated an unchanged financing DAR with a hand-written adapter. Thi
 
 ## Explain what the fields mean
 
-The [financing mapping](../packages/mappings/financing.md) names the existing package, template, choice, and source fields that represent actor, readers, and subject. Its package alias refers to [the pinned input manifest](../packages/inputs.md), so the digest and package identity have one authoritative authored home.
+The [financing mapping](../product/packages/mappings/financing.md) names the existing package, template, choice, and source fields that represent actor, readers, and subject. Its package alias refers to [the pinned input manifest](../product/packages/inputs.md), so the digest and package identity have one authoritative authored home.
 
 ```yaml
 source:
@@ -41,15 +41,15 @@ The [generated financing adapter](generated/GeneratedFinancing.daml) is the revi
 The generator produces a library and a separate [runnable example](generated/FinancingExample.daml). The library has no Daml Script dependency in these examples. The generated directory also contains project configuration, copied DAR inputs, build logs, a README, and a manifest recording source, generated-file, and compiled-artifact digests. Vendor paths are relative, so the project can be copied and built independently with the pinned SDK.
 
 ```sh
-scripts/harmonia generate-bindings packages/mappings/financing.md .artifacts/my-binding
+scripts/harmonia generate-bindings product/packages/mappings/financing.md .artifacts/my-binding
 scripts/harmonia bindings-check
 ```
 
-The second command regenerates, compiles, and runs both supported examples on fresh local Canton instances. It compares actual source and core effects with [the shared approval expectation](../packages/mappings/approval-expected.md). It does not update that expectation.
+The second command regenerates, compiles, and runs both supported examples on fresh local Canton instances. It compares actual source and core effects with [the shared approval expectation](../product/packages/mappings/approval-expected.md). It does not update that expectation.
 
 ## Supply typed arguments
 
-The [primitive-argument mapping](../packages/mappings/primitive-approval.md) covers Text, Int, Bool, Decimal, and Party values. Its source choice checks those values before approving. The [generated adapter](generated/GeneratedPrimitiveApproval.daml) stores the source's actual choice argument type; the [example](generated/PrimitiveExample.daml) supplies its fields.
+The [primitive-argument mapping](../product/packages/mappings/primitive-approval.md) covers Text, Int, Bool, Decimal, and Party values. Its source choice checks those values before approving. The [generated adapter](generated/GeneratedPrimitiveApproval.daml) stores the source's actual choice argument type; the [example](generated/PrimitiveExample.daml) supplies its fields.
 
 Decimal values are quoted in YAML to preserve their exact value. A quoted `"10"` becomes a Daml decimal literal `10.0`; a quoted `"1.25"` remains exact. Party arguments refer to a named party from the example, rather than an opaque fabricated ledger identifier.
 
@@ -63,7 +63,7 @@ The real ledger example verifies an unauthorized reader attempt, authorized exec
 
 The source application is not edited or rebuilt by generation. The frozen financing archive retains its original identity, and the copied source bytes are checked again after compilation. Chapter 2's hand-written path remains available for comparison. The regular suite now runs equivalent approval and rejection stories through direct and generated participation paths.
 
-Read the [architecture decision](../docs/architecture/008-binding-generation.md), [Scala generator](../off-ledger/jvm/src/main/scala/harmonia/bindings/generate/GenerateSources.scala), and [verification runner](../off-ledger/jvm/src/main/scala/harmonia/bindings/verify/CheckBinding.scala).
+Read the [architecture decision](../docs/architecture/008-binding-generation.md), [Scala generator](../product/server/src/main/scala/harmonia/bindings/generate/GenerateSources.scala), and [verification runner](../harness/runner/src/main/scala/harmonia/bindings/verify/CheckBinding.scala).
 
 ## Compare the two paths
 

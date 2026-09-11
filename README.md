@@ -6,7 +6,7 @@ The ledger enforces actions and records progression. Scala tools execute stories
 
 ## Start here
 
-The [third draft](THIRD-DRAFT.md) carries typed models through operations, server state, and the executable book. Start with its [reading guide](docs/third-draft/reading-guide.md). The verified [second draft](SECOND-DRAFT.md) remains preserved on `second-draft`, and the original working version remains on `first-draft`.
+The [fourth draft](FOURTH-DRAFT.md) separates a minimal [product](product/README.md) from the book and development harness. The previous verified versions remain preserved on `first-draft`, `second-draft`, and `third-draft`.
 
 - [Verified local delivery and handoff](docs/release/acceptance.md)
 - [Product requirements and ordered commit plan](PRD.md)
@@ -18,7 +18,7 @@ The [third draft](THIRD-DRAFT.md) carries typed models through operations, serve
 - [Authenticated live viewer and composer](docs/live.md)
 - [Developer/evaluator walkthrough](docs/developer-walkthrough.md)
 - [Supported limits and trust boundaries](docs/capabilities.md)
-- [Pinned local and upstream DAR inputs](packages/README.md)
+- [Pinned local and upstream DAR inputs](product/packages/README.md)
 
 The verified local edition includes both reference workflows, direct and generated integration, an authenticated live composer, package inspection/generation, and a nine-chapter executable book with 32 recordings. The packaged `run-book` launcher opens recorded playback with Java 17; `run-live` starts the disposable ledger evaluation with the pinned SDK. Start with [local setup](book/setup.md), then run:
 

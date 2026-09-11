@@ -49,7 +49,7 @@ Draft three's preliminary package classification has 1,677 book lines, 4,590 sto
 ## Ordered work and commits
 
 - [x] FD01: preserve the third draft, inspect actual coupling, and record principles and baseline.
-- [ ] FD02: introduce a plain service context and move demo preparation behind it; establish independent product/book/harness builds and entry points.
+- [x] FD02: introduce a plain service context and move demo preparation behind it; establish independent product/book/harness builds and entry points.
 - [ ] FD03: make the third actual commit record a working slice, with compiler boundaries and a real ledger/browser check against the unchanged golden.
 - [ ] FD04: finish the filesystem migration, update build/package paths, and simplify product state and operation wiring without losing supported behavior.
 - [ ] FD05: provide independently runnable artifacts and a short product reading guide; update export, source links, release assembly, and architectural evidence.
@@ -63,3 +63,7 @@ The product compiles and launches without book or harness classes on its runtime
 The complete release repeats the existing ledger, package, composition, boundary, portability, and browser proofs. Both pinned source DAR identities remain unchanged. One heavy stage runs at a time; resource measurements distinguish Java RSS from heap caps and native/system memory. Existing verified archives and the third-draft preview remain available until replacement is verified.
 
 A final guide follows one operation through a small number of meaningful owners and explains the public boundary. Measurements report source moved out of product separately from implementation deleted or added. Human readability remains a review judgment rather than a number inferred from compilation.
+
+## Implementation evidence
+
+FD02 separates the product service and browser from runner, book export, recorded browser, and development tools. `Connections` replaces the participant wrapper and the service receives existing ledger clients. The standalone entry point reads explicit connection configuration; the harness owns synthetic setup. All 48 Scala tests pass, including compiler-based product isolation and configuration validation (`.artifacts/fourth-02-tests.log`). `scripts/build-product` compiles product contracts, service, browser, and generated binding without compiling book or harness projects. The full build also compiles the separate reader and harness assemblies (`.artifacts/fourth-02-complete-build.log`).

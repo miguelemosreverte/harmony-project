@@ -18,7 +18,7 @@ Only one ledger environment can run in this workspace. Stop it with Ctrl-C befor
 
 In the bank session, find **Bring an application package**. Either choose a local `.dar` file and click **Inspect selected DAR**, or select a verified source and click **Retrieve and inspect**.
 
-The participant option reads an actual DAR exported by the local participant administrator during setup. The other options use the [committed input identities](../packages/inputs.md): the unchanged legacy financing application, the primitive-action fixture, and the upstream Splice metadata package. External retrieval uses the pinned commit URL and verifies the archive digest, package ID, and Daml-LF version. Party credentials do not become administrator credentials.
+The participant option reads an actual DAR exported by the local participant administrator during setup. The other options use the [committed input identities](../product/packages/inputs.md): the unchanged legacy financing application, the primitive-action fixture, and the upstream Splice metadata package. External retrieval uses the pinned commit URL and verifies the archive digest, package ID, and Daml-LF version. Party credentials do not become administrator credentials.
 
 Expand **Package identity and origin**. The archive digest identifies the supplied bytes; the package ID identifies the compiled main package. A different ZIP containing the same compiled package has a different archive identity. The builder accepts at most eight inputs, each no larger than 8 MiB compressed, 32 MiB expanded, or 2,048 entries. It checks actual expanded bytes before invoking the compiler.
 
@@ -52,4 +52,4 @@ scripts/harmonia builder-check
 
 Try giving both actions the same name: the UI must show a specific diagnostic. Then restore unique names, put buyer review first, and select generated bank approval second. Complete the workflow from the two real participant sessions. In the package panel, inspect metadata and observe why package availability does not imply an executable action.
 
-Read the [composition decision](../docs/architecture/010-composition.md), [on-ledger consent model](../on-ledger/composition/daml/Composer.daml), [Scala input builder](../off-ledger/jvm/src/main/scala/harmonia/packages/workspace/PackageBuilder.scala), and [verification evidence](../docs/verification/16c-builder.md).
+Read the [composition decision](../docs/architecture/010-composition.md), [on-ledger consent model](../product/ledger/composition/daml/Composer.daml), [Scala input builder](../product/server/src/main/scala/harmonia/packages/workspace/PackageBuilder.scala), and [verification evidence](../docs/verification/16c-builder.md).

@@ -50,10 +50,10 @@ Editing only the explanatory prose leaves the scenario unchanged. Adding an unsu
 
 ## Follow the code
 
-- [Financing application](../on-ledger/applications/financing/daml/Financing.daml): its signatory, observer, controller, and transition condition.
-- [Ledger-driving script](../on-ledger/tests/daml/Story.daml): submits actions and queries their effects.
-- [Scala execution slice](../off-ledger/jvm/src/main/scala/harmonia/stories/run/RunStory.scala): translates input and retains observations without receiving the expectation.
-- [Pure comparison](../off-ledger/shared/src/main/scala/harmonia/stories/compare/CompareResults.scala): checks complete result structures and reports differences.
+- [Financing application](../product/ledger/applications/financing/daml/Financing.daml): its signatory, observer, controller, and transition condition.
+- [Ledger-driving script](../harness/ledger/tests/daml/Story.daml): submits actions and queries their effects.
+- [Scala execution slice](../harness/runner/src/main/scala/harmonia/stories/run/RunStory.scala): translates input and retains observations without receiving the expectation.
+- [Pure comparison](../harness/model/src/main/scala/harmonia/stories/compare/CompareResults.scala): checks complete result structures and reports differences.
 
 ## Let the workflow advance with the application
 
@@ -67,10 +67,10 @@ Alice's attempt leaves the workflow waiting. Northbank's approval changes the ap
 
 The [rollback story](../examples/stories/workflow-rejected/input.md) starts with an already-approved application. Even Northbank cannot approve it again. The failure leaves that application active and the workflow waiting. Daml rolls back the consuming workflow exercise with the failed child action.
 
-Follow the [common interface](../on-ledger/interfaces/daml/Harmonia/Action.daml), [core transition](../on-ledger/core/daml/Harmonia/Workflow.daml), and financing implementation above. Neither the common interface nor the core imports the financing application.
+Follow the [common interface](../product/ledger/interfaces/daml/Harmonia/Action.daml), [core transition](../product/ledger/core/daml/Harmonia/Workflow.daml), and financing implementation above. Neither the common interface nor the core imports the financing application.
 
 These examples run on one local participant. Separate-participant privacy requires a different topology and its own observations. An adapter for an unchanged application is the next integration experiment.
 
 ## Find the live operation
 
-The private handoff in [Chapter 3](03-participant-views.md) uses the same approval idea with separate participant sessions. Its Scala entry point is [the financing operation](../off-ledger/jvm/src/main/scala/harmonia/financing/Financing.scala). It accepts a [typed financing action and observation](../off-ledger/shared/src/main/scala/harmonia/financing/FinancingState.scala); the authenticated ledger client submits the actual Daml choice. [Workspace command decoding](../off-ledger/shared/src/main/scala/harmonia/workspace/WorkspaceCommand.scala) translates external action names at the API boundary.
+The private handoff in [Chapter 3](03-participant-views.md) uses the same approval idea with separate participant sessions. Its Scala entry point is [the financing operation](../product/server/src/main/scala/harmonia/financing/Financing.scala). It accepts a [typed financing action and observation](../product/api/src/main/scala/harmonia/financing/FinancingState.scala); the authenticated ledger client submits the actual Daml choice. [Workspace command decoding](../product/api/src/main/scala/harmonia/workspace/WorkspaceCommand.scala) translates external action names at the API boundary.

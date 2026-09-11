@@ -20,7 +20,7 @@ The adapter input adds `integration: adapter`. The business observations are the
 
 ## Inspect what changed
 
-The [source application](../on-ledger/applications/legacy-financing/daml/LegacyFinancing.daml) contains no Harmonia imports. Its [identity record](../on-ledger/applications/legacy-financing/identity.json) pins the artifact that the suite checks. The [adapter](../on-ledger/bindings/daml/FinancingBinding.daml) knows the source template and choice; the [core](../on-ledger/core/daml/Harmonia/Workflow.daml) only knows the common action interface.
+The [source application](../product/ledger/applications/legacy-financing/daml/LegacyFinancing.daml) contains no Harmonia imports. Its [identity record](../product/ledger/applications/legacy-financing/identity.json) pins the artifact that the suite checks. The [adapter](../product/ledger/bindings/daml/FinancingBinding.daml) knows the source template and choice; the [core](../product/ledger/core/daml/Harmonia/Workflow.daml) only knows the common action interface.
 
 The adapter has a contract of its own, pointing to the source contract. Approval replaces both contracts. A workflow failure replaces neither. The golden counts application contracts; raw observations identify the source contracts used during execution.
 

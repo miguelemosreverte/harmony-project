@@ -14,7 +14,7 @@ flowchart LR
 
 ## The applications own their rules
 
-The [financing package](../on-ledger/applications/property-financing/daml/PropertyFinancing.daml) owns document submission, review, and the final assessment. The [offer package](../on-ledger/applications/property-offer/daml/PropertyOffer.daml) owns offer preparation, proposal creation, relay, and receipt. Neither imports the other. They share Harmonia's action interface and signed-result contract.
+The [financing package](../product/ledger/applications/property-financing/daml/PropertyFinancing.daml) owns document submission, review, and the final assessment. The [offer package](../product/ledger/applications/property-offer/daml/PropertyOffer.daml) owns offer preparation, proposal creation, relay, and receipt. Neither imports the other. They share Harmonia's action interface and signed-result contract.
 
 Four small versioned definitions govern assessment, proposal, relay, and receipt. Their publishers are the bank, buyer's agent, and seller's agent as appropriate. The core executes an application's actual interface choice. It cannot approve financing, create a proposal, or relay it by changing a browser status.
 

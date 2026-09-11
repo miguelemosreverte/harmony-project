@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+set -euo pipefail
+source "$(dirname "${BASH_SOURCE[0]}")/environment"
+cd "$HARMONIA_ROOT"
+harmonia_target="$1"
+harmonia_main="$2"
+shift 2
+case "$harmonia_target" in
+  service) harmonia_sources=(product/server/src/main product/api/src/main) ;;
+  bookExport) harmonia_sources=(product/server/src/main product/api/src/main harness/runner/src/main harness/model/src/main book/export/src/main book/model/src/main) ;;
+  tools) harmonia_sources=(product/server/src/main product/api/src/main harness/runner/src/main harness/model/src/main book/export/src/main book/model/src/main harness/tools/src/main) ;;
+  *) exit 2 ;;
+esac
+harmonia_fingerprint() {
+  rg --files "${harmonia_sources[@]}" project | LC_ALL=C sort | while IFS= read -r harmonia_file; do shasum -a 256 "$harmonia_file"; done
+  shasum -a 256 build.sbt .jvmopts
+}
+harmonia_before="$(harmonia_fingerprint | shasum -a 256)"
+harmonia_manifest=".artifacts/classpaths/$harmonia_target.txt"
+harmonia_stamp=".artifacts/classpaths/$harmonia_target.fingerprint"
+if [[ ! -f "$harmonia_manifest" || ! -f "$harmonia_stamp" || "$(cat "$harmonia_stamp")" != "$harmonia_before" ]]; then
+  sbt --batch "$harmonia_target/exportRuntime"
+  if [[ "$(harmonia_fingerprint | shasum -a 256)" != "$harmonia_before" ]]; then
+    printf 'Sources changed during compilation; run this command again.\n' >&2
+    exit 1
+  fi
+  printf '%s' "$harmonia_before" > "$harmonia_stamp"
+fi
+harmonia_heap=512m
+case "${1:-}" in release-check|serve-book|release-verify) harmonia_heap=128m ;; esac
+exec "${JAVA_HOME:-/usr}/bin/java" -Xms32m -Xmx"${HARMONIA_TOOLS_HEAP:-$harmonia_heap}" -XX:ActiveProcessorCount=4 \
+  -classpath "$(cat "$harmonia_manifest")" "$harmonia_main" "$@"

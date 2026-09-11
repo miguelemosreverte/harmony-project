@@ -1,0 +1,13 @@
+sdk-version: 3.4.11
+name: harmonia-demo
+version: 0.1.0
+source: daml
+dependencies:
+  - daml-prim
+  - daml-stdlib
+  - daml-script
+data-dependencies:
+  - ../../../product/ledger/interfaces/.daml/dist/harmonia-interfaces-0.1.0.dar
+  - ../../../product/ledger/core/.daml/dist/harmonia-core-0.1.0.dar
+  - ../../../product/ledger/applications/private-financing/.daml/dist/private-financing-0.1.0.dar
+  - ../../../product/ledger/composition/.daml/dist/harmonia-composer-0.1.0.dar

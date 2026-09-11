@@ -1,6 +1,6 @@
 # Supported runtime and integration combinations
 
-This matrix describes demonstrated combinations. All examples use synthetic data and local Canton. The runtime and compiler are pinned to Daml SDK 3.4.11, with Java 17. Off-ledger code builds with Scala 3.3.6 and Cats Effect 3.6.3; the browser uses the pinned Scala.js toolchain in `off-ledger/build.sbt`.
+This matrix describes demonstrated combinations. All examples use synthetic data and local Canton. The runtime and compiler are pinned to Daml SDK 3.4.11, with Java 17. Off-ledger code builds with Scala 3.3.6 and Cats Effect 3.6.3; the browser uses the pinned Scala.js toolchain in `build.sbt`.
 
 | Source | Daml-LF | Integration | Evidence |
 | --- | --- | --- | --- |
@@ -11,7 +11,7 @@ This matrix describes demonstrated combinations. All examples use synthetic data
 | Property financing and property offer 0.1.0 | 2.2 | Independent direct-interface applications with scoped result handoff | Eight `purchase-*` stories across four participants |
 | Source custody, destination custody, and transfer 0.1.0 | 2.2 | Typed reference coordinator exposed through `StepAction` | Six `transfer-*` stories across four participants |
 
-[The input manifest](../packages/inputs.md) is the authoritative home for pinned source digests and package IDs. Generated projects record their own source, interfaces, core, library, and example hashes. Package resolution rejects changed identities or unsupported LF versions before generation; it never selects a newer source implicitly.
+[The input manifest](../product/packages/inputs.md) is the authoritative home for pinned source digests and package IDs. Generated projects record their own source, interfaces, core, library, and example hashes. Package resolution rejects changed identities or unsupported LF versions before generation; it never selects a newer source implicitly.
 
 The source-only legacy package has no Harmonia dependency and remains byte-identical. The primitive fixture is separate from that frozen source. Generated LF 2.1 action integration is not demonstrated by the LF 2.1 metadata import; an external application must validate its own supported mapping and runtime conditions.
 

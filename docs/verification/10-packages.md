@@ -1,6 +1,6 @@
 # Reproducible package input proof
 
-Verified locally on 2026-09-10. The [manifest](../../packages/inputs.md) resolves the unchanged local legacy DAR and an upstream Splice metadata DAR pinned to a full commit, archive SHA-256, main package ID, and Daml-LF version. The resolver records every included dependency identity.
+Verified locally on 2026-09-10. The [manifest](../../product/packages/inputs.md) resolves the unchanged local legacy DAR and an upstream Splice metadata DAR pinned to a full commit, archive SHA-256, main package ID, and Daml-LF version. The resolver records every included dependency identity.
 
 `scripts/check` passed sixteen Scala tests, Daml definition/smoke checks, the package reproduction check, and all eleven workflow goldens. Workflow evidence is `.artifacts/check-16196452810007767555/`; the first package reproduction is `.artifacts/packages-6328852912847288170/`.
 
@@ -10,4 +10,4 @@ On both networks, Canton administrator `dars.download` returned the originally u
 
 Two separate negative manifests exited unsuccessfully with the required diagnostics: a mismatched main package ID reported incompatibility, and an unavailable pinned URL reported HTTP 404. Inputs, logs, exit codes, and assertions are retained in `.artifacts/package-failures/`. Pure checks additionally reject mutable URLs, unsupported LF versions, credentials in URLs, incomplete identities, and unknown fields.
 
-The [package guide](../../packages/README.md) distinguishes package payloads from full DAR downloads, describes the administrator boundary and offline reproduction, and records resolver limits. No external participant or production administration service was contacted; retrieval was verified on disposable local nodes.
+The [package guide](../../product/packages/README.md) distinguishes package payloads from full DAR downloads, describes the administrator boundary and offline reproduction, and records resolver limits. No external participant or production administration service was contacted; retrieval was verified on disposable local nodes.

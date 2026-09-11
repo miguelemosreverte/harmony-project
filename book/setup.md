@@ -36,7 +36,7 @@ The [first story chapter](01-first-story.md) supplies execution from readable Ma
 
 ## Reproduce package inputs
 
-The build resolves the [committed package manifest](../packages/inputs.md). Its first run downloads a small upstream Splice metadata DAR pinned to a full commit and SHA-256; later runs verify cached bytes. The local legacy DAR is built first and checked against its committed identity. See [package setup and failure diagnostics](../packages/README.md) for offline copies and supported inputs.
+The build resolves the [committed package manifest](../product/packages/inputs.md). Its first run downloads a small upstream Splice metadata DAR pinned to a full commit and SHA-256; later runs verify cached bytes. The local legacy DAR is built first and checked against its committed identity. See [package setup and failure diagnostics](../product/packages/README.md) for offline copies and supported inputs.
 
 `scripts/harmonia packages-check` builds the mixed-version import example, compares two real executions with its Markdown expectation, and verifies administrator DAR retrieval. `scripts/check` includes this verification. Its local participant administrator endpoints are part of the disposable test environment; production business credentials are a separate boundary.
 

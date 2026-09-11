@@ -8,7 +8,7 @@ book/          Nine authored chapters, diagrams, setup, and site styling
 on-ledger/     Interfaces, core, applications, bindings, composition, demo, tests
 off-ledger/   Scala application, browser, shared models, and focused tests
 docs/          Architecture, walkthroughs, evidence, and release records
-packages/      Pinned external/local DAR identities and reviewed mappings
+product/packages/      Pinned external/local DAR identities and reviewed mappings
 scripts/       Small bounded launch, build, check, and packaging commands
 ```
 
@@ -32,6 +32,6 @@ scripts/       Small bounded launch, build, check, and packaging commands
 
 All book-specific models, projectors, export and browser code live under `harmonia.book`. Shared visual primitives belong to `harmonia.ui`. The server constructs the same `WorkspaceSnapshot`, `CompositionState`, `PackageState`, and recording models that consumers decode. HTTP/file encoding happens at the boundary. The browser renders observations and submits supported commands; the ledger owns business authority.
 
-The [ledger map](../../on-ledger/README.md) explains package ownership. The live demo assembly has no dependency on the test assembly. Core depends on common interfaces; applications retain independent compiled identities. Existing business rules and input/expectation contents survive the second draft.
+The [ledger map](../../product/ledger/README.md) explains package ownership. The live demo assembly has no dependency on the test assembly. Core depends on common interfaces; applications retain independent compiled identities. Existing business rules and input/expectation contents survive the second draft.
 
 Generated projects, networks, local recordings, and release bundles live under ignored `.artifacts/`. Ordinary compiler output uses ignored `target/` and `.daml/` directories beside its source. A release copies selected evidence and verifies its clean source revision and file hashes. It does not package live credentials or network authorization files.
