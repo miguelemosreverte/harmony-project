@@ -66,10 +66,10 @@ The first three actual commits on `second-draft` form one acceptance sequence: d
 
 ### SD02 — Give financing a typed boundary
 
-- [ ] Introduce meaningful financing commands, observations, and results under consistent feature ownership.
-- [ ] Add strict transport/ledger decoding at the boundary and focused malformed-input/observation checks.
-- [ ] Adapt the existing financing path to the new types while preserving its wire behavior and passing examples.
-- [ ] **Acceptance:** the primary operation and its data contract are readable together; SDK values and raw JSON do not flow into the financing view.
+- [x] Introduce meaningful financing commands, observations, and results under consistent feature ownership.
+- [x] Add strict transport/ledger decoding at the boundary and focused malformed-input/observation checks.
+- [x] Adapt the existing financing path to the new types while preserving its wire behavior and passing examples.
+- [x] **Acceptance:** the primary operation and its data contract are readable together; SDK values and raw JSON do not flow into the financing view.
 
 ### SD03 — Prove the complete financing slice
 
@@ -150,4 +150,4 @@ A file-count or line-count reduction alone does not establish readability. Revie
 
 ## Progress
 
-Only SD01 is complete. Its commit establishes the design baseline. SD02–SD11 are planned work; the first-draft application and verified book remain available while migration proceeds.
+SD01 (`f40cb17`) and SD02 are complete. SD02 passed 30 Scala tests and JVM/browser compilation; financing state is decoded before browser rendering. SD03–SD11 remain in progress; the first-draft application and verified book remain available while migration proceeds.

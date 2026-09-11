@@ -2,12 +2,15 @@ package harmonia.live
 
 import harmonia.book.Elements.*
 import io.circe.Json
+import harmonia.financing.*
+import harmonia.protocol.SubmissionStatus
+import harmonia.workspace.WorkspaceSnapshot
 import org.scalajs.dom
 
 object LiveView:
   private var previous = ""
   def render(
-      snapshot: Option[Json],
+      snapshot: Option[WorkspaceSnapshot],
       connection: String,
       unconfirmed: Boolean,
       submitting: Boolean,
@@ -21,7 +24,7 @@ object LiveView:
       compose: (String, Json) => Unit
   ): Unit =
     val signature = snapshot
-      .map(_.noSpaces)
+      .map(_.toString)
       .getOrElse("") + connection + unconfirmed.toString + submitting.toString + notice.getOrElse(
       ""
     )
@@ -75,11 +78,11 @@ object LiveView:
                 "Open the participant link supplied by the local operator. This page cannot select or grant a ledger identity."
             )
           )
-        case Some(json) =>
-          val cursor = json.hcursor
-          val actor = cursor.get[String]("actor").getOrElse("")
-          val workflow = cursor.get[String]("workflow").getOrElse("unknown")
-          val proof = cursor.get[Boolean]("evidence_available").getOrElse(false)
+        case Some(observation) =>
+          val financing = observation.financing
+          val actor = financing.actor
+          val workflow = financing.progress
+          val proof = financing.evidenceAvailable
           val actorLabel =
             Map("bank" -> "Bank", "buyer" -> "Buyer", "reviewer" -> "Olivia · observer")
               .getOrElse(actor, actor)
@@ -91,7 +94,8 @@ object LiveView:
             Vector("Bank approves privately", "Bank issues a signed result", "Buyer continues")
           labels.zipWithIndex.foreach { (label, index) =>
             val done =
-              if index == 2 then workflow == "complete" else proof || workflow == "complete"
+              if index == 2 then workflow == ProgressStatus.Complete
+              else proof || workflow == ProgressStatus.Complete
             append(
               graph,
               element(
@@ -107,29 +111,26 @@ object LiveView:
           append(
             state,
             element("h2", text = "Current state"),
-            element("p", text = cursor.get[String]("current_step").getOrElse("Waiting"))
+            element("p", text = financing.currentStep)
           )
-          val status = element("p", "live-workflow", s"Workflow: $workflow");
+          val status = element("p", "live-workflow", s"Workflow: ${workflow.wire}");
           status.id = "live-workflow"
           append(state, status)
-          cursor.get[String]("application").toOption.foreach { application =>
+          financing.application.foreach { application =>
             append(
               state,
               element("h3", text = "Your private application"),
-              element("p", text = s"Status: $application"),
-              element("p", text = cursor.get[String]("private_details").getOrElse(""))
+              element("p", text = s"Status: ${application.wire}"),
+              element("p", text = financing.privateDetails.getOrElse(""))
             )
           }
-          val actions = cursor.get[Vector[String]]("eligible").getOrElse(Vector.empty)
-          val pending = cursor
-            .get[Vector[Json]]("jobs")
-            .getOrElse(Vector.empty)
-            .exists(_.hcursor.get[String]("outcome").contains("pending"))
+          val actions = financing.eligible
+          val pending = observation.submissions.exists(_.outcome == SubmissionStatus.Pending)
           actions.foreach { action =>
             val label =
-              if action == "approve-financing" then "Approve financing"
+              if action == FinancingAction.Approve then "Approve financing"
               else "Continue shared workflow"
-            val control = button(label, "primary", "live-" + action)(submit(action))
+            val control = button(label, "primary", "live-" + action.wire)(submit(action.wire))
             control.disabled = pending || unconfirmed || submitting || connection != "Connected"
             append(state, control)
           }
@@ -139,27 +140,27 @@ object LiveView:
               element(
                 "p",
                 text =
-                  if workflow == "complete" then "This handoff is complete."
+                  if workflow == ProgressStatus.Complete then "This handoff is complete."
                   else "No action is currently available for your session."
               )
             )
           val jobs = element("section", "live-panel")
           append(jobs, element("h2", text = "Your submissions"))
-          val submissions = cursor.get[Vector[Json]]("jobs").getOrElse(Vector.empty)
+          val submissions = observation.submissions
           if submissions.isEmpty then
             append(jobs, element("p", text = "No commands submitted in this session."))
           submissions.reverse.foreach { job =>
             val row = element("article", "live-job")
             append(
               row,
-              element("strong", text = job.hcursor.get[String]("outcome").getOrElse("unknown")),
-              element("p", text = job.hcursor.get[String]("action").getOrElse("")),
-              element("p", text = job.hcursor.get[String]("detail").getOrElse(""))
+              element("strong", text = job.outcome.wire),
+              element("p", text = job.action),
+              element("p", text = job.detail)
             )
             append(jobs, row)
           }
           append(grid, state, jobs); append(main, grid)
-          cursor.downField("composer").focus.foreach { composition =>
+          Some(observation.composition).foreach { composition =>
             append(
               main,
               harmonia.composer.ComposerView.render(
@@ -182,23 +183,20 @@ object LiveView:
             )
           )
           val list = element("ol", "live-history")
-          cursor.get[Vector[Json]]("history").getOrElse(Vector.empty).foreach { transaction =>
+          observation.history.foreach { transaction =>
             val row = element("li")
             append(
               row,
               element(
                 "p",
-                text = transaction.hcursor
-                  .get[Vector[String]]("events")
-                  .getOrElse(Vector.empty)
-                  .mkString(" → ")
+                text = transaction.events.mkString(" → ")
               )
             )
             val details = element("details")
             append(
               details,
               element("summary", text = "Transaction identity"),
-              element("code", text = transaction.hcursor.get[String]("update_id").getOrElse(""))
+              element("code", text = transaction.updateId.getOrElse(""))
             )
             append(row, details); append(list, row)
           }

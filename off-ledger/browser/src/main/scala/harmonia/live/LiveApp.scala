@@ -4,12 +4,13 @@ import cats.effect.{IO, Ref}
 import cats.effect.std.Dispatcher
 import cats.syntax.all.*
 import io.circe.Json
+import harmonia.workspace.WorkspaceSnapshot
 import org.scalajs.dom
 import scala.scalajs.js
 import scala.concurrent.duration.*
 
 private final case class ClientState(
-    snapshot: Option[Json],
+    snapshot: Option[WorkspaceSnapshot],
     connection: String,
     unconfirmed: Option[Json],
     submitting: Boolean = false,
@@ -64,7 +65,7 @@ private final class BrowserSession(
             .obj(
               "id" -> Json.fromString(js.Dynamic.global.crypto.randomUUID().asInstanceOf[String]),
               "action" -> Json.fromString(action),
-              "version" -> snapshot.hcursor.downField("version").focus.getOrElse(Json.Null)
+              "version" -> Json.fromString(snapshot.financing.version)
             )
             .deepMerge(parameters.fold(Json.obj())(value => Json.obj("input" -> value)))
           send(input)
@@ -77,15 +78,11 @@ private final class BrowserSession(
   }
   def refresh: IO[Unit] = LiveApi
     .request(capability, "GET", "/api/state", None)
+    .flatMap(json => IO.fromEither(json.as[WorkspaceSnapshot]))
     .flatMap { snapshot =>
       state.update { current =>
         val found = current.unconfirmed.exists { request =>
-          snapshot.hcursor
-            .get[Vector[Json]]("jobs")
-            .getOrElse(Vector.empty)
-            .exists(job =>
-              job.hcursor.get[String]("id").toOption == request.hcursor.get[String]("id").toOption
-            )
+          snapshot.submissions.exists(job => request.hcursor.get[String]("id").contains(job.id))
         }
         current.copy(
           snapshot = Some(snapshot),

@@ -1,6 +1,8 @@
 package harmonia.live.state
 
 import cats.effect.IO
+import harmonia.financing.*
+import io.circe.syntax.*
 import harmonia.live.ledger.{ActiveContract, ParticipantLedger, TemplateCatalog}
 import io.circe.Json
 import java.nio.charset.StandardCharsets.UTF_8
@@ -19,52 +21,59 @@ final case class LiveSnapshot(contracts: Vector[ActiveContract], history: Vector
     .map(b => f"${b & 0xff}%02x")
     .mkString
   def json(actor: String): Json =
+    val applicationStatus = application.map(c =>
+      Json.fromString(c.text("status")).as[ApplicationStatus].fold(throw _, identity)
+    )
+    val progressStatus = Json.fromString(workflow).as[ProgressStatus].fold(throw _, identity)
     val eligible = Vector(
-      Option.when(actor == "bank" && application.exists(_.text("status") == "pending"))(
-        "approve-financing"
+      Option.when(actor == "bank" && applicationStatus.contains(ApplicationStatus.Pending))(
+        FinancingAction.Approve
       ),
-      Option.when(actor == "buyer" && workflow == "waiting" && proof.nonEmpty)("publish-approval")
+      Option.when(actor == "buyer" && progressStatus == ProgressStatus.Waiting && proof.nonEmpty)(
+        FinancingAction.Continue
+      )
     ).flatten
-    Json.obj(
-      "actor" -> Json.fromString(actor),
-      "version" -> Json.fromString(version),
-      "workflow" -> Json.fromString(workflow),
-      "application" -> application.fold(Json.Null)(c => Json.fromString(c.text("status"))),
-      "private_details" -> application.fold(Json.Null)(c =>
-        Json.fromString(c.text("privateDetails"))
-      ),
-      "evidence_available" -> Json.fromBoolean(proof.nonEmpty),
-      "eligible" -> Json.arr(eligible.map(Json.fromString)*),
-      "current_step" -> Json.fromString(
-        if workflow == "complete" then "Complete"
-        else if proof.nonEmpty then "Buyer continues"
-        else "Waiting for bank approval"
-      ),
-      "history" -> Json.arr(history.map { update =>
-        val transaction = update.hcursor.downField("transaction")
-        Json.obj(
-          "update_id" -> transaction
-            .get[String]("updateId")
-            .toOption
-            .fold(Json.Null)(Json.fromString),
-          "command_id" -> transaction
-            .get[String]("commandId")
-            .toOption
-            .fold(Json.Null)(Json.fromString),
-          "events" -> Json.arr(transaction.get[Vector[Json]]("events").getOrElse(Vector.empty).map {
-            event =>
-              val created = event.hcursor.downField("created")
-              val exercised = event.hcursor.downField("exercised")
-              val value = if created.succeeded then created else exercised
-              val template =
-                value.downField("templateId").get[String]("entityName").getOrElse("Contract")
-              val operation =
-                if created.succeeded then "created"
-                else exercised.get[String]("choice").getOrElse("archived")
-              Json.fromString(s"$template · $operation")
-          }*)
-        )
-      }*)
+    val financing = FinancingState(
+      actor,
+      version,
+      progressStatus,
+      applicationStatus,
+      application.map(_.text("privateDetails")),
+      proof.nonEmpty,
+      eligible,
+      if progressStatus == ProgressStatus.Complete then "Complete"
+      else if proof.nonEmpty then "Buyer continues"
+      else "Waiting for bank approval"
+    )
+    financing.json.deepMerge(
+      Json.obj(
+        "history" -> Json.arr(history.map { update =>
+          val transaction = update.hcursor.downField("transaction")
+          Json.obj(
+            "update_id" -> transaction
+              .get[String]("updateId")
+              .toOption
+              .fold(Json.Null)(Json.fromString),
+            "command_id" -> transaction
+              .get[String]("commandId")
+              .toOption
+              .fold(Json.Null)(Json.fromString),
+            "events" -> Json.arr(
+              transaction.get[Vector[Json]]("events").getOrElse(Vector.empty).map { event =>
+                val created = event.hcursor.downField("created")
+                val exercised = event.hcursor.downField("exercised")
+                val value = if created.succeeded then created else exercised
+                val template =
+                  value.downField("templateId").get[String]("entityName").getOrElse("Contract")
+                val operation =
+                  if created.succeeded then "created"
+                  else exercised.get[String]("choice").getOrElse("archived")
+                Json.fromString(s"$template · $operation")
+              }*
+            )
+          )
+        }*)
+      )
     )
 
 object LiveSnapshot:
