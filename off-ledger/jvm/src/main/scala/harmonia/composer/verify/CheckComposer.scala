@@ -23,6 +23,15 @@ object CheckComposer:
         input <- ArtifactFiles.read(root.resolve(s"evaluations/$id/input.md"))
         expectedMarkdown <- ArtifactFiles.read(root.resolve(s"evaluations/$id/expected.md"))
         scenario <- read(input, "Scenario")
+        _ <- IO.fromEither(
+          Composition
+            .fields(scenario, Set("workflow", "plan", "actions"))
+            .left
+            .map(IllegalArgumentException(_))
+        )
+        _ <- IO.raiseUnless(scenario.hcursor.get[String]("workflow").contains("composed-process"))(
+          IllegalArgumentException("Unknown composition story workflow")
+        )
         plan <- IO.fromEither(scenario.hcursor.get[Json]("plan"))
         _ <- IO.fromEither(Composition.read(plan).left.map(IllegalArgumentException(_)))
         expectedJson <- read(expectedMarkdown, "Result")
@@ -84,11 +93,30 @@ object CheckComposer:
     plan <- IO.fromEither(scenario.hcursor.get[Json]("plan"))
     reference <- IO.fromEither(plan.hcursor.get[String]("reference"))
     attempts <- IO.fromEither(scenario.hcursor.get[Vector[Json]]("actions"))
+    _ <- IO.raiseUnless(attempts.nonEmpty && attempts.size <= 32)(
+      IllegalArgumentException("Use one to thirty-two composition attempts")
+    )
+    _ <- IO.raiseUnless(
+      attempts.flatMap(_.hcursor.get[String]("id").toOption).distinct.size == attempts.size
+    )(IllegalArgumentException("Composition attempt identifiers must be unique"))
     observations <- attempts.traverse { attempt =>
       for
         id <- IO.fromEither(attempt.hcursor.get[String]("id"))
         actor <- IO.fromEither(attempt.hcursor.get[String]("actor"))
         action <- IO.fromEither(attempt.hcursor.get[String]("action"))
+        _ <- IO.fromEither(
+          Composition
+            .fields(
+              attempt,
+              Set("id", "actor", "action") ++ (if action == "advance" then Set("step")
+                                               else Set.empty[String])
+            )
+            .left
+            .map(IllegalArgumentException(_))
+        )
+        _ <- IO.raiseUnless(
+          Set("bank", "buyer").contains(actor) && id.matches("[a-zA-Z0-9-]{1,64}")
+        )(IllegalArgumentException("Unknown actor or invalid attempt identifier"))
         _ <- IO.raiseUnless(Set("propose", "accept", "advance").contains(action))(
           IllegalArgumentException("Unknown composer story action")
         )

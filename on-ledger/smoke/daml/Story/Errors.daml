@@ -11,6 +11,7 @@ reason error = case error of
   FailureStatusError failure
     | failure.errorId == "UNHANDLED_EXCEPTION/DA.Exception.AssertionFailed:AssertionFailed" -> pure "application-rejected"
     | failure.errorId == "UNHANDLED_EXCEPTION/DA.Exception.GeneralError:GeneralError" -> pure "application-rejected"
+    | failure.errorId == "UNHANDLED_EXCEPTION/DA.Exception.PreconditionFailed:PreconditionFailed" -> pure "application-rejected"
     | failure.errorId == "DAML_AUTHORIZATION_ERROR" -> pure "unauthorized"
     | failure.errorId == "CONTRACT_NOT_FOUND" -> pure "not-visible"
   _ -> abort ("Unexpected ledger error: " <> show error)

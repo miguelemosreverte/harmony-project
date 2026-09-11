@@ -4,7 +4,7 @@ The [PRD](../PRD.md) defines the ordered work. This record reports actual commit
 
 ## Current step
 
-Step 15 is complete. A memory correction now bounds JVM heaps, releases sbt before runtime work, and prevents overlapping local ledger environments. The four-participant transfer still passes. Step 16 is complete: consented composition, live editing, bounded package input/generation, three new golden recordings, and Chapter 8. Next are the execution-boundary hardening, completed book, and reproducible release gates.
+Step 15 is complete. A memory correction now bounds JVM heaps, releases sbt before runtime work, and prevents overlapping local ledger environments. The four-participant transfer still passes. Step 17 is complete: real maximum-size ledger cases, one winning concurrent advance, exact package projection, explicit observation failures, bounded streams, and a downloaded project rebuilt/executed from empty build directories. Next: finish the reader/developer guides and verify/package one clean source revision.
 
 ## Commit evidence
 
@@ -37,7 +37,9 @@ Actual commit identifiers are recorded in the next commit after they are created
 
 | 16b | `b649833` | [Live editor proof](verification/16b-editor.md): reader-defined order/roles, generated adapter execution, actual buyer consent, persistent input diagnostics, and mobile layout |
 
-| 16c | This increment | [Package builder proof](verification/16c-builder.md): actual upload/export, reviewed compilation, verified download, negative inputs, and Chapter 8 with thirty recordings |
+| 16c | `4d830e5` | [Package builder proof](verification/16c-builder.md): actual upload/export, reviewed compilation, verified download, negative inputs, and Chapter 8 with thirty recordings |
+
+| 17 | This increment | [Execution boundary proof](verification/17-boundaries.md): upper bounds, disclosure/stale/retry checks, concurrent commands, twenty-seven Scala tests, and portable project reproduction |
 
 ## External decisions
 

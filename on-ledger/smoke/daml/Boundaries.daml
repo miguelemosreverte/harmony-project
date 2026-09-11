@@ -1,0 +1,124 @@
+module Boundaries where
+
+import Daml.Script
+import qualified Financing
+import qualified LegacyFinancing
+import qualified Composer as C
+import qualified Composer.Model as CM
+import qualified Story.Errors as Errors
+import Harmonia.Action
+import Harmonia.Process.Model
+import Harmonia.Process.Engine
+
+data Observation = Observation with
+    maximum_steps : Int
+    approved_sources : Int
+    maximum_join_prerequisites : Int
+    join_complete : Bool
+    graph_overflow_rejected : Bool
+    stale_contract_rejected : Bool
+    request_collision_rejected : Bool
+    duplicate_kept_identity : Bool
+    missing_disclosure_rejected : Bool
+    maximum_composer_steps : Int
+    composition_approved_sources : Int
+    composition_overflow_rejected : Bool
+    maximum_proposals : Int
+    proposal_overflow_rejected : Bool
+  deriving (Eq, Show)
+
+run : Script Observation
+run = script do
+  bank <- allocateParty "BoundaryBank"
+  buyer <- allocateParty "BoundaryBuyer"
+  publisher <- allocateParty "BoundaryPublisher"
+  outsider <- allocateParty "BoundaryOutsider"
+  let stepId n = "step-" <> show n
+      sequential n = StepSpec (stepId n) "bank" (if n == 1 then [] else [stepId (n - 1)]) ActionStep None
+      definition = Definition "maximum-sequence" 1 (map sequential [1..16])
+  overflow <- trySubmit publisher do createCmd PublishedDefinition with publisher; readers = [bank]; definition = definition with steps = map sequential [1..17]
+  graphOverflow <- rejected "application-rejected" overflow
+  published <- submit publisher do createCmd PublishedDefinition with publisher; readers = [bank]; definition
+  bindings <- createBindings bank buyer "maximum-sequence" (map stepId [1..16])
+  started <- submit bank do exerciseCmd published Start with owner = bank; reference = "maximum-sequence"; subject = "maximum-sequence"; roles = [Role "bank" bank]; bindings
+  finished <- advanceAll bank started (map stepId [1..16])
+  Some complete <- queryContractId bank finished
+  sources <- queryFilter @Financing.Application bank (\application -> application.reference == "maximum-sequence" && application.status == "approved")
+  stale <- trySubmit bank do exerciseCmd started AdvanceStep with step = stepId 1; actor = bank; request = "stale"
+  staleRejected <- rejected "not-visible" stale
+  collision <- trySubmit bank do exerciseCmd finished AdvanceStep with step = stepId 2; actor = bank; request = stepId 1
+  collisionRejected <- rejected "application-rejected" collision
+  duplicate <- submit bank do exerciseCmd finished AdvanceStep with step = stepId 1; actor = bank; request = stepId 1
+
+  -- Fourteen conditional actions plus one decision and one exhaustive join.
+  let branch n = if n <= 7 then "left" else "right"
+      conditional n = StepSpec (stepId n) "bank" ["decision"] ActionStep (Some (Branch "decision" (branch n)))
+      joinDefinition = Definition "maximum-join" 1 ([StepSpec "decision" "bank" [] (DecisionStep ["left", "right"]) None] <>
+        map conditional [1..14] <> [StepSpec "join" "bank" (map stepId [1..14]) JoinStep None])
+  joinPublished <- submit publisher do createCmd PublishedDefinition with publisher; readers = [bank]; definition = joinDefinition
+  joinBindings <- createBindings bank buyer "maximum-join" (map stepId [1..14])
+  joinStarted <- submit bank do exerciseCmd joinPublished Start with owner = bank; reference = "maximum-join"; subject = "maximum-join"; roles = [Role "bank" bank]; bindings = joinBindings
+  selected <- submit bank do exerciseCmd joinStarted SelectBranch with step = "decision"; actor = bank; request = "select"; option = "left"
+  branchFinished <- advanceAll bank selected (map stepId [1..7])
+  joined <- submit bank do exerciseCmd branchFinished CompleteJoin with step = "join"; actor = bank; request = "join"
+  Some joinedProcess <- queryContractId bank joined
+
+  -- Knowing an ID is insufficient when neither caller nor publisher can see it.
+  privateSource <- submit bank do createCmd Financing.Application with bank; buyer = outsider; reference = "undisclosed"; status = "pending"
+  hiddenPublished <- submit publisher do createCmd PublishedDefinition with publisher; readers = [buyer]; definition = Definition "undisclosed" 1 [sequential 1]
+  hidden <- trySubmit buyer do exerciseCmd hiddenPublished Start with owner = buyer; reference = "undisclosed"; subject = "undisclosed"; roles = [Role "bank" bank]; bindings = [ActionBinding (stepId 1) (toInterfaceContractId @StepAction privateSource)]
+  missingDisclosure <- rejected "not-visible" hidden
+
+  workspace <- submit bank do createCmd C.Workspace with bank; buyer; references = []
+  let plan n = CM.PlannedStep (stepId n) "bank" bank "approve-generated"
+  invalidComposition <- trySubmit bank do exerciseCmd workspace C.Propose with name = "too many actions"; reference = "too-many"; steps = map plan [1..5]
+  compositionOverflow <- rejected "application-rejected" invalidComposition
+  (_, draft) <- submit bank do exerciseCmd workspace C.Propose with name = "maximum composition"; reference = "max-composition"; steps = map plan [1..4]
+  composition <- submit buyer do exerciseCmd draft C.Accept
+  composedFinished <- advanceAll bank composition (map stepId [1..4])
+  Some composed <- queryContractId bank composedFinished
+  approvedLegacy <- queryFilter @LegacyFinancing.Application bank (\source -> source.reference == "max-composition" && source.status == "approved")
+  slots <- submit bank do createCmd C.Workspace with bank; buyer; references = []
+  full <- proposeAll bank slots (map (\n -> "slot-" <> show n) [1..8]) [plan 1]
+  Some fullWorkspace <- queryContractId bank full
+  ninth <- trySubmit bank do exerciseCmd full C.Propose with name = "ninth"; reference = "slot-9"; steps = [plan 1]
+  proposalOverflow <- rejected "application-rejected" ninth
+  pure Observation with
+    maximum_steps = length complete.completed
+    approved_sources = length sources
+    maximum_join_prerequisites = length (concatMap (.prerequisites) (filter (\step -> step.id == "join") joinedProcess.definition.steps))
+    join_complete = processComplete joinedProcess.definition joinedProcess.completed joinedProcess.selections
+    graph_overflow_rejected = graphOverflow
+    stale_contract_rejected = staleRejected
+    request_collision_rejected = collisionRejected
+    duplicate_kept_identity = duplicate == finished
+    missing_disclosure_rejected = missingDisclosure
+    maximum_composer_steps = length composed.completed
+    composition_approved_sources = length approvedLegacy
+    composition_overflow_rejected = compositionOverflow
+    maximum_proposals = length fullWorkspace.references
+    proposal_overflow_rejected = proposalOverflow
+
+createBindings : Party -> Party -> Text -> [Text] -> Script [ActionBinding]
+createBindings bank buyer subject steps = forA steps (\step -> do
+  source <- submit bank do createCmd Financing.Application with bank; buyer; reference = subject; status = "pending"
+  pure (ActionBinding step (toInterfaceContractId @StepAction source)))
+
+advanceAll : Party -> ContractId ProcessInstance -> [Text] -> Script (ContractId ProcessInstance)
+advanceAll actor current steps = case steps of
+  [] -> pure current
+  step :: remaining -> do
+    next <- submit actor do exerciseCmd current AdvanceStep with step; actor; request = step
+    advanceAll actor next remaining
+
+rejected : Text -> Either SubmitError a -> Script Bool
+rejected expected result = case result of
+  Right _ -> pure False
+  Left error -> (== expected) <$> Errors.reason error
+
+proposeAll : Party -> ContractId C.Workspace -> [Text] -> [CM.PlannedStep] -> Script (ContractId C.Workspace)
+proposeAll bank current references steps = case references of
+  [] -> pure current
+  reference :: remaining -> do
+    (next, _) <- submit bank do exerciseCmd current C.Propose with name = reference; reference; steps
+    proposeAll bank next remaining steps

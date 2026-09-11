@@ -475,12 +475,12 @@ Deliver this larger step as three ordered, working commits:
 
 ### Commit 17 — `test: harden workflow bounds and failure behavior`
 
-- [ ] Close remaining execution-boundary gaps after the feature-level tests.
-  - [ ] Define measured, documented limits for graph size, join prerequisites, atomic work, and artifact payloads.
-  - [ ] Add targeted cases for stale contracts, competing advances, invalid continuation, missing disclosure, and exceeded bounds.
-  - [ ] Verify observation/transport failures cannot masquerade as expected business rejection.
-  - [ ] Exercise a fully generated reference project from a fresh build environment.
-  - [ ] **Acceptance:** the supported capability matrix links each boundary to an executable check, and every failure leaves documented ledger effects and useful evidence.
+- [x] Close remaining execution-boundary gaps after the feature-level tests.
+  - [x] Define measured, documented limits for graph size, join prerequisites, atomic work, and artifact payloads.
+  - [x] Add targeted cases for stale contracts, competing advances, invalid continuation, missing disclosure, and exceeded bounds.
+  - [x] Verify observation/transport failures cannot masquerade as expected business rejection.
+  - [x] Exercise a fully generated reference project from a fresh build environment.
+  - [x] **Acceptance:** the supported capability matrix links each boundary to an executable check, and every failure leaves documented ledger effects and useful evidence.
 
 ### Commit 18 — `docs: complete the book and evaluation walkthroughs`
 

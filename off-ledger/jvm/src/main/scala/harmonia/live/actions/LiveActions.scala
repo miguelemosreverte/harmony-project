@@ -38,7 +38,7 @@ final class LiveActions private (
     supervisor: Supervisor[IO]
 ):
   def state(actor: String): IO[Json] = for
-    snapshot <- LiveSnapshot.read(runtime.participants(actor).ledger)
+    snapshot <- LiveSnapshot.read(runtime.participants(actor).ledger, runtime.catalog)
     _ <- reconcile(actor, snapshot)
     current <- jobs.get
   yield snapshot
@@ -86,7 +86,7 @@ final class LiveActions private (
   private def execute(job: LiveJob): IO[Unit] = lock.permit.use { _ =>
     val ledger = runtime.participants(job.actor).ledger
     val result = for
-      snapshot <- LiveSnapshot.read(ledger)
+      snapshot <- LiveSnapshot.read(ledger, runtime.catalog)
       next <-
         if snapshot.version != job.request.version then
           IO.pure(
@@ -115,7 +115,7 @@ final class LiveActions private (
             case None =>
               IO.pure(
                 job.copy(
-                  outcome = "rejected",
+                  outcome = "unavailable",
                   detail = "The required contract is not visible to this session"
                 )
               )
@@ -129,26 +129,33 @@ final class LiveActions private (
                     transaction = Some(tx)
                   )
                 )
+                .handleError(error => submissionFailure(job, error))
     yield next
     result
-      .handleError(error =>
-        val code = Status.fromThrowable(error).getCode
-        val definite = Set(
-          Status.Code.INVALID_ARGUMENT,
-          Status.Code.FAILED_PRECONDITION,
-          Status.Code.PERMISSION_DENIED,
-          Status.Code.NOT_FOUND,
-          Status.Code.UNAUTHENTICATED
-        ).contains(code)
+      .handleError(_ =>
         job.copy(
-          outcome = if definite then "rejected" else "disconnected",
+          outcome = "disconnected",
           detail =
-            if definite then s"Ledger rejected the command ($code)"
-            else "No definitive completion received. Reconnect to reconcile; do not assume failure."
+            "Could not observe the required ledger state. Reconnect before submitting; no business rejection was observed."
         )
       )
       .flatMap(replace)
   }
+  private def submissionFailure(job: LiveJob, error: Throwable): LiveJob =
+    val code = Status.fromThrowable(error).getCode
+    val definite = Set(
+      Status.Code.INVALID_ARGUMENT,
+      Status.Code.FAILED_PRECONDITION,
+      Status.Code.PERMISSION_DENIED,
+      Status.Code.NOT_FOUND,
+      Status.Code.UNAUTHENTICATED
+    ).contains(code)
+    job.copy(
+      outcome = if definite then "rejected" else "disconnected",
+      detail =
+        if definite then s"Ledger rejected the command ($code)"
+        else "No definitive completion received. Reconnect to reconcile; do not assume failure."
+    )
   private def commandId(job: LiveJob): String = s"live-${job.actor}-${job.request.id}"
   private def replace(next: LiveJob): IO[Unit] = jobs.update(
     _.map(j => if j.actor == next.actor && j.request.id == next.request.id then next else j)

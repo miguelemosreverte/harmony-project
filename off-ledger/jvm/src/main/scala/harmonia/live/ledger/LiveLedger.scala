@@ -35,7 +35,7 @@ final class LiveLedger private (
     val party: String,
     val user: String,
     token: IO[String]
-):
+) extends ParticipantLedger:
   private def authenticated[A](f: Channel => A): IO[A] = token.flatMap { bearer =>
     IO.interruptible {
       val headers = new Metadata()
@@ -43,9 +43,15 @@ final class LiveLedger private (
         Metadata.Key.of("Authorization", Metadata.ASCII_STRING_MARSHALLER),
         "Bearer " + bearer
       )
-      f(
-        ClientInterceptors.intercept(connection, MetadataUtils.newAttachHeadersInterceptor(headers))
-      )
+      val context = io.grpc.Context.current().withCancellation()
+      try
+        context.call(new java.util.concurrent.Callable[A] {
+          def call(): A = f(
+            ClientInterceptors
+              .intercept(connection, MetadataUtils.newAttachHeadersInterceptor(headers))
+          )
+        })
+      finally context.cancel(null)
     }
   }
   private def options = CallOptions.DEFAULT.withDeadlineAfter(20, TimeUnit.SECONDS)
@@ -85,20 +91,21 @@ final class LiveLedger private (
       .setActiveAtOffset(end(channel))
       .setEventFormat(filter(readParty))
       .build()
-    ClientCalls
-      .blockingServerStreamingCall(
-        channel,
-        LiveLedger.method(
-          "StateService/GetActiveContracts",
-          true,
-          State.GetActiveContractsRequest.getDefaultInstance,
-          State.GetActiveContractsResponse.getDefaultInstance
-        ),
-        options,
-        request
+    BoundedRecords
+      .read(
+        ClientCalls
+          .blockingServerStreamingCall(
+            channel,
+            LiveLedger.method(
+              "StateService/GetActiveContracts",
+              true,
+              State.GetActiveContractsRequest.getDefaultInstance,
+              State.GetActiveContractsResponse.getDefaultInstance
+            ),
+            options,
+            request
+          )
       )
-      .asScala
-      .toVector
       .filter(_.hasActiveContract)
       .map { response =>
         val event = response.getActiveContract.getCreatedEvent
@@ -116,20 +123,21 @@ final class LiveLedger private (
       .setEndInclusive(end(channel))
       .setUpdateFormat(Filter.UpdateFormat.newBuilder().setIncludeTransactions(format))
       .build()
-    ClientCalls
-      .blockingServerStreamingCall(
-        channel,
-        LiveLedger.method(
-          "UpdateService/GetUpdates",
-          true,
-          Updates.GetUpdatesRequest.getDefaultInstance,
-          Updates.GetUpdatesResponse.getDefaultInstance
-        ),
-        options,
-        request
+    BoundedRecords
+      .read(
+        ClientCalls
+          .blockingServerStreamingCall(
+            channel,
+            LiveLedger.method(
+              "UpdateService/GetUpdates",
+              true,
+              Updates.GetUpdatesRequest.getDefaultInstance,
+              Updates.GetUpdatesResponse.getDefaultInstance
+            ),
+            options,
+            request
+          )
       )
-      .asScala
-      .toVector
       .map(LiveLedger.json)
   }
 

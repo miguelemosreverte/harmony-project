@@ -93,7 +93,7 @@ object CheckLive:
     val bank = runtime.participants("bank").ledger
     val buyer = runtime.participants("buyer").ledger
     for
-      initialBank <- LiveSnapshot.read(bank)
+      initialBank <- LiveSnapshot.read(bank, runtime.catalog)
       initialBuyer <- state(server, "buyer")
       readBypass <- buyer
         .active(bank.party)
@@ -125,7 +125,7 @@ object CheckLive:
       ) { (acc, step) =>
         for
           previous <- acc
-          before <- LiveSnapshot.read(bank)
+          before <- LiveSnapshot.read(bank, runtime.catalog)
           snapshot <- state(server, sessions(step.actor))
           request = action(
             step.id,
@@ -140,19 +140,19 @@ object CheckLive:
           )
           _ <-
             if outcome == "committed" && step.action == "approve-financing" then
-              awaitCondition(LiveSnapshot.read(buyer).map(_.proof.nonEmpty))
+              awaitCondition(LiveSnapshot.read(buyer, runtime.catalog).map(_.proof.nonEmpty))
             else IO.unit
           _ <-
             if outcome == "committed" && step.action == "publish-approval" then
               awaitCondition(
                 runtime.participants.values.toVector
-                  .traverse(p => LiveSnapshot.read(p.ledger))
+                  .traverse(p => LiveSnapshot.read(p.ledger, runtime.catalog))
                   .map(_.forall(_.workflow == "complete"))
               )
             else IO.unit
-          after <- LiveSnapshot.read(bank)
+          after <- LiveSnapshot.read(bank, runtime.catalog)
           views <- runtime.participants.toVector.sortBy(_._1).traverse { (name, participant) =>
-            LiveSnapshot.read(participant.ledger).map(name -> _)
+            LiveSnapshot.read(participant.ledger, runtime.catalog).map(name -> _)
           }
           fields = Vector(
             "id" -> Json.fromString(step.id),

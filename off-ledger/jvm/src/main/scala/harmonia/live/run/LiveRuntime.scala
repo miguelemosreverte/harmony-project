@@ -4,7 +4,7 @@ import cats.effect.{IO, Resource}
 import cats.syntax.all.*
 import harmonia.files.ArtifactFiles
 import harmonia.ledger.auth.LocalCredentials
-import harmonia.live.ledger.LiveLedger
+import harmonia.live.ledger.{LiveLedger, ParticipantLedger, TemplateCatalog}
 import harmonia.ledger.DamlScript
 import harmonia.ledger.network.{CantonNetwork, NetworkAuthorization}
 import io.circe.Json
@@ -13,14 +13,21 @@ import java.util.UUID
 import harmonia.stories.financing.model.FinancingStory
 import harmonia.stories.read.StoryFormat
 
-final case class LiveParticipant(name: String, ledger: LiveLedger)
-final case class LiveRuntime(participants: Map[String, LiveParticipant], packageExports: Path)
+final case class LiveParticipant(name: String, ledger: ParticipantLedger)
+final case class LiveRuntime(
+    participants: Map[String, LiveParticipant],
+    packageExports: Path,
+    catalog: TemplateCatalog
+)
 
 object LiveRuntime:
   def resource(root: Path, artifacts: Path, story: FinancingStory): Resource[IO, LiveRuntime] =
     val names = Vector("bank", "buyer", "reviewer")
     val dar = root.resolve("on-ledger/smoke/.daml/dist/harmonia-smoke-0.1.0.dar")
     for
+      catalog <- Resource.eval(
+        TemplateCatalog.load(root, dar, artifacts.resolve("template-catalog"))
+      )
       normal <- Resource.eval(
         names.traverse(name => LocalCredentials.create.map(name -> _)).map(_.toMap)
       )
@@ -76,7 +83,7 @@ object LiveRuntime:
           )
         yield name -> LiveParticipant(name, ledger)
       }
-    yield LiveRuntime(participants.toMap, artifacts.resolve("downloaded"))
+    yield LiveRuntime(participants.toMap, artifacts.resolve("downloaded"), catalog)
 
   def serve(root: Path): IO[Unit] = for
     artifacts <- ArtifactFiles.createRun(root, "live")

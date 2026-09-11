@@ -1,7 +1,7 @@
 package harmonia.live.state
 
 import cats.effect.IO
-import harmonia.live.ledger.{ActiveContract, LiveLedger}
+import harmonia.live.ledger.{ActiveContract, ParticipantLedger, TemplateCatalog}
 import io.circe.Json
 import java.nio.charset.StandardCharsets.UTF_8
 import java.security.MessageDigest
@@ -68,7 +68,7 @@ final case class LiveSnapshot(contracts: Vector[ActiveContract], history: Vector
     )
 
 object LiveSnapshot:
-  def read(ledger: LiveLedger): IO[LiveSnapshot] = for
+  def read(ledger: ParticipantLedger, catalog: TemplateCatalog): IO[LiveSnapshot] = for
     contracts <- ledger.active()
     history <- ledger.events
-  yield LiveSnapshot(contracts, history)
+  yield LiveSnapshot(contracts.filter(catalog.accepts), history)
