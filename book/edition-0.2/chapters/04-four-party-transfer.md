@@ -1,15 +1,26 @@
-# Four-party transfer
+# A transfer across four parties
 
-Follow staged work into one transaction
+Alice is buying a position from a seller. The source custodian holds it today. The destination custodian will receive it for Alice. The example uses ten synthetic TEST units.
 
-Buyer, seller, source custodian, and destination custodian each have work to do. One of these four parties fulfills the Settler role. There is no implied fifth operator.
+## First, everyone prepares
 
-## How to read this chapter
+1. The seller agrees to the trade and locks the source position.
+2. The source custodian confirms the locked position and trade terms.
+3. The destination custodian prepares and confirms its receiving permission.
+4. Alice, the designated settler in this example, requests settlement.
 
-First establish consent, the source lock, and destination readiness. Only after the required conditions hold may the eligible final path commit atomically. Four animated steps do not by themselves prove four ledger transactions or one atomic transaction.
+The settler is one of these four parties. No fifth party takes ownership of their responsibilities.
 
-## Current evidence and next work
+## The final transfer is one transaction
 
-The existing reference demonstrates a bounded final transfer. The 0.2 application design must expose each party’s work and the evidence of atomic completion, with refusal and rollback cases beside the successful path.
+The final action withdraws the locked position, passes a typed release to the destination, creates the destination holding, and records completion. These effects belong to one eligible ledger transaction.
 
-[Existing transfer chapter and golden evidence](../../../book/06-atomic-transfer.md)
+The earlier preparations are separate transactions. Grouping them in one diagram does not make the whole journey atomic.
+
+## Watch the refusal as well as the success
+
+Choose **Try it** and follow **Transfer completes**. The displayed quantities come directly from the observed ledger result. Attempts to bypass the coordinator, settle as the wrong party, or settle again are refused.
+
+Then select **Final transfer rolls back**. The destination rejects the final action. Ten units remain locked at the source and zero arrive at the destination. The earlier preparations remain in place; this reference does not implement cancellation or expiry.
+
+This is a bounded transfer example, without a payment leg, fees, splitting, or an arbitrary settlement graph.

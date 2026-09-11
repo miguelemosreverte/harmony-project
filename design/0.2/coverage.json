@@ -26,42 +26,42 @@
   "chapters": [
     {
       "id": "01-product",
-      "title": "The product",
+      "title": "What Harmonia provides",
       "quoted_units": 284
     },
     {
       "id": "02-roles-and-trust",
-      "title": "Roles & trust",
+      "title": "Who can act, and why",
       "quoted_units": 110
     },
     {
       "id": "03-financing-to-offer",
-      "title": "Financing to an offer",
+      "title": "Alice buys a home",
       "quoted_units": 28
     },
     {
       "id": "04-four-party-transfer",
-      "title": "Four-party transfer",
+      "title": "A transfer across four parties",
       "quoted_units": 31
     },
     {
       "id": "05-bring-an-application",
-      "title": "Bring an application",
+      "title": "Connect your application",
       "quoted_units": 42
     },
     {
       "id": "06-compose-a-workflow",
-      "title": "Compose a workflow",
+      "title": "Do the next task",
       "quoted_units": 9
     },
     {
       "id": "07-evidence-and-boundaries",
-      "title": "Evidence & boundaries",
+      "title": "What the evidence proves",
       "quoted_units": 72
     },
     {
       "id": "08-release-and-adoption",
-      "title": "Release & adoption",
+      "title": "Readiness and adoption",
       "quoted_units": 96
     },
     {
@@ -71,7 +71,7 @@
     },
     {
       "id": "10-context-and-references",
-      "title": "Context & references",
+      "title": "Context and references",
       "quoted_units": 31
     }
   ]

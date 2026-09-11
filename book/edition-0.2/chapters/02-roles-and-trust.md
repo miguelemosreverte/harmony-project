@@ -1,15 +1,19 @@
-# Roles & trust
+# Who can act, and why
 
-Understand who can act
+Alice can ask for financing. Northbank can assess it. Ben can relay a purchase proposal. Sofia can receive it after that relay. These are distinct responsibilities, even when the screen shows them together.
 
-Before advancing a workflow, ask who owns the source contract, who may exercise its choice, and who is allowed to rely on the result. A visible button is guidance. The ledger must enforce the action.
+## A button is a request
 
-## How to read this chapter
+An enabled button tells a person what action appears available. The source application's rules decide whether that action is authorized when it executes.
 
-The original core description and illustrative contract model follow below. A shared interface does not transfer business authority to the browser or the workflow publisher. Private source details should remain with their entitled parties.
+In Alice's recorded story, she first tries to assess her own financing. The attempt fails. When Northbank acts, the assessment can complete. That difference is enforced by the ledger application, not by hiding a button.
 
-## Current evidence and next work
+## A result has an intended use
 
-The publisher and process owner are trusted in the baseline. They can create records they are authorized to sign. We must settle what an independent party may infer from a progress record before claiming stronger provenance.
+The property application checks who issued the financing result, which buyer and application it concerns, its decision, and the exact offer it can enable. A result for another buyer or another offer does not become permission to proceed.
 
-[Current authorization and trust boundary](../../../docs/capabilities.md)
+## What the reader can see
+
+The book contains synthetic evaluator recordings. It may show the complete test result. Highlighting a person helps you follow their actions; it does not log you in as that person or change ledger permissions.
+
+A future live workspace must use the authenticated participant's observations and authority. The Evidence & limits view keeps this requirement visible.

@@ -59,7 +59,7 @@ the subsequent phase described below, matching the requested design-first sequen
     use-case chapters or clearly named context appendices.
   - [x] `book/edition-0.2/chapters/`: original narrative, user questions, evidence
     links, interpretation, and explicit limitations for each destination.
-  - [x] `book/edition-0.2/build.py`: standard-library-only document extraction,
+  - [x] `book/edition-0.2/build.py`: fingerprinted document extraction,
     exact quote rendering, source links, and deterministic coverage output.
   - [x] `book/edition-0.2/check.py`: stale source, missing assignment, duplicate
     range, altered quote, incomplete HTML extraction, and missing destination checks.
@@ -70,7 +70,12 @@ the subsequent phase described below, matching the requested design-first sequen
   - [x] Commit only after this design/coverage slice demonstrably works. Do not
     mark any of the runtime commits below complete from prototype evidence.
 
-Evidence: [verification](verification.md), [browser results](browser-results.json), and
+The second UX pass is governed by [the UX contract](UX.md). It adds readable
+source rendering, reader routes, deterministic URLs, and four preserved recordings
+to the static design edition. Step 07 below still refers to integration into the
+Scala book and portable runtime export; these HTML improvements do not complete it.
+
+First-pass evidence: [verification](verification.md), [browser results](browser-results.json), and
 [concept/render comparison](../../design/0.2/review.html).
 
 ## Following runtime commits

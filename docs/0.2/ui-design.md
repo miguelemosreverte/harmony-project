@@ -1,5 +1,8 @@
 # The proposed 0.2 experience
 
+> Historical first-pass design record (`v0.2.0-design.1`). The second pass is
+> governed by [UX.md](UX.md), which supersedes this visual hierarchy and olive palette.
+
 The book introduces the product through a concrete use case. The application
 workspace lets the authorized participant do the work. They share a restrained
 visual vocabulary, with separate implementations and responsibilities.

@@ -1,15 +1,22 @@
-# Evidence & boundaries
+# What the evidence proves
 
-Inspect the promise and its proof
+Luis wrote the original proposal. He wants to find each requirement and see what supports it. Erik wants to inspect an input, a committed expectation, and an observed outcome. These questions share a destination, but they need different evidence.
 
-Keep three things next to one another: a readable input, an independently committed expectation, and the observed result. A disagreement is information to inspect, not a reason to regenerate the baseline.
+## Begin with the kind of claim
 
-## How to read this chapter
+| Question | Evidence to inspect | What it does not establish |
+| --- | --- | --- |
+| Is the original wording preserved? | Original sources and quotation coverage | That the feature works |
+| Did this bounded example behave as expected? | Recorded input, expectation, observation, and provenance | That every integration works |
+| Can a new team integrate its application? | An independent integration and its executable evidence | Production adoption |
+| Is another organization using the product? | An actual evaluator or adopter record | Something a repository test can substitute for |
 
-Quotation coverage answers whether the book includes the original words. Requirement mapping answers where a claim is discussed. Executable evidence answers what a named build actually did. External evaluation answers what another team tried. These are separate measurements.
+## Inspect a recorded result
 
-## Current evidence and next work
+In Alice's or the transfer chapter, select **Try it**, move to an action, then open **Inspect the input and the evidence**. Expected and observed data remain separate, and provenance names the recorded revision and timestamp.
 
-The proposal excludes generic BPMN, arbitrary dynamic composition, managed hosting, and a full studio. The original missing diagram attachments have not been recovered. A source quote or a mock interaction cannot close an implementation gap.
+The four included recordings come from the preserved fourth-draft evaluation. Their input and expectation fingerprints match the committed stories. This design pass does not create a fresh ledger run.
 
-[Historical release evidence and limitations](../../../docs/release/acceptance.md)
+## Find the exact source
+
+[Open document coverage](../coverage.html). Choose the requirement's chapter, open its source passage, and inspect the exact original text if needed. The readable rendering and audit text serve different reading tasks.

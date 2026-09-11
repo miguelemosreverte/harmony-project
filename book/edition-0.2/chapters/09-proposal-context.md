@@ -1,15 +1,9 @@
 # Proposal context
 
-Appendix · identity and commercial terms
+The proposal contains delivery arrangements, effort estimates, and commercial context as well as product requirements. Those passages matter to a reviewer even when they do not belong in an operator's first task.
 
-These passages preserve the proposal’s attribution and commercial context. They belong in the source record, with the same quotation accounting as technical requirements.
+## Read the original commitments in their own context
 
-## How to read this chapter
+Open **Original sources** to inspect these passages. They are preserved as statements from the supplied proposal. They are not updated estimates, accepted commercial terms, or proof that a milestone has been delivered.
 
-Read funding, timing, approval, volatility, and retention terms as the original document’s statements. They do not describe application features or constitute evidence that a grant was approved or a payment made.
-
-## Current evidence and next work
-
-This appendix contributes to document quotation coverage. It does not increase executable feature coverage or provide current legal or financial guidance.
-
-[Original document provenance](../../../docs/sources.md)
+Use the readiness chapter when evaluating what the current repository actually establishes.

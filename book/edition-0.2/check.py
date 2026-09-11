@@ -9,6 +9,9 @@ from urllib.parse import unquote, urlsplit
 import json
 import shutil
 import unittest
+import xml.etree.ElementTree as ET
+from unittest.mock import patch
+from render import markdown, html_fragment
 
 import build
 
@@ -141,7 +144,7 @@ class CoverageChecks(unittest.TestCase):
     def test_altered_rendered_quote_fails(self):
         outputs = dict(self.outputs)
         name = "chapters/01-product.html"
-        outputs[name] = outputs[name].replace("without bespoke pairwise integration.", "with bespoke pairwise integration.", 1)
+        outputs[name] = outputs[name].replace('data-unit="proposal-L13">' + escape(next(u.text for u in self.corpus["proposal"][2] if u.id == "proposal-L13")), 'data-unit="proposal-L13">ALTERED', 1)
         with self.assertRaisesRegex(AssertionError, "Altered quotation"):
             verify_rendered(outputs)
 
@@ -165,6 +168,50 @@ class CoverageChecks(unittest.TestCase):
         outputs["coverage.json"] = json.dumps(report)
         with self.assertRaisesRegex(AssertionError, "Coverage report differs"):
             verify_rendered(outputs)
+
+    def test_readable_markdown_has_semantic_structure(self):
+        rendered = markdown("### Heading\n\n- First\n- Second\n\n| Action | Actor |\n| --- | --- |\n| Assess | Bank |\n\n```plantuml\nAlice -> Bank\n```", source=True)
+        self.assertIn("<h3>Heading</h3>", rendered)
+        self.assertIn("<ul>", rendered)
+        self.assertIn("<table>", rendered)
+        self.assertIn('class="diagram-code"', rendered)
+        self.assertNotIn("### Heading", rendered)
+        self.assertEqual(rendered.count("<details"), rendered.count("</details>"))
+
+    def test_exported_diagrams_are_valid_svg_images(self):
+        for name in ["assets/component-map.svg", "assets/contract-model.svg"]:
+            svg = ET.fromstring(self.outputs[name])
+            self.assertEqual(svg.tag, "{http://www.w3.org/2000/svg}svg")
+            self.assertGreater(len(list(svg.iter("{http://www.w3.org/2000/svg}text"))), 20)
+
+    def test_missing_attachments_are_explained(self):
+        self.assertIn("not included", markdown("![Missing](assets/missing.svg)", source=True))
+        self.assertNotIn("<img", markdown("![Missing](assets/missing.svg)", source=True))
+
+    def test_html_styles_do_not_escape_into_the_book(self):
+        rendered = html_fragment('<style>body{display:none}</style><h2>Readable</h2><p>A &amp; B</p><svg><text>In isolated diagram</text></svg>')
+        self.assertEqual(rendered, "<h3>Readable</h3><p>A &amp; B</p>")
+
+    def test_preserved_recordings_match_current_committed_goldens(self):
+        self.assertEqual(len(build.load_recordings(build.ROOT)), 4)
+
+    def test_changed_recording_fails_before_it_can_be_presented(self):
+        original = Path.read_bytes
+        def altered(path):
+            data = original(path)
+            return data + b" " if str(path).endswith("recordings/purchase-approved.json") else data
+        with patch.object(Path, "read_bytes", altered):
+            with self.assertRaisesRegex(ValueError, "Recording changed"):
+                build.load_recordings(build.ROOT)
+
+    def test_stale_recorded_expectation_fails(self):
+        original = Path.read_bytes
+        def altered(path):
+            data = original(path)
+            return data + b" " if str(path).endswith("stories/purchase-approved/expected.md") else data
+        with patch.object(Path, "read_bytes", altered):
+            with self.assertRaisesRegex(ValueError, "no longer matches committed expected"):
+                build.load_recordings(build.ROOT)
 
     def test_html_corpus_rules_include_svg_and_entities(self):
         sample = '<html><head><title>Excluded</title><style>.x { color:red; }</style></head><body><h1>A &amp; B</h1><!-- hidden --><svg><text>Actor</text></svg><script>ignore()</script><p> next </p></body></html>'

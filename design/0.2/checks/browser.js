@@ -1,84 +1,104 @@
-// Load in the preview browser, then await harmoniaDesignChecks.<page>().
-// Checks use the actual DOM and native controls. They submit no ledger commands.
+// Run inside the preview browser. Assertions exercise rendered behavior and independent evidence.
 window.harmoniaDesignChecks = (() => {
-  function assert(condition, message) { if (!condition) throw Error(message); }
-  function click(selector) { const node=document.querySelector(selector); assert(node,`Missing ${selector}`); node.click(); }
-  function select(selector,value) { const node=document.querySelector(selector); node.value=value; node.dispatchEvent(new Event('change',{bubbles:true})); }
+  const assert=(condition,message)=>{if(!condition)throw Error(message);};
+  const $=selector=>document.querySelector(selector);
+  const click=selector=>{assert($(selector),`Missing ${selector}`);$(selector).click();};
+  const select=(selector,value)=>{$(selector).value=value;$(selector).dispatchEvent(new Event('change',{bubbles:true}));};
+  const settle=()=>new Promise(resolve=>setTimeout(resolve,40));
+  const state=()=>window.HarmoniaView.state;
   function layout() {
-    assert(document.documentElement.scrollWidth <= innerWidth, 'Page overflows viewport');
-    assert(document.querySelector('h1'), 'Page has no primary heading');
-    assert(document.querySelector('a[href="#main"]'), 'Missing keyboard skip link');
+    assert(document.documentElement.scrollWidth<=innerWidth,`Page overflows ${innerWidth}px: ${document.documentElement.scrollWidth}`);
+    assert(document.querySelectorAll('h1').length===1,'Expected one primary heading');
+    assert($('a[href="#main"]'),'Missing keyboard skip link');
+    for(const image of document.images) assert(image.complete&&image.naturalWidth>0,`Broken image: ${image.src}`);
     return {width:innerWidth,height:innerHeight,overflow:false};
   }
-  function chapter() {
-    const next=document.getElementById('next-step');
-    click('#next-step'); assert(document.getElementById('step-count').textContent==='Step 3 of 4','Next step did not advance');
-    click('#next-step'); assert(next.disabled,'Completed story still allows progression');
-    click('#reset-story'); assert(!next.disabled && document.getElementById('step-count').textContent==='Step 1 of 4','Reset failed');
-    click('[data-role="Seller"]'); assert(document.getElementById('visibility-explanation').textContent.includes('Private financing documents remain outside'),'Seller privacy explanation missing');
-    click('#tab-input'); assert(!document.getElementById('panel-input').hidden,'Input tab did not open');
-    const input=document.getElementById('tab-input'); input.focus(); input.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true}));
-    assert(document.activeElement.id==='tab-expected' && !document.getElementById('panel-expected').hidden,'Keyboard tab navigation failed');
-    click('#tab-source'); assert(document.querySelector('#panel-source a').getAttribute('href').includes('03-financing'),'Source destination missing');
-    return {checks:7,...layout(),simulation:true};
+  function snapshot() {
+    return {state:state(), heading:$('h1').textContent, visibleModes:[...document.querySelectorAll('.mode-panel')].filter(n=>!n.hidden).map(n=>n.dataset.mode),
+      selected:[...document.querySelectorAll('select')].map(n=>[n.id,n.value]), disclosures:[...document.querySelectorAll('[data-disclosure][open]')].map(n=>n.id).sort(),
+      outcome:$('#recorded-outcome')?.textContent, action:$('#recorded-action')?.textContent, facts:$('#recorded-state')?.textContent, evidence:$('#recorded-json')?.textContent,
+      task:$('#action-title')?.textContent, history:$('#workflow-history')?.textContent, builder:$('#builder-result')?.textContent,
+      route:$('#route-links')?.textContent};
+  }
+  async function common() {
+    click('#appearance-toggle');click('[data-theme="dark"]');click('[data-text="large"]');
+    assert(location.search.includes('theme=dark')&&location.search.includes('text=large'),'Appearance is absent from URL');
+    assert(document.documentElement.dataset.theme==='dark'&&document.documentElement.dataset.text==='large','Appearance is not applied');
+    click('#close-appearance');assert(document.activeElement.id==='appearance-toggle','Appearance did not return focus');
+    const before=location.href;window.HarmoniaView.update({theme:'paper'});
+    await new Promise(resolve=>{addEventListener('popstate',resolve,{once:true});history.back();});await settle();
+    assert(location.href===before&&state().theme==='dark','Back did not restore appearance');
+    await new Promise(resolve=>{addEventListener('popstate',resolve,{once:true});history.forward();});await settle();
+    assert(state().theme==='paper','Forward did not restore appearance');
+    return {checks:5,...layout()};
+  }
+  function welcome() {
+    const expected={explorer:'01-product',author:'coverage',developer:'01-product',investor:'01-product',operator:'06-compose-a-workflow'};
+    for(const [audience,target] of Object.entries(expected)) {
+      click(`[name=audience][value=${audience}]`);
+      assert($('#start-route').href.includes(target),`Wrong first stop for ${audience}`);
+      assert(state().audience===audience,'Audience was not serialized');
+      assert($('#route-links').children.length===window.HarmoniaView.config.journeys[audience].steps.length,'Wrong path length');
+    }
+    return {checks:15,...layout()};
+  }
+  async function chapter() {
+    click('[data-view="try"]');
+    let attempts=0,refusals=0;
+    for(const [key,story] of Object.entries(window.HarmoniaView.config.stories)) {
+      select('#story-select',key);
+      assert(state().step===0&&$('#previous-step').disabled,'Scenario did not start at setup');
+      for(let index=0;index<story.presentation.units.length;index++) {
+        const expected=story.presentation.units[index];click('#next-step');attempts++;
+        assert(state().step===index+1&&location.search.includes(`step=${index+1}`),'Next action did not update URL');
+        assert($('#recorded-json').textContent===JSON.stringify(expected.actual,null,2),'Displayed observation differs from recorded result');
+        assert($('#recorded-outcome').textContent===(expected.actual.outcome==='committed'?'Transaction committed':'Action refused'),'Outcome label is wrong');
+        if(expected.actual.outcome==='rejected')refusals++;
+      }
+      assert($('#next-step').disabled&&!$('#story-complete').hidden,'End of story has no completion state');
+      click('#previous-step');assert(!$('#next-step').disabled,'Previous action does not restore controls');
+      click('#reset-story');assert(state().step===0,'Reset failed');
+    }
+    click('#step-inspector summary');await settle();click('[data-tab="input"]');
+    $('[data-tab="input"]').focus();$('[data-tab="input"]').dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true}));
+    assert(state().tab==='expected'&&document.activeElement.id==='evidence-expected','Evidence tabs do not support arrows');
+    return {attempts,refusals,...layout()};
   }
   function application() {
-    const advance=document.getElementById('advance-workflow');
-    select('#actor','Buyer'); assert(advance.disabled,'Wrong illustrated actor can advance');
-    select('#actor','Bank');
-    for(const mode of ['pending','refused','stale','disconnected']) {
-      select('#simulation-state',mode); assert(advance.disabled,`${mode} still enables commands`);
-      assert(document.getElementById('workflow-status').textContent==='Awaiting bank',`${mode} advanced progress`);
+    const advance=$('#advance-workflow');
+    select('#actor','Buyer');assert(advance.disabled,'Wrong sample actor can advance');select('#actor','Bank');
+    for(const status of ['pending','refused','stale','disconnected']) {
+      select('#simulation-state',status);assert(advance.disabled&&state().step===2,`${status} allows progression`);assert($('#action-notice').textContent.length>20,'No recovery explanation');
     }
-    select('#simulation-state','ready'); click('#advance-workflow');
-    assert(document.getElementById('workflow-status').textContent==='Awaiting buyer' && advance.disabled,'Bank action did not hand off to buyer');
-    select('#actor','Buyer'); click('#advance-workflow'); assert(document.getElementById('workflow-status').textContent==='Awaiting seller','Buyer did not create offer');
-    select('#actor','Seller'); click('#advance-workflow'); assert(advance.disabled && document.getElementById('workflow-status').textContent==='Complete · sample','Final completion incorrect');
-    click('[data-view="history"]'); assert(!document.getElementById('view-history').hidden && document.querySelectorAll('#workflow-history li').length===4,'History does not follow actions');
-    return {checks:9,...layout(),simulation:true};
-  }
-  function refusal() {
-    click('#reject-workflow');
-    assert(document.getElementById('workflow-status').textContent==='Financing rejected','Rejection missing');
-    assert(document.getElementById('advance-workflow').disabled,'Rejected workflow can advance');
-    assert(!document.querySelector('[data-progress="3"]').classList.contains('complete'),'Rejection created an offer');
-    return {checks:3,...layout(),simulation:true};
+    select('#simulation-state','ready');click('#advance-workflow');
+    assert(state().step===3&&advance.disabled&&!$('#handoff-workflow').hidden,'Bank action lacks handoff');
+    click('#handoff-workflow');assert(state().actor==='Buyer'&&!advance.disabled,'Handoff does not enable buyer task');
+    click('#advance-workflow');click('#handoff-workflow');click('#advance-workflow');
+    assert(state().step===5&&advance.hidden,'Completion not shown');
+    click('[data-view="history"]');assert($('#workflow-history').children.length===4,'History does not reflect the URL state');
+    click('#reset-workflow');click('#reject-workflow');
+    assert(state().state==='rejected'&&state().step===2&&advance.disabled,'Refusal did not stop the sample');
+    return {checks:10,...layout()};
   }
   function builder() {
-    select('#sample-package','unsupported'); click('#inspect-sample');
-    assert(document.getElementById('builder-result').textContent.includes('Unsupported sample shape'),'Unsupported shape is not explained');
-    select('#sample-package','legacy'); click('#inspect-sample');
-    assert(document.getElementById('builder-result').textContent.includes('not a fresh DAR inspection'),'Inspection wrongly claims live evidence');
-    click('#inspect-sample'); assert(document.getElementById('builder-result').textContent.includes('Mapping preview'),'Mapping is not shown');
-    click('#inspect-sample'); assert(document.getElementById('inspect-sample').disabled,'Final design state still advances');
-    assert(document.getElementById('builder-result').textContent.includes('performs none of those operations'),'Build simulation claims compilation');
-    return {checks:5,...layout(),simulation:true};
+    select('#sample-package','unsupported');click('#inspect-sample');
+    assert(state().phase===2&&$('#inspect-sample').disabled&&$('#builder-title').textContent.includes('unsupported'),'Unsupported shape can proceed');
+    select('#sample-package','legacy');
+    for(let phase=2;phase<=4;phase++){click('#inspect-sample');assert(state().phase===phase,'Builder phase absent from URL');}
+    assert($('#inspect-sample').disabled&&!$('#builder-complete').hidden,'No final integration guide');
+    click('#builder-back');assert(state().phase===3&&!$('#inspect-sample').disabled,'Builder cannot go back');
+    return {checks:6,...layout()};
   }
-  async function coverage() {
-    const original=await (await fetch('../../docs/proposal/harmonia-architecture.html')).text();
-    const document=new DOMParser().parseFromString(original,'text/html');
-    const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
-    const units=[]; let node;
-    while((node=walker.nextNode())) if(node.textContent.trim() && !node.parentElement.closest('style,script,template')) units.push(node.textContent.trim());
-    const report=await (await fetch('coverage.json')).json();
-    const architecture=report.documents.find(d=>d.id==='architecture');
-    assert(units.length===architecture.units, 'Browser HTML text count differs from report');
-    const words=units.flatMap(t=>t.match(/[\p{L}\p{N}_]+(?:[’'-][\p{L}\p{N}_]+)*/gu)||[]).length;
-    assert(words===architecture.words,'Browser HTML word count differs from report');
-    const quoted=[];
-    for(const chapter of report.chapters) {
-      const html=await (await fetch(`chapters/${chapter.id}.html`)).text();
-      const page=new DOMParser().parseFromString(html,'text/html');
-      quoted.push(...[...page.querySelectorAll('[data-unit^="architecture-"]')].map(n=>({id:n.dataset.unit,text:n.textContent})));
+  async function sources() {
+    window.HarmoniaView.update({view:'sources'});
+    let count=0;
+    for(const details of document.querySelectorAll('.source-section')) {
+      details.open=true; await settle();count++;
+      assert(state().open.split(',').includes(details.id),'Source disclosure not serialized');
+      assert(details.querySelector('.rich-source'),'Missing readable source');
+      layout(); details.open=false;await settle();
     }
-    quoted.sort((a,b)=>a.id.localeCompare(b.id));
-    assert(JSON.stringify(quoted.map(q=>q.text))===JSON.stringify(units),'Browser parsed source does not equal chapter quotations');
-    return {checks:3,...layout(),htmlUnits:units.length,htmlWords:words};
+    return {passages:count,...layout()};
   }
-  function narrow() {
-    const menu=document.querySelector('.mobile-menu');
-    if(innerWidth<=900) { click('.mobile-menu'); assert(menu.getAttribute('aria-expanded')==='true','Mobile menu did not open'); click('.mobile-menu'); assert(menu.getAttribute('aria-expanded')==='false','Mobile menu did not close'); }
-    return {checks:2,...layout()};
-  }
-  return {chapter,application,refusal,builder,coverage,narrow,layout};
+  return {layout,snapshot,common,welcome,chapter,application,builder,sources};
 })();

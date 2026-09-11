@@ -1,0 +1,592 @@
+{
+  "id": "transfer-final-leg-rejected",
+  "title": "Transfer: final leg rejected",
+  "description": "The destination rejects its receipt after source withdrawal is attempted. The source remains locked and no destination holding or workflow completion survives.",
+  "input": {
+    "workflow": "atomic-transfer",
+    "setup": {
+      "trade": {
+        "buyer": "Alice",
+        "seller": "Seller",
+        "source": "Source",
+        "destination": "Destination",
+        "settler": "Alice",
+        "asset": "TEST",
+        "quantity": "10"
+      },
+      "destination_receipts": "reject"
+    },
+    "actions": [
+      {
+        "id": "seller-agrees",
+        "actor": "Seller",
+        "action": "agree-trade"
+      },
+      {
+        "id": "seller-locks",
+        "actor": "Seller",
+        "action": "lock-position"
+      },
+      {
+        "id": "source-confirms",
+        "actor": "Source",
+        "action": "confirm-source"
+      },
+      {
+        "id": "destination-prepares",
+        "actor": "Destination",
+        "action": "prepare-destination"
+      },
+      {
+        "id": "destination-confirms",
+        "actor": "Destination",
+        "action": "confirm-destination"
+      },
+      {
+        "id": "settle",
+        "actor": "Alice",
+        "action": "settle"
+      }
+    ]
+  },
+  "expected": {
+    "actions": [
+      {
+        "id": "seller-agrees",
+        "outcome": "committed",
+        "trade": "agreed",
+        "source": {
+          "available": "10",
+          "locked": "0"
+        },
+        "destination": "0",
+        "workflow": "waiting",
+        "active_workflows": 0,
+        "releases": 0,
+        "visible_to": [
+          "Alice",
+          "Destination",
+          "Seller",
+          "Source"
+        ]
+      },
+      {
+        "id": "seller-locks",
+        "outcome": "committed",
+        "trade": "agreed",
+        "source": {
+          "available": "0",
+          "locked": "10"
+        },
+        "destination": "0",
+        "workflow": "waiting",
+        "active_workflows": 0,
+        "releases": 0,
+        "visible_to": [
+          "Alice",
+          "Destination",
+          "Seller",
+          "Source"
+        ]
+      },
+      {
+        "id": "source-confirms",
+        "outcome": "committed",
+        "trade": "source-confirmed",
+        "source": {
+          "available": "0",
+          "locked": "10"
+        },
+        "destination": "0",
+        "workflow": "waiting",
+        "active_workflows": 0,
+        "releases": 0,
+        "visible_to": [
+          "Alice",
+          "Destination",
+          "Seller",
+          "Source"
+        ]
+      },
+      {
+        "id": "destination-prepares",
+        "outcome": "committed",
+        "trade": "source-confirmed",
+        "source": {
+          "available": "0",
+          "locked": "10"
+        },
+        "destination": "0",
+        "workflow": "waiting",
+        "active_workflows": 0,
+        "releases": 0,
+        "visible_to": [
+          "Alice",
+          "Destination",
+          "Seller",
+          "Source"
+        ]
+      },
+      {
+        "id": "destination-confirms",
+        "outcome": "committed",
+        "trade": "ready",
+        "source": {
+          "available": "0",
+          "locked": "10"
+        },
+        "destination": "0",
+        "workflow": "waiting",
+        "active_workflows": 0,
+        "releases": 0,
+        "visible_to": [
+          "Alice",
+          "Destination",
+          "Seller",
+          "Source"
+        ]
+      },
+      {
+        "id": "settle",
+        "outcome": "rejected",
+        "reason": "destination-rejected",
+        "trade": "ready",
+        "source": {
+          "available": "0",
+          "locked": "10"
+        },
+        "destination": "0",
+        "workflow": "waiting",
+        "active_workflows": 0,
+        "releases": 0,
+        "visible_to": [
+          "Alice",
+          "Destination",
+          "Seller",
+          "Source"
+        ]
+      }
+    ],
+    "settlement_transactions": 0
+  },
+  "actual": {
+    "actions": [
+      {
+        "id": "seller-agrees",
+        "outcome": "committed",
+        "trade": "agreed",
+        "workflow": "waiting",
+        "active_workflows": 0,
+        "releases": 0,
+        "source": {
+          "available": "10",
+          "locked": "0"
+        },
+        "destination": "0",
+        "visible_to": [
+          "Alice",
+          "Destination",
+          "Seller",
+          "Source"
+        ]
+      },
+      {
+        "id": "seller-locks",
+        "outcome": "committed",
+        "trade": "agreed",
+        "workflow": "waiting",
+        "active_workflows": 0,
+        "releases": 0,
+        "source": {
+          "available": "0",
+          "locked": "10"
+        },
+        "destination": "0",
+        "visible_to": [
+          "Alice",
+          "Destination",
+          "Seller",
+          "Source"
+        ]
+      },
+      {
+        "id": "source-confirms",
+        "outcome": "committed",
+        "trade": "source-confirmed",
+        "workflow": "waiting",
+        "active_workflows": 0,
+        "releases": 0,
+        "source": {
+          "available": "0",
+          "locked": "10"
+        },
+        "destination": "0",
+        "visible_to": [
+          "Alice",
+          "Destination",
+          "Seller",
+          "Source"
+        ]
+      },
+      {
+        "id": "destination-prepares",
+        "outcome": "committed",
+        "trade": "source-confirmed",
+        "workflow": "waiting",
+        "active_workflows": 0,
+        "releases": 0,
+        "source": {
+          "available": "0",
+          "locked": "10"
+        },
+        "destination": "0",
+        "visible_to": [
+          "Alice",
+          "Destination",
+          "Seller",
+          "Source"
+        ]
+      },
+      {
+        "id": "destination-confirms",
+        "outcome": "committed",
+        "trade": "ready",
+        "workflow": "waiting",
+        "active_workflows": 0,
+        "releases": 0,
+        "source": {
+          "available": "0",
+          "locked": "10"
+        },
+        "destination": "0",
+        "visible_to": [
+          "Alice",
+          "Destination",
+          "Seller",
+          "Source"
+        ]
+      },
+      {
+        "id": "settle",
+        "outcome": "rejected",
+        "trade": "ready",
+        "workflow": "waiting",
+        "active_workflows": 0,
+        "releases": 0,
+        "source": {
+          "available": "0",
+          "locked": "10"
+        },
+        "destination": "0",
+        "visible_to": [
+          "Alice",
+          "Destination",
+          "Seller",
+          "Source"
+        ],
+        "reason": "destination-rejected"
+      }
+    ],
+    "settlement_transactions": 0
+  },
+  "provenance": {
+    "mode": "live-canton",
+    "topology": "four independent participant nodes, one local JVM, one common synchronizer",
+    "revision": "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+    "worktree_dirty": false,
+    "recorded_at": "2026-09-11T05:14:03.248206Z",
+    "story_format": 1,
+    "java": "17.0.19+10",
+    "configured_sdk": "3.4.11",
+    "input_sha256": "ba449398b72494701bc76d8a7211f92ce8d113406de0fd9227e24655fd5bd211",
+    "expected_sha256": "4b937b4712a87be43e371b0351b7b494777ca34ddf8e5f4f5dda1e28a3036863",
+    "dar_sha256": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e",
+    "dars": {
+      "harness/ledger/tests/.daml/dist/harmonia-tests-0.1.0.dar": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e"
+    },
+    "actual_sha256": "29dd853c45195ef19f8668b34db9ccb5827a65fedf25fc4e6b6c74c267427504",
+    "observation_sha256": "6cf55ef42bd64ac2b4666f4273adf381744d9f52a6d956d4c1604ce67fd1f655",
+    "matched": true
+  },
+  "presentation": {
+    "kind": "Transfer",
+    "subtitle": "Four-party atomic transfer",
+    "start": "proposed",
+    "start_detail": "Trade and source position created",
+    "operation": "product/ledger/applications/transfer/daml/AtomicTransfer.daml",
+    "units": [
+      {
+        "id": "seller-agrees",
+        "actor": "Seller",
+        "action": "agree-trade",
+        "expected": {
+          "id": "seller-agrees",
+          "outcome": "committed",
+          "trade": "agreed",
+          "source": {
+            "available": "10",
+            "locked": "0"
+          },
+          "destination": "0",
+          "workflow": "waiting",
+          "active_workflows": 0,
+          "releases": 0,
+          "visible_to": [
+            "Alice",
+            "Destination",
+            "Seller",
+            "Source"
+          ]
+        },
+        "actual": {
+          "id": "seller-agrees",
+          "outcome": "committed",
+          "trade": "agreed",
+          "workflow": "waiting",
+          "active_workflows": 0,
+          "releases": 0,
+          "source": {
+            "available": "10",
+            "locked": "0"
+          },
+          "destination": "0",
+          "visible_to": [
+            "Alice",
+            "Destination",
+            "Seller",
+            "Source"
+          ]
+        },
+        "observed_state": "agreed",
+        "outcome_label": "committed"
+      },
+      {
+        "id": "seller-locks",
+        "actor": "Seller",
+        "action": "lock-position",
+        "expected": {
+          "id": "seller-locks",
+          "outcome": "committed",
+          "trade": "agreed",
+          "source": {
+            "available": "0",
+            "locked": "10"
+          },
+          "destination": "0",
+          "workflow": "waiting",
+          "active_workflows": 0,
+          "releases": 0,
+          "visible_to": [
+            "Alice",
+            "Destination",
+            "Seller",
+            "Source"
+          ]
+        },
+        "actual": {
+          "id": "seller-locks",
+          "outcome": "committed",
+          "trade": "agreed",
+          "workflow": "waiting",
+          "active_workflows": 0,
+          "releases": 0,
+          "source": {
+            "available": "0",
+            "locked": "10"
+          },
+          "destination": "0",
+          "visible_to": [
+            "Alice",
+            "Destination",
+            "Seller",
+            "Source"
+          ]
+        },
+        "observed_state": "agreed",
+        "outcome_label": "committed"
+      },
+      {
+        "id": "source-confirms",
+        "actor": "Source",
+        "action": "confirm-source",
+        "expected": {
+          "id": "source-confirms",
+          "outcome": "committed",
+          "trade": "source-confirmed",
+          "source": {
+            "available": "0",
+            "locked": "10"
+          },
+          "destination": "0",
+          "workflow": "waiting",
+          "active_workflows": 0,
+          "releases": 0,
+          "visible_to": [
+            "Alice",
+            "Destination",
+            "Seller",
+            "Source"
+          ]
+        },
+        "actual": {
+          "id": "source-confirms",
+          "outcome": "committed",
+          "trade": "source-confirmed",
+          "workflow": "waiting",
+          "active_workflows": 0,
+          "releases": 0,
+          "source": {
+            "available": "0",
+            "locked": "10"
+          },
+          "destination": "0",
+          "visible_to": [
+            "Alice",
+            "Destination",
+            "Seller",
+            "Source"
+          ]
+        },
+        "observed_state": "source-confirmed",
+        "outcome_label": "committed"
+      },
+      {
+        "id": "destination-prepares",
+        "actor": "Destination",
+        "action": "prepare-destination",
+        "expected": {
+          "id": "destination-prepares",
+          "outcome": "committed",
+          "trade": "source-confirmed",
+          "source": {
+            "available": "0",
+            "locked": "10"
+          },
+          "destination": "0",
+          "workflow": "waiting",
+          "active_workflows": 0,
+          "releases": 0,
+          "visible_to": [
+            "Alice",
+            "Destination",
+            "Seller",
+            "Source"
+          ]
+        },
+        "actual": {
+          "id": "destination-prepares",
+          "outcome": "committed",
+          "trade": "source-confirmed",
+          "workflow": "waiting",
+          "active_workflows": 0,
+          "releases": 0,
+          "source": {
+            "available": "0",
+            "locked": "10"
+          },
+          "destination": "0",
+          "visible_to": [
+            "Alice",
+            "Destination",
+            "Seller",
+            "Source"
+          ]
+        },
+        "observed_state": "source-confirmed",
+        "outcome_label": "committed"
+      },
+      {
+        "id": "destination-confirms",
+        "actor": "Destination",
+        "action": "confirm-destination",
+        "expected": {
+          "id": "destination-confirms",
+          "outcome": "committed",
+          "trade": "ready",
+          "source": {
+            "available": "0",
+            "locked": "10"
+          },
+          "destination": "0",
+          "workflow": "waiting",
+          "active_workflows": 0,
+          "releases": 0,
+          "visible_to": [
+            "Alice",
+            "Destination",
+            "Seller",
+            "Source"
+          ]
+        },
+        "actual": {
+          "id": "destination-confirms",
+          "outcome": "committed",
+          "trade": "ready",
+          "workflow": "waiting",
+          "active_workflows": 0,
+          "releases": 0,
+          "source": {
+            "available": "0",
+            "locked": "10"
+          },
+          "destination": "0",
+          "visible_to": [
+            "Alice",
+            "Destination",
+            "Seller",
+            "Source"
+          ]
+        },
+        "observed_state": "ready",
+        "outcome_label": "committed"
+      },
+      {
+        "id": "settle",
+        "actor": "Alice",
+        "action": "settle",
+        "expected": {
+          "id": "settle",
+          "outcome": "rejected",
+          "reason": "destination-rejected",
+          "trade": "ready",
+          "source": {
+            "available": "0",
+            "locked": "10"
+          },
+          "destination": "0",
+          "workflow": "waiting",
+          "active_workflows": 0,
+          "releases": 0,
+          "visible_to": [
+            "Alice",
+            "Destination",
+            "Seller",
+            "Source"
+          ]
+        },
+        "actual": {
+          "id": "settle",
+          "outcome": "rejected",
+          "trade": "ready",
+          "workflow": "waiting",
+          "active_workflows": 0,
+          "releases": 0,
+          "source": {
+            "available": "0",
+            "locked": "10"
+          },
+          "destination": "0",
+          "visible_to": [
+            "Alice",
+            "Destination",
+            "Seller",
+            "Source"
+          ],
+          "reason": "destination-rejected"
+        },
+        "observed_state": "ready",
+        "outcome_label": "rejected"
+      }
+    ]
+  }
+}

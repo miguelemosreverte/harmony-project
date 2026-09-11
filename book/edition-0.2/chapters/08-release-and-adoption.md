@@ -1,15 +1,23 @@
-# Release & adoption
+# Readiness and adoption
 
-Move from a local example to external use
+Priya wants to understand whether the product solves a useful problem and what still separates a convincing reference from adoption by another team.
 
-A useful release can be obtained, run, inspected, and adapted by another team. Its documentation helps that team understand the integration cost and the supported trust boundary.
+## The benefit to evaluate
 
-## How to read this chapter
+Separate applications can coordinate a process without handing one application control of every participant's rules. The purchase example makes the privacy boundary visible. The transfer example shows a bounded final transaction across prepared participants.
 
-M1–M6 describe engineering and release deliverables. M7 requires two qualified external teams using the system in pilot or production. M8 concerns additional qualified adoption. The complete original milestone, co-marketing, and maintenance wording follows below.
+## What exists today
 
-## Current evidence and next work
+The repository has local reference implementations, committed golden stories, preserved ledger evidence, and integration guides. This edition adds guided reading and interactive playback. Its workspace screens remain design simulations.
 
-The repository contains local release evidence and a blank external-feedback template. Public destination and license remain undecided. No external adoption, funded acceptance, completed workshop, or public release is established by this design.
+## What the next product evidence must establish
 
-[Unfilled evaluator record](../../../docs/release/evaluator-feedback.md)
+- An independently developed application can be integrated using the supported path.
+- The live interface exposes the supported workflow and its failure states.
+- Another team can evaluate the integration with a recorded outcome.
+- Release, licensing, publication, and knowledge transfer have actual decisions and evidence.
+- Any pilot or production adoption claim is confirmed by the participating team.
+
+No customer counts, commercial traction, or completed adoption milestones are inferred from passing local tests.
+
+The original milestones remain available in **Original sources**. Their quotation coverage is complete under the documented counting rules; their product acceptance is a separate question.

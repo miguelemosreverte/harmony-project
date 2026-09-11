@@ -1,15 +1,21 @@
-# Compose a workflow
+# Do the next task
 
-Make the next action clear
+Nina is reviewing a financing request at the bank. She needs to know what she is looking at, whether the decision belongs to her, and what will happen when she submits it.
 
-A person names a bounded workflow, chooses eligible compiled actions, assigns actual parties, and obtains consent. The workspace then makes the current state, owners, and available next actions obvious.
+## The workspace starts with the current responsibility
 
-## How to read this chapter
+The task names the workflow, the person who can act, and the source application that owns the decision. Supporting details stay available without competing with the next action.
 
-The book explains the model. The application workspace performs the work through the Scala service. Its design must show pending submission, refusal, stale state, disconnection, and completion. Only a committed ledger observation establishes success.
+When Nina approves the sample financing, the task moves to the buyer. When she refuses it, the sample stops before an offer is created. A waiting participant sees who must act next.
 
-## Current evidence and next work
+[Try the workspace simulation](../application.html). Start as the bank, make a decision, then switch to the buyer to follow the handoff. Actor switching is a design aid, not authentication.
 
-The current live composer supports short sequential plans between bank and buyer. Branches, joins, and the four-party flow need explicit UI coverage before calling the full supported release experience complete. The adjacent application mockup is a simulation.
+## What should happen when something goes wrong?
 
-[Current composer contract](../../../docs/architecture/010-composition.md)
+A pending submission disables another command. A lost connection makes the lack of a current observation visible. A refused action leaves progress unchanged. Stale state asks for a new observation before retrying.
+
+The prototype exposes these states under **Explore connection states**, so the ordinary task stays focused.
+
+## How this relates to the product
+
+The underlying core includes more composition behavior than this sequential screen. Branches, joins, and continuation still need their supported live views. The simple task screen is not a claim that every proposed composer feature is implemented.

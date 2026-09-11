@@ -7,10 +7,10 @@ Compose independently owned Canton/Daml applications into a shared workflow. The
 The active work revisits the original product requirements from the fourth-draft
 baseline. Read the [linear plan](docs/0.2/PLAN.md), [product contract](docs/0.2/product-contract.md),
 and [numbered Git history](docs/versions.md). The new book and application designs
-are available in the [design review](design/0.2/README.md); their interactions are labelled prototypes.
+are available in the [design review](design/0.2/README.md); the book plays preserved ledger recordings and the workspace is a labelled simulation.
 
 Run `scripts/design-preview` and open [the new field guide](http://127.0.0.1:56202/design/0.2/book-overview.html).
-Inspect the [concept and HTML pairs](http://127.0.0.1:56202/design/0.2/review.html) and
+Inspect the [current design review](http://127.0.0.1:56202/design/0.2/review.html) and
 [quotation coverage](http://127.0.0.1:56202/design/0.2/coverage.html).
 
 ## Read the product

@@ -1,15 +1,11 @@
-# Context & references
+# Context and references
 
-Appendix · rationale and related work
+The original documents place Harmonia in a wider technical context and name related work. Those references explain the proposal's reasoning and remain part of its quoted corpus.
 
-The original proposal explains why decentralized composition matters and names research and related projects. Preserve that reasoning so reviewers can examine the assumptions behind the product.
+## Know what is included
 
-## How to read this chapter
+The two downloaded documents are preserved and fingerprinted. Their referenced external publications are outside this quotation denominator. Four original diagram attachments were absent from the download; this edition identifies those missing attachments instead of rendering broken images.
 
-The quoted links and project statuses below are historical source statements. They have not been refreshed as part of this design task. Linked external works are references, not additional documents included in the quotation denominator.
+The supplied HTML does contain two architecture illustrations. They are displayed with their own original styling and can be opened at full size.
 
-## Current evidence and next work
-
-The two imported files define this coverage corpus. The four missing diagram assets and the full contents of linked third-party works are not silently included or claimed as recovered.
-
-[Corpus boundary and missing source assets](../../../docs/sources.md)
+Open **Original sources** to read the context and references, or return to your chosen reading path.

@@ -1,0 +1,234 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 790" role="img" aria-label="Harmonia Daml contract model"><style>
+  :root{
+    --bg:#0b0f14; --panel:#111823; --ink:#e6edf3; --dim:#8fa3b8; --faint:#5b6b7d;
+    --off:#4cc9f0; --off-bg:#0f1a24; --off-br:#1e3a4f;
+    --on:#4ade80;  --on-bg:#0d1a14;  --on-br:#1f4a34;
+    --ext:#f0a04c; --edge:#6c8199; --grid:#1a2430;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font:14px/1.5 ui-sans-serif,-apple-system,"Segoe UI",Inter,system-ui,sans-serif;
+       padding:28px 24px 80px}
+  .wrap{max-width:1460px;margin:0 auto}
+  header{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+         border-bottom:1px solid var(--grid);padding-bottom:14px;margin-bottom:26px}
+  h1{font:600 22px/1.2 var(--mono);margin:0;letter-spacing:-.3px}
+  header .sub{color:var(--dim);font:12px/1.4 var(--mono)}
+  header .src{margin-left:auto;color:var(--faint);font:11px/1.4 var(--mono)}
+  h2{font:600 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+     color:var(--dim);margin:44px 0 14px;display:flex;align-items:center;gap:12px}
+  h2::after{content:"";flex:1;height:1px;background:var(--grid)}
+  figure{margin:0;background:var(--panel);border:1px solid var(--grid);border-radius:12px;
+         padding:10px;overflow-x:auto}
+  svg{display:block;width:100%;height:auto;min-width:1080px}
+  .t{font:600 14px var(--mono);fill:var(--ink)}
+  .t2{font:600 12px var(--mono);fill:var(--ink)}
+  .st{font:10.5px var(--mono);fill:var(--faint);letter-spacing:.06em}
+  .li{font:11.5px var(--mono);fill:var(--dim)}
+  .lo{font:10.5px var(--mono);fill:#9fb3c8}
+  .xs{font:9.5px var(--mono);fill:#8fa3b8}
+  .band{font:700 11px var(--mono);letter-spacing:.2em}
+  .num{font:700 12px var(--mono)}
+  .bandoff{fill:var(--off-bg);stroke:var(--off-br)}
+  .bandon{fill:var(--on-bg);stroke:var(--on-br)}
+  .node{fill:#16202c;stroke:#2b3a4a;stroke-width:1.2;rx:8}
+  .nodeoff{fill:#12202c;stroke:#2a4d63}
+  .nodeon{fill:#102019;stroke:#28553d}
+  .ext{fill:#1e1810;stroke:#5c451f;stroke-dasharray:5 4}
+  .sub{fill:#0e1721;stroke:#25333f;rx:5}
+  .subon{fill:#0c1912;stroke:#22432f;rx:5}
+  .sw{rx:3}
+  .e{stroke:var(--edge);stroke-width:1.4;fill:none;marker-end:url(#a)}
+  .e.build{stroke-dasharray:6 4;stroke:#f0a04c;marker-end:url(#ao)}
+  .e.deploy{stroke:#f0a04c;stroke-width:1.8;marker-end:url(#ao)}
+  .e.on{stroke:#4ade80;marker-end:url(#ag)}
+  .cut{stroke:#3d4f61;stroke-width:1.4;stroke-dasharray:10 7}
+  table{width:100%;border-collapse:collapse;font:12.5px/1.45 var(--mono);
+        background:var(--panel);border:1px solid var(--grid);border-radius:10px;overflow:hidden}
+  th{text-align:left;font-weight:600;color:var(--dim);background:#0e1620;
+     padding:9px 12px;border-bottom:1px solid var(--grid);white-space:nowrap;
+     font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+  td{padding:8px 12px;border-bottom:1px solid #16202c;vertical-align:top;color:#c9d6e2}
+  tr:last-child td{border-bottom:0}
+  td.k{color:var(--ink);white-space:nowrap}
+  .tag{display:inline-block;padding:1px 7px;border-radius:20px;font:10.5px var(--mono);
+       border:1px solid;letter-spacing:.04em}
+  .tag.off{color:var(--off);border-color:#1e4a63;background:#0d1e29}
+  .tag.on{color:var(--on);border-color:#1f4a34;background:#0d1d14}
+  .tag.ext{color:var(--ext);border-color:#5c451f;background:#1c1610}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .grid2>div>h3{font:600 11px var(--mono);letter-spacing:.14em;
+       text-transform:uppercase;color:var(--faint);margin:0 0 8px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{font:11.5px var(--mono);padding:4px 9px;border-radius:6px;
+        background:#12202c;border:1px solid #2a4d63;color:#bcd4e4}
+  .chip.no{background:#1c1114;border-color:#5a2a33;color:#e0a9b3;text-decoration:line-through;
+           text-decoration-color:#7a3a46}
+  code{font:12px var(--mono);color:#bcd4e4}
+  @media (max-width:900px){.grid2{grid-template-columns:1fr}}
+</style><rect width="100%" height="100%" fill="#111823"/>
+  <defs>
+    <marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#4ade80"/></marker>
+  </defs>
+  <style>
+    .cls{fill:#102019;stroke:#28553d;stroke-width:1.2;rx:8}
+    .iface{fill:#101c26;stroke:#2a4d63;stroke-width:1.2;rx:8}
+    .dat{fill:#1a1610;stroke:#5c451f;stroke-width:1.2;rx:8}
+    .cn{font:600 13px var(--mono);fill:#e6edf3}
+    .cs{font:10px var(--mono);fill:#5b6b7d;letter-spacing:.1em}
+    .cf{font:11px var(--mono);fill:#9fb3c8}
+    .cc{font:11px var(--mono);fill:#4ade80}
+    .sep{stroke:#28553d;stroke-width:1}
+    .rel{stroke:#4ade80;stroke-width:1.3;fill:none;marker-end:url(#b)}
+    .relo{stroke:#f0a04c;stroke-width:1.3;fill:none;stroke-dasharray:5 4;marker-end:url(#ao)}
+    .rl{font:10.5px var(--mono);fill:#8fa3b8}
+  </style>
+
+
+  <rect class="cls" x="40" y="80" width="300" height="240"/>
+  <text class="cs" x="56" y="102">«template» harmonia-core</text>
+  <text class="cn" x="56" y="120">WorkflowDefinition</text>
+  <line class="sep" x1="40" y1="132" x2="340" y2="132"/>
+  <text class="cf" x="56" y="150">definitionId · version</text>
+  <text class="cf" x="56" y="168">startEvent · endEvent</text>
+  <text class="cf" x="56" y="186">steps : [StepSpec]</text>
+  <text class="cf" x="56" y="204">flow : sequential</text>
+  <text class="cf" x="56" y="222">branches : XOR · joins</text>
+  <text class="cf" x="56" y="240">atomicBlocks : [[StepId]]</text>
+  <text class="cf" x="56" y="258">subWorkflows : [DefId]</text>
+  <line class="sep" x1="40" y1="270" x2="340" y2="270"/>
+  <text class="cc" x="56" y="288">◆ Instantiate</text>
+  <text class="cf" x="56" y="306">signatory definer</text>
+
+
+  <rect class="cls" x="400" y="60" width="330" height="300"/>
+  <text class="cs" x="416" y="82">«template» harmonia-core</text>
+  <text class="cn" x="416" y="100">WorkflowInstance</text>
+  <line class="sep" x1="400" y1="112" x2="730" y2="112"/>
+  <text class="cf" x="416" y="130">definitionId</text>
+  <text class="cf" x="416" y="148">roleBindings : [RoleBinding]</text>
+  <text class="cf" x="416" y="166">state : orchestration state</text>
+  <text class="cf" x="416" y="184">currentSteps · completedSteps</text>
+  <text class="cf" x="416" y="202">outputs : workflow results</text>
+  <line class="sep" x1="400" y1="214" x2="730" y2="214"/>
+  <text class="cc" x="416" y="232">◆ AdvanceStep</text>
+  <text class="cc" x="416" y="250">◆ TakeBranch (XOR) · Join</text>
+  <text class="cc" x="416" y="268">◆ ExecuteAtomic (bounded)</text>
+  <text class="cc" x="416" y="286">◆ Continue → sub-workflow</text>
+  <text class="cc" x="416" y="304">◆ Complete → end event</text>
+  <line class="sep" x1="400" y1="316" x2="730" y2="316"/>
+  <text class="cf" x="416" y="334">signatory bound parties</text>
+  <text class="cf" x="416" y="352">queryable · inspectable</text>
+
+
+  <rect class="dat" x="400" y="410" width="160" height="120"/>
+  <text class="cs" x="416" y="432">«data»</text>
+  <text class="cn" x="416" y="450">RoleBinding</text>
+  <line class="sep" x1="400" y1="462" x2="560" y2="462" stroke="#5c451f"/>
+  <text class="cf" x="416" y="480">role : Text</text>
+  <text class="cf" x="416" y="498">party : Party</text>
+  <text class="cf" x="416" y="516">rights : [StepId]</text>
+
+
+  <rect class="cls" x="590" y="410" width="200" height="140"/>
+  <text class="cs" x="606" y="432">«template» harmonia-core</text>
+  <text class="cn" x="606" y="450">Continuation</text>
+  <line class="sep" x1="590" y1="462" x2="790" y2="462"/>
+  <text class="cf" x="606" y="480">producer : InstanceId</text>
+  <text class="cf" x="606" y="498">consumer : DefinitionId</text>
+  <text class="cf" x="606" y="516">outputs : payload</text>
+  <text class="cf" x="606" y="538">links owned domains</text>
+
+
+  <rect class="cls" x="800" y="60" width="330" height="290"/>
+  <text class="cs" x="816" y="82">«template» harmonia-core</text>
+  <text class="cn" x="816" y="100">StepAssignment</text>
+  <line class="sep" x1="800" y1="112" x2="1130" y2="112"/>
+  <text class="cf" x="816" y="130">stepId · instanceId</text>
+  <text class="cf" x="816" y="148">actor : Party ← assignee</text>
+  <text class="cf" x="816" y="166">kind : Create | Exercise | Wait</text>
+  <text class="cf" x="816" y="184">&#160;&#160;&#160;&#160; | Branch | Continue | Atomic</text>
+  <text class="cf" x="816" y="202">target : templateId · choice</text>
+  <text class="cf" x="816" y="220">view : interface view</text>
+  <text class="cf" x="816" y="238">authority : required from app</text>
+  <line class="sep" x1="800" y1="250" x2="1130" y2="250"/>
+  <text class="cc" x="816" y="268">◆ Execute → app choice</text>
+  <text class="cc" x="816" y="286">◆ Reject</text>
+  <line class="sep" x1="800" y1="298" x2="1130" y2="298"/>
+  <text class="cf" x="816" y="316">controller actor</text>
+  <text class="cf" x="816" y="334">human- or system-executed</text>
+
+
+  <rect class="iface" x="800" y="400" width="330" height="180"/>
+  <text class="cs" x="816" y="422">«interface» harmonia-core</text>
+  <text class="cn" x="816" y="440">HarmoniaStepAction</text>
+  <line class="sep" x1="800" y1="452" x2="1130" y2="452" stroke="#2a4d63"/>
+  <text class="cf" x="816" y="470">viewtype StepView</text>
+  <text class="cf" x="816" y="488">&#160;&#160;{ stepId, actor, status }</text>
+  <line class="sep" x1="800" y1="500" x2="1130" y2="500" stroke="#2a4d63"/>
+  <text class="cc" x="816" y="518" fill="#4cc9f0">◆ executeStep</text>
+  <line class="sep" x1="800" y1="530" x2="1130" y2="530" stroke="#2a4d63"/>
+  <text class="cf" x="816" y="548">declared in core</text>
+  <text class="cf" x="816" y="566">disclosure + visibility limits</text>
+
+
+  <rect class="dat" x="800" y="630" width="330" height="120"/>
+  <text class="cs" x="816" y="652">«data» applicability declaration</text>
+  <text class="cn" x="816" y="670">AppliesTo</text>
+  <line class="sep" x1="800" y1="682" x2="1130" y2="682" stroke="#5c451f"/>
+  <text class="cf" x="816" y="700">templateId · choice</text>
+  <text class="cf" x="816" y="718">stepKind · role</text>
+  <text class="cf" x="816" y="736">carried by the Binding DAR</text>
+
+
+  <rect class="cls" x="1180" y="400" width="220" height="350"/>
+  <text class="cs" x="1196" y="422">«template» source app DAR</text>
+  <text class="cn" x="1196" y="440">AppTemplate</text>
+  <line class="sep" x1="1180" y1="452" x2="1400" y2="452"/>
+  <text class="cf" x="1196" y="470">own fields</text>
+  <text class="cf" x="1196" y="488">own signatories</text>
+  <text class="cf" x="1196" y="506">own observers</text>
+  <line class="sep" x1="1180" y1="518" x2="1400" y2="518"/>
+  <text class="cc" x="1196" y="536">◆ eligible choice A</text>
+  <text class="cc" x="1196" y="554">◆ eligible choice B</text>
+  <line class="sep" x1="1180" y1="566" x2="1400" y2="566"/>
+  <text class="cf" x="1196" y="584">① implements iface</text>
+  <text class="cf" x="1196" y="602">② bound by generated</text>
+  <text class="cf" x="1196" y="620">&#160;&#160; code · unchanged</text>
+  <line class="sep" x1="1180" y1="632" x2="1400" y2="632"/>
+  <text class="cf" x="1196" y="650">ownership preserved</text>
+  <text class="cf" x="1196" y="668">authorization preserved</text>
+  <text class="cf" x="1196" y="686">privacy preserved</text>
+
+
+  <path class="rel" d="M340 200 L395 200"/>
+  <text class="rl" x="367" y="192" text-anchor="middle">1 ▸ n</text>
+  <text class="rl" x="367" y="216" text-anchor="middle">creates</text>
+
+  <path class="rel" d="M730 170 L795 170"/>
+  <text class="rl" x="762" y="162" text-anchor="middle">1 ▸ n</text>
+  <text class="rl" x="762" y="186" text-anchor="middle">assigns</text>
+
+  <path class="rel" d="M480 360 L480 405"/>
+  <text class="rl" x="490" y="390">1 ▸ n</text>
+
+  <path class="rel" d="M690 360 L690 405"/>
+  <text class="rl" x="700" y="390">0 ▸ n</text>
+
+  <path class="rel" d="M700 550 L700 590 L190 590 L190 325"/>
+  <text class="rl" x="420" y="583" text-anchor="middle">continuation feeds the next definition</text>
+
+  <path class="rel" d="M965 350 L965 395"/>
+  <text class="rl" x="976" y="378">exercises via</text>
+
+  <path class="rel" d="M965 630 L965 585"/>
+  <text class="rl" x="976" y="612">qualifies</text>
+
+  <path class="relo" d="M1130 490 L1175 490"/>
+  <text class="rl" x="1152" y="480" text-anchor="middle">binds</text>
+
+  <path class="relo" d="M1130 700 L1152 700 L1152 545 L1175 545"/>
+  <text class="rl" x="1120" y="726" text-anchor="end">selects choice</text>
+</svg>

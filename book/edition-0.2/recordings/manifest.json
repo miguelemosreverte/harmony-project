@@ -1,0 +1,35 @@
+{
+  "source_export_sha256": "887ed02645f2287d847f96165dc9309611f98cae969e535a355f2aba3267dc82",
+  "source_release": "harmonia-0014c0d7a3eb",
+  "description": "Historical fourth-draft ledger recordings. Not fresh 0.2 submissions.",
+  "stories": {
+    "purchase-approved": {
+      "file": "purchase-approved.json",
+      "sha256": "95eda46e944b7ed2248c3c8850b5a1675c1a0597ea69a820236bdbcb9a83f4e4",
+      "revision": "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+      "input_sha256": "21b3e5fa5dfb4062c886145ad816c00b2000bd26d81df172e70045a158051750",
+      "expected_sha256": "cd0f4b49a0843e5353054bd7409bb77e212b9d8a359b977200c6e77143fa9fa9"
+    },
+    "purchase-rejected": {
+      "file": "purchase-rejected.json",
+      "sha256": "7e304da5c45522be959956495991edf2b497460119062b80ea4143064a6859fb",
+      "revision": "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+      "input_sha256": "820c05ef0ec2ba28d26e6a75f3954e10e7315082f12127aed0d072a89ca6aa25",
+      "expected_sha256": "6a5a12260e01460bff062b7cd3bff1320153b677ff1fae4060ea2c64eaadd354"
+    },
+    "transfer-approved": {
+      "file": "transfer-approved.json",
+      "sha256": "a5fb05e7ddf5723178416ef20052ae52aecc27c39fda96c65b5f00fe9681ec73",
+      "revision": "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+      "input_sha256": "e1eb701614ab508f1ca7e65a096ec3923165b25815e77074a873b0dd4f2d38e7",
+      "expected_sha256": "8fa5a267556cc91ae5ead24eb9adf43c406abbcd4dba1d3dd5f929afb1a31930"
+    },
+    "transfer-final-leg-rejected": {
+      "file": "transfer-final-leg-rejected.json",
+      "sha256": "8e2c4c0caa6ba0101948c21ae78ac7a461955a30c98ae86e121f405423f10d92",
+      "revision": "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+      "input_sha256": "ba449398b72494701bc76d8a7211f92ce8d113406de0fd9227e24655fd5bd211",
+      "expected_sha256": "4b937b4712a87be43e371b0351b7b494777ca34ddf8e5f4f5dda1e28a3036863"
+    }
+  }
+}
