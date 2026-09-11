@@ -39,7 +39,8 @@ object CantonSandbox:
       .flatMap { ports =>
         val arguments =
           portOptions.zip(ports).flatMap((option, port) => List(option, port.toString))
-        ManagedProcess.start(command ++ arguments, root, artifacts.resolve("canton.log"))
+        // The SDK also writes rotating detail logs relative to its working directory.
+        ManagedProcess.start(command ++ arguments, artifacts, artifacts.resolve("canton.log"))
       }
       .evalMap { process =>
         def awaitPort: IO[CantonSandbox] =
