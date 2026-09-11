@@ -1,10 +1,12 @@
 package harmonia.packages
 
-import io.circe.Decoder
+import io.circe.{Codec, Decoder, Encoder, Json}
 
 final case class PackageSource(id: String, source: String)
 object PackageSource:
-  given Decoder[PackageSource] = Decoder.forProduct2("id", "source")(PackageSource.apply)
+  given Codec.AsObject[PackageSource] =
+    Codec.forProduct2("id", "source")(PackageSource.apply)(v => (v.id, v.source))
+
 final case class InspectedPackage(
     id: String,
     origin: String,
@@ -15,10 +17,12 @@ final case class InspectedPackage(
     canGenerate: Boolean,
     availableLive: Boolean,
     compiled: Boolean,
-    diagnostic: String
+    diagnostic: String,
+    includedPackages: Map[String, Json],
+    generation: Option[Json]
 )
 object InspectedPackage:
-  given Decoder[InspectedPackage] = Decoder.forProduct10(
+  private val fields: Codec.AsObject[InspectedPackage] = Codec.forProduct12(
     "id",
     "origin",
     "sha256",
@@ -28,8 +32,32 @@ object InspectedPackage:
     "can_generate",
     "available_live",
     "compiled",
-    "diagnostic"
-  )(InspectedPackage.apply)
+    "diagnostic",
+    "packages",
+    "generation"
+  )(InspectedPackage.apply)(v =>
+    (
+      v.id,
+      v.origin,
+      v.sha256,
+      v.packageId,
+      v.lf,
+      v.matchedSource,
+      v.canGenerate,
+      v.availableLive,
+      v.compiled,
+      v.diagnostic,
+      v.includedPackages,
+      v.generation
+    )
+  )
+  given Decoder[InspectedPackage] = fields
+  // The existing API publishes a generation manifest only after compilation.
+  given Encoder.AsObject[InspectedPackage] = Encoder.AsObject.instance { value =>
+    val encoded = fields.encodeObject(value)
+    if value.generation.isDefined then encoded else encoded.remove("generation")
+  }
+
 final case class PackageState(
     inputs: Vector[InspectedPackage],
     remaining: Int,
@@ -37,5 +65,7 @@ final case class PackageState(
 )
 object PackageState:
   val empty = PackageState(Vector.empty, 8, Vector.empty)
-  given Decoder[PackageState] =
-    Decoder.forProduct3("inputs", "remaining", "sources")(PackageState.apply)
+  given Codec.AsObject[PackageState] =
+    Codec.forProduct3("inputs", "remaining", "sources")(PackageState.apply)(v =>
+      (v.inputs, v.remaining, v.sources)
+    )

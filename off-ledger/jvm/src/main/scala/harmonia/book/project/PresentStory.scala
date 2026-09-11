@@ -3,11 +3,11 @@ package harmonia.book.project
 import harmonia.examples.ExampleKind
 import harmonia.examples.ExampleKind.*
 import io.circe.Json
-import io.circe.syntax.*
+import harmonia.book.{StoryPresentation, StoryUnit}
 
 /** Selects explanatory labels from actual observations. Expected values never choose an outcome. */
 object PresentStory:
-  def apply(kind: ExampleKind, input: Json, expected: Json, actual: Json): Json =
+  def apply(kind: ExampleKind, input: Json, expected: Json, actual: Json): StoryPresentation =
     val (subtitle, start, detail) = kind match
       case Boundaries =>
         (
@@ -61,7 +61,7 @@ object PresentStory:
             .getOrElse(Json.Null)
           val left = observed(expected)
           val right = observed(actual)
-          unit(
+          StoryUnit(
             id,
             required(action, "actor"),
             required(action, "action"),
@@ -75,14 +75,7 @@ object PresentStory:
             else right.hcursor.get[String]("outcome").getOrElse("Missing outcome")
           )
         }
-    Json.obj(
-      "kind" -> kind.asJson,
-      "subtitle" -> Json.fromString(subtitle),
-      "start" -> Json.fromString(start),
-      "start_detail" -> Json.fromString(detail),
-      "operation" -> Json.fromString(operation),
-      "units" -> Json.arr(units*)
-    )
+    StoryPresentation(kind, subtitle, start, detail, operation, units)
 
   private def observedState(kind: ExampleKind, actual: Json): String = kind match
     case Purchase =>
@@ -95,22 +88,5 @@ object PresentStory:
     case Packages => actual.hcursor.get[Int]("inputs").fold(_ => "Missing count", n => s"$n inputs")
     case _        => actual.hcursor.get[String]("application").getOrElse("Missing application")
 
-  private[project] def unit(
-      id: String,
-      actor: String,
-      action: String,
-      expected: Json,
-      actual: Json,
-      observed: String,
-      outcome: String
-  ): Json = Json.obj(
-    "id" -> Json.fromString(id),
-    "actor" -> Json.fromString(actor),
-    "action" -> Json.fromString(action),
-    "expected" -> expected,
-    "actual" -> actual,
-    "observed_state" -> Json.fromString(observed),
-    "outcome_label" -> Json.fromString(outcome)
-  )
   private def required(json: Json, name: String): String =
     json.hcursor.get[String](name).fold(throw _, identity)

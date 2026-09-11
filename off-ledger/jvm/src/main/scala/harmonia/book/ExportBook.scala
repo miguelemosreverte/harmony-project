@@ -7,6 +7,7 @@ import harmonia.examples.Examples
 import harmonia.book.project.{PresentStory, RecordingKind}
 import harmonia.stories.read.{MarkdownYaml, StoryFormat}
 import io.circe.Json
+import io.circe.syntax.*
 import java.nio.file.{Files, Path, StandardCopyOption}
 import java.security.MessageDigest
 import org.commonmark.node.{AbstractVisitor, Link}
@@ -39,12 +40,10 @@ object ExportBook:
                 link.setDestination("source/book/" + link.getDestination)
               visitChildren(link)
           })
-          Json.obj(
-            "id" -> Json.fromString(name),
-            "title" -> Json.fromString(markdown.linesIterator.next().stripPrefix("# ")),
-            "html" -> Json.fromString(
-              HtmlRenderer.builder().escapeHtml(true).sanitizeUrls(true).build().render(document)
-            )
+          BookChapter(
+            name,
+            markdown.linesIterator.next().stripPrefix("# "),
+            HtmlRenderer.builder().escapeHtml(true).sanitizeUrls(true).build().render(document)
           )
         }
       }
@@ -52,7 +51,7 @@ object ExportBook:
     _ <- ArtifactFiles.write(
       output.resolve("evidence.json"),
       Json
-        .obj("stories" -> Json.fromValues(stories), "chapters" -> Json.fromValues(chapters))
+        .obj("stories" -> stories.asJson, "chapters" -> chapters.asJson)
         .spaces2
     )
     _ <- copy(root.resolve("book/site/index.html"), output.resolve("index.html"))
@@ -88,13 +87,14 @@ object ExportBook:
       "README.md",
       "PRD.md",
       "SECOND-DRAFT.md",
+      "THIRD-DRAFT.md",
       "harmonia.md",
       "harmonia-architecture.html"
     ).traverse_(name => copy(root.resolve(name), output.resolve("source").resolve(name)))
     _ <- IO.println(s"Book exported: $output")
   yield ()
 
-  private def recorded(directory: Path, output: Path): IO[Json] = for
+  private def recorded(directory: Path, output: Path): IO[RecordedStory] = for
     input <- ArtifactFiles.read(directory.resolve("input.md"))
     expected <- ArtifactFiles.read(directory.resolve("expected.md"))
     actual <- ArtifactFiles.read(directory.resolve("actual.md"))
@@ -133,20 +133,16 @@ object ExportBook:
       .traverse_(name =>
         copy(directory.resolve(name), output.resolve("evidence").resolve(id).resolve(name))
       )
-  yield Json.obj(
-    "id" -> Json.fromString(id),
-    "title" -> Json.fromString(
-      input.linesIterator.next().stripPrefix("# ") + (if Examples.find(id).isDefined then ""
-                                                      else s" · $id")
-    ),
-    "description" -> Json.fromString(
-      input.linesIterator.drop(1).takeWhile(_ != "## Scenario").mkString(" ").trim
-    ),
-    "input" -> scenario,
-    "expected" -> baseline,
-    "actual" -> observed,
-    "provenance" -> provenance,
-    "presentation" -> PresentStory(kind, scenario, baseline, observed)
+  yield RecordedStory(
+    id,
+    input.linesIterator.next().stripPrefix("# ") + (if Examples.find(id).isDefined then ""
+                                                    else s" · $id"),
+    input.linesIterator.drop(1).takeWhile(_ != "## Scenario").mkString(" ").trim,
+    scenario,
+    baseline,
+    observed,
+    provenance,
+    PresentStory(kind, scenario, baseline, observed)
   )
 
   private def copy(source: Path, target: Path): IO[Unit] = IO.blocking {

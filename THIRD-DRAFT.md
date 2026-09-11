@@ -58,10 +58,10 @@ These are observed problems in actual entry points, not a reason to move every d
 
 ### TD05 — Use typed package and book state
 
-- [ ] Store inspected metadata, reviewed-source identity, and generated archive as typed package state.
-- [ ] Generate package transport views without reading control decisions from JSON.
-- [ ] Make book projectors and export produce the existing typed recording envelope directly.
-- [ ] Preserve full raw comparisons and render deliberately missing/wrong observations honestly.
+- [x] Store inspected metadata, reviewed-source identity, and generated archive as typed package state.
+- [x] Generate package transport views without reading control decisions from JSON.
+- [x] Make book projectors and export produce the existing typed recording envelope directly.
+- [x] Preserve full raw comparisons and render deliberately missing/wrong observations honestly.
 
 ### TD06 — Finish the review path and delivery
 
@@ -84,3 +84,5 @@ TD02 passes 40 Scala tests and JVM/browser compilation (`.artifacts/third-02-bui
 TD03 proves `fc2de14` on the real ledger: authenticated handoff, direct API authority, stale/repeated requests, and reconnect all pass (`.artifacts/third-03-live-check.log`; `.artifacts/live-check-13369180420142803701/live-handoff/`). In the browser, Bank approval changed the private application to approved; Buyer continuation completed shared progress, without exposing the private income details. The owned live runtime (`.artifacts/live-6253572949849521465/`) was stopped afterward; the second-draft book remains at its original URL. This evidence is recorded in the third actual commit.
 
 TD04 constructs a typed workspace throughout the server, with shared codecs at HTTP serialization. Composition has its own command family and named ledger payload schemas; malformed visible workspaces/drafts fail instead of becoming empty views. Ledger history retains command IDs in a shared `LedgerUpdate`. All 44 Scala tests and both targets pass (`.artifacts/third-04-verified.log`), including transport-field preservation. Dedicated composition execution follows this commit and is repeated in the final release.
+
+TD04's direct and generated composition goldens both passed with zero differences (`.artifacts/third-04-composer.log`, clean source `3a37771`). TD05 makes package workspace state typed, derives transport flags from its inspected source and compiled project, and makes book projection/export return the shared envelope directly. All 45 Scala tests and both targets pass (`.artifacts/third-05-build.log`). The new missing-observation test retains both the visible absence and the complete independent mismatch through recording encoding.

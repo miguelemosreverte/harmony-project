@@ -1,6 +1,6 @@
 package harmonia.book
 
-import io.circe.{Decoder, Json}
+import io.circe.{Codec, Decoder, Encoder, Json}
 import harmonia.examples.ExampleKind
 import harmonia.stories.compare.CompareResults
 
@@ -15,7 +15,7 @@ final case class StoryUnit(
     outcomeLabel: String
 )
 object StoryUnit:
-  given Decoder[StoryUnit] = Decoder.forProduct7(
+  given Codec.AsObject[StoryUnit] = Codec.forProduct7(
     "id",
     "actor",
     "action",
@@ -23,7 +23,9 @@ object StoryUnit:
     "actual",
     "observed_state",
     "outcome_label"
-  )(StoryUnit.apply)
+  )(StoryUnit.apply)(v =>
+    (v.id, v.actor, v.action, v.expected, v.actual, v.observedState, v.outcomeLabel)
+  )
 
 final case class StoryPresentation(
     kind: ExampleKind,
@@ -34,17 +36,18 @@ final case class StoryPresentation(
     units: Vector[StoryUnit]
 )
 object StoryPresentation:
-  given Decoder[StoryPresentation] = Decoder
-    .forProduct6("kind", "subtitle", "start", "start_detail", "operation", "units")(
+  private val fields: Codec.AsObject[StoryPresentation] =
+    Codec.forProduct6("kind", "subtitle", "start", "start_detail", "operation", "units")(
       StoryPresentation.apply
+    )(v => (v.kind, v.subtitle, v.start, v.startDetail, v.operation, v.units))
+  given Encoder.AsObject[StoryPresentation] = fields
+  given Decoder[StoryPresentation] = fields.emap(p =>
+    Either.cond(
+      p.units.nonEmpty && p.units.map(_.id).distinct.size == p.units.size,
+      p,
+      "A recording needs distinct presentation units"
     )
-    .emap(p =>
-      Either.cond(
-        p.units.nonEmpty && p.units.map(_.id).distinct.size == p.units.size,
-        p,
-        "A recording needs distinct presentation units"
-      )
-    )
+  )
 
 final case class RecordedStory(
     id: String,
@@ -64,7 +67,7 @@ final case class RecordedStory(
   def differences = CompareResults.compare(expected, actual)
 
 object RecordedStory:
-  given Decoder[RecordedStory] = Decoder.forProduct8(
+  given Codec.AsObject[RecordedStory] = Codec.forProduct8(
     "id",
     "title",
     "description",
@@ -73,4 +76,6 @@ object RecordedStory:
     "actual",
     "provenance",
     "presentation"
-  )(RecordedStory.apply)
+  )(RecordedStory.apply)(v =>
+    (v.id, v.title, v.description, v.input, v.expected, v.actual, v.provenance, v.presentation)
+  )

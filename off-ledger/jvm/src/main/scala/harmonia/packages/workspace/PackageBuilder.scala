@@ -9,17 +9,12 @@ import harmonia.packages.inspect.InspectDar
 import harmonia.packages.read.{PackageInput, PackageManifest}
 import harmonia.packages.resolve.ResolvePackages
 import io.circe.Json
+import io.circe.syntax.*
+import harmonia.packages.{PackageState, PackageSource}
 import java.nio.file.{Files, Path}
 import java.util.UUID
 import scala.jdk.CollectionConverters.*
 import scala.concurrent.duration.*
-
-private final case class BuilderInput(
-    id: String,
-    directory: Path,
-    record: Json,
-    project: Option[Path] = None
-)
 
 final class PackageBuilder private (
     root: Path,
@@ -29,26 +24,19 @@ final class PackageBuilder private (
     inputs: Ref[IO, Vector[BuilderInput]],
     gate: Semaphore[IO]
 ):
-  private val mappings =
-    Map("legacy-financing" -> "financing", "primitive-approval" -> "primitive-approval")
-
-  def state: IO[Json] = inputs.get.map(values =>
-    Json.obj(
-      "inputs" -> Json.arr(values.map(_.record)*),
-      "remaining" -> Json.fromInt(8 - values.size),
-      "sources" -> Json.arr(
-        pins.map(pin =>
-          Json.obj("id" -> Json.fromString(pin.name), "source" -> Json.fromString(pin.source))
-        )*
-      )
+  def state: IO[PackageState] = inputs.get.map(values =>
+    PackageState(
+      values.map(_.view),
+      8 - values.size,
+      pins.map(pin => PackageSource(pin.name, pin.source))
     )
   )
 
-  def upload(bytes: IO[Array[Byte]]): IO[Json] = exclusive {
+  def upload(bytes: IO[Array[Byte]]): IO[PackageState] = exclusive {
     add("local upload", bytes, None)
   }
 
-  def retrieve(name: String): IO[Json] = exclusive {
+  def retrieve(name: String): IO[PackageState] = exclusive {
     if name == "participant" then
       for
         pin <- IO.fromOption(pins.find(_.name == "legacy-financing"))(
@@ -86,41 +74,32 @@ final class PackageBuilder private (
       yield result
   }
 
-  def generate(id: String): IO[Json] = exclusive {
+  def generate(id: String): IO[PackageState] = exclusive {
     for
       entry <- find(id)
       _ <- entry.project match
         case Some(_) => IO.unit
         case None =>
           for
-            alias <- IO.fromEither(
-              entry.record.hcursor
-                .get[String]("matched_source")
-                .leftMap(_ =>
-                  IllegalArgumentException(
-                    "No reviewed mapping matches these archive bytes. Inspect the package and add a pinned source and typed mapping before rebuilding."
-                  )
-                )
+            _ <- IO.raiseWhen(entry.source.isEmpty)(
+              IllegalArgumentException(
+                "No reviewed mapping matches these archive bytes. Inspect the package and add a pinned source and typed mapping before rebuilding."
+              )
             )
-            mapping <- IO.fromOption(mappings.get(alias))(
+            binding <- IO.fromOption(entry.binding)(
               IllegalArgumentException(
                 "This package has no supported action mapping. Metadata types are not an executable action."
               )
             )
             project <- GenerateBinding.run(
               root,
-              root.resolve(s"packages/mappings/$mapping.md"),
+              root.resolve(s"packages/mappings/${binding.mapping}.md"),
               entry.directory.resolve("project")
             )
             manifestText <- ArtifactFiles.read(project.directory.resolve("generation.json"))
             manifest <- IO.fromEither(io.circe.parser.parse(manifestText))
             archive <- ProjectArchive.write(project, manifest)
-            updated = entry.copy(
-              project = Some(archive),
-              record = entry.record.deepMerge(
-                Json.obj("compiled" -> Json.fromBoolean(true), "generation" -> manifest)
-              )
-            )
+            updated = entry.copy(project = Some(CompiledProject(archive, manifest)))
             _ <- inputs.update(_.map(value => if value.id == id then updated else value))
           yield ()
       result <- state
@@ -128,7 +107,7 @@ final class PackageBuilder private (
   }
 
   def download(id: String): IO[Path] = find(id).flatMap(entry =>
-    IO.fromOption(entry.project)(
+    IO.fromOption(entry.project.map(_.archive))(
       IllegalArgumentException("Generate the project before downloading it")
     )
   )
@@ -141,7 +120,7 @@ final class PackageBuilder private (
       origin: String,
       bytes: IO[Array[Byte]],
       expected: Option[PackageInput]
-  ): IO[Json] = for
+  ): IO[PackageState] = for
     values <- inputs.get
     _ <- IO.raiseWhen(values.size >= 8)(
       IllegalArgumentException("This builder accepts eight inputs per evaluation")
@@ -157,9 +136,10 @@ final class PackageBuilder private (
         Files.createDirectories(target); Files.write(target.resolve("source.dar"), data); ()
       }
       digest <- InspectDar.digest(target.resolve("source.dar"))
-      inspection <- InspectDar.inspect(root, target.resolve("source.dar"), target)
-      packageId <- IO.fromEither(inspection.hcursor.get[String]("main_package_id"))
-      lf <- IO.fromEither(inspection.hcursor.get[String]("lf"))
+      rawInspection <- InspectDar.inspect(root, target.resolve("source.dar"), target)
+      inspection <- IO.fromEither(rawInspection.as[InspectedDar])
+      packageId = inspection.packageId
+      lf = inspection.lf
       _ <- IO.raiseUnless(Set("2.1", "2.2").contains(lf))(
         IllegalArgumentException("Supported Daml-LF versions are 2.1 and 2.2")
       )
@@ -169,29 +149,9 @@ final class PackageBuilder private (
         )
       )
       pin = pins.find(p => p.sha256 == digest && p.packageId == packageId && p.lf == lf)
-      supported = pin.exists(p => mappings.contains(p.name))
-      available = pin.exists(_.name == "legacy-financing")
-      record = Json.obj(
-        "id" -> Json.fromString(id),
-        "origin" -> Json.fromString(origin),
-        "sha256" -> Json.fromString(digest),
-        "package_id" -> Json.fromString(packageId),
-        "lf" -> Json.fromString(lf),
-        "matched_source" -> pin.fold(Json.Null)(p => Json.fromString(p.name)),
-        "can_generate" -> Json.fromBoolean(supported),
-        "available_live" -> Json.fromBoolean(available),
-        "compiled" -> Json.fromBoolean(false),
-        "packages" -> inspection.hcursor.downField("packages").focus.getOrElse(Json.obj()),
-        "diagnostic" -> Json.fromString(
-          if available then "Reviewed generated approval is available in the workflow action menu."
-          else if supported then
-            "A reviewed primitive-action mapping can generate a portable project. Register its typed action and rebuild to add it to the live composer."
-          else
-            "No reviewed executable mapping matches this input. Package inspection does not make an action available; add a pinned source and supported typed mapping, then rebuild."
-        )
-      )
-      _ <- ArtifactFiles.write(target.resolve("input.json"), record.spaces2)
-      _ <- inputs.update(_ :+ BuilderInput(id, target, record))
+      entry = BuilderInput(id, target, origin, digest, inspection, pin)
+      _ <- ArtifactFiles.write(target.resolve("input.json"), entry.view.asJson.spaces2)
+      _ <- inputs.update(_ :+ entry)
       result <- state
     yield result).onError(_ => remove(target)).onCancel(remove(target))
   yield result

@@ -147,19 +147,21 @@ object LiveServer:
   ): IO[Unit] =
     val response = (method, path) match
       case ("GET", "/api/state")   => actions.state(actor).map(_.asJson)
-      case ("GET", "/api/builder") => builder.state
+      case ("GET", "/api/builder") => builder.state.map(_.asJson)
       case ("POST", "/api/builder/upload") =>
-        builder.upload(
-          IO.blocking(
-            exchange.getRequestBody.readNBytes(
-              harmonia.packages.inspect.InspectDar.maximumBytes + 1
+        builder
+          .upload(
+            IO.blocking(
+              exchange.getRequestBody.readNBytes(
+                harmonia.packages.inspect.InspectDar.maximumBytes + 1
+              )
             )
           )
-        )
+          .map(_.asJson)
       case ("POST", "/api/builder/retrieve") =>
-        builderKey(exchange, "source").flatMap(builder.retrieve)
+        builderKey(exchange, "source").flatMap(builder.retrieve).map(_.asJson)
       case ("POST", "/api/builder/generate") =>
-        builderKey(exchange, "id").flatMap(builder.generate)
+        builderKey(exchange, "id").flatMap(builder.generate).map(_.asJson)
       case ("POST", "/api/actions") =>
         for
           bytes <- IO.blocking(exchange.getRequestBody.readNBytes(16385))
