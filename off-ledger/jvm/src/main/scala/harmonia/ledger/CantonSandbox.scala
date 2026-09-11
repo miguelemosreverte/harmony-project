@@ -33,8 +33,9 @@ object CantonSandbox:
       .fill(portOptions.size)(Resource.fromAutoCloseable(IO.blocking(new ServerSocket(0))))
       .sequence
       .use(sockets => IO.pure(sockets.map(_.getLocalPort)))
-    Resource
-      .eval(freePorts)
+    harmonia.ledger.lifecycle.LedgerLease
+      .resource(root)
+      .evalMap(_ => freePorts)
       .flatMap { ports =>
         val arguments =
           portOptions.zip(ports).flatMap((option, port) => List(option, port.toString))

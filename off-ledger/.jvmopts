@@ -1,0 +1,4 @@
+-Xms128m
+-Xmx1024m
+-Xss2m
+-XX:ActiveProcessorCount=4

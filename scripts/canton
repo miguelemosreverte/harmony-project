@@ -2,4 +2,4 @@
 set -euo pipefail
 source "$(dirname "${BASH_SOURCE[0]}")/environment"
 harmonia_canton="${HARMONIA_CANTON_JAR:-$HOME/.daml/sdk/3.4.11/canton/canton.jar}"
-exec "${JAVA_HOME:-/usr}/bin/java" -jar "$harmonia_canton" "$@"
+exec "${JAVA_HOME:-/usr}/bin/java" -Xms128m -Xmx"${HARMONIA_CANTON_HEAP:-2048m}" -XX:ActiveProcessorCount=4 -jar "$harmonia_canton" "$@"

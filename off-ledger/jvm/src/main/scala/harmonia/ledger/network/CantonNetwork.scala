@@ -40,6 +40,7 @@ object CantonNetwork:
       .sequence
       .use(sockets => IO.pure(sockets.map(_.getLocalPort).toVector))
     for
+      _ <- harmonia.ledger.lifecycle.LedgerLease.resource(root)
       ports <- Resource.eval(freePorts)
       config = artifacts.resolve("network.conf")
       bootstrap = artifacts.resolve("bootstrap.canton")

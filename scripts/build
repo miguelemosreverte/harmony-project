@@ -7,7 +7,8 @@ for harmonia_package in interfaces core financing legacy-financing binding-fixtu
   "$harmonia_root/scripts/daml" build
 done
 cd "$harmonia_root/off-ledger"
-sbt --batch 'scalafmtCheckAll' 'jvm/compile' 'browser/fastLinkJS' 'jvm/run generate-bindings packages/mappings/financing.md .artifacts/generated-financing'
+sbt --batch 'scalafmtCheckAll' 'jvm/compile' 'browser/fastLinkJS'
+"$harmonia_root/scripts/harmonia" generate-bindings packages/mappings/financing.md .artifacts/generated-financing
 
 for harmonia_package in smoke metadata-receipts package-example; do
   "$harmonia_root/scripts/daml" build --package-root "$harmonia_root/on-ledger/$harmonia_package"

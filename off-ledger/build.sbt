@@ -2,6 +2,8 @@ ThisBuild / scalaVersion := "3.3.6"
 ThisBuild / organization := "io.harmonia"
 ThisBuild / version := "0.1.0"
 
+lazy val exportRuntime = taskKey[File]("Export an immutable application JAR and runtime classpath for direct JVM launch")
+
 lazy val jvm = project.in(file("jvm")).settings(
   name := "harmonia-tools",
   Compile / unmanagedSourceDirectories += baseDirectory.value.getParentFile / "shared" / "src" / "main" / "scala",
@@ -20,6 +22,18 @@ lazy val jvm = project.in(file("jvm")).settings(
   ),
   scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked"),
   Compile / run / fork := true,
+  Compile / run / javaOptions ++= Seq("-Xms32m", "-Xmx512m", "-XX:ActiveProcessorCount=4"),
+  exportRuntime := {
+    val jar = (Compile / packageBin).value
+    val digest = java.security.MessageDigest.getInstance("SHA-256").digest(IO.readBytes(jar)).map(b => f"${b & 0xff}%02x").mkString
+    val workspace = baseDirectory.value.getParentFile.getParentFile
+    val executable = workspace / ".artifacts" / "runtime" / digest / "harmonia.jar"
+    if (!executable.exists) IO.copyFile(jar, executable)
+    val dependencies = (Compile / dependencyClasspath).value.files
+    val manifest = baseDirectory.value.getParentFile / "target" / "runtime-classpath"
+    IO.write(manifest, (executable +: dependencies).map(_.getAbsolutePath).mkString(java.io.File.pathSeparator))
+    manifest
+  },
   Compile / run / connectInput := false
 )
 

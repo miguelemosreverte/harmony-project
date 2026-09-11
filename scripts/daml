@@ -6,4 +6,8 @@ if [[ ! -x "$harmonia_daml" ]]; then
   printf 'Daml SDK 3.4.11 is required. Set HARMONIA_DAML to the assistant executable. See book/setup.md.\n' >&2
   exit 1
 fi
+case "${1:-}" in
+  script) export JAVA_TOOL_OPTIONS="${JAVA_TOOL_OPTIONS:-} -Xms32m -Xmx512m -XX:ActiveProcessorCount=4" ;;
+  sandbox) export JAVA_TOOL_OPTIONS="${JAVA_TOOL_OPTIONS:-} -Xms128m -Xmx${HARMONIA_CANTON_HEAP:-2048m} -XX:ActiveProcessorCount=4" ;;
+esac
 exec "$harmonia_daml" --no-legacy-assistant-warning "$@"

@@ -11,7 +11,9 @@ object ServeBook:
     val root = directory.toAbsolutePath.normalize()
     val server = Resource.make(IO.blocking {
       val executor = Executors.newFixedThreadPool(4)
-      val http = HttpServer.create(new InetSocketAddress("127.0.0.1", 0), 0)
+      val port = sys.env.get("HARMONIA_BOOK_PORT").fold(0)(_.toInt)
+      require(port >= 0 && port <= 65535, "HARMONIA_BOOK_PORT must be between 0 and 65535")
+      val http = HttpServer.create(new InetSocketAddress("127.0.0.1", port), 0)
       http.setExecutor(executor)
       http.createContext("/", (exchange: HttpExchange) => respond(root, exchange))
       http.start()

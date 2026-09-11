@@ -4,7 +4,7 @@ The [PRD](../PRD.md) defines the ordered work. This record reports actual commit
 
 ## Current step
 
-Step 15 adds authenticated live participant sessions, observed state/history, confirmed command results, and recovery from lost responses. The live acceptance story and direct authority checks pass. Next: the bounded workflow composer and its DAR input path.
+Step 15 is complete. A memory correction now bounds JVM heaps, releases sbt before runtime work, and prevents overlapping local ledger environments. The four-participant transfer still passes. Step 16 composition is in progress; its live editor and DAR input path remain to be completed.
 
 ## Commit evidence
 
@@ -29,7 +29,9 @@ Actual commit identifiers are recorded in the next commit after they are created
 
 | 14 | `44cc384` | [Participation parity proof](verification/14-participation-parity.md): twenty-seven ledger goldens, two equal business scenarios, deterministic generation, and a caught compiled regression |
 
-| 15 | This increment | [Authenticated live proof](verification/15-live-sessions.md): separate sessions, direct API permission denial, stale/repeated requests, browser reconnect, and response-loss recovery |
+| 15 | `a452054` | [Authenticated live proof](verification/15-live-sessions.md): separate sessions, direct API permission denial, stale/repeated requests, browser reconnect, and response-loss recovery |
+
+| 15a | This increment | [Memory proof](verification/15a-memory.md): direct JVM launch, one ledger environment, bounded heaps, successful four-party transfer, and one retained preview |
 
 ## External decisions
 

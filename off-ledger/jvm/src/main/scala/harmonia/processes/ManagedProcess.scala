@@ -31,10 +31,18 @@ object ManagedProcess:
     }
 
   private def stop(process: Process): IO[Unit] = IO.blocking {
-    val descendants = process.descendants()
-    try descendants.iterator().asScala.toList.reverse.foreach(_.destroy())
-    finally descendants.close()
+    val stream = process.descendants()
+    val descendants =
+      try stream.iterator().asScala.toList.reverse
+      finally stream.close()
+    descendants.foreach(_.destroy())
     process.destroy()
-    if !process.waitFor(5, java.util.concurrent.TimeUnit.SECONDS) then process.destroyForcibly()
+    if !process.waitFor(5, java.util.concurrent.TimeUnit.SECONDS) then
+      process.destroyForcibly()
+      process.waitFor(5, java.util.concurrent.TimeUnit.SECONDS)
+    descendants.filter(_.isAlive).foreach { child =>
+      child.destroyForcibly()
+      child.onExit().get(5, java.util.concurrent.TimeUnit.SECONDS)
+    }
     ()
   }
