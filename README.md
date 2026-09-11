@@ -28,6 +28,6 @@ Read the [nine-chapter book](book/README.md) or open recorded runs using the [pl
 
 ## Review this draft
 
-[Fourth-draft principles and plan](FOURTH-DRAFT.md) · [Progress](docs/progress.md) · [Acceptance](docs/release/acceptance.md) · [Capabilities](docs/capabilities.md) · [Compatibility](docs/compatibility.md)
+[Fourth-draft principles and plan](FOURTH-DRAFT.md) · [Measurements](docs/fourth-draft/measurements.md) · [Progress](docs/progress.md) · [Acceptance](docs/release/acceptance.md) · [Capabilities](docs/capabilities.md) · [Compatibility](docs/compatibility.md)
 
 The earlier versions remain on `first-draft`, `second-draft`, and `third-draft`. Their plans and verification notes are in [history](docs/history/README.md). Imported proposals and attribution are recorded in [sources](docs/sources.md). Public repository destination and licensing remain undecided.

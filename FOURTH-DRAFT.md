@@ -1,6 +1,6 @@
 # Harmonia, fourth draft
 
-**Status:** implementation in progress on `fourth-draft`.  
+**Status:** complete on `fourth-draft`; [verified delivery](docs/fourth-draft/acceptance.md).  
 **Preserved third draft:** `5345651`; verified software `070f499f045b196cfab66c8bd34dd6c86c94dc8f`.
 
 ## Purpose
@@ -53,8 +53,8 @@ Draft three's preliminary package classification has 1,677 book lines, 4,590 sto
 - [x] FD03: make the third actual commit record a working slice, with compiler boundaries and a real ledger/browser check against the unchanged golden.
 - [x] FD04: finish the filesystem migration, update build/package paths, and simplify product state and operation wiring without losing supported behavior.
 - [x] FD05: provide independently runnable artifacts and a short product reading guide; update export, source links, release assembly, and architectural evidence.
-- [ ] FD06: run the complete clean-checkout gate sequentially; verify relocation, browser controls, independent expectations, archive identity, and owned process cleanup.
-- [ ] FD07: publish local measurements of moved/deleted code, preserve one bounded book preview, and commit final acceptance.
+- [x] FD06: run the complete clean-checkout gate sequentially; verify relocation, browser controls, independent expectations, archive identity, and owned process cleanup.
+- [x] FD07: publish local measurements of moved/deleted code, preserve one bounded book preview, and commit final acceptance.
 
 ## Acceptance
 
@@ -73,3 +73,5 @@ FD03 proves clean source `a44509d67f841335b2d88138ed9d3d5ad4e617dd`: authenticat
 FD04 removes repeated API field lists through one compiler-derived snake-case codec convention, while the transport-contract tests retain the established JSON fields. The editor validates a typed `Composition` directly. Golden-result validators and disposable participant JWT signing now belong to the harness. Live and recorded browsers own separate styles and entry points. All 49 Scala tests pass, including parity between typed-plan validation and HTTP decoding (`.artifacts/fourth-04-final-build.log`). The live gate now launches the standalone service with its product-only classpath; the standalone service also passes the authenticated live gate at `ac35d28` (`.artifacts/fourth-04-standalone-live.log`).
 
 FD05 provides separate product, book, live-demo, and verifier launchers with explicit runtime classpaths. Current guides lead with the product; prior plans and records live under `docs/history`. All 49 Scala tests pass after the packaging changes, and the new exporter passes source, chapter, recording, and asset link checks (`.artifacts/fourth-05-build.log`, `.artifacts/fourth-05-book-export.log`). This preliminary export uses retained third-draft recordings and keeps their original provenance; FD06 will execute fresh evidence.
+
+FD06–FD07 complete at verified software `0014c0d`: all eleven clean-checkout gates, 49 Scala tests, four Daml scripts, and 32 fresh recordings pass. The archive verifies after relocation, detects changed payload bytes, and supports separate product, live-demo, and book launchers. Real browser checks cover private handoff, typed composition, package compilation/download, all chapters, and all recordings. Only the 128 MiB book server remains. The [acceptance](docs/fourth-draft/acceptance.md) and [measurements](docs/fourth-draft/measurements.md) record exact identity, resource use, and code changes; they are committed after the verified software.
