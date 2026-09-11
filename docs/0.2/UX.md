@@ -123,22 +123,25 @@ responsive layout can differ between devices. No credentials go into URLs.
 
 ## Implementation and acceptance sequence
 
-- [ ] 1. Record the reproduced problems and these screen/reader contracts.
-- [ ] 2. Replace accumulated style overrides with explicit tokens and components;
+- [x] 1. Record the reproduced problems and these screen/reader contracts.
+- [x] 2. Replace accumulated style overrides with explicit tokens and components;
   add the URL state model, shared appearance controls, and persona routes.
-- [ ] 3. Render source Markdown correctly, retain exact quotation audits, restore
+- [x] 3. Render source Markdown correctly, retain exact quotation audits, restore
   original diagrams, and establish one canonical route per chapter.
-- [ ] 4. Rewrite chapters around the existing characters and use cases; connect the
+- [x] 4. Rewrite chapters around the existing characters and use cases; connect the
   sandbox to preserved recorded input/expected/actual data with provenance.
-- [ ] 5. Make workspace and builder mock state reproducible, with visible next
+- [x] 5. Make workspace and builder mock state reproducible, with visible next
   actions, recovery, Back/Forward, and reset behavior.
-- [ ] 6. Verify rendering, navigation, and evidence independently: source-render
+- [x] 6. Verify rendering, navigation, and evidence independently: source-render
   assertions; cold URL replay and browser history; screenshots at narrow, intermediate,
   and desktop widths, dark/light/paper, larger text, expanded sources, and print.
-- [ ] 7. Record real results, retain the first design checkpoint, commit the second
+- [x] 7. Record real results, retain the first design checkpoint, commit the second
   pass, and provide one obvious entry URL.
 
 Acceptance requires more than no horizontal overflow. Inspect actual paragraphs,
 table structure, diagram labels, intended control visibility, focus behavior,
 direct links, failed actions, and print output. Keep a log of observed fixes and
 remaining limitations; do not claim an absence of all possible bugs.
+
+Acceptance evidence: [second-pass verification](verification-2.md),
+[browser results](browser-results-2.json), and [captured screens](../../design/0.2/review.html).

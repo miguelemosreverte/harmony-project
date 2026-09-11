@@ -70,7 +70,8 @@ the subsequent phase described below, matching the requested design-first sequen
   - [x] Commit only after this design/coverage slice demonstrably works. Do not
     mark any of the runtime commits below complete from prototype evidence.
 
-The second UX pass is governed by [the UX contract](UX.md). It adds readable
+The completed second UX pass is governed by [the UX contract](UX.md), with
+[its own verification](verification-2.md). It adds readable
 source rendering, reader routes, deterministic URLs, and four preserved recordings
 to the static design edition. Step 07 below still refers to integration into the
 Scala book and portable runtime export; these HTML improvements do not complete it.

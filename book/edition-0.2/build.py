@@ -144,6 +144,11 @@ def load_recordings(root):
                 raise ValueError(f"Recording no longer matches committed {kind}: {key}")
         if story["provenance"]["revision"] != pin["revision"] or story["expected"] != story["actual"] or not story["provenance"]["matched"]:
             raise ValueError(f"Recording does not support its stated result: {key}")
+        units = story["presentation"]["units"]
+        if [u["actual"] for u in units] != story["actual"]["actions"] or [u["expected"] for u in units] != story["expected"]["actions"]:
+            raise ValueError(f"Playback differs from the recorded golden comparison: {key}")
+        if len(units) != len(story["input"]["actions"]):
+            raise ValueError(f"Playback does not account for every supplied action: {key}")
         recordings[key] = story
     return recordings
 

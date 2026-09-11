@@ -33,7 +33,7 @@ def markdown(text, source=False):
 
 
 def diagram(asset, title):
-    return f'<figure class="source-diagram"><div class="diagram-scroll" tabindex="0" aria-label="Scrollable {escape(title)}"><img src="../assets/{asset}.svg" alt="{escape(title)}"></div><figcaption>{escape(title)} · <a href="../assets/{asset}.svg">Open full diagram ↗</a></figcaption></figure>'
+    return f'<figure class="source-diagram"><div class="diagram-scroll" tabindex="0" aria-label="Scrollable {escape(title)}"><img src="../assets/{asset}.svg" alt="{escape(title)}"></div><figcaption>{escape(title)} · scroll sideways or <a href="../assets/{asset}.svg">Open full diagram ↗</a></figcaption></figure>'
 
 
 class Fragment(HTMLParser):

@@ -45,7 +45,7 @@
     // Rebuild link preferences on every render, including links opened in a new tab.
     const base = new URL(config.base, location.href);
     document.querySelectorAll('a[href]').forEach(anchor => {
-      if (anchor.getAttribute('href').startsWith('#')) return;
+      if (anchor.hasAttribute('data-exact-view') || anchor.getAttribute('href').startsWith('#')) return;
       const url = new URL(anchor.href);
       if (url.origin !== base.origin || !url.pathname.startsWith(base.pathname) || !url.pathname.endsWith('.html')) return;
       for (const key of ['audience','theme','text']) {

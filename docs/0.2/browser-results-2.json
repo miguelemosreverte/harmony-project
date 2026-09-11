@@ -1,0 +1,853 @@
+{
+  "scope": "Second UX pass; browser rendering and recorded playback, not fresh ledger execution",
+  "checks": [
+    {
+      "page": "book-overview.html",
+      "test": "welcome",
+      "result": {
+        "checks": 15,
+        "width": 1280,
+        "height": 900,
+        "overflow": false
+      },
+      "replay": "http://127.0.0.1:56202/design/0.2/book-overview.html?audience=operator"
+    },
+    {
+      "page": "chapters/03-financing-to-offer.html?view=try",
+      "test": "chapter",
+      "result": {
+        "attempts": 11,
+        "refusals": 4,
+        "width": 1280,
+        "height": 900,
+        "overflow": false
+      },
+      "replay": "http://127.0.0.1:56202/design/0.2/chapters/03-financing-to-offer.html?open=step-inspector&view=try&story=purchase-rejected&tab=expected"
+    },
+    {
+      "page": "chapters/04-four-party-transfer.html?view=try",
+      "test": "chapter",
+      "result": {
+        "attempts": 15,
+        "refusals": 4,
+        "width": 1280,
+        "height": 900,
+        "overflow": false
+      },
+      "replay": "http://127.0.0.1:56202/design/0.2/chapters/04-four-party-transfer.html?open=step-inspector&view=try&story=transfer-final-leg-rejected&tab=expected"
+    },
+    {
+      "page": "application.html",
+      "test": "application",
+      "result": {
+        "checks": 10,
+        "width": 1280,
+        "height": 900,
+        "overflow": false
+      },
+      "replay": "http://127.0.0.1:56202/design/0.2/application.html?state=rejected"
+    },
+    {
+      "page": "application-builder.html",
+      "test": "builder",
+      "result": {
+        "checks": 6,
+        "width": 1280,
+        "height": 900,
+        "overflow": false
+      },
+      "replay": "http://127.0.0.1:56202/design/0.2/application-builder.html?phase=3"
+    },
+    {
+      "test": "appearance-and-history",
+      "result": {
+        "checks": 8,
+        "width": 1280,
+        "height": 900,
+        "overflow": false
+      },
+      "replay": "http://127.0.0.1:56202/design/0.2/book-overview.html"
+    },
+    {
+      "test": "review-reproduction-links",
+      "explicitThemePreserved": true
+    },
+    {
+      "test": "malformed-url",
+      "replay": "http://127.0.0.1:56202/design/0.2/chapters/03-financing-to-offer.html?view=try&step=8"
+    },
+    {
+      "test": "nested-source-link",
+      "replay": "http://127.0.0.1:56202/design/0.2/chapters/01-product.html?open=exact-proposal-L160%2Cproposal-L160&view=sources"
+    },
+    {
+      "test": "legacy-chapter-redirect",
+      "url": "http://127.0.0.1:56202/design/0.2/chapters/03-financing-to-offer.html?view=try&step=2"
+    },
+    {
+      "test": "layout",
+      "page": "book-overview.html",
+      "width": 390,
+      "height": 844,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "application.html",
+      "width": 390,
+      "height": 844,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "application-builder.html",
+      "width": 390,
+      "height": 844,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "coverage.html",
+      "width": 390,
+      "height": 844,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "review.html",
+      "width": 390,
+      "height": 844,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "sources/proposal.html",
+      "width": 390,
+      "height": 844,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "sources/architecture.html",
+      "width": 390,
+      "height": 844,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/01-product.html",
+      "width": 390,
+      "height": 844,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/02-roles-and-trust.html",
+      "width": 390,
+      "height": 844,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/03-financing-to-offer.html",
+      "width": 390,
+      "height": 844,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/04-four-party-transfer.html",
+      "width": 390,
+      "height": 844,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/05-bring-an-application.html",
+      "width": 390,
+      "height": 844,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/06-compose-a-workflow.html",
+      "width": 390,
+      "height": 844,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/07-evidence-and-boundaries.html",
+      "width": 390,
+      "height": 844,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/08-release-and-adoption.html",
+      "width": 390,
+      "height": 844,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/09-proposal-context.html",
+      "width": 390,
+      "height": 844,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/10-context-and-references.html",
+      "width": 390,
+      "height": 844,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "book-overview.html",
+      "width": 768,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "application.html",
+      "width": 768,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "application-builder.html",
+      "width": 768,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "coverage.html",
+      "width": 768,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "review.html",
+      "width": 768,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "sources/proposal.html",
+      "width": 768,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "sources/architecture.html",
+      "width": 768,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/01-product.html",
+      "width": 768,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/02-roles-and-trust.html",
+      "width": 768,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/03-financing-to-offer.html",
+      "width": 768,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/04-four-party-transfer.html",
+      "width": 768,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/05-bring-an-application.html",
+      "width": 768,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/06-compose-a-workflow.html",
+      "width": 768,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/07-evidence-and-boundaries.html",
+      "width": 768,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/08-release-and-adoption.html",
+      "width": 768,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/09-proposal-context.html",
+      "width": 768,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/10-context-and-references.html",
+      "width": 768,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "book-overview.html",
+      "width": 1280,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "application.html",
+      "width": 1280,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "application-builder.html",
+      "width": 1280,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "coverage.html",
+      "width": 1280,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "review.html",
+      "width": 1280,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "sources/proposal.html",
+      "width": 1280,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "sources/architecture.html",
+      "width": 1280,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/01-product.html",
+      "width": 1280,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/02-roles-and-trust.html",
+      "width": 1280,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/03-financing-to-offer.html",
+      "width": 1280,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/04-four-party-transfer.html",
+      "width": 1280,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/05-bring-an-application.html",
+      "width": 1280,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/06-compose-a-workflow.html",
+      "width": 1280,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/07-evidence-and-boundaries.html",
+      "width": 1280,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/08-release-and-adoption.html",
+      "width": 1280,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/09-proposal-context.html",
+      "width": 1280,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/10-context-and-references.html",
+      "width": 1280,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "book-overview.html",
+      "width": 1536,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "application.html",
+      "width": 1536,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "application-builder.html",
+      "width": 1536,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "coverage.html",
+      "width": 1536,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "review.html",
+      "width": 1536,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "sources/proposal.html",
+      "width": 1536,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "sources/architecture.html",
+      "width": 1536,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/01-product.html",
+      "width": 1536,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/02-roles-and-trust.html",
+      "width": 1536,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/03-financing-to-offer.html",
+      "width": 1536,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/04-four-party-transfer.html",
+      "width": 1536,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/05-bring-an-application.html",
+      "width": 1536,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/06-compose-a-workflow.html",
+      "width": 1536,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/07-evidence-and-boundaries.html",
+      "width": 1536,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/08-release-and-adoption.html",
+      "width": 1536,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/09-proposal-context.html",
+      "width": 1536,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "layout",
+      "page": "chapters/10-context-and-references.html",
+      "width": 1536,
+      "height": 900,
+      "overflow": false
+    },
+    {
+      "test": "mobile-navigation",
+      "result": {
+        "checks": 3,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "test": "source-disclosures",
+      "theme": "light",
+      "text": "compact",
+      "result": {
+        "passages": 6,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "test": "source-disclosures",
+      "theme": "light",
+      "text": "standard",
+      "result": {
+        "passages": 6,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "test": "source-disclosures",
+      "theme": "light",
+      "text": "large",
+      "result": {
+        "passages": 6,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "test": "source-disclosures",
+      "theme": "dark",
+      "text": "compact",
+      "result": {
+        "passages": 6,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "test": "source-disclosures",
+      "theme": "dark",
+      "text": "standard",
+      "result": {
+        "passages": 6,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "test": "source-disclosures",
+      "theme": "dark",
+      "text": "large",
+      "result": {
+        "passages": 6,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "test": "source-disclosures",
+      "theme": "paper",
+      "text": "compact",
+      "result": {
+        "passages": 6,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "test": "source-disclosures",
+      "theme": "paper",
+      "text": "standard",
+      "result": {
+        "passages": 6,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "test": "source-disclosures",
+      "theme": "paper",
+      "text": "large",
+      "result": {
+        "passages": 6,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "test": "all-source-passages",
+      "chapter": "01-product",
+      "result": {
+        "passages": 6,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "test": "all-source-passages",
+      "chapter": "02-roles-and-trust",
+      "result": {
+        "passages": 3,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "test": "all-source-passages",
+      "chapter": "03-financing-to-offer",
+      "result": {
+        "passages": 2,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "test": "all-source-passages",
+      "chapter": "04-four-party-transfer",
+      "result": {
+        "passages": 2,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "test": "all-source-passages",
+      "chapter": "05-bring-an-application",
+      "result": {
+        "passages": 2,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "test": "all-source-passages",
+      "chapter": "06-compose-a-workflow",
+      "result": {
+        "passages": 1,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "test": "all-source-passages",
+      "chapter": "07-evidence-and-boundaries",
+      "result": {
+        "passages": 4,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "test": "all-source-passages",
+      "chapter": "08-release-and-adoption",
+      "result": {
+        "passages": 3,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "test": "all-source-passages",
+      "chapter": "09-proposal-context",
+      "result": {
+        "passages": 2,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "test": "all-source-passages",
+      "chapter": "10-context-and-references",
+      "result": {
+        "passages": 1,
+        "width": 390,
+        "height": 844,
+        "overflow": false
+      }
+    },
+    {
+      "test": "file-url-offline-playback",
+      "replay": "file:///Users/miguel_lemos/Desktop/harmony-project/design/0.2/chapters/03-financing-to-offer.html?view=try&story=purchase-rejected&step=3"
+    },
+    {
+      "test": "print",
+      "file": "transfer-rollback.pdf",
+      "statePreserved": true
+    },
+    {
+      "test": "javascript-disabled-reading",
+      "staticRecordingTables": true
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "welcome",
+      "url": "http://127.0.0.1:56202/design/0.2/book-overview.html",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "purchase",
+      "url": "http://127.0.0.1:56202/design/0.2/chapters/03-financing-to-offer.html?view=try&step=2",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "source",
+      "url": "http://127.0.0.1:56202/design/0.2/chapters/01-product.html?audience=author&view=sources&open=proposal-L160",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "workspace",
+      "url": "http://127.0.0.1:56202/design/0.2/application.html?audience=operator",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "builder",
+      "url": "http://127.0.0.1:56202/design/0.2/application-builder.html?phase=3",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "coverage",
+      "url": "http://127.0.0.1:56202/design/0.2/coverage.html?audience=author",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "mobile",
+      "url": "http://127.0.0.1:56202/design/0.2/chapters/03-financing-to-offer.html?view=try&step=2&text=large",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "dark",
+      "url": "http://127.0.0.1:56202/design/0.2/chapters/04-four-party-transfer.html?view=try&story=transfer-final-leg-rejected&step=6&theme=dark",
+      "width": 1280,
+      "height": 1100
+    },
+    {
+      "name": "paper",
+      "url": "http://127.0.0.1:56202/design/0.2/chapters/03-financing-to-offer.html?theme=paper",
+      "width": 1280,
+      "height": 1000
+    }
+  ],
+  "errors": [],
+  "followup_checks": [
+    {
+      "test": "print-pagination-review",
+      "result": "passed",
+      "pages": 4,
+      "light_colors": true,
+      "source_break_inside": "avoid",
+      "interactive_state_preserved": true,
+      "all_pages_visually_reviewed": true
+    }
+  ]
+}

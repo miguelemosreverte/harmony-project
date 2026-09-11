@@ -50,6 +50,9 @@ try {
     await navigate(page);report.checks.push({page,test,result:await evaluate(`harmoniaDesignChecks.${test}()`),replay:await replay()});
   }
   await navigate('book-overview.html');report.checks.push({test:'appearance-and-history',result:await evaluate('harmoniaDesignChecks.common()'),replay:await replay()});
+  await navigate('review.html?theme=paper');
+  assert.equal(await evaluate('new URL([...document.querySelectorAll("[data-exact-view]")].find(a=>a.href.includes("theme=dark")).href).searchParams.get("theme")'),'dark');
+  report.checks.push({test:'review-reproduction-links',explicitThemePreserved:true});
   // A malformed link must settle on usable canonical state.
   await navigate('chapters/03-financing-to-offer.html?view=try&story=missing&step=999&theme=purple&theme=dark&text=huge&unknown=x#%XX');
   assert.equal(await evaluate('HarmoniaView.state.step'),8);assert.equal(await evaluate('HarmoniaView.state.theme'),'light');
@@ -60,12 +63,13 @@ try {
   await navigate('book-chapter.html?view=try&step=2');
   assert.equal(await evaluate('HarmoniaView.state.step'),2);report.checks.push({test:'legacy-chapter-redirect',url:await evaluate('location.href')});
   const chapters=(await(await fetch(base+'coverage.json')).json()).chapters;
-  const pages=['book-overview.html','application.html','application-builder.html','coverage.html','sources/proposal.html','sources/architecture.html',...chapters.map(c=>`chapters/${c.id}.html`)];
+  const pages=['book-overview.html','application.html','application-builder.html','coverage.html','review.html','sources/proposal.html','sources/architecture.html',...chapters.map(c=>`chapters/${c.id}.html`)];
   for(const width of [390,768,1280,1536]) {
     await viewport(width,width===390?844:900);
     for(const page of pages){await navigate(page);const result=await evaluate('harmoniaDesignChecks.layout()');report.checks.push({test:'layout',page,...result});}
   }
   await viewport(390,844);
+  await navigate('book-overview.html');report.checks.push({test:'mobile-navigation',result:await evaluate('harmoniaDesignChecks.mobile()')});
   for(const theme of ['light','dark','paper']) for(const text of ['compact','standard','large']) {
     await navigate(`chapters/01-product.html?view=sources&theme=${theme}&text=${text}`);
     report.checks.push({test:'source-disclosures',theme,text,result:await evaluate('harmoniaDesignChecks.sources()')});
@@ -84,9 +88,12 @@ try {
   assert.equal(await evaluate('getComputedStyle(document.querySelector("[data-recording=transfer-final-leg-rejected]")).display'),'block');
   assert.equal(await evaluate('getComputedStyle(document.querySelector("[data-recording=transfer-approved]")).display'),'none');
   await fs.mkdir('design/0.2/review-2',{recursive:true});
+  const beforePrint=await evaluate('harmoniaDesignChecks.snapshot()');
   const pdf=await cdp('Page.printToPDF',{printBackground:true,preferCSSPageSize:true,displayHeaderFooter:false});
   await fs.writeFile('design/0.2/review-2/transfer-rollback.pdf',Buffer.from(pdf.data,'base64'));
-  report.checks.push({test:'print',file:'transfer-rollback.pdf'});
+  await evaluate('new Promise(resolve=>setTimeout(resolve,60))');
+  assert.deepEqual(await evaluate('harmoniaDesignChecks.snapshot()'),beforePrint,'Printing changed the interactive state');
+  report.checks.push({test:'print',file:'transfer-rollback.pdf',statePreserved:true});
   await cdp('Emulation.setEmulatedMedia',{media:''});
   await cdp('Emulation.setScriptExecutionDisabled',{value:true});
   await cdp('Page.navigate',{url:base+'chapters/03-financing-to-offer.html'});

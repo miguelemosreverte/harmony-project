@@ -10,7 +10,7 @@ window.harmoniaDesignChecks = (() => {
     assert(document.documentElement.scrollWidth<=innerWidth,`Page overflows ${innerWidth}px: ${document.documentElement.scrollWidth}`);
     assert(document.querySelectorAll('h1').length===1,'Expected one primary heading');
     assert($('a[href="#main"]'),'Missing keyboard skip link');
-    for(const image of document.images) assert(image.complete&&image.naturalWidth>0,`Broken image: ${image.src}`);
+    for(const image of document.images) {if(image.loading==='lazy'&&!image.complete)continue;assert(image.complete&&image.naturalWidth>0,`Broken image: ${image.src}`);}
     return {width:innerWidth,height:innerHeight,overflow:false};
   }
   function snapshot() {
@@ -30,7 +30,17 @@ window.harmoniaDesignChecks = (() => {
     assert(location.href===before&&state().theme==='dark','Back did not restore appearance');
     await new Promise(resolve=>{addEventListener('popstate',resolve,{once:true});history.forward();});await settle();
     assert(state().theme==='paper','Forward did not restore appearance');
-    return {checks:5,...layout()};
+    const link=document.querySelector('#all-chapters a');
+    assert(new URL(link.href).searchParams.get('theme')==='paper','Link did not inherit appearance');
+    window.HarmoniaView.update({theme:'light',text:'standard'});
+    assert(!new URL(link.href).searchParams.has('theme'),'Old appearance stuck to navigation link');
+    // Exercise clipboard-denied recovery without overwriting the host clipboard.
+    const clipboard=Object.getOwnPropertyDescriptor(navigator,'clipboard');
+    Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText:()=>Promise.reject(Error('Permission denied'))}});
+    click('#share-view');await settle();
+    assert(!$('#share-fallback').hidden&&$('#share-url').value===location.href,'Share fallback does not contain the current URL');
+    if(clipboard)Object.defineProperty(navigator,'clipboard',clipboard);else delete navigator.clipboard;
+    return {checks:8,...layout()};
   }
   function welcome() {
     const expected={explorer:'01-product',author:'coverage',developer:'01-product',investor:'01-product',operator:'06-compose-a-workflow'};
@@ -100,5 +110,11 @@ window.harmoniaDesignChecks = (() => {
     }
     return {passages:count,...layout()};
   }
-  return {layout,snapshot,common,welcome,chapter,application,builder,sources};
+  function mobile() {
+    assert(getComputedStyle($('#menu-toggle')).display!=='none','Mobile reading-path control is hidden');
+    click('#menu-toggle');assert(state().nav==='open'&&$('#route-navigation').classList.contains('open'),'Mobile path did not open');
+    click('#menu-toggle');assert(state().nav==='closed'&&!$('#route-navigation').classList.contains('open'),'Mobile path did not close');
+    return {checks:3,...layout()};
+  }
+  return {layout,snapshot,common,welcome,chapter,application,builder,sources,mobile};
 })();

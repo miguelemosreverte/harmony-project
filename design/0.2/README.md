@@ -25,6 +25,9 @@ current URL, including selected scenario, step, actor, evidence tab, source pane
 and appearance. Back/Forward and cold navigation restore that state. No local
 storage overrides a link. Appearance also offers Print / save PDF.
 
+The [second-pass verification](../../docs/0.2/verification-2.md) records actual
+checks and remaining limitations.
+
 Read the [UX contract](../../docs/0.2/UX.md) for the explicit screen goals, personas,
 color provenance, and navigation rules. `v0.2.0-design.1` preserves the first pass:
 its root `.png`, `.rendered.png`, and `.mobile.png` images are historical, with
