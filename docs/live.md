@@ -60,3 +60,5 @@ The same bank and buyer sessions also contain **Build a workflow together**. The
 Only direct financing approval, generated legacy approval, and review confirmation are compiled into this evaluation. The composer supports eight unique proposal references per disposable workspace. Repeated role names must bind to the same party. Invalid input produces a persistent diagnostic; pending or uncertain commands disable new submissions until their outcome is reconciled. Adding a new action package requires a reviewed mapping and rebuild.
 
 These composed sources are visible to both parties. The private financing handoff above remains a separate example with its own disclosure boundary. Stopping the local network ends both evaluations.
+
+The bank session also includes **Bring an application package**. See [Chapter 8](../book/08-compose-a-workflow.md) for local upload, participant export, pinned source retrieval, supported mappings, and compiled project downloads. **Refresh package inputs** recovers the current builder state after a lost response.

@@ -616,6 +616,9 @@ tr:last-child td {
 @media (max-width: 700px) { .live-main { padding: 1.5rem 1rem; } .live-grid { grid-template-columns: 1fr; } .live-flow { flex-direction: column; } }
 
 .composition-evidence { padding: 1.5rem; overflow-x: auto; }
+.builder-slots { display: flex; flex-wrap: wrap; gap: .5rem; padding: 0; list-style: none; }
+.builder-slots li { border: 1px solid #8e9989; border-radius: 5px; padding: .5rem; }
+.builder-slots .occupied { background: #e7efde; font-weight: 600; }
 .composition-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
 .composition-fields label { display: block; font-weight: 600; margin-bottom: .4rem; }
 .composition-fields input, .composition-fields select { box-sizing: border-box; width: 100%; min-width: 0; padding: .7rem; border: 1px solid #8e9989; border-radius: 5px; background: white; color: #203c31; font: inherit; }

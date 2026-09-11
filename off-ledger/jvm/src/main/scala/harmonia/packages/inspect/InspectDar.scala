@@ -27,6 +27,7 @@ object InspectDar:
   def inspect(root: Path, dar: Path, output: Path): IO[Json] = for
     _ <- Resource.fromAutoCloseable(IO.blocking(new ZipFile(dar.toFile))).use { zip =>
       IO.blocking {
+        require(Files.size(dar) <= maximumBytes, "DAR exceeds the 8 MiB input limit")
         val entries = zip.entries().asScala.toVector
         require(
           entries.size <= 2048 && entries.map(_.getName).distinct.size == entries.size,
@@ -37,6 +38,20 @@ object InspectDar:
           "DAR exceeds the 32 MiB expanded size limit"
         )
         require(zip.getEntry("META-INF/MANIFEST.MF") != null, "DAR is missing its manifest")
+        // Verify actual expansion before handing bytes to the compiler; ZIP size
+        // declarations alone are insufficient for user-supplied archives.
+        var expanded = 0L
+        val buffer = new Array[Byte](8192)
+        entries.filterNot(_.isDirectory).foreach { entry =>
+          val stream = zip.getInputStream(entry)
+          try
+            var count = stream.read(buffer)
+            while count != -1 do
+              expanded += count
+              require(expanded <= 32L * 1024 * 1024, "DAR exceeds the 32 MiB expanded size limit")
+              count = stream.read(buffer)
+          finally stream.close()
+        }
       }
     }
     _ <- ManagedProcess.run(

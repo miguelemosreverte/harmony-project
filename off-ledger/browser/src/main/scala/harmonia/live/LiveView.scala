@@ -13,6 +13,7 @@ object LiveView:
       submitting: Boolean,
       notice: Option[String],
       editor: harmonia.composer.CompositionEditor,
+      packages: harmonia.builder.PackagePanel,
       reconnect: () => Unit,
       retry: () => Unit,
       dismiss: () => Unit,
@@ -169,6 +170,7 @@ object LiveView:
               )
             )
           }
+          if actor == "bank" then append(main, packages.render())
           val history = element("section", "live-panel")
           append(
             history,

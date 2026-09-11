@@ -11,6 +11,8 @@ This book grows with the working implementation. Chapters link to the actual sto
 7. [Four parties, one final transaction](06-atomic-transfer.md)
 8. [Generate an adapter from a deliberate mapping](07-generated-bindings.md)
 
+9. [Bring an application and compose a workflow](08-compose-a-workflow.md)
+
 Use the [recorded playback guide](playback.md) to open the browser edition.
 
 The current edition includes interactive playback for recorded stories, chapter navigation, observed progression, contract details, and complete expected/actual differences. Follow the playback guide to export and open a saved run. Later chapters extend the same book as the remaining capabilities pass their checks.

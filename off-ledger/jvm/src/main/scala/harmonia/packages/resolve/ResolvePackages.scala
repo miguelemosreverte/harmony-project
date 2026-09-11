@@ -22,7 +22,7 @@ object ResolvePackages:
     _ <- IO.println(s"Resolved ${inputs.size} pinned DAR inputs: .artifacts/packages/resolved.json")
   yield result
 
-  private def resolve(root: Path, input: PackageInput): IO[Json] =
+  def resolve(root: Path, input: PackageInput): IO[Json] =
     val directory = root.resolve(".artifacts/packages/cache").resolve(input.sha256)
     val cached = directory.resolve("source.dar")
     val alias = root.resolve(".artifacts/packages/inputs").resolve(input.name + ".dar")

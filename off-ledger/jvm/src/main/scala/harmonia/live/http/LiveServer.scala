@@ -19,6 +19,10 @@ final case class LiveServer(port: Int, capabilities: Map[String, String]):
 object LiveServer:
   def resource(root: Path, artifacts: Path, runtime: LiveRuntime): Resource[IO, LiveServer] = for
     actions <- LiveActions.resource(runtime)
+    builder <- Resource.eval(
+      harmonia.builder.PackageBuilder
+        .create(root, artifacts.resolve("builder"), runtime.packageExports)
+    )
     sessions <- Resource.eval(
       runtime.participants.keys.toVector
         .traverse(name => LocalCredentials.random.map(name -> _))
@@ -33,7 +37,7 @@ object LiveServer:
         "/",
         (exchange: HttpExchange) =>
           dispatcher.unsafeRunAndForget(
-            respond(root, http.getAddress.getPort, sessions, actions, exchange)
+            respond(root, http.getAddress.getPort, sessions, actions, builder, exchange)
               .handleErrorWith { error =>
                 val code = if error.isInstanceOf[IllegalArgumentException] then 400 else 503
                 send(
@@ -76,6 +80,7 @@ object LiveServer:
       port: Int,
       sessions: Map[String, String],
       actions: LiveActions,
+      builder: harmonia.builder.PackageBuilder,
       exchange: HttpExchange
   ): IO[Unit] =
     val path = exchange.getRequestURI.getPath
@@ -98,50 +103,21 @@ object LiveServer:
             "Open the session provisioned by the local operator".getBytes(UTF_8)
           )
         case Some((actor, _)) =>
-          val response = (method, path) match
-            case ("GET", "/api/state") => actions.state(actor)
-            case ("POST", "/api/actions") =>
-              for
-                bytes <- IO.blocking(exchange.getRequestBody.readNBytes(16385))
-                _ <- IO.raiseWhen(bytes.length > 16384)(
-                  IllegalArgumentException("Request exceeds 16 KiB")
-                )
-                json <- IO.fromEither(
-                  io.circe.parser
-                    .parse(new String(bytes, UTF_8))
-                    .leftMap(_ => IllegalArgumentException("Invalid JSON"))
-                )
-                _ <- IO.raiseUnless(
-                  json.asObject.exists(obj =>
-                    Set("id", "action", "version").subsetOf(
-                      obj.keys.toSet
-                    ) && (obj.keys.toSet -- Set("id", "action", "version", "input")).isEmpty
-                  )
-                )(
-                  IllegalArgumentException(
-                    "Expected id, action, version, and optional composition input"
-                  )
-                )
-                request <- IO
-                  .fromEither(for
-                    id <- json.hcursor.get[String]("id")
-                    action <- json.hcursor.get[String]("action")
-                    version <- json.hcursor.get[String]("version")
-                  yield ActionRequest(id, action, version, json.hcursor.downField("input").focus))
-                  .adaptError { case _: io.circe.Error =>
-                    IllegalArgumentException("Action fields must be text")
-                  }
-                job <- actions.submit(actor, request)
-              yield job.json
-            case _ => IO.raiseError(IllegalArgumentException("Unsupported endpoint or method"))
-          response.flatMap(json =>
+          if path.startsWith("/api/builder") && actor != "bank" then
             send(
               exchange,
-              if method == "POST" then 202 else 200,
-              "application/json",
-              json.noSpaces.getBytes(UTF_8)
+              403,
+              "text/plain",
+              "The builder belongs to the bank operator session".getBytes(UTF_8)
             )
-          )
+          else if method == "GET" && path.startsWith("/api/builder/project/") then
+            builder
+              .download(path.stripPrefix("/api/builder/project/"))
+              .flatMap(file =>
+                IO.blocking(Files.readAllBytes(file))
+                  .flatMap(send(exchange, 200, "application/zip", _))
+              )
+          else apiResponse(actor, method, path, actions, builder, exchange)
     else if method != "GET" then send(exchange, 405, "text/plain", Array.emptyByteArray)
     else
       val file = path match
@@ -157,6 +133,90 @@ object LiveServer:
       file.fold(send(exchange, 404, "text/plain", Array.emptyByteArray)) { (file, kind) =>
         IO.blocking(Files.readAllBytes(file)).flatMap(send(exchange, 200, kind, _))
       }
+
+  private def apiResponse(
+      actor: String,
+      method: String,
+      path: String,
+      actions: LiveActions,
+      builder: harmonia.builder.PackageBuilder,
+      exchange: HttpExchange
+  ): IO[Unit] =
+    val response = (method, path) match
+      case ("GET", "/api/state")   => actions.state(actor)
+      case ("GET", "/api/builder") => builder.state
+      case ("POST", "/api/builder/upload") =>
+        builder.upload(
+          IO.blocking(
+            exchange.getRequestBody.readNBytes(
+              harmonia.packages.inspect.InspectDar.maximumBytes + 1
+            )
+          )
+        )
+      case ("POST", "/api/builder/retrieve") =>
+        builderKey(exchange, "source").flatMap(builder.retrieve)
+      case ("POST", "/api/builder/generate") =>
+        builderKey(exchange, "id").flatMap(builder.generate)
+      case ("POST", "/api/actions") =>
+        for
+          bytes <- IO.blocking(exchange.getRequestBody.readNBytes(16385))
+          _ <- IO.raiseWhen(bytes.length > 16384)(
+            IllegalArgumentException("Request exceeds 16 KiB")
+          )
+          json <- IO.fromEither(
+            io.circe.parser
+              .parse(new String(bytes, UTF_8))
+              .leftMap(_ => IllegalArgumentException("Invalid JSON"))
+          )
+          _ <- IO.raiseUnless(
+            json.asObject.exists(obj =>
+              Set("id", "action", "version").subsetOf(
+                obj.keys.toSet
+              ) && (obj.keys.toSet -- Set("id", "action", "version", "input")).isEmpty
+            )
+          )(
+            IllegalArgumentException(
+              "Expected id, action, version, and optional composition input"
+            )
+          )
+          request <- IO
+            .fromEither(for
+              id <- json.hcursor.get[String]("id")
+              action <- json.hcursor.get[String]("action")
+              version <- json.hcursor.get[String]("version")
+            yield ActionRequest(id, action, version, json.hcursor.downField("input").focus))
+            .adaptError { case _: io.circe.Error =>
+              IllegalArgumentException("Action fields must be text")
+            }
+          job <- actions.submit(actor, request)
+        yield job.json
+      case _ => IO.raiseError(IllegalArgumentException("Unsupported endpoint or method"))
+    response.flatMap(json =>
+      send(
+        exchange,
+        if method == "POST" && path == "/api/actions" then 202 else 200,
+        "application/json",
+        json.noSpaces.getBytes(UTF_8)
+      )
+    )
+
+  private def builderKey(exchange: HttpExchange, field: String): IO[String] = for
+    bytes <- IO.blocking(exchange.getRequestBody.readNBytes(1025))
+    _ <- IO.raiseWhen(bytes.length > 1024)(
+      IllegalArgumentException("Package request exceeds 1 KiB")
+    )
+    json <- IO.fromEither(
+      io.circe.parser
+        .parse(new String(bytes, UTF_8))
+        .leftMap(_ => IllegalArgumentException("Invalid package request JSON"))
+    )
+    _ <- IO.raiseUnless(json.asObject.exists(_.keys.toSet == Set(field)))(
+      IllegalArgumentException(s"Expected only $field")
+    )
+    key <- IO.fromEither(
+      json.hcursor.get[String](field).leftMap(_ => IllegalArgumentException(s"$field must be text"))
+    )
+  yield key
 
   private def send(exchange: HttpExchange, code: Int, kind: String, bytes: Array[Byte]): IO[Unit] =
     IO.blocking {

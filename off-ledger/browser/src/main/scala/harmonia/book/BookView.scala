@@ -97,6 +97,7 @@ final class BookView(
   private def laboratory(main: dom.HTMLElement, state: ViewState): Unit =
     val story = stories(state.story)
     val composition = story.input.hcursor.get[String]("workflow").contains("composed-process")
+    val builder = story.input.hcursor.get[String]("workflow").contains("package-builder")
     val transfer = story.input.hcursor.get[String]("workflow").contains("atomic-transfer")
     val hero = element("header", "hero")
     append(
@@ -154,6 +155,7 @@ final class BookView(
           "Generated typed adapter"
         else if story.input.hcursor.get[String]("integration").toOption.contains("adapter") then
           "Typed adapter"
+        else if builder then "Inspect → verify → generate"
         else if composition then "Propose → consent → core execution"
         else if transfer then "Four-party atomic transfer"
         else if story.input.hcursor.get[String]("workflow").toOption.contains("property-purchase")
@@ -177,14 +179,16 @@ final class BookView(
       element(
         "strong",
         text =
-          if composition then "Empty workspace"
+          if builder then "No package inputs"
+          else if composition then "Empty workspace"
           else if transfer then "proposed"
           else setup.get[String]("status").getOrElse("Unknown")
       ),
       element(
         "span",
         text =
-          if composition then "Sources await partner consent"
+          if builder then "Eight available input slots"
+          else if composition then "Sources await partner consent"
           else if transfer then "Trade and source position created"
           else "Application created"
       )
@@ -205,7 +209,8 @@ final class BookView(
         element(
           "span",
           if text(actual, "outcome") == "rejected" then "rejected" else "",
-          text(actual, "outcome") + actual.hcursor
+          (if builder then s"HTTP ${actual.hcursor.get[Int]("http").getOrElse(0)}"
+           else text(actual, "outcome")) + actual.hcursor
             .get[String]("workflow")
             .toOption
             .fold("")(value => s" · workflow $value")
@@ -233,6 +238,7 @@ final class BookView(
     append(main, hero, toolbar, panel)
     if composition then
       append(main, harmonia.book.composer.CompositionEvidence.render(story, state.step))
+    if builder then append(main, harmonia.book.builder.BuilderEvidence.render(story, state.step))
     if transfer then append(main, harmonia.book.transfer.TransferView.render(story, state.step))
     append(main, details)
     if story.input.hcursor.get[String]("integration").contains("generated") then
@@ -405,6 +411,8 @@ final class BookView(
       text(actual, "trade")
     else if story.input.hcursor.get[String]("workflow").contains("composed-process") then
       text(actual, "workflow")
+    else if story.input.hcursor.get[String]("workflow").contains("package-builder") then
+      s"${actual.hcursor.get[Int]("inputs").getOrElse(0)} inputs"
     else text(actual, "application")
 
   private def text(json: Json, field: String): String =

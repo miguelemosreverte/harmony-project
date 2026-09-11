@@ -462,16 +462,16 @@ Deliver this larger step as three ordered, working commits:
 
 - [x] **16a:** ledger proposal/consent, core instantiation, authenticated commands, two committed goldens, and recorded source-state playback. Evidence: [composition foundation](docs/verification/16a-composition.md).
 - [x] **16b:** accessible live editor, partner consent, execution controls, and observed source states.
-- [ ] **16c:** bounded DAR input/inspection and supported mapping diagnostics, with Chapter 8's complete walkthrough.
+- [x] **16c:** bounded DAR input/inspection and supported mapping diagnostics, with Chapter 8's complete walkthrough.
 
 
-- [ ] Complete the bounded evaluation composer.
+- [x] Complete the bounded evaluation composer.
   - [x] Let a user define a small workflow from supported actions and bind its roles and inputs.
   - [x] Validate the definition and submit its authorized instantiation through the core.
-  - [ ] Provide local DAR upload and the validated participant/package-source retrieval path to the builder.
-  - [ ] Show useful diagnostics for unsupported mappings and workflow shapes.
-  - [ ] Add Chapter 8's create, authorize, run, and inspect walkthrough.
-  - [ ] **Acceptance:** a reader defines and executes a supported example without editing generated Daml; the result uses the same ledger rules and observable states as the scripted examples.
+  - [x] Provide local DAR upload and the validated participant/package-source retrieval path to the builder.
+  - [x] Show useful diagnostics for unsupported mappings and workflow shapes.
+  - [x] Add Chapter 8's create, authorize, run, and inspect walkthrough.
+  - [x] **Acceptance:** a reader defines and executes a supported example without editing generated Daml; the result uses the same ledger rules and observable states as the scripted examples.
 
 ### Commit 17 — `test: harden workflow bounds and failure behavior`
 

@@ -14,7 +14,7 @@ import harmonia.stories.financing.model.FinancingStory
 import harmonia.stories.read.StoryFormat
 
 final case class LiveParticipant(name: String, ledger: LiveLedger)
-final case class LiveRuntime(participants: Map[String, LiveParticipant])
+final case class LiveRuntime(participants: Map[String, LiveParticipant], packageExports: Path)
 
 object LiveRuntime:
   def resource(root: Path, artifacts: Path, story: FinancingStory): Resource[IO, LiveRuntime] =
@@ -38,7 +38,14 @@ object LiveRuntime:
           .toMap,
         tokens
       )
-      network <- CantonNetwork.resource(root, artifacts, dar, authorization = Some(auth))
+      network <- CantonNetwork.resource(
+        root,
+        artifacts,
+        dar,
+        inspectDars =
+          Vector(root.resolve("on-ledger/legacy-financing/.daml/dist/legacy-financing-0.1.0.dar")),
+        authorization = Some(auth)
+      )
       _ <- Resource.eval(
         ArtifactFiles.write(
           artifacts.resolve("setup/input.json"),
@@ -69,7 +76,7 @@ object LiveRuntime:
           )
         yield name -> LiveParticipant(name, ledger)
       }
-    yield LiveRuntime(participants.toMap)
+    yield LiveRuntime(participants.toMap, artifacts.resolve("downloaded"))
 
   def serve(root: Path): IO[Unit] = for
     artifacts <- ArtifactFiles.createRun(root, "live")

@@ -13,8 +13,15 @@ final case class LiveHttpFailure(code: Int, detail: Option[String] = None)
       else detail.getOrElse(s"Request unavailable (HTTP $code) — reconnect to recover state")
     )
 
-private object LiveApi:
-  def request(capability: String, verb: String, path: String, body: Option[Json]): IO[Json] =
+private[harmonia] object LiveApi:
+  def request(
+      capability: String,
+      verb: String,
+      path: String,
+      body: Option[Json],
+      upload: Option[dom.Blob] = None,
+      deadline: FiniteDuration = 45.seconds
+  ): IO[Json] =
     Resource
       .make(IO(new dom.AbortController()))(controller => IO(controller.abort()))
       .use { controller =>
@@ -22,13 +29,17 @@ private object LiveApi:
           response <- IO.fromFuture(IO {
             val requestHeaders = new dom.Headers()
             requestHeaders.set("Authorization", "Bearer " + capability)
-            requestHeaders.set("Content-Type", "application/json")
+            requestHeaders.set(
+              "Content-Type",
+              if upload.nonEmpty then "application/octet-stream" else "application/json"
+            )
             val options = new dom.RequestInit {
               this.method = (if verb == "POST" then dom.HttpMethod.POST else dom.HttpMethod.GET)
               this.headers = requestHeaders
               this.signal = controller.signal
             }
             body.foreach(value => options.body = value.noSpaces)
+            upload.foreach(value => options.body = value)
             dom.fetch(path, options).toFuture
           })
           text <- IO.fromFuture(IO(response.text().toFuture))
@@ -42,6 +53,25 @@ private object LiveApi:
         yield json
       }
       .timeoutTo(
-        45.seconds,
+        deadline,
         IO.raiseError(RuntimeException("Disconnected — participant request timed out"))
       )
+
+  def file(capability: String, path: String): IO[dom.Blob] = Resource
+    .make(IO(new dom.AbortController()))(controller => IO(controller.abort()))
+    .use { controller =>
+      for
+        response <- IO.fromFuture(IO {
+          val options = new dom.RequestInit {
+            method = dom.HttpMethod.GET
+            headers = new dom.Headers()
+            signal = controller.signal
+          }
+          options.headers.asInstanceOf[dom.Headers].set("Authorization", "Bearer " + capability)
+          dom.fetch(path, options).toFuture
+        })
+        _ <- IO.raiseUnless(response.ok)(LiveHttpFailure(response.status.toInt))
+        blob <- IO.fromFuture(IO(response.blob().toFuture))
+      yield blob
+    }
+    .timeout(45.seconds)
