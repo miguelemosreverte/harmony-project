@@ -1,6 +1,6 @@
 ThisBuild / scalaVersion := "3.3.6"
 ThisBuild / organization := "io.harmonia"
-ThisBuild / version := "0.1.0"
+ThisBuild / version := "0.2.0-SNAPSHOT"
 ThisBuild / scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked")
 
 lazy val exportRuntime = taskKey[File]("Export immutable runtime JARs and their classpath")

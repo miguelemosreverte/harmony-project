@@ -1,5 +1,10 @@
 # The Harmonia book
 
+The [0.2 design plan](../docs/0.2/PLAN.md) introduces a source-cited, use-case-oriented
+edition alongside this working book. Its design prototype is separate from these
+existing recorded-runtime chapters.
+
+
 This nine-chapter book accompanies the working implementation. Chapters link to the actual story inputs, committed expectations, and code used by the regression suite.
 
 1. [Set up the local runtime](setup.md)

@@ -2,6 +2,13 @@
 
 Compose independently owned Canton/Daml applications into a shared workflow. The ledger authorizes actions and records progression; the Scala service observes state and submits commands; the browser makes the workflow visible.
 
+## Version 0.2 design
+
+The active work revisits the original product requirements from the fourth-draft
+baseline. Read the [linear plan](docs/0.2/PLAN.md), [product contract](docs/0.2/product-contract.md),
+and [numbered Git history](docs/versions.md). The new book and application designs
+will live together under `design/0.2/`; their interactions are labelled prototypes.
+
 ## Read the product
 
 Start in **[product/](product/README.md)**. It contains the contracts, service, shared API types, live browser, and reviewed package mappings. The [reading guide](docs/fourth-draft/reading-guide.md) follows one operation through those owners.
@@ -30,4 +37,4 @@ Read the [nine-chapter book](book/README.md) or open recorded runs using the [pl
 
 [Fourth-draft principles and plan](FOURTH-DRAFT.md) · [Measurements](docs/fourth-draft/measurements.md) · [Progress](docs/progress.md) · [Acceptance](docs/release/acceptance.md) · [Capabilities](docs/capabilities.md) · [Compatibility](docs/compatibility.md)
 
-The earlier versions remain on `first-draft`, `second-draft`, and `third-draft`. Their plans and verification notes are in [history](docs/history/README.md). Imported proposals and attribution are recorded in [sources](docs/sources.md). Public repository destination and licensing remain undecided.
+The earlier versions remain on the numbered archive branches listed in [version history](docs/versions.md). Their plans and verification notes are in [history](docs/history/README.md). Imported proposals and attribution are recorded in [sources](docs/sources.md). Public repository destination and licensing remain undecided.
