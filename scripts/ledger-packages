@@ -1,0 +1,9 @@
+# Dependency order, shared by the build and test wrappers.
+harmonia_base_packages=(
+  interfaces core
+  applications/financing applications/legacy-financing fixtures/primitive-approval bindings
+  applications/private-financing applications/review
+  applications/property-financing applications/property-offer
+  applications/source-custody applications/destination-custody applications/transfer
+)
+harmonia_assembly_packages=(composition demo tests fixtures/metadata-receipts fixtures/package-example)

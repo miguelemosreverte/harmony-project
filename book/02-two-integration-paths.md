@@ -8,19 +8,19 @@ If the application can be developed with Harmonia in mind, it implements the com
 
 | Path | Input | Committed expectation |
 | --- | --- | --- |
-| Direct | [Workflow approval](../stories/workflow-approved/input.md) | [Result](../stories/workflow-approved/expected.md) |
-| Adapter | [Adapted approval](../stories/adapter-approved/input.md) | [Result](../stories/adapter-approved/expected.md) |
-| Adapter failure | [Already approved](../stories/adapter-rejected/input.md) | [Rollback](../stories/adapter-rejected/expected.md) |
+| Direct | [Workflow approval](../examples/stories/workflow-approved/input.md) | [Result](../examples/stories/workflow-approved/expected.md) |
+| Adapter | [Adapted approval](../examples/stories/adapter-approved/input.md) | [Result](../examples/stories/adapter-approved/expected.md) |
+| Adapter failure | [Already approved](../examples/stories/adapter-rejected/input.md) | [Rollback](../examples/stories/adapter-rejected/expected.md) |
 
 ```sh
-scripts/harmonia check stories/workflow-approved stories/adapter-approved stories/adapter-rejected
+scripts/harmonia check examples/stories/workflow-approved examples/stories/adapter-approved examples/stories/adapter-rejected
 ```
 
 The adapter input adds `integration: adapter`. The business observations are the same: the buyer's attempt is rejected, the bank's valid action approves the application and completes the workflow, and a failed application action preserves the waiting workflow.
 
 ## Inspect what changed
 
-The [source application](../on-ledger/legacy-financing/daml/LegacyFinancing.daml) contains no Harmonia imports. Its [identity record](../on-ledger/legacy-financing/identity.json) pins the artifact that the suite checks. The [adapter](../on-ledger/bindings/daml/FinancingBinding.daml) knows the source template and choice; the [core](../on-ledger/core/daml/Harmonia/Workflow.daml) only knows the common action interface.
+The [source application](../on-ledger/applications/legacy-financing/daml/LegacyFinancing.daml) contains no Harmonia imports. Its [identity record](../on-ledger/applications/legacy-financing/identity.json) pins the artifact that the suite checks. The [adapter](../on-ledger/bindings/daml/FinancingBinding.daml) knows the source template and choice; the [core](../on-ledger/core/daml/Harmonia/Workflow.daml) only knows the common action interface.
 
 The adapter has a contract of its own, pointing to the source contract. Approval replaces both contracts. A workflow failure replaces neither. The golden counts application contracts; raw observations identify the source contracts used during execution.
 

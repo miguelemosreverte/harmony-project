@@ -27,10 +27,10 @@ object Main extends IOApp:
       case List("boundaries-check") =>
         harmonia.verification.CheckBoundaries.run(root).as(ExitCode.Success)
       case List("builder-check") =>
-        harmonia.builder.verify.CheckBuilder.run(root).as(ExitCode.Success)
+        harmonia.packages.verify.CheckBuilder.run(root).as(ExitCode.Success)
       case List("composer-check") =>
         harmonia.composition.verify.CheckComposer.run(root).as(ExitCode.Success)
-      case List("live")       => harmonia.live.run.LiveRuntime.serve(root).as(ExitCode.Success)
+      case List("live")       => harmonia.app.live.LiveRuntime.serve(root).as(ExitCode.Success)
       case List("live-check") => harmonia.live.verify.CheckLive.run(root).as(ExitCode.Success)
       case List("generate-bindings", mapping, output) =>
         harmonia.bindings.generate.GenerateBinding
@@ -71,12 +71,12 @@ object Main extends IOApp:
             .resource(
               root,
               artifacts,
-              root.resolve("on-ledger/smoke/.daml/dist/harmonia-smoke-0.1.0.dar")
+              root.resolve("on-ledger/tests/.daml/dist/harmonia-tests-0.1.0.dar")
             )
             .use { network => IO.println(s"Connected: ${network.participants}") }
         yield ExitCode.Success
       case List("smoke") =>
-        val dar = root.resolve("on-ledger/smoke/.daml/dist/harmonia-smoke-0.1.0.dar")
+        val dar = root.resolve("on-ledger/tests/.daml/dist/harmonia-tests-0.1.0.dar")
         for
           artifacts <- ArtifactFiles.createRun(root, "smoke")
           _ <- IO.println(s"Starting local Canton. Evidence: $artifacts")

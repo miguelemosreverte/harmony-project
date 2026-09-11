@@ -1,7 +1,7 @@
 package harmonia.live.verify
 
 import cats.effect.IO
-import harmonia.live.http.LiveServer
+import harmonia.app.http.LiveServer
 import io.circe.Json
 import java.net.URI
 import java.net.http.{HttpClient, HttpRequest, HttpResponse}

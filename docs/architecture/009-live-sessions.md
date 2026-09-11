@@ -59,7 +59,7 @@ in-memory evaluation.
 
 ## Evidence
 
-`evaluations/live-handoff/` contains readable setup/actions, independent business
+`examples/evaluations/live-handoff/` contains readable setup/actions, independent business
 expectations, and independent identity/reconnect expectations. The checker uses
 separate HTTP capabilities and actual restricted Ledger API calls. Its business
 observations use the same Markdown result format, comparison, and provenance as

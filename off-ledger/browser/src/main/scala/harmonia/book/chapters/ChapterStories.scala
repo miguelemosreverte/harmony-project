@@ -4,6 +4,7 @@ import harmonia.ui.Elements
 import harmonia.book.{RecordedStory, ViewState}
 import Elements.*
 import org.scalajs.dom
+import harmonia.examples.Examples
 
 object ChapterStories:
   def render(
@@ -11,20 +12,8 @@ object ChapterStories:
       stories: Vector[RecordedStory],
       navigate: ViewState => Unit
   ): dom.HTMLElement =
-    val prefixes = Vector(
-      Vector("financing-approved", "already-approved"),
-      Vector("workflow-", "adapter-"),
-      Vector("private-approval", "live-handoff"),
-      Vector("sequence-", "branch-"),
-      Vector("purchase-"),
-      Vector("transfer-"),
-      Vector("generated-"),
-      Vector("composer-", "package-builder"),
-      Vector("execution-boundaries", "generated-approved", "transfer-final-leg-rejected")
-    )
-    val selected = stories.zipWithIndex.filter((story, _) =>
-      prefixes.lift(index).getOrElse(Vector.empty).exists(story.id.startsWith)
-    )
+    val selected =
+      stories.zipWithIndex.filter((story, _) => Examples.forChapter(index).contains(story.id))
     val root = element("section", "chapter-experiments")
     append(root, element("h2", text = "Try the recorded examples"))
     if selected.isEmpty then
@@ -49,7 +38,7 @@ object ChapterStories:
         append(
           root,
           button(story.title, "button chapter-demo", "chapter-demo-" + story.id)(
-            navigate(ViewState(position, 0))
+            navigate(ViewState(position, 0, originChapter = Some(index)))
           )
         )
       }

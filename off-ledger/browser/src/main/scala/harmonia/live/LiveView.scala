@@ -1,216 +1,197 @@
 package harmonia.live
 
 import harmonia.ui.Elements.*
-import io.circe.Json
-import harmonia.financing.*
+import harmonia.financing.FinancingPanel
 import harmonia.protocol.SubmissionStatus
-import harmonia.workspace.{WorkspaceSnapshot, WorkspaceCommand}
+import harmonia.workspace.{WorkspaceSnapshot, WorkspaceCommand, SubmissionView, HistoryView}
 import org.scalajs.dom
 
-object LiveView:
-  private var previous = ""
+/** Owns stable workspace regions. Polling never detaches the draft editor or package controls. */
+final class LiveView:
+  private val main = element("main", "live-main"); main.id = "main"
+  private val feedback = element("section")
+  private val identity = element("p", "live-identity"); identity.id = "live-identity"
+  private val finance = element("div")
+  private val jobs = element("section", "live-panel")
+  private val composition = element("section", "live-panel"); composition.id = "composer"
+  private val draft = element("div")
+  private val composed = element("div")
+  private val packageArea = element("div")
+  private val history = element("details", "live-panel")
+  private val historyBody = element("div")
+  private var previous: Option[WorkspaceSnapshot] = None
+  private var previousBlocked = true
+  private var previousFeedback: Option[(ConnectionState, Boolean, Boolean, Option[String])] = None
+  private var mounted = false
+
   def render(
       snapshot: Option[WorkspaceSnapshot],
-      connection: String,
+      connection: ConnectionState,
       unconfirmed: Boolean,
       submitting: Boolean,
       notice: Option[String],
       editor: harmonia.composition.CompositionEditor,
-      packages: harmonia.builder.PackagePanel,
+      packages: harmonia.packages.PackagePanel,
       reconnect: () => Unit,
       retry: () => Unit,
       dismiss: () => Unit,
       submit: WorkspaceCommand => Unit
   ): Unit =
-    val signature = snapshot
-      .map(_.toString)
-      .getOrElse("") + connection + unconfirmed.toString + submitting.toString + notice.getOrElse(
-      ""
-    )
-    if signature != previous then
-      previous = signature
-      val focused = Option(dom.document.activeElement).map(_.id).filter(_.nonEmpty)
-      val root = dom.document.getElementById("app")
-      root.textContent = ""
-      val main = element("main", "live-main"); main.id = "main"
-      val eyebrow = element("p", "eyebrow", "HARMONIA / LIVE PARTICIPANT SESSION")
-      val title = element("h1", text = "A private decision. A shared next step.")
-      val description = element(
-        "p",
-        "lede",
-        "The bank approves its private financing case. The buyer uses the signed result to continue. Each session sees what its own participant discloses."
-      )
-      val feedback =
-        if submitting then connection + " · Pending — waiting for the server"
-        else if unconfirmed then
-          connection + " · Previous submission is unconfirmed. Reconnect or retry the same request."
-        else connection
-      val banner = element("p", "live-connection", feedback);
-      banner.setAttribute("role", "status"); banner.id = "live-connection"
+    if !mounted then
+      mounted = true
       append(
         main,
-        eyebrow,
-        title,
-        description,
-        banner,
-        button("Reconnect / refresh", "secondary", "live-refresh")(reconnect())
+        element("p", "eyebrow", "HARMONIA / LIVE PARTICIPANT SESSION"),
+        element("h1", text = "A private decision. A shared next step."),
+        element(
+          "p",
+          "lede",
+          "The bank approves its private financing case. The buyer uses the signed result to continue. Each session sees what its own participant discloses."
+        ),
+        feedback,
+        identity
       )
-      if unconfirmed && !submitting && connection == "Connected" then
-        append(main, button("Retry unconfirmed request", "secondary", "live-retry")(retry()))
-      notice.foreach { message =>
-        val diagnostic = element("div", "live-diagnostic"); diagnostic.setAttribute("role", "alert")
-        diagnostic.id = "live-diagnostic"
-        append(
-          diagnostic,
-          element("p", text = message),
-          button("Dismiss", "secondary", "live-dismiss")(dismiss())
-        )
-        append(main, diagnostic)
-      }
-      snapshot match
-        case None =>
-          append(
-            main,
-            element(
-              "p",
-              text =
-                "Open the participant link supplied by the local operator. This page cannot select or grant a ledger identity."
-            )
-          )
-        case Some(observation) =>
-          val financing = observation.financing
-          val actor = financing.actor
-          val workflow = financing.progress
-          val proof = financing.evidenceAvailable
-          val actorLabel =
-            Map("bank" -> "Bank", "buyer" -> "Buyer", "reviewer" -> "Olivia · observer")
-              .getOrElse(actor, actor)
-          val identity = element("p", "live-identity", s"Authenticated as $actorLabel");
-          identity.id = "live-identity"
-          append(main, identity)
-          val graph = element("ol", "live-flow")
-          val labels =
-            Vector("Bank approves privately", "Bank issues a signed result", "Buyer continues")
-          labels.zipWithIndex.foreach { (label, index) =>
-            val done =
-              if index == 2 then workflow == ProgressStatus.Complete
-              else proof || workflow == ProgressStatus.Complete
-            append(
-              graph,
-              element(
-                "li",
-                if done then "done" else "waiting",
-                (if done then "✓ " else "○ ") + label
-              )
-            )
-          }
-          append(main, graph)
-          val grid = element("div", "live-grid")
-          val state = element("section", "live-panel")
-          append(
-            state,
-            element("h2", text = "Current state"),
-            element("p", text = financing.currentStep)
-          )
-          val status = element("p", "live-workflow", s"Workflow: ${workflow.wire}");
-          status.id = "live-workflow"
-          append(state, status)
-          financing.application.foreach { application =>
-            append(
-              state,
-              element("h3", text = "Your private application"),
-              element("p", text = s"Status: ${application.wire}"),
-              element("p", text = financing.privateDetails.getOrElse(""))
-            )
-          }
-          val actions = financing.eligible
-          val pending = observation.submissions.exists(_.outcome == SubmissionStatus.Pending)
-          actions.foreach { action =>
-            val label =
-              if action == FinancingAction.Approve then "Approve financing"
-              else "Continue shared workflow"
-            val control = button(label, "primary", "live-" + action.wire)(
-              submit(WorkspaceCommand.Financing(action))
-            )
-            control.disabled = pending || unconfirmed || submitting || connection != "Connected"
-            append(state, control)
-          }
-          if actions.isEmpty then
-            append(
-              state,
-              element(
-                "p",
-                text =
-                  if workflow == ProgressStatus.Complete then "This handoff is complete."
-                  else "No action is currently available for your session."
-              )
-            )
-          val jobs = element("section", "live-panel")
-          append(jobs, element("h2", text = "Your submissions"))
-          val submissions = observation.submissions
-          if submissions.isEmpty then
-            append(jobs, element("p", text = "No commands submitted in this session."))
-          submissions.reverse.foreach { job =>
-            val row = element("article", "live-job")
-            append(
-              row,
-              element("strong", text = job.outcome.wire),
-              element("p", text = job.action),
-              element("p", text = job.detail)
-            )
-            append(jobs, row)
-          }
-          append(grid, state, jobs); append(main, grid)
-          Some(observation.composition).foreach { composition =>
-            append(
-              main,
-              harmonia.composition.ComposerView.render(
-                composition,
-                pending || unconfirmed || submitting || connection != "Connected",
-                editor,
-                submit
-              )
-            )
-          }
-          if actor == "bank" then append(main, packages.render())
-          val history = element("section", "live-panel")
-          append(
-            history,
-            element("h2", text = "Visible ledger history"),
-            element(
-              "p",
-              text =
-                "These events came from your authenticated participant query. Refreshing recovers committed state."
-            )
-          )
-          val list = element("ol", "live-history")
-          observation.history.foreach { transaction =>
-            val row = element("li")
-            append(
-              row,
-              element(
-                "p",
-                text = transaction.events.mkString(" → ")
-              )
-            )
-            val details = element("details")
-            append(
-              details,
-              element("summary", text = "Transaction identity"),
-              element("code", text = transaction.updateId.getOrElse(""))
-            )
-            append(row, details); append(list, row)
-          }
-          append(history, list); append(main, history)
+      val nav = element("nav", "workspace-nav"); nav.setAttribute("aria-label", "Workspace tasks")
+      Vector(
+        "Financing" -> "financing",
+        "Compose a workflow" -> "composer",
+        "Application packages" -> "package-builder"
+      ).foreach((title, id) => append(nav, link(title, "#" + id)))
+      finance.id = "financing"
+      append(main, nav, finance, jobs)
+      append(
+        composition,
+        element("h2", text = "Build a workflow together"),
+        element(
+          "p",
+          text =
+            "Propose → partner consent → execute → inspect. These evaluation sources are shared with both parties; the private handoff above keeps its own disclosure rules."
+        ),
+        draft,
+        composed
+      )
+      append(
+        history,
+        element("summary", text = "Visible ledger history"),
+        element(
+          "p",
+          text =
+            "These events came from your authenticated participant query. Refreshing recovers committed state."
+        ),
+        historyBody
+      )
       append(
         main,
+        composition,
+        packageArea,
+        history,
         element(
           "p",
           "live-footnote",
           "Local evaluation · synthetic data · one synchronizer · state lasts until the local network stops. Recorded playback is available separately in the book."
         )
       )
-      root.appendChild(main)
-      focused
-        .flatMap(id => Option(dom.document.getElementById(id)))
-        .foreach(_.asInstanceOf[dom.HTMLElement].focus())
+      val root = dom.document.getElementById("app"); root.textContent = ""; append(root, main)
+    val feedbackState = (connection, unconfirmed, submitting, notice)
+    if !previousFeedback.contains(feedbackState) then
+      previousFeedback = Some(feedbackState)
+      feedback.textContent = ""
+      val message =
+        if submitting then connection.label + " · Pending — waiting for the server"
+        else if unconfirmed then
+          connection.label + " · Previous submission is unconfirmed. Reconnect or retry the same request."
+        else connection.label
+      val banner = element("p", "live-connection", message); banner.id = "live-connection";
+      banner.setAttribute("role", "status")
+      append(
+        feedback,
+        banner,
+        button("Reconnect / refresh", "secondary", "live-refresh")(reconnect())
+      )
+      if unconfirmed && !submitting && connection == ConnectionState.Connected then
+        append(feedback, button("Retry unconfirmed request", "secondary", "live-retry")(retry()))
+      notice.foreach { message =>
+        val diagnostic = element("div", "live-diagnostic"); diagnostic.id = "live-diagnostic";
+        diagnostic.setAttribute("role", "alert")
+        append(
+          diagnostic,
+          element("p", text = message),
+          button("Dismiss", "secondary", "live-dismiss")(dismiss())
+        )
+        append(feedback, diagnostic)
+      }
+    snapshot match
+      case None =>
+        identity.textContent = "Open the participant link supplied by the local operator."
+      case Some(state) =>
+        val actor = state.financing.actor
+        identity.textContent = "Authenticated as " + Map(
+          "bank" -> "Bank",
+          "buyer" -> "Buyer",
+          "reviewer" -> "Olivia · observer"
+        ).getOrElse(actor, actor)
+        val blocked = state.submissions.exists(
+          _.outcome == SubmissionStatus.Pending
+        ) || unconfirmed || submitting || connection != ConnectionState.Connected
+        if previous.map(_.financing) != Some(state.financing) || blocked != previousBlocked then
+          replace(
+            finance,
+            FinancingPanel.render(
+              state.financing,
+              blocked,
+              a => submit(WorkspaceCommand.Financing(a))
+            )
+          )
+        if previous.map(_.submissions) != Some(state.submissions) then renderJobs(state.submissions)
+        val compositionState = state.composition
+        draft.style.display = if compositionState.canPropose then "" else "none"
+        val input = editor.render(blocked, compositionState.remainingProposals)
+        if input.parentNode != draft then append(draft, input)
+        if previous.map(_.composition) != Some(compositionState) || blocked != previousBlocked then
+          replace(
+            composed,
+            harmonia.composition.ComposerView.render(compositionState, blocked, submit)
+          )
+        packageArea.style.display = if actor == "bank" then "" else "none"
+        if actor == "bank" then
+          val panel = packages.render()
+          if panel.parentNode != packageArea then append(packageArea, panel)
+        if previous.map(_.history) != Some(state.history) then renderHistory(state.history)
+        previous = Some(state); previousBlocked = blocked
+
+  private def replace(parent: dom.HTMLElement, child: dom.HTMLElement): Unit =
+    val focused =
+      Option(dom.document.activeElement).filter(parent.contains).map(_.id).filter(_.nonEmpty)
+    parent.textContent = ""; append(parent, child)
+    focused
+      .flatMap(id => Option(dom.document.getElementById(id)))
+      .foreach(_.asInstanceOf[dom.HTMLElement].focus())
+
+  private def renderJobs(values: Vector[SubmissionView]): Unit =
+    jobs.textContent = ""; append(jobs, element("h2", text = "Your submissions"))
+    if values.isEmpty then
+      append(jobs, element("p", text = "No commands submitted in this session."))
+    values.reverse.foreach { job =>
+      val row = element("article", "live-job")
+      append(
+        row,
+        element("strong", text = job.outcome.wire),
+        element("p", text = job.action),
+        element("p", text = job.detail)
+      )
+      append(jobs, row)
+    }
+
+  private def renderHistory(values: Vector[HistoryView]): Unit =
+    val list = element("ol", "live-history")
+    values.foreach { tx =>
+      val row = element("li")
+      val details = element("details")
+      append(
+        details,
+        element("summary", text = "Transaction identity"),
+        element("code", text = tx.updateId.getOrElse(""))
+      )
+      append(row, element("p", text = tx.events.mkString(" → ")), details); append(list, row)
+    }
+    replace(historyBody, list)

@@ -3,6 +3,7 @@ package harmonia.release
 import cats.effect.IO
 import cats.syntax.all.*
 import harmonia.book.ExportBook
+import harmonia.examples.Examples
 import harmonia.files.ArtifactFiles
 import harmonia.processes.ManagedProcess
 import io.circe.Json
@@ -29,7 +30,7 @@ object CheckRelease:
     _ <- ReleaseFiles.cloneAt(root, source, revision, work.resolve("source-clone"))
     commands = Vector(
       "build" -> List("scripts/build"),
-      "daml-test" -> List("scripts/daml", "test", "--package-root", "on-ledger/smoke"),
+      "daml-test" -> List("scripts/daml", "test", "--package-root", "on-ledger/tests"),
       "scala-test" -> List(
         "bash",
         "-c",
@@ -86,11 +87,11 @@ object CheckRelease:
         first.startsWith
       )
     }
-    _ <- IO.raiseUnless(records.size == 32)(
-      RuntimeException(s"Expected 32 release recordings, found ${records.size}")
+    _ <- IO.raiseUnless(records.size == Examples.all.size)(
+      RuntimeException(s"Expected ${Examples.all.size} release recordings, found ${records.size}")
     )
-    _ <- IO.raiseUnless(records.map(_.getParent.getFileName).distinct.size == 32)(
-      RuntimeException("Duplicate release story IDs")
+    _ <- IO.raiseUnless(records.map(_.getParent.getFileName.toString).toSet == Examples.ids)(
+      RuntimeException("Missing, extra, or duplicate release story IDs")
     )
     _ <- records.traverse_ { run =>
       for

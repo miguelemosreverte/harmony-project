@@ -4,8 +4,8 @@ import cats.effect.IO
 import cats.syntax.all.*
 import harmonia.files.ArtifactFiles
 import harmonia.ledger.{CantonSandbox, DamlScript}
-import harmonia.live.http.LiveServer
-import harmonia.live.run.LiveRuntime
+import harmonia.app.http.LiveServer
+import harmonia.app.live.LiveRuntime
 import harmonia.ledger.client.{LedgerValue as V}
 import harmonia.live.verify.SessionRequests.*
 import harmonia.stories.compare.CompareResults
@@ -20,8 +20,10 @@ object CheckBoundaries:
     artifacts <- ArtifactFiles.createRun(root, "boundaries")
     output = artifacts.resolve("execution-boundaries")
     _ <- IO.println(s"Checking execution bounds and competing advances. Evidence: $artifacts")
-    input <- ArtifactFiles.read(root.resolve("evaluations/execution-boundaries/input.md"))
-    baseline <- ArtifactFiles.read(root.resolve("evaluations/execution-boundaries/expected.md"))
+    input <- ArtifactFiles.read(root.resolve("examples/evaluations/execution-boundaries/input.md"))
+    baseline <- ArtifactFiles.read(
+      root.resolve("examples/evaluations/execution-boundaries/expected.md")
+    )
     scenario <- IO.fromEither(
       MarkdownYaml.read(input, "Scenario").leftMap(IllegalArgumentException(_))
     )
@@ -31,7 +33,7 @@ object CheckBoundaries:
     _ <- IO.raiseUnless(scenario.hcursor.get[String]("ledger_script").contains("Boundaries:run"))(
       IllegalArgumentException("Unknown boundary script")
     )
-    dar = root.resolve("on-ledger/smoke/.daml/dist/harmonia-smoke-0.1.0.dar")
+    dar = root.resolve("on-ledger/tests/.daml/dist/harmonia-tests-0.1.0.dar")
     _ <- ArtifactFiles.write(output.resolve("input.md"), input)
     _ <- ArtifactFiles.write(output.resolve("expected.md"), baseline)
     core <- CantonSandbox.resource(root, artifacts.resolve("core"), dar).use { ledger =>

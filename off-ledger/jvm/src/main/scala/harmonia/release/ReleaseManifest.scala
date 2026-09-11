@@ -3,6 +3,7 @@ package harmonia.release
 import cats.effect.IO
 import cats.syntax.all.*
 import harmonia.files.ArtifactFiles
+import harmonia.examples.Examples
 import io.circe.Json
 import java.nio.file.{Files, Path}
 import scala.jdk.CollectionConverters.*
@@ -25,8 +26,8 @@ object ReleaseManifest:
         .obj(
           "format" -> Json.fromInt(1),
           "source_revision" -> Json.fromString(revision),
-          "recordings" -> Json.fromInt(32),
-          "chapters" -> Json.fromInt(9),
+          "recordings" -> Json.fromInt(Examples.all.size),
+          "chapters" -> Json.fromInt(Examples.chapters.size),
           "sdk" -> Json.fromString("3.4.11"),
           "java" -> Json.fromString(Runtime.version().toString),
           "platform" -> Json.fromString(s"${sys.props("os.name")} ${sys.props("os.arch")}"),
@@ -57,7 +58,12 @@ object ReleaseManifest:
     evidence <- read(bundle.resolve("book/evidence.json"))
     stories <- IO.fromEither(evidence.hcursor.get[Vector[Json]]("stories"))
     chapters <- IO.fromEither(evidence.hcursor.get[Vector[Json]]("chapters"))
-    _ <- IO.raiseUnless(stories.size == 32 && chapters.size == 9)(
+    _ <- IO.raiseUnless(
+      stories.flatMap(_.hcursor.get[String]("id").toOption).toSet == Examples.ids &&
+        stories.size == Examples.all.size && chapters.flatMap(
+          _.hcursor.get[String]("id").toOption
+        ) == Examples.chapters
+    )(
       RuntimeException("Incomplete release book")
     )
     _ <- stories.traverse_ { story =>
@@ -88,7 +94,7 @@ object ReleaseManifest:
     )
     _ <- harmonia.book.verify.CheckBookLinks.run(bundle.resolve("source"), bundle.resolve("book"))
     _ <- IO.println(
-      s"PASS release: ${entries.size} file hashes, 32 clean-revision recordings, nine chapters; $revision"
+      s"PASS release: ${entries.size} file hashes, ${Examples.all.size} clean-revision recordings, ${Examples.chapters.size} chapters; $revision"
     )
   yield ()
 

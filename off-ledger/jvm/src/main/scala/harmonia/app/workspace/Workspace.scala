@@ -1,7 +1,7 @@
 package harmonia.app.workspace
 
 import cats.effect.{IO, Resource}
-import harmonia.live.run.LiveRuntime
+import harmonia.app.live.LiveRuntime
 import harmonia.ledger.client.LedgerSnapshot
 import harmonia.financing.FinancingObservation
 import harmonia.submission.*

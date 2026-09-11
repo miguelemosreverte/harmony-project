@@ -31,31 +31,31 @@ The coordinator's trade contract carries the consent accumulated from all four p
 
 These changes are one Daml update submitted as one transaction. The custody packages depend on common transfer terms, while the coordinator depends on both typed custody packages. Neither custody application imports the other or the workflow engine.
 
-The custody choices require all four parties' authority. The agreed coordinator supplies that authority for its consequences; the Settler cannot directly withdraw using only its own submission identity. The [successful story](../stories/transfer-approved/input.md) includes that rejected bypass before settlement.
+The custody choices require all four parties' authority. The agreed coordinator supplies that authority for its consequences; the Settler cannot directly withdraw using only its own submission identity. The [successful story](../examples/stories/transfer-approved/input.md) includes that rejected bypass before settlement.
 
 ## Follow the quantities
 
 Open **Transfer: approved** in the story laboratory. Select the seller's agreement, lock, and settlement attempts. The balance bars move from source available, to source locked, to destination received. The exact quoted quantities also appear in the expected/observed table.
 
-The [committed expectation](../stories/transfer-approved/expected.md) requires one settlement transaction containing all four kinds of effects: source retirement, destination holding, settled trade, and completed workflow. The runner obtains this count from the Settler's real ledger event stream. Raw observations retain the transaction identifier and the contract identifier used to match source retirement.
+The [committed expectation](../examples/stories/transfer-approved/expected.md) requires one settlement transaction containing all four kinds of effects: source retirement, destination holding, settled trade, and completed workflow. The runner obtains this count from the Settler's real ledger event stream. Raw observations retain the transaction identifier and the contract identifier used to match source retirement.
 
-The [source-as-Settler story](../stories/transfer-source-settler/input.md) transfers **7.125** units. Decimal normalization preserves exact values; the browser's bars are a visual aid and do not determine business arithmetic.
+The [source-as-Settler story](../examples/stories/transfer-source-settler/input.md) transfers **7.125** units. Decimal normalization preserves exact values; the browser's bars are a visual aid and do not determine business arithmetic.
 
 ## Try the failed final leg
 
 Select **Transfer: final leg rejected** and move to its last attempt. The destination's synthetic receipt rule rejects after source withdrawal is attempted inside the transaction. The raw ledger error identifies that destination assertion.
 
-The [expected result](../stories/transfer-final-leg-rejected/expected.md) requires the source to retain ten locked units, the destination to retain zero, and no active release or workflow instance to remain. The trade stays ready. The complete recording contains zero settlement transactions. This proves rollback of the eligible final path, including the temporarily started workflow.
+The [expected result](../examples/stories/transfer-final-leg-rejected/expected.md) requires the source to retain ten locked units, the destination to retain zero, and no active release or workflow instance to remain. The trade stays ready. The complete recording contains zero settlement transactions. This proves rollback of the eligible final path, including the temporarily started workflow.
 
-Compare that failure with [missing seller agreement](../stories/transfer-missing-agreement/input.md), [missing lock](../stories/transfer-missing-lock/input.md), and [missing readiness](../stories/transfer-missing-readiness/input.md). Those attempts fail at their own earlier prerequisite. Readiness grants permission to attempt receipt; the destination still enforces its business rules when it receives.
+Compare that failure with [missing seller agreement](../examples/stories/transfer-missing-agreement/input.md), [missing lock](../examples/stories/transfer-missing-lock/input.md), and [missing readiness](../examples/stories/transfer-missing-readiness/input.md). Those attempts fail at their own earlier prerequisite. Readiness grants permission to attempt receipt; the destination still enforces its business rules when it receives.
 
 ## Reproduce and extend
 
 ```sh
-scripts/harmonia check stories/transfer-approved stories/transfer-final-leg-rejected
+scripts/harmonia check examples/stories/transfer-approved examples/stories/transfer-final-leg-rejected
 scripts/book .artifacts/check-RUN
 ```
 
 The initial bound is one complete position, one release, one destination receipt, and one core action. Quantities are positive, at most one trillion, with at most ten decimal places. There is no splitting, aggregation, fee calculation, payment exchange, cancellation, expiry, or arbitrary atomic graph. The graph's earlier consent stages are deliberately outside the final transaction.
 
-Read the [architecture decision](../docs/architecture/007-atomic-transfer.md), [source custody](../on-ledger/source-custody/daml/SourceCustody.daml), [destination custody](../on-ledger/destination-custody/daml/DestinationCustody.daml), [coordinator](../on-ledger/transfer/daml/AtomicTransfer.daml), and [event-backed runner](../off-ledger/jvm/src/main/scala/harmonia/stories/transfer/run/RunTransferStory.scala).
+Read the [architecture decision](../docs/architecture/007-atomic-transfer.md), [source custody](../on-ledger/applications/source-custody/daml/SourceCustody.daml), [destination custody](../on-ledger/applications/destination-custody/daml/DestinationCustody.daml), [coordinator](../on-ledger/applications/transfer/daml/AtomicTransfer.daml), and [event-backed runner](../off-ledger/jvm/src/main/scala/harmonia/stories/transfer/run/RunTransferStory.scala).

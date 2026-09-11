@@ -7,4 +7,4 @@ dependencies:
   - daml-stdlib
 data-dependencies:
   - ../interfaces/.daml/dist/harmonia-interfaces-0.1.0.dar
-  - ../legacy-financing/.daml/dist/legacy-financing-0.1.0.dar
+  - ../applications/legacy-financing/.daml/dist/legacy-financing-0.1.0.dar

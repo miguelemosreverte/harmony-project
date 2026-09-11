@@ -4,7 +4,7 @@ import cats.effect.{IO, Resource}
 import cats.syntax.all.*
 import harmonia.bindings.generate.GeneratedProject
 import harmonia.bindings.verify.CheckBinding
-import harmonia.builder.ProjectArchive
+import harmonia.packages.workspace.ProjectArchive
 import harmonia.files.ArtifactFiles
 import harmonia.packages.inspect.InspectDar
 import harmonia.processes.ManagedProcess

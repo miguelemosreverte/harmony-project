@@ -217,9 +217,9 @@ Committed story inputs and expectations are human-reviewed product specification
 
 The executable examples are maintained in one place:
 
-- [Financing approval input](stories/financing-approved/input.md) and [its committed expectation](stories/financing-approved/expected.md).
-- [Already-approved input](stories/already-approved/input.md) and [its committed expectation](stories/already-approved/expected.md).
-- [Current format and observation scope](stories/README.md).
+- [Financing approval input](examples/stories/financing-approved/input.md) and [its committed expectation](examples/stories/financing-approved/expected.md).
+- [Already-approved input](examples/stories/already-approved/input.md) and [its committed expectation](examples/stories/already-approved/expected.md).
+- [Current format and observation scope](examples/stories/README.md).
 
 These files are the reader-facing specification used by the runner. They replace the initial inline schema sketches to avoid duplicating examples that could drift apart. As later commits extend the supported actions, update the format documentation and affected stories together.
 

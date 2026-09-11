@@ -127,18 +127,21 @@ object StoryFormat:
     privateDetails
   )
 
-  def result(markdown: String): Either[String, Json] = for
+  def result(
+      markdown: String,
+      kind: harmonia.stories.model.ResultKind = harmonia.stories.model.ResultKind.Ordinary
+  ): Either[String, Json] = for
     json <- MarkdownYaml.read(markdown, "Result")
-    normalized <-
-      if json.hcursor.downField("core").succeeded && json.hcursor.downField("race").succeeded then
-        harmonia.verification.BoundaryResult.read(json)
-      else if json.hcursor.downField("builder").succeeded then
-        harmonia.builder.BuilderResult.read(json)
-      else if json.hcursor.downField("composition").succeeded then
-        harmonia.composition.model.CompositionResult.read(json)
-      else if json.hcursor.downField("settlement_transactions").succeeded then
+    normalized <- kind match
+      case harmonia.stories.model.ResultKind.Ordinary => ordinaryResult(json)
+      case harmonia.stories.model.ResultKind.Transfer =>
         harmonia.stories.transfer.read.TransferFormat.result(json)
-      else ordinaryResult(json)
+      case harmonia.stories.model.ResultKind.Composition =>
+        harmonia.composition.model.CompositionResult.read(json)
+      case harmonia.stories.model.ResultKind.Packages =>
+        harmonia.packages.workspace.BuilderResult.read(json)
+      case harmonia.stories.model.ResultKind.Boundaries =>
+        harmonia.verification.BoundaryResult.read(json)
   yield normalized
 
   private def ordinaryResult(json: Json): Either[String, Json] = for

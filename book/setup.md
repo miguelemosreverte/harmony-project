@@ -32,7 +32,7 @@ The [first story chapter](01-first-story.md) supplies execution from readable Ma
 
 ## Separate participants
 
-`scripts/harmonia network-smoke` starts three independently identified participant nodes on a common local synchronizer, uploads the story DAR, checks connectivity, and stops the owned nodes. The generated configuration and node IDs remain in the printed evidence directory. `scripts/harmonia check stories/private-approval` exercises the authority and privacy story in that topology.
+`scripts/harmonia network-smoke` starts three independently identified participant nodes on a common local synchronizer, uploads the story DAR, checks connectivity, and stops the owned nodes. The generated configuration and node IDs remain in the printed evidence directory. `scripts/harmonia check examples/stories/private-approval` exercises the authority and privacy story in that topology.
 
 ## Reproduce package inputs
 

@@ -6,7 +6,7 @@ import harmonia.bindings.read.BindingFormat
 import harmonia.bindings.inspect.TemplateShapeReader
 import harmonia.files.ArtifactFiles
 import harmonia.packages.resolve.ResolvePackages
-import harmonia.packages.inspect.InspectDar
+import harmonia.packages.inspect.{InspectDar, LfArchive}
 import harmonia.processes.ManagedProcess
 import io.circe.Json
 import java.nio.file.{Files, Path, StandardCopyOption}
@@ -33,13 +33,8 @@ object GenerateBinding:
     )
     sourcePath <- IO.fromEither(input.hcursor.get[String]("file"))
     digest <- IO.fromEither(input.hcursor.get[String]("sha256"))
-    prettyPath = root.resolve(".artifacts/packages/cache").resolve(digest).resolve("main.daml-lf")
-    prettySize <- IO.blocking(Files.size(prettyPath))
-    _ <- IO.raiseWhen(prettySize > 16 * 1024 * 1024)(
-      RuntimeException("LF inspection exceeds the 16 MiB limit")
-    )
-    pretty <- ArtifactFiles.read(prettyPath)
-    shape <- IO.fromEither(TemplateShapeReader.read(pretty, mapping).left.map(RuntimeException(_)))
+    source <- LfArchive.read(root.resolve(sourcePath))
+    shape <- IO.fromEither(TemplateShapeReader.read(source, mapping).left.map(RuntimeException(_)))
     files <- IO.fromEither(GenerateSources(mapping, shape).left.map(RuntimeException(_)))
     exists <- ArtifactFiles.exists(output)
     _ <-

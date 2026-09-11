@@ -1,52 +1,37 @@
 # Repository map
 
-This map describes the implemented repository. The [progress record](../progress.md) links its working capabilities to commits and evidence.
+Start with [a chapter](../../book/README.md) or [an example](../../examples/README.md), then follow its named capability. The [reading traces](../second-draft/reading-traces.md) link the operations, boundaries, and independent tests directly.
 
 ```text
-harmony-project/
-  README.md                    Reader's starting point
-  PRD.md                       Requirements and ordered commit plan
-  harmonia.md                  Imported development proposal
-  harmonia-architecture.html   Imported design illustration
-  docs/
-    architecture/             Architecture decisions and code organization
-    progress.md               Delivered commits and verification evidence
-    sources.md                Provenance of imported documents
-  book/                       Chapters and presentation assets
-  packages/                   Pinned DAR input manifest and provenance
-  stories/                    Regular ledger input.md and expected.md examples
-  evaluations/                Authenticated UI, composer, package, and boundary goldens
-  on-ledger/                  Daml contracts, interfaces, bindings, and references
-  off-ledger/
-    shared/                   Models needed by JVM and browser code
-    jvm/                      Scala tools, server, and Canton integration
-    browser/                  Scala.js interactive application
-  scripts/                    Small launch/build wrappers; application logic is Scala
+examples/      Human-readable inputs and independent expectations
+book/          Nine authored chapters, diagrams, setup, and site styling
+on-ledger/     Interfaces, core, applications, bindings, composition, demo, tests
+off-ledger/   Scala application, browser, shared models, and focused tests
+docs/          Architecture, walkthroughs, evidence, and release records
+packages/      Pinned external/local DAR identities and reviewed mappings
+scripts/       Small bounded launch, build, check, and packaging commands
 ```
 
-`off-ledger/jvm/src/main/scala/harmonia/` contains the following capability packages:
+`off-ledger` has two build targets, JVM and Scala.js, with shared pure types. Inside them, Scala packages use the same capability vocabulary:
 
-| Package | Owns | Example |
+| Package | Owns | Entry point |
 | --- | --- | --- |
-| `stories/` | Reading, executing, and comparing executable stories | Run an input and compare observed results with its golden |
-| `bindings/` | Application package inspection and generation of typed Daml integration | Generate an adapter for an eligible financing choice |
-| `live/` | Authenticated workflow state, actions, HTTP sessions, and reconciliation | Submit under one restricted party identity |
-| `composer/` | Ordered plan validation, typed instantiation, and source projections | Obtain partner consent and execute a core-managed plan |
-| `builder/` | Bounded package input and downloadable compiled projects | Inspect an uploaded DAR and use its reviewed mapping |
-| `packages/` | Pinned source resolution and DAR identity inspection | Verify archive, package, and LF identities |
-| `ledger/` | Canton-specific connections, submissions, queries, and observations | Obtain a command's committed or rejected outcome |
-| `book/` | Static chapter/evidence export and local HTTP playback | Produce a self-contained reader bundle |
-| `verification/` | Cross-feature boundary and portable-project checks | Race two submissions against one process |
-| `processes/` | Owned subprocess lifecycles | Stop compiler/script/runtime children after a run |
-| `files/` | Filesystem access and artifact persistence | Read Markdown or write actual results and a diff |
-| `app/` | Configuration, resource ownership, and entry-point wiring | Construct programs and run the CLI/server |
+| `financing` | Approval, continuation, private observations, and their view | `Financing`, `FinancingObservation`, `FinancingState`, `FinancingPanel` |
+| `composition` | Validated plans, consent/execution choices, observations, and the draft editor | `Composition`, `ComposerCommands`, `ComposerView` |
+| `packages` | Acquisition, structured LF inspection, package workspace and export | `ResolvePackages`, `LfArchive`, `PackageBuilder` |
+| `bindings` | Reviewed mapping, supported type checks, generated code, independent proof | `TemplateShapeReader`, `GenerateSources`, `GenerateBinding` |
+| `submission` | Duplicate requests, stale observations, scheduling, and reconciliation | `Submissions` |
+| `ledger` | Authenticated transport, values, queries, networks, and Script execution | `ParticipantLedger`, `LedgerSnapshot`, `CantonNetwork` |
+| `stories` | Scenario parsing, execution, normalized observations, comparison, provenance | `CheckStories`, feature runners, `CompareResults` |
+| `examples` | Required example and chapter membership | `Examples` |
+| `book` | Recording presentation, chapter export, reader navigation and inspection | `PresentStory`, `ExportBook`, `BookApp` |
+| `app` | CLI, HTTP, authenticated live resource wiring, feature dispatch | `Main`, `LiveRuntime`, `Workspace` |
+| `live` | Browser session and HTTP client; dedicated live verification | `LiveApp`, `LiveView`, `CheckLive` |
+| `ui` | Small generic DOM primitives shared by book and workspace | `Elements` |
+| `release`, `files`, `processes` | Delivery assembly and narrow operating-system boundaries | `CheckRelease`, `ArtifactFiles`, `ManagedProcess` |
 
-The transfer reference is a complete feature slice under `stories/transfer/{model,read,run}`. Its on-ledger packages are `source-custody`, `destination-custody`, and `transfer`; their common types live in `interfaces`. Financing and purchase have separate typed input models so their data does not accumulate in a shared optional-field record.
+All book-specific models, projectors, export and browser code live under `harmonia.book`. Shared visual primitives belong to `harmonia.ui`. The browser does not run another business-rule engine: it renders observations and submits supported commands.
 
-`ledger/` and `files/` are distinct packages. Domain parsing belongs to its feature; the filesystem package supplies file access. Domain action selection belongs to its feature; the ledger package supplies the Canton integration.
+The [ledger map](../../on-ledger/README.md) explains package ownership. The live demo assembly has no dependency on the test assembly. Core depends on common interfaces; applications retain independent compiled identities. Existing business rules and input/expectation contents survive the second draft.
 
-The Scala binding generator emits Daml contracts. Scala workflow operations submit requests; Daml enforces their validity. This distinction also applies to the book: a diagram displays observed behavior without implementing a second execution engine.
-
-Tests mirror the feature packages under `src/test/scala`. The authored regular stories stay in `stories/`; authenticated interaction and cross-feature evaluations live in `evaluations/`. Generated local runs and diagnostics go to ignored `.artifacts/` directories, while selected release evidence is packaged deliberately with its provenance.
-
-See [Scala organization](scala.md) for the source tree and dependency rules, and [the PRD](../../PRD.md) for the exact delivery order.
+Generated projects, networks, compiler products, and local recordings live under ignored `.artifacts/`. A release copies selected evidence and verifies its clean source revision and file hashes. It does not package live credentials or network authorization files.

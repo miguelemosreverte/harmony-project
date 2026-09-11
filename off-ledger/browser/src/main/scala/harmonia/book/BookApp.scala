@@ -1,8 +1,7 @@
 package harmonia.book
 
-import cats.effect.{IO, IOApp, Ref}
+import cats.effect.{IO, IOApp, Resource}
 import cats.effect.std.Dispatcher
-import io.circe.Json
 import org.scalajs.dom
 import scala.scalajs.js.Thenable.Implicits.*
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -11,7 +10,8 @@ final case class ViewState(
     story: Int,
     step: Int,
     chapter: Option[Int] = None,
-    perspective: Option[String] = None
+    perspective: Option[String] = None,
+    originChapter: Option[Int] = None
 )
 
 object BookApp extends IOApp.Simple:
@@ -30,20 +30,32 @@ object BookApp extends IOApp.Simple:
         text <- IO.fromFuture(IO(response.text().toFuture))
         json <- IO.fromEither(io.circe.parser.parse(text))
         stories <- IO.fromEither(json.hcursor.get[Vector[RecordedStory]]("stories"))
-        chapters <- IO.fromEither(json.hcursor.get[Vector[Json]]("chapters"))
-        _ <- IO.raiseWhen(stories.isEmpty)(RuntimeException("This book has no recorded stories"))
-        initial = ViewState(math.max(0, stories.indexWhere(_.id == "workflow-approved")), 0)
-        state <- Ref.of[IO, ViewState](initial)
-        renderer = new BookView(
-          stories,
-          chapters,
-          next =>
-            dispatcher.unsafeRunAndForget(
-              state.set(next) *> BookApp.draw(state, stories, chapters, dispatcher)
-            )
+        chapters <- IO.fromEither(json.hcursor.get[Vector[BookChapter]]("chapters"))
+        _ <- IO.raiseWhen(stories.isEmpty || chapters.isEmpty)(
+          RuntimeException("This book has no stories or chapters")
         )
-        _ <- renderer.render(initial)
-        _ <- IO.never
+        _ <- Resource.make(IO(new Inspector(dispatcher)))(i => IO(i.dispose())).use { inspector =>
+          lazy val view: BookView = new BookView(
+            stories,
+            chapters,
+            next =>
+              dispatcher.unsafeRunAndForget(
+                IO(
+                  dom.window.history
+                    .pushState(null, "", BookNavigation.address(next, stories, chapters))
+                ) *> view.render(next)
+              ),
+            inspector
+          )
+          def current = BookNavigation.read(dom.window.location.hash, stories, chapters)
+          val onHistory: dom.Event => Unit =
+            _ => dispatcher.unsafeRunAndForget(view.render(current))
+          Resource
+            .make(IO(dom.window.addEventListener("popstate", onHistory)))(_ =>
+              IO(dom.window.removeEventListener("popstate", onHistory))
+            )
+            .use(_ => view.render(current) *> IO.never)
+        }
       yield ()
     }
     .handleErrorWith(error =>
@@ -52,20 +64,3 @@ object BookApp extends IOApp.Simple:
           s"Could not open the book: ${error.getMessage}"
       }
     )
-
-  private def draw(
-      state: Ref[IO, ViewState],
-      stories: Vector[RecordedStory],
-      chapters: Vector[Json],
-      dispatcher: Dispatcher[IO]
-  ): IO[Unit] =
-    state.get.flatMap { current =>
-      new BookView(
-        stories,
-        chapters,
-        next =>
-          dispatcher.unsafeRunAndForget(
-            state.set(next) *> draw(state, stories, chapters, dispatcher)
-          )
-      ).render(current)
-    }

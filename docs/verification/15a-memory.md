@@ -4,7 +4,7 @@ Verified on 2026-09-10 on the 24 GiB macOS development machine. Twenty-two old J
 
 ## Real execution and overlap rejection
 
-`scripts/harmonia check stories/transfer-approved` passed with zero differences at `.artifacts/check-3915631785737725915/transfer-approved/`. Its four-party Canton runtime used a 2 GiB maximum heap and the Scala driver used 512 MiB, verified through `jcmd VM.flags` while running. The Daml Script log confirms its 512 MiB `JAVA_TOOL_OPTIONS`. All three transient programs exited after the check.
+`scripts/harmonia check examples/stories/transfer-approved` passed with zero differences at `.artifacts/check-3915631785737725915/transfer-approved/`. Its four-party Canton runtime used a 2 GiB maximum heap and the Scala driver used 512 MiB, verified through `jcmd VM.flags` while running. The Daml Script log confirms its 512 MiB `JAVA_TOOL_OPTIONS`. All three transient programs exited after the check.
 
 During that execution, `scripts/harmonia network-smoke` failed with exit code 1 and the explicit workspace-lease diagnostic before launching another Canton. The negative result is retained at `.artifacts/ram-overlap.log`. The transfer remained successful.
 

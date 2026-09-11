@@ -1,6 +1,6 @@
 package harmonia.live
 
-import cats.effect.{IO, Ref}
+import cats.effect.{IO, Ref, Resource}
 import cats.effect.std.Dispatcher
 import cats.syntax.all.*
 import io.circe.Json
@@ -11,7 +11,7 @@ import scala.concurrent.duration.*
 
 private final case class ClientState(
     snapshot: Option[WorkspaceSnapshot],
-    connection: String,
+    connection: ConnectionState,
     unconfirmed: Option[Json],
     submitting: Boolean = false,
     notice: Option[String] = None
@@ -27,21 +27,20 @@ object LiveApp:
           dom.window.history.replaceState(null, "", "/")
         Option(dom.window.sessionStorage.getItem("harmonia-live")).getOrElse("")
       }
-      _ <- IO {
-        dom.window.addEventListener(
-          "hashchange",
-          (_: dom.Event) =>
-            if dom.window.location.hash.matches("#session=[A-Za-z0-9_-]{43}") then
-              dom.window.location.reload()
-        )
-      }
       remembered <- IO(
         Option(dom.window.sessionStorage.getItem("harmonia-request-" + capability))
           .flatMap(io.circe.parser.parse(_).toOption)
       )
-      state <- Ref.of[IO, ClientState](ClientState(None, "Connecting", remembered))
+      state <- Ref.of[IO, ClientState](ClientState(None, ConnectionState.Connecting, remembered))
       session = new BrowserSession(capability, state, dispatcher)
-      _ <- (session.refresh *> IO.sleep(1.second)).foreverM
+      listener: (dom.Event => Unit) = _ =>
+        if dom.window.location.hash.matches("#session=[A-Za-z0-9_-]{43}") then
+          dom.window.location.reload()
+      _ <- Resource
+        .make(IO(dom.window.addEventListener("hashchange", listener)))(_ =>
+          IO(dom.window.removeEventListener("hashchange", listener))
+        )
+        .use(_ => (session.refresh *> IO.sleep(1.second)).foreverM)
     yield ()
   }
 
@@ -50,8 +49,9 @@ private final class BrowserSession(
     state: Ref[IO, ClientState],
     dispatcher: Dispatcher[IO]
 ):
+  private val view = new LiveView
   private val storageKey = "harmonia-request-" + capability
-  private val packages = new harmonia.builder.PackagePanel(capability, dispatcher)
+  private val packages = new harmonia.packages.PackagePanel(capability, dispatcher)
   private val editor =
     new harmonia.composition.CompositionEditor({
       case Right(plan) => submit(WorkspaceCommand.Propose(plan))
@@ -61,7 +61,7 @@ private final class BrowserSession(
 
   private def submit(command: WorkspaceCommand): Unit =
     dispatcher.unsafeRunAndForget(state.get.flatMap { current =>
-      if current.submitting || current.unconfirmed.nonEmpty || current.connection != "Connected"
+      if current.submitting || current.unconfirmed.nonEmpty || current.connection != ConnectionState.Connected
       then IO.unit
       else
         current.snapshot.fold(IO.unit) { snapshot =>
@@ -90,7 +90,7 @@ private final class BrowserSession(
         }
         current.copy(
           snapshot = Some(snapshot),
-          connection = "Connected",
+          connection = ConnectionState.Connected,
           unconfirmed = if found then None else current.unconfirmed
         )
       } *> state.get.flatMap(s => remember(s.unconfirmed))
@@ -99,7 +99,7 @@ private final class BrowserSession(
       val message = error match
         case failure: LiveHttpFailure if failure.code == 401 => failure.getMessage
         case _ => "Disconnected — showing the last observed state"
-      state.update(_.copy(connection = message))
+      state.update(_.copy(connection = ConnectionState.Disconnected(message)))
     } *> draw
 
   private def send(input: Json): IO[Unit] =
@@ -127,7 +127,8 @@ private final class BrowserSession(
                 state.update(
                   _.copy(
                     submitting = false,
-                    connection = "Disconnected — submission result unknown"
+                    connection =
+                      ConnectionState.Disconnected("Disconnected — submission result unknown")
                   )
                 ) *> draw
             }
@@ -135,7 +136,7 @@ private final class BrowserSession(
 
   private def draw: IO[Unit] = state.get.flatMap { current =>
     IO {
-      LiveView.render(
+      view.render(
         current.snapshot,
         current.connection,
         current.unconfirmed.nonEmpty,

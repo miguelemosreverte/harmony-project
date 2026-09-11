@@ -4,8 +4,8 @@ import cats.effect.IO
 import cats.syntax.all.*
 import harmonia.composition.model.{Composition, CompositionResult}
 import harmonia.files.ArtifactFiles
-import harmonia.live.http.LiveServer
-import harmonia.live.run.LiveRuntime
+import harmonia.app.http.LiveServer
+import harmonia.app.live.LiveRuntime
 import harmonia.live.verify.SessionRequests.*
 import harmonia.stories.compare.CompareResults
 import harmonia.stories.read.MarkdownYaml
@@ -20,8 +20,10 @@ object CheckComposer:
     setup <- LiveRuntime.readInput(root)
     _ <- Vector("composer-direct", "composer-generated").traverse_ { id =>
       for
-        input <- ArtifactFiles.read(root.resolve(s"evaluations/$id/input.md"))
-        expectedMarkdown <- ArtifactFiles.read(root.resolve(s"evaluations/$id/expected.md"))
+        input <- ArtifactFiles.read(root.resolve(s"examples/evaluations/$id/input.md"))
+        expectedMarkdown <- ArtifactFiles.read(
+          root.resolve(s"examples/evaluations/$id/expected.md")
+        )
         scenario <- read(input, "Scenario")
         _ <- IO.fromEither(
           Composition
@@ -76,7 +78,7 @@ object CheckComposer:
           root,
           output.resolve("input.md"),
           output.resolve("expected.md"),
-          root.resolve("on-ledger/smoke/.daml/dist/harmonia-smoke-0.1.0.dar"),
+          root.resolve("on-ledger/demo/.daml/dist/harmonia-demo-0.1.0.dar"),
           output,
           differences.isEmpty,
           "three authenticated participants; bank proposal and buyer consent; core-managed source actions"

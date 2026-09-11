@@ -38,10 +38,10 @@ The bundle contains the compiled browser application, chapters, relevant source 
 
 ## Explore a failing comparison
 
-Create a copy of `stories/workflow-approved/` at `.artifacts/experiments/wrong-workflow/`. In the copied `expected.md`, change the successful action's `workflow: complete` to `workflow: waiting`. This is the `wrong-workflow` experiment: its input performs a valid bank approval, but its copied expectation says the workflow should remain waiting. Run the normal story and that experiment together:
+Create a copy of `examples/stories/workflow-approved/` at `.artifacts/experiments/wrong-workflow/`. In the copied `expected.md`, change the successful action's `workflow: complete` to `workflow: waiting`. This is the `wrong-workflow` experiment: its input performs a valid bank approval, but its copied expectation says the workflow should remain waiting. Run the normal story and that experiment together:
 
 ```sh
-scripts/harmonia check stories/workflow-approved .artifacts/experiments/wrong-workflow
+scripts/harmonia check examples/stories/workflow-approved .artifacts/experiments/wrong-workflow
 ```
 
 The command should return a failure because the copied expectation is intentionally wrong. Open the printed run with `scripts/book`. Choose the regression experiment. The workflow row shows **waiting** as the expectation and **complete** as the observation; the complete diff remains available below it.

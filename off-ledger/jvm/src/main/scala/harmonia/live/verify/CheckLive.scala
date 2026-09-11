@@ -3,9 +3,9 @@ package harmonia.live.verify
 import cats.effect.IO
 import cats.syntax.all.*
 import harmonia.files.ArtifactFiles
-import harmonia.live.http.LiveServer
+import harmonia.app.http.LiveServer
 import harmonia.ledger.client.LiveLedger
-import harmonia.live.run.{LiveRuntime, LiveParticipant}
+import harmonia.app.live.{LiveRuntime, LiveParticipant}
 import harmonia.financing.FinancingObservation
 import harmonia.ledger.client.LedgerSnapshot
 import harmonia.stories.financing.model.FinancingStory
@@ -24,10 +24,12 @@ object CheckLive:
   def run(root: Path): IO[Unit] = for
     artifacts <- ArtifactFiles.createRun(root, "live-check")
     output = artifacts.resolve("live-handoff")
-    input <- ArtifactFiles.read(root.resolve("evaluations/live-handoff/input.md"))
-    expectedMarkdown <- ArtifactFiles.read(root.resolve("evaluations/live-handoff/expected.md"))
+    input <- ArtifactFiles.read(root.resolve("examples/evaluations/live-handoff/input.md"))
+    expectedMarkdown <- ArtifactFiles.read(
+      root.resolve("examples/evaluations/live-handoff/expected.md")
+    )
     securityMarkdown <- ArtifactFiles.read(
-      root.resolve("evaluations/live-handoff/security-expected.md")
+      root.resolve("examples/evaluations/live-handoff/security-expected.md")
     )
     story <- LiveRuntime.parseInput(input)
     expected <- IO.fromEither(
@@ -70,7 +72,7 @@ object CheckLive:
       root,
       output.resolve("input.md"),
       output.resolve("expected.md"),
-      root.resolve("on-ledger/smoke/.daml/dist/harmonia-smoke-0.1.0.dar"),
+      root.resolve("on-ledger/demo/.daml/dist/harmonia-demo-0.1.0.dar"),
       output,
       differences.isEmpty && securityDifferences.isEmpty,
       "three independent participants; restricted JWT users; independent HTTP sessions; one common synchronizer"

@@ -1,6 +1,6 @@
 # The second-draft book and live workspace
 
-**Target experience, not yet implemented.** This document is the presentation brief for [the second-draft plan](../../SECOND-DRAFT.md). The current working book remains the behavioral and content reference.
+This document records the implemented presentation principles and their interaction checks. The [second-draft plan](../../SECOND-DRAFT.md) and release evidence distinguish completed checks from pending verification.
 
 ## The first ten minutes
 
@@ -20,7 +20,7 @@ Reading and evidence inspection share the selected example, attempt, and saved p
 
 ## Book layout
 
-The desired desktop composition is:
+The desktop reading composition is:
 
 ```text
 ┌────────────────────┬─────────────────────────────────────────┐
@@ -36,7 +36,7 @@ The desired desktop composition is:
 └────────────────────┴─────────────────────────────────────────┘
 ```
 
-Evidence opens beside the story when there is enough width and in a dedicated, reversible view on narrow screens. Long comparisons and code have local scroll regions. The chapter remains readable without opening every technical detail. The example catalog supports discovery beyond the guided reading order.
+Evidence opens in a focused, closable inspector over the story on desktop and in a full-height view on narrow screens. Long comparisons and code have local scroll regions. The chapter remains readable without opening every technical detail. The example catalog supports discovery beyond the guided reading order.
 
 Preserve the current book's warm paper, restrained green accents, and readable typography as the starting visual direction. Use generous spacing and a comfortable reading measure. Establish a small shared set of colors, spacing values, text styles, buttons, notices, and panels. The final refinement should be judged on actual rendered pages and interactions.
 

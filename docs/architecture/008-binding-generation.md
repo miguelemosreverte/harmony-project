@@ -2,7 +2,7 @@
 
 Status: implemented for consuming replacement action choices.
 
-The generator receives an authored Markdown mapping and a source alias from the pinned DAR manifest. Source types and choice signatures come from the actual DAR's LF description produced by SDK 3.4.11. Business meaning remains authored: actor, readers, subject, choice, arguments, result shape, and example observation. The parser is tied to that compiler's readable inspection format and rejects unknown structures; it is not a general LF parser or runtime reflection engine.
+The generator receives an authored Markdown mapping and a source alias from the pinned DAR manifest. Source types and choice signatures come from the actual DAR's structured LF protobuf syntax tree, using SDK 3.4.11's public archive schema. Business meaning remains authored: actor, readers, subject, choice, arguments, result shape, and example observation. `LfArchive` verifies the payload hash, resolves interned names and types, and bounds archive expansion and type-reference depth. `TemplateShapeReader` checks the supported primitive records and consuming replacement choices. Unsupported shapes fail explicitly; formatted compiler text is not parsed.
 
 Scala code is organized under `bindings/{model,read,inspect,generate,verify}`. `GenerateSources` is pure; `GenerateBinding` uses concrete `IO` for source resolution, inspection access, file creation, compilation, and identity checks. `CheckBinding` runs an actual Canton example and compares independent Markdown expectations. Existing directories are overwritten only when marked as owned generated projects. Generated names are constrained and source field declarations must use supported identifiers.
 

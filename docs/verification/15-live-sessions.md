@@ -2,7 +2,7 @@
 
 Verified locally on 2026-09-10. The final authored live story passes at
 `.artifacts/live-check-1624511490887743420/live-handoff/`. Its setup, action list,
-and independent expectations are in `evaluations/live-handoff/`. The business
+and independent expectations are in `examples/evaluations/live-handoff/`. The business
 result uses the existing Markdown result format and compares with zero
 differences; the independent security/reconnect comparison also has zero
 differences. Raw party-filtered events, HTTP request bodies/results, and source,

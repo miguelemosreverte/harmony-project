@@ -8,23 +8,12 @@ object ComposerView:
   def render(
       state: CompositionState,
       blocked: Boolean,
-      editor: CompositionEditor,
       submit: WorkspaceCommand => Unit
   ): dom.HTMLElement =
-    val root = element("section", "live-panel"); root.id = "composer"
-    append(
-      root,
-      element("h2", text = "Build a workflow together"),
-      element(
-        "p",
-        text =
-          "Propose → partner consent → execute → inspect. These evaluation source contracts are shared with both parties. The private handoff above keeps its separate disclosure rules."
-      )
-    )
-    if state.canPropose then append(root, editor.render(blocked, state.remainingProposals))
-    else if !state.available then
+    val root = element("div"); root.id = "composition-observations"
+    if !state.available then
       append(root, element("p", text = "Your session has no access to the composition workspace."))
-    else
+    else if !state.canPropose then
       append(
         root,
         element(

@@ -3,6 +3,7 @@ package harmonia.release
 import cats.effect.IO
 import cats.syntax.all.*
 import harmonia.files.ArtifactFiles
+import harmonia.examples.Examples
 import java.nio.file.{Files, Path}
 
 private[release] object AssembleRelease:
@@ -55,7 +56,7 @@ private[release] object AssembleRelease:
       bundle.resolve("README.md"),
       s"""# Harmonia local evaluation
 
-Source revision: `$revision`. This bundle contains nine chapters, 32 fresh recordings, the compiled Scala application, Daml packages, source history, and retained verification evidence.
+Source revision: `$revision`. This bundle contains ${Examples.chapters.size} chapters, ${Examples.all.size} fresh recordings, the compiled Scala application, Daml packages, source history, and retained verification evidence.
 
 - `./run-book`: open the printed local URL. Java 17 is sufficient; the book needs no ledger.
 - `./run-live`: start disposable authenticated participant sessions. Install Daml SDK 3.4.11 first; see `source/book/setup.md`. Ctrl-C releases the network.

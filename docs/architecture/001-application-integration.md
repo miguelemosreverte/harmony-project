@@ -33,7 +33,7 @@ The workflow completes, the binding is replaced, and the source application is r
 
 ## Artifact identity
 
-The legacy source DAR was built and inspected before the adapter was built. Its [identity record](../../on-ledger/legacy-financing/identity.json) fixes both the DAR SHA-256 and main package ID. The Scala suite verifies these values and inspects the source's packaged dependencies before ledger execution. Rebuilding with the pinned compiler reproduces the artifact locally. A change requires explicit review of the source and identity record.
+The legacy source DAR was built and inspected before the adapter was built. Its [identity record](../../on-ledger/applications/legacy-financing/identity.json) fixes both the DAR SHA-256 and main package ID. The Scala suite verifies these values and inspects the source's packaged dependencies before ledger execution. Rebuilding with the pinned compiler reproduces the artifact locally. A change requires explicit review of the source and identity record.
 
 This source is a small application maintained in this repository to make the experiment reproducible. It models integrating an existing DAR; it is not represented as an externally adopted production package.
 

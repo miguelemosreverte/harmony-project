@@ -39,9 +39,9 @@ in-memory lifecycle.
 scripts/harmonia live-check
 ```
 
-This runs the [authored input](../evaluations/live-handoff/input.md), compares
-actual business state with the [committed golden](../evaluations/live-handoff/expected.md),
-and checks [identity and reconnect expectations](../evaluations/live-handoff/security-expected.md).
+This runs the [authored input](../examples/evaluations/live-handoff/input.md), compares
+actual business state with the [committed golden](../examples/evaluations/live-handoff/expected.md),
+and checks [identity and reconnect expectations](../examples/evaluations/live-handoff/security-expected.md).
 It also attempts to read and act as the bank using the buyer's actual ledger
 credentials, sends an actor override directly to HTTP, submits an old view,
 retries a request, and reconnects through a fresh HTTP client.

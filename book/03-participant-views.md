@@ -2,7 +2,7 @@
 
 Northbank needs to keep its internal application details private. Alice needs an approval to continue her process. Olivia needs to observe progress, but she has no authority to act for either of them.
 
-The [private approval story](../stories/private-approval/input.md) hosts each party on a different participant node. Its [committed expectation](../stories/private-approval/expected.md) checks both action outcomes and visibility.
+The [private approval story](../examples/stories/private-approval/input.md) hosts each party on a different participant node. Its [committed expectation](../examples/stories/private-approval/expected.md) checks both action outcomes and visibility.
 
 ## Follow the handoff
 
@@ -21,7 +21,7 @@ These are two committed stages. A wait between them is an intentional part of th
 ## Try the boundaries
 
 ```sh
-scripts/harmonia check stories/private-approval
+scripts/harmonia check examples/stories/private-approval
 ```
 
 The six attempts demonstrate the roles:
@@ -53,10 +53,10 @@ The evaluation bundle contains the collected evidence from all three parties so 
 
 ## Follow the implementation
 
-- [Private application](../on-ledger/private-financing/daml/PrivateFinancing.daml): bank ownership and the private approval action.
+- [Private application](../on-ledger/applications/private-financing/daml/PrivateFinancing.daml): bank ownership and the private approval action.
 - [Signed result](../on-ledger/interfaces/daml/Harmonia/Result.daml): the issuer, designated consumer, and single-use choice.
 - [Shared progress](../on-ledger/core/daml/Harmonia/SharedProgress.daml): validation and continuation owned by Alice.
-- [Multi-participant script](../on-ledger/smoke/daml/Privacy.daml): submissions and synchronized party-specific queries.
+- [Multi-participant script](../on-ledger/tests/daml/Privacy.daml): submissions and synchronized party-specific queries.
 - [Event observation](../off-ledger/jvm/src/main/scala/harmonia/ledger/events/LedgerEvents.scala): bounded Ledger API history requests.
 
 The local topology has three independently identified participant nodes with separate in-memory stores and API endpoints, one common synchronizer, and one hosting JVM. This proves the demonstrated ledger visibility boundary; it is not a deployment with separate operating-system or administrator trust boundaries.
@@ -69,8 +69,8 @@ buyer, and observer sessions to their own authenticated participant clients.
 Approve in the bank tab, continue in the buyer tab, and reload to recover the
 committed state. The private payload stays in the bank's view.
 
-The [live input](../evaluations/live-handoff/input.md) and its
-[expected result](../evaluations/live-handoff/expected.md) use the same Markdown
+The [live input](../examples/evaluations/live-handoff/input.md) and its
+[expected result](../examples/evaluations/live-handoff/expected.md) use the same Markdown
 story language. `scripts/harmonia live-check` repeats the handoff and tests direct
 API attempts to bypass the displayed controls. Inspect the
 [session architecture](../docs/architecture/009-live-sessions.md) to follow the

@@ -94,39 +94,39 @@ The first three actual commits on `second-draft` form one acceptance sequence: d
 
 ### SD06 — Clarify package and binding responsibilities
 
-- [ ] Give package acquisition/inspection and reviewed binding generation explicit APIs and an acyclic dependency direction.
-- [ ] Replace formatted compiler-text matching with structured LF metadata for supported binding shapes.
-- [ ] Keep compilation, archive creation, and downloads owned and bounded; expose typed progress and diagnostics to the workspace.
+- [x] Give package acquisition/inspection and reviewed binding generation explicit APIs and an acyclic dependency direction.
+- [x] Replace formatted compiler-text matching with structured LF metadata for supported binding shapes.
+- [x] Keep compilation, archive creation, and downloads owned and bounded; expose typed progress and diagnostics to the workspace.
 - [ ] Reproduce package identities, both generated projects, determinism, the deliberate regression check, and portable output.
-- [ ] **Acceptance:** the feature trace explains exactly what is acquired, validated, generated, compiled, and downloaded; unsupported shapes remain explicit.
+- [x] **Acceptance:** the feature trace explains exactly what is acquired, validated, generated, compiled, and downloaded; unsupported shapes remain explicit.
 
 ### SD07 — Separate observations from reader presentation
 
-- [ ] Introduce a validated recording envelope with explicit typed presentation sections and linked raw evidence.
-- [ ] Move scenario-specific interpretation into named projectors; remove script-name and JSON-shape inference from general reader models/views.
-- [ ] Keep comparison based on independent expected and actual results, including meaningful missing data.
-- [ ] **Acceptance:** all 32 baseline examples remain renderable; a boundary report is represented honestly as verification phases rather than fabricated workflow actions.
+- [x] Introduce a validated recording envelope with explicit typed presentation sections and linked raw evidence.
+- [x] Move scenario-specific interpretation into named projectors; remove script-name and JSON-shape inference from general reader models/views.
+- [x] Keep comparison based on independent expected and actual results, including meaningful missing data.
+- [x] **Acceptance:** all 32 baseline examples remain renderable; a boundary report is represented honestly as verification phases rather than fabricated workflow actions.
 
 ### SD08 — Clarify ledger packages and example ownership
 
-- [ ] Group interfaces, core, reference applications, and bindings by responsibility; give the live demo assembly and integration tests accurate ownership and names.
-- [ ] Consolidate story/evaluation discovery into one example inventory without duplicating scenario facts or changing baseline contents.
-- [ ] Replace implicit source paths and repeated package/example lists with explicit build/runtime inputs where those lists currently disagree or obscure ownership.
-- [ ] **Acceptance:** core depends on common interfaces; application/test/demo dependencies are explicit and acyclic; all moved examples and preserved package identities are accounted for.
+- [x] Group interfaces, core, reference applications, and bindings by responsibility; give the live demo assembly and integration tests accurate ownership and names.
+- [x] Consolidate story/evaluation discovery into one example inventory without duplicating scenario facts or changing baseline contents.
+- [x] Replace implicit source paths and repeated package/example lists with explicit build/runtime inputs where those lists currently disagree or obscure ownership.
+- [x] **Acceptance:** core depends on common interfaces; application/test/demo dependencies are explicit and acyclic; all moved examples and preserved package identities are accounted for.
 
 ### SD09 — Complete the book and live workspace
 
-- [ ] Apply the [reader design](docs/second-draft/reader.md) across all chapters and demonstrations, with a shared visual vocabulary and stable component lifetimes.
-- [ ] Provide contextual code/evidence inspection, navigable reader state, and a clear return to the story.
-- [ ] Give the live workspace clear financing, composition, and package tasks under its authenticated session.
+- [x] Apply the [reader design](docs/second-draft/reader.md) across all chapters and demonstrations, with a shared visual vocabulary and stable component lifetimes.
+- [x] Provide contextual code/evidence inspection, navigable reader state, and a clear return to the story.
+- [x] Give the live workspace clear financing, composition, and package tasks under its authenticated session.
 - [ ] **Acceptance:** desktop and narrow-screen walkthroughs cover keyboard access, focus, editing, refresh, pending/uncertain/rejected states, and all baseline recordings.
 
 ### SD10 — Remove migration scaffolding and finish the reading guide
 
-- [ ] Delete replaced coordinators, duplicate codecs, obsolete paths, and completed compatibility adapters.
-- [ ] Update the repository map, architecture notes, chapter source links, and developer walkthrough to the actual final structure.
-- [ ] Record before/after traces for financing, composition, and package generation, including remaining unavoidable cross-feature boundaries.
-- [ ] **Acceptance:** examples can be followed through their public operations without relying on the original implementation narrative, and the shipped source contains one active path for each migrated responsibility.
+- [x] Delete replaced coordinators, duplicate codecs, obsolete paths, and completed compatibility adapters.
+- [x] Update the repository map, architecture notes, chapter source links, and developer walkthrough to the actual final structure.
+- [x] Record before/after traces for financing, composition, and package generation, including remaining unavoidable cross-feature boundaries.
+- [x] **Acceptance:** examples can be followed through their public operations without relying on the original implementation narrative, and the shipped source contains one active path for each migrated responsibility.
 
 ### SD11 — Produce the second-draft release
 
@@ -157,3 +157,11 @@ The chapter links distinguish the introductory shared application from the priva
 SD04 separates `submission/Submissions`, `ledger/client`, `financing/FinancingObservation`, and `app/workspace/Workspace`. Thirty Scala tests pass, including observation failures versus definite submission rejection; JVM and browser builds pass (`.artifacts/second-04-final.log`). HTTP diagnostics retain the actual validation error. The full release gate will repeat the real ledger recovery and resource checks.
 
 SD05 implements typed composition plans, observations, and browser commands. Thirty Scala tests and both compilation targets pass (`.artifacts/second-05-verified.log`). Shared UI primitives now live in `harmonia.ui`. The direct/generated ledger proofs and the stable-component browser walkthrough remain scheduled for the release gate and SD09.
+
+SD06–SD08 share one migration commit because the explicit example kind joins result decoding, reader projection, and inventory coverage. Structured LF inspection passes 31 Scala tests; both generated applications, source/DAR determinism, and deliberate compiled-regression detection pass (`.artifacts/second-06-bindings.log`). Portable reproduction remains in the full release gate. Formatting and both Scala targets pass (`.artifacts/second-08.log`).
+
+All example input/expectation bytes are preserved in `examples/`; `docs/second-draft/example-moves.json` records their old/new locations and hashes. Applications now have a grouped ledger owner. The live setup is an independent `demo` package, and the former broad smoke assembly is named `tests`. The shared inventory defines all 32 recordings and nine chapters. Reader projectors no longer infer verification phases from a script name or select a result schema by JSON field presence.
+
+SD09–SD10 implement the chapter-first reader, stable navigation, a cancellable code/evidence inspector, typed connection state, and mounted live editor/package regions. All 32 baseline recordings render successfully in the browser and all source/exported links pass. The first-draft archive is used only for this presentation check, with its original provenance displayed; the second release will contain fresh executions. All 18 ledger packages build, both pinned source DAR digests are unchanged, and 35 Scala tests pass (`.artifacts/second-09-verified.log`, `.artifacts/second-08-ledger.log`).
+
+The updated repository map, Scala guide, and three operation traces describe the actual implementation. The remaining work is the live/mobile interaction walkthrough and the complete clean-revision release gate.

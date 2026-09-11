@@ -1,6 +1,6 @@
 # Package input and compiled project proof
 
-The independently authored `evaluations/package-builder/` story passes with zero differences at `.artifacts/builder-check-17447850100362222392/package-builder/` on 2026-09-10. Requests use the actual authenticated HTTP service and a three-participant Canton runtime.
+The independently authored `examples/evaluations/package-builder/` story passes with zero differences at `.artifacts/builder-check-17447850100362222392/package-builder/` on 2026-09-10. Requests use the actual authenticated HTTP service and a three-participant Canton runtime.
 
 The bank uploads the unchanged legacy DAR and retrieves a second copy exported by its participant administrator. Both match the committed archive digest, package ID, and LF version. It generates and compiles the reviewed typed adapter and example, then downloads their portable ZIP. The verifier hashes the actual downloaded source DAR against the committed pin and checks all four compiled/vendor DAR digests against the generation manifest.
 

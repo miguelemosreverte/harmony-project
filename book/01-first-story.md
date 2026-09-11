@@ -2,14 +2,14 @@
 
 Alice needs Northbank to approve her financing application. The business rule is simple: Alice can see the application, but only the bank can approve it.
 
-Read the [story input](../stories/financing-approved/input.md) and [committed expectation](../stories/financing-approved/expected.md). They describe two attempts in order: Alice tries first, then Northbank.
+Read the [story input](../examples/stories/financing-approved/input.md) and [committed expectation](../examples/stories/financing-approved/expected.md). They describe two attempts in order: Alice tries first, then Northbank.
 
 ## Run the story
 
 After [setup](setup.md), run:
 
 ```sh
-scripts/harmonia check stories/financing-approved
+scripts/harmonia check examples/stories/financing-approved
 ```
 
 The Scala runner creates a local Canton environment, translates the input into a Daml Script argument, and submits the attempts. The script queries the contracts after each attempt. The comparator then checks those observations against the expected file.
@@ -38,7 +38,7 @@ The terminal prints the run directory. Inside the story's subdirectory:
 
 In `actual.md`, a rejected attempt should leave the input contract unconsumed. Successful approval should consume the pending contract and leave one approved application visible to Alice and Northbank.
 
-The [already-approved story](../stories/already-approved/input.md) tests another boundary: bank authority alone is insufficient when the application is already approved.
+The [already-approved story](../examples/stories/already-approved/input.md) tests another boundary: bank authority alone is insufficient when the application is already approved.
 
 ## Try a disagreement
 
@@ -50,22 +50,22 @@ Editing only the explanatory prose leaves the scenario unchanged. Adding an unsu
 
 ## Follow the code
 
-- [Financing application](../on-ledger/financing/daml/Financing.daml): its signatory, observer, controller, and transition condition.
-- [Ledger-driving script](../on-ledger/smoke/daml/Story.daml): submits actions and queries their effects.
+- [Financing application](../on-ledger/applications/financing/daml/Financing.daml): its signatory, observer, controller, and transition condition.
+- [Ledger-driving script](../on-ledger/tests/daml/Story.daml): submits actions and queries their effects.
 - [Scala execution slice](../off-ledger/jvm/src/main/scala/harmonia/stories/run/RunStory.scala): translates input and retains observations without receiving the expectation.
 - [Pure comparison](../off-ledger/shared/src/main/scala/harmonia/stories/compare/CompareResults.scala): checks complete result structures and reports differences.
 
 ## Let the workflow advance with the application
 
-The [workflow story](../stories/workflow-approved/input.md) adds one line, `workflow: approval`, to select the core-managed path. Its [expectation](../stories/workflow-approved/expected.md) observes both application and workflow state.
+The [workflow story](../examples/stories/workflow-approved/input.md) adds one line, `workflow: approval`, to select the core-managed path. Its [expectation](../examples/stories/workflow-approved/expected.md) observes both application and workflow state.
 
 ```sh
-scripts/harmonia check stories/workflow-approved stories/workflow-rejected
+scripts/harmonia check examples/stories/workflow-approved examples/stories/workflow-rejected
 ```
 
 Alice's attempt leaves the workflow waiting. Northbank's approval changes the application to approved and the workflow to complete in a single transaction. The core calls a common action interface; the financing application supplies its implementation and retains its own approval rule.
 
-The [rollback story](../stories/workflow-rejected/input.md) starts with an already-approved application. Even Northbank cannot approve it again. The failure leaves that application active and the workflow waiting. Daml rolls back the consuming workflow exercise with the failed child action.
+The [rollback story](../examples/stories/workflow-rejected/input.md) starts with an already-approved application. Even Northbank cannot approve it again. The failure leaves that application active and the workflow waiting. Daml rolls back the consuming workflow exercise with the failed child action.
 
 Follow the [common interface](../on-ledger/interfaces/daml/Harmonia/Action.daml), [core transition](../on-ledger/core/daml/Harmonia/Workflow.daml), and financing implementation above. Neither the common interface nor the core imports the financing application.
 

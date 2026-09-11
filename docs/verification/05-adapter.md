@@ -1,6 +1,6 @@
 # Unchanged-source adapter proof
 
-The source application was compiled before the adapter on 2026-09-10. Its identity was recorded in `on-ledger/legacy-financing/identity.json`. Subsequent builds reproduced the same DAR SHA-256 and package ID. Package inspection found no Harmonia dependency in that source DAR.
+The source application was compiled before the adapter on 2026-09-10. Its identity was recorded in `on-ledger/applications/legacy-financing/identity.json`. Subsequent builds reproduced the same DAR SHA-256 and package ID. Package inspection found no Harmonia dependency in that source DAR.
 
 `scripts/check` passed all six live Canton stories, Daml smoke checks, and ten Scala checks. Evidence: `.artifacts/check-8497592380592558092/`. The suite checks the source identity before and after execution; `source-inspection.json` retains the inspected package contents.
 

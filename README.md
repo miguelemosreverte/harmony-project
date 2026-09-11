@@ -6,7 +6,7 @@ The ledger enforces actions and records progression. Scala tools execute stories
 
 ## Start here
 
-This branch develops the [second draft](SECOND-DRAFT.md): its principles, target architecture, reader experience, and ordered migration plan. The first working version is preserved on `first-draft`; the verified delivery below remains its reference.
+This is the [second draft](SECOND-DRAFT.md), organized around typed capabilities and an executable book. Start with the [three operation traces](docs/second-draft/reading-traces.md) to review the implementation. The first working version is preserved on `first-draft`; its verified delivery remains the behavioral baseline.
 
 - [Verified local delivery and handoff](docs/release/acceptance.md)
 - [Product requirements and ordered commit plan](PRD.md)

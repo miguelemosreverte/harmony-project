@@ -1,0 +1,54 @@
+module LiveSetup where
+
+import Daml.Script
+import qualified PrivateFinancing as Private
+import Harmonia.SharedProgress
+import DA.Time
+import qualified Composer
+
+data Setup = Setup with bank : Party; buyer : Party; reviewer : Party
+  deriving (Eq, Show)
+
+data Input = Input with
+    namespace : Text
+    bankName : Text
+    buyerName : Text
+    reviewerName : Text
+    privateDetails : Text
+    initialStatus : Text
+  deriving (Eq, Show)
+
+run : Input -> Script Setup
+run input = script do
+  let namespace = input.namespace
+  let reviewerName = input.reviewerName
+  let privateDetails = input.privateDetails
+  bank <- allocatePartyOn (namespace <> "-" <> input.bankName) (ParticipantName "bank")
+  buyer <- allocatePartyOn (namespace <> "-" <> input.buyerName) (ParticipantName "buyer")
+  reviewer <- allocatePartyOn (namespace <> "-" <> reviewerName) (ParticipantName "reviewer")
+  forA ["bank", "buyer", "reviewer"] (\name -> await 60 do
+    known <- listKnownPartiesOn (ParticipantName name)
+    pure (all (\party -> elem party (map (.party) known)) [bank, buyer, reviewer]))
+  submit bank do
+    createCmd Private.Application with bank; buyer; reviewers = [reviewer]; subject = "application"; status = input.initialStatus; privateDetails
+  proposal <- submit bank do
+    createCmd ProgressProposal with owner = buyer; issuer = bank; readers = [reviewer]; subject = "application"
+  await 60 do visible <- queryContractId buyer proposal; pure (visible /= None)
+  progress <- submit buyer do exerciseCmd proposal Accept
+  forA [bank, buyer, reviewer] (\party -> await 60 do
+    view <- queryContractId party progress
+    pure (view /= None))
+  forA [("bank", bank), ("buyer", buyer), ("reviewer", reviewer)] (\(name, party) -> do
+    userId <- validateUserId name
+    createUserOn (User userId (Some party)) [CanActAs party] (ParticipantName name))
+  submit bank do createCmd Composer.Workspace with bank; buyer; references = []
+  pure Setup with bank; buyer; reviewer
+
+-- Participant visibility is asynchronous, so setup waits for the actual shared contract.
+await : Int -> Script Bool -> Script ()
+await remaining check = do
+  ready <- check
+  if ready then pure () else do
+    assertMsg "Participant observation timed out" (remaining > 0)
+    sleep (milliseconds 100)
+    await (remaining - 1) check

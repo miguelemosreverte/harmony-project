@@ -1,0 +1,337 @@
+[
+  {
+    "before": "evaluations/composer-direct/expected.md",
+    "after": "examples/evaluations/composer-direct/expected.md",
+    "sha256": "8b11e8bf8989bb0d60b03e411c34bf9d183142d8b0fd84a7db476d5dac9bae5f"
+  },
+  {
+    "before": "evaluations/composer-direct/input.md",
+    "after": "examples/evaluations/composer-direct/input.md",
+    "sha256": "de40f51592f1b5f58a154b6e13d05d891ede226e2000d14a3b9177180f109777"
+  },
+  {
+    "before": "evaluations/composer-generated/expected.md",
+    "after": "examples/evaluations/composer-generated/expected.md",
+    "sha256": "51f1f1e59264fe8531b8f3e0e68338ad711133fa72d054693309d2cfdbe2f37d"
+  },
+  {
+    "before": "evaluations/composer-generated/input.md",
+    "after": "examples/evaluations/composer-generated/input.md",
+    "sha256": "fd7a4abbf217b77db334e158302c7874553c3eea0c1af4f333be6b86810f44d8"
+  },
+  {
+    "before": "evaluations/execution-boundaries/expected.md",
+    "after": "examples/evaluations/execution-boundaries/expected.md",
+    "sha256": "670801f22b0f86b629b1ea5692a53b9b01d17da3b5b2d3350901b00aecac19b3"
+  },
+  {
+    "before": "evaluations/execution-boundaries/input.md",
+    "after": "examples/evaluations/execution-boundaries/input.md",
+    "sha256": "9479228510678c3b686e667f9096efa97200be232322fb8aa354c4cfb52d5712"
+  },
+  {
+    "before": "evaluations/live-handoff/expected.md",
+    "after": "examples/evaluations/live-handoff/expected.md",
+    "sha256": "efbbbce23928d80252d7a7c1f9bb1a0bc504b7f9448d0a1f60aa079bd8fed8e1"
+  },
+  {
+    "before": "evaluations/live-handoff/input.md",
+    "after": "examples/evaluations/live-handoff/input.md",
+    "sha256": "8f5afd901018009e5c6d8748642be58de7422a1b87a5ee609e60e08faa9bdf6a"
+  },
+  {
+    "before": "evaluations/live-handoff/security-expected.md",
+    "after": "examples/evaluations/live-handoff/security-expected.md",
+    "sha256": "50d23e87dcbfc310549122031c0e685b5071b61bb5345c59715bea508ff25ca0"
+  },
+  {
+    "before": "evaluations/package-builder/expected.md",
+    "after": "examples/evaluations/package-builder/expected.md",
+    "sha256": "d5b9bbbb4a2efcda580ade8d133b7bf545bd17b6753b7d9345439c5f18a478e9"
+  },
+  {
+    "before": "evaluations/package-builder/input.md",
+    "after": "examples/evaluations/package-builder/input.md",
+    "sha256": "747bdc7bbad62eaac4899a8332b0a5d2093d6887107386f9543e0ee85cb204aa"
+  },
+  {
+    "before": "stories/README.md",
+    "after": "examples/stories/README.md",
+    "sha256": "26d7d8c0869f5c63e321777dad1d25c1b4745764c9738155e691423509c56f34"
+  },
+  {
+    "before": "stories/adapter-approved/expected.md",
+    "after": "examples/stories/adapter-approved/expected.md",
+    "sha256": "98688ac1ca49099105adb6417401f9d8178383e45679220e84bb7bc0a8aafc28"
+  },
+  {
+    "before": "stories/adapter-approved/input.md",
+    "after": "examples/stories/adapter-approved/input.md",
+    "sha256": "dc6b68d0a1bf1300fc13799e26c93b6053b88f70c58aadd573cda72396996405"
+  },
+  {
+    "before": "stories/adapter-rejected/expected.md",
+    "after": "examples/stories/adapter-rejected/expected.md",
+    "sha256": "7742a247ebfa2aacf12bb5f235075913378acaa9182c18affed835c1485bd12d"
+  },
+  {
+    "before": "stories/adapter-rejected/input.md",
+    "after": "examples/stories/adapter-rejected/input.md",
+    "sha256": "c076d7f21b36282aa1739f5c45737d3c30b2ede6d8cf685a68eb43c1c4c33ec1"
+  },
+  {
+    "before": "stories/already-approved/expected.md",
+    "after": "examples/stories/already-approved/expected.md",
+    "sha256": "9e70968a7ab0715a27e2ad0b21b86d884fc503eb3e0920339596c5d4e3008b46"
+  },
+  {
+    "before": "stories/already-approved/input.md",
+    "after": "examples/stories/already-approved/input.md",
+    "sha256": "fee3dd5211960abb0a0ee2bca72a24927ae027605cdd0dd90be74a715d54eb68"
+  },
+  {
+    "before": "stories/branch-approved/expected.md",
+    "after": "examples/stories/branch-approved/expected.md",
+    "sha256": "14117de9fae8dce16708d2ca772e13505bfcad3d2a338c00bdbbe80f102b6f19"
+  },
+  {
+    "before": "stories/branch-approved/input.md",
+    "after": "examples/stories/branch-approved/input.md",
+    "sha256": "6b35a1b3782804f2deb9885681459fae86370ac6ffee069f417f4fe0e46d2d4d"
+  },
+  {
+    "before": "stories/branch-declined/expected.md",
+    "after": "examples/stories/branch-declined/expected.md",
+    "sha256": "edf1c3ef329d5b97c262077b14ace090c8ee58a5501526585dbaa10a5c819a41"
+  },
+  {
+    "before": "stories/branch-declined/input.md",
+    "after": "examples/stories/branch-declined/input.md",
+    "sha256": "b84ab7dac9ccdd3940dc1012bede74f5e261c44265c1640583019ff9fce11866"
+  },
+  {
+    "before": "stories/financing-approved/expected.md",
+    "after": "examples/stories/financing-approved/expected.md",
+    "sha256": "4743f9f36bb3b72474faeede61d4de661008100a01923c3df524c38b803e936b"
+  },
+  {
+    "before": "stories/financing-approved/input.md",
+    "after": "examples/stories/financing-approved/input.md",
+    "sha256": "ab64885fc14348e30f00de10773d18e4c6ec50db090bfa27cdfb1712ad6171ae"
+  },
+  {
+    "before": "stories/format.yaml",
+    "after": "examples/stories/format.yaml",
+    "sha256": "09bfcc6a14b83e2192b8673677725c84883ee9cd0c70e45c9ec09daa8f2b2847"
+  },
+  {
+    "before": "stories/generated-approved/expected.md",
+    "after": "examples/stories/generated-approved/expected.md",
+    "sha256": "4b906f17b38af67954b93a61524bddd2155ccaaa4d981be6b58b4d42f8684ec5"
+  },
+  {
+    "before": "stories/generated-approved/input.md",
+    "after": "examples/stories/generated-approved/input.md",
+    "sha256": "aea53f0b4977c03bba20d7befb0c2bfa94a55d62f554cb66e369b03a4669ef9f"
+  },
+  {
+    "before": "stories/generated-rejected/expected.md",
+    "after": "examples/stories/generated-rejected/expected.md",
+    "sha256": "fe8ba01df161c0b510931f69e64d33275849e37693326f6c896442bedc668f8f"
+  },
+  {
+    "before": "stories/generated-rejected/input.md",
+    "after": "examples/stories/generated-rejected/input.md",
+    "sha256": "6427dc69a4547c233e36ba04f1f6a05e78149ed5d40c15df4cf137316953a3c9"
+  },
+  {
+    "before": "stories/private-approval/expected.md",
+    "after": "examples/stories/private-approval/expected.md",
+    "sha256": "d6d078859d384e2543be943a2ebad6228b081ff0ab441928a3641187a7fa3b12"
+  },
+  {
+    "before": "stories/private-approval/input.md",
+    "after": "examples/stories/private-approval/input.md",
+    "sha256": "8cedeed6f724419eee545886d5939c87f48bb340a478f8e0b53c5a917e3a9165"
+  },
+  {
+    "before": "stories/purchase-approved/expected.md",
+    "after": "examples/stories/purchase-approved/expected.md",
+    "sha256": "cd0f4b49a0843e5353054bd7409bb77e212b9d8a359b977200c6e77143fa9fa9"
+  },
+  {
+    "before": "stories/purchase-approved/input.md",
+    "after": "examples/stories/purchase-approved/input.md",
+    "sha256": "21b3e5fa5dfb4062c886145ad816c00b2000bd26d81df172e70045a158051750"
+  },
+  {
+    "before": "stories/purchase-missing/expected.md",
+    "after": "examples/stories/purchase-missing/expected.md",
+    "sha256": "d6adab5267495a9e27a1d0dae3267b734e607bbae84d4bebfd994613892f2e1f"
+  },
+  {
+    "before": "stories/purchase-missing/input.md",
+    "after": "examples/stories/purchase-missing/input.md",
+    "sha256": "e3ec26796f0277a6532a552580a291bdf1114025790d9ad3aaa2adc0ae8d3d41"
+  },
+  {
+    "before": "stories/purchase-rejected/expected.md",
+    "after": "examples/stories/purchase-rejected/expected.md",
+    "sha256": "6a5a12260e01460bff062b7cd3bff1320153b677ff1fae4060ea2c64eaadd354"
+  },
+  {
+    "before": "stories/purchase-rejected/input.md",
+    "after": "examples/stories/purchase-rejected/input.md",
+    "sha256": "820c05ef0ec2ba28d26e6a75f3954e10e7315082f12127aed0d072a89ca6aa25"
+  },
+  {
+    "before": "stories/purchase-reused-proof/expected.md",
+    "after": "examples/stories/purchase-reused-proof/expected.md",
+    "sha256": "a012d3f39002dee31e3f07e5bde68f84ae57eb9a765e1107a99931e310eaf7f2"
+  },
+  {
+    "before": "stories/purchase-reused-proof/input.md",
+    "after": "examples/stories/purchase-reused-proof/input.md",
+    "sha256": "48d2b0573a2e1b412019e0307c86639986fe57f6490f9ef2b7777369995d35a9"
+  },
+  {
+    "before": "stories/purchase-wrong-buyer/expected.md",
+    "after": "examples/stories/purchase-wrong-buyer/expected.md",
+    "sha256": "0986ad75461e987863684cd80e2fa3612e0b1968cff02676e7f46786ab1dd279"
+  },
+  {
+    "before": "stories/purchase-wrong-buyer/input.md",
+    "after": "examples/stories/purchase-wrong-buyer/input.md",
+    "sha256": "37c3c960b9841a5761f0be550b7e2765a26c44afe272f703fbf9cb59c458b0e6"
+  },
+  {
+    "before": "stories/purchase-wrong-continuation/expected.md",
+    "after": "examples/stories/purchase-wrong-continuation/expected.md",
+    "sha256": "0986ad75461e987863684cd80e2fa3612e0b1968cff02676e7f46786ab1dd279"
+  },
+  {
+    "before": "stories/purchase-wrong-continuation/input.md",
+    "after": "examples/stories/purchase-wrong-continuation/input.md",
+    "sha256": "a72671829f73b56e58b3202cf7815d8747954c9a9b4ba469e1cf4cf8feacf78c"
+  },
+  {
+    "before": "stories/purchase-wrong-issuer/expected.md",
+    "after": "examples/stories/purchase-wrong-issuer/expected.md",
+    "sha256": "0986ad75461e987863684cd80e2fa3612e0b1968cff02676e7f46786ab1dd279"
+  },
+  {
+    "before": "stories/purchase-wrong-issuer/input.md",
+    "after": "examples/stories/purchase-wrong-issuer/input.md",
+    "sha256": "751feee7a73789d7dd3a762d44c9afcdf4fca5cde431dbb4d86de091f3888938"
+  },
+  {
+    "before": "stories/purchase-wrong-subject/expected.md",
+    "after": "examples/stories/purchase-wrong-subject/expected.md",
+    "sha256": "0986ad75461e987863684cd80e2fa3612e0b1968cff02676e7f46786ab1dd279"
+  },
+  {
+    "before": "stories/purchase-wrong-subject/input.md",
+    "after": "examples/stories/purchase-wrong-subject/input.md",
+    "sha256": "577aadef4f1eee6a88c970acfc66f3bbee944971a0ed650cffb4315aad0f716d"
+  },
+  {
+    "before": "stories/sequence-complete/expected.md",
+    "after": "examples/stories/sequence-complete/expected.md",
+    "sha256": "b2a5ad4bfe2f5c81d2f4dc46667feb6bcfdb24a6d555d284fdb4fbbe50a1b14f"
+  },
+  {
+    "before": "stories/sequence-complete/input.md",
+    "after": "examples/stories/sequence-complete/input.md",
+    "sha256": "466a6026857edd01dcf1b265befe50fc2009192436a5526e01e8915e9ac04801"
+  },
+  {
+    "before": "stories/sequence-resumed/expected.md",
+    "after": "examples/stories/sequence-resumed/expected.md",
+    "sha256": "8cf9605b1f35d84bb542246c1c8d1661eb3416bcb4c74033ddd4c2703562bcdc"
+  },
+  {
+    "before": "stories/sequence-resumed/input.md",
+    "after": "examples/stories/sequence-resumed/input.md",
+    "sha256": "caf64898158d957289cfd9e1f7159979900e9ac0c538e19262e188855e0b7baa"
+  },
+  {
+    "before": "stories/transfer-approved/expected.md",
+    "after": "examples/stories/transfer-approved/expected.md",
+    "sha256": "8fa5a267556cc91ae5ead24eb9adf43c406abbcd4dba1d3dd5f929afb1a31930"
+  },
+  {
+    "before": "stories/transfer-approved/input.md",
+    "after": "examples/stories/transfer-approved/input.md",
+    "sha256": "e1eb701614ab508f1ca7e65a096ec3923165b25815e77074a873b0dd4f2d38e7"
+  },
+  {
+    "before": "stories/transfer-final-leg-rejected/expected.md",
+    "after": "examples/stories/transfer-final-leg-rejected/expected.md",
+    "sha256": "4b937b4712a87be43e371b0351b7b494777ca34ddf8e5f4f5dda1e28a3036863"
+  },
+  {
+    "before": "stories/transfer-final-leg-rejected/input.md",
+    "after": "examples/stories/transfer-final-leg-rejected/input.md",
+    "sha256": "ba449398b72494701bc76d8a7211f92ce8d113406de0fd9227e24655fd5bd211"
+  },
+  {
+    "before": "stories/transfer-missing-agreement/expected.md",
+    "after": "examples/stories/transfer-missing-agreement/expected.md",
+    "sha256": "867eed3bd60e804c1ab50cd073a41e423a90132b99d8eb6b021d1021e532d0e7"
+  },
+  {
+    "before": "stories/transfer-missing-agreement/input.md",
+    "after": "examples/stories/transfer-missing-agreement/input.md",
+    "sha256": "ab6827ad30624220988171606fcd4ac4fa0f7e9df48e10b6936baf6c9f24945c"
+  },
+  {
+    "before": "stories/transfer-missing-lock/expected.md",
+    "after": "examples/stories/transfer-missing-lock/expected.md",
+    "sha256": "2825cf26461e17ea15ea7c8b4cc5667275e8dcdeb6fcfdd2d00c031fa028baa7"
+  },
+  {
+    "before": "stories/transfer-missing-lock/input.md",
+    "after": "examples/stories/transfer-missing-lock/input.md",
+    "sha256": "cd195ea7c5a2f214518b11f41c51f4a5511c4dc23ad33aaa2d7c9fe4de3f2c04"
+  },
+  {
+    "before": "stories/transfer-missing-readiness/expected.md",
+    "after": "examples/stories/transfer-missing-readiness/expected.md",
+    "sha256": "62507a923e284553d0225212636a9ebf6b9e1f33c60001ee14a3ec366a89a246"
+  },
+  {
+    "before": "stories/transfer-missing-readiness/input.md",
+    "after": "examples/stories/transfer-missing-readiness/input.md",
+    "sha256": "ac858237b6e0644a715e8bfe6c87d57f8fffb75725b7b5a3e85fdce50a78c0bb"
+  },
+  {
+    "before": "stories/transfer-source-settler/expected.md",
+    "after": "examples/stories/transfer-source-settler/expected.md",
+    "sha256": "9497a1a1ca7cdd9abaecca3369583071400ff2fccdcb4a39d3b2ec4f92ea16b8"
+  },
+  {
+    "before": "stories/transfer-source-settler/input.md",
+    "after": "examples/stories/transfer-source-settler/input.md",
+    "sha256": "8316ae0bae11d87972e249504bfa879f7c070a0f1a1afdec8eb36f1076d87872"
+  },
+  {
+    "before": "stories/workflow-approved/expected.md",
+    "after": "examples/stories/workflow-approved/expected.md",
+    "sha256": "98688ac1ca49099105adb6417401f9d8178383e45679220e84bb7bc0a8aafc28"
+  },
+  {
+    "before": "stories/workflow-approved/input.md",
+    "after": "examples/stories/workflow-approved/input.md",
+    "sha256": "87b39e5c030483addc42d3212b714c298748ae9990f217b9c3536d6a227fdeab"
+  },
+  {
+    "before": "stories/workflow-rejected/expected.md",
+    "after": "examples/stories/workflow-rejected/expected.md",
+    "sha256": "7742a247ebfa2aacf12bb5f235075913378acaa9182c18affed835c1485bd12d"
+  },
+  {
+    "before": "stories/workflow-rejected/input.md",
+    "after": "examples/stories/workflow-rejected/input.md",
+    "sha256": "779ad4c89dadd5d6c7f9fff42fa7ba45e8404c731796775a3c2b848fa213b4ef"
+  }
+]

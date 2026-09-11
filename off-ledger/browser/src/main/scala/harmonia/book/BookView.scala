@@ -2,16 +2,25 @@ package harmonia.book
 
 import harmonia.ui.Elements
 import cats.effect.IO
+import harmonia.examples.ExampleKind
 import io.circe.Json
 import org.scalajs.dom
 import Elements.*
 
 final class BookView(
     stories: Vector[RecordedStory],
-    chapters: Vector[Json],
-    navigate: ViewState => Unit
+    chapters: Vector[BookChapter],
+    navigate: ViewState => Unit,
+    inspector: Inspector
 ):
+  private var previousView: Option[ViewState] = None
+  private var currentChapter: Option[Int] = None
+  private var chapterScroll = Map.empty[Int, Double]
   def render(state: ViewState): IO[Unit] = IO {
+    val pageChanged = previousView.exists(p => p.chapter != state.chapter || p.story != state.story)
+    previousView = Some(state)
+    currentChapter.foreach(i => chapterScroll = chapterScroll.updated(i, dom.window.scrollY))
+    currentChapter = state.chapter
     val focused = Option(dom.document.activeElement).map(_.id).filter(_.nonEmpty)
     val root = dom.document.getElementById("app")
     root.textContent = ""
@@ -33,7 +42,7 @@ final class BookView(
       append(
         nav,
         button(
-          s"0${index + 1}  ${text(chapter, "title")}",
+          s"0${index + 1}  ${chapter.title}",
           "nav-button" + (if state.chapter.contains(index) then " active" else ""),
           s"nav-$index"
         ) { navigate(state.copy(chapter = Some(index))) }
@@ -59,7 +68,7 @@ final class BookView(
       case Some(index) =>
         val chapter = element("article", "chapter")
         // The exporter escapes raw HTML and sanitizes URLs before this content reaches the browser.
-        chapter.innerHTML = text(chapters(index), "html")
+        chapter.innerHTML = chapters(index).html
         harmonia.book.diagram.ChapterDiagram.render(chapter)
         val scrollRegions = chapter.querySelectorAll("pre, table")
         (0 until scrollRegions.length).foreach { i =>
@@ -68,7 +77,27 @@ final class BookView(
           region.setAttribute("aria-label", "Code or table; scroll horizontally if needed")
         }
         append(main, chapter)
-        append(main, harmonia.book.chapters.ChapterStories.render(index, stories, navigate))
+        val experiments = harmonia.book.chapters.ChapterStories.render(index, stories, navigate)
+        Option(chapter.querySelector("h2")) match
+          case Some(firstSection) => chapter.insertBefore(experiments, firstSection)
+          case None               => append(chapter, experiments)
+        val paging = element("nav", "chapter-paging");
+        paging.setAttribute("aria-label", "Continue reading")
+        if index > 0 then
+          append(
+            paging,
+            button("← Previous chapter", "button", "chapter-previous")(
+              navigate(state.copy(chapter = Some(index - 1)))
+            )
+          )
+        if index + 1 < chapters.size then
+          append(
+            paging,
+            button("Next chapter →", "button primary", "chapter-next")(
+              navigate(state.copy(chapter = Some(index + 1)))
+            )
+          )
+        append(main, paging)
       case None => laboratory(main, state)
     append(
       main,
@@ -80,6 +109,15 @@ final class BookView(
     )
     append(layout, sidebar, main)
     append(root, layout)
+    val sourceLinks = root.querySelectorAll("a[href]")
+    (0 until sourceLinks.length).foreach { index =>
+      val anchor = sourceLinks(index).asInstanceOf[dom.html.Anchor]
+      val path = anchor.getAttribute("href")
+      if path.startsWith("source/") || path.startsWith("evidence/") then
+        anchor.onclick = event =>
+          if !event.ctrlKey && !event.metaKey then
+            event.preventDefault(); inspector.open(path, anchor.textContent)
+    }
     Option(nav.querySelector(".active")).foreach(_.setAttribute("aria-current", "page"))
     Option(root.querySelector(".graph")).foreach { graphNode =>
       val graph = graphNode.asInstanceOf[dom.HTMLElement]
@@ -90,9 +128,18 @@ final class BookView(
           (graph.clientWidth - selected.getBoundingClientRect().width) / 2
       }
     }
-    if focused.exists(id => id.startsWith("nav-") || id.startsWith("chapter-demo-")) then
+    if pageChanged && state.chapter.nonEmpty then
+      main.focus();
+      dom.window.scrollTo(0, state.chapter.flatMap(chapterScroll.get).getOrElse(0.0).toInt)
+    else if pageChanged || focused.exists(id =>
+        id.startsWith("nav-") || id.startsWith("chapter-demo-")
+      )
+    then
       main.focus()
       main.scrollIntoView()
+    else if focused.contains("return-to-chapter") then
+      main.focus();
+      dom.window.scrollTo(0, state.chapter.flatMap(chapterScroll.get).getOrElse(0.0).toInt)
     else
       focused
         .flatMap(id => Option(dom.document.getElementById(id)))
@@ -110,9 +157,17 @@ final class BookView(
 
   private def laboratory(main: dom.HTMLElement, state: ViewState): Unit =
     val story = stories(state.story)
-    val composition = story.input.hcursor.get[String]("workflow").contains("composed-process")
-    val builder = story.input.hcursor.get[String]("workflow").contains("package-builder")
-    val transfer = story.input.hcursor.get[String]("workflow").contains("atomic-transfer")
+    state.originChapter.foreach { index =>
+      append(
+        main,
+        button(s"← Return to ${chapters(index).title}", "button", "return-to-chapter")(
+          navigate(state.copy(chapter = Some(index)))
+        )
+      )
+    }
+    val composition = story.kind == ExampleKind.Composition
+    val builder = story.kind == ExampleKind.Packages
+    val transfer = story.kind == ExampleKind.Transfer
     val hero = element("header", "hero")
     append(
       hero,
@@ -145,7 +200,13 @@ final class BookView(
       val firstDifference = stories(index).differences.headOption
         .flatMap(_.path.stripPrefix("$.actions[").takeWhile(_ != ']').toIntOption)
         .getOrElse(0)
-      navigate(ViewState(index, math.min(firstDifference, stories(index).actions.size - 1)))
+      navigate(
+        ViewState(
+          index,
+          math.max(0, math.min(firstDifference, stories(index).units.size - 1)),
+          originChapter = state.originChapter
+        )
+      )
     append(label, select)
     val differences = story.differences.size
     val badge = element(
@@ -165,23 +226,7 @@ final class BookView(
       element(
         "span",
         "small",
-        if story.input.hcursor.get[String]("integration").toOption.contains("generated") then
-          "Generated typed adapter"
-        else if story.input.hcursor.get[String]("integration").toOption.contains("adapter") then
-          "Typed adapter"
-        else if story.isBoundaryReport then "Independent verification phases"
-        else if builder then "Inspect → verify → generate"
-        else if composition then "Propose → consent → core execution"
-        else if transfer then "Four-party atomic transfer"
-        else if story.input.hcursor.get[String]("workflow").toOption.contains("property-purchase")
-        then "Financing → offer → agents"
-        else if story.input.hcursor.get[String]("workflow").toOption.contains("private-approval")
-        then "Signed result handoff"
-        else if story.actual.hcursor.downField("definition").focus.nonEmpty
-        then
-          s"${story.actual.hcursor.downField("definition").get[String]("name").getOrElse("Workflow")} · version ${story.actual.hcursor.downField("definition").get[Int]("version").getOrElse(0)}"
-        else if story.input.hcursor.get[String]("workflow").isRight then "Direct interface"
-        else "Application action"
+        story.presentation.subtitle
       )
     )
     val graph = element("div", "graph")
@@ -193,25 +238,12 @@ final class BookView(
       element("span", "eyebrow", "Starting point"),
       element(
         "strong",
-        text =
-          if story.isBoundaryReport then "Empty local networks"
-          else if builder then "No package inputs"
-          else if composition then "Empty workspace"
-          else if transfer then "proposed"
-          else setup.get[String]("status").getOrElse("Unknown")
+        text = story.presentation.start
       ),
-      element(
-        "span",
-        text =
-          if story.isBoundaryReport then "Core limits, then concurrent requests"
-          else if builder then "Eight available input slots"
-          else if composition then "Sources await partner consent"
-          else if transfer then "Trade and source position created"
-          else "Application created"
-      )
+      element("span", text = story.presentation.startDetail)
     )
     append(graph, start)
-    story.actions.zipWithIndex.foreach { (action, index) =>
+    story.units.zipWithIndex.foreach { (action, index) =>
       val actual = story.actualActions.lift(index).getOrElse(Json.Null)
       val node =
         button("", "node" + (if state.step == index then " selected" else ""), s"step-$index") {
@@ -220,17 +252,13 @@ final class BookView(
       node.setAttribute("aria-pressed", (state.step == index).toString)
       append(
         node,
-        element("span", text = s"${index + 1}. ${text(action, "actor")}"),
-        element("span", "small", text(action, "action").replace('-', ' ')),
-        element("strong", text = observedState(story, actual)),
+        element("span", text = s"${index + 1}. ${action.actor}"),
+        element("span", "small", action.action.replace('-', ' ')),
+        element("strong", text = action.observedState),
         element(
           "span",
           if text(actual, "outcome") == "rejected" then "rejected" else "",
-          (if builder then s"HTTP ${actual.hcursor.get[Int]("http").getOrElse(0)}"
-           else text(actual, "outcome")) + actual.hcursor
-            .get[String]("workflow")
-            .toOption
-            .fold("")(value => s" · workflow $value")
+          action.outcomeLabel
         )
       )
       append(graph, node)
@@ -241,12 +269,20 @@ final class BookView(
       navigate(state.copy(step = state.step - 1))
     }
     previous.disabled = state.step <= 0
-    val next = button("Next attempt →", "button primary", "next") {
+    val next = button(
+      if story.isBoundaryReport then "Next phase →" else "Next attempt →",
+      "button primary",
+      "next"
+    ) {
       navigate(state.copy(step = state.step + 1))
     }
-    next.disabled = state.step >= story.actions.size - 1
+    next.disabled = state.step >= story.units.size - 1
     append(buttons, previous, next)
-    val progress = element("span", "small", s"Attempt ${state.step + 1} of ${story.actions.size}")
+    val progress = element(
+      "span",
+      "small",
+      s"${if story.isBoundaryReport then "Phase" else "Attempt"} ${state.step + 1} of ${story.units.size}"
+    )
     progress.setAttribute("aria-live", "polite")
     append(controls, progress, buttons)
     append(panel, head, graph, controls)
@@ -260,7 +296,7 @@ final class BookView(
       append(main, harmonia.book.chapters.BoundaryEvidence.render(story, state.step))
     if transfer then append(main, harmonia.book.transfer.TransferView.render(story, state.step))
     append(main, details)
-    if story.input.hcursor.get[String]("integration").contains("generated") then
+    if story.kind == ExampleKind.Generated then
       append(main, harmonia.book.bindings.BindingView.render(story))
     participantEvidence(story, state).foreach(view => append(main, view))
     if story.differences.nonEmpty then
@@ -304,7 +340,7 @@ final class BookView(
       select.onchange = _ => navigate(state.copy(perspective = Some(select.value)))
       append(heading, element("h2", text = "Participant evidence"), select)
       val purchase =
-        story.input.hcursor.get[String]("workflow").toOption.contains("property-purchase")
+        story.kind == ExampleKind.Purchase
       val description = element(
         "p",
         "evidence",
@@ -354,7 +390,7 @@ final class BookView(
     append(
       head,
       element("h2", text = "Expected & observed"),
-      element("span", "small", text(story.actions(step), "id"))
+      element("span", "small", story.units(step).id)
     )
     val table = element("table")
     table.id = "comparison-table"
@@ -419,21 +455,6 @@ final class BookView(
     append(content, links, provenance)
     append(panel, head, content)
     panel
-
-  private def observedState(story: RecordedStory, actual: Json): String =
-    if story.isBoundaryReport then s"${actual.asObject.fold(0)(_.size - 2)} observations"
-    else if story.input.hcursor.get[String]("workflow").toOption.contains("property-purchase") then
-      Vector("proposal", "offer", "application")
-        .map(field => text(actual, field))
-        .find(value => !Set("none", "not-opened", "Unknown")(value))
-        .getOrElse("Unknown")
-    else if story.input.hcursor.get[String]("workflow").contains("atomic-transfer") then
-      text(actual, "trade")
-    else if story.input.hcursor.get[String]("workflow").contains("composed-process") then
-      text(actual, "workflow")
-    else if story.input.hcursor.get[String]("workflow").contains("package-builder") then
-      s"${actual.hcursor.get[Int]("inputs").getOrElse(0)} inputs"
-    else text(actual, "application")
 
   private def text(json: Json, field: String): String =
     json.hcursor.get[String](field).getOrElse("Unknown")

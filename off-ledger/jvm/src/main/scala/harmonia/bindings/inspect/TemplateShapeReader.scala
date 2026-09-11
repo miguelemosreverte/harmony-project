@@ -2,85 +2,142 @@ package harmonia.bindings.inspect
 
 import cats.syntax.all.*
 import harmonia.bindings.model.*
-import java.util.regex.Pattern
+import harmonia.packages.inspect.LfPackage
+import com.digitalasset.daml.lf.archive.{DamlLf2 as LF}
+import scala.jdk.CollectionConverters.*
+import scala.util.Try
 
-/** Reads the pinned compiler's public LF description; unsupported shapes fail closed. */
+/** Validates supported source records and consuming replacement choices in the LF syntax tree. */
 object TemplateShapeReader:
-  def read(pretty: String, mapping: BindingMapping): Either[String, TemplateShape] = for
-    module <- section(pretty, s"module ${mapping.sourceModule} where", "(?m)^module ")
-    fields <- record(module, mapping.template)
-    arguments <- record(module, mapping.choice)
-    template <- section(module, s"template ${mapping.template} this where", "(?m)^template ")
-    signature <- ("(?m)^  consuming choice " + Pattern.quote(
-      mapping.choice
-    ) + " ([^\\n]+)\\n    controller").r
-      .findFirstMatchIn(template)
-      .map(_.group(1).replaceAll("\\s+", " "))
-      .toRight(s"${mapping.choice}: expected a consuming action choice in ${mapping.template}")
-    _ <- Either.cond(
-      signature.endsWith(s": ContractId ${mapping.sourceModule}:${mapping.template}") && signature
-        .contains(s"(arg : ${mapping.sourceModule}:${mapping.choice})"),
-      (),
-      "The choice must return a replacement contract of its own source template"
-    )
-    _ <- (Vector(mapping.actor) ++ mapping.readers).traverse(name =>
-      requireType(fields, name, FieldType.Party)
-    )
-    _ <- Vector(mapping.subject, mapping.observation).traverse(name =>
-      requireType(fields, name, FieldType.Text)
-    )
-    _ <- Either.cond(
-      fields.size <= 16 && arguments.size <= 8,
-      (),
-      "At most sixteen source fields and eight choice arguments are supported"
-    )
-    _ <- Either.cond(
-      mapping.example.keys.toSet == fields.map(_.name).toSet,
-      (),
-      "example must supply exactly the inspected source fields"
-    )
-    _ <- Either.cond(
-      mapping.arguments.keys.toSet == arguments.map(_.name).toSet,
-      (),
-      "arguments must supply exactly the inspected choice fields"
-    )
-  yield TemplateShape(fields, arguments)
+  def read(source: LfPackage, mapping: BindingMapping): Either[String, TemplateShape] =
+    Try(inspect(source, mapping)).toEither.left
+      .map(e => s"Invalid LF package: ${e.getMessage}")
+      .flatten
 
-  private def section(text: String, start: String, next: String): Either[String, String] =
-    text.linesIterator.find(_ == start).toRight(s"DAR does not contain $start").map { _ =>
-      val beginning = text.indexOf(start)
-      val tail = text.substring(beginning + start.length)
-      next.r.findFirstMatchIn(tail).fold(tail)(found => tail.substring(0, found.start))
-    }
+  private def inspect(source: LfPackage, mapping: BindingMapping): Either[String, TemplateShape] =
+    for
+      module <- source.proto.getModulesList.asScala
+        .find(m => source.name(m.getNameInternedDname) == mapping.sourceModule)
+        .toRight(s"DAR does not contain module ${mapping.sourceModule}")
+      fields <- record(source, module, mapping.template)
+      arguments <- record(source, module, mapping.choice)
+      template <- module.getTemplatesList.asScala
+        .find(t => source.name(t.getTyconInternedDname) == mapping.template)
+        .toRight(s"DAR does not contain template ${mapping.template}")
+      choice <- template.getChoicesList.asScala
+        .find(c => source.string(c.getNameInternedStr) == mapping.choice)
+        .toRight(s"DAR does not contain choice ${mapping.choice}")
+      _ <- Either.cond(
+        choice.getConsuming,
+        (),
+        s"${mapping.choice}: expected a consuming action choice"
+      )
+      _ <- Either.cond(
+        choice.hasArgBinder && sameRecord(
+          source,
+          choice.getArgBinder.getType,
+          mapping.sourceModule,
+          mapping.choice
+        ),
+        (),
+        "The choice argument must be its own declared record"
+      )
+      result = source.resolve(choice.getRetType)
+      _ <- Either.cond(
+        result.hasBuiltin && result.getBuiltin.getBuiltin == LF.BuiltinType.CONTRACT_ID &&
+          result.getBuiltin.getArgsCount == 1 && sameRecord(
+            source,
+            result.getBuiltin.getArgs(0),
+            mapping.sourceModule,
+            mapping.template
+          ),
+        (),
+        "The choice must return a replacement contract of its own source template"
+      )
+      _ <- (Vector(mapping.actor) ++ mapping.readers).traverse(name =>
+        requireType(fields, name, FieldType.Party)
+      )
+      _ <- Vector(mapping.subject, mapping.observation).traverse(name =>
+        requireType(fields, name, FieldType.Text)
+      )
+      _ <- Either.cond(
+        fields.size <= 16 && arguments.size <= 8,
+        (),
+        "At most sixteen source fields and eight choice arguments are supported"
+      )
+      _ <- Either.cond(
+        mapping.example.keys.toSet == fields.map(_.name).toSet,
+        (),
+        "example must supply exactly the inspected source fields"
+      )
+      _ <- Either.cond(
+        mapping.arguments.keys.toSet == arguments.map(_.name).toSet,
+        (),
+        "arguments must supply exactly the inspected choice fields"
+      )
+    yield TemplateShape(fields, arguments)
 
-  private def record(module: String, name: String): Either[String, Vector[Field]] =
-    ("(?s)record @serializable " + Pattern.quote(name) + " =\\s*\\{([^}]*)\\}").r
-      .findFirstMatchIn(module)
-      .map(_.group(1).trim)
-      .toRight(s"Cannot inspect record $name; only primitive records are supported")
-      .flatMap { body =>
-        if body.isEmpty then Right(Vector.empty)
+  private def sameRecord(
+      source: LfPackage,
+      original: LF.Type,
+      module: String,
+      name: String
+  ): Boolean =
+    val tpe = source.resolve(original)
+    if !tpe.hasCon || tpe.getCon.getArgsCount != 0 then false
+    else
+      val id = tpe.getCon.getTycon
+      id.hasModule && id.getModule.getPackageId.hasSelfPackageId &&
+      source.name(id.getModule.getModuleNameInternedDname) == module && source.name(
+        id.getNameInternedDname
+      ) == name
+
+  private def record(
+      source: LfPackage,
+      module: LF.Module,
+      name: String
+  ): Either[String, Vector[Field]] = for
+    record <- module.getDataTypesList.asScala
+      .find(d => source.name(d.getNameInternedDname) == name)
+      .toRight(s"Cannot inspect record $name")
+    _ <- Either.cond(
+      record.hasRecord && record.getSerializable && record.getParamsCount == 0,
+      (),
+      s"$name must be a serializable primitive record"
+    )
+    fields <- record.getRecord.getFieldsList.asScala.toVector.traverse { field =>
+      val label = source.string(field.getFieldInternedStr)
+      val tpe = source.resolve(field.getType)
+      val kind =
+        if !tpe.hasBuiltin then None
         else
-          body.split(';').toVector.traverse { item =>
-            item.trim.split("\\s*:\\s*", 2).toVector match
-              case Vector(field, kind) if field.matches("[a-z][A-Za-z0-9_]*") =>
-                val normalized = kind.replaceAll("\\s+", " ").trim
-                val supported = Map(
-                  "Party" -> FieldType.Party,
-                  "Text" -> FieldType.Text,
-                  "Int64" -> FieldType.Integer,
-                  "Bool" -> FieldType.Boolean,
-                  "Numeric 10" -> FieldType.Decimal
-                )
-                supported
-                  .get(normalized)
-                  .toRight(
-                    s"$name.$field has unsupported type $normalized; use primitive Party, Text, Int, Bool, or Decimal fields"
-                  )
-                  .map(Field(field, _))
-              case _ => Left(s"Cannot inspect field declaration in $name: $item")
-          }
-      }
+          val builtin = tpe.getBuiltin
+          builtin.getBuiltin match
+            case LF.BuiltinType.PARTY if builtin.getArgsCount == 0 => Some(FieldType.Party)
+            case LF.BuiltinType.TEXT if builtin.getArgsCount == 0  => Some(FieldType.Text)
+            case LF.BuiltinType.INT64 if builtin.getArgsCount == 0 => Some(FieldType.Integer)
+            case LF.BuiltinType.BOOL if builtin.getArgsCount == 0  => Some(FieldType.Boolean)
+            case LF.BuiltinType.NUMERIC if builtin.getArgsCount == 1 =>
+              val scale = source.resolve(builtin.getArgs(0))
+              Option.when(scale.hasNat && scale.getNat == 10)(FieldType.Decimal)
+            case _ => None
+      for
+        _ <- Either.cond(
+          label.matches("[a-z][A-Za-z0-9_]*"),
+          (),
+          s"Unsupported source field name: $label"
+        )
+        supported <- kind.toRight(
+          s"$name.$label has unsupported type; use primitive Party, Text, Int, Bool, or Decimal fields"
+        )
+      yield Field(label, supported)
+    }
+    _ <- Either.cond(
+      fields.map(_.name).distinct.size == fields.size,
+      (),
+      s"Duplicate field in $name"
+    )
+  yield fields
 
   private def requireType(
       fields: Vector[Field],

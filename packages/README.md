@@ -7,7 +7,7 @@ scripts/harmonia resolve-packages
 scripts/harmonia packages-check
 ```
 
-The package check imports both pinned inputs, builds the [reference package](../on-ledger/package-example/daml/PackageExample.daml), executes its [input](../on-ledger/package-example/input.md) twice, and compares each observation with the [committed expectation](../on-ledger/package-example/expected.md). It also uploads the upstream DAR separately and downloads it through the participant administrator API, requiring an identical SHA-256 digest.
+The package check imports both pinned inputs, builds the [reference package](../on-ledger/fixtures/package-example/daml/PackageExample.daml), executes its [input](../on-ledger/fixtures/package-example/input.md) twice, and compares each observation with the [committed expectation](../on-ledger/fixtures/package-example/expected.md). It also uploads the upstream DAR separately and downloads it through the participant administrator API, requiring an identical SHA-256 digest.
 
 ## What is recorded
 

@@ -9,6 +9,8 @@ import harmonia.ledger.network.CantonNetwork
 import harmonia.stories.transfer.model.TransferStory
 import harmonia.stories.transfer.run.RunTransferStory
 import harmonia.stories.Story
+import harmonia.stories.model.ResultKind
+import harmonia.examples.Examples
 import harmonia.stories.financing.model.FinancingStory
 import harmonia.stories.purchase.model.PurchaseStory
 import harmonia.stories.run.process.RunProcessStory
@@ -29,24 +31,13 @@ object CheckStories:
   )
 
   def run(root: Path, requested: List[String]): IO[ExitCode] = for
-    format <- ArtifactFiles.read(root.resolve("stories/format.yaml"))
+    format <- ArtifactFiles.read(root.resolve("examples/stories/format.yaml"))
     _ <- IO.raiseUnless(format.trim == "version: 1")(
       RuntimeException("Unsupported story format version")
     )
     directories <-
       if requested.nonEmpty then IO.pure(requested.map(root.resolve).toVector)
-      else
-        IO.blocking {
-          val entries = Files.list(root.resolve("stories"))
-          try
-            entries
-              .iterator()
-              .asScala
-              .filter(path => Files.isRegularFile(path.resolve("input.md")))
-              .toVector
-              .sortBy(_.getFileName.toString)
-          finally entries.close()
-        }
+      else IO.pure(Examples.all.filter(_.collection == "stories").map(e => root.resolve(e.path)))
     _ <- IO.raiseWhen(directories.isEmpty)(RuntimeException("No stories found"))
     prepared <- directories.traverse(prepare)
     _ <- IO.raiseWhen(prepared.map(_.story.id).distinct.size != prepared.size)(
@@ -55,7 +46,7 @@ object CheckStories:
     artifacts <- ArtifactFiles.createRun(root, "check")
     _ <- SourceIdentity.verify(root, artifacts)
     _ <- IO.println(s"Running ${prepared.size} stories against local Canton. Evidence: $artifacts")
-    dar = root.resolve("on-ledger/smoke/.daml/dist/harmonia-smoke-0.1.0.dar")
+    dar = root.resolve("on-ledger/tests/.daml/dist/harmonia-tests-0.1.0.dar")
     (transfers, others) = prepared.partition(_.story.workflow.contains("atomic-transfer"))
     (purchases, remaining) = others.partition(_.story.workflow.contains("property-purchase"))
     (privateStories, ordinaryStories) = remaining.partition(
@@ -169,7 +160,7 @@ object CheckStories:
         actual <- execute(item.story, output)
         _ <- IO.fromEither(
           StoryFormat
-            .result(MarkdownYaml.render("Observed", "Result", actual))
+            .result(MarkdownYaml.render("Observed", "Result", actual), resultKind(item.story))
             .left
             .map(RuntimeException(_))
         )
@@ -208,8 +199,12 @@ object CheckStories:
     )
     result <- IO.fromEither(
       StoryFormat
-        .result(expected)
+        .result(expected, resultKind(story))
         .left
         .map(message => RuntimeException(s"$directory/expected.md: $message"))
     )
   yield Prepared(directory, story, result, input, expected)
+
+  private def resultKind(story: Story): ResultKind = story match
+    case _: TransferStory => ResultKind.Transfer
+    case _                => ResultKind.Ordinary

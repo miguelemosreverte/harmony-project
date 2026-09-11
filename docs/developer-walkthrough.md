@@ -13,7 +13,7 @@ Open an exported book with `scripts/harmonia serve-book DIRECTORY`; the packaged
 5. Open Chapter 8's composition and package examples. The first exposes consent/order/source status; the second exposes accepted inputs and unsupported mappings.
 6. Open Chapter 9's boundary recording. Compare maximum sizes and the two competing commands. Finish with its extension guide and capability matrix.
 
-Each chapter has direct buttons for matching recordings. The laboratory's previous/next controls, actor perspectives, source links, and complete differences remain available for closer inspection.
+Each chapter has direct buttons for matching recordings. The book opens at Chapter 1. Example and attempt selections have stable navigation addresses. Code and evidence open in an inspector; closing it restores focus, and returning to the chapter restores the reading position. The laboratory keeps actor perspectives and complete differences available. Read the [three source traces](second-draft/reading-traces.md) for financing, composition, and package generation.
 
 ## Live walkthrough
 

@@ -6,7 +6,7 @@ An integration is useful when another reader can explain it, run it, and tell wh
 
 Choose a source action with a clear actor, subject, and observable result. Write a short Markdown input and an independent expectation before changing the implementation. Keep business names and exact values readable. The expectation should describe meaningful effects: which contract remains active, who can see it, whether progression completes, and what a rejected action leaves unchanged.
 
-Use the [generated approval story](../stories/generated-approved/input.md) and its [expectation](../stories/generated-approved/expected.md) as the first model. For a transaction spanning domains, use the [final-leg transfer rejection](../stories/transfer-final-leg-rejected/input.md) and its [unchanged-state expectation](../stories/transfer-final-leg-rejected/expected.md). A successful compilation cannot replace these observations.
+Use the [generated approval story](../examples/stories/generated-approved/input.md) and its [expectation](../examples/stories/generated-approved/expected.md) as the first model. For a transaction spanning domains, use the [final-leg transfer rejection](../examples/stories/transfer-final-leg-rejected/input.md) and its [unchanged-state expectation](../examples/stories/transfer-final-leg-rejected/expected.md). A successful compilation cannot replace these observations.
 
 ```mermaid
 flowchart LR
@@ -23,11 +23,11 @@ An owned application can implement `StepAction` directly. An unchanged applicati
 
 A mapping explains which existing fields mean actor, readers, and subject. It does not repeat the compiler's type declarations. A source package with an unsupported return type or nested argument needs an explicit adapter design, not an invented interpretation. Inspecting a DAR does not grant execution rights, reveal private contracts, or install a live action.
 
-Keep private data in its owning application. If another participant needs a result, design the minimal signed evidence and its consuming continuation. The issuer, consumer, subject, decision, and intended continuation all matter; the [purchase rejection cases](../stories/purchase-wrong-continuation/expected.md) demonstrate that boundary.
+Keep private data in its owning application. If another participant needs a result, design the minimal signed evidence and its consuming continuation. The issuer, consumer, subject, decision, and intended continuation all matter; the [purchase rejection cases](../examples/stories/purchase-wrong-continuation/expected.md) demonstrate that boundary.
 
 ## Test the edge, then inspect the failure
 
-Run the ordinary golden first, then its authority, retry, disclosure, and rollback cases. The [capability matrix](../docs/capabilities.md) links each supported boundary to an executable check. The [boundary input](../evaluations/execution-boundaries/input.md) and [expectation](../evaluations/execution-boundaries/expected.md) exercise maximum graph/composer sizes and two commands competing for one process.
+Run the ordinary golden first, then its authority, retry, disclosure, and rollback cases. The [capability matrix](../docs/capabilities.md) links each supported boundary to an executable check. The [boundary input](../examples/evaluations/execution-boundaries/input.md) and [expectation](../examples/evaluations/execution-boundaries/expected.md) exercise maximum graph/composer sizes and two commands competing for one process.
 
 In the story laboratory, open **Execute the supported limits and compete for one step**. Its two selectable phases show queried limits and the race's observed counts. The expected outcome is one committed advance, one definitive conflict, one replacement source, and one active process. The comparison table also includes the stale-reference, disclosure, and request-identity checks.
 

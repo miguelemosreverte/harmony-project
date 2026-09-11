@@ -3,6 +3,8 @@ package harmonia.book
 import cats.effect.IO
 import cats.syntax.all.*
 import harmonia.files.ArtifactFiles
+import harmonia.examples.Examples
+import harmonia.book.project.PresentStory
 import harmonia.stories.read.{MarkdownYaml, StoryFormat}
 import io.circe.Json
 import java.nio.file.{Files, Path, StandardCopyOption}
@@ -27,17 +29,7 @@ object ExportBook:
     }
     _ <- IO.raiseWhen(directories.isEmpty)(RuntimeException(s"No recorded stories in $run"))
     stories <- directories.traverse(directory => recorded(directory, output))
-    chapters <- Vector(
-      "01-first-story.md",
-      "02-two-integration-paths.md",
-      "03-participant-views.md",
-      "04-progression.md",
-      "05-financing-and-offer.md",
-      "06-atomic-transfer.md",
-      "07-generated-bindings.md",
-      "08-compose-a-workflow.md",
-      "09-extend-with-evidence.md"
-    ).traverse { name =>
+    chapters <- Examples.chapters.traverse { name =>
       ArtifactFiles.read(root.resolve("book").resolve(name)).flatMap { markdown =>
         CodeIncludes.expand(root.resolve("book"), markdown).map { expanded =>
           val document = Parser.builder().build().parse(expanded)
@@ -69,7 +61,7 @@ object ExportBook:
       root.resolve("off-ledger/browser/target/scala-3.3.6/harmonia-book-fastopt/main.js"),
       output.resolve("main.js")
     )
-    _ <- Vector("book", "docs", "stories", "on-ledger", "off-ledger", "packages", "evaluations")
+    _ <- Vector("book", "docs", "examples", "on-ledger", "off-ledger", "packages")
       .traverse_ { directory =>
         IO.blocking {
           val stream = Files.walk(root.resolve(directory))
@@ -92,9 +84,13 @@ object ExportBook:
           _.traverse_(path => copy(path, output.resolve("source").resolve(root.relativize(path))))
         )
       }
-    _ <- Vector("README.md", "PRD.md", "harmonia.md", "harmonia-architecture.html").traverse_(
-      name => copy(root.resolve(name), output.resolve("source").resolve(name))
-    )
+    _ <- Vector(
+      "README.md",
+      "PRD.md",
+      "SECOND-DRAFT.md",
+      "harmonia.md",
+      "harmonia-architecture.html"
+    ).traverse_(name => copy(root.resolve(name), output.resolve("source").resolve(name)))
     _ <- IO.println(s"Book exported: $output")
   yield ()
 
@@ -125,9 +121,16 @@ object ExportBook:
       yield ()
     }
     scenario <- IO.fromEither(MarkdownYaml.read(input, "Scenario").left.map(RuntimeException(_)))
-    baseline <- IO.fromEither(StoryFormat.result(expected).left.map(RuntimeException(_)))
-    observed <- IO.fromEither(StoryFormat.result(actual).left.map(RuntimeException(_)))
     id = directory.getFileName.toString
+    example <- IO.fromOption(Examples.find(id))(
+      RuntimeException(s"Recording is missing from the example inventory: $id")
+    )
+    baseline <- IO.fromEither(
+      StoryFormat.result(expected, example.kind.resultKind).left.map(RuntimeException(_))
+    )
+    observed <- IO.fromEither(
+      StoryFormat.result(actual, example.kind.resultKind).left.map(RuntimeException(_))
+    )
     _ <- Vector("input.md", "expected.md", "actual.md", "diff.md", "run.json", "observation.json")
       .traverse_(name =>
         copy(directory.resolve(name), output.resolve("evidence").resolve(id).resolve(name))
@@ -141,7 +144,8 @@ object ExportBook:
     "input" -> scenario,
     "expected" -> baseline,
     "actual" -> observed,
-    "provenance" -> provenance
+    "provenance" -> provenance,
+    "presentation" -> PresentStory(example.kind, scenario, baseline, observed)
   )
 
   private def copy(source: Path, target: Path): IO[Unit] = IO.blocking {

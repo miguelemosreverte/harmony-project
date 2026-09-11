@@ -6,7 +6,7 @@ import cats.syntax.all.*
 import harmonia.app.workspace.Workspace
 import harmonia.submission.ActionRequest
 import harmonia.ledger.client.{ActiveContract, ParticipantLedger, TemplateCatalog, LiveLedger}
-import harmonia.live.run.{LiveRuntime, LiveParticipant}
+import harmonia.app.live.{LiveRuntime, LiveParticipant}
 import harmonia.financing.FinancingObservation
 import harmonia.ledger.client.LedgerSnapshot
 import com.daml.ledger.api.v2.ValueOuterClass

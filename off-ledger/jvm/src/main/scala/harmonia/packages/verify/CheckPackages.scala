@@ -31,13 +31,17 @@ object CheckPackages:
         artifacts.resolve(s"build-$name.log")
       )
     }
-    dar = root.resolve("on-ledger/package-example/.daml/dist/harmonia-package-example-0.1.0.dar")
-    scenarioText <- ArtifactFiles.read(root.resolve("on-ledger/package-example/input.md"))
+    dar = root.resolve(
+      "on-ledger/fixtures/package-example/.daml/dist/harmonia-package-example-0.1.0.dar"
+    )
+    scenarioText <- ArtifactFiles.read(root.resolve("on-ledger/fixtures/package-example/input.md"))
     scenario <- IO.fromEither(
       MarkdownYaml.read(scenarioText, "Scenario").left.map(RuntimeException(_))
     )
     reference <- IO.fromEither(scenario.hcursor.get[String]("reference"))
-    expectedText <- ArtifactFiles.read(root.resolve("on-ledger/package-example/expected.md"))
+    expectedText <- ArtifactFiles.read(
+      root.resolve("on-ledger/fixtures/package-example/expected.md")
+    )
     expected <- IO.fromEither(
       MarkdownYaml.read(expectedText, "Result").left.map(RuntimeException(_))
     )

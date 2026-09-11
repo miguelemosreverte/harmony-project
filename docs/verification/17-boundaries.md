@@ -1,6 +1,6 @@
 # Execution boundaries and portable reference verification
 
-Verified locally on 2026-09-10. The independent Markdown baseline in `evaluations/execution-boundaries/` passes with zero differences at `.artifacts/boundaries-8113632047783060608/execution-boundaries/`. Its first phase uses a real Canton sandbox and Daml Script; its second uses three authenticated participants and direct concurrent Ledger API submissions.
+Verified locally on 2026-09-10. The independent Markdown baseline in `examples/evaluations/execution-boundaries/` passes with zero differences at `.artifacts/boundaries-8113632047783060608/execution-boundaries/`. Its first phase uses a real Canton sandbox and Daml Script; its second uses three authenticated participants and direct concurrent Ledger API submissions.
 
 ## Observed ledger limits
 

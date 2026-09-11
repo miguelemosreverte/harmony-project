@@ -9,7 +9,7 @@ import java.security.MessageDigest
 
 object SourceIdentity:
   def verify(root: Path, artifacts: Path): IO[Unit] =
-    val source = root.resolve("on-ledger/legacy-financing")
+    val source = root.resolve("on-ledger/applications/legacy-financing")
     val dar = source.resolve(".daml/dist/legacy-financing-0.1.0.dar")
     val inspection = artifacts.resolve("source-inspection.json")
     for

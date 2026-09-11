@@ -41,9 +41,9 @@ The ledger enforces authority, consent, and order even when a caller bypasses th
 
 ## Compare with committed stories
 
-The [direct composition input](../evaluations/composer-direct/input.md) and its [expectation](../evaluations/composer-direct/expected.md) include wrong-party acceptance, early review, and execution by the wrong actor. The [generated composition](../evaluations/composer-generated/input.md) reverses the order and uses the generated adapter. Their interactive recordings show consent, enabled steps, and expected/observed source status after each attempt.
+The [direct composition input](../examples/evaluations/composer-direct/input.md) and its [expectation](../examples/evaluations/composer-direct/expected.md) include wrong-party acceptance, early review, and execution by the wrong actor. The [generated composition](../examples/evaluations/composer-generated/input.md) reverses the order and uses the generated adapter. Their interactive recordings show consent, enabled steps, and expected/observed source status after each attempt.
 
-The [package input story](../evaluations/package-builder/input.md) and its [expectation](../evaluations/package-builder/expected.md) check upload, participant export, generated project download, and rejected inputs. Its recording shows whether each operation consumes an input slot. Failed operations leave the accepted inputs unchanged.
+The [package input story](../examples/evaluations/package-builder/input.md) and its [expectation](../examples/evaluations/package-builder/expected.md) check upload, participant export, generated project download, and rejected inputs. Its recording shows whether each operation consumes an input slot. Failed operations leave the accepted inputs unchanged.
 
 ```sh
 scripts/harmonia composer-check
@@ -52,4 +52,4 @@ scripts/harmonia builder-check
 
 Try giving both actions the same name: the UI must show a specific diagnostic. Then restore unique names, put buyer review first, and select generated bank approval second. Complete the workflow from the two real participant sessions. In the package panel, inspect metadata and observe why package availability does not imply an executable action.
 
-Read the [composition decision](../docs/architecture/010-composition.md), [on-ledger consent model](../on-ledger/composer/daml/Composer.daml), [Scala input builder](../off-ledger/jvm/src/main/scala/harmonia/builder/PackageBuilder.scala), and [verification evidence](../docs/verification/16c-builder.md).
+Read the [composition decision](../docs/architecture/010-composition.md), [on-ledger consent model](../on-ledger/composition/daml/Composer.daml), [Scala input builder](../off-ledger/jvm/src/main/scala/harmonia/packages/workspace/PackageBuilder.scala), and [verification evidence](../docs/verification/16c-builder.md).
