@@ -502,57 +502,59 @@ Deliver this larger step as three ordered, working commits:
 
 ### Commit 20 — `docs: record release acceptance and adopter handoff`
 
-- [ ] Record the completed implementation and its evaluation evidence.
-  - [ ] Attach the actual commit/release identifiers and evidence paths to completed checklist items.
-  - [ ] Review the release checklist below and distinguish completed technical work from external acceptance obligations.
-  - [ ] Prepare the public release description, demonstration outline, and evaluator feedback template.
-  - [ ] Document maintenance boundaries and an actionable next-step guide for an external application team.
-  - [ ] **Acceptance:** the handoff accurately states what is implemented, tested, published, and still externally pending; no adoption or publication is claimed without evidence.
+- [x] Record the completed implementation and its evaluation evidence.
+  - [x] Attach the actual commit/release identifiers and evidence paths to completed checklist items.
+  - [x] Review the release checklist below and distinguish completed technical work from external acceptance obligations.
+  - [x] Prepare the public release description, demonstration outline, and evaluator feedback template.
+  - [x] Document maintenance boundaries and an actionable next-step guide for an external application team.
+  - [x] **Acceptance:** the handoff accurately states what is implemented, tested, published, and still externally pending; no adoption or publication is claimed without evidence.
 
 ### Conditions for every implementation commit
 
-- [ ] Its stated behavior is implemented and the relevant existing behavior still works.
-- [ ] New behavior has the appropriate golden or focused verification; checks do not merely mirror implementation details.
-- [ ] Meaningful negative cases accompany authority, privacy, evidence, and atomicity claims.
-- [ ] Ordinary validation leaves committed expectations untouched.
-- [ ] Its story, chapter, or setup explanation matches the delivered version.
-- [ ] Authored Markdown/YAML remains intuitive, concise, and free of unnecessary duplication; independent expectations remain explicit.
-- [ ] Scala changes follow feature ownership, pure/effect boundaries, and explicit resource lifecycles described in the architecture note.
-- [ ] The reader-visible result is demonstrated and evidence is retained.
-- [ ] Changes are scoped and the commit message explains intentional behavior/baseline changes.
+- [x] Its stated behavior is implemented and the relevant existing behavior still works.
+- [x] New behavior has the appropriate golden or focused verification; checks do not merely mirror implementation details.
+- [x] Meaningful negative cases accompany authority, privacy, evidence, and atomicity claims.
+- [x] Ordinary validation leaves committed expectations untouched.
+- [x] Its story, chapter, or setup explanation matches the delivered version.
+- [x] Authored Markdown/YAML remains intuitive, concise, and free of unnecessary duplication; independent expectations remain explicit.
+- [x] Scala changes follow feature ownership, pure/effect boundaries, and explicit resource lifecycles described in the architecture note.
+- [x] The reader-visible result is demonstrated and evidence is retained.
+- [x] Changes are scoped and the commit message explains intentional behavior/baseline changes.
 
 ## 9. Release acceptance checklist
 
-- [ ] **Working composition**
-  - [ ] Both integration paths execute through the same core-managed model.
-  - [ ] At least two independently packaged source applications and two complete reference workflows are available.
-  - [ ] Role ownership and application boundaries remain explicit.
-  - [ ] Staged progression, continuation, and bounded atomic completion are each demonstrated.
-- [ ] **Executable specifications**
-  - [ ] Every release story has a committed Markdown input and expected result.
-  - [ ] A reader can explain the scenario from those files without decoding infrastructure metadata or following layers of inheritance.
-  - [ ] The suite checks observed behavior and fails on meaningful divergence.
-  - [ ] Golden changes are explicit and readable in Git.
-  - [ ] Actual outputs, diffs, and provenance are retained on failure.
-  - [ ] Normalization preserves meaningful identity, ordering, values, and permissions.
-- [ ] **Authority and privacy**
-  - [ ] Wrong actors cannot execute source actions through Harmonia.
-  - [ ] Evidence is validated for its claimed purpose and cannot be reused where prohibited.
-  - [ ] Separate-participant observations substantiate visibility claims.
-  - [ ] Missing observation data cannot produce a passing privacy result.
-  - [ ] A failed atomic block leaves no partial application or workflow effects.
-- [ ] **Readable, interactive delivery**
-  - [ ] Each chapter includes a story, visual explanation, relevant code, and a reproducible experiment.
-  - [ ] The reader can inspect expected and actual results and see their differences.
-  - [ ] Recorded demonstrations work without a ledger; fresh execution has documented setup.
-  - [ ] Live identity and authorization are enforced independently of the display.
-  - [ ] The composer stays within the documented workflow and integration vocabulary.
-- [ ] **Reproducible release**
-  - [ ] Versions, packages, source provenance, commands, and environment requirements are documented.
-  - [ ] A clean environment reproduces both reference workflows and generated integration.
-  - [ ] All included local links and demo assets resolve.
+Technical acceptance is recorded in the [identified local delivery](docs/release/acceptance.md). Public distribution remains open below.
+
+- [x] **Working composition**
+  - [x] Both integration paths execute through the same core-managed model.
+  - [x] At least two independently packaged source applications and two complete reference workflows are available.
+  - [x] Role ownership and application boundaries remain explicit.
+  - [x] Staged progression, continuation, and bounded atomic completion are each demonstrated.
+- [x] **Executable specifications**
+  - [x] Every release story has a committed Markdown input and expected result.
+  - [x] A reader can explain the scenario from those files without decoding infrastructure metadata or following layers of inheritance.
+  - [x] The suite checks observed behavior and fails on meaningful divergence.
+  - [x] Golden changes are explicit and readable in Git.
+  - [x] Actual outputs, diffs, and provenance are retained on failure.
+  - [x] Normalization preserves meaningful identity, ordering, values, and permissions.
+- [x] **Authority and privacy**
+  - [x] Wrong actors cannot execute source actions through Harmonia.
+  - [x] Evidence is validated for its claimed purpose and cannot be reused where prohibited.
+  - [x] Separate-participant observations substantiate visibility claims.
+  - [x] Missing observation data cannot produce a passing privacy result.
+  - [x] A failed atomic block leaves no partial application or workflow effects.
+- [x] **Readable, interactive delivery**
+  - [x] Each chapter includes a story, visual explanation, relevant code, and a reproducible experiment.
+  - [x] The reader can inspect expected and actual results and see their differences.
+  - [x] Recorded demonstrations work without a ledger; fresh execution has documented setup.
+  - [x] Live identity and authorization are enforced independently of the display.
+  - [x] The composer stays within the documented workflow and integration vocabulary.
+- [ ] **Reproducible release, including public distribution**
+  - [x] Versions, packages, source provenance, commands, and environment requirements are documented.
+  - [x] A clean checkout, using the installed pinned tools and dependency caches, reproduces both reference workflows and generated integration.
+  - [x] Current source/document links, exported chapter links, recording links, and demo assets pass the local audit; missing archival proposal assets are documented.
   - [ ] Public-source and licensing requirements are satisfied before claiming a public release.
-  - [ ] Known limits and deployment topology are explicit.
+  - [x] Known limits and deployment topology are explicit.
 
 ## 10. Open decisions and evidence gates
 

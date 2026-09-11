@@ -4,7 +4,7 @@ The [PRD](../PRD.md) defines the ordered work. This record reports actual commit
 
 ## Current step
 
-Steps 01–19 are complete. The verified software/book revision is `dd5cf02754241730dc6cfed71e0b92216d657da0`: eleven clean-checkout gate stages, 32 passing recordings, nine chapters, a hashed archive, and working relocated launchers. Step 20 records acceptance and the prepared handoff materials. Public licensing, publication, external feedback, and adoption remain pending.
+Steps 01–20 are complete for the local technical delivery. The [acceptance record](release/acceptance.md) identifies source revision `dd5cf02754241730dc6cfed71e0b92216d657da0`, eleven passing clean-checkout gates, 32 recordings, nine chapters, the hashed archive, and relocated launcher verification. One bounded book process is retained. Public licensing, publication, outside feedback, and adoption remain pending.
 
 ## Commit evidence
 
@@ -45,7 +45,9 @@ Actual commit identifiers are recorded in the next commit after they are created
 
 | 19a | `dd5cf02` | [Release harness](release/packaging.md): compiled clean-checkout runner, sequential gates, bounded launchers, hashed bundle, and provenance verification; the full release gate follows this commit |
 
-| 19b | This increment | [Release acceptance proof](verification/19-release.md): clean suite, one-revision bundle, changed-file detection, relocated book/live launchers, and measured process cleanup |
+| 19b | `8189028` | [Release acceptance proof](verification/19-release.md): clean suite, one-revision bundle, changed-file detection, relocated book/live launchers, and measured process cleanup |
+
+| 20 | This increment | [Technical acceptance and adopter handoff](release/acceptance.md): identified delivery, completed technical checklist, prepared demo/feedback/integration materials, and explicit external obligations |
 
 ## External decisions
 

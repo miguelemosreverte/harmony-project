@@ -6,6 +6,7 @@ The ledger enforces actions and records progression. Scala tools execute stories
 
 ## Start here
 
+- [Verified local delivery and handoff](docs/release/acceptance.md)
 - [Product requirements and ordered commit plan](PRD.md)
 - [Implementation progress and verification](docs/progress.md)
 - [Repository map](docs/architecture/repository.md)
@@ -17,7 +18,7 @@ The ledger enforces actions and records progression. Scala tools execute stories
 - [Supported limits and trust boundaries](docs/capabilities.md)
 - [Pinned local and upstream DAR inputs](packages/README.md)
 
-The implementation includes both reference workflows, direct and generated integration, an authenticated live composer, package inspection/generation, and a nine-chapter executable book. Start with [local setup](book/setup.md), then run:
+The verified local edition includes both reference workflows, direct and generated integration, an authenticated live composer, package inspection/generation, and a nine-chapter executable book with 32 recordings. The packaged `run-book` launcher opens recorded playback with Java 17; `run-live` starts the disposable ledger evaluation with the pinned SDK. Start with [local setup](book/setup.md), then run:
 
 ```sh
 scripts/build
