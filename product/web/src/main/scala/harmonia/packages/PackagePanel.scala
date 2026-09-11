@@ -1,11 +1,20 @@
 package harmonia.packages
 
+/** @book.slice
+  *   packages
+  * @book.role
+  *   Explain what can run
+  * @book.summary
+  *   The browser presents package origin, compilation, and the separate live-registration boundary.
+  */
+
 import cats.effect.{IO, Resource}
 import cats.effect.std.Dispatcher
 import harmonia.ui.Elements.*
 import harmonia.live.LiveApi
 import io.circe.Json
 import org.scalajs.dom
+import harmonia.scene.{WorkflowDiagram, WorkflowDiagramView, DiagramNode, DiagramEdge, DiagramState}
 import scala.concurrent.duration.*
 
 /** Package operations have their own bounded lifetime and no ledger command authority. */
@@ -19,6 +28,7 @@ final class PackagePanel(capability: String, dispatcher: Dispatcher[IO]):
   private var busy = false
   private var message = ""
   private var snapshot = PackageState.empty
+  private var diagrams = Vector.empty[WorkflowDiagramView]
 
   def render(): dom.HTMLElement =
     if !initialized then
@@ -48,6 +58,7 @@ final class PackagePanel(capability: String, dispatcher: Dispatcher[IO]):
       )
 
   private def draw(): Unit =
+    diagrams.foreach(_.dispose()); diagrams = Vector.empty
     val focused = Option(dom.document.activeElement).filter(root.contains).map(_.id)
     root.textContent = ""
     append(
@@ -135,6 +146,59 @@ final class PackagePanel(capability: String, dispatcher: Dispatcher[IO]):
         element("h3", text = value.matchedSource.getOrElse("Inspected package")),
         element("p", text = value.diagnostic),
         element("p", text = "Daml-LF " + value.lf)
+      )
+      val diagramRoot = element("div")
+      append(card, diagramRoot)
+      val diagram = new WorkflowDiagramView(diagramRoot)
+      diagrams :+= diagram
+      val nodes = Vector(
+        DiagramNode(
+          "input",
+          "Inspect the DAR",
+          "Compiled package metadata",
+          "Package input",
+          DiagramState.Complete
+        ),
+        DiagramNode(
+          "mapping",
+          "Review the mapping",
+          value.diagnostic,
+          "Binding",
+          if value.matchedSource.isDefined then DiagramState.Complete else DiagramState.Refused
+        ),
+        DiagramNode(
+          "compile",
+          "Compile the adapter",
+          "Portable project",
+          "Daml compiler",
+          if value.compiled then DiagramState.Complete
+          else if value.canGenerate then DiagramState.Current
+          else DiagramState.Pending
+        ),
+        DiagramNode(
+          "register",
+          "Register and evaluate",
+          "Separate typed registration and fresh evaluation",
+          "Live workspace",
+          if value.availableLive then DiagramState.Complete else DiagramState.Pending
+        )
+      )
+      diagram.render(
+        WorkflowDiagram(
+          "From package identity to usable integration.",
+          "Compilation and live availability are separate observed facts.",
+          nodes,
+          nodes
+            .zip(nodes.drop(1))
+            .map((a, b) =>
+              DiagramEdge(
+                a.id,
+                b.id,
+                if b.state == DiagramState.Complete then DiagramState.Complete
+                else DiagramState.Pending
+              )
+            )
+        )
       )
       val details = element("details")
       append(details, element("summary", text = "Package identity and origin"))

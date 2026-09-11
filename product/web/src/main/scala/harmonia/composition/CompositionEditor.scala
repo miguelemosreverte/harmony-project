@@ -3,6 +3,7 @@ package harmonia.composition
 import harmonia.ui.Elements.*
 import harmonia.composition.model.{Composition, CompositionAction, CompositionActor, PlannedStep}
 import org.scalajs.dom
+import harmonia.scene.{WorkflowDiagram, WorkflowDiagramView, DiagramNode, DiagramEdge, DiagramState}
 
 /** This editor owns its DOM so participant polling preserves unfinished input. */
 final class CompositionEditor(propose: Either[String, Composition] => Unit):
@@ -20,6 +21,17 @@ final class CompositionEditor(propose: Either[String, Composition] => Unit):
     event.preventDefault()
     if !blocked && remaining > 0 then
       propose(Composition.validate(Composition(name, reference, steps)))
+  private val preview = element("div", "composition-preview")
+  private val diagram = new WorkflowDiagramView(preview)
+  preview.addEventListener(
+    "harmonia-select",
+    (event: dom.Event) =>
+      val selected = event.asInstanceOf[dom.CustomEvent].detail.toString
+      val index = selected.stripPrefix("draft-").toIntOption.getOrElse(-1)
+      if index >= 0 then
+        Option(dom.document.getElementById(s"composition-step-$index"))
+          .foreach(_.asInstanceOf[dom.HTMLElement].focus())
+  )
   rebuild()
 
   def render(disabled: Boolean, proposalsLeft: Int): dom.HTMLElement =
@@ -52,13 +64,15 @@ final class CompositionEditor(propose: Either[String, Composition] => Unit):
       textInput("Workflow name", "composition-name", name, 80)(name = _),
       textInput("Unique reference", "composition-reference", reference, 80)(reference = _)
     )
-    append(root, identity)
+    append(root, preview, identity)
+    drawPlan()
     steps.zipWithIndex.foreach { (step, index) =>
       val row = element("fieldset", "composition-step")
       append(row, element("legend", text = s"Action ${index + 1}"))
       val fields = element("div", "composition-fields")
-      def update(f: PlannedStep => PlannedStep): Unit = steps =
-        steps.updated(index, f(steps(index)))
+      def update(f: PlannedStep => PlannedStep): Unit =
+        steps = steps.updated(index, f(steps(index)))
+        drawPlan()
       append(
         fields,
         textInput("Step name", s"composition-step-$index", step.id, 40)(v =>
@@ -114,6 +128,25 @@ final class CompositionEditor(propose: Either[String, Composition] => Unit):
     focus
       .flatMap(id => Option(dom.document.getElementById(id)))
       .foreach(_.asInstanceOf[dom.HTMLElement].focus())
+
+  private def drawPlan(): Unit =
+    val nodes = steps.zipWithIndex.map((step, index) =>
+      DiagramNode(
+        "draft-" + index,
+        step.action.label,
+        step.id + " · " + step.role,
+        step.actor.wire,
+        DiagramState.Pending
+      )
+    )
+    diagram.render(
+      WorkflowDiagram(
+        "Review the proposed handoffs.",
+        "Editable plan · buyer consent is required before execution.",
+        nodes,
+        nodes.zip(nodes.drop(1)).map((a, b) => DiagramEdge(a.id, b.id, DiagramState.Pending))
+      )
+    )
 
   private def control(label: String, id: String, unavailable: Boolean)(
       action: => Unit

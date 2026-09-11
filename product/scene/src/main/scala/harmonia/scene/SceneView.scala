@@ -39,7 +39,6 @@ final class SceneView(root: dom.HTMLElement):
     map,
     privateArea,
     sharedArea,
-    SceneArtwork.connections(),
     people,
     documents,
     approval,
@@ -49,6 +48,7 @@ final class SceneView(root: dom.HTMLElement):
   append(caption, title, description)
   append(figure, map, amounts, caption)
   append(root, figure)
+  private val connections = new ConnectionLayer(map)
 
   private def document(css: String, label: String, verified: Boolean): dom.HTMLElement =
     val node = element("div", css + " scene-document")
@@ -125,6 +125,35 @@ final class SceneView(root: dom.HTMLElement):
       val person = nodes(index).asInstanceOf[dom.HTMLElement]
       person.classList.toggle("scene-focus", person.getAttribute("data-person") == frame.focus)
     }
+    def person(index: Int): dom.Element =
+      people.children(index)
+    def status(phase: Int): String =
+      if frame.refused then "refused"
+      else if frame.phase >= phase then "complete"
+      else "pending"
+    val approvalPaper = approval.querySelector(".document-sheet")
+    val proposalPaper = artifact.querySelector(".document-sheet")
+    val links =
+      if frame.kind == SceneKind.Transfer then Vector.empty
+      else
+        val common = Vector(
+          ConnectionLayer.Arrow(
+            "bank",
+            people.children(0).querySelector("strong"),
+            approvalPaper,
+            "pending",
+            false
+          ),
+          ConnectionLayer.Arrow("approval", approvalPaper, person(1), status(1)),
+          ConnectionLayer.Arrow("proposal", person(1), proposalPaper, status(2))
+        )
+        if frame.kind == SceneKind.Purchase then
+          common ++ Vector(
+            ConnectionLayer.Arrow("relay", proposalPaper, person(2), status(3)),
+            ConnectionLayer.Arrow("receipt", person(2), person(3), status(4))
+          )
+        else common :+ ConnectionLayer.Arrow("receipt", proposalPaper, person(2), status(4))
+    connections.render(links)
     amounts.textContent = ""
     hide(amounts, frame.amounts.isEmpty)
     frame.amounts.foreach { amount =>

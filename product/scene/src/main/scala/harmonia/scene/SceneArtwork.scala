@@ -31,26 +31,3 @@ object SceneArtwork:
     path.setAttribute("fill-rule", "evenodd")
     svg.appendChild(path)
     svg
-
-  def connections(): dom.Element =
-    val svg = dom.document.createElementNS("http://www.w3.org/2000/svg", "svg")
-    svg.setAttribute("viewBox", "0 0 1000 450")
-    svg.setAttribute("preserveAspectRatio", "none")
-    svg.setAttribute("class", "scene-connections")
-    svg.setAttribute("aria-hidden", "true")
-    Vector(
-      "bank" -> "M103 235 C103 300 137 310 185 310",
-      "approval" -> "M253 310 H408",
-      "approval connection-head" -> "M399 303 408 310 399 317",
-      "proposal" -> "M511 310 H561",
-      "relay" -> "M628 310 H674",
-      "relay connection-head" -> "M665 303 674 310 665 317",
-      "receipt" -> "M751 310 H820",
-      "receipt connection-head" -> "M811 303 820 310 811 317"
-    ).foreach { (name, shape) =>
-      val path = dom.document.createElementNS("http://www.w3.org/2000/svg", "path")
-      path.setAttribute("d", shape)
-      path.setAttribute("class", "connection-" + name)
-      svg.appendChild(path)
-    }
-    svg

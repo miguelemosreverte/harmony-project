@@ -55,6 +55,7 @@ lazy val service = project.in(file("product/server")).settings(jvmSettings).sett
 )
 lazy val scene = project.in(file("product/scene")).enablePlugins(ScalaJSPlugin).settings(browserSettings).settings(
   name := "harmonia-scene",
+  libraryDependencies += "org.scalameta" %%% "munit" % "1.0.4" % Test,
   scalaJSUseMainModuleInitializer := false
 )
 lazy val web = project.in(file("product/web")).dependsOn(scene).enablePlugins(ScalaJSPlugin).settings(browserSettings).settings(
