@@ -8,12 +8,11 @@ Separate applications can coordinate a process without handing one application c
 
 ## What exists today
 
-The repository has local reference implementations, committed golden stories, preserved ledger evidence, and integration guides. This edition adds guided reading and interactive playback. Its workspace screens remain design simulations.
+The repository has local reference implementations, committed golden stories, preserved ledger evidence, and integration guides. This edition adds guided reading and interactive playback. The separate live workspace executes the demonstrated financing and consented composition APIs and compiles supported adapters.
 
 ## What the next product evidence must establish
 
 - An independently developed application can be integrated using the supported path.
-- The live interface exposes the supported workflow and its failure states.
 - Another team can evaluate the integration with a recorded outcome.
 - Release, licensing, publication, and knowledge transfer have actual decisions and evidence.
 - Any pilot or production adoption claim is confirmed by the participating team.

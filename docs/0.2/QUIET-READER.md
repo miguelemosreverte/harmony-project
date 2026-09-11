@@ -49,9 +49,9 @@ reproduces it. Previous/Next never wraps silently to the start.
   - [x] Replace the shared control drawer and six audience presets with binary entrances.
   - [x] Simplify source, reviewer, original-author, workflow and chapter pages.
   - [x] Preserve actual source, all 32 recordings, exact quotations and useful URLs.
-- [ ] Commit 4: simplify live entry, financing, composition and package journeys.
-  - [ ] Keep each live step within two interactions without hiding a dashboard.
-  - [ ] Exercise real commands and recovery against one disposable network.
+- [x] Commit 4: simplify live entry, financing, composition and package journeys.
+  - [x] Keep each live step within two interactions without hiding a dashboard.
+  - [x] Exercise real commands and recovery against one disposable network.
 - [ ] Commit 5: navigate the complete routes, capture screenshots and write page notes.
   - [ ] Inspect desktop and mobile: purpose, caption, next action, destination, spacing.
   - [ ] Count interactions, including links, inputs, disclosures and embedded controls.

@@ -9,7 +9,7 @@ const endpoint=process.argv[2];
 const entry=new URL(process.argv[3]||'http://127.0.0.1:56202/design/0.2/chapters/03-financing-to-offer.html');
 assert(['127.0.0.1','localhost'].includes(entry.hostname),'Record a local book, without participant capabilities.');
 assert(entry.pathname.endsWith('/chapters/03-financing-to-offer.html'),'Use the recorded purchase chapter.');
-entry.search='?story=purchase-approved&present=1&audience=investor';entry.hash='';
+entry.search='?story=purchase-approved&present=1';entry.hash='';
 const output=path.resolve(process.argv[4]||'.artifacts/presentation');await fs.mkdir(output,{recursive:true});
 const b=await browser(endpoint),frames=[];
 try {

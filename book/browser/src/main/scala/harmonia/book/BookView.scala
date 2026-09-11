@@ -15,7 +15,8 @@ final class BookView(
   private val laboratory = new StoryLaboratory(stories, chapters, navigate)
   def render(state: ViewState): IO[Unit] = IO {
     laboratory.dispose()
-    val root = dom.document.getElementById("app"); root.textContent = ""
+    val root = dom.document.getElementById("app"); root.textContent = "";
+    root.setAttribute("class", "reference-shell")
     val main = element("main", "quiet-content"); main.id = "main"
     val header = element("header", "reference-header")
     append(header, element("span", "reference-brand", "Harmonia"))

@@ -196,6 +196,7 @@ def build_outputs(root=ROOT):
         outputs[f"chapters/{slug}.html"] = pages.chapter(slug, text, passages, corpus, stories)
     outputs["recordings.js"] = "window.HarmoniaRecordings = " + pages.json_script(recordings) + ";\n"
     outputs["sandbox.html"] = pages.sandbox()
+    outputs["recording-choice.html"] = pages.recording_choice()
     outputs["coverage.html"] = pages.coverage(report, claim_rows(root))
     outputs["coverage.json"] = json.dumps(report, ensure_ascii=False, indent=2) + "\n"
     outputs["review.html"] = pages.review()

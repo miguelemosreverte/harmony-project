@@ -3,10 +3,10 @@ package harmonia.book
 /** @book.slice
   *   book
   * @book.role
-  *   Mount or read offline
+  *   Serve separately or read offline
   * @book.summary
-  *   The exported directory can be read independently or mounted by the product HTTP server without
-  *   importing book logic.
+  *   The exported directory can be read independently or served by the book host. The product
+  *   service has no book routes.
   */
 
 import cats.effect.IO
@@ -16,7 +16,7 @@ import io.circe.syntax.*
 import java.nio.file.{Files, Path, StandardCopyOption}
 import scala.jdk.CollectionConverters.*
 
-/** Exports the designed book as files. The production server only mounts this directory. */
+/** Exports the designed book as files for its independent host and offline readers. */
 object FieldGuide:
   private val evidenceNames = RecordedArtifact.values.toVector.map(_.filename)
   def evidenceFiles(output: Path, stories: Vector[RecordedStory]): IO[Map[String, String]] =

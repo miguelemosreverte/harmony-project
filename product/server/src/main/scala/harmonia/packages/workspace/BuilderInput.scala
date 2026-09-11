@@ -23,7 +23,8 @@ private[workspace] enum SupportedBinding(
   case Primitive extends SupportedBinding("primitive-approval", "primitive-approval", false)
 
   def diagnostic: String = this match
-    case Financing => "Reviewed generated approval is available in the workflow action menu."
+    case Financing =>
+      "This reviewed generated approval is already available for composing a workflow."
     case Primitive =>
       "A reviewed primitive-action mapping can generate a portable project. Register its typed action and rebuild to add it to the live composer."
 

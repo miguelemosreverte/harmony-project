@@ -123,7 +123,7 @@ object ComposerView:
           card,
           if process.complete then "This plan is complete."
           else "Follow the next authorized action.",
-          "Observed ledger state · a diagram selection never submits a command.",
+          "Progress follows the observed ledger result.",
           process.steps.map(step =>
             DiagramNode(
               step.id,
@@ -140,7 +140,6 @@ object ComposerView:
         process.steps.zipWithIndex.foreach { (step, position) =>
           val row = element("section", "composition-step-detail")
           row.id = s"compose-detail-$index-$position"
-          append(row, element("h3", text = step.id))
           append(
             row,
             element(

@@ -2,6 +2,7 @@
 (() => {
   const view=HarmoniaView,{node}=HarmoniaReader;
   const enter=document.getElementById('sandbox-enter');
+  if(enter){const task=view.state.task,copy={financing:['Make the handoff yourself.','Open Bank and approve the private financing case. Then open Buyer and use that approval to continue.','live-handoff','workflows.html'],composer:['Agree on a workflow.','Bank proposes one plan. Buyer consents, then each participant executes its assigned action.','composer-direct','chapters/07-evidence-and-boundaries.html'],packages:['Inspect a real application.','Open Bank and choose Bring an application. Inspect the DAR, review the supported mapping, then compile the project.','package-builder','chapters/06-compose-a-workflow.html']}[task];document.querySelector('main h1').textContent=copy[0];document.querySelector('main .lead').textContent=copy[1];enter.href=view.href('laboratory.html?story='+copy[2]);const back=enter.nextElementSibling;back.href=view.href(copy[3]);back.textContent='Continue reading →';}
   if(enter&&window.HarmoniaLiveRoot){const u=new URL(HarmoniaLiveRoot);u.searchParams.set('view',view.state.task);enter.href=u.href;enter.textContent='Enter the live workspace →';}
   const scene=document.getElementById('story-scene'),laboratory=document.getElementById('laboratory-stage');
   if(!scene&&!laboratory)return;
@@ -31,6 +32,7 @@
       document.getElementById('laboratory-position').textContent=`Example ${storyIndex+1} of ${keys.length} · observation ${step+1} of ${units.length}`;
       if(['Purchase','Transfer'].includes(story.presentation.kind))renderHarmoniaScene(laboratory,projectHarmoniaRecording(JSON.stringify(story),step+1,'all'));
       else renderHarmoniaDiagram(laboratory,projectHarmoniaDiagram(JSON.stringify(story),step));
+      document.getElementById('laboratory-action').textContent=`${unit.actor}: ${unit.action.replaceAll('-',' ')} · observed ${unit.actual.outcome||unit.outcome_label}.`;
       const detail=document.getElementById('laboratory-observation');detail.replaceChildren(node('h2',`${unit.actor}: ${unit.action.replaceAll('-',' ')}`),node('p',`Observed outcome: ${unit.actual.outcome||unit.outcome_label}. ${story.differences?.length?'The recording contains differences from its expectation.':'The recorded result matches the committed expectation.'}`));
       const columns=node('div','','observed-comparison');for(const [title,value] of [['Committed expectation',unit.expected],['Recorded observation',unit.actual]]){const column=node('section');column.append(node('h3',title),node('pre',JSON.stringify(value,null,2)));columns.append(column);}detail.append(columns);
       back=()=>step?view.update({step:step-1}):storyIndex?view.update({story:keys[storyIndex-1],step:view.config.stories[keys[storyIndex-1]].presentation.units.length-1}):move('workflows.html');
@@ -39,6 +41,7 @@
     }
     document.getElementById('recording-provenance').textContent=`Historical Canton recording · revision ${story.provenance.revision.slice(0,12)} · ${story.provenance.recorded_at}. Playback submits no transactions.`;
   });
+  if(view.state.embed)return;
   previous.onclick=()=>back();next.onclick=()=>forward();
   addEventListener('keydown',e=>{if(e.target.closest('input,textarea,select'))return;if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();(e.key==='ArrowLeft'?back:forward)();}});
   let touch;const region=scene||laboratory;

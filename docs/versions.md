@@ -56,3 +56,12 @@ handoffs, complete evidence URLs, offline artifact inspection, and stable A4 dia
 printing. The [acceptance audit](0.2/COMPLETION-AUDIT.md) records the full scope and
 verification; the [delivery report](0.2/reader-delivery.json) verifies the final mounted
 book and a fresh sandbox. `main` remains the fourth-draft baseline.
+
+
+`v0.2.0-reader.3` replaces the reader controls with finite, authored routes and
+a two-interaction page budget. It separates product and book hosting, uses generic
+product module documentation, introduces one-question composition pages, and
+provides a [page walkthrough](0.2/WALKTHROUGH.md) with desktop/mobile screenshots.
+All 32 recordings and exact original quotations remain preserved. Live financing,
+consent, execution, adapter compilation and recovery were exercised on a disposable
+network. This is a reader checkpoint on `version/0.2.0`; `main` remains unchanged.

@@ -16,4 +16,4 @@ The property application checks who issued the financing result, which buyer and
 
 The book contains synthetic evaluator recordings. It may show the complete test result. Highlighting a person helps you follow their actions; it does not log you in as that person or change ledger permissions.
 
-A future live workspace must use the authenticated participant's observations and authority. The Evidence & limits view keeps this requirement visible.
+The live workspace uses each authenticated participant's observations and authority. Buyer and Reviewer do not receive Bank's private financing details.

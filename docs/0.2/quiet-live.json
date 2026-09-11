@@ -1,0 +1,377 @@
+{
+  "scope": "Actual Scala service and Canton ledger; isolated local sandbox",
+  "checks": [
+    "Product does not mount the book",
+    "Product serves the current compiled browser",
+    "live-entry has at most two interactions: participant-link / Enter workspace →",
+    "live-entry fits the viewport",
+    "live-bank has at most two interactions: Approve financing → / Choose the next task →",
+    "live-bank fits the viewport",
+    "The bank observes its private application",
+    "Bank approval committed",
+    "live-buyer-390 has at most two interactions: Continue with this approval → / Choose the next task →",
+    "live-buyer-390 fits the viewport",
+    "Buyer has no private application",
+    "Buyer continuation committed",
+    "live-observer-390 has at most two interactions: Choose the next task →",
+    "live-observer-390 fits the viewport",
+    "Observer receives no eligible ledger action",
+    "live-evidence-390 has at most two interactions: Choose the next task →",
+    "live-evidence-390 fits the viewport",
+    "live-task-choice-390 has at most two interactions: Compose a workflow → / Bring an application →",
+    "live-task-choice-390 fits the viewport",
+    "compose-name-390 has at most two interactions: composition-name / Continue →",
+    "compose-name-390 fits the viewport",
+    "compose-reference-390 has at most two interactions: composition-reference / Continue →",
+    "compose-reference-390 fits the viewport",
+    "compose-count-390 has at most two interactions: composition-count / Continue →",
+    "compose-count-390 fits the viewport",
+    "compose-action-name-0-390 has at most two interactions: composition-step-0 / Continue →",
+    "compose-action-name-0-390 fits the viewport",
+    "compose-role-0-390 has at most two interactions: composition-role-0 / Continue →",
+    "compose-role-0-390 fits the viewport",
+    "compose-actor-0-390 has at most two interactions: Bank / Buyer",
+    "compose-actor-0-390 fits the viewport",
+    "compose-kind-0-390 has at most two interactions: Approve financing / Confirm a review",
+    "compose-kind-0-390 fits the viewport",
+    "compose-integration-390 has at most two interactions: Direct interface / Generated adapter",
+    "compose-integration-390 fits the viewport",
+    "compose-action-name-1-390 has at most two interactions: composition-step-1 / Continue →",
+    "compose-action-name-1-390 fits the viewport",
+    "compose-role-1-390 has at most two interactions: composition-role-1 / Continue →",
+    "compose-role-1-390 fits the viewport",
+    "compose-actor-1-390 has at most two interactions: Bank / Buyer",
+    "compose-actor-1-390 fits the viewport",
+    "compose-kind-1-390 has at most two interactions: Approve financing / Confirm a review",
+    "compose-kind-1-390 fits the viewport",
+    "compose-review-390 has at most two interactions: Review my answers / Propose this workflow →",
+    "compose-review-390 fits the viewport",
+    "Cold URL restores the complete unsubmitted plan",
+    "compose-proposed-390 has at most two interactions: Cancel proposal / Choose the next task →",
+    "compose-proposed-390 fits the viewport",
+    "compose-consent-390 has at most two interactions: Accept this plan / Choose the next task →",
+    "compose-consent-390 fits the viewport",
+    "compose-execute-390 has at most two interactions: Execute approval / Choose the next task →",
+    "compose-execute-390 fits the viewport",
+    "compose-complete-390 has at most two interactions: Choose the next task →",
+    "compose-complete-390 fits the viewport",
+    "Consented composition completes on the ledger",
+    "package-input-390 has at most two interactions: Upload a local DAR / Use a verified source",
+    "package-input-390 fits the viewport",
+    "package-upload-390 has at most two interactions: builder-file / Inspect this DAR →",
+    "package-upload-390 fits the viewport",
+    "Package Back restores the input choice",
+    "package-source-390 has at most two interactions: Retrieve and inspect → / Next source →",
+    "package-source-390 fits the viewport",
+    "package-inspected has at most two interactions: Generate and compile → / Choose another input →",
+    "package-inspected fits the viewport",
+    "package-compiled has at most two interactions: Download the compiled project → / Choose another input →",
+    "package-compiled fits the viewport",
+    "Compiled project download is a nonempty ZIP",
+    "compose-new has at most two interactions: composition-name / Continue →",
+    "compose-new fits the viewport",
+    "live-recovery has at most two interactions: Reconnect",
+    "live-recovery fits the viewport",
+    "Reconnect restores the unfinished page",
+    "No unexpected browser errors"
+  ],
+  "pages": [
+    {
+      "id": "live-entry",
+      "purpose": "Enter with a private participant link.",
+      "next": "Paste the link and enter the workspace.",
+      "labels": [
+        "participant-link",
+        "Enter workspace →"
+      ],
+      "screenshot": "live-entry.png"
+    },
+    {
+      "id": "live-bank",
+      "purpose": "Bank reviews its private case.",
+      "next": "Approve financing, or choose another task.",
+      "labels": [
+        "Approve financing →",
+        "Choose the next task →"
+      ],
+      "screenshot": "live-bank.png"
+    },
+    {
+      "id": "live-buyer-390",
+      "purpose": "Buyer has the signed result and may continue.",
+      "next": "Use the approval; no private bank data is shown.",
+      "labels": [
+        "Continue with this approval →",
+        "Choose the next task →"
+      ],
+      "screenshot": "live-buyer-390.png"
+    },
+    {
+      "id": "live-observer-390",
+      "purpose": "Observer sees shared completion.",
+      "next": "Choose the next task.",
+      "labels": [
+        "Choose the next task →"
+      ],
+      "screenshot": "live-observer-390.png"
+    },
+    {
+      "id": "live-evidence-390",
+      "purpose": "Read actual submissions and transaction identities.",
+      "next": "Return to task selection.",
+      "labels": [
+        "Choose the next task →"
+      ],
+      "screenshot": "live-evidence-390.png"
+    },
+    {
+      "id": "live-task-choice-390",
+      "purpose": "Choose shared work or an application integration.",
+      "next": "Compose a workflow, or bring an application.",
+      "labels": [
+        "Compose a workflow →",
+        "Bring an application →"
+      ],
+      "screenshot": "live-task-choice-390.png"
+    },
+    {
+      "id": "compose-name-390",
+      "purpose": "Give the workflow a readable name.",
+      "next": "Edit the one input, then Continue.",
+      "labels": [
+        "composition-name",
+        "Continue →"
+      ],
+      "screenshot": "compose-name-390.png"
+    },
+    {
+      "id": "compose-reference-390",
+      "purpose": "Give this proposal its own identity.",
+      "next": "Enter one reference, then Continue.",
+      "labels": [
+        "composition-reference",
+        "Continue →"
+      ],
+      "screenshot": "compose-reference-390.png"
+    },
+    {
+      "id": "compose-count-390",
+      "purpose": "Choose the number of actions, from one to four.",
+      "next": "Enter the count, then Continue.",
+      "labels": [
+        "composition-count",
+        "Continue →"
+      ],
+      "screenshot": "compose-count-390.png"
+    },
+    {
+      "id": "compose-action-name-0-390",
+      "purpose": "Name this one action.",
+      "next": "Edit the name, then Continue.",
+      "labels": [
+        "composition-step-0",
+        "Continue →"
+      ],
+      "screenshot": "compose-action-name-0-390.png"
+    },
+    {
+      "id": "compose-role-0-390",
+      "purpose": "Name the responsibility for this action.",
+      "next": "Edit the role, then Continue.",
+      "labels": [
+        "composition-role-0",
+        "Continue →"
+      ],
+      "screenshot": "compose-role-0-390.png"
+    },
+    {
+      "id": "compose-actor-0-390",
+      "purpose": "Assign this action to a participant.",
+      "next": "Choose Bank or Buyer.",
+      "labels": [
+        "Bank",
+        "Buyer"
+      ],
+      "screenshot": "compose-actor-0-390.png"
+    },
+    {
+      "id": "compose-kind-0-390",
+      "purpose": "Choose what this one action does.",
+      "next": "Approve financing or confirm a review.",
+      "labels": [
+        "Approve financing",
+        "Confirm a review"
+      ],
+      "screenshot": "compose-kind-0-390.png"
+    },
+    {
+      "id": "compose-integration-390",
+      "purpose": "Choose the supported application interface.",
+      "next": "Direct interface or generated adapter.",
+      "labels": [
+        "Direct interface",
+        "Generated adapter"
+      ],
+      "screenshot": "compose-integration-390.png"
+    },
+    {
+      "id": "compose-action-name-1-390",
+      "purpose": "Name this one action.",
+      "next": "Edit the name, then Continue.",
+      "labels": [
+        "composition-step-1",
+        "Continue →"
+      ],
+      "screenshot": null
+    },
+    {
+      "id": "compose-role-1-390",
+      "purpose": "Name the responsibility for this action.",
+      "next": "Edit the role, then Continue.",
+      "labels": [
+        "composition-role-1",
+        "Continue →"
+      ],
+      "screenshot": null
+    },
+    {
+      "id": "compose-actor-1-390",
+      "purpose": "Assign this action to a participant.",
+      "next": "Choose Bank or Buyer.",
+      "labels": [
+        "Bank",
+        "Buyer"
+      ],
+      "screenshot": null
+    },
+    {
+      "id": "compose-kind-1-390",
+      "purpose": "Choose what this one action does.",
+      "next": "Approve financing or confirm a review.",
+      "labels": [
+        "Approve financing",
+        "Confirm a review"
+      ],
+      "screenshot": null
+    },
+    {
+      "id": "compose-review-390",
+      "purpose": "Review the complete proposed handoff before consent.",
+      "next": "Review answers or propose the plan.",
+      "labels": [
+        "Review my answers",
+        "Propose this workflow →"
+      ],
+      "screenshot": "compose-review-390.png"
+    },
+    {
+      "id": "compose-proposed-390",
+      "purpose": "Bank waits for consent to the observed draft.",
+      "next": "Cancel this proposal or choose the next task.",
+      "labels": [
+        "Cancel proposal",
+        "Choose the next task →"
+      ],
+      "screenshot": "compose-proposed-390.png"
+    },
+    {
+      "id": "compose-consent-390",
+      "purpose": "Buyer reviews the exact proposed handoff.",
+      "next": "Accept the plan or choose the next task.",
+      "labels": [
+        "Accept this plan",
+        "Choose the next task →"
+      ],
+      "screenshot": "compose-consent-390.png"
+    },
+    {
+      "id": "compose-execute-390",
+      "purpose": "Bank may execute its assigned financing action.",
+      "next": "Execute the action or choose the next task.",
+      "labels": [
+        "Execute approval",
+        "Choose the next task →"
+      ],
+      "screenshot": "compose-execute-390.png"
+    },
+    {
+      "id": "compose-complete-390",
+      "purpose": "Both assigned actions have completed on the ledger.",
+      "next": "Choose the next task.",
+      "labels": [
+        "Choose the next task →"
+      ],
+      "screenshot": "compose-complete-390.png"
+    },
+    {
+      "id": "package-input-390",
+      "purpose": "Choose the application origin.",
+      "next": "Upload a DAR or use a verified source.",
+      "labels": [
+        "Upload a local DAR",
+        "Use a verified source"
+      ],
+      "screenshot": "package-input-390.png"
+    },
+    {
+      "id": "package-upload-390",
+      "purpose": "Supply one compiled application.",
+      "next": "Choose the file, then inspect.",
+      "labels": [
+        "builder-file",
+        "Inspect this DAR →"
+      ],
+      "screenshot": "package-upload-390.png"
+    },
+    {
+      "id": "package-source-390",
+      "purpose": "Review the operator-provisioned local source.",
+      "next": "Retrieve it or read the next source.",
+      "labels": [
+        "Retrieve and inspect →",
+        "Next source →"
+      ],
+      "screenshot": "package-source-390.png"
+    },
+    {
+      "id": "package-inspected",
+      "purpose": "See what the package and reviewed mapping permit.",
+      "next": "Generate and compile, or choose another input.",
+      "labels": [
+        "Generate and compile →",
+        "Choose another input →"
+      ],
+      "screenshot": "package-inspected.png"
+    },
+    {
+      "id": "package-compiled",
+      "purpose": "The compiler produced the mapped integration project.",
+      "next": "Download it or choose another input.",
+      "labels": [
+        "Download the compiled project →",
+        "Choose another input →"
+      ],
+      "screenshot": "package-compiled.png"
+    },
+    {
+      "id": "compose-new",
+      "purpose": "Start a second proposal after the first has finished.",
+      "next": "One name and Continue.",
+      "labels": [
+        "composition-name",
+        "Continue →"
+      ],
+      "screenshot": "compose-new.png"
+    },
+    {
+      "id": "live-recovery",
+      "purpose": "The connection needs attention before further work.",
+      "next": "Reconnect.",
+      "labels": [
+        "Reconnect"
+      ],
+      "screenshot": "live-recovery.png"
+    }
+  ],
+  "errors": []
+}

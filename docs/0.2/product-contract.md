@@ -18,21 +18,22 @@ that same journey before exposing Daml, DAR, or Scala details.
 
 ## Claims and evidence
 
-Statuses describe the fourth-draft baseline. They are assessments of scope, not
-fresh test results or formal milestone acceptance. A quotation does not prove a
-claim. The 0.2 design work does not upgrade any runtime status.
+Statuses describe locally demonstrated scope, including the current live browser
+walkthrough. They are not formal milestone acceptance or independent adoption.
+A quotation does not prove a claim; the current verification reports identify the
+actual commands exercised.
 
-| ID | Product claim | Source | Baseline assessment | Next evidence |
+| ID | Product claim | Source | Current assessment | Next evidence |
 | --- | --- | --- | --- | --- |
 | C01 | On-ledger workflow state and authorized source actions | Proposal 53–74 | Demonstrated in local references | Retain core and source refusal goldens |
 | C02 | Both integration paths share a reusable core | Proposal 13–17, 90–116 | Demonstrated for bounded repository examples | Integrate an independently developed application |
-| C03 | Private domains exchange only the required result | Proposal 133–141 | Demonstrated local financing/offer reference | Replay visibility and wrong-consumer cases in the new chapter |
+| C03 | Private domains exchange only the required result | Proposal 133–141 | Live financing and recorded private-offer reference | Independent-party privacy review |
 | C04 | Four parties coordinate before one eligible atomic transfer | Proposal 120–127 | Demonstrated local reference | Expose the entire reference journey in the live UI |
 | C05 | Supported branches, joins, and continuation are visible | Proposal 37, 63–74; M2–M6 | Core coverage exists; live composer is sequential | Map each supported operation to an actual live view |
-| C06 | Existing DARs can produce usable compiled adapters | Proposal 103–116; M4–M5 | Bounded generator and portable examples | Prove new eligible input without changing core |
+| C06 | Existing DARs can produce usable compiled adapters | Proposal 103–116; M4–M5 | Live supported package inspection and adapter compilation | Prove new eligible input without changing core |
 | C07 | Package Manager and participant DAR sourcing support the journey | Proposal 108–114; M2/M6 | Pinned GitHub and local admin retrieval; proposal interpretation unresolved | Choose and verify the actual provider journey |
 | C08 | Progress can be relied on across independent organizations | Proposal 101, 153, 494 | Publisher/owner trust is explicit; reliance contract unresolved | Threat model and golden demonstrating the agreed guarantee |
-| C09 | The viewer shows applications, state, actors, and executable steps | Proposal 407–420; M6 | Some live views plus broader recorded stories | Complete the supported live journey, including failure states |
+| C09 | The viewer shows applications, state, actors, and executable steps | Proposal 407–420; M6 | Live financing, sequential consented plans, package compilation and recovery | Independent usability review and broader application coverage |
 | C10 | Another team can evaluate adoption | Proposal 410–411, 423 | Guides and templates exist; external evaluation unproven | Actual external evaluator record |
 | C11 | Stable public release and knowledge transfer | Proposal 421, 466–480 | Local release evidence; publication and license undecided | Published release and actual walkthrough/workshop evidence |
 | C12 | Qualified independent adoption | Proposal M7/M8 | Not established by repository evidence | Team-confirmed pilot/production usage |
@@ -43,8 +44,8 @@ claim. The 0.2 design work does not upgrade any runtime status.
   execution, managed hosting, and a generic studio are outside this release.
 - Expose staged and atomic work differently. An animation grouping steps does
   not establish that the ledger committed them atomically.
-- Label generated HTML interactions as a simulation. A role switch in the design
-  is a viewing aid, not login or authorization.
+- Label recorded playback, authored diagrams and live actions distinctly. Live
+  participant identity comes from the provisioned session, never a role selector.
 - The production UI is the browser interface backed by the existing Scala
   service/proxy. It is distinct from the recorded, offline-capable book.
 - Make source quotations complete and discoverable without forcing all proposal

@@ -111,7 +111,7 @@ private final class BrowserSession(
     .handleErrorWith { error =>
       val connection = error match
         case failure: LiveHttpFailure if failure.code == 401 => ConnectionState.SessionRequired
-        case _ => ConnectionState.Disconnected("Disconnected — showing the last observed state")
+        case _ => ConnectionState.Disconnected("Connection lost. Reconnect to resume your task.")
       state.update(_.copy(connection = connection))
     } *> draw
 

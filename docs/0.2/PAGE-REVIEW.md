@@ -110,6 +110,50 @@ Visible interactions: ← Previous passage / Next passage →.
 ![Desktop author](../../design/0.2/quiet-review/author-1280.png)
 ![Mobile author](../../design/0.2/quiet-review/author-390.png)
 
+## author-architecture
+
+Purpose: Read the supplied component drawing beside the implementation.
+
+Expected next action: Previous or next original passage.
+
+Visible interactions: ← Previous passage / Next passage →.
+
+![Desktop author-architecture](../../design/0.2/quiet-review/author-architecture-1280.png)
+![Mobile author-architecture](../../design/0.2/quiet-review/author-architecture-390.png)
+
+## integration-choice
+
+Purpose: Choose a live application integration or continue the book.
+
+Expected next action: Open the package sandbox, or continue to shared workflows.
+
+Visible interactions: Open the package workspace → / Continue to shared workflows →.
+
+![Desktop integration-choice](../../design/0.2/quiet-review/integration-choice-1280.png)
+![Mobile integration-choice](../../design/0.2/quiet-review/integration-choice-390.png)
+
+## workflow-choice
+
+Purpose: Choose a live shared workflow or continue to evidence.
+
+Expected next action: Open the composition sandbox, or continue reading.
+
+Visible interactions: Enter the live sandbox → / Continue to the evidence →.
+
+![Desktop workflow-choice](../../design/0.2/quiet-review/workflow-choice-1280.png)
+![Mobile workflow-choice](../../design/0.2/quiet-review/workflow-choice-390.png)
+
+## recording-choice
+
+Purpose: Choose a detailed recording review or readiness.
+
+Expected next action: All recordings, or chapter eight.
+
+Visible interactions: Walk through the recordings.All 32 examples, one observation at a time.Begin the recorded  / Continue to readiness.Understand the remaining integration and adoption evidence.Continue .
+
+![Desktop recording-choice](../../design/0.2/quiet-review/recording-choice-1280.png)
+![Mobile recording-choice](../../design/0.2/quiet-review/recording-choice-390.png)
+
 ## chapter
 
 Purpose: Explain what Harmonia provides in readable prose.
@@ -149,7 +193,7 @@ Purpose: Explain the separate live application and its participant identity.
 
 Expected next action: Enter the live application when available, or follow the recording; return to Alice.
 
-Visible interactions: Follow the recorded handoff → / Return to Alice’s story →.
+Visible interactions: Follow the recorded handoff → / Continue reading →.
 
 ![Desktop sandbox](../../design/0.2/quiet-review/sandbox-1280.png)
 ![Mobile sandbox](../../design/0.2/quiet-review/sandbox-390.png)

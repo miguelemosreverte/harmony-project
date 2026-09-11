@@ -11,11 +11,12 @@ diagram review, and original-document comparison. The Scala workspace uses the s
 components for live financing, composition, and package stages.
 See the [approved visual contract and verification](docs/0.2/REFERENCE-FIDELITY.md),
 [reference comparison](design/0.2/infographic/reference-review/compare.html), and
-[reader principles and implementation plan](docs/0.2/READER-EXPERIENCE.md).
+[reader principles](docs/0.2/READER-EXPERIENCE.md), and
+[page-by-page walkthrough with screenshots](docs/0.2/WALKTHROUGH.md).
 
 After the [runtime setup](book/setup.md) and initial `scripts/build`, run
 `scripts/start-sandbox`. Open the private `open.html` launcher printed by the command:
-Bank approves, Buyer continues, Reviewer observes. The same server serves the book.
+Bank approves, Buyer continues, Reviewer observes. The command prints separate product and book addresses. The product has no book routes.
 One disposable Canton environment runs at a time; Ctrl-C closes it.
 
 For recorded exploration without a ledger, run `scripts/design-preview` and open

@@ -24,7 +24,10 @@ This nine-chapter book accompanies the working implementation. Chapters link to 
 
 Use the [recorded playback guide](playback.md) to open the browser edition.
 
-The current edition includes interactive playback for recorded stories, chapter navigation, observed progression, contract details, and complete expected/actual differences. Follow the playback guide to export and open a saved run. Each chapter provides direct access to its matching recordings when they are included in the export.
+The current edition has four finite reader paths and at most two interactions per
+page. The file tree is the sole composite control. Recorded observations keep their
+expectations beside them. Read [the page walkthrough](../docs/0.2/WALKTHROUGH.md)
+for the actual chapter and sandbox routes.
 
 ## Book implementation
 

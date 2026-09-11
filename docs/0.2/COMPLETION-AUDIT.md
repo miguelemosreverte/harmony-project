@@ -1,5 +1,8 @@
 # Reader.2 acceptance against the complete request
 
+Historical checkpoint. The current UX supersedes its controls and mounted book
+routes; see [the current walkthrough](WALKTHROUGH.md) and [UX contract](UX.md).
+
 The approved infographic is now shared by the featured stories, the complete recording
 laboratory, live financing, live composition, package stages, and the book's diagrams.
 This audit covers the complete reader request, rather than only the four featured stories.

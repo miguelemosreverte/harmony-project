@@ -22,6 +22,8 @@ def paging(previous, previous_label, following, following_label):
 
 
 def shell(title, body, slug='', prefix='', kind='chapter', stories=None):
+    for mode in ["try","sources","source","evidence"]:
+        body=body.replace(f'data-mode="{mode}"',f'data-mode="{mode}" hidden')
     config=dict(slug=slug,kind=kind,base=prefix or './',journeys=JOURNEYS,chapters=CHAPTERS,stories=list(stories or {}))
     scripts=['recordings.js','run-recordings.js','context.js','../../book/browser/target/scala-3.3.6/harmonia-reader-fastopt/main.js','reader/catalog.js','state.js','reader/common.js','navigation.js','book.js','reader/code.js','reader/reviewer.js','reader/author.js','reader/presentation.js']
     includes=''.join(f'<script defer src="{prefix}{name}"></script>' for name in scripts)
@@ -57,10 +59,12 @@ def chapter(slug,text,passages,corpus,stories):
     ids=list(CHAPTERS);index=ids.index(slug)
     previous=f'{ids[index-1]}.html' if index else '../workflows.html'
     following=f'{ids[index+1]}.html' if index+1<len(ids) else '../book-overview.html'
+    following={'05-bring-an-application':'../application-builder.html','06-compose-a-workflow':'../application.html','07-evidence-and-boundaries':'../recording-choice.html'}.get(slug,following)
+    next_label={'05-bring-an-application':'Try an application integration →','06-compose-a-workflow':'Try the shared workflow →','07-evidence-and-boundaries':'Choose the evidence to follow →'}.get(slug,'Next chapter →' if index+1<len(ids) else 'Return to the reading paths →')
     authored=passive(markdown('\n'.join(text.splitlines()[1:])))
     sources=''.join(passage(p,corpus) for p in passages if p.chapter==slug)
-    controls=paging(previous,'← Previous chapter',following,'Next chapter →' if index+1<len(ids) else 'Return to the reading paths →')
-    body=f'''<main id="main" class="quiet-content"><div class="chapter-heading"><p class="eyebrow">Chapter {slug[:2]}</p><h1>{CHAPTERS[slug]}</h1></div><article id="chapter-read" class="mode-panel prose" data-mode="read"><div data-chapter-diagram="{slug}"></div>{authored}{controls}</article>{story_panel(stories) if stories else ''}<section id="chapter-sources" class="mode-panel prose" data-mode="sources"><h1>The original words</h1>{sources}{controls.replace('id="page-','id="source-page-')}</section><section class="mode-panel prose" data-mode="evidence"><h1>What this chapter establishes</h1><p>Original quotations establish the proposed requirements. Recorded observations establish the behavior of the referenced run. Neither establishes external adoption.</p>{controls.replace('id="page-','id="evidence-page-')}</section></main>'''
+    controls=paging(previous,'← Previous chapter',following,next_label)
+    body=f'''<main id="main" class="quiet-content"><div class="chapter-heading"><p class="eyebrow">Chapter {slug[:2]}</p><h1>{CHAPTERS[slug]}</h1></div><article id="chapter-read" class="mode-panel prose" data-mode="read">{controls}{authored}<div data-chapter-diagram="{slug}"></div></article>{story_panel(stories) if stories else ''}<section id="chapter-sources" class="mode-panel prose" data-mode="sources"><h1>The original words</h1>{sources}{controls.replace('id="page-','id="source-page-')}</section><section class="mode-panel prose" data-mode="evidence"><h1>What this chapter establishes</h1><p>Original quotations establish the proposed requirements. Recorded observations establish the behavior of the referenced run. Neither establishes external adoption.</p>{controls.replace('id="page-','id="evidence-page-')}</section></main>'''
     return shell(CHAPTERS[slug],body,slug,'../',stories=stories)
 
 
@@ -73,8 +77,8 @@ def source_page(name,text,pin):
 
 def coverage(report,claims):
     rows=''.join(f'<tr><td>{d["id"].title()}</td><td>{d["quoted_units"]} / {d["units"]}</td><td>{d["quoted_words"]:,} / {d["words"]:,}</td></tr>' for d in report['documents'])
-    claims=''.join('<tr>'+''.join(f'<td>{escape(c)}</td>' for c in row)+'</tr>' for row in claims)
-    body=f'''<main id="main" class="quiet-content prose"><p class="eyebrow">The end of the document review</p><h1>736 original units preserved.</h1><p class="lead">Every defined source unit has a chapter destination. Quotation coverage is 100%; implementation and adoption remain separate questions.</p><table><thead><tr><th>Original</th><th>Quoted units</th><th>Quoted words</th></tr></thead><tbody>{rows}</tbody></table><h2>How this is counted</h2><p>Nonblank Markdown source lines and visible HTML body text nodes are counted once. The source files are pinned by SHA-256. Rendering a second copy does not increase coverage.</p><h2>What the product has demonstrated</h2><div class="table-scroll"><table><tbody>{claims}</tbody></table></div>{paging('author.html','← Return to the original text','book-overview.html','Finish this reading path →')}</main>'''
+    claims=''.join(f'<article class="coverage-claim"><h3>{escape(row[0])} · {escape(row[1])}</h3><p><strong>Assessment:</strong> {escape(row[3])}</p><p><strong>Next evidence:</strong> {escape(row[4])}</p><p class="citation">Original {escape(row[2])}</p></article>' for row in claims)
+    body=f'''<main id="main" class="quiet-content prose"><p class="eyebrow">The end of the document review</p><h1>736 original units preserved.</h1>{paging('author.html','← Return to the original text','book-overview.html','Finish this reading path →')}<p class="lead">Every defined source unit has a chapter destination. Quotation coverage is 100%; implementation and adoption remain separate questions.</p><table><thead><tr><th>Original</th><th>Quoted units</th><th>Quoted words</th></tr></thead><tbody>{rows}</tbody></table><h2>How this is counted</h2><p>Nonblank Markdown source lines and visible HTML body text nodes are counted once. The source files are pinned by SHA-256. Rendering a second copy does not increase coverage.</p><h2>What the product has demonstrated</h2><div class="coverage-claims">{claims}</div></main>'''
     return shell('Quotation coverage',body,kind='coverage')
 
 
@@ -95,3 +99,7 @@ def outcome(purchase=True):
     choices=[(accepted,'Follow the approval.' if purchase else 'Follow successful settlement.','The observed result allows the handoff to continue.'),(refused,'Follow the refusal.' if purchase else 'Follow a refused final leg.','See the refused action and the state that remains.')]
     cards=''.join(f'<a href="chapters/{chapter}.html?story={story}&step={step}"><h2>{label}</h2><p>{detail}</p><span>Follow this recording →</span></a>' for story,label,detail in choices)
     return shell(title,f'<main id="main" class="quiet-content"><p class="eyebrow">Two preserved outcomes</p><h1>{title}</h1><p class="lead">Choose the recorded result you want to understand. These are observed runs, not decisions submitted to a live ledger.</p><div class="quiet-choices">{cards}</div></main>',kind='outcome')
+
+
+def recording_choice():
+    return shell('Follow the evidence','<main id="main" class="quiet-content"><p class="eyebrow">Evidence review</p><h1>What would you like to inspect?</h1><p class="lead">Each recording keeps its committed expectation beside its observed result. The readiness chapter explains what local evidence leaves open.</p><div class="quiet-choices"><a href="laboratory.html"><h2>Walk through the recordings.</h2><p>All 32 examples, one observation at a time.</p><span>Begin the recorded review →</span></a><a href="chapters/08-release-and-adoption.html"><h2>Continue to readiness.</h2><p>Understand the remaining integration and adoption evidence.</p><span>Continue reading →</span></a></div></main>',kind='evidence-choice')

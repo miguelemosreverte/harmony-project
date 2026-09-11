@@ -15,12 +15,12 @@ Northbank's documents stay in the financing domain. The offer uses the scoped re
 
 ## Start with the successful path
 
-Choose **Try it**, then **Next action**. The recording includes deliberate wrong turns: Alice cannot assess her own financing or forge a proposal, and Sofia cannot receive a proposal before Ben relays it.
+From the opening scene, choose **Follow a recorded outcome**, then **Follow the approval**. The full recording also includes deliberate wrong turns: Alice cannot assess her own financing or forge a proposal, and Sofia cannot receive a proposal before Ben relays it.
 
 By the end, Sofia has received the proposal. This example ends at receipt; it does not claim a completed property sale.
 
 ## Then change one condition
 
-Choose **Financing refused**. Northbank successfully records a negative assessment. Recording that decision is a committed transaction, but it does not authorize a purchase proposal. The later proposal attempt fails and the offer remains waiting.
+On the outcome page, choose **Follow the refusal**. Northbank successfully records a negative assessment. Recording that decision is a committed transaction, but it does not authorize a purchase proposal. The later proposal attempt fails and the offer remains waiting.
 
 The distinction matters: “the request was processed” and “the financing was approved” are different outcomes.

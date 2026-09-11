@@ -4,7 +4,7 @@ Nina works at the bank. Her task is to approve a private financing case. The sce
 
 ## Make a live handoff
 
-[Open the local sandbox](../../../design/0.2/sandbox.html). Its private launcher opens each participant in a separate tab.
+The chapter's next step offers the local sandbox. Its private launcher opens each participant in a separate tab.
 
 1. In **Bank**, inspect the private case and approve financing.
 2. In **Buyer**, wait for the signed approval, then continue.
@@ -14,10 +14,10 @@ The scene changes when the server observes the ledger result. Refreshing recover
 
 ## Compose a workflow
 
-The **Compose** view lets the bank propose a bounded workflow and the buyer consent before execution. The draft stays in place during polling and when switching workspace tabs. Inspect committed operations in **Evidence**; connect an application under **Applications** in the bank session.
+Choose **Choose the next task**, then **Compose a workflow**. Bank answers one question per page and reviews the complete plan before proposing it. Buyer consents before execution. The URL preserves the unfinished plan and current question; polling does not detach the input.
 
 ## When a submission is interrupted
 
-An unresolved request remains pending. Reconnecting reconciles it with the server; retrying reuses the same request identity. A lost connection keeps the last observed state visible. It does not turn uncertainty into success.
+An unresolved request remains pending. Reconnecting reconciles it with the server; retrying reuses the same request identity. A lost connection presents a focused recovery page; reconnecting restores the current task. It does not turn uncertainty into success.
 
 This sandbox covers the existing financing and composition APIs. The full property offer and custody transfer remain recorded stories in their respective chapters.

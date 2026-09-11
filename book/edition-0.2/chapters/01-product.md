@@ -17,6 +17,6 @@ A result can cross that boundary without carrying the buyer's private documents 
 
 ## What is available to explore?
 
-The next chapters include interactive playback of preserved local ledger runs, including refusals. The workspace is a separate design simulation of the future operator experience. The evidence view explains the boundary before you rely on it.
+The next chapters include interactive playback of preserved local ledger runs, including refusals. The separate live workspace supports authenticated financing, consented sequential plans, and package inspection and compilation. The book labels the limits before you rely on them.
 
 You do not need to understand the implementation to follow Alice's story.

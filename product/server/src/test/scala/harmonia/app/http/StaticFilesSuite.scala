@@ -4,7 +4,7 @@ import munit.FunSuite
 import java.nio.file.Files
 
 class StaticFilesSuite extends FunSuite:
-  test("a mounted book serves only regular files inside its real directory") {
+  test("a static directory serves only regular files inside its real directory") {
     val root = Files.createTempDirectory("harmonia-static")
     val outside = Files.createTempFile("harmonia-private", ".txt")
     try

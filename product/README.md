@@ -43,11 +43,8 @@ The separate harness command `scripts/demo live` provisions the demonstrated loc
 
 Public case classes use `JsonCodec` to derive the established snake-case HTTP fields. Special envelopes, such as the flattened workspace response, remain explicit. Composition validation operates on the typed plan and is shared by the editor and HTTP boundary.
 
-The optional configuration field `"book": "path/to/exported-book"` mounts a static
-book at `/book/`. The service imports no book or harness code. The mount rejects
-path traversal and symlinks outside the export.
-
-The live browser keeps only task and appearance in query parameters (`view`,
-`theme`, `text`). A shared URL opens the recipient's own authenticated view of the
+The live browser keeps the task and appearance in query parameters (`view`,
+`theme`, `text`). A composition draft and its current question, selected workflow,
+and selected package input also have durable query addresses. A shared URL opens the recipient's own authenticated view of the
 current ledger; it cannot freeze mutable ledger state. Session capabilities are
 removed from the address after entry and never included in ordinary navigation.

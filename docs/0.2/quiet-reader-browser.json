@@ -21,13 +21,21 @@
     "reviewer at 1280 fits the viewport",
     "author at 1280 has at most two interactions: [\"← Previous passage\",\"Next passage →\"]",
     "author at 1280 fits the viewport",
+    "author-architecture at 1280 has at most two interactions: [\"← Previous passage\",\"Next passage →\"]",
+    "author-architecture at 1280 fits the viewport",
+    "integration-choice at 1280 has at most two interactions: [\"Open the package workspace →\",\"Continue to shared workflows →\"]",
+    "integration-choice at 1280 fits the viewport",
+    "workflow-choice at 1280 has at most two interactions: [\"Enter the live sandbox →\",\"Continue to the evidence →\"]",
+    "workflow-choice at 1280 fits the viewport",
+    "recording-choice at 1280 has at most two interactions: [\"Walk through the recordings.All 32 examples, one observation at a time.Begin the recorded \",\"Continue to readiness.Understand the remaining integration and adoption evidence.Continue \"]",
+    "recording-choice at 1280 fits the viewport",
     "chapter at 1280 has at most two interactions: [\"← Previous chapter\",\"Next chapter →\"]",
     "chapter at 1280 fits the viewport",
     "coverage at 1280 has at most two interactions: [\"← Return to the original text\",\"Finish this reading path →\"]",
     "coverage at 1280 fits the viewport",
     "laboratory at 1280 has at most two interactions: [\"← Previous observation\",\"Next observation →\"]",
     "laboratory at 1280 fits the viewport",
-    "sandbox at 1280 has at most two interactions: [\"Follow the recorded handoff →\",\"Return to Alice’s story →\"]",
+    "sandbox at 1280 has at most two interactions: [\"Follow the recorded handoff →\",\"Continue reading →\"]",
     "sandbox at 1280 fits the viewport",
     "welcome at 390 has at most two interactions: [\"I want to understand it.Follow the product, or explore its code.Begin →\",\"I want to verify it.Review the implementation, or trace the original proposal.Begin →\"]",
     "welcome at 390 fits the viewport",
@@ -49,13 +57,21 @@
     "reviewer at 390 fits the viewport",
     "author at 390 has at most two interactions: [\"← Previous passage\",\"Next passage →\"]",
     "author at 390 fits the viewport",
+    "author-architecture at 390 has at most two interactions: [\"← Previous passage\",\"Next passage →\"]",
+    "author-architecture at 390 fits the viewport",
+    "integration-choice at 390 has at most two interactions: [\"Open the package workspace →\",\"Continue to shared workflows →\"]",
+    "integration-choice at 390 fits the viewport",
+    "workflow-choice at 390 has at most two interactions: [\"Enter the live sandbox →\",\"Continue to the evidence →\"]",
+    "workflow-choice at 390 fits the viewport",
+    "recording-choice at 390 has at most two interactions: [\"Walk through the recordings.All 32 examples, one observation at a time.Begin the recorded \",\"Continue to readiness.Understand the remaining integration and adoption evidence.Continue \"]",
+    "recording-choice at 390 fits the viewport",
     "chapter at 390 has at most two interactions: [\"← Previous chapter\",\"Next chapter →\"]",
     "chapter at 390 fits the viewport",
     "coverage at 390 has at most two interactions: [\"← Return to the original text\",\"Finish this reading path →\"]",
     "coverage at 390 fits the viewport",
     "laboratory at 390 has at most two interactions: [\"← Previous observation\",\"Next observation →\"]",
     "laboratory at 390 fits the viewport",
-    "sandbox at 390 has at most two interactions: [\"Follow the recorded handoff →\",\"Return to Alice’s story →\"]",
+    "sandbox at 390 has at most two interactions: [\"Follow the recorded handoff →\",\"Continue reading →\"]",
     "sandbox at 390 fits the viewport",
     "No browser exceptions or failed assets"
   ],
@@ -211,6 +227,66 @@
       "screenshot": "author-1280.png"
     },
     {
+      "id": "author-architecture",
+      "width": 1280,
+      "page": "author.html?passage=architecture-88",
+      "purpose": "Read the supplied component drawing beside the implementation.",
+      "next": "Previous or next original passage.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "← Previous passage",
+          "Next passage →"
+        ]
+      },
+      "screenshot": "author-architecture-1280.png"
+    },
+    {
+      "id": "integration-choice",
+      "width": 1280,
+      "page": "application-builder.html",
+      "purpose": "Choose a live application integration or continue the book.",
+      "next": "Open the package sandbox, or continue to shared workflows.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "Open the package workspace →",
+          "Continue to shared workflows →"
+        ]
+      },
+      "screenshot": "integration-choice-1280.png"
+    },
+    {
+      "id": "workflow-choice",
+      "width": 1280,
+      "page": "application.html",
+      "purpose": "Choose a live shared workflow or continue to evidence.",
+      "next": "Open the composition sandbox, or continue reading.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "Enter the live sandbox →",
+          "Continue to the evidence →"
+        ]
+      },
+      "screenshot": "workflow-choice-1280.png"
+    },
+    {
+      "id": "recording-choice",
+      "width": 1280,
+      "page": "recording-choice.html",
+      "purpose": "Choose a detailed recording review or readiness.",
+      "next": "All recordings, or chapter eight.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "Walk through the recordings.All 32 examples, one observation at a time.Begin the recorded ",
+          "Continue to readiness.Understand the remaining integration and adoption evidence.Continue "
+        ]
+      },
+      "screenshot": "recording-choice-1280.png"
+    },
+    {
       "id": "chapter",
       "width": 1280,
       "page": "chapters/01-product.html",
@@ -265,7 +341,7 @@
         "count": 2,
         "labels": [
           "Follow the recorded handoff →",
-          "Return to Alice’s story →"
+          "Continue reading →"
         ]
       },
       "screenshot": "sandbox-1280.png"
@@ -421,6 +497,66 @@
       "screenshot": "author-390.png"
     },
     {
+      "id": "author-architecture",
+      "width": 390,
+      "page": "author.html?passage=architecture-88",
+      "purpose": "Read the supplied component drawing beside the implementation.",
+      "next": "Previous or next original passage.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "← Previous passage",
+          "Next passage →"
+        ]
+      },
+      "screenshot": "author-architecture-390.png"
+    },
+    {
+      "id": "integration-choice",
+      "width": 390,
+      "page": "application-builder.html",
+      "purpose": "Choose a live application integration or continue the book.",
+      "next": "Open the package sandbox, or continue to shared workflows.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "Open the package workspace →",
+          "Continue to shared workflows →"
+        ]
+      },
+      "screenshot": "integration-choice-390.png"
+    },
+    {
+      "id": "workflow-choice",
+      "width": 390,
+      "page": "application.html",
+      "purpose": "Choose a live shared workflow or continue to evidence.",
+      "next": "Open the composition sandbox, or continue reading.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "Enter the live sandbox →",
+          "Continue to the evidence →"
+        ]
+      },
+      "screenshot": "workflow-choice-390.png"
+    },
+    {
+      "id": "recording-choice",
+      "width": 390,
+      "page": "recording-choice.html",
+      "purpose": "Choose a detailed recording review or readiness.",
+      "next": "All recordings, or chapter eight.",
+      "interactions": {
+        "count": 2,
+        "labels": [
+          "Walk through the recordings.All 32 examples, one observation at a time.Begin the recorded ",
+          "Continue to readiness.Understand the remaining integration and adoption evidence.Continue "
+        ]
+      },
+      "screenshot": "recording-choice-390.png"
+    },
+    {
       "id": "chapter",
       "width": 390,
       "page": "chapters/01-product.html",
@@ -475,7 +611,7 @@
         "count": 2,
         "labels": [
           "Follow the recorded handoff →",
-          "Return to Alice’s story →"
+          "Continue reading →"
         ]
       },
       "screenshot": "sandbox-390.png"

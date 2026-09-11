@@ -1,0 +1,15 @@
+{
+  "checks": [
+    "Export playback interaction budget at 1280",
+    "Export playback fits at 1280",
+    "Exported Next advances one observation at 1280",
+    "Export playback interaction budget at 390",
+    "Export playback fits at 390",
+    "Exported Next advances one observation at 390",
+    "Offline prose remains visible without JavaScript",
+    "Offline prose has only two interactions",
+    "Print layout fits an A4 content width",
+    "No exported browser errors"
+  ],
+  "errors": []
+}

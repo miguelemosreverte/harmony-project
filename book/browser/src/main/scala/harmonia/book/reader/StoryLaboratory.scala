@@ -72,6 +72,7 @@ final class StoryLaboratory(
           else "The recording differs from the expectation."
       )
     )
+    main.insertBefore(paging, graph)
     val unit = story.units(state.step)
     append(
       main,

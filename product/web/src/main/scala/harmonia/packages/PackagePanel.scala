@@ -193,6 +193,7 @@ final class PackagePanel(capability: String, dispatcher: Dispatcher[IO]):
                 element("h1", text = value.matchedSource.getOrElse("Inspected application")),
                 element("p", text = value.diagnostic)
               )
+              val actions = element("nav", "package-actions"); append(root, actions)
               val canvas = element("div"); append(root, canvas)
               val renderer = new WorkflowDiagramView(canvas); diagram = Some(renderer)
               val nodes = Vector(
@@ -222,8 +223,8 @@ final class PackagePanel(capability: String, dispatcher: Dispatcher[IO]):
                 ),
                 DiagramNode(
                   "register",
-                  "Register and evaluate",
-                  "Separate typed registration and fresh evaluation",
+                  "Check live availability",
+                  "This sandbox already registers supported actions independently of this download",
                   "Live workspace",
                   if value.availableLive then DiagramState.Complete else DiagramState.Pending
                 )
@@ -233,13 +234,13 @@ final class PackagePanel(capability: String, dispatcher: Dispatcher[IO]):
                   "From application identity to usable integration.",
                   "Compilation and live availability are separate observed facts.",
                   nodes,
-                  nodes
-                    .zip(nodes.drop(1))
-                    .map((a, b) =>
+                  Vector(("input", "mapping"), ("mapping", "compile"), ("mapping", "register"))
+                    .map((from, to) =>
                       DiagramEdge(
-                        a.id,
-                        b.id,
-                        if b.state == DiagramState.Complete then DiagramState.Complete
+                        from,
+                        to,
+                        if nodes.find(_.id == to).exists(_.state == DiagramState.Complete) then
+                          DiagramState.Complete
                         else DiagramState.Pending
                       )
                     )
@@ -247,14 +248,14 @@ final class PackagePanel(capability: String, dispatcher: Dispatcher[IO]):
               )
               if value.compiled then
                 append(
-                  root,
+                  actions,
                   button("Download the compiled project →", "primary", "builder-download-" + id)(
                     download(id)
                   )
                 )
               else if value.canGenerate then
                 append(
-                  root,
+                  actions,
                   button("Generate and compile →", "primary", "builder-generate-" + id) {
                     run(
                       "Generating and compiling the reviewed mapping",
@@ -268,8 +269,11 @@ final class PackagePanel(capability: String, dispatcher: Dispatcher[IO]):
                   }
                 )
               append(
+                actions,
+                button("Choose another input →", "secondary", "builder-another")(go(Page.Input))
+              )
+              append(
                 root,
-                button("Choose another input →", "secondary", "builder-another")(go(Page.Input)),
                 element(
                   "p",
                   "live-footnote",
