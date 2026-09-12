@@ -1,22 +1,5 @@
 # What Harmonia provides
 
-Imagine that a bank has approved a buyer's financing. A separate property application needs that decision before it can accept a proposal. Neither application should have to take over the other's business rules.
+Alice needs financing before making an offer. Northbank decides privately; the property application receives a result scoped to Alice’s next action. Neither application gives up its own rules.
 
-Harmonia gives those applications a shared way to **authorize a step, record its result, and enable the next participant's work**.
-
-## What changes for the people using it?
-
-The bank keeps the financing decision. The property application keeps the offer rules. The people involved can follow the shared process and see whose action comes next.
-
-A result can cross that boundary without carrying the buyer's private documents with it. The receiving application still decides whether the result authorizes its next action.
-
-## Two examples make this concrete
-
-- **A home purchase:** Alice's financing assessment enables a proposal that Ben relays to Sofia. Follow the people and the limits on what each may do.
-- **A transfer:** a buyer, seller, and two custodians prepare independently. One final transaction either completes the eligible transfer or leaves those preparations in place.
-
-## What is available to explore?
-
-The next chapters include interactive playback of preserved local ledger runs, including refusals. The separate live workspace supports authenticated financing, consented sequential plans, and package inspection and compilation. The book labels the limits before you rely on them.
-
-You do not need to understand the implementation to follow Alice's story.
+The live workspace demonstrates financing and consented sequential plans. The full property purchase and four-party transfer are preserved ledger recordings.

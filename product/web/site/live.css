@@ -112,3 +112,18 @@ body {background:radial-gradient(ellipse at center,#f7f8fa 30%,#dfe2e6 100%);}
 .composition-editor .workflow-title{display:none}.composition-record>h3{font-size:1.5rem;letter-spacing:-.025em}.composition-step-detail>strong{font-size:.9rem}.composition-step-detail p{font-size:.85rem}.composition-record{margin-bottom:20px}
 
 .package-actions{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0}.package-actions button{max-width:100%}
+
+/* Stable action edges. Ledger polling must not move the user's next action. */
+:root{--action-left:max(22px,calc((100vw - 1022px)/2));--action-width:min(300px,calc(50vw - 34px))}
+html{scrollbar-gutter:stable}body{padding-bottom:106px}.live-main{min-height:calc(100dvh - 182px)}
+.financing-action>button,.live-destination>a,.composition-editor>button,.composition-record>button,#composition-observations>a,#package-builder>button,.package-actions>button,.package-actions>a{position:fixed;z-index:20;bottom:max(18px,env(safe-area-inset-bottom));width:var(--action-width);height:58px;margin:0;padding:8px 12px;display:grid;place-items:center;font-size:.88rem;line-height:1.3;text-align:center;box-shadow:0 3px 15px #162b4118;background:var(--surface);border:1px solid var(--line);border-radius:12px;text-decoration:none}
+.financing-action>button,.composition-record>button,#composition-next,#composition-second,#composition-propose{right:var(--action-left);left:auto}
+.live-destination>a,#composition-first,#composition-edit,#composition-observations>a,#package-builder>button,.package-actions>:first-child{left:var(--action-left);right:auto}
+.live-destination>a+a,#package-builder>button+button,.package-actions>:last-child{right:var(--action-left);left:auto}
+.financing-action>button,button.primary{background:#275ee3;color:white;border-color:#275ee3}
+.composition-editor h1{min-height:2.5em}.composition-editor>input{min-height:56px}#builder-status{min-height:24px}.live-destination{min-height:44px}.financing-action{min-height:0;margin:0}.live-main .scene-caption{min-height:76px}.live-main .private-case{margin-top:14px}.composition-step-details{font-size:.8rem}
+@media(max-width:700px){:root{--action-left:16px;--action-width:calc(50vw - 24px)}html{scrollbar-gutter:auto}.live-main{min-height:calc(100dvh - 106px)}}
+@media print{body{padding-bottom:0}.live-main{min-height:0}.live-destination,.composition-editor>button,.composition-record>button,#composition-observations>a,.package-actions{display:none}}
+.live-main:has(#financing)::after{content:'';position:fixed;z-index:19;pointer-events:none;left:0;right:0;bottom:0;height:92px;background:var(--surface);border-top:1px solid var(--line)}.composition-record .workflow-title{display:none}.composition-status{font-size:.8rem;color:var(--muted)}
+@media print{.live-main:has(#financing)::after{display:none}}
+#live-refresh,#live-retry{position:fixed;z-index:20;right:var(--action-left);bottom:max(18px,env(safe-area-inset-bottom));width:var(--action-width);height:58px;margin:0;background:var(--surface)}

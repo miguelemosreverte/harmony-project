@@ -11,6 +11,14 @@ final class ConnectionLayer(root: dom.HTMLElement):
   svg.setAttribute("aria-hidden", "true")
   root.appendChild(svg)
   private var arrows = Vector.empty[Arrow]
+  private val paths = scala.collection.mutable.Map.empty[String, dom.Element]
+  private def pathFor(id: String): dom.Element = paths.getOrElseUpdate(
+    id, {
+      val path = dom.document.createElementNS(namespace, "path")
+      svg.appendChild(path)
+      path
+    }
+  )
   private val observer = new dom.ResizeObserver((_, _) => draw())
   observer.observe(root)
 
@@ -25,10 +33,10 @@ final class ConnectionLayer(root: dom.HTMLElement):
 
   def render(value: Vector[Arrow]): Unit =
     arrows = value
-    dom.window.requestAnimationFrame(_ => draw())
+    draw()
 
   private def draw(): Unit =
-    svg.textContent = ""
+    val visible = scala.collection.mutable.Set.empty[String]
     val bounds = root.getBoundingClientRect()
     svg.setAttribute("viewBox", s"0 0 ${bounds.width} ${bounds.height}")
     arrows.foreach { arrow =>
@@ -67,7 +75,8 @@ final class ConnectionLayer(root: dom.HTMLElement):
         val lane = math.min(bounds.width - 4, math.max(a.right, b.right) - bounds.left + 18)
         val endX = if detour then b.right - bounds.left + 8 else x2
         val endY = if detour then b.top - bounds.top + b.height / 2 else y2
-        val path = dom.document.createElementNS(namespace, "path")
+        val path = pathFor(arrow.id)
+        visible += arrow.id
         val shape =
           if skipColumn then
             s"M$x1 $y1 H${a.right - bounds.left + 18} V$topLane H${b.left - bounds.left - 18} V$y2 H$x2"
@@ -78,9 +87,9 @@ final class ConnectionLayer(root: dom.HTMLElement):
         path.setAttribute("d", shape)
         path.setAttribute("data-edge", arrow.id)
         path.setAttribute("data-status", arrow.status.toString.toLowerCase)
-        svg.appendChild(path)
         if arrow.head then
-          val head = dom.document.createElementNS(namespace, "path")
+          val head = pathFor(arrow.id + ":head")
+          visible += arrow.id + ":head"
           head.setAttribute(
             "d",
             if detour then s"M${endX + 6} ${endY - 5} L$endX $endY L${endX + 6} ${endY + 5}"
@@ -90,7 +99,10 @@ final class ConnectionLayer(root: dom.HTMLElement):
           head.setAttribute("class", "connector-head")
           head.setAttribute("data-edge", arrow.id)
           head.setAttribute("data-status", arrow.status.toString.toLowerCase)
-          svg.appendChild(head)
+    }
+
+    paths.keys.filterNot(visible).toVector.foreach { id =>
+      paths.remove(id).foreach(path => path.parentNode.removeChild(path))
     }
 
 object ConnectionLayer:

@@ -9,6 +9,8 @@ final class FinancingPanel:
   val root = element("section", "financing-scene")
   private val scene = new SceneView(root)
   private val actionArea = element("div", "financing-action")
+  private var previousAction = Vector.empty[FinancingAction]
+  private var control = Vector.empty[dom.html.Button]
   private val details = element("section", "private-case")
   private val detailBody = element("div")
   private val status = element("p", "visually-hidden"); status.id = "live-workflow"
@@ -18,18 +20,20 @@ final class FinancingPanel:
   def render(state: FinancingState, blocked: Boolean, submit: FinancingAction => Unit): Unit =
     scene.render(FinancingScene(state))
     status.textContent = s"Workflow: ${state.workflow.wire}"
-    actionArea.textContent = ""
-    state.eligible.foreach { action =>
-      val label = action match
-        case FinancingAction.Approve  => "Approve financing →"
-        case FinancingAction.Continue => "Continue with this approval →"
-      val control = button(
-        if blocked then "Waiting for confirmation…" else label,
-        "primary",
-        "live-" + action.wire
-      )(submit(action))
-      control.disabled = blocked
-      append(actionArea, control)
+    if state.eligible != previousAction then
+      previousAction = state.eligible
+      actionArea.textContent = ""
+      control = state.eligible.map { action =>
+        val label = action match
+          case FinancingAction.Approve  => "Approve financing →"
+          case FinancingAction.Continue => "Continue with this approval →"
+        val next = button(label, "primary", "live-" + action.wire)(submit(action))
+        append(actionArea, next)
+        next
+      }
+    control.foreach { button =>
+      button.disabled = blocked
+      button.setAttribute("aria-busy", blocked.toString)
     }
     hide(details, state.application.isEmpty)
     detailBody.textContent = ""

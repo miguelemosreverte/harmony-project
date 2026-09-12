@@ -9,33 +9,33 @@
     "verify at 1280 fits the viewport",
     "product at 1280 has at most two interactions: [\"Follow Alice’s purchase.See the people, applications and handoffs in a recorded ledger exe\",\"Understand the mechanism.Daml contracts, Canton participants, and the boundary of the impl\"]",
     "product at 1280 fits the viewport",
-    "purchase at 1280 has at most two interactions: [\"← Recorded outcomes\",\"Next scene →\"]",
+    "purchase at 1280 has at most two interactions: [\"‹\",\"›\"]",
     "purchase at 1280 fits the viewport",
-    "outcomes at 1280 has at most two interactions: [\"Follow the approval.The observed result allows the handoff to continue.Follow this recordi\",\"Follow the refusal.See the refused action and the state that remains.Follow this recording\"]",
+    "outcomes at 1280 has at most two interactions: [\"✓→▤Follow the approval.The observed result allows the handoff to continue.Follow this reco\",\"–→▤Follow the refusal.See the refused action and the state that remains.Follow this record\"]",
     "outcomes at 1280 fits the viewport",
-    "transfer at 1280 has at most two interactions: [\"← Previous scene\",\"Next scene →\"]",
+    "transfer at 1280 has at most two interactions: [\"‹\",\"›\"]",
     "transfer at 1280 fits the viewport",
     "developer at 1280 has at most two interactions: [\"Return to the reading paths →\",\"Repository file tree\"]",
     "developer at 1280 fits the viewport",
-    "reviewer at 1280 has at most two interactions: [\"← Choose a reading path\",\"Next relationship →\"]",
+    "reviewer at 1280 has at most two interactions: [\"‹\",\"›\"]",
     "reviewer at 1280 fits the viewport",
-    "author at 1280 has at most two interactions: [\"← Previous passage\",\"Next passage →\"]",
+    "author at 1280 has at most two interactions: [\"‹\",\"›\"]",
     "author at 1280 fits the viewport",
-    "author-architecture at 1280 has at most two interactions: [\"← Previous passage\",\"Next passage →\"]",
+    "author-architecture at 1280 has at most two interactions: [\"‹\",\"›\"]",
     "author-architecture at 1280 fits the viewport",
-    "integration-choice at 1280 has at most two interactions: [\"Open the package workspace →\",\"Continue to shared workflows →\"]",
+    "integration-choice at 1280 has at most two interactions: [\"Try the package workspaceInspect a DAR and compile an adapter.Explore →\",\"Continue the storySee how participants agree on their next tasks.Continue →\"]",
     "integration-choice at 1280 fits the viewport",
-    "workflow-choice at 1280 has at most two interactions: [\"Enter the live sandbox →\",\"Continue to the evidence →\"]",
+    "workflow-choice at 1280 has at most two interactions: [\"Try the shared workflowSubmit a plan, consent, then execute.Explore →\",\"Follow the evidenceCompare recorded outcomes with their expectations.Continue →\"]",
     "workflow-choice at 1280 fits the viewport",
     "recording-choice at 1280 has at most two interactions: [\"Walk through the recordings.All 32 examples, one observation at a time.Begin the recorded \",\"Continue to readiness.Understand the remaining integration and adoption evidence.Continue \"]",
     "recording-choice at 1280 fits the viewport",
-    "chapter at 1280 has at most two interactions: [\"← Previous chapter\",\"Next chapter →\"]",
+    "chapter at 1280 has at most two interactions: [\"‹\",\"›\"]",
     "chapter at 1280 fits the viewport",
-    "coverage at 1280 has at most two interactions: [\"← Return to the original text\",\"Finish this reading path →\"]",
+    "coverage at 1280 has at most two interactions: [\"‹\",\"›\"]",
     "coverage at 1280 fits the viewport",
-    "laboratory at 1280 has at most two interactions: [\"← Previous observation\",\"Next observation →\"]",
+    "laboratory at 1280 has at most two interactions: [\"‹\",\"›\"]",
     "laboratory at 1280 fits the viewport",
-    "sandbox at 1280 has at most two interactions: [\"Follow the recorded handoff →\",\"Continue reading →\"]",
+    "sandbox at 1280 has at most two interactions: [\"‹\",\"›\"]",
     "sandbox at 1280 fits the viewport",
     "welcome at 390 has at most two interactions: [\"I want to understand it.Follow the product, or explore its code.Begin →\",\"I want to verify it.Review the implementation, or trace the original proposal.Begin →\"]",
     "welcome at 390 fits the viewport",
@@ -45,33 +45,33 @@
     "verify at 390 fits the viewport",
     "product at 390 has at most two interactions: [\"Follow Alice’s purchase.See the people, applications and handoffs in a recorded ledger exe\",\"Understand the mechanism.Daml contracts, Canton participants, and the boundary of the impl\"]",
     "product at 390 fits the viewport",
-    "purchase at 390 has at most two interactions: [\"← Recorded outcomes\",\"Next scene →\"]",
+    "purchase at 390 has at most two interactions: [\"‹\",\"›\"]",
     "purchase at 390 fits the viewport",
-    "outcomes at 390 has at most two interactions: [\"Follow the approval.The observed result allows the handoff to continue.Follow this recordi\",\"Follow the refusal.See the refused action and the state that remains.Follow this recording\"]",
+    "outcomes at 390 has at most two interactions: [\"✓→▤Follow the approval.The observed result allows the handoff to continue.Follow this reco\",\"–→▤Follow the refusal.See the refused action and the state that remains.Follow this record\"]",
     "outcomes at 390 fits the viewport",
-    "transfer at 390 has at most two interactions: [\"← Previous scene\",\"Next scene →\"]",
+    "transfer at 390 has at most two interactions: [\"‹\",\"›\"]",
     "transfer at 390 fits the viewport",
     "developer at 390 has at most two interactions: [\"Return to the reading paths →\",\"Repository file tree\"]",
     "developer at 390 fits the viewport",
-    "reviewer at 390 has at most two interactions: [\"← Choose a reading path\",\"Next relationship →\"]",
+    "reviewer at 390 has at most two interactions: [\"‹\",\"›\"]",
     "reviewer at 390 fits the viewport",
-    "author at 390 has at most two interactions: [\"← Previous passage\",\"Next passage →\"]",
+    "author at 390 has at most two interactions: [\"‹\",\"›\"]",
     "author at 390 fits the viewport",
-    "author-architecture at 390 has at most two interactions: [\"← Previous passage\",\"Next passage →\"]",
+    "author-architecture at 390 has at most two interactions: [\"‹\",\"›\"]",
     "author-architecture at 390 fits the viewport",
-    "integration-choice at 390 has at most two interactions: [\"Open the package workspace →\",\"Continue to shared workflows →\"]",
+    "integration-choice at 390 has at most two interactions: [\"Try the package workspaceInspect a DAR and compile an adapter.Explore →\",\"Continue the storySee how participants agree on their next tasks.Continue →\"]",
     "integration-choice at 390 fits the viewport",
-    "workflow-choice at 390 has at most two interactions: [\"Enter the live sandbox →\",\"Continue to the evidence →\"]",
+    "workflow-choice at 390 has at most two interactions: [\"Try the shared workflowSubmit a plan, consent, then execute.Explore →\",\"Follow the evidenceCompare recorded outcomes with their expectations.Continue →\"]",
     "workflow-choice at 390 fits the viewport",
     "recording-choice at 390 has at most two interactions: [\"Walk through the recordings.All 32 examples, one observation at a time.Begin the recorded \",\"Continue to readiness.Understand the remaining integration and adoption evidence.Continue \"]",
     "recording-choice at 390 fits the viewport",
-    "chapter at 390 has at most two interactions: [\"← Previous chapter\",\"Next chapter →\"]",
+    "chapter at 390 has at most two interactions: [\"‹\",\"›\"]",
     "chapter at 390 fits the viewport",
-    "coverage at 390 has at most two interactions: [\"← Return to the original text\",\"Finish this reading path →\"]",
+    "coverage at 390 has at most two interactions: [\"‹\",\"›\"]",
     "coverage at 390 fits the viewport",
-    "laboratory at 390 has at most two interactions: [\"← Previous observation\",\"Next observation →\"]",
+    "laboratory at 390 has at most two interactions: [\"‹\",\"›\"]",
     "laboratory at 390 fits the viewport",
-    "sandbox at 390 has at most two interactions: [\"Follow the recorded handoff →\",\"Continue reading →\"]",
+    "sandbox at 390 has at most two interactions: [\"‹\",\"›\"]",
     "sandbox at 390 fits the viewport",
     "No browser exceptions or failed assets"
   ],
@@ -145,8 +145,8 @@
       "interactions": {
         "count": 2,
         "labels": [
-          "← Recorded outcomes",
-          "Next scene →"
+          "‹",
+          "›"
         ]
       },
       "screenshot": "purchase-1280.png"
@@ -160,8 +160,8 @@
       "interactions": {
         "count": 2,
         "labels": [
-          "Follow the approval.The observed result allows the handoff to continue.Follow this recordi",
-          "Follow the refusal.See the refused action and the state that remains.Follow this recording"
+          "✓→▤Follow the approval.The observed result allows the handoff to continue.Follow this reco",
+          "–→▤Follow the refusal.See the refused action and the state that remains.Follow this record"
         ]
       },
       "screenshot": "outcomes-1280.png"
@@ -175,8 +175,8 @@
       "interactions": {
         "count": 2,
         "labels": [
-          "← Previous scene",
-          "Next scene →"
+          "‹",
+          "›"
         ]
       },
       "screenshot": "transfer-1280.png"
@@ -205,8 +205,8 @@
       "interactions": {
         "count": 2,
         "labels": [
-          "← Choose a reading path",
-          "Next relationship →"
+          "‹",
+          "›"
         ]
       },
       "screenshot": "reviewer-1280.png"
@@ -220,8 +220,8 @@
       "interactions": {
         "count": 2,
         "labels": [
-          "← Previous passage",
-          "Next passage →"
+          "‹",
+          "›"
         ]
       },
       "screenshot": "author-1280.png"
@@ -230,13 +230,13 @@
       "id": "author-architecture",
       "width": 1280,
       "page": "author.html?passage=architecture-88",
-      "purpose": "Read the supplied component drawing beside the implementation.",
+      "purpose": "Read the original architecture words beside a redrawn infographic.",
       "next": "Previous or next original passage.",
       "interactions": {
         "count": 2,
         "labels": [
-          "← Previous passage",
-          "Next passage →"
+          "‹",
+          "›"
         ]
       },
       "screenshot": "author-architecture-1280.png"
@@ -250,8 +250,8 @@
       "interactions": {
         "count": 2,
         "labels": [
-          "Open the package workspace →",
-          "Continue to shared workflows →"
+          "Try the package workspaceInspect a DAR and compile an adapter.Explore →",
+          "Continue the storySee how participants agree on their next tasks.Continue →"
         ]
       },
       "screenshot": "integration-choice-1280.png"
@@ -265,8 +265,8 @@
       "interactions": {
         "count": 2,
         "labels": [
-          "Enter the live sandbox →",
-          "Continue to the evidence →"
+          "Try the shared workflowSubmit a plan, consent, then execute.Explore →",
+          "Follow the evidenceCompare recorded outcomes with their expectations.Continue →"
         ]
       },
       "screenshot": "workflow-choice-1280.png"
@@ -290,13 +290,13 @@
       "id": "chapter",
       "width": 1280,
       "page": "chapters/01-product.html",
-      "purpose": "Explain what Harmonia provides in readable prose.",
+      "purpose": "Explain what Harmonia provides through the application handoff.",
       "next": "Previous or next chapter.",
       "interactions": {
         "count": 2,
         "labels": [
-          "← Previous chapter",
-          "Next chapter →"
+          "‹",
+          "›"
         ]
       },
       "screenshot": "chapter-1280.png"
@@ -310,8 +310,8 @@
       "interactions": {
         "count": 2,
         "labels": [
-          "← Return to the original text",
-          "Finish this reading path →"
+          "‹",
+          "›"
         ]
       },
       "screenshot": "coverage-1280.png"
@@ -325,8 +325,8 @@
       "interactions": {
         "count": 2,
         "labels": [
-          "← Previous observation",
-          "Next observation →"
+          "‹",
+          "›"
         ]
       },
       "screenshot": "laboratory-1280.png"
@@ -340,8 +340,8 @@
       "interactions": {
         "count": 2,
         "labels": [
-          "Follow the recorded handoff →",
-          "Continue reading →"
+          "‹",
+          "›"
         ]
       },
       "screenshot": "sandbox-1280.png"
@@ -415,8 +415,8 @@
       "interactions": {
         "count": 2,
         "labels": [
-          "← Recorded outcomes",
-          "Next scene →"
+          "‹",
+          "›"
         ]
       },
       "screenshot": "purchase-390.png"
@@ -430,8 +430,8 @@
       "interactions": {
         "count": 2,
         "labels": [
-          "Follow the approval.The observed result allows the handoff to continue.Follow this recordi",
-          "Follow the refusal.See the refused action and the state that remains.Follow this recording"
+          "✓→▤Follow the approval.The observed result allows the handoff to continue.Follow this reco",
+          "–→▤Follow the refusal.See the refused action and the state that remains.Follow this record"
         ]
       },
       "screenshot": "outcomes-390.png"
@@ -445,8 +445,8 @@
       "interactions": {
         "count": 2,
         "labels": [
-          "← Previous scene",
-          "Next scene →"
+          "‹",
+          "›"
         ]
       },
       "screenshot": "transfer-390.png"
@@ -475,8 +475,8 @@
       "interactions": {
         "count": 2,
         "labels": [
-          "← Choose a reading path",
-          "Next relationship →"
+          "‹",
+          "›"
         ]
       },
       "screenshot": "reviewer-390.png"
@@ -490,8 +490,8 @@
       "interactions": {
         "count": 2,
         "labels": [
-          "← Previous passage",
-          "Next passage →"
+          "‹",
+          "›"
         ]
       },
       "screenshot": "author-390.png"
@@ -500,13 +500,13 @@
       "id": "author-architecture",
       "width": 390,
       "page": "author.html?passage=architecture-88",
-      "purpose": "Read the supplied component drawing beside the implementation.",
+      "purpose": "Read the original architecture words beside a redrawn infographic.",
       "next": "Previous or next original passage.",
       "interactions": {
         "count": 2,
         "labels": [
-          "← Previous passage",
-          "Next passage →"
+          "‹",
+          "›"
         ]
       },
       "screenshot": "author-architecture-390.png"
@@ -520,8 +520,8 @@
       "interactions": {
         "count": 2,
         "labels": [
-          "Open the package workspace →",
-          "Continue to shared workflows →"
+          "Try the package workspaceInspect a DAR and compile an adapter.Explore →",
+          "Continue the storySee how participants agree on their next tasks.Continue →"
         ]
       },
       "screenshot": "integration-choice-390.png"
@@ -535,8 +535,8 @@
       "interactions": {
         "count": 2,
         "labels": [
-          "Enter the live sandbox →",
-          "Continue to the evidence →"
+          "Try the shared workflowSubmit a plan, consent, then execute.Explore →",
+          "Follow the evidenceCompare recorded outcomes with their expectations.Continue →"
         ]
       },
       "screenshot": "workflow-choice-390.png"
@@ -560,13 +560,13 @@
       "id": "chapter",
       "width": 390,
       "page": "chapters/01-product.html",
-      "purpose": "Explain what Harmonia provides in readable prose.",
+      "purpose": "Explain what Harmonia provides through the application handoff.",
       "next": "Previous or next chapter.",
       "interactions": {
         "count": 2,
         "labels": [
-          "← Previous chapter",
-          "Next chapter →"
+          "‹",
+          "›"
         ]
       },
       "screenshot": "chapter-390.png"
@@ -580,8 +580,8 @@
       "interactions": {
         "count": 2,
         "labels": [
-          "← Return to the original text",
-          "Finish this reading path →"
+          "‹",
+          "›"
         ]
       },
       "screenshot": "coverage-390.png"
@@ -595,8 +595,8 @@
       "interactions": {
         "count": 2,
         "labels": [
-          "← Previous observation",
-          "Next observation →"
+          "‹",
+          "›"
         ]
       },
       "screenshot": "laboratory-390.png"
@@ -610,8 +610,8 @@
       "interactions": {
         "count": 2,
         "labels": [
-          "Follow the recorded handoff →",
-          "Continue reading →"
+          "‹",
+          "›"
         ]
       },
       "screenshot": "sandbox-390.png"

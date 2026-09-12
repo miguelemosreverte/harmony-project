@@ -14,11 +14,11 @@ const checks=[],pages=[
  ['developer','code.html','Select a file and read its purpose, exact source and slice.','Use the one file tree or return to the reading paths.'],
  ['reviewer','reviewer.html','Read the first implementation relationship and its limits.','Previous or next authored relationship.'],
  ['author','author.html?passage=proposal-53','Compare original wording with its implementation context.','Previous or next original passage; the companion follows automatically.'],
- ['author-architecture','author.html?passage=architecture-88','Read the supplied component drawing beside the implementation.','Previous or next original passage.'],
+ ['author-architecture','author.html?passage=architecture-88','Read the original architecture words beside a redrawn infographic.','Previous or next original passage.'],
  ['integration-choice','application-builder.html','Choose a live application integration or continue the book.','Open the package sandbox, or continue to shared workflows.'],
  ['workflow-choice','application.html','Choose a live shared workflow or continue to evidence.','Open the composition sandbox, or continue reading.'],
  ['recording-choice','recording-choice.html','Choose a detailed recording review or readiness.','All recordings, or chapter eight.'],
- ['chapter','chapters/01-product.html','Explain what Harmonia provides in readable prose.','Previous or next chapter.'],
+ ['chapter','chapters/01-product.html','Explain what Harmonia provides through the application handoff.','Previous or next chapter.'],
  ['coverage','coverage.html','Distinguish exact quotation coverage from implementation.','Return to the documents or finish the reading path.'],
  ['laboratory','laboratory.html?story=branch-approved&step=1','Inspect one actual branch observation against its committed expectation.','Previous or next observation in a finite recording sequence.'],
  ['sandbox','sandbox.html','Explain the separate live application and its participant identity.','Enter the live application when available, or follow the recording; return to Alice.']
@@ -32,7 +32,7 @@ try{
  for(const width of [1280,390])for(const [id,page,purpose,next] of pages){
   await b.viewport(width,1100);await b.navigate(new URL(page,base).href);await b.until('!!window.HarmoniaView');
   if(id==='developer')await b.until("!!document.querySelector('.code-line')");
-  if(id.startsWith('author'))await b.until("!!document.querySelector('iframe').contentDocument?.querySelector('main')");
+  if(id.startsWith('author'))await b.until("!!document.querySelector('#companion-frame .workflow-node,#companion-frame .scene-person')");
   await b.wait(250);
   const controls=await b.evaluate(interactions);
   check(id+' at '+width+' has at most two interactions: '+JSON.stringify(controls.labels),controls.count<=2);

@@ -1,5 +1,5 @@
 // Small shared reader primitives; source and workflow semantics stay in their data owners.
-(() => {
+HarmoniaView.mounts.push(() => {
   const view=window.HarmoniaView, atlas=window.HarmoniaAtlas;
   const node=(tag,text='',css='')=>{const n=document.createElement(tag);n.textContent=text;n.className=css;return n;};
   const link=(text,path)=>{const a=node('a',text);a.href=view.href(path);return a;};
@@ -10,6 +10,14 @@
   }
   function diagramValue(root,slice,selected="") {
     renderHarmoniaDiagram(root,JSON.stringify({title:slice.title,caption:slice.relationship,nodes:slice.nodes.map(n=>({id:n.id,label:n.label,detail:n.detail,actor:n.actor,state:n.id===selected?'current':'pending'})),edges:slice.edges.map(([from,to])=>({from,to,state:to===selected?'current':'pending'}))}));
+  }
+  function render(root,kind,json){
+    if(root.dataset.renderer!==kind){root.replaceChildren(node('div'));root.dataset.renderer=kind;pruneHarmoniaScenes();pruneHarmoniaDiagrams();}
+    (kind==='scene'?renderHarmoniaScene:renderHarmoniaDiagram)(root.firstElementChild,json);
+  }
+  function chapterDiagram(root,chapter){
+    if(atlas.chapterDiagrams[chapter])render(root,'diagram',JSON.stringify(atlas.chapterDiagrams[chapter]));
+    else if(atlas.chapterSlices[chapter])diagram(root,atlas.chapterSlices[chapter]);
   }
   function citation(slice){const [source,start,end]=slice.citation;return link(`Original ${source} · lines ${start}–${end}`,`sources/${source}.html?view=source#L${start}`);}
   const loading=new Map();
@@ -22,10 +30,14 @@
     }));
     return loading.get(path);
   }
-  window.HarmoniaReader={node,link,query,diagram,diagramValue,citation,source};
+  // Object keys have one order at every depth. Array order is part of the observation.
+  const ordered=value=>Array.isArray(value)?value.map(ordered):value&&typeof value==='object'?Object.fromEntries(Object.keys(value).sort().map(key=>[key,ordered(value[key])])):value;
+  const json=value=>JSON.stringify(ordered(value),null,2);
+  window.HarmoniaReader={node,link,query,diagram,diagramValue,citation,source,json,render,chapterDiagram};
   view.subscribe(s=>{document.documentElement.dataset.embed=String(s.embed);document.documentElement.dataset.presentation=String(s.present);});
   for(const root of document.querySelectorAll('[data-slice-diagram],[data-chapter-diagram]')) {
     const slice=root.dataset.sliceDiagram||atlas.chapterSlices[root.dataset.chapterDiagram];
-    if(slice)diagram(root,slice);
+    if(root.dataset.chapterDiagram)chapterDiagram(root,root.dataset.chapterDiagram);
+    else if(slice)diagram(root,slice);
   }
-})();
+});

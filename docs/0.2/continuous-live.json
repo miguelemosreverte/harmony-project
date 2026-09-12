@@ -1,0 +1,17 @@
+{
+  "checks": [
+    "Task navigation retains the document at 1280",
+    "New plan opens without reloading at 1280",
+    "Polling keeps the input and next control at 1280",
+    "The next question keeps its control position at 1280",
+    "History restores the draft without a reload at 1280",
+    "Task navigation retains the document at 390",
+    "New plan opens without reloading at 390",
+    "Polling keeps the input and next control at 390",
+    "The next question keeps its control position at 390",
+    "History restores the draft without a reload at 390",
+    "No browser errors"
+  ],
+  "errors": [],
+  "scope": "Navigation and unsubmitted drafts; no ledger mutations"
+}

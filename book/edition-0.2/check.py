@@ -192,7 +192,7 @@ class CoverageChecks(unittest.TestCase):
 
     def test_html_styles_do_not_escape_into_the_book(self):
         rendered = html_fragment('<style>body{display:none}</style><h2>Readable</h2><p>A &amp; B</p><svg><text>In isolated diagram</text></svg>')
-        self.assertEqual(rendered, "<h3>Readable</h3><p>A &amp; B</p>")
+        self.assertEqual(rendered, '<h3>Readable</h3><p>A &amp; B</p><section class="original-diagram-labels"><p class="citation">Original diagram labels</p><ul><li>In isolated diagram</li></ul></section>')
 
     def test_preserved_recordings_match_current_committed_goldens(self):
         self.assertEqual(len(build.load_recordings(build.ROOT)), 32)
@@ -214,6 +214,14 @@ class CoverageChecks(unittest.TestCase):
         with patch.object(Path, "read_bytes", altered):
             with self.assertRaisesRegex(ValueError, "no longer matches committed expected"):
                 build.load_recordings(build.ROOT)
+
+    def test_redrawn_diagrams_keep_the_original_labels_readable(self):
+        rendered = html_fragment('<p>Before</p><svg><style>.x{fill:red}</style><g><text>A &amp; B</text><text>C<tspan> D</tspan></text></g></svg><p>After</p>')
+        self.assertIn('<li>A &amp; B</li>', rendered)
+        self.assertIn('<li>C D</li>', rendered)
+        self.assertIn('<p>After</p>', rendered)
+        self.assertNotIn('<svg', rendered)
+        self.assertNotIn('fill:red', rendered)
 
     def test_html_corpus_rules_include_svg_and_entities(self):
         sample = '<html><head><title>Excluded</title><style>.x { color:red; }</style></head><body><h1>A &amp; B</h1><!-- hidden --><svg><text>Actor</text></svg><script>ignore()</script><p> next </p></body></html>'

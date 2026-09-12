@@ -32,8 +32,8 @@ A deep link opens its selected material directly.
 - A deliberate return to the entrance is an exit, not an automatic playback cycle.
 - Prose, citations, diagrams, progress counts and line numbers are passive.
   No tabs, drawers, selector collections, clickable dots, hover menus or node actions.
-- Give the public story one useful caption per observation. Technical explanation
-  follows the scene rather than competing with it.
+- Give the public story one useful caption per observation. A short evidence limit
+  follows the scene; do not repeat its mechanism at every step.
 - Keep application interfaces one question at a time. A text field and Continue
   use the entire budget; a choice page offers two direct alternatives.
 - A review page shows the complete proposed plan before submission. Ledger
@@ -51,10 +51,13 @@ Never infer a completed action from a submitted request or its golden expectatio
 At a narrow width, stack choice cards and code/document work areas. Keep diagrams
 legible by reflowing their nodes; arrows must terminate outside portraits and cards.
 Code and original-document panes may scroll natively. They do not gain extra controls.
-Original SVG drawings retain their supplied semantic colors and aspect ratios.
+Original drawings remain in the source archive. Explanatory diagrams are authored
+in the shared infographic language; do not embed the supplied SVG styling.
 
-Native links and forms support the keyboard. The story supports arrow keys and
-horizontal touch swipes. Text remains selectable and annotated source retains its
+Native links and forms support the keyboard. Every carousel supports arrow keys and
+horizontal touch swipes. Previous and next stay in fixed viewport positions.
+Chapter turns retain the shell; diagrams retain their cards and arrows. Binary
+decisions use two directly clickable cards, not ambiguous previous/next arrows. Text remains selectable and annotated source retains its
 exact original bytes. Appearance can be specified through `theme=light|dark|paper`
 and `text=compact|standard|large`; these do not add a toolbar.
 
@@ -84,3 +87,7 @@ check interaction counts including embedded content, and verify real commands on
 one disposable network. Record the purpose and destination of each screen in
 Markdown. A screenshot is visual evidence, not proof of ledger behavior; a green
 unit test is not a visual review.
+
+The [continuous reader implementation](CONTINUOUS-READER.md) records page lifetimes,
+source fidelity, comparison ordering and the visual stability checks. JSON objects
+use consistent recursive key ordering; arrays preserve their observed order.

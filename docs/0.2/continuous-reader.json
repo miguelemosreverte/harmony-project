@@ -1,0 +1,72 @@
+{
+  "base": "http://127.0.0.1:56202/design/0.2/",
+  "checks": [
+    "Purchase retains scene and arrow at 1280",
+    "Purchase controls stay exactly in place at 1280",
+    "Proposal-to-Ben arrow completes at 1280",
+    "Chapter turn retains document and header at 1280",
+    "Chapter turn retains control positions at 1280",
+    "Back restores the exact frame without a reload at 1280",
+    "Reviewer turns in the same map at 1280",
+    "Reviewer has no copied source drawings at 1280",
+    "Author uses a shared renderer without embedded pages at 1280",
+    "Author retains its document at 1280",
+    "Purchase retains scene and arrow at 390",
+    "Purchase controls stay exactly in place at 390",
+    "Proposal-to-Ben arrow completes at 390",
+    "Chapter turn retains document and header at 390",
+    "Chapter turn retains control positions at 390",
+    "Back restores the exact frame without a reload at 390",
+    "Reviewer turns in the same map at 390",
+    "Reviewer has no copied source drawings at 390",
+    "Author uses a shared renderer without embedded pages at 390",
+    "Author retains its document at 390",
+    "No empty painted page across turns at 1280",
+    "No moving carousel target in sampled frames at 1280",
+    "No empty painted page across turns at 390",
+    "No moving carousel target in sampled frames at 390",
+    "Recursive JSON sorting retains nested values and array order",
+    "Displayed expectation uses canonical ordering",
+    "Observed diagram updates keep existing cards",
+    "No browser errors"
+  ],
+  "frameSamples": [
+    {
+      "width": 1280,
+      "count": 23,
+      "controls": [
+        [
+          129,
+          926,
+          58,
+          58
+        ],
+        [
+          1093,
+          926,
+          58,
+          58
+        ]
+      ]
+    },
+    {
+      "width": 390,
+      "count": 23,
+      "controls": [
+        [
+          16,
+          929,
+          52,
+          52
+        ],
+        [
+          322,
+          929,
+          52,
+          52
+        ]
+      ]
+    }
+  ],
+  "errors": []
+}

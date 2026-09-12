@@ -50,7 +50,7 @@ Purpose: Understand Northbank’s observed approval.
 
 Expected next action: Go back to the recorded outcomes or follow Alice’s proposal.
 
-Visible interactions: ← Recorded outcomes / Next scene →.
+Visible interactions: ‹ / ›.
 
 ![Desktop purchase](../../design/0.2/quiet-review/purchase-1280.png)
 ![Mobile purchase](../../design/0.2/quiet-review/purchase-390.png)
@@ -61,7 +61,7 @@ Purpose: Choose an observed approval or refusal.
 
 Expected next action: Two recorded branches, both with a finite continuation.
 
-Visible interactions: Follow the approval.The observed result allows the handoff to continue.Follow this recordi / Follow the refusal.See the refused action and the state that remains.Follow this recording.
+Visible interactions: ✓→▤Follow the approval.The observed result allows the handoff to continue.Follow this reco / –→▤Follow the refusal.See the refused action and the state that remains.Follow this record.
 
 ![Desktop outcomes](../../design/0.2/quiet-review/outcomes-1280.png)
 ![Mobile outcomes](../../design/0.2/quiet-review/outcomes-390.png)
@@ -72,7 +72,7 @@ Purpose: Understand preparation before settlement.
 
 Expected next action: Previous or next recorded scene.
 
-Visible interactions: ← Previous scene / Next scene →.
+Visible interactions: ‹ / ›.
 
 ![Desktop transfer](../../design/0.2/quiet-review/transfer-1280.png)
 ![Mobile transfer](../../design/0.2/quiet-review/transfer-390.png)
@@ -94,7 +94,7 @@ Purpose: Read the first implementation relationship and its limits.
 
 Expected next action: Previous or next authored relationship.
 
-Visible interactions: ← Choose a reading path / Next relationship →.
+Visible interactions: ‹ / ›.
 
 ![Desktop reviewer](../../design/0.2/quiet-review/reviewer-1280.png)
 ![Mobile reviewer](../../design/0.2/quiet-review/reviewer-390.png)
@@ -105,18 +105,18 @@ Purpose: Compare original wording with its implementation context.
 
 Expected next action: Previous or next original passage; the companion follows automatically.
 
-Visible interactions: ← Previous passage / Next passage →.
+Visible interactions: ‹ / ›.
 
 ![Desktop author](../../design/0.2/quiet-review/author-1280.png)
 ![Mobile author](../../design/0.2/quiet-review/author-390.png)
 
 ## author-architecture
 
-Purpose: Read the supplied component drawing beside the implementation.
+Purpose: Read the original architecture words beside a redrawn infographic.
 
 Expected next action: Previous or next original passage.
 
-Visible interactions: ← Previous passage / Next passage →.
+Visible interactions: ‹ / ›.
 
 ![Desktop author-architecture](../../design/0.2/quiet-review/author-architecture-1280.png)
 ![Mobile author-architecture](../../design/0.2/quiet-review/author-architecture-390.png)
@@ -127,7 +127,7 @@ Purpose: Choose a live application integration or continue the book.
 
 Expected next action: Open the package sandbox, or continue to shared workflows.
 
-Visible interactions: Open the package workspace → / Continue to shared workflows →.
+Visible interactions: Try the package workspaceInspect a DAR and compile an adapter.Explore → / Continue the storySee how participants agree on their next tasks.Continue →.
 
 ![Desktop integration-choice](../../design/0.2/quiet-review/integration-choice-1280.png)
 ![Mobile integration-choice](../../design/0.2/quiet-review/integration-choice-390.png)
@@ -138,7 +138,7 @@ Purpose: Choose a live shared workflow or continue to evidence.
 
 Expected next action: Open the composition sandbox, or continue reading.
 
-Visible interactions: Enter the live sandbox → / Continue to the evidence →.
+Visible interactions: Try the shared workflowSubmit a plan, consent, then execute.Explore → / Follow the evidenceCompare recorded outcomes with their expectations.Continue →.
 
 ![Desktop workflow-choice](../../design/0.2/quiet-review/workflow-choice-1280.png)
 ![Mobile workflow-choice](../../design/0.2/quiet-review/workflow-choice-390.png)
@@ -156,11 +156,11 @@ Visible interactions: Walk through the recordings.All 32 examples, one observati
 
 ## chapter
 
-Purpose: Explain what Harmonia provides in readable prose.
+Purpose: Explain what Harmonia provides through the application handoff.
 
 Expected next action: Previous or next chapter.
 
-Visible interactions: ← Previous chapter / Next chapter →.
+Visible interactions: ‹ / ›.
 
 ![Desktop chapter](../../design/0.2/quiet-review/chapter-1280.png)
 ![Mobile chapter](../../design/0.2/quiet-review/chapter-390.png)
@@ -171,7 +171,7 @@ Purpose: Distinguish exact quotation coverage from implementation.
 
 Expected next action: Return to the documents or finish the reading path.
 
-Visible interactions: ← Return to the original text / Finish this reading path →.
+Visible interactions: ‹ / ›.
 
 ![Desktop coverage](../../design/0.2/quiet-review/coverage-1280.png)
 ![Mobile coverage](../../design/0.2/quiet-review/coverage-390.png)
@@ -182,7 +182,7 @@ Purpose: Inspect one actual branch observation against its committed expectation
 
 Expected next action: Previous or next observation in a finite recording sequence.
 
-Visible interactions: ← Previous observation / Next observation →.
+Visible interactions: ‹ / ›.
 
 ![Desktop laboratory](../../design/0.2/quiet-review/laboratory-1280.png)
 ![Mobile laboratory](../../design/0.2/quiet-review/laboratory-390.png)
@@ -193,7 +193,7 @@ Purpose: Explain the separate live application and its participant identity.
 
 Expected next action: Enter the live application when available, or follow the recording; return to Alice.
 
-Visible interactions: Follow the recorded handoff → / Continue reading →.
+Visible interactions: ‹ / ›.
 
 ![Desktop sandbox](../../design/0.2/quiet-review/sandbox-1280.png)
 ![Mobile sandbox](../../design/0.2/quiet-review/sandbox-390.png)

@@ -25,7 +25,7 @@ def shell(title, body, slug='', prefix='', kind='chapter', stories=None):
     for mode in ["try","sources","source","evidence"]:
         body=body.replace(f'data-mode="{mode}"',f'data-mode="{mode}" hidden')
     config=dict(slug=slug,kind=kind,base=prefix or './',journeys=JOURNEYS,chapters=CHAPTERS,stories=list(stories or {}))
-    scripts=['recordings.js','run-recordings.js','context.js','../../book/browser/target/scala-3.3.6/harmonia-reader-fastopt/main.js','reader/catalog.js','state.js','reader/common.js','navigation.js','book.js','reader/code.js','reader/reviewer.js','reader/author.js','reader/presentation.js']
+    scripts=['recordings.js','run-recordings.js','context.js','../../book/browser/target/scala-3.3.6/harmonia-reader-fastopt/main.js','reader/catalog.js','state.js','reader/common.js','book.js','reader/code.js','reader/reviewer.js','reader/author.js','reader/presentation.js','navigation.js']
     includes=''.join(f'<script defer src="{prefix}{name}"></script>' for name in scripts)
     return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{escape(title)} · Harmonia</title><link rel="icon" href="{prefix}../../product/web/site/favicon.svg"><link rel="stylesheet" href="{prefix}../../product/scene/site/scene.css"><link rel="stylesheet" href="{prefix}../../product/scene/site/surface.css"><link rel="stylesheet" href="{prefix}quiet.css"><link rel="stylesheet" href="{prefix}../../book/site/print.css"><script id="view-config" type="application/json">{json_script(config)}</script>{includes}</head><body class="{kind}"><div class="reference-shell"><header class="reference-header"><span class="reference-brand">Harmonia</span><span class="quiet-location">The field guide</span></header>{body}<noscript><p class="quiet-note">The written chapters and quotations remain readable. The source tree and recorded scenes need JavaScript.</p></noscript></div></body></html>'''
 
@@ -44,15 +44,13 @@ def passage(p,corpus):
     _,text,units=corpus[p.source]
     excerpt='\n'.join(text.splitlines()[p.start-1:p.end])
     rich=markdown(excerpt,source=True) if p.source=='proposal' else html_fragment(excerpt)
-    if p.source=='architecture' and p.start<=88<=p.end:rich+=diagram('component-map','Original component map')
-    if p.source=='architecture' and p.start<=318<=p.end:rich+=diagram('contract-model','Original contract model')
     exact='\n'.join(f'<span class="source-unit" data-unit="{u.id}">{escape(u.text)}</span>' for u in units if p.start<=u.line<=p.end)
     return f'<section class="source-section" id="{p.source}-L{p.start}"><h2>{escape(p.title)}</h2><p class="citation">Original {p.source} · lines {p.start}–{p.end}</p><div class="rich-source">{passive(rich)}</div><pre class="exact-source" hidden>{exact}</pre></section>'
 
 
 def story_panel(stories):
-    first=next(iter(stories.values()))
-    return f'''<section id="chapter-try" class="mode-panel" data-mode="try"><p class="eyebrow">Recorded ledger story · <span id="recorded-step">Start</span></p><div id="story-carousel" class="story-carousel"><div id="story-scene" aria-live="polite"></div></div><p id="scene-detail" class="quiet-note"></p><nav class="quiet-paging" aria-label="Story scenes"><button id="previous-step">← Previous</button><button id="next-step">Next →</button></nav><section class="scene-explanation"><h2 id="mechanism-title">What makes this possible?</h2><p id="mechanism-detail">The applications retain their authority. The scene follows observed contracts.</p><p class="citation" id="recording-provenance"></p></section></section>'''
+    return '''<section id="chapter-try" class="mode-panel" data-mode="try"><p class="eyebrow">Recorded ledger story · <span id="recorded-step">Start</span></p><div id="story-carousel" class="story-carousel"><div id="story-scene" aria-live="polite"></div></div><nav class="quiet-paging" aria-label="Story scenes"><button id="previous-step">← Previous</button><button id="next-step">Next →</button></nav><p class="citation" id="recording-provenance"></p></section>'''
+
 
 
 def chapter(slug,text,passages,corpus,stories):
@@ -64,12 +62,12 @@ def chapter(slug,text,passages,corpus,stories):
     authored=passive(markdown('\n'.join(text.splitlines()[1:])))
     sources=''.join(passage(p,corpus) for p in passages if p.chapter==slug)
     controls=paging(previous,'← Previous chapter',following,next_label)
-    body=f'''<main id="main" class="quiet-content"><div class="chapter-heading"><p class="eyebrow">Chapter {slug[:2]}</p><h1>{CHAPTERS[slug]}</h1></div><article id="chapter-read" class="mode-panel prose" data-mode="read">{controls}{authored}<div data-chapter-diagram="{slug}"></div></article>{story_panel(stories) if stories else ''}<section id="chapter-sources" class="mode-panel prose" data-mode="sources"><h1>The original words</h1>{sources}{controls.replace('id="page-','id="source-page-')}</section><section class="mode-panel prose" data-mode="evidence"><h1>What this chapter establishes</h1><p>Original quotations establish the proposed requirements. Recorded observations establish the behavior of the referenced run. Neither establishes external adoption.</p>{controls.replace('id="page-','id="evidence-page-')}</section></main>'''
+    body=f'''<main id="main" class="quiet-content"><div class="chapter-heading"><p class="eyebrow">Chapter {slug[:2]}</p><h1>{CHAPTERS[slug]}</h1></div><article id="chapter-read" class="mode-panel prose" data-mode="read">{controls}<div data-chapter-diagram="{slug}"></div>{authored}</article>{story_panel(stories) if stories else ''}<section id="chapter-sources" class="mode-panel prose" data-mode="sources"><h1>The original words</h1>{sources}{controls.replace('id="page-','id="source-page-')}</section><section class="mode-panel prose" data-mode="evidence"><h1>What this chapter establishes</h1><p>Original quotations establish the proposed requirements. Recorded observations establish the behavior of the referenced run. Neither establishes external adoption.</p>{controls.replace('id="page-','id="evidence-page-')}</section></main>'''
     return shell(CHAPTERS[slug],body,slug,'../',stories=stories)
 
 
 def source_page(name,text,pin):
-    rich=markdown(text,source=True) if name=='proposal' else html_fragment(text)+diagram('component-map','Original component map')+diagram('contract-model','Original contract model')
+    rich=markdown(text,source=True) if name=='proposal' else html_fragment(text)
     lines='\n'.join(f'<span class="source-line" id="L{n}"><span>{n}</span>{escape(line)}</span>' for n,line in enumerate(text.splitlines(),1))
     body=f'<main id="main" class="quiet-content prose"><p class="eyebrow">Original document</p><h1>{name.title()}</h1><article class="rich-source mode-panel" data-mode="read">{passive(rich)}</article><section class="mode-panel" data-mode="source"><p class="citation">SHA-256 {pin["sha256"]}</p><pre class="source-view">{lines}</pre></section>{paging("../author.html?source="+name,"Read beside the implementation →","../coverage.html","Quotation coverage →")}</main>'
     return shell('Original '+name,body,slug=name,prefix='../',kind='source')
@@ -97,8 +95,8 @@ def outcome(purchase=True):
     refused='purchase-rejected' if purchase else 'transfer-final-leg-rejected'
     step=2 if purchase else 1
     choices=[(accepted,'Follow the approval.' if purchase else 'Follow successful settlement.','The observed result allows the handoff to continue.'),(refused,'Follow the refusal.' if purchase else 'Follow a refused final leg.','See the refused action and the state that remains.')]
-    cards=''.join(f'<a href="chapters/{chapter}.html?story={story}&step={step}"><h2>{label}</h2><p>{detail}</p><span>Follow this recording →</span></a>' for story,label,detail in choices)
-    return shell(title,f'<main id="main" class="quiet-content"><p class="eyebrow">Two preserved outcomes</p><h1>{title}</h1><p class="lead">Choose the recorded result you want to understand. These are observed runs, not decisions submitted to a live ledger.</p><div class="quiet-choices">{cards}</div></main>',kind='outcome')
+    cards=''.join(f'<a href="chapters/{chapter}.html?story={story}&step={step}"><div class="choice-flow {"refusal" if story==refused else "approval"}" aria-hidden="true"><i>{"–" if story==refused else "✓"}</i><span>→</span><i>▤</i></div><h2>{label}</h2><p>{detail}</p><span>Follow this recording →</span></a>' for story,label,detail in choices)
+    return shell(title,f'<main id="main" class="quiet-content"><p class="eyebrow">Two preserved outcomes</p><h1>{title}</h1><p class="lead">Choose one preserved ledger outcome.</p><div class="quiet-choices">{cards}</div></main>',kind='outcome')
 
 
 def recording_choice():

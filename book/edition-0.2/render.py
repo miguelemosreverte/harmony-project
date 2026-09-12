@@ -43,12 +43,23 @@ class Fragment(HTMLParser):
     def __init__(self):
         super().__init__(convert_charrefs=True)
         self.skip = 0
+        self.svg = 0
+        self.label = 0
         self.stack = []
         self.output = []
 
     def handle_starttag(self, tag, attrs):
-        if tag in {"head", "style", "script", "svg"}:
+        if tag in {"head", "style", "script"}:
             self.skip += 1
+            return
+        if not self.skip and tag == "svg":
+            self.svg += 1
+            self.output.append('<section class="original-diagram-labels"><p class="citation">Original diagram labels</p><ul>')
+            return
+        if self.svg and not self.skip:
+            if tag == "text":
+                self.label += 1
+                self.output.append('<li>')
             return
         if self.skip or tag not in self.tags:
             return
@@ -60,10 +71,19 @@ class Fragment(HTMLParser):
             self.stack.append((tag, mapped))
 
     def handle_endtag(self, tag):
-        if tag in {"head", "style", "script", "svg"}:
+        if tag in {"head", "style", "script"}:
             self.skip = max(0, self.skip - 1)
             return
         if self.skip:
+            return
+        if tag == "svg" and self.svg:
+            self.svg -= 1
+            self.output.append('</ul></section>')
+            return
+        if self.svg:
+            if tag == "text" and self.label:
+                self.label -= 1
+                self.output.append('</li>')
             return
         if any(original == tag for original, _ in self.stack):
             while self.stack:
@@ -73,7 +93,7 @@ class Fragment(HTMLParser):
                     break
 
     def handle_data(self, data):
-        if not self.skip:
+        if not self.skip and (not self.svg or self.label):
             self.output.append(escape(data))
 
     def rendered(self):

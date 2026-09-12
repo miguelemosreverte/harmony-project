@@ -6,23 +6,23 @@ remain distinct; exact original quotations and recorded observations remain inta
 
 ## Implementation sequence
 
-- [ ] Keep the shared scene objects alive during updates.
+- [x] Keep the shared scene objects alive during updates.
   - Reconcile diagram cards and measured arrows by identity.
   - Paint arrows with their cards, without a blank intermediate frame.
-- [ ] Keep the book shell alive during navigation.
+- [x] Keep the book shell alive during navigation.
   - Load local chapters in the current document; preserve native links as fallback.
   - Give each mounted page an explicit lifetime and clean up its listeners.
   - Preserve query addresses, browser history, modified clicks and print output.
-- [ ] Make navigation a carousel edge, in a fixed place.
+- [x] Make navigation a carousel edge, in a fixed place.
   - Two consistent previous/next targets; keyboard and horizontal swipe do the same work.
   - Keep the binary choice cards themselves clickable; add no selector panel.
-- [ ] Let the diagrams speak.
+- [x] Let the diagrams speak.
   - Remove repeated scene mechanisms and lists that restate every diagram node.
   - Replace the author's reloading companion with the shared renderer.
   - Keep supplied drawings in the original archive; explain them with our infographics.
   - Keep original quotations and explicit evidence limitations readable.
-- [ ] Sort displayed JSON object keys recursively; retain array order and values.
-- [ ] Apply stable navigation and action placement to the separate live application.
+- [x] Sort displayed JSON object keys recursively; retain array order and values.
+- [x] Apply stable navigation and action placement to the separate live application.
 - [ ] Verify desktop and mobile: screenshots, control positions, retained DOM,
   complete routes, history, keyboard, touch, source fidelity and live actions.
 - [ ] Commit and push the verified delivery.

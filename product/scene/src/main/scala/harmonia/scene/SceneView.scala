@@ -186,7 +186,12 @@ final class SceneView(root: dom.HTMLElement):
 object SceneView:
   private val views = scala.collection.mutable.Map.empty[dom.HTMLElement, SceneView]
 
-  /** The static book uses the same renderer; JSON ends at this typed presentation boundary. */
+  @JSExportTopLevel("pruneHarmoniaScenes")
+  def prune(): Unit = views.keys.filterNot(dom.document.contains).toVector.foreach { root =>
+    views.remove(root).foreach(_.dispose())
+  }
+
+  /** JSON ends at this typed presentation boundary. */
   @JSExportTopLevel("renderHarmoniaScene")
   def renderJson(root: dom.HTMLElement, json: String): Unit =
     io.circe.parser.decode[SceneFrame](json) match

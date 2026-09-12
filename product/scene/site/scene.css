@@ -1,5 +1,5 @@
 /* Approved reference geometry. Illustrations retain the original reference pixels. */
-.harmonia-scene {--scene-ink:#091c40;--scene-blue:#0079ff;--scene-muted:#8791a5;--scene-tint:#e8f5ff;--scene-paper:#fff;--scene-edge:#e0e4eb;margin:0;color:var(--scene-ink);font-family:Arial,Helvetica,sans-serif;}
+.harmonia-scene {container:scene / inline-size;--scene-ink:#091c40;--scene-blue:#0079ff;--scene-muted:#8791a5;--scene-tint:#e8f5ff;--scene-paper:#fff;--scene-edge:#e0e4eb;margin:0;color:var(--scene-ink);font-family:Arial,Helvetica,sans-serif;}
 .harmonia-scene [hidden] {display:none!important;}
 [data-theme=dark] .harmonia-scene {--scene-ink:#edf2ff;--scene-muted:#a6b6ce;--scene-tint:#172c43;--scene-paper:#182231;--scene-edge:#35465e;}
 [data-theme=paper] .harmonia-scene {--scene-tint:#f3ecdf;--scene-paper:#fffdf8;--scene-ink:#342f28;}
@@ -71,11 +71,11 @@
 [data-kind=transfer] .scene-caption {margin-top:28px;}
 [data-kind=financing] .scene-person[data-position="2"] {left:84%;}
 [data-kind=financing] .scene-artifact {left:65%;}
-@media(min-width:1001px) and (max-width:1100px) {
+@container scene (min-width:1001px) and (max-width:1100px) {
  .scene-person,.scene-document {transform:translateX(-50%) scale(.9);transform-origin:top center;}
  .scene-map>.illustration-house {left:82%;}
 }
-@media(max-width:1000px) {
+@container scene (max-width:1000px) {
  .scene-map {height:681px;}
  .scene-private {width:100%;height:222px;bottom:auto;border-radius:13px;}
  .scene-shared {left:0;right:0;top:238px;bottom:0;border-radius:13px;}

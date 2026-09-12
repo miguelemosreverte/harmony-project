@@ -68,6 +68,8 @@ private final class BrowserSession(
         dispatcher.unsafeRunAndForget(state.update(_.copy(notice = Some(message))) *> draw)
     })
 
+  dom.window.addEventListener("popstate", (_: dom.Event) => dispatcher.unsafeRunAndForget(draw))
+
   private def submit(command: WorkspaceCommand): Unit =
     dispatcher.unsafeRunAndForget(state.get.flatMap { current =>
       if current.submitting || current.unconfirmed.nonEmpty || current.connection != ConnectionState.Connected

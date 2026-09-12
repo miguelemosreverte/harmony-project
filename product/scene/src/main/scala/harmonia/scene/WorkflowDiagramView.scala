@@ -31,10 +31,24 @@ final class WorkflowDiagramView(root: dom.HTMLElement):
     case Left(error) => title.textContent = error
     case Right(layers) =>
       documentation = value.nodes.map(n => n.id -> n).toMap
-      cards.foreach(_.remove())
+      val existing = cards.map(card => card.getAttribute("data-node") -> card).toMap
+      cards
+        .filterNot(card => documentation.contains(card.getAttribute("data-node")))
+        .foreach(_.remove())
       val rows = scala.collection.mutable.Map.empty[Int, Int]
       cards = value.nodes.sortBy(item => layers(item.id)).map { item =>
-        val card = node("article", "workflow-node")
+        val card = existing.getOrElse(
+          item.id, {
+            val fresh = node("article", "workflow-node")
+            Vector(
+              node("span", "workflow-symbol"),
+              node("strong", "workflow-label"),
+              node("span", "workflow-actor")
+            ).foreach(fresh.appendChild)
+            map.appendChild(fresh)
+            fresh
+          }
+        )
         card.title = item.detail
         card.setAttribute("aria-label", item.label + ". " + item.actor + ". " + item.detail)
         card.setAttribute("data-node", item.id)
@@ -43,17 +57,16 @@ final class WorkflowDiagramView(root: dom.HTMLElement):
         val row = rows.getOrElse(layer, 0) + 1; rows.update(layer, row)
         card.style.setProperty("--column", (layer + 1).toString)
         card.style.setProperty("--row", row.toString)
-        val badge = node("span", "workflow-symbol")
+        val badge = card.querySelector(".workflow-symbol")
         badge.textContent =
           if item.state == DiagramState.Complete then "✓"
           else if item.state == DiagramState.Skipped then "–"
           else (layer + 1).toString
-        val heading = node("strong", ""); heading.textContent = item.label
-        val actor = node("span", "workflow-actor"); actor.textContent = item.actor
-        Vector(badge, heading, actor).foreach(card.appendChild)
-        map.appendChild(card)
+        card.querySelector(".workflow-label").textContent = item.label
+        card.querySelector(".workflow-actor").textContent = item.actor
         card
       }
+      cards.foreach(map.appendChild)
       map.style.setProperty("--columns", (layers.values.max + 1).toString)
       map.classList.toggle("workflow-wide", layers.values.max > 3)
       val indexed = cards.map(card => card.getAttribute("data-node") -> card).toMap
@@ -83,6 +96,11 @@ final class WorkflowDiagramView(root: dom.HTMLElement):
 
 object WorkflowDiagramView:
   private val views = scala.collection.mutable.Map.empty[dom.HTMLElement, WorkflowDiagramView]
+  @JSExportTopLevel("pruneHarmoniaDiagrams")
+  def prune(): Unit = views.keys.filterNot(dom.document.contains).toVector.foreach { root =>
+    views.remove(root).foreach(_.dispose())
+  }
+
   @JSExportTopLevel("renderHarmoniaDiagram")
   def renderJson(root: dom.HTMLElement, json: String): Unit =
     io.circe.parser.decode[WorkflowDiagram](json) match

@@ -47,6 +47,12 @@ final class BookView(
           }
         )
         append(main, paging)
+    val paging = root.querySelectorAll(".quiet-paging button")
+    (0 until paging.length).foreach { i =>
+      val control = paging(i).asInstanceOf[dom.HTMLElement]
+      control.setAttribute("aria-label", control.textContent)
+      control.textContent = if i % 2 == 0 then "‹" else "›"
+    }
     if state.embed then
       val controls = root.querySelectorAll(".quiet-paging")
       (0 until controls.length).foreach(i => controls(i).asInstanceOf[dom.Element].remove())

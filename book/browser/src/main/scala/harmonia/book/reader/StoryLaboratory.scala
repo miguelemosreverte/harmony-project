@@ -78,9 +78,9 @@ final class StoryLaboratory(
       main,
       element("p", text = unit.actor + ": " + unit.action),
       element("h3", text = "Committed expectation"),
-      element("pre", text = unit.expected.spaces2),
+      element("pre", text = io.circe.Printer.spaces2.copy(sortKeys = true).print(unit.expected)),
       element("h3", text = "Recorded observation"),
-      element("pre", text = unit.actual.spaces2),
+      element("pre", text = io.circe.Printer.spaces2.copy(sortKeys = true).print(unit.actual)),
       element("p", "citation", "Historical recording; playback submits no ledger commands.")
     )
     state.artifact.foreach { artifact =>

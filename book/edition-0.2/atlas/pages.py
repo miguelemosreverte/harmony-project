@@ -10,7 +10,7 @@ def code():
 
 
 def reviewer():
-    body='''<main id="main" class="quiet-content"><p class="eyebrow">Reviewer · <span id="review-position"></span></p><h1 id="review-title">Review the implementation.</h1><p class="lead" id="review-question"></p><p id="review-status" class="citation"></p><section id="review-diagram" class="reader-stage"></section><article id="review-node" class="reader-note"></article><article id="review-evidence" class="reader-note"></article>'''+pages.paging('verify.html','← Previous','coverage.html','Next →')+'''<section class="original-diagrams"><h2>The original architecture</h2><p>These supplied drawings describe the proposal. The diagram above describes the selected implementation relationship.</p><img src="assets/component-map.svg" alt="Original component diagram"><img src="assets/contract-model.svg" alt="Original contract diagram"></section></main>'''
+    body='''<main id="main" class="quiet-content"><p class="eyebrow">Reviewer · <span id="review-position"></span></p><h1 id="review-title">Review the implementation.</h1><p class="lead" id="review-question"></p><p id="review-status" class="citation"></p><section id="review-diagram" class="reader-stage"></section><article id="review-evidence" class="reader-note"></article>'''+pages.paging('verify.html','← Previous','coverage.html','Next →')+'</main>'
     nav=pages.paging('verify.html','← Previous','coverage.html','Next →')
     body=body.replace(nav,'').replace('<section id="review-diagram"',nav+'<section id="review-diagram"')
     return pages.shell('Review the diagrams',body,slug='reviewer',kind='atlas-review')
@@ -21,11 +21,9 @@ def author(passages,corpus):
     for p in passages:
         excerpt='\n'.join(corpus[p.source][1].splitlines()[p.start-1:p.end])
         rich=markdown(excerpt,source=True) if p.source=='proposal' else html_fragment(excerpt)
-        if p.source=='architecture' and p.start<=88<=p.end:rich+='<img src="assets/component-map.svg" alt="Original component diagram">'
-        if p.source=='architecture' and p.start<=318<=p.end:rich+='<img src="assets/contract-model.svg" alt="Original contract diagram">'
         key=f'{p.source}-{p.start}'
         items.append(f'<section class="author-passage" id="passage-{key}" data-passage="{key}"><p class="citation">Original {p.source} · lines {p.start}–{p.end}</p><h2>{escape(p.title)}</h2><div class="rich-source">{passive(rich)}</div></section>')
-    body='''<main id="main" class="author-content"><header class="author-heading"><p class="eyebrow">Original author · <span id="author-position"></span></p><h1>The original words, beside the work.</h1><p>Read the highlighted passage with its matching explanation.</p><p class="citation">736 / 736 quotation units preserved. Quotation inclusion is separate from implementation.</p></header><div class="author-workbench"><article id="author-document-pane" aria-label="Original documents">'''+''.join(items)+'''</article><section class="author-companion"><h2 id="companion-title"></h2><p id="companion-boundary"></p><iframe id="companion-frame" title="Explanation of the selected original passage" tabindex="-1"></iframe></section></div>'''+pages.paging('verify.html','← Previous passage','coverage.html','Next passage →')+'</main>'
+    body='''<main id="main" class="author-content"><header class="author-heading"><p class="eyebrow">Original author · <span id="author-position"></span></p><h1>The original words, beside the work.</h1><p class="citation">736 / 736 quotation units preserved. Quotation inclusion is separate from implementation.</p></header><div class="author-workbench"><article id="author-document-pane" aria-label="Original documents">'''+''.join(items)+'''</article><section class="author-companion"><h2 id="companion-title"></h2><p id="companion-boundary"></p><div id="companion-frame" aria-label="Explanation of the selected original passage"></div></section></div>'''+pages.paging('verify.html','← Previous passage','coverage.html','Next passage →')+'</main>'
     nav=pages.paging('verify.html','← Previous passage','coverage.html','Next passage →')
     body=body.replace(nav,'').replace('<div class="author-workbench">',nav+'<div class="author-workbench">')
     return pages.shell('Follow the original documents',body,slug='author',kind='atlas-author')

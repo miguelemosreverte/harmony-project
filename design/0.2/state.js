@@ -1,8 +1,12 @@
 // The address owns the selected page, source, passage and recorded moment.
 (() => {
-  const config=JSON.parse(document.getElementById('view-config').textContent),atlas=HarmoniaAtlas;
+  const atlas=HarmoniaAtlas, mounts=[], listeners=new Set();
+  let config, defaults, state, lifetime;
+  function configure(value){
+  config={...value};
   config.stories=Object.fromEntries((config.stories||[]).map(id=>[id,(window.HarmoniaRunRecordings||{})[id]||HarmoniaRecordings[id]]));
-  const defaults={theme:'light',text:'standard',embed:0,present:0,view:Object.keys(config.stories).length?'try':'read',story:Object.keys(config.stories)[0]||'',step:0,actor:'all',file:'product/server/src/main/scala/harmonia/financing/FinancingObservation.scala',line:1,slice:'financing',relationship:'reading',node:'',source:'proposal',passage:atlas.passages[0].id,task:'financing',companion:'',detail:''};
+  defaults={theme:'light',text:'standard',embed:0,present:0,view:Object.keys(config.stories).length?'try':'read',story:Object.keys(config.stories)[0]||'',step:0,actor:'all',file:'product/server/src/main/scala/harmonia/financing/FinancingObservation.scala',line:1,slice:'financing',relationship:'reading',node:'',source:'proposal',passage:atlas.passages[0].id,task:'financing',companion:'',detail:''};
+  }
   const choose=(v,values,fallback)=>values.includes(v)?v:fallback;
   const number=(v,min,max,fallback)=>/^\d+$/.test(String(v))?Math.max(min,Math.min(max,Number(v))):fallback;
   const normalize=input=>{
@@ -21,9 +25,23 @@
     s.task=choose(input.task,['financing','composer','packages'],'financing');
     return s;
   };
-  let state;const listeners=new Set();
+
   const urlFor=s=>{const u=new URL(location.href);u.search='';for(const [key,value] of Object.entries(s))if(value!==defaults[key])u.searchParams.set(key,value);return u;};
   function read(){const values=Object.fromEntries(new URLSearchParams(location.search));if(config.kind==='source'&&/^#L\d+$/.test(location.hash))values.view='source';state=normalize(values);const url=urlFor(state);if(url.href!==location.href)history.replaceState(null,'',url);for(const listener of listeners)listener(state);}
-  window.HarmoniaView={config,get state(){return {...state};},subscribe(listener){listeners.add(listener);listener(state);},update(patch,{replace=false}={}){state=normalize({...state,...patch});const url=urlFor(state);url.hash='';if(url.href!==location.href)history[replace?'replaceState':'pushState'](null,'',url);for(const listener of listeners)listener(state);},href(path){const u=new URL(path,new URL(config.base,location.href));for(const key of ['theme','text'])if(state[key]!==defaults[key]&&!u.searchParams.has(key))u.searchParams.set(key,state[key]);return u.href;}};
-  addEventListener('popstate',read);addEventListener('hashchange',read);read();
+  window.HarmoniaView={
+    mounts, get config(){return config;}, get signal(){return lifetime.signal;},
+    get state(){return {...state};},
+    mount(value){
+      lifetime?.abort(); listeners.clear(); lifetime=new AbortController();
+      configure(value); read(); for(const mount of mounts)mount();
+    },
+    read,
+    subscribe(listener){listeners.add(listener);listener(state);return ()=>listeners.delete(listener);},
+    update(patch,{replace=false}={}){
+      state=normalize({...state,...patch});const url=urlFor(state);url.hash='';
+      if(url.href!==location.href)history[replace?'replaceState':'pushState'](null,'',url);
+      for(const listener of listeners)listener(state);
+    },
+    href(path){const u=new URL(path,new URL(config.base,location.href));for(const key of ['theme','text'])if(state[key]!==defaults[key]&&!u.searchParams.has(key))u.searchParams.set(key,state[key]);return u.href;}
+  };
 })();

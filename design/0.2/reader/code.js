@@ -1,4 +1,4 @@
-(() => {
+HarmoniaView.mounts.push(() => {
   const tree=document.getElementById('file-tree');if(!tree)return;
   const view=HarmoniaView,atlas=HarmoniaAtlas,{node,diagram,source}=HarmoniaReader;
   const code=document.getElementById('source-code'),map=document.getElementById('source-diagram'),notes=document.getElementById('source-notes');
@@ -24,8 +24,8 @@
     if(slice){diagram(map,slice.id,slice.nodes.find(n=>n.file===s.file)?.id);}
     else map.replaceChildren(node('p',context.summary));
     document.getElementById('source-counts').textContent=`${atlas.counts.files} source files · ${atlas.counts.lines.toLocaleString()} lines. Exact source is exported from this checkout. SHA-256 ${file.sha256}`;
-    if(loaded!==s.file){const ticket=++request;loaded='';code.replaceChildren(node('p','Reading the source…'));try{const data=await source(s.file);if(ticket!==request)return;const fragment=document.createDocumentFragment();data.lines.forEach((html,i)=>{const row=node('div','','code-line');row.id='code-L'+(i+1);row.dataset.line=i+1;const number=node('span',String(i+1),'line-number'),content=node('code');content.innerHTML=html||' ';row.append(number,content);fragment.append(row);});code.replaceChildren(fragment);loaded=s.file;}catch(error){code.replaceChildren(node('p',error.message));return;}}
+    if(loaded!==s.file){const ticket=++request;loaded='';code.setAttribute('aria-busy','true');try{const data=await source(s.file);if(ticket!==request||view.signal.aborted||!code.isConnected)return;const fragment=document.createDocumentFragment();data.lines.forEach((html,i)=>{const row=node('div','','code-line');row.id='code-L'+(i+1);row.dataset.line=i+1;const number=node('span',String(i+1),'line-number'),content=node('code');content.innerHTML=html||' ';row.append(number,content);fragment.append(row);});code.replaceChildren(fragment);loaded=s.file;code.removeAttribute('aria-busy');}catch(error){code.replaceChildren(node('p',error.message));return;}}
     for(const row of code.children)row.classList.toggle('selected-line',Number(row.dataset.line)===s.line);
     code.scrollTop=0;if(s.line>1){const selected=document.getElementById('code-L'+s.line);code.scrollTop=selected.offsetTop-code.offsetTop-50;}
   });
-})();
+});

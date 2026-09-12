@@ -136,26 +136,7 @@ object ComposerView:
             )
           )
         )
-        val flow = element("div", "composition-step-details")
         process.steps.zipWithIndex.foreach { (step, position) =>
-          val row = element("section", "composition-step-detail")
-          row.id = s"compose-detail-$index-$position"
-          append(
-            row,
-            element(
-              "strong",
-              text = s"${step.id} · ${
-                  if step.completed then "Complete" else if step.enabled then "Ready" else "Waiting"
-                }"
-            ),
-            element("p", text = s"${step.role} · ${step.actor}"),
-            element(
-              "p",
-              text =
-                s"${step.source.getOrElse("Source unavailable")} · ${step.status.getOrElse("unknown")}"
-            ),
-            element("p", text = s"Integration: ${step.integration.wire}")
-          )
           if step.canExecute then
             val control =
               button(s"Execute ${step.id}", "primary", s"compose-execute-$index-$position") {
@@ -165,9 +146,7 @@ object ComposerView:
                 )
               }
             control.disabled = blocked; append(card, control)
-          append(flow, row)
         }
-        append(card, flow)
         append(root, card)
     }
     if state.drafts.isEmpty && state.processes.isEmpty then

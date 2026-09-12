@@ -74,7 +74,13 @@ final class PackagePanel(capability: String, dispatcher: Dispatcher[IO]):
       replace: Boolean = false
   ): Unit =
     if !busy then
-      busy = true; message = label; draw()
+      busy = true; message = label
+      val status = root.querySelector("#builder-status")
+      if status != null then status.textContent = label
+      val controls = root.querySelectorAll("button,input")
+      (0 until controls.length).foreach(i =>
+        controls(i).asInstanceOf[dom.Element].setAttribute("disabled", "")
+      )
       dispatcher.unsafeRunAndForget(
         operation.flatMap(j => IO.fromEither(j.as[PackageState])).attempt.flatMap { result =>
           IO {
@@ -92,7 +98,7 @@ final class PackagePanel(capability: String, dispatcher: Dispatcher[IO]):
     append(root, element("p", "eyebrow", "Application integration"))
     val status = element("p", "live-connection", message); status.id = "builder-status";
     status.setAttribute("role", "status")
-    if message.nonEmpty then append(root, status)
+    append(root, status)
     if busy then append(root, element("h1", text = "Working on the package…"))
     else
       page match

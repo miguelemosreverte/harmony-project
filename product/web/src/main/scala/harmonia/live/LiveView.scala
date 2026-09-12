@@ -25,6 +25,7 @@ final class LiveView:
   private val historyBody = element("div")
   private var previous: Option[WorkspaceSnapshot] = None
   private var previousBlocked = true
+  private var compositionAddress = ""
   private var previousFeedback: Option[(ConnectionState, Boolean, Boolean, Option[String])] = None
   private var mounted = false
   private var recovering = false
@@ -107,7 +108,12 @@ final class LiveView:
         hide(composed, creating)
         val input = editor.render(blocked, compositionState.remainingProposals)
         if input.parentNode != draft then append(draft, input)
-        if previous.map(_.composition) != Some(compositionState) || blocked != previousBlocked then
+        val address = dom.window.location.search
+        if previous.map(_.composition) != Some(
+            compositionState
+          ) || blocked != previousBlocked || compositionAddress != address
+        then
+          compositionAddress = address
           replace(
             composed,
             harmonia.composition.ComposerView.render(compositionState, blocked, submit)
@@ -119,6 +125,7 @@ final class LiveView:
         previous = Some(state); previousBlocked = blocked
     selectPage()
 
+  private var destinationState = Option.empty[(String, Boolean)]
   private val destination = element("section", "live-destination")
   private def selectPage(): Unit =
     val page = if recovering then "recovery" else WorkspaceNavigation.page
@@ -126,6 +133,9 @@ final class LiveView:
     hide(composition, page != "composer")
     hide(evidence, page != "evidence")
     hide(packageArea, page != "packages" || previous.forall(_.financing.actor != "bank"))
+    val key = (page, previous.exists(_.financing.actor == "bank"))
+    if destinationState.contains(key) then return
+    destinationState = Some(key)
     destination.textContent = ""
     if destination.parentNode != main then append(main, destination)
     if page == "financing" || page == "evidence" then
