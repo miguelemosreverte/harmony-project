@@ -6,6 +6,7 @@ import scala.scalajs.js.annotation.JSExportTopLevel
 /** Stable HTML objects make changes of state visible without replacing the whole scene. */
 final class SceneView(root: dom.HTMLElement):
   private val figure = element("figure", "harmonia-scene")
+  private val observation = new ObservationView(figure)
   private val map = element("div", "scene-map")
   private val privateArea = element("div", "scene-zone scene-private")
   private val sharedArea = element("div", "scene-zone scene-shared")
@@ -61,10 +62,17 @@ final class SceneView(root: dom.HTMLElement):
     node
 
   def render(frame: SceneFrame): Unit =
+    observation.render(frame.observation)
     val kind = frame.kind.toString.toLowerCase
     figure.setAttribute("data-kind", kind)
     figure.setAttribute("data-phase", frame.phase.max(0).min(4).toString)
     figure.setAttribute("data-refused", frame.refused.toString)
+    val approvalState = frame.approval.getOrElse(
+      if frame.phase > 0 then DiagramState.Complete else DiagramState.Pending
+    )
+    approval.setAttribute("data-status", approvalState.toString.toLowerCase)
+    approval.querySelector(".document-check").textContent =
+      if approvalState == DiagramState.Refused then "!" else "✓"
     figure.setAttribute("aria-label", frame.title)
     privateArea.querySelector(".scene-zone-label").textContent =
       if frame.kind == SceneKind.Transfer then "Source custody" else "Financing"
@@ -146,7 +154,7 @@ final class SceneView(root: dom.HTMLElement):
             DiagramState.Pending,
             false
           ),
-          ConnectionLayer.Arrow("approval", approvalPaper, person(1), status(1)),
+          ConnectionLayer.Arrow("approval", approvalPaper, person(1), approvalState),
           ConnectionLayer.Arrow("proposal", person(1), proposalPaper, status(2))
         )
         if frame.kind == SceneKind.Purchase then

@@ -29,7 +29,8 @@ final case class WorkflowDiagram(
     title: String,
     caption: String,
     nodes: Vector[DiagramNode],
-    edges: Vector[DiagramEdge]
+    edges: Vector[DiagramEdge],
+    observation: Option[SceneObservation] = None
 ):
   /** Explicit edges determine layers. No text matching is used to infer dependencies. */
   def layers: Either[String, Map[String, Int]] =

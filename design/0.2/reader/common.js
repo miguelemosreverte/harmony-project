@@ -20,6 +20,12 @@ HarmoniaView.mounts.push(() => {
     else if(atlas.chapterSlices[chapter])diagram(root,atlas.chapterSlices[chapter]);
   }
   function citation(slice){const [source,start,end]=slice.citation;return link(`Original ${source} · lines ${start}–${end}`,`sources/${source}.html?view=source#L${start}`);}
+  function carousel(nav,paths,selected,select){
+    nav.classList.add('has-carousel');
+    let root=nav.querySelector('.step-carousel');
+    if(!root){root=node('div');nav.insertBefore(root,nav.lastElementChild);}
+    renderHarmoniaCarousel(root,JSON.stringify({paths,selected}),select);
+  }
   const loading=new Map();
   async function source(path){
     if(window.HarmoniaSourceFiles?.[path])return window.HarmoniaSourceFiles[path];
@@ -33,7 +39,7 @@ HarmoniaView.mounts.push(() => {
   // Object keys have one order at every depth. Array order is part of the observation.
   const ordered=value=>Array.isArray(value)?value.map(ordered):value&&typeof value==='object'?Object.fromEntries(Object.keys(value).sort().map(key=>[key,ordered(value[key])])):value;
   const json=value=>JSON.stringify(ordered(value),null,2);
-  window.HarmoniaReader={node,link,query,diagram,diagramValue,citation,source,json,render,chapterDiagram};
+  window.HarmoniaReader={node,link,query,diagram,diagramValue,citation,source,json,render,chapterDiagram,carousel};
   view.subscribe(s=>{document.documentElement.dataset.embed=String(s.embed);document.documentElement.dataset.presentation=String(s.present);});
   for(const root of document.querySelectorAll('[data-slice-diagram],[data-chapter-diagram]')) {
     const slice=root.dataset.sliceDiagram||atlas.chapterSlices[root.dataset.chapterDiagram];

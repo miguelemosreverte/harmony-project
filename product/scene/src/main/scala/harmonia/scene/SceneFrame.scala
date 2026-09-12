@@ -30,7 +30,9 @@ final case class SceneFrame(
     focus: String,
     artifact: String,
     refused: Boolean,
-    amounts: Vector[SceneAmount]
+    amounts: Vector[SceneAmount],
+    observation: Option[SceneObservation] = None,
+    approval: Option[DiagramState] = None
 )
 object SceneFrame:
   given Codec.AsObject[SceneFrame] = Codec.AsObject.derived[SceneFrame]

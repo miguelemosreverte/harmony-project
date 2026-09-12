@@ -13,14 +13,16 @@ final class BookView(
     navigate: ViewState => Unit
 ):
   private val laboratory = new StoryLaboratory(stories, chapters, navigate)
+  private val root = dom.document.getElementById("app")
+  private val main = element("main", "quiet-content"); main.id = "main"
+  private val header = element("header", "reference-header")
+  private var wasChapter = false
+  root.textContent = ""; root.setAttribute("class", "reference-shell")
+  append(header, element("span", "reference-brand", "Harmonia"))
+  append(root, header, main)
   def render(state: ViewState): IO[Unit] = IO {
-    laboratory.dispose()
-    val root = dom.document.getElementById("app"); root.textContent = "";
-    root.setAttribute("class", "reference-shell")
-    val main = element("main", "quiet-content"); main.id = "main"
-    val header = element("header", "reference-header")
-    append(header, element("span", "reference-brand", "Harmonia"))
-    append(root, header, main)
+    if state.chapter.nonEmpty || wasChapter then main.textContent = ""
+    wasChapter = state.chapter.nonEmpty
     state.chapter match
       case None => laboratory.render(main, state)
       case Some(index) =>
@@ -47,15 +49,18 @@ final class BookView(
           }
         )
         append(main, paging)
-    val paging = root.querySelectorAll(".quiet-paging button")
+    val paging = root.querySelectorAll(".quiet-paging > button")
     (0 until paging.length).foreach { i =>
       val control = paging(i).asInstanceOf[dom.HTMLElement]
-      control.setAttribute("aria-label", control.textContent)
-      control.textContent = if i % 2 == 0 then "‹" else "›"
+      if control.textContent != "‹" && control.textContent != "›" then
+        control.setAttribute("aria-label", control.textContent)
+        control.textContent = if i % 2 == 0 then "‹" else "›"
     }
-    if state.embed then
-      val controls = root.querySelectorAll(".quiet-paging")
-      (0 until controls.length).foreach(i => controls(i).asInstanceOf[dom.Element].remove())
+    val controls = root.querySelectorAll(".quiet-paging")
+    (0 until controls.length).foreach { i =>
+      val control = controls(i).asInstanceOf[dom.Element]
+      if state.embed then control.setAttribute("hidden", "") else control.removeAttribute("hidden")
+    }
     dom.document.documentElement.setAttribute("data-theme", state.theme)
     dom.document.documentElement.setAttribute("data-text", state.text)
   }

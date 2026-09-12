@@ -15,6 +15,7 @@ import scala.scalajs.js.annotation.JSExportTopLevel
 /** A diagram presents observed state without introducing navigation controls. */
 final class WorkflowDiagramView(root: dom.HTMLElement):
   private val figure = node("figure", "workflow-diagram")
+  private val observation = new ObservationView(figure)
   private val map = node("div", "workflow-map")
   private val title = node("strong", "workflow-title")
   private val caption = node("p", "workflow-caption")
@@ -30,6 +31,7 @@ final class WorkflowDiagramView(root: dom.HTMLElement):
   def render(value: WorkflowDiagram): Unit = value.layers match
     case Left(error) => title.textContent = error
     case Right(layers) =>
+      observation.render(value.observation)
       documentation = value.nodes.map(n => n.id -> n).toMap
       val existing = cards.map(card => card.getAttribute("data-node") -> card).toMap
       cards

@@ -11,6 +11,7 @@ HarmoniaView.mounts.push(() => {
     document.getElementById('review-status').textContent=graph.status;
     diagramValue(root,graph,s.node);
     const evidence=document.getElementById('review-evidence');evidence.replaceChildren(node('p',slice.gap),node('p','Evidence: '+(graph.evidence||slice.evidence),'citation'),node('p',`Original ${slice.citation[0]} · lines ${slice.citation[1]}–${slice.citation[2]}`,'citation'));
+    HarmoniaReader.carousel(document.querySelector('.quiet-paging'),[{id:'review',label:'Review',steps:trail.map((e,i)=>({id:String(i),label:atlas.slices[e.slice].title+' · '+e.relationship,state:i<index?'complete':i===index?'current':'pending'}))}],String(index),id=>view.go(address(trail[Number(id)])));
     const previous=document.getElementById('page-previous'),next=document.getElementById('page-next');previous.href=index?address(trail[index-1]):view.href('verify.html');previous.textContent=index?'← Previous relationship':'← Choose a reading path';next.href=index+1<trail.length?address(trail[index+1]):view.href('coverage.html');next.textContent=index+1<trail.length?'Next relationship →':'Finish with the evidence boundary →';
   });
 });

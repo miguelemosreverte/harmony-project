@@ -1,4 +1,4 @@
-"""Finite, authored reading routes. Page navigation contains at most two actions."""
+"""Authored reading routes. Workflow decisions live in the bottom carousel."""
 from html import escape
 import json
 from render import markdown, html_fragment, diagram, passive
@@ -25,7 +25,7 @@ def shell(title, body, slug='', prefix='', kind='chapter', stories=None):
     for mode in ["try","sources","source","evidence"]:
         body=body.replace(f'data-mode="{mode}"',f'data-mode="{mode}" hidden')
     config=dict(slug=slug,kind=kind,base=prefix or './',journeys=JOURNEYS,chapters=CHAPTERS,stories=list(stories or {}))
-    scripts=['recordings.js','run-recordings.js','context.js','../../book/browser/target/scala-3.3.6/harmonia-reader-fastopt/main.js','reader/catalog.js','state.js','reader/common.js','book.js','reader/code.js','reader/reviewer.js','reader/author.js','reader/presentation.js','navigation.js']
+    scripts=['recordings.js','run-recordings.js','context.js','../../book/browser/target/scala-3.3.6/harmonia-reader-fastopt/main.js','reader/catalog.js','state.js','reader/common.js','book.js','reader/code.js','reader/reviewer.js','reader/author.js','reader/presentation.js','reader/routes.js','navigation.js']
     includes=''.join(f'<script defer src="{prefix}{name}"></script>' for name in scripts)
     return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{escape(title)} · Harmonia</title><link rel="icon" href="{prefix}../../product/web/site/favicon.svg"><link rel="stylesheet" href="{prefix}../../product/scene/site/scene.css"><link rel="stylesheet" href="{prefix}../../product/scene/site/surface.css"><link rel="stylesheet" href="{prefix}quiet.css"><link rel="stylesheet" href="{prefix}../../book/site/print.css"><script id="view-config" type="application/json">{json_script(config)}</script>{includes}</head><body class="{kind}"><div class="reference-shell"><header class="reference-header"><span class="reference-brand">Harmonia</span><span class="quiet-location">The field guide</span></header>{body}<noscript><p class="quiet-note">The written chapters and quotations remain readable. The source tree and recorded scenes need JavaScript.</p></noscript></div></body></html>'''
 
@@ -88,15 +88,11 @@ def sandbox():
     return shell('Make a live handoff','''<main id="main" class="quiet-content"><p class="eyebrow">A separate, live application</p><h1>Make the handoff yourself.</h1><p class="lead">Open Bank and approve the private financing case. Then open Buyer and use that approval to continue.</p><div id="live-entry"><p>Start the local sandbox and open its private participant launcher.</p><pre>scripts/start-sandbox</pre></div><p class="quiet-note">The product has its own address and participant sessions. A shared URL identifies a task; it does not grant access. Purchase and custody transfer remain recorded examples.</p><div class="quiet-choices"><a id="sandbox-enter" href="laboratory.html?story=live-handoff"><h2>Follow the recording</h2><p>A preserved Canton handoff.</p><span>Explore →</span></a><a href="chapters/03-financing-to-offer.html"><h2>Continue reading</h2><p>Follow the next chapter.</p><span>Continue →</span></a></div></main>''',kind='sandbox')
 
 
-def outcome(purchase=True):
-    title='What did the bank decide?' if purchase else 'Does the final settlement complete?'
-    chapter='03-financing-to-offer' if purchase else '04-four-party-transfer'
-    accepted='purchase-approved' if purchase else 'transfer-approved'
-    refused='purchase-rejected' if purchase else 'transfer-final-leg-rejected'
-    step=2 if purchase else 1
-    choices=[(accepted,'Follow the approval.' if purchase else 'Follow successful settlement.','The observed result allows the handoff to continue.'),(refused,'Follow the refusal.' if purchase else 'Follow a refused final leg.','See the refused action and the state that remains.')]
-    cards=''.join(f'<a href="chapters/{chapter}.html?story={story}&step={step}"><div class="choice-flow {"refusal" if story==refused else "approval"}" aria-hidden="true"><i>{"–" if story==refused else "✓"}</i><span>→</span><i>▤</i></div><h2>{label}</h2><p>{detail}</p><span>Follow this recording →</span></a>' for story,label,detail in choices)
-    return shell(title,f'<main id="main" class="quiet-content"><p class="eyebrow">Two preserved outcomes</p><h1>{title}</h1><p class="lead">Choose one preserved ledger outcome.</p><div class="quiet-choices">{cards}</div></main>',kind='outcome')
+def outcome(purchase=True, stories=None):
+    # Historical links keep the same recorded stage and its explicit branch carousel.
+    slug='03-financing-to-offer' if purchase else '04-four-party-transfer'
+    body='<main id="main" class="quiet-content">'+story_panel(stories)+'</main>'
+    return shell(CHAPTERS[slug],body,slug,stories=stories)
 
 
 def recording_choice():

@@ -1,5 +1,10 @@
 # A continuous, visual reader
 
+The [stable carousel revision](STABLE-CAROUSEL.md) supersedes this checkpoint's
+restriction to two arrow controls. The persistent rendering and URL guarantees
+below remain in force.
+
+
 The infographic carries the explanation. A reader turns one frame at a time,
 with two familiar directions and no moving controls. The four reading paths
 remain distinct; exact original quotations and recorded observations remain intact.

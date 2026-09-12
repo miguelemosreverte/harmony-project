@@ -44,8 +44,13 @@ object RecordedScene:
             ).getOrElse(reason, unit.get.observedState)
         base.copy(title = title, caption = caption, refused = true)
       else base
-    result.copy(focus =
-      if actor == "all" then unit.map(_.actor).getOrElse(base.people.head.id) else actor
+    result.copy(
+      focus = if actor == "all" then unit.map(_.actor).getOrElse(base.people.head.id) else actor,
+      observation = Some(
+        unit.fold(SceneObservation(base.people.head.name, "Before the handoff", "Start"))(value =>
+          SceneObservation(value.actor, value.id.replace('-', ' '), text(actual, "outcome"))
+        )
+      )
     )
 
   private def purchase(setup: Json, unit: Option[StoryUnit], actual: Json): SceneFrame =
@@ -91,7 +96,12 @@ object RecordedScene:
       else if phase == 1 then "Financing · " + text(actual, "application")
       else "",
       false,
-      Vector.empty
+      Vector.empty,
+      approval = Some(
+        if text(actual, "application") == "rejected" then DiagramState.Refused
+        else if phase > 0 then DiagramState.Complete
+        else DiagramState.Pending
+      )
     )
 
   private def transfer(setup: Json, unit: Option[StoryUnit], actual: Json): SceneFrame =

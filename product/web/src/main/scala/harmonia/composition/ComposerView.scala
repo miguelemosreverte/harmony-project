@@ -11,10 +11,11 @@ package harmonia.composition
 import harmonia.ui.Elements.*
 import harmonia.workspace.WorkspaceCommand
 import org.scalajs.dom
-import harmonia.scene.{WorkflowDiagram, WorkflowDiagramView, DiagramNode, DiagramEdge, DiagramState}
+import harmonia.scene.*
 
 object ComposerView:
   private var diagrams = Vector.empty[WorkflowDiagramView]
+  private var carousels = Vector.empty[StepCarousel]
   private def diagram(
       root: dom.HTMLElement,
       title: String,
@@ -42,12 +43,45 @@ object ComposerView:
           )
       )
     )
+    val dock = element("nav", "workflow-dock")
+    val rail = element("div")
+    append(dock, rail); append(root, dock)
+    val carousel = new StepCarousel(rail)
+    carousels :+= carousel
+    def select(id: String): Unit =
+      renderer.select(id)
+      carousel.render(
+        CarouselFrame(
+          Vector(
+            CarouselPath(
+              "execution",
+              "Inspect",
+              nodes.map(n => CarouselStep(n.id, n.label, n.state))
+            )
+          ),
+          id
+        ),
+        next =>
+          val url = new dom.URL(dom.window.location.href)
+          url.searchParams.set("inspect", next)
+          dom.window.history.pushState(null, "", url.toString)
+          select(next)
+      )
+    val requested = Option(new dom.URLSearchParams(dom.window.location.search).get("inspect"))
+    select(
+      nodes
+        .find(n => requested.contains(n.id))
+        .orElse(nodes.find(_.state == DiagramState.Current))
+        .getOrElse(nodes.head)
+        .id
+    )
   def render(
       state: CompositionState,
       blocked: Boolean,
       submit: WorkspaceCommand => Unit
   ): dom.HTMLElement =
     diagrams.foreach(_.dispose()); diagrams = Vector.empty
+    carousels.foreach(_.dispose()); carousels = Vector.empty
     val root = element("div"); root.id = "composition-observations"
     if !state.available then
       append(root, element("p", text = "Your session has no access to the composition workspace."))

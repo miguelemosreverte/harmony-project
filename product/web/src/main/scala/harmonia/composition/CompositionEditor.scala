@@ -2,7 +2,7 @@ package harmonia.composition
 
 import harmonia.ui.Elements.*
 import harmonia.composition.model.{Composition, CompositionAction, CompositionActor, PlannedStep}
-import harmonia.scene.{WorkflowDiagram, WorkflowDiagramView, DiagramNode, DiagramEdge, DiagramState}
+import harmonia.scene.*
 import org.scalajs.dom
 
 /** One question at a time. The address preserves the typed draft and current question. */
@@ -29,7 +29,33 @@ final class CompositionEditor(propose: Either[String, Composition] => Unit):
   private var remaining = 8
   private val root = element("form", "composition-editor").asInstanceOf[dom.html.Form]
   root.id = "composition-editor"
-  private var diagram: Option[WorkflowDiagramView] = None
+  private val canvas = element("div", "editor-stage")
+  private val fieldsArea = element("div", "editor-fields")
+  private val dock = element("nav", "workflow-dock")
+  private val rail = element("div")
+  private val diagram = new WorkflowDiagramView(canvas)
+  private val carousel = new StepCarousel(rail)
+  append(root, canvas, fieldsArea, dock)
+  append(dock, rail)
+  private var answers = Vector.empty[(String, () => Unit)]
+  private def label(value: Field): String = value match
+    case Name           => "Plan name"
+    case Reference      => "Reference"
+    case Count          => "Action count"
+    case Review         => "Review plan"
+    case Id(i)          => s"${i + 1}: Name"
+    case Role(i)        => s"${i + 1}: Role"
+    case Actor(i)       => s"${i + 1}: Actor"
+    case Action(i)      => s"${i + 1}: Action"
+    case Integration(i) => s"${i + 1}: Integration"
+  private def focus: String = field match
+    case Id(i)          => "step-" + i
+    case Role(i)        => "step-" + i
+    case Actor(i)       => "step-" + i
+    case Action(i)      => "step-" + i
+    case Integration(i) => "step-" + i
+    case _              => "plan"
+
   private def fields: Vector[Field] =
     Vector(Name, Reference, Count) ++ plan.steps.indices.toVector.flatMap { i =>
       Vector(Id(i), Role(i), Actor(i), Action(i)) ++
@@ -72,9 +98,9 @@ final class CompositionEditor(propose: Either[String, Composition] => Unit):
     root
 
   private def draw(): Unit =
-    diagram.foreach(_.dispose()); diagram = None; root.textContent = ""
+    fieldsArea.textContent = ""; answers = Vector.empty
     append(
-      root,
+      fieldsArea,
       element(
         "p",
         "eyebrow",
@@ -94,13 +120,12 @@ final class CompositionEditor(propose: Either[String, Composition] => Unit):
         dom.window.history.replaceState(null, "", url.toString)
       val next = element("button", "primary", "Continue →").asInstanceOf[dom.html.Button]
       next.id = "composition-next"; next.`type` = "submit"
-      append(root, label, input, next)
+      append(fieldsArea, label, input, next)
     def choose(title: String, first: String, second: String)(answer: Boolean => Unit): Unit =
-      append(
-        root,
-        element("h1", text = title),
-        button(first, "primary", "composition-first") { answer(true); advance() },
-        button(second, "secondary", "composition-second") { answer(false); advance() }
+      append(fieldsArea, element("h1", text = title))
+      answers = Vector(
+        first -> (() => { answer(true); advance() }),
+        second -> (() => { answer(false); advance() })
       )
     field match
       case Name =>
@@ -175,32 +200,74 @@ final class CompositionEditor(propose: Either[String, Composition] => Unit):
         )
       case Review =>
         append(
-          root,
+          fieldsArea,
           element("h1", text = plan.name),
           element(
             "p",
             text = "Review the exact handoffs. The buyer must consent before these actions can run."
           )
         )
-        val canvas = element("div"); append(root, canvas)
-        val renderer = new WorkflowDiagramView(canvas); diagram = Some(renderer)
-        val nodes = plan.steps.map(s =>
-          DiagramNode(s.id, s.action.label, s.role, s.actor.wire, DiagramState.Pending)
-        )
-        renderer.render(
-          WorkflowDiagram(
-            plan.name,
-            "Proposed plan · no source contracts created",
-            nodes,
-            nodes.zip(nodes.drop(1)).map((a, b) => DiagramEdge(a.id, b.id, DiagramState.Pending))
-          )
-        )
         append(
-          root,
+          fieldsArea,
           element("p", text = "Reference: " + plan.reference),
           button("Review my answers", "secondary", "composition-edit")(save(Name)),
           button("Propose this workflow →", "primary", "composition-propose") {
             if !blocked && remaining > 0 then propose(Composition.validate(plan))
           }
         )
+    val planNode = DiagramNode(
+      "plan",
+      plan.name,
+      plan.reference,
+      "Shared plan",
+      if focus == "plan" then DiagramState.Current else DiagramState.Pending
+    )
+    val nodes = planNode +: plan.steps.zipWithIndex.map { (s, i) =>
+      DiagramNode(
+        "step-" + i,
+        s.action.label,
+        s.role,
+        s.actor.wire + " · " + s.role,
+        if focus == "step-" + i then DiagramState.Current else DiagramState.Pending
+      )
+    }
+    diagram.render(
+      WorkflowDiagram(
+        plan.name,
+        "Draft plan · nothing submitted",
+        nodes,
+        nodes.zip(nodes.drop(1)).map((a, b) => DiagramEdge(a.id, b.id, DiagramState.Pending)),
+        Some(SceneObservation("Editing", label(field), "Draft"))
+      )
+    )
+    val questions = CarouselPath(
+      "questions",
+      "Plan",
+      fields.map(f =>
+        CarouselStep(
+          f.toString,
+          label(f),
+          if f == field then DiagramState.Current else DiagramState.Pending
+        )
+      )
+    )
+    val choices =
+      if answers.isEmpty then Vector.empty
+      else
+        Vector(
+          CarouselPath(
+            "choices",
+            "Choose",
+            answers.zipWithIndex.map((a, i) =>
+              CarouselStep("answer-" + i, a._1, DiagramState.Pending)
+            )
+          )
+        )
+    carousel.render(
+      CarouselFrame(questions +: choices, field.toString),
+      id =>
+        if !blocked then
+          if id.startsWith("answer-") then answers(id.stripPrefix("answer-").toInt)._2()
+          else fields.find(_.toString == id).foreach(save(_))
+    )
     render(blocked, remaining)

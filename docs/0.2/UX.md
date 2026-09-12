@@ -1,14 +1,14 @@
-# UX contract: one purpose, two possible actions
+# UX contract: stable infographics and direct paths
 
-The approved infographic sets the visual and interaction standard. Every page
-answers one question, presents the information needed to answer it, and offers
-at most two interactable things. Links, inputs, disclosures and diagram nodes
-count. The whole repository file tree is the single explicit composite exception.
-A panel containing many controls does not satisfy this rule.
+The approved infographic sets the visual standard. Each page answers one question.
+Its workflow stays on screen while a bottom carousel exposes the named steps,
+progress, and alternative outcomes. Every step must communicate a visible change
+or a specific observed attempt. Selection never substitutes for ledger execution.
 
-The [screen contracts and implementation plan](QUIET-READER.md) and
-[page walkthrough](WALKTHROUGH.md) describe the current design. Earlier design and
-reader reports are historical checkpoints, not permission to restore their controls.
+The [stable carousel contract](STABLE-CAROUSEL.md) supersedes the earlier ban on
+clickable progress markers. Outside the workflow dock, keep at most two primary
+interactions. The repository file tree remains one composite interaction. This is
+not permission to add toolbars, selector collections, or control drawers.
 
 ## Four reading paths
 
@@ -30,12 +30,18 @@ A deep link opens its selected material directly.
 - Name the next destination: a scene, outcome, chapter, passage, or transaction.
   Previous/Next never wraps automatically. The final item says where it ends.
 - A deliberate return to the entrance is an exit, not an automatic playback cycle.
-- Prose, citations, diagrams, progress counts and line numbers are passive.
-  No tabs, drawers, selector collections, clickable dots, hover menus or node actions.
+- Prose, citations, diagram objects and line numbers are passive. Actual controls
+  visibly respond to hover, keyboard focus, and pressing without moving.
+- Named carousel stops are directly clickable. Each outcome has an explicit path
+  running from left to right. Progress identifies the inspected position; step
+  labels and state colors distinguish pending, complete, skipped, and refused.
+- Workflow branches belong in the dock. They never replace the infographic with
+  large choice cards. Root audience entrances remain separate from workflows.
 - Give the public story one useful caption per observation. A short evidence limit
   follows the scene; do not repeat its mechanism at every step.
-- Keep application interfaces one question at a time. A text field and Continue
-  use the entire budget; a choice page offers two direct alternatives.
+- Keep application editing to one question at a time, with the plan visible.
+  Questions can be reached directly in the carousel; answer alternatives appear
+  in its branch row. Submission remains an explicit action after review.
 - A review page shows the complete proposed plan before submission. Ledger
   consent and observed execution remain separate steps.
 - A connection failure receives its own recovery state. Further tasks return only
@@ -44,8 +50,9 @@ A deep link opens its selected material directly.
 ## Visual and responsive rules
 
 Use the approved bank, document, house and character assets, quiet neutral panels,
-blue progression, generous gaps, and measured arrows. Blue indicates observed
-completion; refused, skipped and pending states have different labels and styles.
+blue progression, generous gaps, and measured arrows. Blue emphasizes the selected
+stop and completed marks identify preceding observations. Refused, skipped and
+pending states have different labels and styles.
 Never infer a completed action from a submitted request or its golden expectation.
 
 At a narrow width, stack choice cards and code/document work areas. Keep diagrams
@@ -56,8 +63,9 @@ in the shared infographic language; do not embed the supplied SVG styling.
 
 Native links and forms support the keyboard. Every carousel supports arrow keys and
 horizontal touch swipes. Previous and next stay in fixed viewport positions.
-Chapter turns retain the shell; diagrams retain their cards and arrows. Binary
-decisions use two directly clickable cards, not ambiguous previous/next arrows. Text remains selectable and annotated source retains its
+Chapter turns retain the shell; diagrams retain their cards and arrows. Branches
+stay visible in the dock. On mobile the rail scrolls horizontally; selecting a
+step brings it into view without moving the diagram or the navigation edges. Text remains selectable and annotated source retains its
 exact original bytes. Appearance can be specified through `theme=light|dark|paper`
 and `text=compact|standard|large`; these do not add a toolbar.
 
@@ -91,3 +99,9 @@ unit test is not a visual review.
 The [continuous reader implementation](CONTINUOUS-READER.md) records page lifetimes,
 source fidelity, comparison ordering and the visual stability checks. JSON objects
 use consistent recursive key ordering; arrays preserve their observed order.
+
+The positional budget within one workflow is at most 50 CSS pixels for persistent
+landmarks. Screenshot changed area is measured separately: state changes should
+be noticeable, while stage geometry stays stable. The browser checks and pixel
+comparison in `design/0.2/checks/stable-carousel.mjs` and `carousel-pixels.py`
+record both quantities. Old two-arrow-only interaction reports are historical.

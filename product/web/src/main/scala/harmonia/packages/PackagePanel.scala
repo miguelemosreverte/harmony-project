@@ -12,7 +12,7 @@ import cats.effect.{IO, Resource}
 import cats.effect.std.Dispatcher
 import harmonia.ui.Elements.*
 import harmonia.live.LiveApi
-import harmonia.scene.{WorkflowDiagram, WorkflowDiagramView, DiagramNode, DiagramEdge, DiagramState}
+import harmonia.scene.*
 import io.circe.Json
 import org.scalajs.dom
 import scala.concurrent.duration.*
@@ -29,7 +29,13 @@ final class PackagePanel(capability: String, dispatcher: Dispatcher[IO]):
   private var snapshot = PackageState.empty
   private var page: Page = Page.Start
   private var sourceIndex = 0
-  private var diagram: Option[WorkflowDiagramView] = None
+  private val canvas = element("div", "package-stage")
+  private val diagram = new WorkflowDiagramView(canvas)
+  private val dock = element("nav", "workflow-dock")
+  private val rail = element("div")
+  private val carousel = new StepCarousel(rail)
+  append(dock, rail)
+
   private val file = element("input").asInstanceOf[dom.html.Input]
   file.id = "builder-file"; file.`type` = "file"; file.accept = ".dar"
   private def readPage(): Unit =
@@ -94,7 +100,10 @@ final class PackagePanel(capability: String, dispatcher: Dispatcher[IO]):
   private def latest(value: PackageState): Page =
     value.inputs.lastOption.map(p => Page.Inspect(p.id)).getOrElse(Page.Start)
   private def draw(): Unit =
-    diagram.foreach(_.dispose()); diagram = None; root.textContent = ""
+    root.textContent = ""
+    append(root, canvas, dock)
+    drawDiagram()
+
     append(root, element("p", "eyebrow", "Application integration"))
     val status = element("p", "live-connection", message); status.id = "builder-status";
     status.setAttribute("role", "status")
@@ -200,58 +209,6 @@ final class PackagePanel(capability: String, dispatcher: Dispatcher[IO]):
                 element("p", text = value.diagnostic)
               )
               val actions = element("nav", "package-actions"); append(root, actions)
-              val canvas = element("div"); append(root, canvas)
-              val renderer = new WorkflowDiagramView(canvas); diagram = Some(renderer)
-              val nodes = Vector(
-                DiagramNode(
-                  "input",
-                  "Inspect the DAR",
-                  "Compiled package identity",
-                  "Application",
-                  DiagramState.Complete
-                ),
-                DiagramNode(
-                  "mapping",
-                  "Review the mapping",
-                  value.diagnostic,
-                  "Binding",
-                  if value.matchedSource.isDefined then DiagramState.Complete
-                  else DiagramState.Refused
-                ),
-                DiagramNode(
-                  "compile",
-                  "Compile the adapter",
-                  "Portable project",
-                  "Daml compiler",
-                  if value.compiled then DiagramState.Complete
-                  else if value.canGenerate then DiagramState.Current
-                  else DiagramState.Pending
-                ),
-                DiagramNode(
-                  "register",
-                  "Check live availability",
-                  "This sandbox already registers supported actions independently of this download",
-                  "Live workspace",
-                  if value.availableLive then DiagramState.Complete else DiagramState.Pending
-                )
-              )
-              renderer.render(
-                WorkflowDiagram(
-                  "From application identity to usable integration.",
-                  "Compilation and live availability are separate observed facts.",
-                  nodes,
-                  Vector(("input", "mapping"), ("mapping", "compile"), ("mapping", "register"))
-                    .map((from, to) =>
-                      DiagramEdge(
-                        from,
-                        to,
-                        if nodes.find(_.id == to).exists(_.state == DiagramState.Complete) then
-                          DiagramState.Complete
-                        else DiagramState.Pending
-                      )
-                    )
-                )
-              )
               if value.compiled then
                 append(
                   actions,
@@ -286,6 +243,90 @@ final class PackagePanel(capability: String, dispatcher: Dispatcher[IO]):
                   s"Daml-LF ${value.lf} · Origin: ${value.origin}\nSHA-256: ${value.sha256}\nPackage: ${value.packageId}"
                 )
               )
+
+  private def drawDiagram(): Unit =
+    val value = page match
+      case Page.Inspect(id) => snapshot.inputs.find(_.id == id)
+      case _                => None
+    val nodes = Vector(
+      DiagramNode(
+        "input",
+        "Inspect the DAR",
+        "Read the compiled application identity.",
+        "Application",
+        if value.nonEmpty then DiagramState.Complete else DiagramState.Current
+      ),
+      DiagramNode(
+        "mapping",
+        "Review the mapping",
+        value
+          .map(_.diagnostic)
+          .getOrElse("Inspection will identify whether a reviewed mapping is available."),
+        "Binding",
+        if value.exists(_.matchedSource.nonEmpty) then DiagramState.Complete
+        else if value.nonEmpty then DiagramState.Refused
+        else DiagramState.Pending
+      ),
+      DiagramNode(
+        "compile",
+        "Compile the adapter",
+        "A portable project is produced by the Daml compiler.",
+        "Daml compiler",
+        if value.exists(_.compiled) then DiagramState.Complete
+        else if value.exists(_.canGenerate) then DiagramState.Current
+        else DiagramState.Pending
+      ),
+      DiagramNode(
+        "register",
+        "Check live availability",
+        "Availability in this sandbox is observed separately from compilation.",
+        "Live workspace",
+        if value.exists(_.availableLive) then DiagramState.Complete else DiagramState.Pending
+      )
+    )
+    diagram.render(
+      WorkflowDiagram(
+        "From application to integration",
+        "Inspection and compilation never imply registration.",
+        nodes,
+        Vector(("input", "mapping"), ("mapping", "compile"), ("mapping", "register")).map((a, b) =>
+          DiagramEdge(
+            a,
+            b,
+            if nodes.find(_.id == b).exists(_.state == DiagramState.Complete) then
+              DiagramState.Complete
+            else DiagramState.Pending
+          )
+        )
+      )
+    )
+    def select(id: String): Unit =
+      diagram.select(id)
+      carousel.render(
+        CarouselFrame(
+          Vector(
+            CarouselPath(
+              "packages",
+              "Inspect",
+              nodes.map(n => CarouselStep(n.id, n.label, n.state))
+            )
+          ),
+          id
+        ),
+        next =>
+          val url = new dom.URL(dom.window.location.href)
+          url.searchParams.set("inspect", next)
+          dom.window.history.pushState(null, "", url.toString)
+          select(next)
+      )
+    val requested = Option(new dom.URLSearchParams(dom.window.location.search).get("inspect"))
+    select(
+      nodes
+        .find(n => requested.contains(n.id))
+        .orElse(nodes.find(_.state == DiagramState.Current))
+        .getOrElse(nodes.head)
+        .id
+    )
 
   private def download(id: String): Unit = dispatcher.unsafeRunAndForget(
     LiveApi

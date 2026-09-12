@@ -16,6 +16,7 @@ HarmoniaView.mounts.push(() => {
     else if(slice)HarmoniaReader.render(frame,'diagram',JSON.stringify({title:slice.title,caption:slice.relationship,nodes:slice.nodes.map(n=>({...n,state:'pending'})),edges:slice.edges.map(([from,to])=>({from,to,state:'pending'}))}));
     document.getElementById('companion-title').textContent=original?.title||passage.title;
     document.getElementById('companion-boundary').textContent=slice?slice.gap:'This original context is preserved. Inclusion does not establish implementation or adoption.';
+    HarmoniaReader.carousel(document.querySelector('.quiet-paging'),[{id:'passages',label:'Original text',steps:atlas.passages.map((p,i)=>({id:p.id,label:p.title,state:i<index?'complete':i===index?'current':'pending'}))}],s.passage,id=>view.update({passage:id}));
     const previous=document.getElementById('page-previous'),next=document.getElementById('page-next');previous.href=index?address(atlas.passages[index-1]):view.href('verify.html');previous.textContent=index?'← Previous passage':'← Choose a reading path';next.href=index+1<atlas.passages.length?address(atlas.passages[index+1]):view.href('coverage.html');next.textContent=index+1<atlas.passages.length?'Next passage →':'See the quotation coverage →';
     for(const a of [previous,next])a.onclick=e=>{const p=new URL(a.href).searchParams.get('passage');if(p&&!e.metaKey&&!e.ctrlKey){e.preventDefault();view.update({passage:p});}};
   });

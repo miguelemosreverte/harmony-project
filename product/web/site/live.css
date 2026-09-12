@@ -127,3 +127,15 @@ html{scrollbar-gutter:stable}body{padding-bottom:106px}.live-main{min-height:cal
 .live-main:has(#financing)::after{content:'';position:fixed;z-index:19;pointer-events:none;left:0;right:0;bottom:0;height:92px;background:var(--surface);border-top:1px solid var(--line)}.composition-record .workflow-title{display:none}.composition-status{font-size:.8rem;color:var(--muted)}
 @media print{.live-main:has(#financing)::after{display:none}}
 #live-refresh,#live-retry{position:fixed;z-index:20;right:var(--action-left);bottom:max(18px,env(safe-area-inset-bottom));width:var(--action-width);height:58px;margin:0;background:var(--surface)}
+
+/* Inspection shares the step rail; ledger submission remains an explicit action below it. */
+body:has(.workflow-dock){padding-bottom:270px}
+.workflow-dock{position:fixed;z-index:20;left:var(--action-left);right:var(--action-left);bottom:88px;height:146px;display:flex;align-items:end;background:var(--surface);padding:10px 0;pointer-events:none}
+.workflow-dock>.step-carousel{width:100%;pointer-events:auto}
+.live-main:has(.workflow-dock)::after{height:250px}
+.workflow-dock .carousel-path{grid-template-columns:84px minmax(0,1fr)}
+.editor-stage{margin-bottom:24px}.editor-fields h1{font-size:1.4rem;min-height:2.5em}.editor-fields>.eyebrow{display:none}
+.editor-fields>button{position:fixed;z-index:21;bottom:max(18px,env(safe-area-inset-bottom));width:var(--action-width);height:58px;padding:8px 12px;margin:0;border-radius:12px}
+.editor-fields>input{display:block;width:100%;max-width:640px;min-height:56px;padding:14px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink)}
+@media(max-width:700px){.workflow-dock .carousel-path{grid-template-columns:60px minmax(0,1fr)}.editor-fields h1{font-size:1.15rem}}
+@media print{.workflow-dock,.editor-fields>button{display:none}body:has(.workflow-dock){padding-bottom:0}}

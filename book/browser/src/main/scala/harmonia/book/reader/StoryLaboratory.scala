@@ -4,83 +4,119 @@ import harmonia.book.*
 import harmonia.book.ui.Elements.*
 import harmonia.book.diagram.{StoryDiagram, RecordedScene}
 import harmonia.examples.ExampleKind
-import harmonia.scene.{WorkflowDiagramView, SceneView}
+import harmonia.scene.*
 import org.scalajs.dom
 import scala.scalajs.js
 
-/** A finite recording route: previous observation, next observation, then the next story. */
+/** The standalone export retains the same stage while selecting recorded observations. */
 final class StoryLaboratory(
     stories: Vector[RecordedStory],
     chapters: Vector[BookChapter],
     navigate: ViewState => Unit
 ):
-  private var cleanup: () => Unit = () => ()
-  def dispose(): Unit = cleanup()
-  def render(main: dom.HTMLElement, state: ViewState): Unit =
-    val story = stories(state.story)
-    append(
-      main,
-      element(
-        "p",
-        "eyebrow",
-        s"Recording ${state.story + 1} of ${stories.size} · observation ${state.step + 1} of ${story.units.size}"
-      ),
-      element("h1", text = story.title),
-      element("p", text = story.description)
-    )
-    val graph = element("section"); graph.id = "laboratory-stage"; append(main, graph)
-    if Set(ExampleKind.Purchase, ExampleKind.Transfer)(story.kind) then
-      val view = new SceneView(graph); view.render(RecordedScene(story, state.step + 1));
-      cleanup = () => view.dispose()
-    else
-      val view = new WorkflowDiagramView(graph); view.render(StoryDiagram(story, state.step));
-      cleanup = () => view.dispose()
-    val paging = element("nav", "quiet-paging")
-    def finish(): Unit = dom.window.location.href = "source/design/0.2/book-overview.html"
-    append(
-      paging,
-      button(
-        if state.step > 0 then "← Previous observation" else "← Previous story",
-        "",
-        "previous"
-      ) {
-        if state.step > 0 then navigate(state.copy(step = state.step - 1))
-        else if state.story > 0 then
-          navigate(
-            state.copy(story = state.story - 1, step = stories(state.story - 1).units.size - 1)
-          )
-        else finish()
-      },
-      button(
-        if state.step + 1 < story.units.size then "Next observation →" else "Next story →",
-        "",
-        "next"
-      ) {
-        if state.step + 1 < story.units.size then navigate(state.copy(step = state.step + 1))
-        else if state.story + 1 < stories.size then
-          navigate(state.copy(story = state.story + 1, step = 0))
-        else finish()
-      }
-    )
-    append(
-      main,
-      paging,
-      element(
-        "h2",
-        text =
-          if story.differences.isEmpty then "Recorded result matches the expectation."
-          else "The recording differs from the expectation."
+  private val position = element("p", "eyebrow")
+  private val title = element("h1"); title.id = "laboratory-title"
+  private val graph = element("section"); graph.id = "laboratory-stage"
+  private val detail = element("section")
+  private val paging = element("nav", "quiet-paging has-carousel")
+  private val rail = element("div")
+  private val carousel = new StepCarousel(rail)
+  private var scene = Option.empty[SceneView]
+  private var diagram = Option.empty[WorkflowDiagramView]
+  private var current = ViewState(0, 0)
+  private def finish(): Unit = dom.window.location.href = "source/design/0.2/book-overview.html"
+  private val previous = button("‹", "", "previous") {
+    if current.step > 0 then navigate(current.copy(step = current.step - 1))
+    else if current.story > 0 then
+      navigate(
+        current.copy(story = current.story - 1, step = stories(current.story - 1).units.size - 1)
       )
+    else finish()
+  }
+  private val next = button("›", "", "next") {
+    if current.step + 1 < stories(current.story).units.size then
+      navigate(current.copy(step = current.step + 1))
+    else if current.story + 1 < stories.size then
+      navigate(current.copy(story = current.story + 1, step = 0))
+    else finish()
+  }
+  append(paging, previous, rail, next)
+
+  def dispose(): Unit =
+    scene.foreach(_.dispose()); diagram.foreach(_.dispose()); carousel.dispose()
+
+  def render(main: dom.HTMLElement, state: ViewState): Unit =
+    current = state
+    val story = stories(state.story)
+    if graph.parentNode != main then append(main, position, title, graph, paging, detail)
+    position.textContent =
+      s"Recording ${state.story + 1} of ${stories.size} · observation ${state.step + 1} of ${story.units.size}"
+    title.textContent = story.title
+    if Set(ExampleKind.Purchase, ExampleKind.Transfer)(story.kind) then
+      if scene.isEmpty then
+        diagram.foreach(_.dispose()); diagram = None; graph.textContent = ""
+        scene = Some(new SceneView(graph))
+      scene.foreach(_.render(RecordedScene(story, state.step + 1)))
+    else
+      if diagram.isEmpty then
+        scene.foreach(_.dispose()); scene = None; graph.textContent = ""
+        diagram = Some(new WorkflowDiagramView(graph))
+      diagram.foreach(_.render(StoryDiagram(story, state.step)))
+    previous.setAttribute(
+      "aria-label",
+      if state.step > 0 then "Previous observation" else "Previous story"
     )
-    main.insertBefore(paging, graph)
+    next.setAttribute(
+      "aria-label",
+      if state.step + 1 < story.units.size then "Next observation" else "Next story"
+    )
+    carousel.render(
+      CarouselFrame(
+        Vector(
+          CarouselPath(
+            story.id,
+            "Observations",
+            story.units.zipWithIndex.map { (unit, i) =>
+              CarouselStep(
+                i.toString,
+                unit.id.replace('-', ' '),
+                if unit.outcomeLabel == "rejected" then DiagramState.Refused
+                else if i < state.step then DiagramState.Complete
+                else if i == state.step then DiagramState.Current
+                else DiagramState.Pending
+              )
+            }
+          )
+        ),
+        state.step.toString
+      ),
+      id => navigate(state.copy(step = id.toInt))
+    )
+    detail.textContent = ""
     val unit = story.units(state.step)
     append(
-      main,
-      element("p", text = unit.actor + ": " + unit.action),
-      element("h3", text = "Committed expectation"),
-      element("pre", text = io.circe.Printer.spaces2.copy(sortKeys = true).print(unit.expected)),
-      element("h3", text = "Recorded observation"),
-      element("pre", text = io.circe.Printer.spaces2.copy(sortKeys = true).print(unit.actual)),
+      detail,
+      element(
+        "p",
+        "citation",
+        if story.differences.isEmpty then "Recorded result matches the expectation."
+        else "The recording differs from the expectation."
+      )
+    )
+    val columns = element("div", "observed-comparison")
+    Vector("Committed expectation" -> unit.expected, "Recorded observation" -> unit.actual)
+      .foreach { (label, value) =>
+        val column = element("section")
+        append(
+          column,
+          element("h3", text = label),
+          element("pre", text = io.circe.Printer.spaces2.copy(sortKeys = true).print(value))
+        )
+        append(columns, column)
+      }
+    append(
+      detail,
+      columns,
       element("p", "citation", "Historical recording; playback submits no ledger commands.")
     )
     state.artifact.foreach { artifact =>
@@ -88,5 +124,5 @@ final class StoryLaboratory(
       if !js.isUndefined(bundled) then
         val text = bundled.selectDynamic(s"evidence/${story.id}/${artifact.filename}")
         if !js.isUndefined(text) then
-          append(main, element("h2", text = artifact.label), element("pre", text = text.toString))
+          append(detail, element("h2", text = artifact.label), element("pre", text = text.toString))
     }
