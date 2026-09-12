@@ -1,5 +1,5 @@
 {
-  "base": "http://127.0.0.1:56202/design/0.2/",
+  "base": "http://127.0.0.1:52767/source/design/0.2/",
   "checks": [
     "Understand choice reaches its page",
     "Public choice reaches product",

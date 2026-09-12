@@ -1,9 +1,9 @@
 {
-  "book": "http://127.0.0.1:60693/",
-  "product": "http://127.0.0.1:60692/",
-  "sourceFiles": 382,
+  "book": "http://127.0.0.1:52767/",
+  "product": "http://127.0.0.1:52766/",
+  "sourceFiles": 383,
   "checks": [
-    "Separate book serves the original drawing",
+    "Separate book pairs original labels with a redrawn infographic",
     "Every exported source matches its source-catalog fingerprint",
     "financing entry links to separate product",
     "composer entry links to separate product",

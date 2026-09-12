@@ -1,5 +1,9 @@
 # Walk through the book, one decision at a time
 
+The [continuous reader update](CONTINUOUS-READER.md) keeps these destinations and
+replaces page reloads with persistent scenes, fixed carousel edges and shorter prose.
+The author companion is rendered directly; original diagrams are redrawn in the shared style.
+
 Start at `design/0.2/book-overview.html`. A reader sees a short explanation and two
 choices. There is no navigation drawer or selector strip to learn. The four paths
 separate the reader's purpose before presenting the detailed material.

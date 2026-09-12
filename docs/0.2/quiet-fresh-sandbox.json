@@ -1,28 +1,21 @@
 {
-  "states": {
+  "scope": "Fresh delivery sandbox; GET observations only; no commands submitted",
+  "product": "http://127.0.0.1:52766/",
+  "observations": {
     "bank": {
-      "actor": "bank",
       "application": "pending",
       "workflow": "waiting",
-      "private": true,
-      "eligible": [
-        "approve-financing"
-      ]
+      "hasPrivateDetails": true
     },
     "buyer": {
-      "actor": "buyer",
       "application": null,
       "workflow": "waiting",
-      "private": false,
-      "eligible": []
+      "hasPrivateDetails": false
     },
     "reviewer": {
-      "actor": "reviewer",
       "application": null,
       "workflow": "waiting",
-      "private": false,
-      "eligible": []
+      "hasPrivateDetails": false
     }
-  },
-  "mutatingCommandsSubmitted": 0
+  }
 }

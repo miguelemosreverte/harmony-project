@@ -35,7 +35,7 @@
     "coverage at 1280 fits the viewport",
     "laboratory at 1280 has at most two interactions: [\"‹\",\"›\"]",
     "laboratory at 1280 fits the viewport",
-    "sandbox at 1280 has at most two interactions: [\"‹\",\"›\"]",
+    "sandbox at 1280 has at most two interactions: [\"Follow the recordingA preserved Canton handoff.Explore →\",\"Continue readingFollow the next chapter.Continue →\"]",
     "sandbox at 1280 fits the viewport",
     "welcome at 390 has at most two interactions: [\"I want to understand it.Follow the product, or explore its code.Begin →\",\"I want to verify it.Review the implementation, or trace the original proposal.Begin →\"]",
     "welcome at 390 fits the viewport",
@@ -71,7 +71,7 @@
     "coverage at 390 fits the viewport",
     "laboratory at 390 has at most two interactions: [\"‹\",\"›\"]",
     "laboratory at 390 fits the viewport",
-    "sandbox at 390 has at most two interactions: [\"‹\",\"›\"]",
+    "sandbox at 390 has at most two interactions: [\"Follow the recordingA preserved Canton handoff.Explore →\",\"Continue readingFollow the next chapter.Continue →\"]",
     "sandbox at 390 fits the viewport",
     "No browser exceptions or failed assets"
   ],
@@ -340,8 +340,8 @@
       "interactions": {
         "count": 2,
         "labels": [
-          "‹",
-          "›"
+          "Follow the recordingA preserved Canton handoff.Explore →",
+          "Continue readingFollow the next chapter.Continue →"
         ]
       },
       "screenshot": "sandbox-1280.png"
@@ -610,8 +610,8 @@
       "interactions": {
         "count": 2,
         "labels": [
-          "‹",
-          "›"
+          "Follow the recordingA preserved Canton handoff.Explore →",
+          "Continue readingFollow the next chapter.Continue →"
         ]
       },
       "screenshot": "sandbox-390.png"

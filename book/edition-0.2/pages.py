@@ -18,7 +18,7 @@ def json_script(value):
 
 
 def paging(previous, previous_label, following, following_label):
-    return f'<nav class="quiet-paging" aria-label="Continue reading"><a id="page-previous" href="{previous}">{previous_label}</a><a id="page-next" href="{following}">{following_label}</a></nav>'
+    return f'<nav class="quiet-paging" aria-label="Continue reading"><a id="page-previous" href="{previous}" aria-label="{escape(previous_label)}" title="{escape(previous_label)}">‹</a><a id="page-next" href="{following}" aria-label="{escape(following_label)}" title="{escape(following_label)}">›</a></nav>'
 
 
 def shell(title, body, slug='', prefix='', kind='chapter', stories=None):
@@ -49,7 +49,7 @@ def passage(p,corpus):
 
 
 def story_panel(stories):
-    return '''<section id="chapter-try" class="mode-panel" data-mode="try"><p class="eyebrow">Recorded ledger story · <span id="recorded-step">Start</span></p><div id="story-carousel" class="story-carousel"><div id="story-scene" aria-live="polite"></div></div><nav class="quiet-paging" aria-label="Story scenes"><button id="previous-step">← Previous</button><button id="next-step">Next →</button></nav><p class="citation" id="recording-provenance"></p></section>'''
+    return '''<section id="chapter-try" class="mode-panel" data-mode="try"><p class="eyebrow">Recorded ledger story · <span id="recorded-step">Start</span></p><div id="story-carousel" class="story-carousel"><div id="story-scene" aria-live="polite"></div></div><nav class="quiet-paging" aria-label="Story scenes"><button id="previous-step" aria-label="Previous scene">‹</button><button id="next-step" aria-label="Next scene">›</button></nav><p class="citation" id="recording-provenance"></p></section>'''
 
 
 
@@ -85,7 +85,7 @@ def review():
 
 
 def sandbox():
-    return shell('Make a live handoff','''<main id="main" class="quiet-content"><p class="eyebrow">A separate, live application</p><h1>Make the handoff yourself.</h1><p class="lead">Open Bank and approve the private financing case. Then open Buyer and use that approval to continue.</p><div id="live-entry"><p>Start the local sandbox and open its private participant launcher.</p><pre>scripts/start-sandbox</pre></div><p class="quiet-note">The product has its own address and participant sessions. A shared URL identifies a task; it does not grant access. Purchase and custody transfer remain recorded examples.</p><nav class="quiet-paging"><a id="sandbox-enter" href="laboratory.html?story=live-handoff">Follow the recorded handoff →</a><a href="chapters/03-financing-to-offer.html">Return to Alice’s story →</a></nav></main>''',kind='sandbox')
+    return shell('Make a live handoff','''<main id="main" class="quiet-content"><p class="eyebrow">A separate, live application</p><h1>Make the handoff yourself.</h1><p class="lead">Open Bank and approve the private financing case. Then open Buyer and use that approval to continue.</p><div id="live-entry"><p>Start the local sandbox and open its private participant launcher.</p><pre>scripts/start-sandbox</pre></div><p class="quiet-note">The product has its own address and participant sessions. A shared URL identifies a task; it does not grant access. Purchase and custody transfer remain recorded examples.</p><div class="quiet-choices"><a id="sandbox-enter" href="laboratory.html?story=live-handoff"><h2>Follow the recording</h2><p>A preserved Canton handoff.</p><span>Explore →</span></a><a href="chapters/03-financing-to-offer.html"><h2>Continue reading</h2><p>Follow the next chapter.</p><span>Continue →</span></a></div></main>''',kind='sandbox')
 
 
 def outcome(purchase=True):

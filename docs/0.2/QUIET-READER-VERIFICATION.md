@@ -1,5 +1,8 @@
 # Reader.3 verification
 
+Historical checkpoint. [Reader.4](CONTINUOUS-READER.md) supersedes its page reloads,
+embedded companions and flowing controls; the original evidence remains below.
+
 This checkpoint applies the two-interaction contract to the book and live product.
 The [authored walkthrough](WALKTHROUGH.md) explains each screen, its purpose and its
 next destination. The [book captures](PAGE-REVIEW.md) and

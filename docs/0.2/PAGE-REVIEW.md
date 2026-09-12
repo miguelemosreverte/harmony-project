@@ -193,7 +193,7 @@ Purpose: Explain the separate live application and its participant identity.
 
 Expected next action: Enter the live application when available, or follow the recording; return to Alice.
 
-Visible interactions: ‹ / ›.
+Visible interactions: Follow the recordingA preserved Canton handoff.Explore → / Continue readingFollow the next chapter.Continue →.
 
 ![Desktop sandbox](../../design/0.2/quiet-review/sandbox-1280.png)
 ![Mobile sandbox](../../design/0.2/quiet-review/sandbox-390.png)

@@ -1,6 +1,8 @@
 // Keep the shell and renderer loaded. A chapter owns its listeners until the next mount.
 (() => {
   const view=HarmoniaView;
+  // History changes the document base URL; persistent head assets need absolute addresses.
+  for(const link of document.head.querySelectorAll('link[href]'))link.href=link.href;
   const initial=JSON.parse(document.getElementById('view-config').textContent);
   const base=new URL(initial.base,location.href);
   let path=location.pathname, shown=location.href, request=0;
@@ -20,6 +22,7 @@
         control.textContent=i===0?'‹':'›';
       });
     }
+    for(const img of document.querySelectorAll('img[src]')){const url=new URL(img.getAttribute('src'),location.href).href;if(img.getAttribute('src')!==url)img.src=url;}
     for(const a of document.querySelectorAll('a[href]')){
       const u=new URL(a.getAttribute('href'),location.href);
       if(u.origin!==location.origin)continue;
