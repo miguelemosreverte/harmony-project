@@ -198,3 +198,15 @@ Visible interactions: Follow the recordingA preserved Canton handoff.Explore →
 ![Desktop sandbox](../../design/0.2/quiet-review/sandbox-1280.png)
 ![Mobile sandbox](../../design/0.2/quiet-review/sandbox-390.png)
 
+
+## Original contract model
+
+Purpose: preserve the original template and interface names beside a dedicated
+infographic of their proposed relationships. The current implementation limit is
+explicit; a general financing overview does not stand in for this diagram.
+
+Next action: previous or next original passage. Both controls share the story
+carousel's fixed positions.
+
+![Desktop contract model](../../design/0.2/quiet-review/author-contract-1280.png)
+![Mobile contract model](../../design/0.2/quiet-review/author-contract-390.png)

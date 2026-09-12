@@ -57,11 +57,11 @@ The opening reviewer screen contains 99 visible words, down from 216.
 | Shared renderer and reader tests | Valid diagrams for all 130 observed moments; expectations cannot alter the observed scene |
 | Source and quotation build | 28 checks; 736 original units preserved, including readable original diagram labels |
 | Complete reading routes | 674 assertions; 14 reviewer frames, 26 passages, 32 recordings and 130 observations |
-| Continuous reader | 31 assertions; retained objects, fixed control rectangles, failed-request recovery and offline history |
+| Continuous reader | 35 assertions; retained objects, fixed control rectangles, failed-request recovery and offline history |
 | Visual walkthrough | 36 desktop/mobile captures; two interactions and no horizontal page overflow |
 | Live walkthrough | 73 assertions and 30 captures; financing, consented execution and adapter compilation |
 | Live navigation | 11 assertions; retained document, stable draft controls and history, without ledger mutations |
-| Delivered source | All 383 catalogued files match their served SHA-256 fingerprints |
+| Delivered source | All 384 catalogued files match their served SHA-256 fingerprints |
 | Standalone export | Two-control playback, readable no-JavaScript chapters and an inspected A4 PDF |
 
 See [the screen review](PAGE-REVIEW.md), [continuous reader checks](continuous-reader.json),
@@ -79,3 +79,7 @@ node design/0.2/checks/continuous-live.mjs http://127.0.0.1:CDP_PORT PRIVATE_SES
 The live stability script follows the completed plan from `quiet-live.mjs` and only
 edits an unsubmitted draft. Use a separate `scripts/harmonia export-book` directory
 for `quiet-export.mjs`; the sandbox's book host opens the curated edition directly.
+
+The original component and contract-model passages have their own redrawn proposal
+diagrams. Their original names are checked independently of the general product
+overview; current implementation limits remain alongside them.

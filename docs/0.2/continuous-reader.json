@@ -9,6 +9,7 @@
     "Back restores the exact frame without a reload at 1280",
     "Reviewer turns in the same map at 1280",
     "Reviewer has no copied source drawings at 1280",
+    "Author and story controls share the same positions at 1280",
     "Author uses a shared renderer without embedded pages at 1280",
     "Author retains its document at 1280",
     "Purchase retains scene and arrow at 390",
@@ -19,12 +20,15 @@
     "Back restores the exact frame without a reload at 390",
     "Reviewer turns in the same map at 390",
     "Reviewer has no copied source drawings at 390",
+    "Author and story controls share the same positions at 390",
     "Author uses a shared renderer without embedded pages at 390",
     "Author retains its document at 390",
     "No empty painted page across turns at 1280",
     "No moving carousel target in sampled frames at 1280",
     "No empty painted page across turns at 390",
     "No moving carousel target in sampled frames at 390",
+    "Original architecture has its own diagram: architecture-88",
+    "Original architecture has its own diagram: architecture-318",
     "Recursive JSON sorting retains nested values and array order",
     "Displayed expectation uses canonical ordering",
     "Observed diagram updates keep existing cards",
@@ -36,7 +40,7 @@
   "frameSamples": [
     {
       "width": 1280,
-      "count": 24,
+      "count": 23,
       "controls": [
         [
           129,
@@ -54,7 +58,7 @@
     },
     {
       "width": 390,
-      "count": 23,
+      "count": 24,
       "controls": [
         [
           16,

@@ -40,6 +40,7 @@ try{
   check(`Reviewer has no copied source drawings at ${width}`,await b.evaluate(`document.querySelectorAll('img[src*="assets/component-map"],img[src*="assets/contract-model"]').length===0`));
 
   await inspect(width,'author.html?passage=proposal-53');
+  check(`Author and story controls share the same positions at ${width}`,JSON.stringify(before)===JSON.stringify(await b.evaluate(rects)));
   check(`Author uses a shared renderer without embedded pages at ${width}`,await b.evaluate(`!document.querySelector('iframe')&&!!document.querySelector('#companion-frame .workflow-node,#companion-frame .scene-person')`));
   for(let n=0;n<3;n++){await b.evaluate(`document.querySelector('#page-next').click()`);await b.wait(200);}
   check(`Author retains its document at ${width}`,await b.evaluate('document===readerDocument'));
@@ -49,6 +50,11 @@ try{
  for(const sample of samples){
   check(`No empty painted page across turns at ${sample.width}`,sample.frames.length>2&&sample.frames.every(f=>f.body&&f.nodes>0));
   check(`No moving carousel target in sampled frames at ${sample.width}`,sample.frames.every(f=>JSON.stringify(f.controls)===JSON.stringify(sample.frames[0].controls)));
+ }
+ for(const [passage,labels] of [['architecture-88',['harmonia-dapp','harmonia-builder','Source application DAR']],['architecture-318',['WorkflowDefinition','WorkflowInstance','StepAssignment','HarmoniaStepAction']]]){
+  await b.navigate(new URL('author.html?passage='+passage,base).href);await b.until('!!document.querySelector("#companion-frame .workflow-node")');
+  const actual=await b.evaluate('[...document.querySelectorAll("#companion-frame .workflow-label")].map(n=>n.textContent)');
+  check('Original architecture has its own diagram: '+passage,labels.every(label=>actual.includes(label)));
  }
  await b.navigate(new URL('laboratory.html?story=branch-approved&step=1',base).href);
  await b.until('!!document.querySelector(".observed-comparison pre")');
