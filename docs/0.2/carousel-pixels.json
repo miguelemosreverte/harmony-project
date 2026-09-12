@@ -41,15 +41,15 @@
       "from": "purchase-rejected:0",
       "to": "purchase-rejected:1",
       "width": 1056,
-      "changed_pixels": 2895,
-      "changed_percent": 0.513
+      "changed_pixels": 2913,
+      "changed_percent": 0.517
     },
     {
       "from": "purchase-rejected:1",
       "to": "purchase-rejected:3",
       "width": 1056,
-      "changed_pixels": 75700,
-      "changed_percent": 13.424
+      "changed_pixels": 75300,
+      "changed_percent": 13.353
     },
     {
       "from": "transfer-approved:0",
@@ -181,15 +181,15 @@
       "from": "purchase-rejected:0",
       "to": "purchase-rejected:1",
       "width": 366,
-      "changed_pixels": 1999,
-      "changed_percent": 0.794
+      "changed_pixels": 2018,
+      "changed_percent": 0.801
     },
     {
       "from": "purchase-rejected:1",
       "to": "purchase-rejected:3",
       "width": 366,
-      "changed_pixels": 30059,
-      "changed_percent": 11.937
+      "changed_pixels": 29820,
+      "changed_percent": 11.842
     },
     {
       "from": "transfer-approved:0",
@@ -265,8 +265,8 @@
       "from": "transfer-final-leg-rejected:3",
       "to": "transfer-final-leg-rejected:4",
       "width": 366,
-      "changed_pixels": 9992,
-      "changed_percent": 5.19
+      "changed_pixels": 9986,
+      "changed_percent": 5.187
     },
     {
       "from": "transfer-final-leg-rejected:4",

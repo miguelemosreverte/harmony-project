@@ -17,8 +17,10 @@ try{
   await b.screenshot(`design/0.2/carousel-review/live-financing-${width}.png`);
   await actor('bank','view=composer&new=1');await b.until('!!document.querySelector("#composition-name")');
   await b.evaluate('window.retained=document.querySelector(".editor-stage .workflow-diagram");window.cards=[...retained.querySelectorAll(".workflow-node")]');
+  const questionY=await b.evaluate('document.querySelector("#composition-editor .carousel-path").getBoundingClientRect().y');
   for(const id of ['Reference','Actor(0)','Integration(0)','Review','Name']){
    await click(`#composition-editor [data-stop="${id}"]`);
+   check(`${width} draft ${id}: question row stays fixed`,Math.abs(questionY-await b.evaluate('document.querySelector("#composition-editor .carousel-path").getBoundingClientRect().y'))<1);
    check(`${width} draft ${id}: retained infographic`,await b.evaluate('retained===document.querySelector(".editor-stage .workflow-diagram")&&cards.every((n,i)=>n===retained.querySelectorAll(".workflow-node")[i])'));
    check(`${width} draft ${id}: selected question restored in URL`,await b.evaluate(`new URL(location.href).searchParams.get('question')===${JSON.stringify(id)}`));
   }

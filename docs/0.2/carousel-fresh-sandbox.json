@@ -1,0 +1,23 @@
+{
+  "scope": "Fresh disposable network, read-only starting-state check; served browser matches this checkout",
+  "participants": [
+    {
+      "role": "bank",
+      "workflow": "waiting",
+      "private_details_visible": true,
+      "eligible_actions": 1
+    },
+    {
+      "role": "buyer",
+      "workflow": "waiting",
+      "private_details_visible": false,
+      "eligible_actions": 0
+    },
+    {
+      "role": "reviewer",
+      "workflow": "waiting",
+      "private_details_visible": false,
+      "eligible_actions": 0
+    }
+  ]
+}

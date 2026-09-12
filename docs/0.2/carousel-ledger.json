@@ -1,0 +1,14 @@
+{
+  "scope": "Real commands through the Scala UI, service, Canton and Daml compiler on one disposable local network",
+  "checks": [
+    "Bank approval becomes observed approval",
+    "Buyer continuation completes the handoff",
+    "Branch choices preserve the intended typed plan",
+    "Proposed plan is recorded without bypassing consent",
+    "Both assigned actions complete after participant consent",
+    "Compiler result retains the package infographic",
+    "Compilation is observed separately from registration",
+    "No browser errors"
+  ],
+  "errors": []
+}

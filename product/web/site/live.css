@@ -139,3 +139,11 @@ body:has(.workflow-dock){padding-bottom:270px}
 .editor-fields>input{display:block;width:100%;max-width:640px;min-height:56px;padding:14px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink)}
 @media(max-width:700px){.workflow-dock .carousel-path{grid-template-columns:60px minmax(0,1fr)}.editor-fields h1{font-size:1.15rem}}
 @media print{.workflow-dock,.editor-fields>button{display:none}body:has(.workflow-dock){padding-bottom:0}}
+.live-main:has(#financing):has(.workflow-dock)::after{height:250px}
+.editor-stage .workflow-caption{display:none}
+@media(max-width:700px){.editor-stage .workflow-map{gap:26px;padding:14px 0}.editor-stage .workflow-node{min-height:100px;padding:12px;gap:6px}.editor-stage .workflow-symbol{width:28px;height:28px;font-size:15px}}
+/* Reserve the answer lane even when this question has no branches. */
+.composition-editor .workflow-dock{height:156px}
+.composition-editor .step-carousel{grid-template-rows:64px 64px;gap:8px}
+.composition-editor .carousel-path:first-child{grid-row:1}
+.composition-editor .carousel-path:nth-child(2){grid-row:2}
