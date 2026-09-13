@@ -13,6 +13,7 @@
     shown=location.href;
     Object.assign(document.documentElement.dataset,{theme:s.theme,text:s.text,embed:String(s.embed),presentation:String(s.present)});
     for(const panel of document.querySelectorAll('[data-mode]'))panel.hidden=panel.dataset.mode!==s.view;
+    document.querySelector('.quiet-location').textContent=document.getElementById('story-scene')&&s.view==='try'?'Recorded example':'The field guide';
     const heading=document.querySelector('.chapter-heading');if(heading)heading.hidden=s.view==='try';
     for(const nav of document.querySelectorAll('.quiet-paging')){
       nav.setAttribute('aria-label','Story carousel');

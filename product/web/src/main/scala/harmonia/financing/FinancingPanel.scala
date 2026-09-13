@@ -81,6 +81,14 @@ final class FinancingPanel:
     scene.render(
       frame.copy(
         focus = selected._3,
+        badge = Some(
+          SceneBadge(
+            if selected._4 == DiagramState.Complete then "Completed"
+            else if selected._4 == DiagramState.Current then "Ready"
+            else "Waiting",
+            selected._4
+          )
+        ),
         observation = Some(SceneObservation("Inspecting", selected._2, selected._4.toString))
       )
     )

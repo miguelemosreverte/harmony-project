@@ -18,10 +18,8 @@ HarmoniaView.mounts.push(() => {
       const sequences=Object.fromEntries(Object.keys(view.config.stories).map(key=>[key,[...new Set([...featured[key],...(key===s.story?[s.step]:[])])].sort((a,b)=>a-b)]));
       const sequence=sequences[s.story],index=sequence.indexOf(s.step);
       const frame=JSON.parse(projectHarmoniaRecording(JSON.stringify(story),s.step,'all'));
-      frame.observation.action=frame.title;
       renderHarmoniaScene(scene,JSON.stringify(frame));
-      document.getElementById('recorded-step').textContent=`${index+1} of ${sequence.length}`;
-      const paths=Object.entries(sequences).map(([key,stops])=>({id:key,label:key.includes('approved')?'Approval path':'Refusal path',steps:stops.map((step,i)=>{
+      const paths=Object.entries(sequences).map(([key,stops])=>({id:key,label:key.includes('approved')?'Approval path':'Refusal path',sharedPrefix:key.includes('approved')?0:purchase?1:6,outcome:key.includes('approved')?'complete':'refused',steps:stops.map((step,i)=>{
         const unit=view.config.stories[key].presentation.units[step-1];
         return {id:key+':'+step,label:step===0?'Begin':labels[unit.id]||unit.id.replaceAll('-',' '),state:unit?.actual.outcome==='rejected'||unit?.actual.application==='rejected'?'refused':key===s.story&&i<index?'complete':key===s.story&&i===index?'current':'pending'};
       })}));
@@ -43,7 +41,8 @@ HarmoniaView.mounts.push(() => {
       forward=()=>step+1<units.length?view.update({step:step+1}):storyIndex+1<keys.length?view.update({story:keys[storyIndex+1],step:0}):move('coverage.html');
       previous.textContent=step?'← Previous observation':storyIndex?'← Previous example':'← Product overview';next.textContent=step+1<units.length?'Next observation →':storyIndex+1<keys.length?'Next example →':'Finish the recorded review →';
     }
-    document.getElementById('recording-provenance').textContent=`Recorded on Canton · ${story.provenance.revision.slice(0,12)} · playback only.`;
+    const provenance=document.getElementById('recording-provenance');
+    if(provenance)provenance.textContent=`Recorded on Canton · ${story.provenance.revision.slice(0,12)} · playback only.`;
   });
   if(view.state.embed)return;
   previous.onclick=()=>back();next.onclick=()=>forward();

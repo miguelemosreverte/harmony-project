@@ -17,14 +17,14 @@ try{
   await b.screenshot(`design/0.2/carousel-review/live-financing-${width}.png`);
   await actor('bank','view=composer&new=1');await b.until('!!document.querySelector("#composition-name")');
   await b.evaluate('window.retained=document.querySelector(".editor-stage .workflow-diagram");window.cards=[...retained.querySelectorAll(".workflow-node")]');
-  const questionY=await b.evaluate('document.querySelector("#composition-editor .carousel-path").getBoundingClientRect().y');
+  const questionY=await b.evaluate('document.querySelector("#composition-editor .carousel-track").getBoundingClientRect().y');
   for(const id of ['Reference','Actor(0)','Integration(0)','Review','Name']){
    await click(`#composition-editor [data-stop="${id}"]`);
-   check(`${width} draft ${id}: question row stays fixed`,Math.abs(questionY-await b.evaluate('document.querySelector("#composition-editor .carousel-path").getBoundingClientRect().y'))<1);
+   check(`${width} draft ${id}: question row stays fixed`,Math.abs(questionY-await b.evaluate('document.querySelector("#composition-editor .carousel-track").getBoundingClientRect().y'))<1);
    check(`${width} draft ${id}: retained infographic`,await b.evaluate('retained===document.querySelector(".editor-stage .workflow-diagram")&&cards.every((n,i)=>n===retained.querySelectorAll(".workflow-node")[i])'));
    check(`${width} draft ${id}: selected question restored in URL`,await b.evaluate(`new URL(location.href).searchParams.get('question')===${JSON.stringify(id)}`));
   }
-  await click('#composition-editor [data-stop="Actor(0)"]');check(`${width}: actor alternatives live in the rail`,await b.evaluate('document.querySelectorAll("#composition-editor .carousel-path[data-path=choices] button").length===2&&!document.querySelector("#composition-first")'));
+  await click('#composition-editor [data-stop="Actor(0)"]');check(`${width}: actor alternatives live in the rail`,await b.evaluate('document.querySelectorAll("#composition-editor .carousel-answers button").length===2&&!document.querySelector("#composition-first")'));
   await b.screenshot(`design/0.2/carousel-review/live-editor-${width}.png`);
   const url=await b.evaluate('location.href');await b.navigate(url);await b.until(`document.querySelector('#composition-editor [aria-current=step]')?.dataset.stop==='Actor(0)'`);check(`${width}: shared draft address restores its question`,true);
   await actor('bank','view=packages');await b.until('!!document.querySelector("#package-builder .carousel-step")');

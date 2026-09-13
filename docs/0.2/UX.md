@@ -1,11 +1,12 @@
 # UX contract: stable infographics and direct paths
 
 The approved infographic sets the visual standard. Each page answers one question.
-Its workflow stays on screen while a bottom carousel exposes the named steps,
-progress, and alternative outcomes. Every step must communicate a visible change
+Its workflow stays on screen while a bottom graph shows connected stops,
+progress, and alternative outcomes. Names appear on hover or keyboard focus. Every step must communicate a visible change
 or a specific observed attempt. Selection never substitutes for ledger execution.
 
-The [stable carousel contract](STABLE-CAROUSEL.md) supersedes the earlier ban on
+The [compact graph contract](GRAPH-NAVIGATION.md) refines the
+[stable carousel contract](STABLE-CAROUSEL.md), which supersedes the earlier ban on
 clickable progress markers. Outside the workflow dock, keep at most two primary
 interactions. The repository file tree remains one composite interaction. This is
 not permission to add toolbars, selector collections, or control drawers.
@@ -32,13 +33,16 @@ A deep link opens its selected material directly.
 - A deliberate return to the entrance is an exit, not an automatic playback cycle.
 - Prose, citations, diagram objects and line numbers are passive. Actual controls
   visibly respond to hover, keyboard focus, and pressing without moving.
-- Named carousel stops are directly clickable. Each outcome has an explicit path
-  running from left to right. Progress identifies the inspected position; step
-  labels and state colors distinguish pending, complete, skipped, and refused.
+- Connected circles are directly selectable, with 44px touch targets and accessible
+  names. Paths share their common beginning and fork from left to right. A ring
+  identifies the inspected stop; color and endpoint symbols identify outcomes.
 - Workflow branches belong in the dock. They never replace the infographic with
   large choice cards. Root audience entrances remain separate from workflows.
-- Give the public story one useful caption per observation. A short evidence limit
-  follows the scene; do not repeat its mechanism at every step.
+- The featured infographic summarizes who acts, what changes, and what stays
+  private. Put one short state badge beside its actor. Keep application boundaries,
+  document names, and necessary quantities. Avoid duplicate captions, counters,
+  path labels, or revision footers. Recorded context stays in the header; exact
+  run provenance stays in evidence.
 - Keep application editing to one question at a time, with the plan visible.
   Questions can be reached directly in the carousel; answer alternatives appear
   in its branch row. Submission remains an explicit action after review.

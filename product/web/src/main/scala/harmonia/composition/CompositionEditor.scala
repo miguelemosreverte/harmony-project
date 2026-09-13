@@ -260,7 +260,8 @@ final class CompositionEditor(propose: Either[String, Composition] => Unit):
             "Choose",
             answers.zipWithIndex.map((a, i) =>
               CarouselStep("answer-" + i, a._1, DiagramState.Pending)
-            )
+            ),
+            answers = Some(true)
           )
         )
     carousel.render(

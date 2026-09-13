@@ -18,7 +18,7 @@ for frame in report['frames']:
         pairs.append({'from': before['id'], 'to': frame['id'], 'width': image.width,
                       'changed_pixels': pixels, 'changed_percent': round(100*pixels/(image.width*image.height),3)})
     previous[frame['group']] = frame, image
-result = {'scope':'Actual infographic pixels, including the observed-action strip. Changes smaller than 13/255 per channel are ignored.',
+result = {'scope':'Actual infographic pixels, including the compact state badge. Changes smaller than 13/255 per channel are ignored.',
           'max_landmark_drift_css_px':max(frame['drift'] for frame in report['frames']),
           'pairs':pairs}
 Path('docs/0.2/carousel-pixels.json').write_text(json.dumps(result,indent=2)+'\n')

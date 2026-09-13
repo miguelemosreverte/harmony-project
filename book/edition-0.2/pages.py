@@ -49,7 +49,7 @@ def passage(p,corpus):
 
 
 def story_panel(stories):
-    return '''<section id="chapter-try" class="mode-panel" data-mode="try"><p class="eyebrow">Recorded ledger story · <span id="recorded-step">Start</span></p><div id="story-carousel" class="story-carousel"><div id="story-scene" aria-live="polite"></div></div><nav class="quiet-paging" aria-label="Story scenes"><button id="previous-step" aria-label="Previous scene">‹</button><button id="next-step" aria-label="Next scene">›</button></nav><p class="citation" id="recording-provenance"></p></section>'''
+    return '''<section id="chapter-try" class="mode-panel" data-mode="try"><div id="story-carousel" class="story-carousel"><div id="story-scene" aria-live="polite"></div></div><nav class="quiet-paging" aria-label="Story scenes"><button id="previous-step" aria-label="Previous scene">‹</button><button id="next-step" aria-label="Next scene">›</button></nav></section>'''
 
 
 
@@ -62,7 +62,8 @@ def chapter(slug,text,passages,corpus,stories):
     authored=passive(markdown('\n'.join(text.splitlines()[1:])))
     sources=''.join(passage(p,corpus) for p in passages if p.chapter==slug)
     controls=paging(previous,'← Previous chapter',following,next_label)
-    body=f'''<main id="main" class="quiet-content"><div class="chapter-heading"><p class="eyebrow">Chapter {slug[:2]}</p><h1>{CHAPTERS[slug]}</h1></div><article id="chapter-read" class="mode-panel prose" data-mode="read">{controls}<div data-chapter-diagram="{slug}"></div>{authored}</article>{story_panel(stories) if stories else ''}<section id="chapter-sources" class="mode-panel prose" data-mode="sources"><h1>The original words</h1>{sources}{controls.replace('id="page-','id="source-page-')}</section><section class="mode-panel prose" data-mode="evidence"><h1>What this chapter establishes</h1><p>Original quotations establish the proposed requirements. Recorded observations establish the behavior of the referenced run. Neither establishes external adoption.</p>{controls.replace('id="page-','id="evidence-page-')}</section></main>'''
+    provenance=''.join(f'<p class="citation">{escape(story["title"])} · recorded on Canton · revision {escape(story["provenance"]["revision"])} · playback only.</p>' for story in stories.values()) if stories else ''
+    body=f'''<main id="main" class="quiet-content"><div class="chapter-heading"><p class="eyebrow">Chapter {slug[:2]}</p><h1>{CHAPTERS[slug]}</h1></div><article id="chapter-read" class="mode-panel prose" data-mode="read">{controls}<div data-chapter-diagram="{slug}"></div>{authored}</article>{story_panel(stories) if stories else ''}<section id="chapter-sources" class="mode-panel prose" data-mode="sources"><h1>The original words</h1>{sources}{controls.replace('id="page-','id="source-page-')}</section><section class="mode-panel prose" data-mode="evidence"><h1>What this chapter establishes</h1><p>Original quotations establish the proposed requirements. Recorded observations establish the behavior of the referenced run. Neither establishes external adoption.</p>{provenance}{controls.replace('id="page-','id="evidence-page-')}</section></main>'''
     return shell(CHAPTERS[slug],body,slug,'../',stories=stories)
 
 

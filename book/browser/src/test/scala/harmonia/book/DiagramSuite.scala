@@ -70,11 +70,18 @@ class DiagramSuite extends FunSuite:
   test("a committed financing refusal never becomes an approval badge") {
     val declined = RecordedScene(recording("purchase-rejected"), 1)
     assertEquals(declined.approval, Some(DiagramState.Refused))
+    assertEquals(declined.badge.map(_.label), Some("Declined"))
     val approved = RecordedScene(recording("purchase-approved"), 2)
     assertEquals(approved.approval, Some(DiagramState.Complete))
+    assertEquals(approved.badge.map(_.label), Some("Approved"))
     val refusedAttempt = RecordedScene(recording("purchase-approved"), 3)
     assertEquals(refusedAttempt.approval, Some(DiagramState.Complete))
     assert(refusedAttempt.refused)
+    assertEquals(refusedAttempt.badge.map(_.state), Some(DiagramState.Refused))
+    assertEquals(
+      RecordedScene(recording("transfer-final-leg-rejected"), 6).badge.map(_.label),
+      Some("Rolled back")
+    )
   }
 
   test("missing observations are not replaced by a golden success") {

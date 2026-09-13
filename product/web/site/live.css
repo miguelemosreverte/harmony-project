@@ -129,21 +129,22 @@ html{scrollbar-gutter:stable}body{padding-bottom:106px}.live-main{min-height:cal
 #live-refresh,#live-retry{position:fixed;z-index:20;right:var(--action-left);bottom:max(18px,env(safe-area-inset-bottom));width:var(--action-width);height:58px;margin:0;background:var(--surface)}
 
 /* Inspection shares the step rail; ledger submission remains an explicit action below it. */
-body:has(.workflow-dock){padding-bottom:270px}
-.workflow-dock{position:fixed;z-index:20;left:var(--action-left);right:var(--action-left);bottom:88px;height:146px;display:flex;align-items:end;background:var(--surface);padding:10px 0;pointer-events:none}
+body:has(.workflow-dock){padding-bottom:200px}
+.workflow-dock{position:fixed;z-index:20;left:var(--action-left);right:var(--action-left);bottom:88px;height:70px;display:flex;align-items:end;background:var(--surface);padding:10px 0;pointer-events:none}
 .workflow-dock>.step-carousel{width:100%;pointer-events:auto}
-.live-main:has(.workflow-dock)::after{height:250px}
-.workflow-dock .carousel-path{grid-template-columns:84px minmax(0,1fr)}
+.live-main:has(.workflow-dock)::after{height:174px}
 .editor-stage{margin-bottom:24px}.editor-fields h1{font-size:1.4rem;min-height:2.5em}.editor-fields>.eyebrow{display:none}
 .editor-fields>button{position:fixed;z-index:21;bottom:max(18px,env(safe-area-inset-bottom));width:var(--action-width);height:58px;padding:8px 12px;margin:0;border-radius:12px}
 .editor-fields>input{display:block;width:100%;max-width:640px;min-height:56px;padding:14px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink)}
-@media(max-width:700px){.workflow-dock .carousel-path{grid-template-columns:60px minmax(0,1fr)}.editor-fields h1{font-size:1.15rem}}
+@media(max-width:700px){.editor-fields h1{font-size:1.15rem}}
 @media print{.workflow-dock,.editor-fields>button{display:none}body:has(.workflow-dock){padding-bottom:0}}
-.live-main:has(#financing):has(.workflow-dock)::after{height:250px}
+.live-main:has(#financing):has(.workflow-dock)::after{height:174px}
 .editor-stage .workflow-caption{display:none}
 @media(max-width:700px){.editor-stage .workflow-map{gap:26px;padding:14px 0}.editor-stage .workflow-node{min-height:100px;padding:12px;gap:6px}.editor-stage .workflow-symbol{width:28px;height:28px;font-size:15px}}
 /* Reserve the answer lane even when this question has no branches. */
 .composition-editor .workflow-dock{height:156px}
 .composition-editor .step-carousel{grid-template-rows:64px 64px;gap:8px}
-.composition-editor .carousel-path:first-child{grid-row:1}
-.composition-editor .carousel-path:nth-child(2){grid-row:2}
+.composition-editor .carousel-track{grid-row:1;align-self:center}
+.composition-editor .carousel-answers{grid-row:2}
+
+body:has(.composition-editor){padding-bottom:270px}.live-main:has(.composition-editor)::after{height:260px}

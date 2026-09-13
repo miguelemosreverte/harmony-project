@@ -62,7 +62,8 @@ final class SceneView(root: dom.HTMLElement):
     node
 
   def render(frame: SceneFrame): Unit =
-    observation.render(frame.observation)
+    observation.render(if frame.badge.nonEmpty then None else frame.observation)
+    hide(caption, frame.badge.nonEmpty)
     val kind = frame.kind.toString.toLowerCase
     figure.setAttribute("data-kind", kind)
     figure.setAttribute("data-phase", frame.phase.max(0).min(4).toString)
@@ -73,6 +74,8 @@ final class SceneView(root: dom.HTMLElement):
     approval.setAttribute("data-status", approvalState.toString.toLowerCase)
     approval.querySelector(".document-check").textContent =
       if approvalState == DiagramState.Refused then "!" else "✓"
+    approval.querySelector(".artifact-label").textContent =
+      if approvalState == DiagramState.Refused then "Decision" else "Approval"
     figure.setAttribute("aria-label", frame.title)
     privateArea.querySelector(".scene-zone-label").textContent =
       if frame.kind == SceneKind.Transfer then "Source custody" else "Financing"
@@ -125,7 +128,8 @@ final class SceneView(root: dom.HTMLElement):
           place,
           icon,
           element("strong", text = person.name),
-          element("small", text = person.role)
+          element("small", text = person.role),
+          element("span", "scene-badge")
         )
         append(people, place)
       }
@@ -134,6 +138,15 @@ final class SceneView(root: dom.HTMLElement):
     (0 until nodes.length).foreach { index =>
       val person = nodes(index).asInstanceOf[dom.HTMLElement]
       person.classList.toggle("scene-focus", person.getAttribute("data-person") == frame.focus)
+      val badge = person.querySelector(".scene-badge").asInstanceOf[dom.HTMLElement]
+      val active = person.getAttribute("data-person") == frame.focus && frame.badge.nonEmpty
+      hide(badge, !active)
+      if active then
+        frame.badge.foreach { value =>
+          badge.textContent = value.label
+          badge.setAttribute("data-state", value.state.toString.toLowerCase)
+          badge.setAttribute("aria-live", "polite")
+        }
     }
     def person(index: Int): dom.Element =
       people.children(index)

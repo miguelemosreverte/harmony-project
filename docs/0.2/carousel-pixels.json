@@ -1,286 +1,188 @@
 {
-  "scope": "Actual infographic pixels, including the observed-action strip. Changes smaller than 13/255 per channel are ignored.",
+  "scope": "Actual infographic pixels, including the compact state badge. Changes smaller than 13/255 per channel are ignored.",
   "max_landmark_drift_css_px": 5.87109375,
   "pairs": [
     {
       "from": "purchase-approved:0",
       "to": "purchase-approved:2",
       "width": 1056,
-      "changed_pixels": 3609,
-      "changed_percent": 0.64
+      "changed_pixels": 3162,
+      "changed_percent": 0.657
     },
     {
       "from": "purchase-approved:2",
       "to": "purchase-approved:5",
       "width": 1056,
-      "changed_pixels": 12477,
-      "changed_percent": 2.213
+      "changed_pixels": 10517,
+      "changed_percent": 2.184
     },
     {
       "from": "purchase-approved:5",
       "to": "purchase-approved:7",
       "width": 1056,
-      "changed_pixels": 8232,
-      "changed_percent": 1.46
+      "changed_pixels": 8907,
+      "changed_percent": 1.85
     },
     {
       "from": "purchase-approved:7",
       "to": "purchase-approved:8",
       "width": 1056,
-      "changed_pixels": 8185,
-      "changed_percent": 1.451
+      "changed_pixels": 8895,
+      "changed_percent": 1.847
     },
     {
       "from": "purchase-approved:8",
-      "to": "purchase-rejected:0",
-      "width": 1056,
-      "changed_pixels": 13057,
-      "changed_percent": 2.315
-    },
-    {
-      "from": "purchase-rejected:0",
       "to": "purchase-rejected:1",
       "width": 1056,
-      "changed_pixels": 2913,
-      "changed_percent": 0.517
+      "changed_pixels": 12882,
+      "changed_percent": 2.675
     },
     {
       "from": "purchase-rejected:1",
       "to": "purchase-rejected:3",
       "width": 1056,
-      "changed_pixels": 75300,
-      "changed_percent": 13.353
+      "changed_pixels": 12020,
+      "changed_percent": 2.496
     },
     {
       "from": "transfer-approved:0",
       "to": "transfer-approved:1",
       "width": 1056,
-      "changed_pixels": 1882,
-      "changed_percent": 0.282
+      "changed_pixels": 1906,
+      "changed_percent": 0.325
     },
     {
       "from": "transfer-approved:1",
       "to": "transfer-approved:2",
       "width": 1056,
-      "changed_pixels": 3043,
-      "changed_percent": 0.455
+      "changed_pixels": 4468,
+      "changed_percent": 0.762
     },
     {
       "from": "transfer-approved:2",
       "to": "transfer-approved:3",
       "width": 1056,
-      "changed_pixels": 10211,
-      "changed_percent": 1.528
+      "changed_pixels": 8792,
+      "changed_percent": 1.5
     },
     {
       "from": "transfer-approved:3",
       "to": "transfer-approved:4",
       "width": 1056,
-      "changed_pixels": 13522,
-      "changed_percent": 2.023
+      "changed_pixels": 12300,
+      "changed_percent": 2.099
     },
     {
       "from": "transfer-approved:4",
       "to": "transfer-approved:5",
       "width": 1056,
-      "changed_pixels": 1317,
-      "changed_percent": 0.197
+      "changed_pixels": 949,
+      "changed_percent": 0.162
     },
     {
       "from": "transfer-approved:5",
       "to": "transfer-approved:8",
       "width": 1056,
-      "changed_pixels": 13284,
-      "changed_percent": 1.987
+      "changed_pixels": 15609,
+      "changed_percent": 2.663
     },
     {
       "from": "transfer-approved:8",
-      "to": "transfer-final-leg-rejected:0",
-      "width": 1056,
-      "changed_pixels": 10920,
-      "changed_percent": 1.634
-    },
-    {
-      "from": "transfer-final-leg-rejected:0",
-      "to": "transfer-final-leg-rejected:1",
-      "width": 1056,
-      "changed_pixels": 1882,
-      "changed_percent": 0.282
-    },
-    {
-      "from": "transfer-final-leg-rejected:1",
-      "to": "transfer-final-leg-rejected:2",
-      "width": 1056,
-      "changed_pixels": 3043,
-      "changed_percent": 0.455
-    },
-    {
-      "from": "transfer-final-leg-rejected:2",
-      "to": "transfer-final-leg-rejected:3",
-      "width": 1056,
-      "changed_pixels": 10211,
-      "changed_percent": 1.528
-    },
-    {
-      "from": "transfer-final-leg-rejected:3",
-      "to": "transfer-final-leg-rejected:4",
-      "width": 1056,
-      "changed_pixels": 13522,
-      "changed_percent": 2.023
-    },
-    {
-      "from": "transfer-final-leg-rejected:4",
-      "to": "transfer-final-leg-rejected:5",
-      "width": 1056,
-      "changed_pixels": 1317,
-      "changed_percent": 0.197
-    },
-    {
-      "from": "transfer-final-leg-rejected:5",
       "to": "transfer-final-leg-rejected:6",
       "width": 1056,
-      "changed_pixels": 74899,
-      "changed_percent": 11.205
+      "changed_pixels": 8756,
+      "changed_percent": 1.494
     },
     {
       "from": "purchase-approved:0",
       "to": "purchase-approved:2",
       "width": 366,
-      "changed_pixels": 2505,
-      "changed_percent": 0.995
+      "changed_pixels": 2735,
+      "changed_percent": 1.225
     },
     {
       "from": "purchase-approved:2",
       "to": "purchase-approved:5",
       "width": 366,
-      "changed_pixels": 9295,
-      "changed_percent": 3.691
+      "changed_pixels": 8770,
+      "changed_percent": 3.928
     },
     {
       "from": "purchase-approved:5",
       "to": "purchase-approved:7",
       "width": 366,
-      "changed_pixels": 6519,
-      "changed_percent": 2.589
+      "changed_pixels": 7758,
+      "changed_percent": 3.475
     },
     {
       "from": "purchase-approved:7",
       "to": "purchase-approved:8",
       "width": 366,
-      "changed_pixels": 6309,
-      "changed_percent": 2.505
+      "changed_pixels": 7575,
+      "changed_percent": 3.393
     },
     {
       "from": "purchase-approved:8",
-      "to": "purchase-rejected:0",
-      "width": 366,
-      "changed_pixels": 9328,
-      "changed_percent": 3.704
-    },
-    {
-      "from": "purchase-rejected:0",
       "to": "purchase-rejected:1",
       "width": 366,
-      "changed_pixels": 2018,
-      "changed_percent": 0.801
+      "changed_pixels": 10245,
+      "changed_percent": 4.589
     },
     {
       "from": "purchase-rejected:1",
       "to": "purchase-rejected:3",
       "width": 366,
-      "changed_pixels": 29820,
-      "changed_percent": 11.842
+      "changed_pixels": 10031,
+      "changed_percent": 4.493
     },
     {
       "from": "transfer-approved:0",
       "to": "transfer-approved:1",
       "width": 366,
-      "changed_pixels": 1371,
-      "changed_percent": 0.712
+      "changed_pixels": 1893,
+      "changed_percent": 1.154
     },
     {
       "from": "transfer-approved:1",
       "to": "transfer-approved:2",
       "width": 366,
-      "changed_pixels": 2827,
-      "changed_percent": 1.468
+      "changed_pixels": 2434,
+      "changed_percent": 1.484
     },
     {
       "from": "transfer-approved:2",
       "to": "transfer-approved:3",
       "width": 366,
-      "changed_pixels": 7674,
-      "changed_percent": 3.986
+      "changed_pixels": 7564,
+      "changed_percent": 4.613
     },
     {
       "from": "transfer-approved:3",
       "to": "transfer-approved:4",
       "width": 366,
-      "changed_pixels": 9986,
-      "changed_percent": 5.187
+      "changed_pixels": 11254,
+      "changed_percent": 6.864
     },
     {
       "from": "transfer-approved:4",
       "to": "transfer-approved:5",
       "width": 366,
-      "changed_pixels": 995,
-      "changed_percent": 0.517
+      "changed_pixels": 1267,
+      "changed_percent": 0.773
     },
     {
       "from": "transfer-approved:5",
       "to": "transfer-approved:8",
       "width": 366,
-      "changed_pixels": 10448,
-      "changed_percent": 5.427
+      "changed_pixels": 11805,
+      "changed_percent": 7.2
     },
     {
       "from": "transfer-approved:8",
-      "to": "transfer-final-leg-rejected:0",
-      "width": 366,
-      "changed_pixels": 8885,
-      "changed_percent": 4.615
-    },
-    {
-      "from": "transfer-final-leg-rejected:0",
-      "to": "transfer-final-leg-rejected:1",
-      "width": 366,
-      "changed_pixels": 1371,
-      "changed_percent": 0.712
-    },
-    {
-      "from": "transfer-final-leg-rejected:1",
-      "to": "transfer-final-leg-rejected:2",
-      "width": 366,
-      "changed_pixels": 2827,
-      "changed_percent": 1.468
-    },
-    {
-      "from": "transfer-final-leg-rejected:2",
-      "to": "transfer-final-leg-rejected:3",
-      "width": 366,
-      "changed_pixels": 7674,
-      "changed_percent": 3.986
-    },
-    {
-      "from": "transfer-final-leg-rejected:3",
-      "to": "transfer-final-leg-rejected:4",
-      "width": 366,
-      "changed_pixels": 9986,
-      "changed_percent": 5.187
-    },
-    {
-      "from": "transfer-final-leg-rejected:4",
-      "to": "transfer-final-leg-rejected:5",
-      "width": 366,
-      "changed_pixels": 995,
-      "changed_percent": 0.517
-    },
-    {
-      "from": "transfer-final-leg-rejected:5",
       "to": "transfer-final-leg-rejected:6",
       "width": 366,
-      "changed_pixels": 29592,
-      "changed_percent": 15.371
+      "changed_pixels": 6216,
+      "changed_percent": 3.791
     }
   ]
 }

@@ -46,7 +46,7 @@ try{
   await b.evaluate(`HarmoniaView.update({story:${JSON.stringify(story)},step:0})`);
   const steps=await b.evaluate('[...document.querySelectorAll(".carousel-step")].map(n=>n.dataset.stop)');
   let previous='';
-  for(const id of steps){await click(`[data-stop="${id}"]`);const observation=await b.evaluate('document.querySelector("#laboratory-stage .scene-observation").textContent');check(story+'/'+id+': identifies a different observed attempt',observation!==previous);previous=observation;observations++;check(story+'/'+id+': diagram is present',await b.evaluate('!!document.querySelector("#laboratory-stage .scene-map,#laboratory-stage .workflow-map")'));}
+  for(const id of steps){await click(`[data-stop="${id}"]`);const observation=await b.evaluate('(()=>{const scene=document.querySelector("#laboratory-stage .harmonia-scene");return scene?scene.getAttribute("aria-label")+scene.querySelector(".scene-focus").dataset.person+scene.querySelector(".scene-badge:not([hidden])").textContent:document.querySelector("#laboratory-stage .scene-observation").textContent})()');check(story+'/'+id+': identifies a different observed attempt',observation!==previous);previous=observation;observations++;check(story+'/'+id+': diagram is present',await b.evaluate('!!document.querySelector("#laboratory-stage .scene-map,#laboratory-stage .workflow-map")'));}
  }
  check('Every recorded observation remains directly accessible',observations===130);
  for(const page of ['reviewer.html','author.html','chapters/01-product.html']){await load(page);const count=await b.evaluate('document.querySelectorAll(".carousel-step").length');check(page+': direct reading stops',count>1);await b.screenshot(directory+'/'+page.replace('.html','').replaceAll('/','-')+'.png');}
@@ -54,9 +54,9 @@ try{
  for(const page of ['workflows.html','application.html','application-builder.html','sandbox.html','recording-choice.html']){await b.navigate(new URL(page,base).href);await b.until('!!document.querySelector(".route-dock")');check(page+': decision stays beside an infographic',await b.evaluate('!!document.querySelector(".workflow-diagram")&&!document.querySelector(".quiet-choices")'));}
  await load('chapters/03-financing-to-offer.html?step=5');
  const selector='[data-stop="purchase-approved:7"]';const rect=await b.evaluate(`document.querySelector(${JSON.stringify(selector)}).getBoundingClientRect().toJSON()`);
- const before=await b.evaluate(`getComputedStyle(document.querySelector(${JSON.stringify(selector)})).boxShadow`);
+ const before=await b.evaluate(`getComputedStyle(document.querySelector(${JSON.stringify(selector)}).querySelector(".carousel-marker")).boxShadow`);
  await b.cdp('Input.dispatchMouseEvent',{type:'mouseMoved',x:rect.x+rect.width/2,y:rect.y+rect.height/2});await b.wait(150);
- check('A clickable step visibly responds to the mouse',before!==await b.evaluate(`getComputedStyle(document.querySelector(${JSON.stringify(selector)})).boxShadow`));
+ check('A clickable step visibly responds to the mouse',before!==await b.evaluate(`getComputedStyle(document.querySelector(${JSON.stringify(selector)}).querySelector(".carousel-marker")).boxShadow`));
  check('Hover does not move its target',JSON.stringify(rect)===JSON.stringify(await b.evaluate(`document.querySelector(${JSON.stringify(selector)}).getBoundingClientRect().toJSON()`)));
  check('No browser errors',b.errors.length===0);
  await fs.writeFile('docs/0.2/stable-carousel.json',JSON.stringify({base,checks,observations,frames,errors:b.errors},null,2)+'\n');console.log(JSON.stringify({checks:checks.length,observations,frames:frames.length}));

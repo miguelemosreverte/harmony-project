@@ -22,10 +22,6 @@
     "1280 purchase-approved:8: landmarks within 50px",
     "1280 purchase-approved:8: fixed arrow targets",
     "1280 purchase-approved:8: selected stop visible in its track",
-    "1280 purchase-rejected:0: stage and portraits retained",
-    "1280 purchase-rejected:0: landmarks within 50px",
-    "1280 purchase-rejected:0: fixed arrow targets",
-    "1280 purchase-rejected:0: selected stop visible in its track",
     "1280 purchase-rejected:1: stage and portraits retained",
     "1280 purchase-rejected:1: landmarks within 50px",
     "1280 purchase-rejected:1: fixed arrow targets",
@@ -65,30 +61,6 @@
     "1280 transfer-approved:8: landmarks within 50px",
     "1280 transfer-approved:8: fixed arrow targets",
     "1280 transfer-approved:8: selected stop visible in its track",
-    "1280 transfer-final-leg-rejected:0: stage and portraits retained",
-    "1280 transfer-final-leg-rejected:0: landmarks within 50px",
-    "1280 transfer-final-leg-rejected:0: fixed arrow targets",
-    "1280 transfer-final-leg-rejected:0: selected stop visible in its track",
-    "1280 transfer-final-leg-rejected:1: stage and portraits retained",
-    "1280 transfer-final-leg-rejected:1: landmarks within 50px",
-    "1280 transfer-final-leg-rejected:1: fixed arrow targets",
-    "1280 transfer-final-leg-rejected:1: selected stop visible in its track",
-    "1280 transfer-final-leg-rejected:2: stage and portraits retained",
-    "1280 transfer-final-leg-rejected:2: landmarks within 50px",
-    "1280 transfer-final-leg-rejected:2: fixed arrow targets",
-    "1280 transfer-final-leg-rejected:2: selected stop visible in its track",
-    "1280 transfer-final-leg-rejected:3: stage and portraits retained",
-    "1280 transfer-final-leg-rejected:3: landmarks within 50px",
-    "1280 transfer-final-leg-rejected:3: fixed arrow targets",
-    "1280 transfer-final-leg-rejected:3: selected stop visible in its track",
-    "1280 transfer-final-leg-rejected:4: stage and portraits retained",
-    "1280 transfer-final-leg-rejected:4: landmarks within 50px",
-    "1280 transfer-final-leg-rejected:4: fixed arrow targets",
-    "1280 transfer-final-leg-rejected:4: selected stop visible in its track",
-    "1280 transfer-final-leg-rejected:5: stage and portraits retained",
-    "1280 transfer-final-leg-rejected:5: landmarks within 50px",
-    "1280 transfer-final-leg-rejected:5: fixed arrow targets",
-    "1280 transfer-final-leg-rejected:5: selected stop visible in its track",
     "1280 transfer-final-leg-rejected:6: stage and portraits retained",
     "1280 transfer-final-leg-rejected:6: landmarks within 50px",
     "1280 transfer-final-leg-rejected:6: fixed arrow targets",
@@ -117,10 +89,6 @@
     "390 purchase-approved:8: landmarks within 50px",
     "390 purchase-approved:8: fixed arrow targets",
     "390 purchase-approved:8: selected stop visible in its track",
-    "390 purchase-rejected:0: stage and portraits retained",
-    "390 purchase-rejected:0: landmarks within 50px",
-    "390 purchase-rejected:0: fixed arrow targets",
-    "390 purchase-rejected:0: selected stop visible in its track",
     "390 purchase-rejected:1: stage and portraits retained",
     "390 purchase-rejected:1: landmarks within 50px",
     "390 purchase-rejected:1: fixed arrow targets",
@@ -160,30 +128,6 @@
     "390 transfer-approved:8: landmarks within 50px",
     "390 transfer-approved:8: fixed arrow targets",
     "390 transfer-approved:8: selected stop visible in its track",
-    "390 transfer-final-leg-rejected:0: stage and portraits retained",
-    "390 transfer-final-leg-rejected:0: landmarks within 50px",
-    "390 transfer-final-leg-rejected:0: fixed arrow targets",
-    "390 transfer-final-leg-rejected:0: selected stop visible in its track",
-    "390 transfer-final-leg-rejected:1: stage and portraits retained",
-    "390 transfer-final-leg-rejected:1: landmarks within 50px",
-    "390 transfer-final-leg-rejected:1: fixed arrow targets",
-    "390 transfer-final-leg-rejected:1: selected stop visible in its track",
-    "390 transfer-final-leg-rejected:2: stage and portraits retained",
-    "390 transfer-final-leg-rejected:2: landmarks within 50px",
-    "390 transfer-final-leg-rejected:2: fixed arrow targets",
-    "390 transfer-final-leg-rejected:2: selected stop visible in its track",
-    "390 transfer-final-leg-rejected:3: stage and portraits retained",
-    "390 transfer-final-leg-rejected:3: landmarks within 50px",
-    "390 transfer-final-leg-rejected:3: fixed arrow targets",
-    "390 transfer-final-leg-rejected:3: selected stop visible in its track",
-    "390 transfer-final-leg-rejected:4: stage and portraits retained",
-    "390 transfer-final-leg-rejected:4: landmarks within 50px",
-    "390 transfer-final-leg-rejected:4: fixed arrow targets",
-    "390 transfer-final-leg-rejected:4: selected stop visible in its track",
-    "390 transfer-final-leg-rejected:5: stage and portraits retained",
-    "390 transfer-final-leg-rejected:5: landmarks within 50px",
-    "390 transfer-final-leg-rejected:5: fixed arrow targets",
-    "390 transfer-final-leg-rejected:5: selected stop visible in its track",
     "390 transfer-final-leg-rejected:6: stage and portraits retained",
     "390 transfer-final-leg-rejected:6: landmarks within 50px",
     "390 transfer-final-leg-rejected:6: fixed arrow targets",
@@ -475,9 +419,9 @@
       "drift": 0,
       "clip": {
         "x": 112,
-        "y": 208.484375,
+        "y": 174,
         "width": 1056,
-        "height": 534,
+        "height": 456,
         "scale": 1
       }
     },
@@ -488,9 +432,9 @@
       "drift": 0,
       "clip": {
         "x": 112,
-        "y": 208.484375,
+        "y": 174,
         "width": 1056,
-        "height": 534,
+        "height": 456,
         "scale": 1
       }
     },
@@ -501,9 +445,9 @@
       "drift": 0,
       "clip": {
         "x": 112,
-        "y": 208.484375,
+        "y": 174,
         "width": 1056,
-        "height": 534,
+        "height": 456,
         "scale": 1
       }
     },
@@ -514,9 +458,9 @@
       "drift": 0,
       "clip": {
         "x": 112,
-        "y": 208.484375,
+        "y": 174,
         "width": 1056,
-        "height": 534,
+        "height": 456,
         "scale": 1
       }
     },
@@ -527,48 +471,35 @@
       "drift": 0,
       "clip": {
         "x": 112,
-        "y": 208.484375,
+        "y": 174,
         "width": 1056,
-        "height": 534,
+        "height": 456,
         "scale": 1
       }
     },
     {
       "file": "1280-purchase-5",
       "group": "1280-purchase",
-      "id": "purchase-rejected:0",
-      "drift": 0,
+      "id": "purchase-rejected:1",
+      "drift": 0.80859375,
       "clip": {
         "x": 112,
-        "y": 208.484375,
+        "y": 174,
         "width": 1056,
-        "height": 534,
+        "height": 456,
         "scale": 1
       }
     },
     {
       "file": "1280-purchase-6",
       "group": "1280-purchase",
-      "id": "purchase-rejected:1",
-      "drift": 0,
-      "clip": {
-        "x": 112,
-        "y": 208.484375,
-        "width": 1056,
-        "height": 534,
-        "scale": 1
-      }
-    },
-    {
-      "file": "1280-purchase-7",
-      "group": "1280-purchase",
       "id": "purchase-rejected:3",
-      "drift": 0,
+      "drift": 0.80859375,
       "clip": {
         "x": 112,
-        "y": 208.484375,
+        "y": 174,
         "width": 1056,
-        "height": 534,
+        "height": 456,
         "scale": 1
       }
     },
@@ -579,9 +510,9 @@
       "drift": 0,
       "clip": {
         "x": 112,
-        "y": 208.484375,
+        "y": 174,
         "width": 1056,
-        "height": 633,
+        "height": 555,
         "scale": 1
       }
     },
@@ -592,9 +523,9 @@
       "drift": 0,
       "clip": {
         "x": 112,
-        "y": 208.484375,
+        "y": 174,
         "width": 1056,
-        "height": 633,
+        "height": 555,
         "scale": 1
       }
     },
@@ -605,9 +536,9 @@
       "drift": 5.87109375,
       "clip": {
         "x": 112,
-        "y": 208.484375,
+        "y": 174,
         "width": 1056,
-        "height": 633,
+        "height": 555,
         "scale": 1
       }
     },
@@ -618,9 +549,9 @@
       "drift": 5.87109375,
       "clip": {
         "x": 112,
-        "y": 208.484375,
+        "y": 174,
         "width": 1056,
-        "height": 633,
+        "height": 555,
         "scale": 1
       }
     },
@@ -631,9 +562,9 @@
       "drift": 5.87109375,
       "clip": {
         "x": 112,
-        "y": 208.484375,
+        "y": 174,
         "width": 1056,
-        "height": 633,
+        "height": 555,
         "scale": 1
       }
     },
@@ -644,9 +575,9 @@
       "drift": 5.87109375,
       "clip": {
         "x": 112,
-        "y": 208.484375,
+        "y": 174,
         "width": 1056,
-        "height": 633,
+        "height": 555,
         "scale": 1
       }
     },
@@ -657,100 +588,22 @@
       "drift": 0.9281005859375,
       "clip": {
         "x": 112,
-        "y": 208.484375,
+        "y": 174,
         "width": 1056,
-        "height": 633,
+        "height": 555,
         "scale": 1
       }
     },
     {
       "file": "1280-transfer-7",
       "group": "1280-transfer",
-      "id": "transfer-final-leg-rejected:0",
-      "drift": 0,
-      "clip": {
-        "x": 112,
-        "y": 208.484375,
-        "width": 1056,
-        "height": 633,
-        "scale": 1
-      }
-    },
-    {
-      "file": "1280-transfer-8",
-      "group": "1280-transfer",
-      "id": "transfer-final-leg-rejected:1",
-      "drift": 0,
-      "clip": {
-        "x": 112,
-        "y": 208.484375,
-        "width": 1056,
-        "height": 633,
-        "scale": 1
-      }
-    },
-    {
-      "file": "1280-transfer-9",
-      "group": "1280-transfer",
-      "id": "transfer-final-leg-rejected:2",
-      "drift": 5.87109375,
-      "clip": {
-        "x": 112,
-        "y": 208.484375,
-        "width": 1056,
-        "height": 633,
-        "scale": 1
-      }
-    },
-    {
-      "file": "1280-transfer-10",
-      "group": "1280-transfer",
-      "id": "transfer-final-leg-rejected:3",
-      "drift": 5.87109375,
-      "clip": {
-        "x": 112,
-        "y": 208.484375,
-        "width": 1056,
-        "height": 633,
-        "scale": 1
-      }
-    },
-    {
-      "file": "1280-transfer-11",
-      "group": "1280-transfer",
-      "id": "transfer-final-leg-rejected:4",
-      "drift": 5.87109375,
-      "clip": {
-        "x": 112,
-        "y": 208.484375,
-        "width": 1056,
-        "height": 633,
-        "scale": 1
-      }
-    },
-    {
-      "file": "1280-transfer-12",
-      "group": "1280-transfer",
-      "id": "transfer-final-leg-rejected:5",
-      "drift": 5.87109375,
-      "clip": {
-        "x": 112,
-        "y": 208.484375,
-        "width": 1056,
-        "height": 633,
-        "scale": 1
-      }
-    },
-    {
-      "file": "1280-transfer-13",
-      "group": "1280-transfer",
       "id": "transfer-final-leg-rejected:6",
       "drift": 5.87109375,
       "clip": {
         "x": 112,
-        "y": 208.484375,
+        "y": 174,
         "width": 1056,
-        "height": 633,
+        "height": 555,
         "scale": 1
       }
     },
@@ -761,9 +614,9 @@
       "drift": 0,
       "clip": {
         "x": 12,
-        "y": 116.484375,
+        "y": 82,
         "width": 366,
-        "height": 688,
+        "height": 610,
         "scale": 1
       }
     },
@@ -774,9 +627,9 @@
       "drift": 0,
       "clip": {
         "x": 12,
-        "y": 116.484375,
+        "y": 82,
         "width": 366,
-        "height": 688,
+        "height": 610,
         "scale": 1
       }
     },
@@ -787,9 +640,9 @@
       "drift": 0,
       "clip": {
         "x": 12,
-        "y": 116.484375,
+        "y": 82,
         "width": 366,
-        "height": 688,
+        "height": 610,
         "scale": 1
       }
     },
@@ -800,9 +653,9 @@
       "drift": 0,
       "clip": {
         "x": 12,
-        "y": 116.484375,
+        "y": 82,
         "width": 366,
-        "height": 688,
+        "height": 610,
         "scale": 1
       }
     },
@@ -813,48 +666,35 @@
       "drift": 0,
       "clip": {
         "x": 12,
-        "y": 116.484375,
+        "y": 82,
         "width": 366,
-        "height": 688,
+        "height": 610,
         "scale": 1
       }
     },
     {
       "file": "390-purchase-5",
       "group": "390-purchase",
-      "id": "purchase-rejected:0",
+      "id": "purchase-rejected:1",
       "drift": 0,
       "clip": {
         "x": 12,
-        "y": 116.484375,
+        "y": 82,
         "width": 366,
-        "height": 688,
+        "height": 610,
         "scale": 1
       }
     },
     {
       "file": "390-purchase-6",
       "group": "390-purchase",
-      "id": "purchase-rejected:1",
-      "drift": 0,
-      "clip": {
-        "x": 12,
-        "y": 116.484375,
-        "width": 366,
-        "height": 688,
-        "scale": 1
-      }
-    },
-    {
-      "file": "390-purchase-7",
-      "group": "390-purchase",
       "id": "purchase-rejected:3",
       "drift": 0,
       "clip": {
         "x": 12,
-        "y": 116.484375,
+        "y": 82,
         "width": 366,
-        "height": 688,
+        "height": 610,
         "scale": 1
       }
     },
@@ -865,9 +705,9 @@
       "drift": 0,
       "clip": {
         "x": 12,
-        "y": 116.484375,
+        "y": 82,
         "width": 366,
-        "height": 526,
+        "height": 448,
         "scale": 1
       }
     },
@@ -878,9 +718,9 @@
       "drift": 0,
       "clip": {
         "x": 12,
-        "y": 116.484375,
+        "y": 82,
         "width": 366,
-        "height": 526,
+        "height": 448,
         "scale": 1
       }
     },
@@ -891,9 +731,9 @@
       "drift": 4.890625,
       "clip": {
         "x": 12,
-        "y": 116.484375,
+        "y": 82,
         "width": 366,
-        "height": 526,
+        "height": 448,
         "scale": 1
       }
     },
@@ -904,9 +744,9 @@
       "drift": 4.890625,
       "clip": {
         "x": 12,
-        "y": 116.484375,
+        "y": 82,
         "width": 366,
-        "height": 526,
+        "height": 448,
         "scale": 1
       }
     },
@@ -917,9 +757,9 @@
       "drift": 4.890625,
       "clip": {
         "x": 12,
-        "y": 116.484375,
+        "y": 82,
         "width": 366,
-        "height": 526,
+        "height": 448,
         "scale": 1
       }
     },
@@ -930,9 +770,9 @@
       "drift": 4.890625,
       "clip": {
         "x": 12,
-        "y": 116.484375,
+        "y": 82,
         "width": 366,
-        "height": 526,
+        "height": 448,
         "scale": 1
       }
     },
@@ -943,100 +783,22 @@
       "drift": 0.7734375,
       "clip": {
         "x": 12,
-        "y": 116.484375,
+        "y": 82,
         "width": 366,
-        "height": 526,
+        "height": 448,
         "scale": 1
       }
     },
     {
       "file": "390-transfer-7",
       "group": "390-transfer",
-      "id": "transfer-final-leg-rejected:0",
-      "drift": 0,
-      "clip": {
-        "x": 12,
-        "y": 116.484375,
-        "width": 366,
-        "height": 526,
-        "scale": 1
-      }
-    },
-    {
-      "file": "390-transfer-8",
-      "group": "390-transfer",
-      "id": "transfer-final-leg-rejected:1",
-      "drift": 0,
-      "clip": {
-        "x": 12,
-        "y": 116.484375,
-        "width": 366,
-        "height": 526,
-        "scale": 1
-      }
-    },
-    {
-      "file": "390-transfer-9",
-      "group": "390-transfer",
-      "id": "transfer-final-leg-rejected:2",
-      "drift": 4.890625,
-      "clip": {
-        "x": 12,
-        "y": 116.484375,
-        "width": 366,
-        "height": 526,
-        "scale": 1
-      }
-    },
-    {
-      "file": "390-transfer-10",
-      "group": "390-transfer",
-      "id": "transfer-final-leg-rejected:3",
-      "drift": 4.890625,
-      "clip": {
-        "x": 12,
-        "y": 116.484375,
-        "width": 366,
-        "height": 526,
-        "scale": 1
-      }
-    },
-    {
-      "file": "390-transfer-11",
-      "group": "390-transfer",
-      "id": "transfer-final-leg-rejected:4",
-      "drift": 4.890625,
-      "clip": {
-        "x": 12,
-        "y": 116.484375,
-        "width": 366,
-        "height": 526,
-        "scale": 1
-      }
-    },
-    {
-      "file": "390-transfer-12",
-      "group": "390-transfer",
-      "id": "transfer-final-leg-rejected:5",
-      "drift": 4.890625,
-      "clip": {
-        "x": 12,
-        "y": 116.484375,
-        "width": 366,
-        "height": 526,
-        "scale": 1
-      }
-    },
-    {
-      "file": "390-transfer-13",
-      "group": "390-transfer",
       "id": "transfer-final-leg-rejected:6",
       "drift": 4.890625,
       "clip": {
         "x": 12,
-        "y": 116.484375,
+        "y": 82,
         "width": 366,
-        "height": 526,
+        "height": 448,
         "scale": 1
       }
     }
