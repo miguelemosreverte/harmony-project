@@ -77,7 +77,11 @@ final class CompositionEditor(propose: Either[String, Composition] => Unit):
         "Direct interfaces and adapters can participate." -> "The application keeps its authority."
       case Review =>
         "These are the exact actions I’ll propose." -> "Nothing runs before the buyer consents."
-    Conversation(Speech(Portrait.Bank, "Bank", first), Speech(Portrait.Alice, "Buyer", second))
+    Conversation(
+      Speech(Portrait.Bank, "Bank", first),
+      Speech(Portrait.Alice, "Buyer", second),
+      Some(StoryIllustration.AgreeThePlan)
+    )
 
   private def fields: Vector[Field] =
     Vector(Name, Reference, Count) ++ plan.steps.indices.toVector.flatMap { i =>

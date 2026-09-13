@@ -32,3 +32,21 @@ RELATIONSHIPS = {
     'dependencies': exchange('These arrows come from package manifests.', 'An import is a dependency, not a runtime call.'),
     'execution': exchange('These handoffs were reviewed against the source.', 'The linked files show where each boundary lives.'),
 }
+
+# Each authored explanation deliberately reuses the relevant scene, not a portrait template.
+for entries, illustrations in (
+    (CHAPTERS, {
+        '01-product': 'purchase-approved', '02-roles-and-trust': 'workflow-rejected',
+        '05-bring-an-application': 'package-builder', '06-compose-a-workflow': 'composer-direct',
+        '07-evidence-and-boundaries': 'evidence-review', '08-release-and-adoption': 'release-preparation',
+        '09-proposal-context': 'original-reading', '10-context-and-references': 'original-reading',
+    }),
+    (SLICES, {
+        'financing': 'private-approval', 'process': 'workflow-approved', 'transfer': 'transfer-approved',
+        'composition': 'composer-direct', 'packages': 'package-builder', 'book': 'evidence-review',
+    }),
+    (SOURCES, {'architecture-88': 'source-workbench', 'architecture-318': 'composer-generated'}),
+    (RELATIONSHIPS, {'dependencies': 'source-workbench', 'execution': 'live-handoff'}),
+):
+    for key, illustration in illustrations.items():
+        entries[key]['illustration'] = illustration

@@ -309,7 +309,8 @@ final class PackagePanel(capability: String, dispatcher: Dispatcher[IO]):
           ) -> "Compilation alone does not register an adapter."
       Conversation(
         Speech(Portrait.Developer, "Developer", lines._1),
-        Speech(Portrait.Reviewer, "Reviewer", lines._2)
+        Speech(Portrait.Reviewer, "Reviewer", lines._2),
+        Some(StoryIllustration.ApplicationWorkshop)
       )
     val illustrated = nodes.map(n => n.copy(conversation = Some(conversation(n))))
     diagram.render(

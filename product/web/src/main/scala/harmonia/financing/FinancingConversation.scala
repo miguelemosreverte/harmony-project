@@ -24,4 +24,8 @@ object FinancingConversation:
         "The private documents stayed with the bank." -> "The shared workflow is complete."
       case _ =>
         "The shared workflow is still waiting." -> "It completes after the buyer continues."
-    Conversation(Speech(Portrait.Bank, "Bank", first), Speech(Portrait.Alice, "Buyer", second))
+    Conversation(
+      Speech(Portrait.Bank, "Bank", first),
+      Speech(Portrait.Alice, "Buyer", second),
+      Some(StoryIllustration.SeparateWorkspaces)
+    )

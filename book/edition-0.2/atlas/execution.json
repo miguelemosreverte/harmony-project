@@ -10,7 +10,7 @@
         "detail": "The browser sends the session capability, request identity, command and observed version.",
         "actor": "Browser",
         "file": "product/web/src/main/scala/harmonia/live/LiveApi.scala",
-        "sha256": "b5a724e270a8a80318985c466b23ca920fc097ffd202689f23a7b0eeaca3f985",
+        "sha256": "3c48489dc3ea82982db566486e4e3db604c38b32b2abec9bacf6a489f1bedbe8",
         "related": []
       },
       {
@@ -23,7 +23,7 @@
         "related": [
           {
             "file": "product/server/src/main/scala/harmonia/app/http/LiveServer.scala",
-            "sha256": "83fd2fb8f088979f1ab1881b306e0590dff9b270126ea558c85c411620df08e9"
+            "sha256": "d7a0744355913a6847bd977c83030ddc59bf32c6a266179df0745fbcf7a09397"
           }
         ]
       },
@@ -109,7 +109,7 @@
         "detail": "The browser sends the session capability, request identity, command and observed version.",
         "actor": "Browser",
         "file": "product/web/src/main/scala/harmonia/live/LiveApi.scala",
-        "sha256": "b5a724e270a8a80318985c466b23ca920fc097ffd202689f23a7b0eeaca3f985",
+        "sha256": "3c48489dc3ea82982db566486e4e3db604c38b32b2abec9bacf6a489f1bedbe8",
         "related": []
       },
       {
@@ -122,7 +122,7 @@
         "related": [
           {
             "file": "product/server/src/main/scala/harmonia/app/http/LiveServer.scala",
-            "sha256": "83fd2fb8f088979f1ab1881b306e0590dff9b270126ea558c85c411620df08e9"
+            "sha256": "d7a0744355913a6847bd977c83030ddc59bf32c6a266179df0745fbcf7a09397"
           }
         ]
       },
@@ -164,7 +164,7 @@
         "related": [
           {
             "file": "product/web/src/main/scala/harmonia/composition/ComposerView.scala",
-            "sha256": "fa41f32beba05cf1f0ef65b522506b1c6bf7ad16695ed5b93167e3865a58129e"
+            "sha256": "8f4478df092954bb216f75fd8888cb897dd6638b0d980788202d24b95e3daba1"
           }
         ]
       }
@@ -204,7 +204,7 @@
         "related": [
           {
             "file": "product/server/src/main/scala/harmonia/app/http/LiveServer.scala",
-            "sha256": "83fd2fb8f088979f1ab1881b306e0590dff9b270126ea558c85c411620df08e9"
+            "sha256": "d7a0744355913a6847bd977c83030ddc59bf32c6a266179df0745fbcf7a09397"
           }
         ]
       },
@@ -237,7 +237,7 @@
         "detail": "The browser exposes the inspected mapping, generation result and registration boundary. Package availability does not grant choice authority.",
         "actor": "Operator browser",
         "file": "product/web/src/main/scala/harmonia/packages/PackagePanel.scala",
-        "sha256": "df349ef31dd82f1b804cd153d0da62bc6dae8d172050fff6c3a6473dc4985add",
+        "sha256": "6800746a2bbde787373094f9015e2625be8367f3e7b4d6a7942abab282c2c024",
         "related": []
       }
     ],

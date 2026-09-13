@@ -17,7 +17,11 @@ object RecordedConversation:
     val bank = setup.downField("application").get[String]("bank").getOrElse("Bank")
     val buyer = setup.downField("application").get[String]("buyer").getOrElse("Buyer")
     def pair(a: Portrait, name: String, line: String, b: Portrait, other: String, reply: String) =
-      Conversation(Speech(a, name, line), Speech(b, other, reply))
+      Conversation(
+        Speech(a, name, line),
+        Speech(b, other, reply),
+        RecordedIllustrations.stories.get(story.id)
+      )
     def financing(line: String, reply: String) =
       pair(Portrait.Bank, bank, line, Portrait.Alice, buyer, reply)
     def review(line: String, reply: String) =

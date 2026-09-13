@@ -119,7 +119,8 @@ object ComposerView:
               Some(
                 Conversation(
                   Speech(Portrait.Bank, "Bank", s"I’m proposing the “${step.id}” action."),
-                  Speech(Portrait.Alice, "Buyer", "My consent is still required before it runs.")
+                  Speech(Portrait.Alice, "Buyer", "My consent is still required before it runs."),
+                  Some(StoryIllustration.AgreeThePlan)
                 )
               )
             )
@@ -177,7 +178,8 @@ object ComposerView:
                     if step.completed then "Its completion is recorded."
                     else if step.enabled then "It is ready for its authorized participant."
                     else "It must wait for the earlier actions."
-                  )
+                  ),
+                  Some(StoryIllustration.AgreeThePlan)
                 )
               )
             )

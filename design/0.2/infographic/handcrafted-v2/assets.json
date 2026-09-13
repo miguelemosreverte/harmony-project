@@ -1,0 +1,416 @@
+{
+  "method": "Built-in image generation",
+  "assets": [
+    {
+      "id": "purchase-approved",
+      "file": "product/scene/site/assets/stories-v2/purchase-approved.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-c9853998-69fb-4f40-9bc1-1343738a76a7.png",
+      "sha256": "bfb2b7616d0e0e4bf0e4a503ace62517768a859a452a205f0dc08e1673c4bedd",
+      "bytes": 1664883,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "purchase-missing",
+      "file": "product/scene/site/assets/stories-v2/purchase-missing.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-1358f0fb-7595-4099-9cda-1d14c02bc296.png",
+      "sha256": "8feb67dd19de7115caf74f09b3ec84927a6c6a823884c6c676d07bed4a2c6575",
+      "bytes": 2078971,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "purchase-rejected",
+      "file": "product/scene/site/assets/stories-v2/purchase-rejected.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-f2eb7c21-53d8-420e-87df-49f56dcdb89f.png",
+      "sha256": "e8f4d042c08a33cf50cac2c85a9a249641c6e1d79e5d8cd55485bf38df9e03f2",
+      "bytes": 1379038,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "purchase-reused-proof",
+      "file": "product/scene/site/assets/stories-v2/purchase-reused-proof.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-2eebdddc-e7e4-4d11-b706-80a7f80864d9.png",
+      "sha256": "9000c6e08d089358c73be2fcfa5be446bbb2ff24b229b116d0ab991479b1c172",
+      "bytes": 1588418,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "purchase-wrong-buyer",
+      "file": "product/scene/site/assets/stories-v2/purchase-wrong-buyer.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-ee109573-3a25-4231-866d-42d3e6f58906.png",
+      "sha256": "e9a753dabfd1c5cd09bff260ed594447229cf9deefdf15ccce33bf0e799a0f20",
+      "bytes": 1524258,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "purchase-wrong-continuation",
+      "file": "product/scene/site/assets/stories-v2/purchase-wrong-continuation.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-697dcf8d-32ae-4733-a767-6c60cbfa0c47.png",
+      "sha256": "9a3b8b2b0363c4d1b9fc3c8b76f85edfbee636e5c427dae3c709dbbe7ba12731",
+      "bytes": 1674536,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "purchase-wrong-issuer",
+      "file": "product/scene/site/assets/stories-v2/purchase-wrong-issuer.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-566aebad-e7c9-4708-9448-43d0e02f9cbd.png",
+      "sha256": "943166064e7583b6059306b4478de083180b64a6c7040cdf61ddb79868c3aa2b",
+      "bytes": 1470818,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "purchase-wrong-subject",
+      "file": "product/scene/site/assets/stories-v2/purchase-wrong-subject.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-4fbb8a6c-1ee5-424d-acbb-320612f8c1b7.png",
+      "sha256": "d4aef55a65655fbade7975ede6439ae3238b640dd1b373c40706ef020c33e47a",
+      "bytes": 1660189,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "financing-approved",
+      "file": "product/scene/site/assets/stories-v2/financing-approved.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-d4196402-d363-43f7-9e5b-d252d68c7064.png",
+      "sha256": "442a568e602a109d2f995c0be91a8ab581841e84a684eb799ca1b7cf0b359ac6",
+      "bytes": 1465260,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "already-approved",
+      "file": "product/scene/site/assets/stories-v2/already-approved.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-983b412e-b57b-4e63-bd49-a95812a575b5.png",
+      "sha256": "090910fb0152e26371c812ed0af82adc0e09fa4a9fdf4d768c3da751a507bb2e",
+      "bytes": 1621042,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "workflow-approved",
+      "file": "product/scene/site/assets/stories-v2/workflow-approved.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-a151ff3c-594d-4b2e-9a86-57b9390c0784.png",
+      "previous": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-46fcefbf-0bc5-4491-b958-c719ba259690.png",
+      "sha256": "e995f656657e3ca4ac309c4caea6d26d81e05efa995d92a1c6db2bf28edb07f7",
+      "bytes": 1627163,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "workflow-rejected",
+      "file": "product/scene/site/assets/stories-v2/workflow-rejected.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-0d9e611a-238b-4cb1-9cb0-6e403f040f05.png",
+      "previous": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-ef81828b-0787-4896-acb2-9bbb6ff05907.png",
+      "sha256": "b51bce49590e6af6fab496c9cded4b31cb7bebf3db8027d68b306602a061204b",
+      "bytes": 1591753,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "adapter-approved",
+      "file": "product/scene/site/assets/stories-v2/adapter-approved.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-c4971446-56de-4215-bd2e-824cf5cabddc.png",
+      "sha256": "4c6879bf76afe41a392cf7486d2fd7e1ca201ed249d72f39123f264a0fad3ecc",
+      "bytes": 1385111,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "adapter-rejected",
+      "file": "product/scene/site/assets/stories-v2/adapter-rejected.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-d47c06fb-4320-4ed4-b732-00d896a0cd22.png",
+      "sha256": "51c84ac780c9ad0491ff46083f067134e5e45aafca0e7e3a38c49c708e374e7f",
+      "bytes": 1840139,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "generated-approved",
+      "file": "product/scene/site/assets/stories-v2/generated-approved.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-5148924c-da70-4ab5-b90a-ed2759b152d9.png",
+      "sha256": "f23c456c5e7d9733a3b78c31157e31f287520eb57313f88ab3739855fce14042",
+      "bytes": 1578623,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "generated-rejected",
+      "file": "product/scene/site/assets/stories-v2/generated-rejected.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-e45de52a-db40-4c93-8aaf-e02651730edc.png",
+      "sha256": "4c44bde49e00d862cb042182e46a9fd78fe099f6a73b8c31aab5f8b32abc7dbf",
+      "bytes": 1386096,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "private-approval",
+      "file": "product/scene/site/assets/stories-v2/private-approval.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-0f30634c-6de2-49a0-a44d-8d2f93561775.png",
+      "sha256": "e9cfdf55867dadb9d6bf5f41347a7582ae43f103945eb80c2d20aa4b402861a0",
+      "bytes": 1490022,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "live-handoff",
+      "file": "product/scene/site/assets/stories-v2/live-handoff.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-76a9b368-3b5f-4f47-b985-51a9de447d95.png",
+      "sha256": "c8f2d2d6cf3c9e98caffa622cf6e660c3a35236e673367a42bdd03574d6f0b03",
+      "bytes": 1353162,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "branch-approved",
+      "file": "product/scene/site/assets/stories-v2/branch-approved.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-ef31502b-de69-4982-b0d6-7e5beac223e9.png",
+      "sha256": "9192486ba9a46307dd54d751dbf0ac1597815a69723d1645739e886bb56097c3",
+      "bytes": 1359578,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "branch-declined",
+      "file": "product/scene/site/assets/stories-v2/branch-declined.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-a7b2c1e0-7b54-4ddc-a070-2e50f48d436e.png",
+      "sha256": "2787e5a85aec536d7dfd455f5550ac37370b0f8bfa52c6243c907e87b031ea61",
+      "bytes": 1693307,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "sequence-complete",
+      "file": "product/scene/site/assets/stories-v2/sequence-complete.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-0f5c6740-1629-49ca-9a90-11d0d59fece9.png",
+      "sha256": "852ce6e18b5061354ab8283e9d2fdcabf638005f6f6da31aa1dbae1063a18dbc",
+      "bytes": 1618522,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "sequence-resumed",
+      "file": "product/scene/site/assets/stories-v2/sequence-resumed.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-a6be1146-b112-44f8-9c99-18d74624fe56.png",
+      "sha256": "0e3441bdfd45d5c3b475a0f316a68862dcff6d92faa3b0acf41c2b7ea4bab49f",
+      "bytes": 1532055,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "composer-direct",
+      "file": "product/scene/site/assets/stories-v2/composer-direct.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-7fa650db-0b0f-43c6-b1c5-cc5e9798ae1d.png",
+      "sha256": "bc283704315d6fdd7aa68d7eec051708a17ab715a097a7c9ddf1402b28aec7d9",
+      "bytes": 1645413,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "composer-generated",
+      "file": "product/scene/site/assets/stories-v2/composer-generated.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-4245f704-c64e-42ef-9224-45ffc54c1b0d.png",
+      "sha256": "c438ea0f57b6f938c153dc4a1d2930fd591232f1590683f0021be4a43e744ac3",
+      "bytes": 1412741,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "package-builder",
+      "file": "product/scene/site/assets/stories-v2/package-builder.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-f34f760e-2db4-4665-b436-94b505cce9e3.png",
+      "sha256": "34e17ac86312ddcaac824ef1747cbbff5214ad5ef356447475fe0c9f8b2198b7",
+      "bytes": 1518782,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "execution-boundaries",
+      "file": "product/scene/site/assets/stories-v2/execution-boundaries.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-b435e38d-310a-41f9-a4a7-cb0882511c98.png",
+      "sha256": "7cdf7b96b267aafedec9081ba3c8e269352e3b01a11f42270e0117b1c93674c6",
+      "bytes": 1644417,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "transfer-approved",
+      "file": "product/scene/site/assets/stories-v2/transfer-approved.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-c201437a-a788-493b-a606-c4815b59ac3c.png",
+      "sha256": "b63e38039497e958ba528e952b5e87435a0fcffe8eeceef645d724610f594c64",
+      "bytes": 1484381,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "transfer-final-leg-rejected",
+      "file": "product/scene/site/assets/stories-v2/transfer-final-leg-rejected.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-50af73bd-e314-4b82-a875-741d0f5d9f73.png",
+      "sha256": "6a84bc54558ac6990aa770bc2f5aef08176951ea441e0abdbc08ce6f03df7cb8",
+      "bytes": 1423752,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "transfer-missing-agreement",
+      "file": "product/scene/site/assets/stories-v2/transfer-missing-agreement.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-78f85324-1a62-4539-9264-aa0bea11a0c2.png",
+      "sha256": "c5dd5f5e6c7bb1f1708feb5b3b117dba7358721e05dc3539923c5a48dbb83fea",
+      "bytes": 1585930,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "transfer-missing-lock",
+      "file": "product/scene/site/assets/stories-v2/transfer-missing-lock.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-a94065ea-7860-41f0-82f9-4a0f5a7f8266.png",
+      "sha256": "b9f479114248f767d27cc9ffd9a241605f9cba8606c6125328ca20056f4d8de0",
+      "bytes": 1664885,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "transfer-missing-readiness",
+      "file": "product/scene/site/assets/stories-v2/transfer-missing-readiness.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-3bc85535-45a1-4741-9675-05dc5bf1a1ba.png",
+      "sha256": "4aac25ca473edbca626c063ef244fe5e803f784e2cff8cdbab1d008c0355051e",
+      "bytes": 1363241,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "transfer-source-settler",
+      "file": "product/scene/site/assets/stories-v2/transfer-source-settler.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-6be23259-38cc-4da1-b22b-441e6b2b4966.png",
+      "sha256": "630b070e06fdb2366f9ef36c34fa5d744760f1fdf5873954aba475f1c3316edc",
+      "bytes": 1510576,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "evidence-review",
+      "file": "product/scene/site/assets/stories-v2/evidence-review.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-9e3008ad-9587-44f9-ba81-0c1e9ea7057b.png",
+      "sha256": "27a7e90804ffcb40128f5bda967bdc728dcca7959bee10f246b33191881b74f6",
+      "bytes": 1651715,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "release-preparation",
+      "file": "product/scene/site/assets/stories-v2/release-preparation.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-08f302d9-e758-4ff1-9f66-8d3483f88bce.png",
+      "sha256": "dc38db220dd1633c036ba4e2395ec2041cc57493f4b683d79b2e91ae98ab2896",
+      "bytes": 1623474,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "original-reading",
+      "file": "product/scene/site/assets/stories-v2/original-reading.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-a70f7759-d91f-40a1-9858-44e4617e4b15.png",
+      "sha256": "8e37604406c741f4ff8bd54bbc0e0353f2e4d0bc756f7dcf7a36e77224f39745",
+      "bytes": 1659341,
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "id": "source-workbench",
+      "file": "product/scene/site/assets/stories-v2/source-workbench.png",
+      "generated": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-26652e19-1f4f-4533-8d7b-845957daa9f5.png",
+      "sha256": "f9833313c2120b650272ab8441e6d3b855edf48f0f464c54c80ee2adc120aba0",
+      "bytes": 1521837,
+      "size": [
+        1536,
+        1024
+      ]
+    }
+  ],
+  "castingCorrections": {
+    "prompt": "Use case: identity-preserve / precise-object-edit. Image 1 is the edit target. Image 2 is a character reference for Alice only. Preserve the target's exact composition, table/counter, documents, poses, camera, white background, blue palette and all props. Correct the casting: the customer must be Alice, the woman with navy shoulder-length hair, blue crew-neck sweater, dark trousers and white shoes shown in image 2. Make the bank adviser a distinct older woman with silver hair in a small bun and a professional blue blazer. No text, labels, symbols or other changes. ",
+    "scenes": [
+      [
+        "workflow-approved",
+        "In the target, the CUSTOMER is on the RIGHT, pointing to the accordion plan. The ADVISER is on the LEFT."
+      ],
+      [
+        "workflow-rejected",
+        "In the target, the CUSTOMER is on the LEFT, reaching toward the counter. The ADVISER is on the RIGHT behind the counter with her hand raised."
+      ]
+    ]
+  }
+}

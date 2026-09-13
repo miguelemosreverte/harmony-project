@@ -44,7 +44,8 @@ object ChapterDiagram:
       conversation = Some(
         Conversation(
           Speech(Portrait.Developer, "Developer", "The arrows show this chapter’s handoffs."),
-          Speech(Portrait.Reviewer, "Reviewer", "Recorded results provide the execution evidence.")
+          Speech(Portrait.Reviewer, "Reviewer", "Recorded results provide the execution evidence."),
+          Some(StoryIllustration.EvidenceReview)
         )
       )
     )

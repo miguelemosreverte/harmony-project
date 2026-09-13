@@ -4,7 +4,6 @@ import cats.effect.IO
 import harmonia.book.{FieldGuide, ServeBook}
 import harmonia.demo.Demo
 import harmonia.files.ArtifactFiles
-import harmonia.ledger.auth.LocalCredentials
 import java.nio.file.Path
 
 /** Development orchestration owns the relationship between two independent applications. */
@@ -20,49 +19,17 @@ object ReaderSandbox:
       ) *>
         ServeBook.resource(output).use { port =>
           val book = s"http://127.0.0.1:$port/"
-          val pages = Vector("bank", "buyer", "reviewer")
-          val writes = pages.zipWithIndex.foldLeft(IO.unit) { case (before, (actor, index)) =>
-            val next = pages.lift(index + 1).map(_ + ".html").getOrElse("book.html")
-            val purpose = Map(
-              "bank" -> "Approve the private financing case.",
-              "buyer" -> "Use the approval to continue.",
-              "reviewer" -> "Observe the shared result."
-            )(actor)
-            val html = page(
-              actor.capitalize,
-              purpose,
-              s"${origin}#session=${product.capabilities(actor)}",
-              "Enter as " + actor.capitalize,
-              next,
-              if index < 2 then "Next participant →" else "Read the book →"
-            )
-            before *> LocalCredentials.privateWrite(artifacts.resolve(actor + ".html"), html)
-          }
-          writes *> LocalCredentials.privateWrite(
+          ArtifactFiles.write(
             artifacts.resolve("open.html"),
             page(
-              "Make the handoff",
-              "Start with Bank. Each participant uses a separate tab.",
-              "bank.html",
+              "Harmonia",
+              "Read the story, or try the local sandbox.",
+              origin,
               "Open the sandbox →",
               book,
               "Read the book →"
             )
-          ) *>
-            LocalCredentials.privateWrite(
-              artifacts.resolve("book.html"),
-              page(
-                "The field guide",
-                "Four ways to understand the product.",
-                book,
-                "Begin reading →",
-                "bank.html",
-                "Return to Bank →"
-              )
-            ) *>
-            IO.println(
-              s"Product: $origin\nBook: $book\nParticipant launcher: $artifacts/open.html"
-            ) *> IO.never
+          ) *> IO.println(s"Product: $origin\nBook: $book\nOpen: $artifacts/open.html") *> IO.never
         }
     }
   yield ()

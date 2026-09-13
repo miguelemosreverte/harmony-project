@@ -120,7 +120,7 @@ html{scrollbar-gutter:stable}body{padding-bottom:106px}.live-main{min-height:cal
 .financing-action>button,.composition-record>button,#composition-next,#composition-second,#composition-propose{right:var(--action-left);left:auto}
 .live-destination>a,#composition-first,#composition-edit,#composition-observations>a,#package-builder>button,.package-actions>:first-child{left:var(--action-left);right:auto}
 .live-destination>a+a,#package-builder>button+button,.package-actions>:last-child{right:var(--action-left);left:auto}
-.financing-action>button,button.primary{background:#275ee3;color:white;border-color:#275ee3}
+.financing-action>button,button.primary,#package-builder>button.primary{background:#275ee3;color:white;border-color:#275ee3}
 .composition-editor h1{min-height:2.5em}.composition-editor>input{min-height:56px}#builder-status{min-height:24px}.live-destination{min-height:44px}.financing-action{min-height:0;margin:0}.live-main .scene-caption{min-height:76px}.live-main .private-case{margin-top:14px}.composition-step-details{font-size:.8rem}
 @media(max-width:700px){:root{--action-left:16px;--action-width:calc(50vw - 24px)}html{scrollbar-gutter:auto}.live-main{min-height:calc(100dvh - 106px)}}
 @media print{body{padding-bottom:0}.live-main{min-height:0}.live-destination,.composition-editor>button,.composition-record>button,#composition-observations>a,.package-actions{display:none}}

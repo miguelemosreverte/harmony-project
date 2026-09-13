@@ -17,6 +17,10 @@ object Speech:
   given Codec.AsObject[Speech] = Codec.AsObject.derived[Speech]
 
 /** A short exchange beside an application, separate from its diagram and commands. */
-final case class Conversation(first: Speech, second: Speech)
+final case class Conversation(
+    first: Speech,
+    second: Speech,
+    illustration: Option[StoryIllustration] = None
+)
 object Conversation:
   given Codec.AsObject[Conversation] = Codec.AsObject.derived[Conversation]
