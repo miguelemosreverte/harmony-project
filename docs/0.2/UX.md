@@ -40,7 +40,7 @@ A deep link opens its selected material directly.
   large choice cards. Root audience entrances remain separate from workflows.
 - The featured infographic summarizes who acts, what changes, and what stays
   private. Keep the approved infographic intact; add a separate illustrated
-  exchange below it, as specified in [Workflow support](WORKFLOW-SUPPORT.md). Keep application boundaries,
+  exchange below it, as specified in [Handcrafted scenes](HANDCRAFTED-SCENES.md). Keep application boundaries,
   document names, and necessary quantities. Avoid duplicate captions, counters,
   path labels, or revision footers. Recorded context stays in the header; exact
   run provenance stays in evidence.
@@ -50,7 +50,8 @@ A deep link opens its selected material directly.
 - A review page shows the complete proposed plan before submission. Ledger
   consent and observed execution remain separate steps.
 - A connection failure receives its own recovery state. Further tasks return only
-  after the connection is restored. An absent session asks for its provisioned link.
+  after the connection is restored. The local sandbox opens ordinary character
+  workspaces; it never asks the reader to find or paste a credential link.
 
 ## Visual and responsive rules
 

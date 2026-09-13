@@ -1,5 +1,8 @@
 # Illustrated support for every workflow
 
+This first support-scene implementation is superseded by
+[Handcrafted scenes](HANDCRAFTED-SCENES.md). Its repeated portrait layout was rejected.
+
 The approved desktop study is the visual authority:
 `design/0.2/infographic/narrative-v1/desktop.html`.
 The infographic stays intact. A separate conversation below it explains the moment.

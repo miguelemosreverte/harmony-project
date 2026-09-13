@@ -1,0 +1,4553 @@
+{
+  "scope": "Recorded and authored workflow presentation; no ledger commands",
+  "checks": 3809,
+  "moments": [
+    {
+      "width": 1280,
+      "story": "purchase-approved",
+      "step": 0,
+      "lines": [
+        "The required contract is private.",
+        "I cannot act on a contract I cannot see."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "purchase-approved",
+      "step": 1,
+      "lines": [
+        "Your financing is approved.",
+        "The next application must check the result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "purchase-approved",
+      "step": 2,
+      "lines": [
+        "That shortcut was refused.",
+        "Progress needs an authorized action."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "purchase-approved",
+      "step": 3,
+      "lines": [
+        "My offer is open.",
+        "We still need a valid financing result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "purchase-approved",
+      "step": 4,
+      "lines": [
+        "My proposal is ready.",
+        "I can relay it to Sofia."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "purchase-approved",
+      "step": 5,
+      "lines": [
+        "The proposal has not been relayed yet.",
+        "I must wait before receiving it."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "purchase-approved",
+      "step": 6,
+      "lines": [
+        "I’ve relayed Alice’s proposal.",
+        "It is ready for me to receive."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "purchase-approved",
+      "step": 7,
+      "lines": [
+        "Alice’s proposal has reached you.",
+        "Received — this handoff is complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "purchase-rejected",
+      "step": 0,
+      "lines": [
+        "Your financing was declined.",
+        "I cannot use it to make a proposal."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "purchase-rejected",
+      "step": 1,
+      "lines": [
+        "My offer is open.",
+        "We still need a valid financing result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "purchase-rejected",
+      "step": 2,
+      "lines": [
+        "My proposal was refused.",
+        "Declined financing cannot authorize it."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-approved",
+      "step": 0,
+      "lines": [
+        "The seller has agreed to the trade.",
+        "The assets have not moved yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-approved",
+      "step": 1,
+      "lines": [
+        "10 TEST is reserved here.",
+        "Nothing has arrived here yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-approved",
+      "step": 2,
+      "lines": [
+        "The source is ready to withdraw.",
+        "I still need to prepare receipt."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-approved",
+      "step": 3,
+      "lines": [
+        "The source position remains locked.",
+        "The receipt permission is now prepared."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-approved",
+      "step": 4,
+      "lines": [
+        "Both sides are ready.",
+        "The assigned settler can now proceed."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-approved",
+      "step": 5,
+      "lines": [
+        "Direct withdrawal was refused.",
+        "Use the coordinated settlement."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-approved",
+      "step": 6,
+      "lines": [
+        "This attempt was refused.",
+        "Settlement needs the assigned authority."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-approved",
+      "step": 7,
+      "lines": [
+        "The reserved position was withdrawn.",
+        "10 TEST arrived in the same transaction."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-approved",
+      "step": 8,
+      "lines": [
+        "This attempt was refused.",
+        "The asset had already arrived."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-final-leg-rejected",
+      "step": 0,
+      "lines": [
+        "The seller has agreed to the trade.",
+        "The assets have not moved yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-final-leg-rejected",
+      "step": 1,
+      "lines": [
+        "10 TEST is reserved here.",
+        "Nothing has arrived here yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-final-leg-rejected",
+      "step": 2,
+      "lines": [
+        "The source is ready to withdraw.",
+        "I still need to prepare receipt."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-final-leg-rejected",
+      "step": 3,
+      "lines": [
+        "The source position remains locked.",
+        "The receipt permission is now prepared."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-final-leg-rejected",
+      "step": 4,
+      "lines": [
+        "Both sides are ready.",
+        "The assigned settler can now proceed."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-final-leg-rejected",
+      "step": 5,
+      "lines": [
+        "The final transfer rolled back.",
+        "The earlier source lock remains."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "adapter-approved",
+      "step": 0,
+      "lines": [
+        "Only the bank can approve financing.",
+        "My attempt did not change the application."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "adapter-approved",
+      "step": 1,
+      "lines": [
+        "The application is now approved.",
+        "The shared workflow is complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "adapter-rejected",
+      "step": 0,
+      "lines": [
+        "This approval attempt was refused.",
+        "An existing approval cannot be exercised again."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "already-approved",
+      "step": 0,
+      "lines": [
+        "This approval attempt was refused.",
+        "An existing approval cannot be exercised again."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "branch-approved",
+      "step": 0,
+      "lines": [
+        "The join attempt was refused.",
+        "The selected path must finish first."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "branch-approved",
+      "step": 1,
+      "lines": [
+        "I’ve chosen the approval path.",
+        "Financing and review can now proceed."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "branch-approved",
+      "step": 2,
+      "lines": [
+        "The branch cannot be changed now.",
+        "We follow the recorded decision."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "branch-approved",
+      "step": 3,
+      "lines": [
+        "Closure belongs to the other branch.",
+        "We follow the approval path."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "branch-approved",
+      "step": 4,
+      "lines": [
+        "The application is now approved.",
+        "The approval is recorded."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "branch-approved",
+      "step": 5,
+      "lines": [
+        "The join attempt was refused.",
+        "The selected path must finish first."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "branch-approved",
+      "step": 6,
+      "lines": [
+        "Your review is confirmed.",
+        "The selected path is ready to join."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "branch-approved",
+      "step": 7,
+      "lines": [
+        "The selected path has joined.",
+        "This workflow is complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "branch-approved",
+      "step": 8,
+      "lines": [
+        "This request was already recorded.",
+        "The retry did not execute it again."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "branch-approved",
+      "step": 9,
+      "lines": [
+        "The join attempt was refused.",
+        "This workflow is already complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "branch-declined",
+      "step": 0,
+      "lines": [
+        "I’ve chosen the decline path.",
+        "We record closure instead of approval."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "branch-declined",
+      "step": 1,
+      "lines": [
+        "Financing belongs to the other branch.",
+        "We follow the decline path."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "branch-declined",
+      "step": 2,
+      "lines": [
+        "The closure is recorded.",
+        "The selected branch can now join."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "branch-declined",
+      "step": 3,
+      "lines": [
+        "The selected path has joined.",
+        "This workflow is complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "composer-direct",
+      "step": 0,
+      "lines": [
+        "I’ve proposed these exact actions.",
+        "Nothing starts before my consent."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "composer-direct",
+      "step": 1,
+      "lines": [
+        "I proposed this plan.",
+        "Only the buyer can consent to it."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "composer-direct",
+      "step": 2,
+      "lines": [
+        "The plan now has its source contracts.",
+        "I’ve accepted the proposed actions."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "composer-direct",
+      "step": 3,
+      "lines": [
+        "This action was refused.",
+        "Both its order and actor must be valid."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "composer-direct",
+      "step": 4,
+      "lines": [
+        "approval was completed.",
+        "The next assigned action is enabled."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "composer-direct",
+      "step": 5,
+      "lines": [
+        "This action was refused.",
+        "Both its order and actor must be valid."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "composer-direct",
+      "step": 6,
+      "lines": [
+        "review was completed.",
+        "The composed workflow is complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "composer-generated",
+      "step": 0,
+      "lines": [
+        "I’ve proposed these exact actions.",
+        "Nothing starts before my consent."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "composer-generated",
+      "step": 1,
+      "lines": [
+        "The plan now has its source contracts.",
+        "I’ve accepted the proposed actions."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "composer-generated",
+      "step": 2,
+      "lines": [
+        "inspection was completed.",
+        "The next assigned action is enabled."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "composer-generated",
+      "step": 3,
+      "lines": [
+        "financing was completed.",
+        "The composed workflow is complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "execution-boundaries",
+      "step": 0,
+      "lines": [
+        "The run exercised 16 workflow steps.",
+        "The oversized graph was refused."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "execution-boundaries",
+      "step": 1,
+      "lines": [
+        "1 request committed; 1 conflicted.",
+        "1 approval was recorded."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "financing-approved",
+      "step": 0,
+      "lines": [
+        "Only the bank can approve financing.",
+        "My attempt did not change the application."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "financing-approved",
+      "step": 1,
+      "lines": [
+        "The application is now approved.",
+        "The approval is recorded."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "generated-approved",
+      "step": 0,
+      "lines": [
+        "Only the bank can approve financing.",
+        "My attempt did not change the application."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "generated-approved",
+      "step": 1,
+      "lines": [
+        "The application is now approved.",
+        "The shared workflow is complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "generated-rejected",
+      "step": 0,
+      "lines": [
+        "This approval attempt was refused.",
+        "An existing approval cannot be exercised again."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "live-handoff",
+      "step": 0,
+      "lines": [
+        "The continuation was refused.",
+        "The bank must approve first."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "live-handoff",
+      "step": 1,
+      "lines": [
+        "The application is now approved.",
+        "I can now publish the scoped result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "live-handoff",
+      "step": 2,
+      "lines": [
+        "The continuation was refused.",
+        "Only the buyer may continue."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "live-handoff",
+      "step": 3,
+      "lines": [
+        "The financing documents stay private.",
+        "I’ve shared the scoped approval result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "package-builder",
+      "step": 0,
+      "lines": [
+        "The uploaded DAR was inspected.",
+        "Its package identity is now known."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "package-builder",
+      "step": 1,
+      "lines": [
+        "The verified source returned a DAR.",
+        "A reviewed mapping is available."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "package-builder",
+      "step": 2,
+      "lines": [
+        "The adapter compiled successfully.",
+        "Live availability is also confirmed."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "package-builder",
+      "step": 3,
+      "lines": [
+        "The DAR was inspected.",
+        "There is no reviewed mapping for it."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "package-builder",
+      "step": 4,
+      "lines": [
+        "Generation was refused.",
+        "A supported mapping is required."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "package-builder",
+      "step": 5,
+      "lines": [
+        "This session cannot retrieve packages.",
+        "Package access belongs to the bank."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "package-builder",
+      "step": 6,
+      "lines": [
+        "This input is not a valid DAR.",
+        "The request was refused."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "package-builder",
+      "step": 7,
+      "lines": [
+        "This upload exceeds the size limit.",
+        "The request was refused."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "private-approval",
+      "step": 0,
+      "lines": [
+        "That shortcut was refused.",
+        "Progress needs an authorized action."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "private-approval",
+      "step": 1,
+      "lines": [
+        "The required contract is private.",
+        "I cannot act on a contract I cannot see."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "private-approval",
+      "step": 2,
+      "lines": [
+        "The continuation was refused.",
+        "The bank must approve first."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "private-approval",
+      "step": 3,
+      "lines": [
+        "The application is now approved.",
+        "I can now publish the scoped result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "private-approval",
+      "step": 4,
+      "lines": [
+        "The continuation was refused.",
+        "Only the buyer may continue."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "private-approval",
+      "step": 5,
+      "lines": [
+        "The financing documents stay private.",
+        "I’ve shared the scoped approval result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "purchase-missing",
+      "step": 0,
+      "lines": [
+        "Your financing is approved.",
+        "The handoff result is not available here."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "purchase-missing",
+      "step": 1,
+      "lines": [
+        "My offer is open.",
+        "We still need a valid financing result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "purchase-missing",
+      "step": 2,
+      "lines": [
+        "My proposal was refused.",
+        "The required result is unavailable."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "purchase-reused-proof",
+      "step": 0,
+      "lines": [
+        "Your financing is approved.",
+        "The next application must check the result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "purchase-reused-proof",
+      "step": 1,
+      "lines": [
+        "My offer is open.",
+        "We still need a valid financing result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "purchase-reused-proof",
+      "step": 2,
+      "lines": [
+        "My proposal is ready.",
+        "I can relay it to Sofia."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "purchase-reused-proof",
+      "step": 3,
+      "lines": [
+        "My offer is open.",
+        "We still need a valid financing result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "purchase-reused-proof",
+      "step": 4,
+      "lines": [
+        "My proposal was refused.",
+        "The required result is unavailable."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "purchase-wrong-buyer",
+      "step": 0,
+      "lines": [
+        "Your financing is approved.",
+        "The next application must check the result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "purchase-wrong-buyer",
+      "step": 1,
+      "lines": [
+        "My offer is open.",
+        "We still need a valid financing result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "purchase-wrong-buyer",
+      "step": 2,
+      "lines": [
+        "My proposal was refused.",
+        "The result does not match this offer."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "purchase-wrong-continuation",
+      "step": 0,
+      "lines": [
+        "Your financing is approved.",
+        "The next application must check the result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "purchase-wrong-continuation",
+      "step": 1,
+      "lines": [
+        "My offer is open.",
+        "We still need a valid financing result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "purchase-wrong-continuation",
+      "step": 2,
+      "lines": [
+        "My proposal was refused.",
+        "The result does not match this offer."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "purchase-wrong-issuer",
+      "step": 0,
+      "lines": [
+        "Your financing is approved.",
+        "The next application must check the result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "purchase-wrong-issuer",
+      "step": 1,
+      "lines": [
+        "My offer is open.",
+        "We still need a valid financing result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "purchase-wrong-issuer",
+      "step": 2,
+      "lines": [
+        "My proposal was refused.",
+        "The result does not match this offer."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "purchase-wrong-subject",
+      "step": 0,
+      "lines": [
+        "Your financing is approved.",
+        "The next application must check the result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "purchase-wrong-subject",
+      "step": 1,
+      "lines": [
+        "My offer is open.",
+        "We still need a valid financing result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "purchase-wrong-subject",
+      "step": 2,
+      "lines": [
+        "My proposal was refused.",
+        "The result does not match this offer."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "sequence-complete",
+      "step": 0,
+      "lines": [
+        "The application is now approved.",
+        "The approval is recorded."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "sequence-complete",
+      "step": 1,
+      "lines": [
+        "Your review is confirmed.",
+        "The workflow is complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "sequence-resumed",
+      "step": 0,
+      "lines": [
+        "That shortcut was refused.",
+        "Progress needs an authorized action."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "sequence-resumed",
+      "step": 1,
+      "lines": [
+        "The review cannot run yet.",
+        "Financing must complete first."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "sequence-resumed",
+      "step": 2,
+      "lines": [
+        "The application is now approved.",
+        "The approval is recorded."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "sequence-resumed",
+      "step": 3,
+      "lines": [
+        "This request was already recorded.",
+        "The retry did not execute it again."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "sequence-resumed",
+      "step": 4,
+      "lines": [
+        "This approval attempt was refused.",
+        "An existing approval cannot be exercised again."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "sequence-resumed",
+      "step": 5,
+      "lines": [
+        "The approval remains recorded.",
+        "My review is still pending."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "sequence-resumed",
+      "step": 6,
+      "lines": [
+        "The ledger kept our progress.",
+        "I reconnected at the pending review."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "sequence-resumed",
+      "step": 7,
+      "lines": [
+        "Your review is confirmed.",
+        "The workflow is complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-missing-agreement",
+      "step": 0,
+      "lines": [
+        "10 TEST is reserved here.",
+        "Nothing has arrived here yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-missing-agreement",
+      "step": 1,
+      "lines": [
+        "This attempt was refused.",
+        "The seller’s agreement is still needed."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-missing-agreement",
+      "step": 2,
+      "lines": [
+        "This attempt was refused.",
+        "The seller’s agreement is still needed."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-missing-lock",
+      "step": 0,
+      "lines": [
+        "The seller has agreed to the trade.",
+        "The assets have not moved yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-missing-lock",
+      "step": 1,
+      "lines": [
+        "This attempt was refused.",
+        "The source has not confirmed readiness."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-missing-lock",
+      "step": 2,
+      "lines": [
+        "This attempt was refused.",
+        "The source has not confirmed readiness."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-missing-readiness",
+      "step": 0,
+      "lines": [
+        "The seller has agreed to the trade.",
+        "The assets have not moved yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-missing-readiness",
+      "step": 1,
+      "lines": [
+        "10 TEST is reserved here.",
+        "Nothing has arrived here yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-missing-readiness",
+      "step": 2,
+      "lines": [
+        "The source is ready to withdraw.",
+        "I still need to prepare receipt."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-missing-readiness",
+      "step": 3,
+      "lines": [
+        "This attempt was refused.",
+        "The destination is not ready yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-missing-readiness",
+      "step": 4,
+      "lines": [
+        "This attempt was refused.",
+        "The destination is not ready yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-source-settler",
+      "step": 0,
+      "lines": [
+        "The seller has agreed to the trade.",
+        "The assets have not moved yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-source-settler",
+      "step": 1,
+      "lines": [
+        "7.125 TEST is reserved here.",
+        "Nothing has arrived here yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-source-settler",
+      "step": 2,
+      "lines": [
+        "The source is ready to withdraw.",
+        "I still need to prepare receipt."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-source-settler",
+      "step": 3,
+      "lines": [
+        "The source position remains locked.",
+        "The receipt permission is now prepared."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-source-settler",
+      "step": 4,
+      "lines": [
+        "Both sides are ready.",
+        "The assigned settler can now proceed."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "transfer-source-settler",
+      "step": 5,
+      "lines": [
+        "The reserved position was withdrawn.",
+        "7.125 TEST arrived in the same transaction."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "workflow-approved",
+      "step": 0,
+      "lines": [
+        "Only the bank can approve financing.",
+        "My attempt did not change the application."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "workflow-approved",
+      "step": 1,
+      "lines": [
+        "The application is now approved.",
+        "The shared workflow is complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 1280,
+      "story": "workflow-rejected",
+      "step": 0,
+      "lines": [
+        "This approval attempt was refused.",
+        "An existing approval cannot be exercised again."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-approved",
+      "step": 0,
+      "lines": [
+        "The required contract is private.",
+        "I cannot act on a contract I cannot see."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-approved",
+      "step": 1,
+      "lines": [
+        "Your financing is approved.",
+        "The next application must check the result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-approved",
+      "step": 2,
+      "lines": [
+        "That shortcut was refused.",
+        "Progress needs an authorized action."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-approved",
+      "step": 3,
+      "lines": [
+        "My offer is open.",
+        "We still need a valid financing result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-approved",
+      "step": 4,
+      "lines": [
+        "My proposal is ready.",
+        "I can relay it to Sofia."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-approved",
+      "step": 5,
+      "lines": [
+        "The proposal has not been relayed yet.",
+        "I must wait before receiving it."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-approved",
+      "step": 6,
+      "lines": [
+        "I’ve relayed Alice’s proposal.",
+        "It is ready for me to receive."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-approved",
+      "step": 7,
+      "lines": [
+        "Alice’s proposal has reached you.",
+        "Received — this handoff is complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-rejected",
+      "step": 0,
+      "lines": [
+        "Your financing was declined.",
+        "I cannot use it to make a proposal."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-rejected",
+      "step": 1,
+      "lines": [
+        "My offer is open.",
+        "We still need a valid financing result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-rejected",
+      "step": 2,
+      "lines": [
+        "My proposal was refused.",
+        "Declined financing cannot authorize it."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-approved",
+      "step": 0,
+      "lines": [
+        "The seller has agreed to the trade.",
+        "The assets have not moved yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-approved",
+      "step": 1,
+      "lines": [
+        "10 TEST is reserved here.",
+        "Nothing has arrived here yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-approved",
+      "step": 2,
+      "lines": [
+        "The source is ready to withdraw.",
+        "I still need to prepare receipt."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-approved",
+      "step": 3,
+      "lines": [
+        "The source position remains locked.",
+        "The receipt permission is now prepared."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-approved",
+      "step": 4,
+      "lines": [
+        "Both sides are ready.",
+        "The assigned settler can now proceed."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-approved",
+      "step": 5,
+      "lines": [
+        "Direct withdrawal was refused.",
+        "Use the coordinated settlement."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-approved",
+      "step": 6,
+      "lines": [
+        "This attempt was refused.",
+        "Settlement needs the assigned authority."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-approved",
+      "step": 7,
+      "lines": [
+        "The reserved position was withdrawn.",
+        "10 TEST arrived in the same transaction."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-approved",
+      "step": 8,
+      "lines": [
+        "This attempt was refused.",
+        "The asset had already arrived."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-final-leg-rejected",
+      "step": 0,
+      "lines": [
+        "The seller has agreed to the trade.",
+        "The assets have not moved yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-final-leg-rejected",
+      "step": 1,
+      "lines": [
+        "10 TEST is reserved here.",
+        "Nothing has arrived here yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-final-leg-rejected",
+      "step": 2,
+      "lines": [
+        "The source is ready to withdraw.",
+        "I still need to prepare receipt."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-final-leg-rejected",
+      "step": 3,
+      "lines": [
+        "The source position remains locked.",
+        "The receipt permission is now prepared."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-final-leg-rejected",
+      "step": 4,
+      "lines": [
+        "Both sides are ready.",
+        "The assigned settler can now proceed."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-final-leg-rejected",
+      "step": 5,
+      "lines": [
+        "The final transfer rolled back.",
+        "The earlier source lock remains."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "adapter-approved",
+      "step": 0,
+      "lines": [
+        "Only the bank can approve financing.",
+        "My attempt did not change the application."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "adapter-approved",
+      "step": 1,
+      "lines": [
+        "The application is now approved.",
+        "The shared workflow is complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "adapter-rejected",
+      "step": 0,
+      "lines": [
+        "This approval attempt was refused.",
+        "An existing approval cannot be exercised again."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "already-approved",
+      "step": 0,
+      "lines": [
+        "This approval attempt was refused.",
+        "An existing approval cannot be exercised again."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "branch-approved",
+      "step": 0,
+      "lines": [
+        "The join attempt was refused.",
+        "The selected path must finish first."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "branch-approved",
+      "step": 1,
+      "lines": [
+        "I’ve chosen the approval path.",
+        "Financing and review can now proceed."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "branch-approved",
+      "step": 2,
+      "lines": [
+        "The branch cannot be changed now.",
+        "We follow the recorded decision."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "branch-approved",
+      "step": 3,
+      "lines": [
+        "Closure belongs to the other branch.",
+        "We follow the approval path."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "branch-approved",
+      "step": 4,
+      "lines": [
+        "The application is now approved.",
+        "The approval is recorded."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "branch-approved",
+      "step": 5,
+      "lines": [
+        "The join attempt was refused.",
+        "The selected path must finish first."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "branch-approved",
+      "step": 6,
+      "lines": [
+        "Your review is confirmed.",
+        "The selected path is ready to join."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "branch-approved",
+      "step": 7,
+      "lines": [
+        "The selected path has joined.",
+        "This workflow is complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "branch-approved",
+      "step": 8,
+      "lines": [
+        "This request was already recorded.",
+        "The retry did not execute it again."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "branch-approved",
+      "step": 9,
+      "lines": [
+        "The join attempt was refused.",
+        "This workflow is already complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "branch-declined",
+      "step": 0,
+      "lines": [
+        "I’ve chosen the decline path.",
+        "We record closure instead of approval."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "branch-declined",
+      "step": 1,
+      "lines": [
+        "Financing belongs to the other branch.",
+        "We follow the decline path."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "branch-declined",
+      "step": 2,
+      "lines": [
+        "The closure is recorded.",
+        "The selected branch can now join."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "branch-declined",
+      "step": 3,
+      "lines": [
+        "The selected path has joined.",
+        "This workflow is complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "composer-direct",
+      "step": 0,
+      "lines": [
+        "I’ve proposed these exact actions.",
+        "Nothing starts before my consent."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "composer-direct",
+      "step": 1,
+      "lines": [
+        "I proposed this plan.",
+        "Only the buyer can consent to it."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "composer-direct",
+      "step": 2,
+      "lines": [
+        "The plan now has its source contracts.",
+        "I’ve accepted the proposed actions."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "composer-direct",
+      "step": 3,
+      "lines": [
+        "This action was refused.",
+        "Both its order and actor must be valid."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "composer-direct",
+      "step": 4,
+      "lines": [
+        "approval was completed.",
+        "The next assigned action is enabled."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "composer-direct",
+      "step": 5,
+      "lines": [
+        "This action was refused.",
+        "Both its order and actor must be valid."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "composer-direct",
+      "step": 6,
+      "lines": [
+        "review was completed.",
+        "The composed workflow is complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "composer-generated",
+      "step": 0,
+      "lines": [
+        "I’ve proposed these exact actions.",
+        "Nothing starts before my consent."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "composer-generated",
+      "step": 1,
+      "lines": [
+        "The plan now has its source contracts.",
+        "I’ve accepted the proposed actions."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "composer-generated",
+      "step": 2,
+      "lines": [
+        "inspection was completed.",
+        "The next assigned action is enabled."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "composer-generated",
+      "step": 3,
+      "lines": [
+        "financing was completed.",
+        "The composed workflow is complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "execution-boundaries",
+      "step": 0,
+      "lines": [
+        "The run exercised 16 workflow steps.",
+        "The oversized graph was refused."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "execution-boundaries",
+      "step": 1,
+      "lines": [
+        "1 request committed; 1 conflicted.",
+        "1 approval was recorded."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "financing-approved",
+      "step": 0,
+      "lines": [
+        "Only the bank can approve financing.",
+        "My attempt did not change the application."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "financing-approved",
+      "step": 1,
+      "lines": [
+        "The application is now approved.",
+        "The approval is recorded."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "generated-approved",
+      "step": 0,
+      "lines": [
+        "Only the bank can approve financing.",
+        "My attempt did not change the application."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "generated-approved",
+      "step": 1,
+      "lines": [
+        "The application is now approved.",
+        "The shared workflow is complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "generated-rejected",
+      "step": 0,
+      "lines": [
+        "This approval attempt was refused.",
+        "An existing approval cannot be exercised again."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "live-handoff",
+      "step": 0,
+      "lines": [
+        "The continuation was refused.",
+        "The bank must approve first."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "live-handoff",
+      "step": 1,
+      "lines": [
+        "The application is now approved.",
+        "I can now publish the scoped result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "live-handoff",
+      "step": 2,
+      "lines": [
+        "The continuation was refused.",
+        "Only the buyer may continue."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "live-handoff",
+      "step": 3,
+      "lines": [
+        "The financing documents stay private.",
+        "I’ve shared the scoped approval result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "package-builder",
+      "step": 0,
+      "lines": [
+        "The uploaded DAR was inspected.",
+        "Its package identity is now known."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "package-builder",
+      "step": 1,
+      "lines": [
+        "The verified source returned a DAR.",
+        "A reviewed mapping is available."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "package-builder",
+      "step": 2,
+      "lines": [
+        "The adapter compiled successfully.",
+        "Live availability is also confirmed."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "package-builder",
+      "step": 3,
+      "lines": [
+        "The DAR was inspected.",
+        "There is no reviewed mapping for it."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "package-builder",
+      "step": 4,
+      "lines": [
+        "Generation was refused.",
+        "A supported mapping is required."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "package-builder",
+      "step": 5,
+      "lines": [
+        "This session cannot retrieve packages.",
+        "Package access belongs to the bank."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "package-builder",
+      "step": 6,
+      "lines": [
+        "This input is not a valid DAR.",
+        "The request was refused."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "package-builder",
+      "step": 7,
+      "lines": [
+        "This upload exceeds the size limit.",
+        "The request was refused."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "private-approval",
+      "step": 0,
+      "lines": [
+        "That shortcut was refused.",
+        "Progress needs an authorized action."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "private-approval",
+      "step": 1,
+      "lines": [
+        "The required contract is private.",
+        "I cannot act on a contract I cannot see."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "private-approval",
+      "step": 2,
+      "lines": [
+        "The continuation was refused.",
+        "The bank must approve first."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "private-approval",
+      "step": 3,
+      "lines": [
+        "The application is now approved.",
+        "I can now publish the scoped result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "private-approval",
+      "step": 4,
+      "lines": [
+        "The continuation was refused.",
+        "Only the buyer may continue."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "private-approval",
+      "step": 5,
+      "lines": [
+        "The financing documents stay private.",
+        "I’ve shared the scoped approval result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-missing",
+      "step": 0,
+      "lines": [
+        "Your financing is approved.",
+        "The handoff result is not available here."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-missing",
+      "step": 1,
+      "lines": [
+        "My offer is open.",
+        "We still need a valid financing result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-missing",
+      "step": 2,
+      "lines": [
+        "My proposal was refused.",
+        "The required result is unavailable."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-reused-proof",
+      "step": 0,
+      "lines": [
+        "Your financing is approved.",
+        "The next application must check the result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-reused-proof",
+      "step": 1,
+      "lines": [
+        "My offer is open.",
+        "We still need a valid financing result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-reused-proof",
+      "step": 2,
+      "lines": [
+        "My proposal is ready.",
+        "I can relay it to Sofia."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-reused-proof",
+      "step": 3,
+      "lines": [
+        "My offer is open.",
+        "We still need a valid financing result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-reused-proof",
+      "step": 4,
+      "lines": [
+        "My proposal was refused.",
+        "The required result is unavailable."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-wrong-buyer",
+      "step": 0,
+      "lines": [
+        "Your financing is approved.",
+        "The next application must check the result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-wrong-buyer",
+      "step": 1,
+      "lines": [
+        "My offer is open.",
+        "We still need a valid financing result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-wrong-buyer",
+      "step": 2,
+      "lines": [
+        "My proposal was refused.",
+        "The result does not match this offer."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-wrong-continuation",
+      "step": 0,
+      "lines": [
+        "Your financing is approved.",
+        "The next application must check the result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-wrong-continuation",
+      "step": 1,
+      "lines": [
+        "My offer is open.",
+        "We still need a valid financing result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-wrong-continuation",
+      "step": 2,
+      "lines": [
+        "My proposal was refused.",
+        "The result does not match this offer."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-wrong-issuer",
+      "step": 0,
+      "lines": [
+        "Your financing is approved.",
+        "The next application must check the result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-wrong-issuer",
+      "step": 1,
+      "lines": [
+        "My offer is open.",
+        "We still need a valid financing result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-wrong-issuer",
+      "step": 2,
+      "lines": [
+        "My proposal was refused.",
+        "The result does not match this offer."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-wrong-subject",
+      "step": 0,
+      "lines": [
+        "Your financing is approved.",
+        "The next application must check the result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-wrong-subject",
+      "step": 1,
+      "lines": [
+        "My offer is open.",
+        "We still need a valid financing result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "purchase-wrong-subject",
+      "step": 2,
+      "lines": [
+        "My proposal was refused.",
+        "The result does not match this offer."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "sequence-complete",
+      "step": 0,
+      "lines": [
+        "The application is now approved.",
+        "The approval is recorded."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "sequence-complete",
+      "step": 1,
+      "lines": [
+        "Your review is confirmed.",
+        "The workflow is complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "sequence-resumed",
+      "step": 0,
+      "lines": [
+        "That shortcut was refused.",
+        "Progress needs an authorized action."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "sequence-resumed",
+      "step": 1,
+      "lines": [
+        "The review cannot run yet.",
+        "Financing must complete first."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "sequence-resumed",
+      "step": 2,
+      "lines": [
+        "The application is now approved.",
+        "The approval is recorded."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "sequence-resumed",
+      "step": 3,
+      "lines": [
+        "This request was already recorded.",
+        "The retry did not execute it again."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "sequence-resumed",
+      "step": 4,
+      "lines": [
+        "This approval attempt was refused.",
+        "An existing approval cannot be exercised again."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "sequence-resumed",
+      "step": 5,
+      "lines": [
+        "The approval remains recorded.",
+        "My review is still pending."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "sequence-resumed",
+      "step": 6,
+      "lines": [
+        "The ledger kept our progress.",
+        "I reconnected at the pending review."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "sequence-resumed",
+      "step": 7,
+      "lines": [
+        "Your review is confirmed.",
+        "The workflow is complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-missing-agreement",
+      "step": 0,
+      "lines": [
+        "10 TEST is reserved here.",
+        "Nothing has arrived here yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-missing-agreement",
+      "step": 1,
+      "lines": [
+        "This attempt was refused.",
+        "The seller’s agreement is still needed."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-missing-agreement",
+      "step": 2,
+      "lines": [
+        "This attempt was refused.",
+        "The seller’s agreement is still needed."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-missing-lock",
+      "step": 0,
+      "lines": [
+        "The seller has agreed to the trade.",
+        "The assets have not moved yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-missing-lock",
+      "step": 1,
+      "lines": [
+        "This attempt was refused.",
+        "The source has not confirmed readiness."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-missing-lock",
+      "step": 2,
+      "lines": [
+        "This attempt was refused.",
+        "The source has not confirmed readiness."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-missing-readiness",
+      "step": 0,
+      "lines": [
+        "The seller has agreed to the trade.",
+        "The assets have not moved yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-missing-readiness",
+      "step": 1,
+      "lines": [
+        "10 TEST is reserved here.",
+        "Nothing has arrived here yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-missing-readiness",
+      "step": 2,
+      "lines": [
+        "The source is ready to withdraw.",
+        "I still need to prepare receipt."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-missing-readiness",
+      "step": 3,
+      "lines": [
+        "This attempt was refused.",
+        "The destination is not ready yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-missing-readiness",
+      "step": 4,
+      "lines": [
+        "This attempt was refused.",
+        "The destination is not ready yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-source-settler",
+      "step": 0,
+      "lines": [
+        "The seller has agreed to the trade.",
+        "The assets have not moved yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-source-settler",
+      "step": 1,
+      "lines": [
+        "7.125 TEST is reserved here.",
+        "Nothing has arrived here yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-source-settler",
+      "step": 2,
+      "lines": [
+        "The source is ready to withdraw.",
+        "I still need to prepare receipt."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-source-settler",
+      "step": 3,
+      "lines": [
+        "The source position remains locked.",
+        "The receipt permission is now prepared."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-source-settler",
+      "step": 4,
+      "lines": [
+        "Both sides are ready.",
+        "The assigned settler can now proceed."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "transfer-source-settler",
+      "step": 5,
+      "lines": [
+        "The reserved position was withdrawn.",
+        "7.125 TEST arrived in the same transaction."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "workflow-approved",
+      "step": 0,
+      "lines": [
+        "Only the bank can approve financing.",
+        "My attempt did not change the application."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "workflow-approved",
+      "step": 1,
+      "lines": [
+        "The application is now approved.",
+        "The shared workflow is complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 390,
+      "story": "workflow-rejected",
+      "step": 0,
+      "lines": [
+        "This approval attempt was refused.",
+        "An existing approval cannot be exercised again."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-approved",
+      "step": 0,
+      "lines": [
+        "The required contract is private.",
+        "I cannot act on a contract I cannot see."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-approved",
+      "step": 1,
+      "lines": [
+        "Your financing is approved.",
+        "The next application must check the result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-approved",
+      "step": 2,
+      "lines": [
+        "That shortcut was refused.",
+        "Progress needs an authorized action."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-approved",
+      "step": 3,
+      "lines": [
+        "My offer is open.",
+        "We still need a valid financing result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-approved",
+      "step": 4,
+      "lines": [
+        "My proposal is ready.",
+        "I can relay it to Sofia."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-approved",
+      "step": 5,
+      "lines": [
+        "The proposal has not been relayed yet.",
+        "I must wait before receiving it."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-approved",
+      "step": 6,
+      "lines": [
+        "I’ve relayed Alice’s proposal.",
+        "It is ready for me to receive."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-approved",
+      "step": 7,
+      "lines": [
+        "Alice’s proposal has reached you.",
+        "Received — this handoff is complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-rejected",
+      "step": 0,
+      "lines": [
+        "Your financing was declined.",
+        "I cannot use it to make a proposal."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-rejected",
+      "step": 1,
+      "lines": [
+        "My offer is open.",
+        "We still need a valid financing result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-rejected",
+      "step": 2,
+      "lines": [
+        "My proposal was refused.",
+        "Declined financing cannot authorize it."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-approved",
+      "step": 0,
+      "lines": [
+        "The seller has agreed to the trade.",
+        "The assets have not moved yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-approved",
+      "step": 1,
+      "lines": [
+        "10 TEST is reserved here.",
+        "Nothing has arrived here yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-approved",
+      "step": 2,
+      "lines": [
+        "The source is ready to withdraw.",
+        "I still need to prepare receipt."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-approved",
+      "step": 3,
+      "lines": [
+        "The source position remains locked.",
+        "The receipt permission is now prepared."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-approved",
+      "step": 4,
+      "lines": [
+        "Both sides are ready.",
+        "The assigned settler can now proceed."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-approved",
+      "step": 5,
+      "lines": [
+        "Direct withdrawal was refused.",
+        "Use the coordinated settlement."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-approved",
+      "step": 6,
+      "lines": [
+        "This attempt was refused.",
+        "Settlement needs the assigned authority."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-approved",
+      "step": 7,
+      "lines": [
+        "The reserved position was withdrawn.",
+        "10 TEST arrived in the same transaction."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-approved",
+      "step": 8,
+      "lines": [
+        "This attempt was refused.",
+        "The asset had already arrived."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-final-leg-rejected",
+      "step": 0,
+      "lines": [
+        "The seller has agreed to the trade.",
+        "The assets have not moved yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-final-leg-rejected",
+      "step": 1,
+      "lines": [
+        "10 TEST is reserved here.",
+        "Nothing has arrived here yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-final-leg-rejected",
+      "step": 2,
+      "lines": [
+        "The source is ready to withdraw.",
+        "I still need to prepare receipt."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-final-leg-rejected",
+      "step": 3,
+      "lines": [
+        "The source position remains locked.",
+        "The receipt permission is now prepared."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-final-leg-rejected",
+      "step": 4,
+      "lines": [
+        "Both sides are ready.",
+        "The assigned settler can now proceed."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-final-leg-rejected",
+      "step": 5,
+      "lines": [
+        "The final transfer rolled back.",
+        "The earlier source lock remains."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "adapter-approved",
+      "step": 0,
+      "lines": [
+        "Only the bank can approve financing.",
+        "My attempt did not change the application."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "adapter-approved",
+      "step": 1,
+      "lines": [
+        "The application is now approved.",
+        "The shared workflow is complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "adapter-rejected",
+      "step": 0,
+      "lines": [
+        "This approval attempt was refused.",
+        "An existing approval cannot be exercised again."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "already-approved",
+      "step": 0,
+      "lines": [
+        "This approval attempt was refused.",
+        "An existing approval cannot be exercised again."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "branch-approved",
+      "step": 0,
+      "lines": [
+        "The join attempt was refused.",
+        "The selected path must finish first."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "branch-approved",
+      "step": 1,
+      "lines": [
+        "I’ve chosen the approval path.",
+        "Financing and review can now proceed."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "branch-approved",
+      "step": 2,
+      "lines": [
+        "The branch cannot be changed now.",
+        "We follow the recorded decision."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "branch-approved",
+      "step": 3,
+      "lines": [
+        "Closure belongs to the other branch.",
+        "We follow the approval path."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "branch-approved",
+      "step": 4,
+      "lines": [
+        "The application is now approved.",
+        "The approval is recorded."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "branch-approved",
+      "step": 5,
+      "lines": [
+        "The join attempt was refused.",
+        "The selected path must finish first."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "branch-approved",
+      "step": 6,
+      "lines": [
+        "Your review is confirmed.",
+        "The selected path is ready to join."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "branch-approved",
+      "step": 7,
+      "lines": [
+        "The selected path has joined.",
+        "This workflow is complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "branch-approved",
+      "step": 8,
+      "lines": [
+        "This request was already recorded.",
+        "The retry did not execute it again."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "branch-approved",
+      "step": 9,
+      "lines": [
+        "The join attempt was refused.",
+        "This workflow is already complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "branch-declined",
+      "step": 0,
+      "lines": [
+        "I’ve chosen the decline path.",
+        "We record closure instead of approval."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "branch-declined",
+      "step": 1,
+      "lines": [
+        "Financing belongs to the other branch.",
+        "We follow the decline path."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "branch-declined",
+      "step": 2,
+      "lines": [
+        "The closure is recorded.",
+        "The selected branch can now join."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "branch-declined",
+      "step": 3,
+      "lines": [
+        "The selected path has joined.",
+        "This workflow is complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "composer-direct",
+      "step": 0,
+      "lines": [
+        "I’ve proposed these exact actions.",
+        "Nothing starts before my consent."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "composer-direct",
+      "step": 1,
+      "lines": [
+        "I proposed this plan.",
+        "Only the buyer can consent to it."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "composer-direct",
+      "step": 2,
+      "lines": [
+        "The plan now has its source contracts.",
+        "I’ve accepted the proposed actions."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "composer-direct",
+      "step": 3,
+      "lines": [
+        "This action was refused.",
+        "Both its order and actor must be valid."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "composer-direct",
+      "step": 4,
+      "lines": [
+        "approval was completed.",
+        "The next assigned action is enabled."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "composer-direct",
+      "step": 5,
+      "lines": [
+        "This action was refused.",
+        "Both its order and actor must be valid."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "composer-direct",
+      "step": 6,
+      "lines": [
+        "review was completed.",
+        "The composed workflow is complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "composer-generated",
+      "step": 0,
+      "lines": [
+        "I’ve proposed these exact actions.",
+        "Nothing starts before my consent."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "composer-generated",
+      "step": 1,
+      "lines": [
+        "The plan now has its source contracts.",
+        "I’ve accepted the proposed actions."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "composer-generated",
+      "step": 2,
+      "lines": [
+        "inspection was completed.",
+        "The next assigned action is enabled."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "composer-generated",
+      "step": 3,
+      "lines": [
+        "financing was completed.",
+        "The composed workflow is complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "execution-boundaries",
+      "step": 0,
+      "lines": [
+        "The run exercised 16 workflow steps.",
+        "The oversized graph was refused."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "execution-boundaries",
+      "step": 1,
+      "lines": [
+        "1 request committed; 1 conflicted.",
+        "1 approval was recorded."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "financing-approved",
+      "step": 0,
+      "lines": [
+        "Only the bank can approve financing.",
+        "My attempt did not change the application."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "financing-approved",
+      "step": 1,
+      "lines": [
+        "The application is now approved.",
+        "The approval is recorded."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "generated-approved",
+      "step": 0,
+      "lines": [
+        "Only the bank can approve financing.",
+        "My attempt did not change the application."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "generated-approved",
+      "step": 1,
+      "lines": [
+        "The application is now approved.",
+        "The shared workflow is complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "generated-rejected",
+      "step": 0,
+      "lines": [
+        "This approval attempt was refused.",
+        "An existing approval cannot be exercised again."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "live-handoff",
+      "step": 0,
+      "lines": [
+        "The continuation was refused.",
+        "The bank must approve first."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "live-handoff",
+      "step": 1,
+      "lines": [
+        "The application is now approved.",
+        "I can now publish the scoped result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "live-handoff",
+      "step": 2,
+      "lines": [
+        "The continuation was refused.",
+        "Only the buyer may continue."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "live-handoff",
+      "step": 3,
+      "lines": [
+        "The financing documents stay private.",
+        "I’ve shared the scoped approval result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "package-builder",
+      "step": 0,
+      "lines": [
+        "The uploaded DAR was inspected.",
+        "Its package identity is now known."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "package-builder",
+      "step": 1,
+      "lines": [
+        "The verified source returned a DAR.",
+        "A reviewed mapping is available."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "package-builder",
+      "step": 2,
+      "lines": [
+        "The adapter compiled successfully.",
+        "Live availability is also confirmed."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "package-builder",
+      "step": 3,
+      "lines": [
+        "The DAR was inspected.",
+        "There is no reviewed mapping for it."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "package-builder",
+      "step": 4,
+      "lines": [
+        "Generation was refused.",
+        "A supported mapping is required."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "package-builder",
+      "step": 5,
+      "lines": [
+        "This session cannot retrieve packages.",
+        "Package access belongs to the bank."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "package-builder",
+      "step": 6,
+      "lines": [
+        "This input is not a valid DAR.",
+        "The request was refused."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "package-builder",
+      "step": 7,
+      "lines": [
+        "This upload exceeds the size limit.",
+        "The request was refused."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "private-approval",
+      "step": 0,
+      "lines": [
+        "That shortcut was refused.",
+        "Progress needs an authorized action."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "private-approval",
+      "step": 1,
+      "lines": [
+        "The required contract is private.",
+        "I cannot act on a contract I cannot see."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "private-approval",
+      "step": 2,
+      "lines": [
+        "The continuation was refused.",
+        "The bank must approve first."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "private-approval",
+      "step": 3,
+      "lines": [
+        "The application is now approved.",
+        "I can now publish the scoped result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "private-approval",
+      "step": 4,
+      "lines": [
+        "The continuation was refused.",
+        "Only the buyer may continue."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "private-approval",
+      "step": 5,
+      "lines": [
+        "The financing documents stay private.",
+        "I’ve shared the scoped approval result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-missing",
+      "step": 0,
+      "lines": [
+        "Your financing is approved.",
+        "The handoff result is not available here."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-missing",
+      "step": 1,
+      "lines": [
+        "My offer is open.",
+        "We still need a valid financing result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-missing",
+      "step": 2,
+      "lines": [
+        "My proposal was refused.",
+        "The required result is unavailable."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-reused-proof",
+      "step": 0,
+      "lines": [
+        "Your financing is approved.",
+        "The next application must check the result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-reused-proof",
+      "step": 1,
+      "lines": [
+        "My offer is open.",
+        "We still need a valid financing result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-reused-proof",
+      "step": 2,
+      "lines": [
+        "My proposal is ready.",
+        "I can relay it to Sofia."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-reused-proof",
+      "step": 3,
+      "lines": [
+        "My offer is open.",
+        "We still need a valid financing result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-reused-proof",
+      "step": 4,
+      "lines": [
+        "My proposal was refused.",
+        "The required result is unavailable."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-wrong-buyer",
+      "step": 0,
+      "lines": [
+        "Your financing is approved.",
+        "The next application must check the result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-wrong-buyer",
+      "step": 1,
+      "lines": [
+        "My offer is open.",
+        "We still need a valid financing result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-wrong-buyer",
+      "step": 2,
+      "lines": [
+        "My proposal was refused.",
+        "The result does not match this offer."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-wrong-continuation",
+      "step": 0,
+      "lines": [
+        "Your financing is approved.",
+        "The next application must check the result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-wrong-continuation",
+      "step": 1,
+      "lines": [
+        "My offer is open.",
+        "We still need a valid financing result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-wrong-continuation",
+      "step": 2,
+      "lines": [
+        "My proposal was refused.",
+        "The result does not match this offer."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-wrong-issuer",
+      "step": 0,
+      "lines": [
+        "Your financing is approved.",
+        "The next application must check the result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-wrong-issuer",
+      "step": 1,
+      "lines": [
+        "My offer is open.",
+        "We still need a valid financing result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-wrong-issuer",
+      "step": 2,
+      "lines": [
+        "My proposal was refused.",
+        "The result does not match this offer."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-wrong-subject",
+      "step": 0,
+      "lines": [
+        "Your financing is approved.",
+        "The next application must check the result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-wrong-subject",
+      "step": 1,
+      "lines": [
+        "My offer is open.",
+        "We still need a valid financing result."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "purchase-wrong-subject",
+      "step": 2,
+      "lines": [
+        "My proposal was refused.",
+        "The result does not match this offer."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "sequence-complete",
+      "step": 0,
+      "lines": [
+        "The application is now approved.",
+        "The approval is recorded."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "sequence-complete",
+      "step": 1,
+      "lines": [
+        "Your review is confirmed.",
+        "The workflow is complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "sequence-resumed",
+      "step": 0,
+      "lines": [
+        "That shortcut was refused.",
+        "Progress needs an authorized action."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "sequence-resumed",
+      "step": 1,
+      "lines": [
+        "The review cannot run yet.",
+        "Financing must complete first."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "sequence-resumed",
+      "step": 2,
+      "lines": [
+        "The application is now approved.",
+        "The approval is recorded."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "sequence-resumed",
+      "step": 3,
+      "lines": [
+        "This request was already recorded.",
+        "The retry did not execute it again."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "sequence-resumed",
+      "step": 4,
+      "lines": [
+        "This approval attempt was refused.",
+        "An existing approval cannot be exercised again."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "sequence-resumed",
+      "step": 5,
+      "lines": [
+        "The approval remains recorded.",
+        "My review is still pending."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "sequence-resumed",
+      "step": 6,
+      "lines": [
+        "The ledger kept our progress.",
+        "I reconnected at the pending review."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "sequence-resumed",
+      "step": 7,
+      "lines": [
+        "Your review is confirmed.",
+        "The workflow is complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-missing-agreement",
+      "step": 0,
+      "lines": [
+        "10 TEST is reserved here.",
+        "Nothing has arrived here yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-missing-agreement",
+      "step": 1,
+      "lines": [
+        "This attempt was refused.",
+        "The seller’s agreement is still needed."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-missing-agreement",
+      "step": 2,
+      "lines": [
+        "This attempt was refused.",
+        "The seller’s agreement is still needed."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-missing-lock",
+      "step": 0,
+      "lines": [
+        "The seller has agreed to the trade.",
+        "The assets have not moved yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-missing-lock",
+      "step": 1,
+      "lines": [
+        "This attempt was refused.",
+        "The source has not confirmed readiness."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-missing-lock",
+      "step": 2,
+      "lines": [
+        "This attempt was refused.",
+        "The source has not confirmed readiness."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-missing-readiness",
+      "step": 0,
+      "lines": [
+        "The seller has agreed to the trade.",
+        "The assets have not moved yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-missing-readiness",
+      "step": 1,
+      "lines": [
+        "10 TEST is reserved here.",
+        "Nothing has arrived here yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-missing-readiness",
+      "step": 2,
+      "lines": [
+        "The source is ready to withdraw.",
+        "I still need to prepare receipt."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-missing-readiness",
+      "step": 3,
+      "lines": [
+        "This attempt was refused.",
+        "The destination is not ready yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-missing-readiness",
+      "step": 4,
+      "lines": [
+        "This attempt was refused.",
+        "The destination is not ready yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-source-settler",
+      "step": 0,
+      "lines": [
+        "The seller has agreed to the trade.",
+        "The assets have not moved yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-source-settler",
+      "step": 1,
+      "lines": [
+        "7.125 TEST is reserved here.",
+        "Nothing has arrived here yet."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-source-settler",
+      "step": 2,
+      "lines": [
+        "The source is ready to withdraw.",
+        "I still need to prepare receipt."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-source-settler",
+      "step": 3,
+      "lines": [
+        "The source position remains locked.",
+        "The receipt permission is now prepared."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-source-settler",
+      "step": 4,
+      "lines": [
+        "Both sides are ready.",
+        "The assigned settler can now proceed."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "transfer-source-settler",
+      "step": 5,
+      "lines": [
+        "The reserved position was withdrawn.",
+        "7.125 TEST arrived in the same transaction."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "workflow-approved",
+      "step": 0,
+      "lines": [
+        "Only the bank can approve financing.",
+        "My attempt did not change the application."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "workflow-approved",
+      "step": 1,
+      "lines": [
+        "The application is now approved.",
+        "The shared workflow is complete."
+      ],
+      "drift": 0
+    },
+    {
+      "width": 320,
+      "story": "workflow-rejected",
+      "step": 0,
+      "lines": [
+        "This approval attempt was refused.",
+        "An existing approval cannot be exercised again."
+      ],
+      "drift": 0
+    }
+  ],
+  "shots": [
+    {
+      "name": "1280-purchase-approved",
+      "label": "purchase-approved",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=purchase-approved&step=7",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-purchase-rejected",
+      "label": "purchase-rejected",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=purchase-rejected&step=2",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-transfer-approved",
+      "label": "transfer-approved",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=transfer-approved&step=8",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-transfer-final-leg-rejected",
+      "label": "transfer-final-leg-rejected",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=transfer-final-leg-rejected&step=5",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-adapter-approved",
+      "label": "adapter-approved",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=adapter-approved&step=1",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-adapter-rejected",
+      "label": "adapter-rejected",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=adapter-rejected&step=0",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-already-approved",
+      "label": "already-approved",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=already-approved&step=0",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-branch-approved",
+      "label": "branch-approved",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=branch-approved&step=9",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-branch-declined",
+      "label": "branch-declined",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=branch-declined&step=3",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-composer-direct",
+      "label": "composer-direct",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=composer-direct&step=6",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-composer-generated",
+      "label": "composer-generated",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=composer-generated&step=3",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-execution-boundaries",
+      "label": "execution-boundaries",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=execution-boundaries&step=1",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-financing-approved",
+      "label": "financing-approved",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=financing-approved&step=1",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-generated-approved",
+      "label": "generated-approved",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=generated-approved&step=1",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-generated-rejected",
+      "label": "generated-rejected",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=generated-rejected&step=0",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-live-handoff",
+      "label": "live-handoff",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=live-handoff&step=3",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-package-builder",
+      "label": "package-builder",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=package-builder&step=7",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-private-approval",
+      "label": "private-approval",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=private-approval&step=5",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-purchase-missing",
+      "label": "purchase-missing",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=purchase-missing&step=2",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-purchase-reused-proof",
+      "label": "purchase-reused-proof",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=purchase-reused-proof&step=4",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-purchase-wrong-buyer",
+      "label": "purchase-wrong-buyer",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=purchase-wrong-buyer&step=2",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-purchase-wrong-continuation",
+      "label": "purchase-wrong-continuation",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=purchase-wrong-continuation&step=2",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-purchase-wrong-issuer",
+      "label": "purchase-wrong-issuer",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=purchase-wrong-issuer&step=2",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-purchase-wrong-subject",
+      "label": "purchase-wrong-subject",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=purchase-wrong-subject&step=2",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-sequence-complete",
+      "label": "sequence-complete",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=sequence-complete&step=1",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-sequence-resumed",
+      "label": "sequence-resumed",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=sequence-resumed&step=7",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-transfer-missing-agreement",
+      "label": "transfer-missing-agreement",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=transfer-missing-agreement&step=2",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-transfer-missing-lock",
+      "label": "transfer-missing-lock",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=transfer-missing-lock&step=2",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-transfer-missing-readiness",
+      "label": "transfer-missing-readiness",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=transfer-missing-readiness&step=4",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-transfer-source-settler",
+      "label": "transfer-source-settler",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=transfer-source-settler&step=5",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-workflow-approved",
+      "label": "workflow-approved",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=workflow-approved&step=1",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-workflow-rejected",
+      "label": "workflow-rejected",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=workflow-rejected&step=0",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-01-product",
+      "label": "01-product",
+      "url": "http://127.0.0.1:56202/design/0.2/chapters/01-product.html",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-02-roles-and-trust",
+      "label": "02-roles-and-trust",
+      "url": "http://127.0.0.1:56202/design/0.2/chapters/02-roles-and-trust.html",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-05-bring-an-application",
+      "label": "05-bring-an-application",
+      "url": "http://127.0.0.1:56202/design/0.2/chapters/05-bring-an-application.html",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-06-compose-a-workflow",
+      "label": "06-compose-a-workflow",
+      "url": "http://127.0.0.1:56202/design/0.2/chapters/06-compose-a-workflow.html",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-07-evidence-and-boundaries",
+      "label": "07-evidence-and-boundaries",
+      "url": "http://127.0.0.1:56202/design/0.2/chapters/07-evidence-and-boundaries.html",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-08-release-and-adoption",
+      "label": "08-release-and-adoption",
+      "url": "http://127.0.0.1:56202/design/0.2/chapters/08-release-and-adoption.html",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-09-proposal-context",
+      "label": "09-proposal-context",
+      "url": "http://127.0.0.1:56202/design/0.2/chapters/09-proposal-context.html",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-10-context-and-references",
+      "label": "10-context-and-references",
+      "url": "http://127.0.0.1:56202/design/0.2/chapters/10-context-and-references.html",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-purchase",
+      "label": "purchase",
+      "url": "http://127.0.0.1:56202/design/0.2/chapters/03-financing-to-offer.html?step=2",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-transfer",
+      "label": "transfer",
+      "url": "http://127.0.0.1:56202/design/0.2/chapters/04-four-party-transfer.html?step=8",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-reviewer",
+      "label": "reviewer",
+      "url": "http://127.0.0.1:56202/design/0.2/reviewer.html?slice=process&relationship=execution",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-developer",
+      "label": "developer",
+      "url": "http://127.0.0.1:56202/design/0.2/code.html?file=product/web/src/main/scala/harmonia/composition/ComposerView.scala",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-author",
+      "label": "author",
+      "url": "http://127.0.0.1:56202/design/0.2/author.html?passage=architecture-88",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "1280-author-contracts",
+      "label": "author-contracts",
+      "url": "http://127.0.0.1:56202/design/0.2/author.html?passage=architecture-318",
+      "width": 1280,
+      "height": 1000
+    },
+    {
+      "name": "390-purchase-approved",
+      "label": "purchase-approved",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=purchase-approved&step=7",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-purchase-rejected",
+      "label": "purchase-rejected",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=purchase-rejected&step=2",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-transfer-approved",
+      "label": "transfer-approved",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=transfer-approved&step=8",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-transfer-final-leg-rejected",
+      "label": "transfer-final-leg-rejected",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=transfer-final-leg-rejected&step=5",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-adapter-approved",
+      "label": "adapter-approved",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=adapter-approved&step=1",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-adapter-rejected",
+      "label": "adapter-rejected",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=adapter-rejected&step=0",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-already-approved",
+      "label": "already-approved",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=already-approved&step=0",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-branch-approved",
+      "label": "branch-approved",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=branch-approved&step=9",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-branch-declined",
+      "label": "branch-declined",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=branch-declined&step=3",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-composer-direct",
+      "label": "composer-direct",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=composer-direct&step=6",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-composer-generated",
+      "label": "composer-generated",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=composer-generated&step=3",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-execution-boundaries",
+      "label": "execution-boundaries",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=execution-boundaries&step=1",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-financing-approved",
+      "label": "financing-approved",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=financing-approved&step=1",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-generated-approved",
+      "label": "generated-approved",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=generated-approved&step=1",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-generated-rejected",
+      "label": "generated-rejected",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=generated-rejected&step=0",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-live-handoff",
+      "label": "live-handoff",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=live-handoff&step=3",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-package-builder",
+      "label": "package-builder",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=package-builder&step=7",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-private-approval",
+      "label": "private-approval",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=private-approval&step=5",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-purchase-missing",
+      "label": "purchase-missing",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=purchase-missing&step=2",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-purchase-reused-proof",
+      "label": "purchase-reused-proof",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=purchase-reused-proof&step=4",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-purchase-wrong-buyer",
+      "label": "purchase-wrong-buyer",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=purchase-wrong-buyer&step=2",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-purchase-wrong-continuation",
+      "label": "purchase-wrong-continuation",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=purchase-wrong-continuation&step=2",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-purchase-wrong-issuer",
+      "label": "purchase-wrong-issuer",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=purchase-wrong-issuer&step=2",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-purchase-wrong-subject",
+      "label": "purchase-wrong-subject",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=purchase-wrong-subject&step=2",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-sequence-complete",
+      "label": "sequence-complete",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=sequence-complete&step=1",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-sequence-resumed",
+      "label": "sequence-resumed",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=sequence-resumed&step=7",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-transfer-missing-agreement",
+      "label": "transfer-missing-agreement",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=transfer-missing-agreement&step=2",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-transfer-missing-lock",
+      "label": "transfer-missing-lock",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=transfer-missing-lock&step=2",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-transfer-missing-readiness",
+      "label": "transfer-missing-readiness",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=transfer-missing-readiness&step=4",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-transfer-source-settler",
+      "label": "transfer-source-settler",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=transfer-source-settler&step=5",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-workflow-approved",
+      "label": "workflow-approved",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=workflow-approved&step=1",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-workflow-rejected",
+      "label": "workflow-rejected",
+      "url": "http://127.0.0.1:56202/design/0.2/laboratory.html?story=workflow-rejected&step=0",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-01-product",
+      "label": "01-product",
+      "url": "http://127.0.0.1:56202/design/0.2/chapters/01-product.html",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-02-roles-and-trust",
+      "label": "02-roles-and-trust",
+      "url": "http://127.0.0.1:56202/design/0.2/chapters/02-roles-and-trust.html",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-05-bring-an-application",
+      "label": "05-bring-an-application",
+      "url": "http://127.0.0.1:56202/design/0.2/chapters/05-bring-an-application.html",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-06-compose-a-workflow",
+      "label": "06-compose-a-workflow",
+      "url": "http://127.0.0.1:56202/design/0.2/chapters/06-compose-a-workflow.html",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-07-evidence-and-boundaries",
+      "label": "07-evidence-and-boundaries",
+      "url": "http://127.0.0.1:56202/design/0.2/chapters/07-evidence-and-boundaries.html",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-08-release-and-adoption",
+      "label": "08-release-and-adoption",
+      "url": "http://127.0.0.1:56202/design/0.2/chapters/08-release-and-adoption.html",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-09-proposal-context",
+      "label": "09-proposal-context",
+      "url": "http://127.0.0.1:56202/design/0.2/chapters/09-proposal-context.html",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-10-context-and-references",
+      "label": "10-context-and-references",
+      "url": "http://127.0.0.1:56202/design/0.2/chapters/10-context-and-references.html",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-purchase",
+      "label": "purchase",
+      "url": "http://127.0.0.1:56202/design/0.2/chapters/03-financing-to-offer.html?step=2",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-transfer",
+      "label": "transfer",
+      "url": "http://127.0.0.1:56202/design/0.2/chapters/04-four-party-transfer.html?step=8",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-reviewer",
+      "label": "reviewer",
+      "url": "http://127.0.0.1:56202/design/0.2/reviewer.html?slice=process&relationship=execution",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-developer",
+      "label": "developer",
+      "url": "http://127.0.0.1:56202/design/0.2/code.html?file=product/web/src/main/scala/harmonia/composition/ComposerView.scala",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-author",
+      "label": "author",
+      "url": "http://127.0.0.1:56202/design/0.2/author.html?passage=architecture-88",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "390-author-contracts",
+      "label": "author-contracts",
+      "url": "http://127.0.0.1:56202/design/0.2/author.html?passage=architecture-318",
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "errors": []
+}

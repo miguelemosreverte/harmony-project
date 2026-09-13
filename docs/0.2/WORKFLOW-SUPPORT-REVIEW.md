@@ -1,5 +1,9 @@
 # Illustrated workflow review
 
+Historical reader.7 review. The user rejected the repeated portrait composition.
+The corrective art direction is [Handcrafted scenes](HANDCRAFTED-SCENES.md).
+The checks below establish rendering behavior, not acceptance of that art direction.
+
 The approved infographic remains the main stage. A separate two-speaker scene
 below it explains the selected moment, with one short HTML sentence per speaker.
 There are no new controls. The old actor badges have been removed.

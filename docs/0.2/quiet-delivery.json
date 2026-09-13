@@ -1,7 +1,7 @@
 {
   "book": "http://127.0.0.1:54724/",
-  "product": "http://127.0.0.1:54723/",
-  "sourceFiles": 393,
+  "product": "http://127.0.0.1:49617/",
+  "sourceFiles": 396,
   "checks": [
     "Separate book pairs original labels with a redrawn infographic",
     "Every exported source matches its source-catalog fingerprint",
