@@ -9,6 +9,7 @@ package harmonia.scene
   */
 
 import org.scalajs.dom
+import harmonia.scene.support.{Conversation, ConversationView}
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportTopLevel
 
@@ -22,6 +23,8 @@ final class WorkflowDiagramView(root: dom.HTMLElement):
   caption.setAttribute("aria-live", "polite")
   figure.appendChild(map); figure.appendChild(title); figure.appendChild(caption)
   root.appendChild(figure)
+  private val support = new ConversationView(root)
+  private var overview = Option.empty[Conversation]
   private val connections = new ConnectionLayer(map)
   private var cards = Vector.empty[dom.HTMLElement]
   private var documentation = Map.empty[String, DiagramNode]
@@ -31,7 +34,13 @@ final class WorkflowDiagramView(root: dom.HTMLElement):
   def render(value: WorkflowDiagram): Unit = value.layers match
     case Left(error) => title.textContent = error
     case Right(layers) =>
-      observation.render(value.observation)
+      overview = value.conversation
+      support.render(overview)
+      observation.render(if overview.nonEmpty then None else value.observation)
+      Vector(title, caption).foreach { element =>
+        if overview.nonEmpty then element.setAttribute("hidden", "")
+        else element.removeAttribute("hidden")
+      }
       documentation = value.nodes.map(n => n.id -> n).toMap
       val existing = cards.map(card => card.getAttribute("data-node") -> card).toMap
       cards
@@ -86,6 +95,7 @@ final class WorkflowDiagramView(root: dom.HTMLElement):
       caption.textContent = value.caption
 
   def select(id: String): Unit = documentation.get(id).foreach { item =>
+    support.render(item.conversation.orElse(overview))
     title.textContent = item.label
     caption.textContent = item.detail
     cards

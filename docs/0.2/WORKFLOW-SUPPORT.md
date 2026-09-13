@@ -32,17 +32,17 @@ The previously added actor badges were vetoed and must be removed.
 ## Linear delivery
 
 - [x] 1. Record the invariant, coverage, and ownership before implementation.
-- [ ] 2. Generate and inspect a small reusable cast.
-  - [ ] Keep masters and exact built-in generation prompts.
-  - [ ] Store the consumed illustrations with the shared presentation assets.
-- [ ] 3. Implement a typed, retained conversation below the shared diagrams.
-  - [ ] Separate illustration, speaker, and spoken text in the presentation value.
-  - [ ] Remove the unapproved actor badges; keep infographic geometry intact.
-  - [ ] Keep the product independent of book and harness data.
-- [ ] 4. Author recorded, explanatory, and live conversations.
-  - [ ] Cover every registered observation without using expected values.
-  - [ ] Keep missing observations, refusal, waiting, and completion distinct.
-  - [ ] Keep source explanations and chapter narration owned by the book.
+- [x] 2. Generate and inspect a small reusable cast.
+  - [x] Keep masters and exact built-in generation prompts.
+  - [x] Store the consumed illustrations with the shared presentation assets.
+- [x] 3. Implement a typed, retained conversation below the shared diagrams.
+  - [x] Separate illustration, speaker, and spoken text in the presentation value.
+  - [x] Remove the unapproved actor badges; keep infographic geometry intact.
+  - [x] Keep the product independent of book and harness data.
+- [x] 4. Author recorded, explanatory, and live conversations.
+  - [x] Cover every registered observation without using expected values.
+  - [x] Keep missing observations, refusal, waiting, and completion distinct.
+  - [x] Keep source explanations and chapter narration owned by the book.
 - [ ] 5. Review the rendered experience.
   - [ ] Traverse every recording and live inspection; retain deterministic URLs.
   - [ ] Save and inspect desktop and mobile screenshots for every workflow family.

@@ -12,6 +12,7 @@ import harmonia.ui.Elements.*
 import harmonia.workspace.WorkspaceCommand
 import org.scalajs.dom
 import harmonia.scene.*
+import harmonia.scene.support.*
 
 object ComposerView:
   private var diagrams = Vector.empty[WorkflowDiagramView]
@@ -40,7 +41,8 @@ object ComposerView:
               if b.state == DiagramState.Complete then DiagramState.Complete
               else DiagramState.Pending
             )
-          )
+          ),
+        conversation = nodes.headOption.flatMap(_.conversation)
       )
     )
     val dock = element("nav", "workflow-dock")
@@ -120,7 +122,13 @@ object ComposerView:
               step.action.label,
               step.role,
               step.actor.wire,
-              DiagramState.Pending
+              DiagramState.Pending,
+              Some(
+                Conversation(
+                  Speech(Portrait.Bank, "Bank", s"I propose ${step.id} for ${step.actor.wire}."),
+                  Speech(Portrait.Alice, "Buyer", "My consent is still required before it runs.")
+                )
+              )
             )
           )
         )
@@ -166,7 +174,19 @@ object ComposerView:
               step.actor,
               if step.completed then DiagramState.Complete
               else if step.enabled then DiagramState.Current
-              else DiagramState.Pending
+              else DiagramState.Pending,
+              Some(
+                Conversation(
+                  Speech(Portrait.Bank, "Bank", s"${step.id} belongs to ${step.actor}."),
+                  Speech(
+                    Portrait.Alice,
+                    "Buyer",
+                    if step.completed then "Its completion is recorded."
+                    else if step.enabled then "It is ready for its authorized participant."
+                    else "It must wait for the earlier actions."
+                  )
+                )
+              )
             )
           )
         )

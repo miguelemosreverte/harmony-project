@@ -3,6 +3,7 @@ package harmonia.composition
 import harmonia.ui.Elements.*
 import harmonia.composition.model.{Composition, CompositionAction, CompositionActor, PlannedStep}
 import harmonia.scene.*
+import harmonia.scene.support.*
 import org.scalajs.dom
 
 /** One question at a time. The address preserves the typed draft and current question. */
@@ -55,6 +56,28 @@ final class CompositionEditor(propose: Either[String, Composition] => Unit):
     case Action(i)      => "step-" + i
     case Integration(i) => "step-" + i
     case _              => "plan"
+
+  private def conversation: Conversation =
+    val (first, second) = field match
+      case Name =>
+        "Let’s give this workflow a clear name." -> "I’ll recognize the plan before I consent."
+      case Reference =>
+        "This reference identifies our plan." -> "We can return to this exact workflow."
+      case Count =>
+        "We can arrange one to four actions." -> "Each action has its own responsibility."
+      case Id(i) =>
+        s"Action ${i + 1} needs a distinct name." -> "We will follow it through execution."
+      case Role(i) =>
+        s"Who is responsible for action ${i + 1}?" -> "The role explains that responsibility."
+      case Actor(_) =>
+        "Assign the role to a participant." -> "That participant must authorize the action."
+      case Action(_) =>
+        "Choose the application action." -> "Its rules still apply inside the workflow."
+      case Integration(_) =>
+        "Direct interfaces and adapters can participate." -> "The application keeps its authority."
+      case Review =>
+        "These are the exact actions I’ll propose." -> "Nothing runs before the buyer consents."
+    Conversation(Speech(Portrait.Bank, "Bank", first), Speech(Portrait.Alice, "Buyer", second))
 
   private def fields: Vector[Field] =
     Vector(Name, Reference, Count) ++ plan.steps.indices.toVector.flatMap { i =>
@@ -237,7 +260,8 @@ final class CompositionEditor(propose: Either[String, Composition] => Unit):
         "Draft plan · nothing submitted",
         nodes,
         nodes.zip(nodes.drop(1)).map((a, b) => DiagramEdge(a.id, b.id, DiagramState.Pending)),
-        Some(SceneObservation("Editing", label(field), "Draft"))
+        Some(SceneObservation("Editing", label(field), "Draft")),
+        conversation = Some(conversation)
       )
     )
     val questions = CarouselPath(

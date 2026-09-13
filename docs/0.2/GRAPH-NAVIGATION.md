@@ -1,5 +1,11 @@
 # Let the infographic speak
 
+The actor-badge decision below was subsequently vetoed. The approved
+[illustrated support contract](WORKFLOW-SUPPORT.md) replaces those badges with
+a separate two-speaker conversation below the unchanged infographic. The
+connected carousel and navigation rules remain in force.
+
+
 The workflow scene explains what happened. Its bottom graph only shows the
 available route and selected moment. This supersedes the labeled step-card layout.
 

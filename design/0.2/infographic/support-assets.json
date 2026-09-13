@@ -1,0 +1,32 @@
+[
+  {
+    "id": "bank",
+    "path": "product/scene/site/assets/support-v1/bank.png",
+    "sha256": "ec64488686daf15e93aabc9080d0129130f1d2235b93783d8cd8d6e14523c72a"
+  },
+  {
+    "id": "alice",
+    "path": "product/scene/site/assets/support-v1/alice.png",
+    "sha256": "c2ea706c65e168b81b1f6eed5921762828bcb151bf63014f5f48110b4953d3d5"
+  },
+  {
+    "id": "ben",
+    "path": "product/scene/site/assets/support-v1/ben.png",
+    "sha256": "0ac0b079913db1128e8dac7a729c3078b1658773d58a255fa2797a2951fe1cd8"
+  },
+  {
+    "id": "sofia",
+    "path": "product/scene/site/assets/support-v1/sofia.png",
+    "sha256": "e41f15561002b6f8dff19907b4db825081551941ee135866bd885f91d00482cb"
+  },
+  {
+    "id": "developer",
+    "path": "product/scene/site/assets/support-v1/developer.png",
+    "sha256": "5db31b8be5e4858a08ce977a9e02a55e4e87b9ce7571f604c8b177e05c5e0789"
+  },
+  {
+    "id": "reviewer",
+    "path": "product/scene/site/assets/support-v1/reviewer.png",
+    "sha256": "d477c63b12d5ba2c5f7cf16277a7396c9200d58dcc98ac701ccb6b178aab1c9d"
+  }
+]

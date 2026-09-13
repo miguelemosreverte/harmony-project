@@ -1,5 +1,6 @@
 """Export actual source with authored annotations; never infer a program from its text."""
 from .chapter_diagrams import DIAGRAMS
+from .conversations import CHAPTERS, SLICES, SOURCES
 from .source_diagrams import DIAGRAMS as SOURCE_DIAGRAMS
 from hashlib import sha256
 from html import escape
@@ -74,6 +75,10 @@ def colored_lines(text, language):
 
 def build_catalog(root):
     slices = json.loads((root/'book/edition-0.2/atlas/slices.json').read_text())
+    for key, diagram in DIAGRAMS.items():
+        diagram['conversation'] = CHAPTERS[key]
+    for key, diagram in SOURCE_DIAGRAMS.items():
+        diagram['conversation'] = SOURCES[key]
     known = {s['id'] for s in slices}
     if len(known)!=len(slices): raise ValueError('Duplicate slice identity')
     context_path=root/'book/edition-0.2/atlas/packages.json'
@@ -125,5 +130,8 @@ def build_catalog(root):
             if not ready:raise ValueError('Cycle in authored diagram')
             placed|=ready
         if not (root/item['evidence']).is_file():raise ValueError('Missing evidence: '+item['evidence'])
+    for item in slices:
+        if item['id'] not in SLICES: raise ValueError('Missing slice conversation: '+item['id'])
+        item['conversation'] = SLICES[item['id']]
     tree_hash=sha256(''.join(f'{p}:{e["sha256"]}\n' for p,e in source.items()).encode()).hexdigest()
     return dict(sourceDiagrams=SOURCE_DIAGRAMS,chapterDiagrams=DIAGRAMS,files=source,contexts={c['id']:{**c,'files':[p for p,f in source.items() if f.get('context')==c['id']]} for c in contexts},slices={s['id']:s for s in slices},sha256=tree_hash,counts=dict(files=len(source),lines=sum(f['lines'] for f in source.values()),annotated=sum(bool(f['annotation']) for f in source.values()))), outputs

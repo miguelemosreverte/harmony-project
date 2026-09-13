@@ -2,6 +2,7 @@ package harmonia.book.diagram
 
 import harmonia.book.{RecordedStory, StoryUnit}
 import harmonia.scene.*
+import harmonia.book.narrative.RecordedConversation
 import io.circe.Json
 import io.circe.syntax.*
 import scala.scalajs.js.annotation.JSExportTopLevel
@@ -46,50 +47,12 @@ object RecordedScene:
       else base
     result.copy(
       focus = if actor == "all" then unit.map(_.actor).getOrElse(base.people.head.id) else actor,
-      badge = Some(badge(unit, actual, base.kind)),
+      conversation = Some(RecordedConversation(story, step - 1)),
       observation = Some(
         unit.fold(SceneObservation(base.people.head.name, "Before the handoff", "Start"))(value =>
           SceneObservation(value.actor, value.id.replace('-', ' '), text(actual, "outcome"))
         )
       )
-    )
-
-  private def badge(unit: Option[StoryUnit], actual: Json, kind: SceneKind): SceneBadge =
-    val refused = text(actual, "outcome") == "rejected"
-    val declined =
-      unit.exists(_.action == "assess-financing") && text(actual, "application") == "rejected"
-    val label =
-      if unit.isEmpty then
-        if kind == SceneKind.Transfer then "Trade proposed" else "Financing pending"
-      else if actual.isNull then "Not observed"
-      else if refused then
-        if unit.exists(_.id == "rejected-financing") then "Offer refused"
-        else
-          text(actual, "reason") match
-            case "destination-rejected" => "Rolled back"
-            case "not-visible"          => "No access"
-            case "unauthorized"         => "Not authorized"
-            case _                      => "Refused"
-      else if declined then "Declined"
-      else
-        unit.get.action match
-          case "assess-financing"    => "Approved"
-          case "open-offer"          => "Offer ready"
-          case "make-proposal"       => "Proposed"
-          case "relay-proposal"      => "Relayed"
-          case "receive-proposal"    => "Received"
-          case "agree-trade"         => "Agreed"
-          case "lock-position"       => "Reserved"
-          case "confirm-source"      => "Source ready"
-          case "prepare-destination" => "Receipt allowed"
-          case "confirm-destination" => "Ready"
-          case "settle"              => "Transferred"
-          case _                     => "Observed"
-    SceneBadge(
-      label,
-      if refused || declined then DiagramState.Refused
-      else if unit.isEmpty || actual.isNull then DiagramState.Pending
-      else DiagramState.Complete
     )
 
   private def purchase(setup: Json, unit: Option[StoryUnit], actual: Json): SceneFrame =

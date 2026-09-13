@@ -1,6 +1,7 @@
 package harmonia.scene
 
 import io.circe.{Codec, Decoder, Encoder}
+import harmonia.scene.support.Conversation
 
 enum SceneKind:
   case Purchase, Transfer, Financing
@@ -20,10 +21,6 @@ final case class SceneAmount(label: String, value: String, fraction: Double)
 object SceneAmount:
   given Codec.AsObject[SceneAmount] = Codec.AsObject.derived[SceneAmount]
 
-final case class SceneBadge(label: String, state: DiagramState)
-object SceneBadge:
-  given Codec.AsObject[SceneBadge] = Codec.AsObject.derived[SceneBadge]
-
 /** A presentation value, supplied by a domain owner or a recorded-story projector. */
 final case class SceneFrame(
     kind: SceneKind,
@@ -37,7 +34,7 @@ final case class SceneFrame(
     amounts: Vector[SceneAmount],
     observation: Option[SceneObservation] = None,
     approval: Option[DiagramState] = None,
-    badge: Option[SceneBadge] = None
+    conversation: Option[Conversation] = None
 )
 object SceneFrame:
   given Codec.AsObject[SceneFrame] = Codec.AsObject.derived[SceneFrame]

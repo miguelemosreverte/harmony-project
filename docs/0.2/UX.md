@@ -39,7 +39,8 @@ A deep link opens its selected material directly.
 - Workflow branches belong in the dock. They never replace the infographic with
   large choice cards. Root audience entrances remain separate from workflows.
 - The featured infographic summarizes who acts, what changes, and what stays
-  private. Put one short state badge beside its actor. Keep application boundaries,
+  private. Keep the approved infographic intact; add a separate illustrated
+  exchange below it, as specified in [Workflow support](WORKFLOW-SUPPORT.md). Keep application boundaries,
   document names, and necessary quantities. Avoid duplicate captions, counters,
   path labels, or revision footers. Recorded context stays in the header; exact
   run provenance stays in evidence.

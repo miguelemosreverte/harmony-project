@@ -3,6 +3,7 @@ package harmonia.book.diagram
 import harmonia.book.RecordedStory
 import harmonia.examples.ExampleKind
 import harmonia.scene.*
+import harmonia.book.narrative.RecordedConversation
 import io.circe.Json
 
 /** Recorded facts choose the diagram. Expected values belong only to the comparison. */
@@ -226,5 +227,6 @@ object StoryDiagram:
           else DiagramState.Pending
         )
       ),
-      Some(SceneObservation(unit.actor, unit.id.replace('-', ' '), unit.outcomeLabel))
+      Some(SceneObservation(unit.actor, unit.id.replace('-', ' '), unit.outcomeLabel)),
+      conversation = Some(RecordedConversation(story, index))
     )

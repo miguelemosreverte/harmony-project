@@ -1,5 +1,6 @@
 """Keep manifest dependencies, reviewed execution handoffs, and reading order distinct."""
 from pathlib import PurePosixPath
+from .conversations import RELATIONSHIPS
 from hashlib import sha256
 import json
 
@@ -55,4 +56,6 @@ def build(root, files, slices):
             ready={n for n in ids-placed if all(a in placed for a,b in graph['edges'] if b==n)}
             if not ready:raise ValueError('Cyclic relationship diagram')
             placed|=ready
+    for graph in maps.values(): graph['conversation'] = RELATIONSHIPS['dependencies']
+    for graph in runtime.values(): graph['conversation'] = RELATIONSHIPS['execution']
     return dict(dependencies=maps,execution=runtime)

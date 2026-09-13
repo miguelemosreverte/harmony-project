@@ -1,6 +1,7 @@
 package harmonia.scene
 
 import io.circe.{Codec, Decoder, Encoder}
+import harmonia.scene.support.Conversation
 
 /** A view of a plan or observation. This model has no command or ledger authority. */
 enum DiagramState:
@@ -16,7 +17,8 @@ final case class DiagramNode(
     label: String,
     detail: String,
     actor: String,
-    state: DiagramState
+    state: DiagramState,
+    conversation: Option[Conversation] = None
 )
 object DiagramNode:
   given Codec.AsObject[DiagramNode] = Codec.AsObject.derived[DiagramNode]
@@ -30,7 +32,8 @@ final case class WorkflowDiagram(
     caption: String,
     nodes: Vector[DiagramNode],
     edges: Vector[DiagramEdge],
-    observation: Option[SceneObservation] = None
+    observation: Option[SceneObservation] = None,
+    conversation: Option[Conversation] = None
 ):
   /** Explicit edges determine layers. No text matching is used to infer dependencies. */
   def layers: Either[String, Map[String, Int]] =

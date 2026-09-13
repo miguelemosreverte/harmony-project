@@ -9,7 +9,7 @@ HarmoniaView.mounts.push(() => {
     diagramValue(root,slice,selected);
   }
   function diagramValue(root,slice,selected="") {
-    renderHarmoniaDiagram(root,JSON.stringify({title:slice.title,caption:slice.relationship,nodes:slice.nodes.map(n=>({id:n.id,label:n.label,detail:n.detail,actor:n.actor,state:n.id===selected?'current':'pending'})),edges:slice.edges.map(([from,to])=>({from,to,state:to===selected?'current':'pending'}))}));
+    renderHarmoniaDiagram(root,JSON.stringify({title:slice.title,caption:slice.relationship,conversation:slice.conversation,nodes:slice.nodes.map(n=>({id:n.id,label:n.label,detail:n.detail,actor:n.actor,state:n.id===selected?'current':'pending'})),edges:slice.edges.map(([from,to])=>({from,to,state:to===selected?'current':'pending'}))}));
   }
   function render(root,kind,json){
     if(root.dataset.renderer!==kind){root.replaceChildren(node('div'));root.dataset.renderer=kind;pruneHarmoniaScenes();pruneHarmoniaDiagrams();}

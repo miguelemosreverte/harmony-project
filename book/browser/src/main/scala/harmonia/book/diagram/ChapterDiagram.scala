@@ -1,6 +1,7 @@
 package harmonia.book.diagram
 
 import harmonia.scene.*
+import harmonia.scene.support.*
 import org.scalajs.dom
 import scala.collection.mutable
 
@@ -39,7 +40,13 @@ object ChapterDiagram:
       labels.toVector.map((id, label) =>
         DiagramNode(id, label, label, "Chapter explanation", DiagramState.Pending)
       ),
-      edges.flatten
+      edges.flatten,
+      conversation = Some(
+        Conversation(
+          Speech(Portrait.Developer, "Developer", "The arrows show this chapter’s handoffs."),
+          Speech(Portrait.Reviewer, "Reviewer", "Recorded results provide the execution evidence.")
+        )
+      )
     )
     Option.when(
       source.linesIterator.nextOption().exists(_.trim == "flowchart LR") && edges.nonEmpty && edges

@@ -13,6 +13,7 @@ import cats.effect.std.Dispatcher
 import harmonia.ui.Elements.*
 import harmonia.live.LiveApi
 import harmonia.scene.*
+import harmonia.scene.support.*
 import io.circe.Json
 import org.scalajs.dom
 import scala.concurrent.duration.*
@@ -284,11 +285,38 @@ final class PackagePanel(capability: String, dispatcher: Dispatcher[IO]):
         if value.exists(_.availableLive) then DiagramState.Complete else DiagramState.Pending
       )
     )
+    def conversation(node: DiagramNode): Conversation =
+      val lines = node.id match
+        case "input" =>
+          (if value.nonEmpty then "This DAR has been inspected."
+           else
+             "Start with a compiled application DAR."
+          ) -> "Inspection reads its package identity."
+        case "mapping" =>
+          (if value.exists(_.matchedSource.nonEmpty) then "A reviewed mapping matches this package."
+           else if value.nonEmpty then "No reviewed mapping matches this package."
+           else "The mapping must match the inspected package.")
+          -> "It names the supported application action."
+        case "compile" =>
+          (if value.exists(_.compiled) then "The adapter compiled successfully."
+           else if value.exists(_.canGenerate) then "This mapping is ready to compile."
+           else "Compilation needs a supported mapping.")
+          -> "A compiled project is a portable artifact."
+        case _ =>
+          (if value.exists(_.availableLive) then "Live availability is confirmed here."
+           else
+             "Live availability is not confirmed here."
+          ) -> "Compilation alone does not register an adapter."
+      Conversation(
+        Speech(Portrait.Developer, "Developer", lines._1),
+        Speech(Portrait.Reviewer, "Reviewer", lines._2)
+      )
+    val illustrated = nodes.map(n => n.copy(conversation = Some(conversation(n))))
     diagram.render(
       WorkflowDiagram(
         "From application to integration",
         "Inspection and compilation never imply registration.",
-        nodes,
+        illustrated,
         Vector(("input", "mapping"), ("mapping", "compile"), ("mapping", "register")).map((a, b) =>
           DiagramEdge(
             a,
@@ -297,7 +325,8 @@ final class PackagePanel(capability: String, dispatcher: Dispatcher[IO]):
               DiagramState.Complete
             else DiagramState.Pending
           )
-        )
+        ),
+        conversation = illustrated.head.conversation
       )
     )
     def select(id: String): Unit =

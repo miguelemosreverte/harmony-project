@@ -4,6 +4,7 @@ import munit.FunSuite
 import harmonia.book.diagram.{RecordedScene, StoryDiagram, ChapterDiagram}
 import harmonia.examples.{Examples, ExampleKind}
 import harmonia.scene.DiagramState
+import harmonia.book.narrative.RecordedConversation
 import io.circe.Json
 import scala.scalajs.js
 
@@ -67,21 +68,34 @@ class DiagramSuite extends FunSuite:
     assertEquals(graph.edges.head.state, DiagramState.Refused)
   }
 
-  test("a committed financing refusal never becomes an approval badge") {
+  test("conversation separates approval, decline, refused shortcuts and rollback") {
     val declined = RecordedScene(recording("purchase-rejected"), 1)
     assertEquals(declined.approval, Some(DiagramState.Refused))
-    assertEquals(declined.badge.map(_.label), Some("Declined"))
+    assertEquals(declined.conversation.get.first.text, "Your financing was declined.")
     val approved = RecordedScene(recording("purchase-approved"), 2)
     assertEquals(approved.approval, Some(DiagramState.Complete))
-    assertEquals(approved.badge.map(_.label), Some("Approved"))
-    val refusedAttempt = RecordedScene(recording("purchase-approved"), 3)
-    assertEquals(refusedAttempt.approval, Some(DiagramState.Complete))
-    assert(refusedAttempt.refused)
-    assertEquals(refusedAttempt.badge.map(_.state), Some(DiagramState.Refused))
-    assertEquals(
-      RecordedScene(recording("transfer-final-leg-rejected"), 6).badge.map(_.label),
-      Some("Rolled back")
-    )
+    assertEquals(approved.conversation.get.first.text, "Your financing is approved.")
+    val refused = RecordedScene(recording("purchase-approved"), 3)
+    assertEquals(refused.approval, Some(DiagramState.Complete))
+    assert(refused.refused)
+    assertEquals(refused.conversation.get.first.text, "That shortcut was refused.")
+    val rollback = RecordedScene(recording("transfer-final-leg-rejected"), 6).conversation.get
+    assertEquals(rollback.first.text, "The final transfer rolled back.")
+    assertEquals(rollback.second.text, "The earlier source lock remains.")
+  }
+
+  test("every observation has two short lines without an unhandled action") {
+    Examples.all.foreach { example =>
+      val story = recording(example.id)
+      story.units.indices.foreach { index =>
+        val dialogue = RecordedConversation(story, index)
+        Vector(dialogue.first, dialogue.second).foreach { line =>
+          assert(line.text.nonEmpty && line.text.length <= 90, s"${story.id}:$index: ${line.text}")
+          assert(!line.text.startsWith("This action has a recorded"), s"${story.id}:$index")
+        }
+        assertEquals(StoryDiagram(story, index).conversation, Some(dialogue))
+      }
+    }
   }
 
   test("missing observations are not replaced by a golden success") {
@@ -90,6 +104,10 @@ class DiagramSuite extends FunSuite:
       story.presentation.copy(units = story.units.map(_.copy(actual = Json.Null)))
     )
     assert(StoryDiagram(missing, 1).nodes.forall(_.state != DiagramState.Complete))
+    assertEquals(
+      RecordedConversation(missing, 1).first.text,
+      "This attempt has no recorded result."
+    )
     val transfer = recording("transfer-approved")
     val absent = transfer.copy(presentation =
       transfer.presentation.copy(units = transfer.units.map(_.copy(actual = Json.Null)))
