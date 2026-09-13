@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Harmonia — desktop narrative proposal</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #edf0f4; }
+    figure { position: relative; width: min(100%, 1280px); margin: 0 auto; }
+    .reference { display: block; width: 100%; height: auto; }
+    /* Only the new conversation is used from the generated study. */
+    .conversation { position: absolute; left: 12.5%; top: 65%; width: 75%; height: 21%; overflow: hidden; }
+    .conversation img { position: absolute; left: -16.666667%; top: 0; width: 133.333333%; height: 476.190476%; transform: translateY(-65%); }
+  </style>
+</head>
+<body>
+  <figure aria-label="Desktop proposal: an illustrated conversation below the existing infographic">
+    <img class="reference" src="desktop-reference.png" width="1280" height="1000" alt="The existing financing-to-offer infographic: Northbank, Alice, Ben and Sofia, with private documents retained in financing.">
+    <div class="conversation">
+      <img src="generated-desktop.png" alt="Northbank: Your financing is approved. Alice, using a laptop: I'll send my proposal.">
+    </div>
+  </figure>
+</body>
+</html>

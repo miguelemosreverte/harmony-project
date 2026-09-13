@@ -1,0 +1,19 @@
+{
+  "scope": "Desktop static visual proposal only; existing infographic pixels come from the captured reference. No production integration or animation.",
+  "viewport": [
+    1280,
+    1000
+  ],
+  "outside_conversation_unchanged": {
+    "above_conversation": true,
+    "below_conversation": true,
+    "left_margin": true,
+    "right_margin": true
+  },
+  "changed_bounds": [
+    160,
+    650,
+    1120,
+    860
+  ]
+}
