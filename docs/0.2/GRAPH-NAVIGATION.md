@@ -15,7 +15,7 @@ available route and selected moment. This supersedes the labeled step-card layou
   footer from featured workflows. Keep provenance in their evidence view.
 - [x] Verify stable geometry, meaningful state changes, every branch address,
   mobile touch targets, and desktop/mobile screenshots.
-- [ ] Refresh the served book, commit and push the checked result.
+- [x] Refresh the served book, commit and push the checked result.
 
 A declined application and a refused attempt are separate facts. The new badges
 must preserve that distinction. Inspecting live progress must never submit a
@@ -27,3 +27,9 @@ The detailed evidence view retains exact run revisions and expected/observed dat
 Screenshots: [desktop](../../design/0.2/carousel-review/summary-1280.png),
 [mobile](../../design/0.2/carousel-review/summary-390.png),
 [narrow mobile](../../design/0.2/carousel-review/summary-320.png).
+
+Verified with 15 Scala checks, 28 edition checks, and 570 browser assertions.
+The recording tour reaches all 130 observations. Across 26 screenshot pairs,
+landmarks move at most 5.88 CSS pixels; every transition changes visible pixels.
+Live inspection leaves the pending sandbox untouched. The standalone export and
+served guide both use this presentation; 388 source fingerprints match.

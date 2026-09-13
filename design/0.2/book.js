@@ -9,17 +9,22 @@ HarmoniaView.mounts.push(() => {
   const previous=document.getElementById('previous-step'),next=document.getElementById('next-step');
   const move=url=>view.go(view.href(url));
   const labels={'bank-assessment':'Bank decides','make-proposal':'Alice proposes','buyer-agent-relays':'Ben relays','seller-agent-receives':'Sofia receives','rejected-financing':'Offer refused','seller-agrees':'Agree trade','seller-locks':'Lock assets','source-confirms':'Source ready','destination-prepares':'Permit receipt','destination-confirms':'Destination ready','settle':'Settle'};
-  const featured={'purchase-approved':[0,2,5,7,8],'purchase-rejected':[0,1,3],'transfer-approved':[0,1,2,3,4,5,8],'transfer-final-leg-rejected':[0,1,2,3,4,5,6]};
+  const featured={
+    'purchase-approved':{stops:[0,2,5,7,8],sharedPrefix:0,outcome:'complete'},
+    'purchase-rejected':{stops:[0,1,3],sharedPrefix:1,outcome:'refused'},
+    'transfer-approved':{stops:[0,1,2,3,4,5,8],sharedPrefix:0,outcome:'complete'},
+    'transfer-final-leg-rejected':{stops:[0,1,2,3,4,5,6],sharedPrefix:6,outcome:'refused'}
+  };
   let back,forward;
   view.subscribe(s=>{
     const story=view.config.stories[s.story],units=story.presentation.units;
     if(scene){
       const purchase=story.presentation.kind==='Purchase';
-      const sequences=Object.fromEntries(Object.keys(view.config.stories).map(key=>[key,[...new Set([...featured[key],...(key===s.story?[s.step]:[])])].sort((a,b)=>a-b)]));
+      const sequences=Object.fromEntries(Object.keys(view.config.stories).map(key=>[key,[...new Set([...featured[key].stops,...(key===s.story?[s.step]:[])])].sort((a,b)=>a-b)]));
       const sequence=sequences[s.story],index=sequence.indexOf(s.step);
       const frame=JSON.parse(projectHarmoniaRecording(JSON.stringify(story),s.step,'all'));
       renderHarmoniaScene(scene,JSON.stringify(frame));
-      const paths=Object.entries(sequences).map(([key,stops])=>({id:key,label:key.includes('approved')?'Approval path':'Refusal path',sharedPrefix:key.includes('approved')?0:purchase?1:6,outcome:key.includes('approved')?'complete':'refused',steps:stops.map((step,i)=>{
+      const paths=Object.entries(sequences).map(([key,stops])=>({id:key,label:featured[key].outcome==='complete'?'Approval path':'Refusal path',sharedPrefix:featured[key].sharedPrefix,outcome:featured[key].outcome,steps:stops.map((step,i)=>{
         const unit=view.config.stories[key].presentation.units[step-1];
         return {id:key+':'+step,label:step===0?'Begin':labels[unit.id]||unit.id.replaceAll('-',' '),state:unit?.actual.outcome==='rejected'||unit?.actual.application==='rejected'?'refused':key===s.story&&i<index?'complete':key===s.story&&i===index?'current':'pending'};
       })}));
