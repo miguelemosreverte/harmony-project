@@ -1,0 +1,586 @@
+{
+  "format": "harmonia-showcase/1",
+  "id": "transfer-source-settler",
+  "title": "Transfer: source settler",
+  "purpose": "The source custodian can serve as Settler when every party has granted the required consent.",
+  "kind": "Transfer",
+  "diagram": {
+    "renderer": "scene",
+    "shared": {
+      "kind": "transfer",
+      "people": [
+        {
+          "id": "Seller",
+          "name": "Seller",
+          "role": "Owns the position",
+          "icon": "person"
+        },
+        {
+          "id": "Source",
+          "name": "Source",
+          "role": "Source custodian",
+          "icon": "bank"
+        },
+        {
+          "id": "Alice",
+          "name": "Alice",
+          "role": "Receives the asset",
+          "icon": "person"
+        },
+        {
+          "id": "Destination",
+          "name": "Destination",
+          "role": "Destination custodian",
+          "icon": "bank"
+        }
+      ],
+      "refused": false,
+      "approval": null
+    }
+  },
+  "steps": [
+    {
+      "id": "seller-agrees",
+      "actor": "Seller",
+      "action": "agree-trade",
+      "open": "laboratory.html?story=transfer-source-settler&step=0",
+      "illustration": "trade-agreed",
+      "dialogue": [
+        {
+          "speaker": "Source",
+          "portrait": "bank",
+          "text": "The seller has agreed to the trade."
+        },
+        {
+          "speaker": "Destination",
+          "portrait": "bank",
+          "text": "The assets have not moved yet."
+        }
+      ],
+      "diagram": {
+        "title": "The seller agrees.",
+        "caption": "Seller accepts the trade. No assets have moved.",
+        "phase": 1,
+        "focus": "Seller",
+        "artifact": "Available · 7.125 TEST",
+        "amounts": [
+          {
+            "label": "Available at source",
+            "value": "7.125 TEST",
+            "fraction": 1
+          },
+          {
+            "label": "Locked at source",
+            "value": "0 TEST",
+            "fraction": 0
+          },
+          {
+            "label": "Received at destination",
+            "value": "0 TEST",
+            "fraction": 0
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Seller",
+        "action": "seller agrees",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "active_workflows": 0,
+          "destination": "0",
+          "id": "seller-agrees",
+          "outcome": "committed",
+          "releases": 0,
+          "source": {
+            "available": "7.125",
+            "locked": "0"
+          },
+          "trade": "agreed",
+          "visible_to": [
+            "Alice",
+            "Destination",
+            "Seller",
+            "Source"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/0/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "current",
+          "pending",
+          "pending",
+          "pending",
+          "pending",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=transfer-missing-readiness&step=4",
+        "next": "laboratory.html?story=transfer-source-settler&step=1"
+      }
+    },
+    {
+      "id": "seller-locks",
+      "actor": "Seller",
+      "action": "lock-position",
+      "open": "laboratory.html?story=transfer-source-settler&step=1",
+      "illustration": "position-locked",
+      "dialogue": [
+        {
+          "speaker": "Source",
+          "portrait": "bank",
+          "text": "7.125 TEST is reserved here."
+        },
+        {
+          "speaker": "Destination",
+          "portrait": "bank",
+          "text": "Nothing has arrived here yet."
+        }
+      ],
+      "diagram": {
+        "title": "The position is locked.",
+        "caption": "7.125 TEST is reserved at the source. It is no longer available for another transfer.",
+        "phase": 2,
+        "focus": "Seller",
+        "artifact": "Locked · 7.125 TEST",
+        "amounts": [
+          {
+            "label": "Available at source",
+            "value": "0 TEST",
+            "fraction": 0
+          },
+          {
+            "label": "Locked at source",
+            "value": "7.125 TEST",
+            "fraction": 1
+          },
+          {
+            "label": "Received at destination",
+            "value": "0 TEST",
+            "fraction": 0
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Seller",
+        "action": "seller locks",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "active_workflows": 0,
+          "destination": "0",
+          "id": "seller-locks",
+          "outcome": "committed",
+          "releases": 0,
+          "source": {
+            "available": "0",
+            "locked": "7.125"
+          },
+          "trade": "agreed",
+          "visible_to": [
+            "Alice",
+            "Destination",
+            "Seller",
+            "Source"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/1/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "current",
+          "pending",
+          "pending",
+          "pending",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=transfer-source-settler&step=0",
+        "next": "laboratory.html?story=transfer-source-settler&step=2"
+      }
+    },
+    {
+      "id": "source-confirms",
+      "actor": "Source",
+      "action": "confirm-source",
+      "open": "laboratory.html?story=transfer-source-settler&step=2",
+      "illustration": "source-ready",
+      "dialogue": [
+        {
+          "speaker": "Source",
+          "portrait": "bank",
+          "text": "The source is ready to withdraw."
+        },
+        {
+          "speaker": "Destination",
+          "portrait": "bank",
+          "text": "I still need to prepare receipt."
+        }
+      ],
+      "diagram": {
+        "title": "The source is ready.",
+        "caption": "Source confirms that the locked position can be withdrawn during settlement.",
+        "phase": 2,
+        "focus": "Source",
+        "artifact": "Locked · 7.125 TEST",
+        "amounts": [
+          {
+            "label": "Available at source",
+            "value": "0 TEST",
+            "fraction": 0
+          },
+          {
+            "label": "Locked at source",
+            "value": "7.125 TEST",
+            "fraction": 1
+          },
+          {
+            "label": "Received at destination",
+            "value": "0 TEST",
+            "fraction": 0
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Source",
+        "action": "source confirms",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "active_workflows": 0,
+          "destination": "0",
+          "id": "source-confirms",
+          "outcome": "committed",
+          "releases": 0,
+          "source": {
+            "available": "0",
+            "locked": "7.125"
+          },
+          "trade": "source-confirmed",
+          "visible_to": [
+            "Alice",
+            "Destination",
+            "Seller",
+            "Source"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/2/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "complete",
+          "current",
+          "pending",
+          "pending",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=transfer-source-settler&step=1",
+        "next": "laboratory.html?story=transfer-source-settler&step=3"
+      }
+    },
+    {
+      "id": "destination-prepares",
+      "actor": "Destination",
+      "action": "prepare-destination",
+      "open": "laboratory.html?story=transfer-source-settler&step=3",
+      "illustration": "transfer-missing-readiness",
+      "dialogue": [
+        {
+          "speaker": "Source",
+          "portrait": "bank",
+          "text": "The source position remains locked."
+        },
+        {
+          "speaker": "Destination",
+          "portrait": "bank",
+          "text": "The receipt permission is now prepared."
+        }
+      ],
+      "diagram": {
+        "title": "The receiving side prepares.",
+        "caption": "Destination creates the permission needed to receive the asset.",
+        "phase": 2,
+        "focus": "Destination",
+        "artifact": "Locked · 7.125 TEST",
+        "amounts": [
+          {
+            "label": "Available at source",
+            "value": "0 TEST",
+            "fraction": 0
+          },
+          {
+            "label": "Locked at source",
+            "value": "7.125 TEST",
+            "fraction": 1
+          },
+          {
+            "label": "Received at destination",
+            "value": "0 TEST",
+            "fraction": 0
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Destination",
+        "action": "destination prepares",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "active_workflows": 0,
+          "destination": "0",
+          "id": "destination-prepares",
+          "outcome": "committed",
+          "releases": 0,
+          "source": {
+            "available": "0",
+            "locked": "7.125"
+          },
+          "trade": "source-confirmed",
+          "visible_to": [
+            "Alice",
+            "Destination",
+            "Seller",
+            "Source"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/3/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "complete",
+          "complete",
+          "current",
+          "pending",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=transfer-source-settler&step=2",
+        "next": "laboratory.html?story=transfer-source-settler&step=4"
+      }
+    },
+    {
+      "id": "destination-confirms",
+      "actor": "Destination",
+      "action": "confirm-destination",
+      "open": "laboratory.html?story=transfer-source-settler&step=4",
+      "illustration": "destination-ready",
+      "dialogue": [
+        {
+          "speaker": "Source",
+          "portrait": "bank",
+          "text": "Both sides are ready."
+        },
+        {
+          "speaker": "Destination",
+          "portrait": "bank",
+          "text": "The assigned settler can now proceed."
+        }
+      ],
+      "diagram": {
+        "title": "Both sides are ready.",
+        "caption": "The destination confirms readiness. Source can now request settlement.",
+        "phase": 3,
+        "focus": "Destination",
+        "artifact": "Locked · 7.125 TEST",
+        "amounts": [
+          {
+            "label": "Available at source",
+            "value": "0 TEST",
+            "fraction": 0
+          },
+          {
+            "label": "Locked at source",
+            "value": "7.125 TEST",
+            "fraction": 1
+          },
+          {
+            "label": "Received at destination",
+            "value": "0 TEST",
+            "fraction": 0
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Destination",
+        "action": "destination confirms",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "active_workflows": 0,
+          "destination": "0",
+          "id": "destination-confirms",
+          "outcome": "committed",
+          "releases": 0,
+          "source": {
+            "available": "0",
+            "locked": "7.125"
+          },
+          "trade": "ready",
+          "visible_to": [
+            "Alice",
+            "Destination",
+            "Seller",
+            "Source"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/4/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "complete",
+          "complete",
+          "complete",
+          "current",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=transfer-source-settler&step=3",
+        "next": "laboratory.html?story=transfer-source-settler&step=5"
+      }
+    },
+    {
+      "id": "settle",
+      "actor": "Source",
+      "action": "settle",
+      "open": "laboratory.html?story=transfer-source-settler&step=5",
+      "illustration": "transfer-settled",
+      "dialogue": [
+        {
+          "speaker": "Source",
+          "portrait": "bank",
+          "text": "The reserved position was withdrawn."
+        },
+        {
+          "speaker": "Destination",
+          "portrait": "bank",
+          "text": "7.125 TEST arrived in the same transaction."
+        }
+      ],
+      "diagram": {
+        "title": "The asset arrives.",
+        "caption": "One final transaction withdraws the locked position and records receipt of 7.125 TEST.",
+        "phase": 4,
+        "focus": "Source",
+        "artifact": "Received · 7.125 TEST",
+        "amounts": [
+          {
+            "label": "Available at source",
+            "value": "0 TEST",
+            "fraction": 0
+          },
+          {
+            "label": "Locked at source",
+            "value": "0 TEST",
+            "fraction": 0
+          },
+          {
+            "label": "Received at destination",
+            "value": "7.125 TEST",
+            "fraction": 1
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Source",
+        "action": "settle",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "active_workflows": 1,
+          "destination": "7.125",
+          "id": "settle",
+          "outcome": "committed",
+          "releases": 0,
+          "source": {
+            "available": "0",
+            "locked": "0"
+          },
+          "trade": "settled",
+          "visible_to": [
+            "Alice",
+            "Destination",
+            "Seller",
+            "Source"
+          ],
+          "workflow": "complete"
+        },
+        "expected_pointer": "/presentation/units/5/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "complete",
+          "complete",
+          "complete",
+          "complete",
+          "current"
+        ],
+        "previous": "laboratory.html?story=transfer-source-settler&step=4",
+        "next": "laboratory.html?story=workflow-approved&step=0"
+      }
+    }
+  ],
+  "recording": {
+    "file": "book/edition-0.2/recordings/transfer-source-settler.json",
+    "sha256": "d8bb7eb815eb3ff5fd9ebadd2a05130ab5b94b61bd3803a210ee77de8a15a459",
+    "provenance": {
+      "actual_sha256": "88e944fd390ac00b1c04645e36e1a8e92563eda04393b2790ddf5b74a962a9f1",
+      "configured_sdk": "3.4.11",
+      "dar_sha256": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e",
+      "dars": {
+        "harness/ledger/tests/.daml/dist/harmonia-tests-0.1.0.dar": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e"
+      },
+      "expected_sha256": "9497a1a1ca7cdd9abaecca3369583071400ff2fccdcb4a39d3b2ec4f92ea16b8",
+      "input_sha256": "8316ae0bae11d87972e249504bfa879f7c070a0f1a1afdec8eb36f1076d87872",
+      "java": "17.0.19+10",
+      "matched": true,
+      "mode": "live-canton",
+      "observation_sha256": "64bad7db004addc40ad6b15b6d093d67fcfea381295a6930c6a99caaae92e54a",
+      "recorded_at": "2026-09-11T05:14:30.626797Z",
+      "revision": "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+      "story_format": 1,
+      "topology": "four independent participant nodes, one local JVM, one common synchronizer",
+      "worktree_dirty": false
+    },
+    "evidence": {
+      "input.md": {
+        "file": "book/edition-0.2/recordings/evidence/transfer-source-settler/input.md",
+        "sha256": "8316ae0bae11d87972e249504bfa879f7c070a0f1a1afdec8eb36f1076d87872"
+      },
+      "expected.md": {
+        "file": "book/edition-0.2/recordings/evidence/transfer-source-settler/expected.md",
+        "sha256": "9497a1a1ca7cdd9abaecca3369583071400ff2fccdcb4a39d3b2ec4f92ea16b8"
+      },
+      "actual.md": {
+        "file": "book/edition-0.2/recordings/evidence/transfer-source-settler/actual.md",
+        "sha256": "88e944fd390ac00b1c04645e36e1a8e92563eda04393b2790ddf5b74a962a9f1"
+      },
+      "observation.json": {
+        "file": "book/edition-0.2/recordings/evidence/transfer-source-settler/observation.json",
+        "sha256": "64bad7db004addc40ad6b15b6d093d67fcfea381295a6930c6a99caaae92e54a"
+      }
+    }
+  },
+  "operation": {
+    "file": "product/ledger/applications/transfer/daml/AtomicTransfer.daml",
+    "sha256": "59f682248da3d8a0e59e08f9ba667a31ba585eb7be42c3f3e69e8ad3a28ee724"
+  }
+}

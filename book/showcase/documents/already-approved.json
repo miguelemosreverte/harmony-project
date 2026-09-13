@@ -1,0 +1,134 @@
+{
+  "format": "harmonia-showcase/1",
+  "id": "already-approved",
+  "title": "Approval is a transition",
+  "purpose": "An approved application cannot be approved again. Even the bank must respect the application's current state.",
+  "kind": "Financing",
+  "diagram": {
+    "renderer": "diagram",
+    "shared": {
+      "title": "Northbank · approve financing",
+      "caption": "approved",
+      "nodes": [
+        {
+          "id": "actor",
+          "label": "Northbank",
+          "detail": "approve financing",
+          "actor": "Attempting actor",
+          "state": "refused",
+          "conversation": null
+        },
+        {
+          "id": "application",
+          "label": "Application: approved",
+          "detail": "The application retains its choice authority.",
+          "actor": "Northbank",
+          "state": "complete",
+          "conversation": null
+        }
+      ],
+      "edges": [
+        {
+          "from": "actor",
+          "to": "application",
+          "state": "refused"
+        }
+      ]
+    }
+  },
+  "steps": [
+    {
+      "id": "repeated-approval",
+      "actor": "Northbank",
+      "action": "approve-financing",
+      "open": "laboratory.html?story=already-approved&step=0",
+      "illustration": "already-approved",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "This approval attempt was refused."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "An existing approval cannot be exercised again."
+        }
+      ],
+      "diagram": {},
+      "observation": {
+        "actor": "Northbank",
+        "action": "repeated approval",
+        "outcome": "rejected"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 1,
+          "application": "approved",
+          "consumed": false,
+          "id": "repeated-approval",
+          "outcome": "rejected",
+          "reason": "application-rejected",
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ]
+        },
+        "expected_pointer": "/presentation/units/0/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "refused"
+        ],
+        "previous": "laboratory.html?story=adapter-rejected&step=0",
+        "next": "laboratory.html?story=branch-approved&step=0"
+      }
+    }
+  ],
+  "recording": {
+    "file": "book/edition-0.2/recordings/already-approved.json",
+    "sha256": "4deb00b9dc45675f344d81e98f663fa6ba336aac79809df0773254712638e42c",
+    "provenance": {
+      "actual_sha256": "4013a649e7ad2894556edf01efad0260cd2562c2d98f3f24d7afedf494256858",
+      "configured_sdk": "3.4.11",
+      "dar_sha256": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e",
+      "dars": {
+        "harness/ledger/tests/.daml/dist/harmonia-tests-0.1.0.dar": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e"
+      },
+      "expected_sha256": "9e70968a7ab0715a27e2ad0b21b86d884fc503eb3e0920339596c5d4e3008b46",
+      "input_sha256": "fee3dd5211960abb0a0ee2bca72a24927ae027605cdd0dd90be74a715d54eb68",
+      "java": "17.0.19+10",
+      "matched": true,
+      "mode": "live-canton",
+      "observation_sha256": "07bbec49bf8f73305729e544b0fc6ca677e239064a3ca736029f1fa27aa3eb4f",
+      "recorded_at": "2026-09-11T05:09:34.541207Z",
+      "revision": "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+      "story_format": 1,
+      "topology": "one participant, one synchronizer, separate party identities",
+      "worktree_dirty": false
+    },
+    "evidence": {
+      "input.md": {
+        "file": "book/edition-0.2/recordings/evidence/already-approved/input.md",
+        "sha256": "fee3dd5211960abb0a0ee2bca72a24927ae027605cdd0dd90be74a715d54eb68"
+      },
+      "expected.md": {
+        "file": "book/edition-0.2/recordings/evidence/already-approved/expected.md",
+        "sha256": "9e70968a7ab0715a27e2ad0b21b86d884fc503eb3e0920339596c5d4e3008b46"
+      },
+      "actual.md": {
+        "file": "book/edition-0.2/recordings/evidence/already-approved/actual.md",
+        "sha256": "4013a649e7ad2894556edf01efad0260cd2562c2d98f3f24d7afedf494256858"
+      },
+      "observation.json": {
+        "file": "book/edition-0.2/recordings/evidence/already-approved/observation.json",
+        "sha256": "07bbec49bf8f73305729e544b0fc6ca677e239064a3ca736029f1fa27aa3eb4f"
+      }
+    }
+  },
+  "operation": {
+    "file": "product/ledger/applications/financing/daml/Financing.daml",
+    "sha256": "a334ab41c9624fe9ccf427c70438372c1d968ac3bf59b8a58337ac177ccbd2f3"
+  }
+}

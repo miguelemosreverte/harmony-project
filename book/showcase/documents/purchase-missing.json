@@ -1,0 +1,277 @@
+{
+  "format": "harmonia-showcase/1",
+  "id": "purchase-missing",
+  "title": "The offer rejects missing evidence",
+  "purpose": "Alice's documents are shared with Northbank. Ben owns the buyer-side offer application; Sofia receives proposals through the seller-side continuation. The evidence selection is explicit so invalid-certificate experiments stay visible.",
+  "kind": "Purchase",
+  "diagram": {
+    "renderer": "scene",
+    "shared": {
+      "kind": "purchase",
+      "people": [
+        {
+          "id": "Northbank",
+          "name": "Northbank",
+          "role": "Financing",
+          "icon": "bank"
+        },
+        {
+          "id": "Alice",
+          "name": "Alice",
+          "role": "Buyer",
+          "icon": "person"
+        },
+        {
+          "id": "Ben",
+          "name": "Ben",
+          "role": "Buyer’s agent",
+          "icon": "person"
+        },
+        {
+          "id": "Sofia",
+          "name": "Sofia",
+          "role": "Seller’s agent",
+          "icon": "person"
+        }
+      ],
+      "phase": 0,
+      "artifact": "",
+      "amounts": [],
+      "approval": "pending"
+    }
+  },
+  "steps": [
+    {
+      "id": "bank-assessment",
+      "actor": "Northbank",
+      "action": "assess-financing",
+      "open": "laboratory.html?story=purchase-missing&step=0",
+      "illustration": "approval-signed",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "Your financing is approved."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "The handoff result is not available here."
+        }
+      ],
+      "diagram": {
+        "title": "Northbank approves. Alice can make her proposal.",
+        "caption": "A verified result is available to Alice. Her financing documents stay within the financing application.",
+        "focus": "Northbank",
+        "refused": false
+      },
+      "observation": {
+        "actor": "Northbank",
+        "action": "bank assessment",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 1,
+          "application": "approved",
+          "completed": [
+            "assessment"
+          ],
+          "consumed": true,
+          "evidence_available": false,
+          "id": "bank-assessment",
+          "offer": "not-opened",
+          "outcome": "committed",
+          "proposal": "none",
+          "proposals": 0,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/0/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "current",
+          "pending",
+          "refused"
+        ],
+        "previous": "laboratory.html?story=private-approval&step=5",
+        "next": "laboratory.html?story=purchase-missing&step=1"
+      }
+    },
+    {
+      "id": "open-offer",
+      "actor": "Alice",
+      "action": "open-offer",
+      "open": "laboratory.html?story=purchase-missing&step=1",
+      "illustration": "offer-opened",
+      "dialogue": [
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "My offer is open."
+        },
+        {
+          "speaker": "Ben",
+          "portrait": "ben",
+          "text": "We still need a valid financing result."
+        }
+      ],
+      "diagram": {
+        "title": "Alice prepares the offer.",
+        "caption": "The property application is ready to check her financing result.",
+        "focus": "Alice",
+        "refused": false
+      },
+      "observation": {
+        "actor": "Alice",
+        "action": "open offer",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 2,
+          "application": "approved",
+          "completed": [
+            "assessment"
+          ],
+          "consumed": false,
+          "evidence_available": false,
+          "id": "open-offer",
+          "offer": "waiting",
+          "outcome": "committed",
+          "proposal": "none",
+          "proposals": 0,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/1/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "current",
+          "refused"
+        ],
+        "previous": "laboratory.html?story=purchase-missing&step=0",
+        "next": "laboratory.html?story=purchase-missing&step=2"
+      }
+    },
+    {
+      "id": "invalid-evidence",
+      "actor": "Alice",
+      "action": "make-proposal",
+      "open": "laboratory.html?story=purchase-missing&step=2",
+      "illustration": "purchase-missing",
+      "dialogue": [
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "My proposal was refused."
+        },
+        {
+          "speaker": "Ben",
+          "portrait": "ben",
+          "text": "The required result is unavailable."
+        }
+      ],
+      "diagram": {
+        "title": "This attempt is refused.",
+        "caption": "The application refused this attempt under its rules.",
+        "focus": "Alice",
+        "refused": true
+      },
+      "observation": {
+        "actor": "Alice",
+        "action": "invalid evidence",
+        "outcome": "rejected"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 2,
+          "application": "approved",
+          "completed": [
+            "assessment"
+          ],
+          "consumed": false,
+          "evidence_available": false,
+          "id": "invalid-evidence",
+          "offer": "waiting",
+          "outcome": "rejected",
+          "proposal": "none",
+          "proposals": 0,
+          "reason": "application-rejected",
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/2/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "complete",
+          "refused"
+        ],
+        "previous": "laboratory.html?story=purchase-missing&step=1",
+        "next": "laboratory.html?story=purchase-reused-proof&step=0"
+      }
+    }
+  ],
+  "recording": {
+    "file": "book/edition-0.2/recordings/purchase-missing.json",
+    "sha256": "8c6a635e6cb368c77fb56cbccf3dfa8de3e9ff2658fc7359e5dd131ba41fa970",
+    "provenance": {
+      "actual_sha256": "e5ec33555fb848707e52f3c8bb7853a6a1b49e51059631546cf4c4bb9ac4afd1",
+      "configured_sdk": "3.4.11",
+      "dar_sha256": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e",
+      "dars": {
+        "harness/ledger/tests/.daml/dist/harmonia-tests-0.1.0.dar": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e"
+      },
+      "expected_sha256": "d6adab5267495a9e27a1d0dae3267b734e607bbae84d4bebfd994613892f2e1f",
+      "input_sha256": "e3ec26796f0277a6532a552580a291bdf1114025790d9ad3aaa2adc0ae8d3d41",
+      "java": "17.0.19+10",
+      "matched": true,
+      "mode": "live-canton",
+      "observation_sha256": "ee3b97492bed3c485c3e0acaa5747f1bb6463f4356427f000031332899f2377a",
+      "recorded_at": "2026-09-11T05:12:38.197369Z",
+      "revision": "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+      "story_format": 1,
+      "topology": "four independent participant nodes, one local JVM, one common synchronizer",
+      "worktree_dirty": false
+    },
+    "evidence": {
+      "input.md": {
+        "file": "book/edition-0.2/recordings/evidence/purchase-missing/input.md",
+        "sha256": "e3ec26796f0277a6532a552580a291bdf1114025790d9ad3aaa2adc0ae8d3d41"
+      },
+      "expected.md": {
+        "file": "book/edition-0.2/recordings/evidence/purchase-missing/expected.md",
+        "sha256": "d6adab5267495a9e27a1d0dae3267b734e607bbae84d4bebfd994613892f2e1f"
+      },
+      "actual.md": {
+        "file": "book/edition-0.2/recordings/evidence/purchase-missing/actual.md",
+        "sha256": "e5ec33555fb848707e52f3c8bb7853a6a1b49e51059631546cf4c4bb9ac4afd1"
+      },
+      "observation.json": {
+        "file": "book/edition-0.2/recordings/evidence/purchase-missing/observation.json",
+        "sha256": "ee3b97492bed3c485c3e0acaa5747f1bb6463f4356427f000031332899f2377a"
+      }
+    }
+  },
+  "operation": {
+    "file": "product/ledger/applications/property-offer/daml/PropertyOffer.daml",
+    "sha256": "a26fbd886a8bec4e218df1596409caf363744ad1b01283a355d3230168055179"
+  }
+}

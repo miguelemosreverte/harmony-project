@@ -1,0 +1,225 @@
+{
+  "format": "harmonia-showcase/1",
+  "id": "sequence-complete",
+  "title": "Approval followed by review",
+  "purpose": "Northbank approves the financing. Alice can then confirm her independent review. Both steps belong to version 1 of the published approval workflow.",
+  "kind": "Progression",
+  "diagram": {
+    "renderer": "diagram",
+    "shared": {
+      "caption": "approved"
+    }
+  },
+  "steps": [
+    {
+      "id": "bank-approval",
+      "actor": "Northbank",
+      "action": "approve-financing",
+      "open": "laboratory.html?story=sequence-complete&step=0",
+      "illustration": "approval-signed",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "The application is now approved."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "The approval is recorded."
+        }
+      ],
+      "diagram": {
+        "title": "Northbank · approve financing",
+        "nodes": [
+          {
+            "id": "financing",
+            "label": "Approve financing",
+            "detail": "approved",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "review",
+            "label": "Confirm the review",
+            "detail": "pending",
+            "actor": "Alice",
+            "state": "current",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "financing",
+            "to": "review",
+            "state": "pending"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Northbank",
+        "action": "bank approval",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 2,
+          "application": "approved",
+          "completed": [
+            "financing"
+          ],
+          "consumed": true,
+          "enabled": [
+            "review"
+          ],
+          "id": "bank-approval",
+          "outcome": "committed",
+          "review": "pending",
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/0/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "current",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=purchase-wrong-subject&step=2",
+        "next": "laboratory.html?story=sequence-complete&step=1"
+      }
+    },
+    {
+      "id": "buyer-review",
+      "actor": "Alice",
+      "action": "confirm-review",
+      "open": "laboratory.html?story=sequence-complete&step=1",
+      "illustration": "review-complete",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "Your review is confirmed."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "The workflow is complete."
+        }
+      ],
+      "diagram": {
+        "title": "Alice · confirm review",
+        "nodes": [
+          {
+            "id": "financing",
+            "label": "Approve financing",
+            "detail": "approved",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "review",
+            "label": "Confirm the review",
+            "detail": "confirmed",
+            "actor": "Alice",
+            "state": "complete",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "financing",
+            "to": "review",
+            "state": "complete"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Alice",
+        "action": "buyer review",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 2,
+          "application": "approved",
+          "completed": [
+            "financing",
+            "review"
+          ],
+          "consumed": false,
+          "enabled": [],
+          "id": "buyer-review",
+          "outcome": "committed",
+          "review": "confirmed",
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "complete"
+        },
+        "expected_pointer": "/presentation/units/1/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "current"
+        ],
+        "previous": "laboratory.html?story=sequence-complete&step=0",
+        "next": "laboratory.html?story=sequence-resumed&step=0"
+      }
+    }
+  ],
+  "recording": {
+    "file": "book/edition-0.2/recordings/sequence-complete.json",
+    "sha256": "37730ed589e2a3148efa7f86a5a880cf9ff77cd46d29237ef92753c1f91e591a",
+    "provenance": {
+      "actual_sha256": "f858db438ac6c9eb525b99a5d08173129d79e49d42e7fb9fe72c67fce1931496",
+      "configured_sdk": "3.4.11",
+      "dar_sha256": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e",
+      "dars": {
+        "harness/ledger/tests/.daml/dist/harmonia-tests-0.1.0.dar": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e"
+      },
+      "expected_sha256": "b2a5ad4bfe2f5c81d2f4dc46667feb6bcfdb24a6d555d284fdb4fbbe50a1b14f",
+      "input_sha256": "466a6026857edd01dcf1b265befe50fc2009192436a5526e01e8915e9ac04801",
+      "java": "17.0.19+10",
+      "matched": true,
+      "mode": "live-canton",
+      "observation_sha256": "c5b6156f72c4969109557fd0f0ec227830e4d6ae2a5d61d6fdc9511f2d7d7d31",
+      "recorded_at": "2026-09-11T05:11:02.642899Z",
+      "revision": "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+      "story_format": 1,
+      "topology": "one participant, one synchronizer, separate party identities",
+      "worktree_dirty": false
+    },
+    "evidence": {
+      "input.md": {
+        "file": "book/edition-0.2/recordings/evidence/sequence-complete/input.md",
+        "sha256": "466a6026857edd01dcf1b265befe50fc2009192436a5526e01e8915e9ac04801"
+      },
+      "expected.md": {
+        "file": "book/edition-0.2/recordings/evidence/sequence-complete/expected.md",
+        "sha256": "b2a5ad4bfe2f5c81d2f4dc46667feb6bcfdb24a6d555d284fdb4fbbe50a1b14f"
+      },
+      "actual.md": {
+        "file": "book/edition-0.2/recordings/evidence/sequence-complete/actual.md",
+        "sha256": "f858db438ac6c9eb525b99a5d08173129d79e49d42e7fb9fe72c67fce1931496"
+      },
+      "observation.json": {
+        "file": "book/edition-0.2/recordings/evidence/sequence-complete/observation.json",
+        "sha256": "c5b6156f72c4969109557fd0f0ec227830e4d6ae2a5d61d6fdc9511f2d7d7d31"
+      }
+    }
+  },
+  "operation": {
+    "file": "product/ledger/core/daml/Harmonia/Process/Engine.daml",
+    "sha256": "6dd2309e6845f2e44966debddf25fe129afcad91ba8ea5a90fda3a610e5862ac"
+  }
+}

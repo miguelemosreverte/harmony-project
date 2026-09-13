@@ -1,0 +1,782 @@
+{
+  "format": "harmonia-showcase/1",
+  "id": "package-builder",
+  "title": "Bring a compiled application",
+  "purpose": "The bank supplies the unchanged legacy DAR, compares it with the participant's actual administrator export, and builds its reviewed adapter. Metadata can be inspected but has no executable action mapping. Buyer credentials cannot operate the builder, and malformed archives never become accepted inputs.",
+  "kind": "Packages",
+  "diagram": {
+    "renderer": "diagram",
+    "shared": {}
+  },
+  "steps": [
+    {
+      "id": "local",
+      "actor": "bank",
+      "action": "upload",
+      "open": "laboratory.html?story=package-builder&step=0",
+      "illustration": "package-builder",
+      "dialogue": [
+        {
+          "speaker": "Developer",
+          "portrait": "developer",
+          "text": "The uploaded DAR was inspected."
+        },
+        {
+          "speaker": "Reviewer",
+          "portrait": "reviewer",
+          "text": "Its package identity is now known."
+        }
+      ],
+      "diagram": {
+        "title": "bank · upload",
+        "caption": "1 inputs",
+        "nodes": [
+          {
+            "id": "actor",
+            "label": "bank",
+            "detail": "Actor or verification owner named in the recording.",
+            "actor": "Recorded actor",
+            "state": "pending",
+            "conversation": null
+          },
+          {
+            "id": "action",
+            "label": "upload",
+            "detail": "local",
+            "actor": "Recorded operation",
+            "state": "current",
+            "conversation": null
+          },
+          {
+            "id": "observation",
+            "label": "HTTP 200",
+            "detail": "1 inputs",
+            "actor": "Observed response",
+            "state": "complete",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "actor",
+            "to": "action",
+            "state": "pending"
+          },
+          {
+            "from": "action",
+            "to": "observation",
+            "state": "complete"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "bank",
+        "action": "local",
+        "outcome": "HTTP 200"
+      },
+      "evidence": {
+        "observed": {
+          "available_live": true,
+          "compiled": false,
+          "http": 200,
+          "id": "local",
+          "inputs": 1,
+          "supported": true
+        },
+        "expected_pointer": "/presentation/units/0/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "current",
+          "pending",
+          "pending",
+          "pending",
+          "pending",
+          "pending",
+          "pending",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=live-handoff&step=3",
+        "next": "laboratory.html?story=package-builder&step=1"
+      }
+    },
+    {
+      "id": "participant",
+      "actor": "bank",
+      "action": "retrieve",
+      "open": "laboratory.html?story=package-builder&step=1",
+      "illustration": "generated-approved",
+      "dialogue": [
+        {
+          "speaker": "Developer",
+          "portrait": "developer",
+          "text": "The verified source returned a DAR."
+        },
+        {
+          "speaker": "Reviewer",
+          "portrait": "reviewer",
+          "text": "A reviewed mapping is available."
+        }
+      ],
+      "diagram": {
+        "title": "bank · retrieve",
+        "caption": "2 inputs",
+        "nodes": [
+          {
+            "id": "actor",
+            "label": "bank",
+            "detail": "Actor or verification owner named in the recording.",
+            "actor": "Recorded actor",
+            "state": "pending",
+            "conversation": null
+          },
+          {
+            "id": "action",
+            "label": "retrieve",
+            "detail": "participant",
+            "actor": "Recorded operation",
+            "state": "current",
+            "conversation": null
+          },
+          {
+            "id": "observation",
+            "label": "HTTP 200",
+            "detail": "2 inputs",
+            "actor": "Observed response",
+            "state": "complete",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "actor",
+            "to": "action",
+            "state": "pending"
+          },
+          {
+            "from": "action",
+            "to": "observation",
+            "state": "complete"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "bank",
+        "action": "participant",
+        "outcome": "HTTP 200"
+      },
+      "evidence": {
+        "observed": {
+          "available_live": true,
+          "compiled": false,
+          "http": 200,
+          "id": "participant",
+          "inputs": 2,
+          "supported": true
+        },
+        "expected_pointer": "/presentation/units/1/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "current",
+          "pending",
+          "pending",
+          "pending",
+          "pending",
+          "pending",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=package-builder&step=0",
+        "next": "laboratory.html?story=package-builder&step=2"
+      }
+    },
+    {
+      "id": "compile",
+      "actor": "bank",
+      "action": "generate",
+      "open": "laboratory.html?story=package-builder&step=2",
+      "illustration": "compiled-adapter",
+      "dialogue": [
+        {
+          "speaker": "Developer",
+          "portrait": "developer",
+          "text": "The adapter compiled successfully."
+        },
+        {
+          "speaker": "Reviewer",
+          "portrait": "reviewer",
+          "text": "Live availability is also confirmed."
+        }
+      ],
+      "diagram": {
+        "title": "bank · generate",
+        "caption": "2 inputs",
+        "nodes": [
+          {
+            "id": "actor",
+            "label": "bank",
+            "detail": "Actor or verification owner named in the recording.",
+            "actor": "Recorded actor",
+            "state": "pending",
+            "conversation": null
+          },
+          {
+            "id": "action",
+            "label": "generate",
+            "detail": "compile",
+            "actor": "Recorded operation",
+            "state": "current",
+            "conversation": null
+          },
+          {
+            "id": "observation",
+            "label": "HTTP 200",
+            "detail": "2 inputs",
+            "actor": "Observed response",
+            "state": "complete",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "actor",
+            "to": "action",
+            "state": "pending"
+          },
+          {
+            "from": "action",
+            "to": "observation",
+            "state": "complete"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "bank",
+        "action": "compile",
+        "outcome": "HTTP 200"
+      },
+      "evidence": {
+        "observed": {
+          "available_live": true,
+          "compiled": true,
+          "http": 200,
+          "id": "compile",
+          "inputs": 2,
+          "supported": true
+        },
+        "expected_pointer": "/presentation/units/2/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "complete",
+          "current",
+          "pending",
+          "pending",
+          "pending",
+          "pending",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=package-builder&step=1",
+        "next": "laboratory.html?story=package-builder&step=3"
+      }
+    },
+    {
+      "id": "metadata",
+      "actor": "bank",
+      "action": "retrieve",
+      "open": "laboratory.html?story=package-builder&step=3",
+      "illustration": "mapping-missing",
+      "dialogue": [
+        {
+          "speaker": "Developer",
+          "portrait": "developer",
+          "text": "The DAR was inspected."
+        },
+        {
+          "speaker": "Reviewer",
+          "portrait": "reviewer",
+          "text": "There is no reviewed mapping for it."
+        }
+      ],
+      "diagram": {
+        "title": "bank · retrieve",
+        "caption": "3 inputs",
+        "nodes": [
+          {
+            "id": "actor",
+            "label": "bank",
+            "detail": "Actor or verification owner named in the recording.",
+            "actor": "Recorded actor",
+            "state": "pending",
+            "conversation": null
+          },
+          {
+            "id": "action",
+            "label": "retrieve",
+            "detail": "metadata",
+            "actor": "Recorded operation",
+            "state": "current",
+            "conversation": null
+          },
+          {
+            "id": "observation",
+            "label": "HTTP 200",
+            "detail": "3 inputs",
+            "actor": "Observed response",
+            "state": "complete",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "actor",
+            "to": "action",
+            "state": "pending"
+          },
+          {
+            "from": "action",
+            "to": "observation",
+            "state": "complete"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "bank",
+        "action": "metadata",
+        "outcome": "HTTP 200"
+      },
+      "evidence": {
+        "observed": {
+          "available_live": false,
+          "compiled": false,
+          "http": 200,
+          "id": "metadata",
+          "inputs": 3,
+          "supported": false
+        },
+        "expected_pointer": "/presentation/units/3/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "complete",
+          "complete",
+          "current",
+          "pending",
+          "pending",
+          "pending",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=package-builder&step=2",
+        "next": "laboratory.html?story=package-builder&step=4"
+      }
+    },
+    {
+      "id": "unsupported",
+      "actor": "bank",
+      "action": "generate",
+      "open": "laboratory.html?story=package-builder&step=4",
+      "illustration": "compilation-refused",
+      "dialogue": [
+        {
+          "speaker": "Developer",
+          "portrait": "developer",
+          "text": "Generation was refused."
+        },
+        {
+          "speaker": "Reviewer",
+          "portrait": "reviewer",
+          "text": "A supported mapping is required."
+        }
+      ],
+      "diagram": {
+        "title": "bank · generate",
+        "caption": "3 inputs",
+        "nodes": [
+          {
+            "id": "actor",
+            "label": "bank",
+            "detail": "Actor or verification owner named in the recording.",
+            "actor": "Recorded actor",
+            "state": "pending",
+            "conversation": null
+          },
+          {
+            "id": "action",
+            "label": "generate",
+            "detail": "unsupported",
+            "actor": "Recorded operation",
+            "state": "current",
+            "conversation": null
+          },
+          {
+            "id": "observation",
+            "label": "HTTP 400",
+            "detail": "3 inputs",
+            "actor": "Observed response",
+            "state": "refused",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "actor",
+            "to": "action",
+            "state": "pending"
+          },
+          {
+            "from": "action",
+            "to": "observation",
+            "state": "pending"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "bank",
+        "action": "unsupported",
+        "outcome": "HTTP 400"
+      },
+      "evidence": {
+        "observed": {
+          "http": 400,
+          "id": "unsupported",
+          "inputs": 3
+        },
+        "expected_pointer": "/presentation/units/4/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "complete",
+          "complete",
+          "complete",
+          "current",
+          "pending",
+          "pending",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=package-builder&step=3",
+        "next": "laboratory.html?story=package-builder&step=5"
+      }
+    },
+    {
+      "id": "wrong-party",
+      "actor": "buyer",
+      "action": "retrieve",
+      "open": "laboratory.html?story=package-builder&step=5",
+      "illustration": "workflow-rejected",
+      "dialogue": [
+        {
+          "speaker": "Developer",
+          "portrait": "developer",
+          "text": "This session cannot retrieve packages."
+        },
+        {
+          "speaker": "Reviewer",
+          "portrait": "reviewer",
+          "text": "Package access belongs to the bank."
+        }
+      ],
+      "diagram": {
+        "title": "buyer · retrieve",
+        "caption": "3 inputs",
+        "nodes": [
+          {
+            "id": "actor",
+            "label": "buyer",
+            "detail": "Actor or verification owner named in the recording.",
+            "actor": "Recorded actor",
+            "state": "pending",
+            "conversation": null
+          },
+          {
+            "id": "action",
+            "label": "retrieve",
+            "detail": "wrong-party",
+            "actor": "Recorded operation",
+            "state": "current",
+            "conversation": null
+          },
+          {
+            "id": "observation",
+            "label": "HTTP 403",
+            "detail": "3 inputs",
+            "actor": "Observed response",
+            "state": "refused",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "actor",
+            "to": "action",
+            "state": "pending"
+          },
+          {
+            "from": "action",
+            "to": "observation",
+            "state": "pending"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "buyer",
+        "action": "wrong party",
+        "outcome": "HTTP 403"
+      },
+      "evidence": {
+        "observed": {
+          "http": 403,
+          "id": "wrong-party",
+          "inputs": 3
+        },
+        "expected_pointer": "/presentation/units/5/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "complete",
+          "complete",
+          "complete",
+          "complete",
+          "current",
+          "pending",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=package-builder&step=4",
+        "next": "laboratory.html?story=package-builder&step=6"
+      }
+    },
+    {
+      "id": "malformed",
+      "actor": "bank",
+      "action": "malformed",
+      "open": "laboratory.html?story=package-builder&step=6",
+      "illustration": "input-invalid",
+      "dialogue": [
+        {
+          "speaker": "Developer",
+          "portrait": "developer",
+          "text": "This input is not a valid DAR."
+        },
+        {
+          "speaker": "Reviewer",
+          "portrait": "reviewer",
+          "text": "The request was refused."
+        }
+      ],
+      "diagram": {
+        "title": "bank · malformed",
+        "caption": "3 inputs",
+        "nodes": [
+          {
+            "id": "actor",
+            "label": "bank",
+            "detail": "Actor or verification owner named in the recording.",
+            "actor": "Recorded actor",
+            "state": "pending",
+            "conversation": null
+          },
+          {
+            "id": "action",
+            "label": "malformed",
+            "detail": "malformed",
+            "actor": "Recorded operation",
+            "state": "current",
+            "conversation": null
+          },
+          {
+            "id": "observation",
+            "label": "HTTP 400",
+            "detail": "3 inputs",
+            "actor": "Observed response",
+            "state": "refused",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "actor",
+            "to": "action",
+            "state": "pending"
+          },
+          {
+            "from": "action",
+            "to": "observation",
+            "state": "pending"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "bank",
+        "action": "malformed",
+        "outcome": "HTTP 400"
+      },
+      "evidence": {
+        "observed": {
+          "http": 400,
+          "id": "malformed",
+          "inputs": 3
+        },
+        "expected_pointer": "/presentation/units/6/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "complete",
+          "complete",
+          "complete",
+          "complete",
+          "complete",
+          "current",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=package-builder&step=5",
+        "next": "laboratory.html?story=package-builder&step=7"
+      }
+    },
+    {
+      "id": "oversized",
+      "actor": "bank",
+      "action": "oversized",
+      "open": "laboratory.html?story=package-builder&step=7",
+      "illustration": "input-oversized",
+      "dialogue": [
+        {
+          "speaker": "Developer",
+          "portrait": "developer",
+          "text": "This upload exceeds the size limit."
+        },
+        {
+          "speaker": "Reviewer",
+          "portrait": "reviewer",
+          "text": "The request was refused."
+        }
+      ],
+      "diagram": {
+        "title": "bank · oversized",
+        "caption": "3 inputs",
+        "nodes": [
+          {
+            "id": "actor",
+            "label": "bank",
+            "detail": "Actor or verification owner named in the recording.",
+            "actor": "Recorded actor",
+            "state": "pending",
+            "conversation": null
+          },
+          {
+            "id": "action",
+            "label": "oversized",
+            "detail": "oversized",
+            "actor": "Recorded operation",
+            "state": "current",
+            "conversation": null
+          },
+          {
+            "id": "observation",
+            "label": "HTTP 400",
+            "detail": "3 inputs",
+            "actor": "Observed response",
+            "state": "refused",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "actor",
+            "to": "action",
+            "state": "pending"
+          },
+          {
+            "from": "action",
+            "to": "observation",
+            "state": "pending"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "bank",
+        "action": "oversized",
+        "outcome": "HTTP 400"
+      },
+      "evidence": {
+        "observed": {
+          "http": 400,
+          "id": "oversized",
+          "inputs": 3
+        },
+        "expected_pointer": "/presentation/units/7/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "complete",
+          "complete",
+          "complete",
+          "complete",
+          "complete",
+          "complete",
+          "current"
+        ],
+        "previous": "laboratory.html?story=package-builder&step=6",
+        "next": "laboratory.html?story=private-approval&step=0"
+      }
+    }
+  ],
+  "recording": {
+    "file": "book/edition-0.2/recordings/package-builder.json",
+    "sha256": "e498dae8e3ecbc5395d546ef0c85569e068e5badd3c797a49ec2d71f00e6e244",
+    "provenance": {
+      "actual_sha256": "83baee243eb130b95c4d960b1a671a92561587286fe3e4966be4efac31b9404a",
+      "configured_sdk": "3.4.11",
+      "dar_sha256": "9e5397148dda311e6bad483f97cfef2949e1c51315d52f02a0a7a2881336e25b",
+      "dars": {
+        "harness/ledger/demo/.daml/dist/harmonia-demo-0.1.0.dar": "9e5397148dda311e6bad483f97cfef2949e1c51315d52f02a0a7a2881336e25b"
+      },
+      "expected_sha256": "d5b9bbbb4a2efcda580ade8d133b7bf545bd17b6753b7d9345439c5f18a478e9",
+      "input_sha256": "747bdc7bbad62eaac4899a8332b0a5d2093d6887107386f9543e0ee85cb204aa",
+      "java": "17.0.19+10",
+      "matched": true,
+      "mode": "live-canton",
+      "observation_sha256": "db7c2b4ea4b1d427973b4b7ca256a233b9e0e4a53ae269dceaeb41d235be2fa0",
+      "recorded_at": "2026-09-11T05:16:27.620451Z",
+      "revision": "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+      "story_format": 1,
+      "topology": "authenticated builder; actual uploaded and participant-exported DARs; compiled downloadable project",
+      "worktree_dirty": false
+    },
+    "evidence": {
+      "input.md": {
+        "file": "book/edition-0.2/recordings/evidence/package-builder/input.md",
+        "sha256": "747bdc7bbad62eaac4899a8332b0a5d2093d6887107386f9543e0ee85cb204aa"
+      },
+      "expected.md": {
+        "file": "book/edition-0.2/recordings/evidence/package-builder/expected.md",
+        "sha256": "d5b9bbbb4a2efcda580ade8d133b7bf545bd17b6753b7d9345439c5f18a478e9"
+      },
+      "actual.md": {
+        "file": "book/edition-0.2/recordings/evidence/package-builder/actual.md",
+        "sha256": "83baee243eb130b95c4d960b1a671a92561587286fe3e4966be4efac31b9404a"
+      },
+      "observation.json": {
+        "file": "book/edition-0.2/recordings/evidence/package-builder/observation.json",
+        "sha256": "db7c2b4ea4b1d427973b4b7ca256a233b9e0e4a53ae269dceaeb41d235be2fa0"
+      }
+    }
+  },
+  "operation": {
+    "file": "product/server/src/main/scala/harmonia/packages/workspace/PackageBuilder.scala",
+    "sha256": "330d9660b449827b1c59ca6406905a7201a6a5f1ba15e1fd6724bab92199ea1e"
+  }
+}

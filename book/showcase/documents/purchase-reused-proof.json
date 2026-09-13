@@ -1,0 +1,424 @@
+{
+  "format": "harmonia-showcase/1",
+  "id": "purchase-reused-proof",
+  "title": "A consumed result cannot authorize a second proposal",
+  "purpose": "Alice's documents are shared with Northbank. Ben owns the buyer-side offer application; Sofia receives proposals through the seller-side continuation. The evidence selection is explicit so invalid-certificate experiments stay visible.",
+  "kind": "Purchase",
+  "diagram": {
+    "renderer": "scene",
+    "shared": {
+      "kind": "purchase",
+      "people": [
+        {
+          "id": "Northbank",
+          "name": "Northbank",
+          "role": "Financing",
+          "icon": "bank"
+        },
+        {
+          "id": "Alice",
+          "name": "Alice",
+          "role": "Buyer",
+          "icon": "person"
+        },
+        {
+          "id": "Ben",
+          "name": "Ben",
+          "role": "Buyer’s agent",
+          "icon": "person"
+        },
+        {
+          "id": "Sofia",
+          "name": "Sofia",
+          "role": "Seller’s agent",
+          "icon": "person"
+        }
+      ],
+      "amounts": []
+    }
+  },
+  "steps": [
+    {
+      "id": "bank-assessment",
+      "actor": "Northbank",
+      "action": "assess-financing",
+      "open": "laboratory.html?story=purchase-reused-proof&step=0",
+      "illustration": "approval-signed",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "Your financing is approved."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "The next application must check the result."
+        }
+      ],
+      "diagram": {
+        "title": "Northbank approves. Alice can make her proposal.",
+        "caption": "A verified result is available to Alice. Her financing documents stay within the financing application.",
+        "phase": 1,
+        "focus": "Northbank",
+        "artifact": "Financing · approved",
+        "refused": false,
+        "approval": "complete"
+      },
+      "observation": {
+        "actor": "Northbank",
+        "action": "bank assessment",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 1,
+          "application": "approved",
+          "completed": [
+            "assessment"
+          ],
+          "consumed": true,
+          "evidence_available": true,
+          "id": "bank-assessment",
+          "offer": "not-opened",
+          "outcome": "committed",
+          "proposal": "none",
+          "proposals": 0,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/0/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "current",
+          "pending",
+          "pending",
+          "pending",
+          "refused"
+        ],
+        "previous": "laboratory.html?story=purchase-missing&step=2",
+        "next": "laboratory.html?story=purchase-reused-proof&step=1"
+      }
+    },
+    {
+      "id": "open-offer",
+      "actor": "Alice",
+      "action": "open-offer",
+      "open": "laboratory.html?story=purchase-reused-proof&step=1",
+      "illustration": "offer-opened",
+      "dialogue": [
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "My offer is open."
+        },
+        {
+          "speaker": "Ben",
+          "portrait": "ben",
+          "text": "We still need a valid financing result."
+        }
+      ],
+      "diagram": {
+        "title": "Alice prepares the offer.",
+        "caption": "The property application is ready to check her financing result.",
+        "phase": 1,
+        "focus": "Alice",
+        "artifact": "Financing · approved",
+        "refused": false,
+        "approval": "complete"
+      },
+      "observation": {
+        "actor": "Alice",
+        "action": "open offer",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 2,
+          "application": "approved",
+          "completed": [
+            "assessment"
+          ],
+          "consumed": false,
+          "evidence_available": true,
+          "id": "open-offer",
+          "offer": "waiting",
+          "outcome": "committed",
+          "proposal": "none",
+          "proposals": 0,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/1/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "current",
+          "pending",
+          "pending",
+          "refused"
+        ],
+        "previous": "laboratory.html?story=purchase-reused-proof&step=0",
+        "next": "laboratory.html?story=purchase-reused-proof&step=2"
+      }
+    },
+    {
+      "id": "make-proposal",
+      "actor": "Alice",
+      "action": "make-proposal",
+      "open": "laboratory.html?story=purchase-reused-proof&step=2",
+      "illustration": "proposal-prepared",
+      "dialogue": [
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "My proposal is ready."
+        },
+        {
+          "speaker": "Ben",
+          "portrait": "ben",
+          "text": "I can relay it to Sofia."
+        }
+      ],
+      "diagram": {
+        "title": "Alice makes her proposal.",
+        "caption": "The property application accepts the approved financing result and creates one proposal.",
+        "phase": 2,
+        "focus": "Alice",
+        "artifact": "Purchase proposal",
+        "refused": false,
+        "approval": "complete"
+      },
+      "observation": {
+        "actor": "Alice",
+        "action": "make proposal",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 3,
+          "application": "approved",
+          "completed": [
+            "assessment",
+            "proposal"
+          ],
+          "consumed": false,
+          "evidence_available": false,
+          "id": "make-proposal",
+          "offer": "proposed",
+          "outcome": "committed",
+          "proposal": "draft",
+          "proposals": 1,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/2/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "complete",
+          "current",
+          "pending",
+          "refused"
+        ],
+        "previous": "laboratory.html?story=purchase-reused-proof&step=1",
+        "next": "laboratory.html?story=purchase-reused-proof&step=3"
+      }
+    },
+    {
+      "id": "open-second-offer",
+      "actor": "Alice",
+      "action": "open-offer",
+      "open": "laboratory.html?story=purchase-reused-proof&step=3",
+      "illustration": "purchase-approved",
+      "dialogue": [
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "My offer is open."
+        },
+        {
+          "speaker": "Ben",
+          "portrait": "ben",
+          "text": "We still need a valid financing result."
+        }
+      ],
+      "diagram": {
+        "title": "Alice prepares the offer.",
+        "caption": "The property application is ready to check her financing result.",
+        "phase": 0,
+        "focus": "Alice",
+        "artifact": "",
+        "refused": false,
+        "approval": "pending"
+      },
+      "observation": {
+        "actor": "Alice",
+        "action": "open second offer",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 4,
+          "application": "approved",
+          "completed": [
+            "assessment"
+          ],
+          "consumed": false,
+          "evidence_available": false,
+          "id": "open-second-offer",
+          "offer": "waiting",
+          "outcome": "committed",
+          "proposal": "none",
+          "proposals": 1,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/3/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "complete",
+          "complete",
+          "current",
+          "refused"
+        ],
+        "previous": "laboratory.html?story=purchase-reused-proof&step=2",
+        "next": "laboratory.html?story=purchase-reused-proof&step=4"
+      }
+    },
+    {
+      "id": "reuse-consumed-result",
+      "actor": "Alice",
+      "action": "make-proposal",
+      "open": "laboratory.html?story=purchase-reused-proof&step=4",
+      "illustration": "purchase-reused-proof",
+      "dialogue": [
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "My proposal was refused."
+        },
+        {
+          "speaker": "Ben",
+          "portrait": "ben",
+          "text": "The required result is unavailable."
+        }
+      ],
+      "diagram": {
+        "title": "This attempt is refused.",
+        "caption": "The required private contract is not visible to this actor.",
+        "phase": 0,
+        "focus": "Alice",
+        "artifact": "",
+        "refused": true,
+        "approval": "pending"
+      },
+      "observation": {
+        "actor": "Alice",
+        "action": "reuse consumed result",
+        "outcome": "rejected"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 4,
+          "application": "approved",
+          "completed": [
+            "assessment"
+          ],
+          "consumed": false,
+          "evidence_available": false,
+          "id": "reuse-consumed-result",
+          "offer": "waiting",
+          "outcome": "rejected",
+          "proposal": "none",
+          "proposals": 1,
+          "reason": "not-visible",
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/4/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "complete",
+          "complete",
+          "complete",
+          "refused"
+        ],
+        "previous": "laboratory.html?story=purchase-reused-proof&step=3",
+        "next": "laboratory.html?story=purchase-wrong-buyer&step=0"
+      }
+    }
+  ],
+  "recording": {
+    "file": "book/edition-0.2/recordings/purchase-reused-proof.json",
+    "sha256": "c957ba1c870f04e49c4ac4d0ac95438b2169d4953669305b7bc7c5839a0c4946",
+    "provenance": {
+      "actual_sha256": "abeda99f3101d59930715db48b2dbd74636d48820e3327d17a938bc8da48ab47",
+      "configured_sdk": "3.4.11",
+      "dar_sha256": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e",
+      "dars": {
+        "harness/ledger/tests/.daml/dist/harmonia-tests-0.1.0.dar": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e"
+      },
+      "expected_sha256": "a012d3f39002dee31e3f07e5bde68f84ae57eb9a765e1107a99931e310eaf7f2",
+      "input_sha256": "48d2b0573a2e1b412019e0307c86639986fe57f6490f9ef2b7777369995d35a9",
+      "java": "17.0.19+10",
+      "matched": true,
+      "mode": "live-canton",
+      "observation_sha256": "863ea51eff3d036a5182ab6a2f9bfa6eb01ea33e60c61b90956176c9fff545cb",
+      "recorded_at": "2026-09-11T05:12:55.997076Z",
+      "revision": "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+      "story_format": 1,
+      "topology": "four independent participant nodes, one local JVM, one common synchronizer",
+      "worktree_dirty": false
+    },
+    "evidence": {
+      "input.md": {
+        "file": "book/edition-0.2/recordings/evidence/purchase-reused-proof/input.md",
+        "sha256": "48d2b0573a2e1b412019e0307c86639986fe57f6490f9ef2b7777369995d35a9"
+      },
+      "expected.md": {
+        "file": "book/edition-0.2/recordings/evidence/purchase-reused-proof/expected.md",
+        "sha256": "a012d3f39002dee31e3f07e5bde68f84ae57eb9a765e1107a99931e310eaf7f2"
+      },
+      "actual.md": {
+        "file": "book/edition-0.2/recordings/evidence/purchase-reused-proof/actual.md",
+        "sha256": "abeda99f3101d59930715db48b2dbd74636d48820e3327d17a938bc8da48ab47"
+      },
+      "observation.json": {
+        "file": "book/edition-0.2/recordings/evidence/purchase-reused-proof/observation.json",
+        "sha256": "863ea51eff3d036a5182ab6a2f9bfa6eb01ea33e60c61b90956176c9fff545cb"
+      }
+    }
+  },
+  "operation": {
+    "file": "product/ledger/applications/property-offer/daml/PropertyOffer.daml",
+    "sha256": "a26fbd886a8bec4e218df1596409caf363744ad1b01283a355d3230168055179"
+  }
+}

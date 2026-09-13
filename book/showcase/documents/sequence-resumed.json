@@ -1,0 +1,776 @@
+{
+  "format": "harmonia-showcase/1",
+  "id": "sequence-resumed",
+  "title": "A workflow survives retries and a restart",
+  "purpose": "A forged completion and a premature review must fail. The bank's request can be retried safely. Alice then reconnects and completes her review using progress recovered from the ledger.",
+  "kind": "Progression",
+  "diagram": {
+    "renderer": "diagram",
+    "shared": {}
+  },
+  "steps": [
+    {
+      "id": "forged-completion",
+      "actor": "Northbank",
+      "action": "forge-completion",
+      "open": "laboratory.html?story=sequence-resumed&step=0",
+      "illustration": "generated-rejected",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "That shortcut was refused."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "Progress needs an authorized action."
+        }
+      ],
+      "diagram": {
+        "title": "Northbank · forge completion",
+        "caption": "pending",
+        "nodes": [
+          {
+            "id": "financing",
+            "label": "Approve financing",
+            "detail": "pending",
+            "actor": "Northbank",
+            "state": "current",
+            "conversation": null
+          },
+          {
+            "id": "review",
+            "label": "Confirm the review",
+            "detail": "pending",
+            "actor": "Alice",
+            "state": "pending",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "financing",
+            "to": "review",
+            "state": "pending"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Northbank",
+        "action": "forged completion",
+        "outcome": "rejected"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 2,
+          "application": "pending",
+          "completed": [],
+          "consumed": false,
+          "enabled": [
+            "financing"
+          ],
+          "id": "forged-completion",
+          "outcome": "rejected",
+          "reason": "unauthorized",
+          "review": "pending",
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/0/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "refused",
+          "refused",
+          "pending",
+          "pending",
+          "refused",
+          "pending",
+          "pending",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=sequence-complete&step=1",
+        "next": "laboratory.html?story=sequence-resumed&step=1"
+      }
+    },
+    {
+      "id": "premature-review",
+      "actor": "Alice",
+      "action": "confirm-review",
+      "open": "laboratory.html?story=sequence-resumed&step=1",
+      "illustration": "review-waiting",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "The review cannot run yet."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "Financing must complete first."
+        }
+      ],
+      "diagram": {
+        "title": "Alice · confirm review",
+        "caption": "pending",
+        "nodes": [
+          {
+            "id": "financing",
+            "label": "Approve financing",
+            "detail": "pending",
+            "actor": "Northbank",
+            "state": "current",
+            "conversation": null
+          },
+          {
+            "id": "review",
+            "label": "Confirm the review",
+            "detail": "pending",
+            "actor": "Alice",
+            "state": "pending",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "financing",
+            "to": "review",
+            "state": "pending"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Alice",
+        "action": "premature review",
+        "outcome": "rejected"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 2,
+          "application": "pending",
+          "completed": [],
+          "consumed": false,
+          "enabled": [
+            "financing"
+          ],
+          "id": "premature-review",
+          "outcome": "rejected",
+          "reason": "application-rejected",
+          "review": "pending",
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/1/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "refused",
+          "refused",
+          "pending",
+          "pending",
+          "refused",
+          "pending",
+          "pending",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=sequence-resumed&step=0",
+        "next": "laboratory.html?story=sequence-resumed&step=2"
+      }
+    },
+    {
+      "id": "bank-approval",
+      "actor": "Northbank",
+      "action": "approve-financing",
+      "open": "laboratory.html?story=sequence-resumed&step=2",
+      "illustration": "approval-signed",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "The application is now approved."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "The approval is recorded."
+        }
+      ],
+      "diagram": {
+        "title": "Northbank · approve financing",
+        "caption": "approved",
+        "nodes": [
+          {
+            "id": "financing",
+            "label": "Approve financing",
+            "detail": "approved",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "review",
+            "label": "Confirm the review",
+            "detail": "pending",
+            "actor": "Alice",
+            "state": "current",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "financing",
+            "to": "review",
+            "state": "pending"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Northbank",
+        "action": "bank approval",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 2,
+          "application": "approved",
+          "completed": [
+            "financing"
+          ],
+          "consumed": true,
+          "enabled": [
+            "review"
+          ],
+          "id": "bank-approval",
+          "outcome": "committed",
+          "review": "pending",
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/2/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "refused",
+          "refused",
+          "current",
+          "pending",
+          "refused",
+          "pending",
+          "pending",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=sequence-resumed&step=1",
+        "next": "laboratory.html?story=sequence-resumed&step=3"
+      }
+    },
+    {
+      "id": "same-request-again",
+      "actor": "Northbank",
+      "action": "approve-financing",
+      "open": "laboratory.html?story=sequence-resumed&step=3",
+      "illustration": "retry-record",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "This request was already recorded."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "The retry did not execute it again."
+        }
+      ],
+      "diagram": {
+        "title": "Northbank · approve financing",
+        "caption": "approved",
+        "nodes": [
+          {
+            "id": "financing",
+            "label": "Approve financing",
+            "detail": "approved",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "review",
+            "label": "Confirm the review",
+            "detail": "pending",
+            "actor": "Alice",
+            "state": "current",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "financing",
+            "to": "review",
+            "state": "pending"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Northbank",
+        "action": "same request again",
+        "outcome": "duplicate"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 2,
+          "application": "approved",
+          "completed": [
+            "financing"
+          ],
+          "consumed": false,
+          "enabled": [
+            "review"
+          ],
+          "id": "same-request-again",
+          "outcome": "duplicate",
+          "review": "pending",
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/3/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "refused",
+          "refused",
+          "complete",
+          "current",
+          "refused",
+          "pending",
+          "pending",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=sequence-resumed&step=2",
+        "next": "laboratory.html?story=sequence-resumed&step=4"
+      }
+    },
+    {
+      "id": "completed-step-again",
+      "actor": "Northbank",
+      "action": "approve-financing",
+      "open": "laboratory.html?story=sequence-resumed&step=4",
+      "illustration": "already-approved",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "This approval attempt was refused."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "An existing approval cannot be exercised again."
+        }
+      ],
+      "diagram": {
+        "title": "Northbank · approve financing",
+        "caption": "approved",
+        "nodes": [
+          {
+            "id": "financing",
+            "label": "Approve financing",
+            "detail": "approved",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "review",
+            "label": "Confirm the review",
+            "detail": "pending",
+            "actor": "Alice",
+            "state": "current",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "financing",
+            "to": "review",
+            "state": "pending"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Northbank",
+        "action": "completed step again",
+        "outcome": "rejected"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 2,
+          "application": "approved",
+          "completed": [
+            "financing"
+          ],
+          "consumed": false,
+          "enabled": [
+            "review"
+          ],
+          "id": "completed-step-again",
+          "outcome": "rejected",
+          "reason": "application-rejected",
+          "review": "pending",
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/4/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "refused",
+          "refused",
+          "complete",
+          "complete",
+          "refused",
+          "pending",
+          "pending",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=sequence-resumed&step=3",
+        "next": "laboratory.html?story=sequence-resumed&step=5"
+      }
+    },
+    {
+      "id": "waiting-for-alice",
+      "actor": "Alice",
+      "action": "wait",
+      "open": "laboratory.html?story=sequence-resumed&step=5",
+      "illustration": "review-waiting",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "The approval remains recorded."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "My review is still pending."
+        }
+      ],
+      "diagram": {
+        "title": "Alice · wait",
+        "caption": "approved",
+        "nodes": [
+          {
+            "id": "financing",
+            "label": "Approve financing",
+            "detail": "approved",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "review",
+            "label": "Confirm the review",
+            "detail": "pending",
+            "actor": "Alice",
+            "state": "current",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "financing",
+            "to": "review",
+            "state": "pending"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Alice",
+        "action": "waiting for alice",
+        "outcome": "observed"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 2,
+          "application": "approved",
+          "completed": [
+            "financing"
+          ],
+          "consumed": false,
+          "enabled": [
+            "review"
+          ],
+          "id": "waiting-for-alice",
+          "outcome": "observed",
+          "review": "pending",
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/5/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "refused",
+          "refused",
+          "complete",
+          "complete",
+          "refused",
+          "current",
+          "pending",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=sequence-resumed&step=4",
+        "next": "laboratory.html?story=sequence-resumed&step=6"
+      }
+    },
+    {
+      "id": "fresh-client",
+      "actor": "Alice",
+      "action": "reconnect",
+      "open": "laboratory.html?story=sequence-resumed&step=6",
+      "illustration": "sequence-resumed",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "The ledger kept our progress."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "I reconnected at the pending review."
+        }
+      ],
+      "diagram": {
+        "title": "Alice · reconnect",
+        "caption": "approved",
+        "nodes": [
+          {
+            "id": "financing",
+            "label": "Approve financing",
+            "detail": "approved",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "review",
+            "label": "Confirm the review",
+            "detail": "pending",
+            "actor": "Alice",
+            "state": "current",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "financing",
+            "to": "review",
+            "state": "pending"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Alice",
+        "action": "fresh client",
+        "outcome": "observed"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 2,
+          "application": "approved",
+          "completed": [
+            "financing"
+          ],
+          "consumed": false,
+          "enabled": [
+            "review"
+          ],
+          "id": "fresh-client",
+          "outcome": "observed",
+          "review": "pending",
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/6/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "refused",
+          "refused",
+          "complete",
+          "complete",
+          "refused",
+          "complete",
+          "current",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=sequence-resumed&step=5",
+        "next": "laboratory.html?story=sequence-resumed&step=7"
+      }
+    },
+    {
+      "id": "buyer-review",
+      "actor": "Alice",
+      "action": "confirm-review",
+      "open": "laboratory.html?story=sequence-resumed&step=7",
+      "illustration": "review-complete",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "Your review is confirmed."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "The workflow is complete."
+        }
+      ],
+      "diagram": {
+        "title": "Alice · confirm review",
+        "caption": "approved",
+        "nodes": [
+          {
+            "id": "financing",
+            "label": "Approve financing",
+            "detail": "approved",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "review",
+            "label": "Confirm the review",
+            "detail": "confirmed",
+            "actor": "Alice",
+            "state": "complete",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "financing",
+            "to": "review",
+            "state": "complete"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Alice",
+        "action": "buyer review",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 2,
+          "application": "approved",
+          "completed": [
+            "financing",
+            "review"
+          ],
+          "consumed": false,
+          "enabled": [],
+          "id": "buyer-review",
+          "outcome": "committed",
+          "review": "confirmed",
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "complete"
+        },
+        "expected_pointer": "/presentation/units/7/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "refused",
+          "refused",
+          "complete",
+          "complete",
+          "refused",
+          "complete",
+          "complete",
+          "current"
+        ],
+        "previous": "laboratory.html?story=sequence-resumed&step=6",
+        "next": "laboratory.html?story=transfer-missing-agreement&step=0"
+      }
+    }
+  ],
+  "recording": {
+    "file": "book/edition-0.2/recordings/sequence-resumed.json",
+    "sha256": "13e2181963e16f0a6273af5188a11e93369eb99aedf784ea6c91ea7293848a57",
+    "provenance": {
+      "actual_sha256": "710535fe711cd3e71a7e3206c800498101beb4add4a2bf37f746eacd491a0cc8",
+      "configured_sdk": "3.4.11",
+      "dar_sha256": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e",
+      "dars": {
+        "harness/ledger/tests/.daml/dist/harmonia-tests-0.1.0.dar": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e"
+      },
+      "expected_sha256": "8cf9605b1f35d84bb542246c1c8d1661eb3416bcb4c74033ddd4c2703562bcdc",
+      "input_sha256": "caf64898158d957289cfd9e1f7159979900e9ac0c538e19262e188855e0b7baa",
+      "java": "17.0.19+10",
+      "matched": true,
+      "mode": "live-canton",
+      "observation_sha256": "7883baa1da28582503c187b7bbd36daeff6cb3ded901787283413088e78a19fe",
+      "recorded_at": "2026-09-11T05:11:34.481439Z",
+      "revision": "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+      "story_format": 1,
+      "topology": "one participant, one synchronizer, separate party identities",
+      "worktree_dirty": false
+    },
+    "evidence": {
+      "input.md": {
+        "file": "book/edition-0.2/recordings/evidence/sequence-resumed/input.md",
+        "sha256": "caf64898158d957289cfd9e1f7159979900e9ac0c538e19262e188855e0b7baa"
+      },
+      "expected.md": {
+        "file": "book/edition-0.2/recordings/evidence/sequence-resumed/expected.md",
+        "sha256": "8cf9605b1f35d84bb542246c1c8d1661eb3416bcb4c74033ddd4c2703562bcdc"
+      },
+      "actual.md": {
+        "file": "book/edition-0.2/recordings/evidence/sequence-resumed/actual.md",
+        "sha256": "710535fe711cd3e71a7e3206c800498101beb4add4a2bf37f746eacd491a0cc8"
+      },
+      "observation.json": {
+        "file": "book/edition-0.2/recordings/evidence/sequence-resumed/observation.json",
+        "sha256": "7883baa1da28582503c187b7bbd36daeff6cb3ded901787283413088e78a19fe"
+      }
+    }
+  },
+  "operation": {
+    "file": "product/ledger/core/daml/Harmonia/Process/Engine.daml",
+    "sha256": "6dd2309e6845f2e44966debddf25fe129afcad91ba8ea5a90fda3a610e5862ac"
+  }
+}

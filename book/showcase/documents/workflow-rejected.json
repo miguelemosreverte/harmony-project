@@ -1,0 +1,135 @@
+{
+  "format": "harmonia-showcase/1",
+  "id": "workflow-rejected",
+  "title": "Workflow rollback",
+  "purpose": "An approved application cannot be approved again. Even the bank must respect the application's current state.",
+  "kind": "Workflow",
+  "diagram": {
+    "renderer": "diagram",
+    "shared": {
+      "title": "Northbank · approve financing",
+      "caption": "approved",
+      "nodes": [
+        {
+          "id": "application",
+          "label": "Application: approved",
+          "detail": "The application retains its choice authority.",
+          "actor": "Northbank",
+          "state": "complete",
+          "conversation": null
+        },
+        {
+          "id": "workflow",
+          "label": "Shared progress",
+          "detail": "waiting",
+          "actor": "Alice",
+          "state": "pending",
+          "conversation": null
+        }
+      ],
+      "edges": [
+        {
+          "from": "application",
+          "to": "workflow",
+          "state": "pending"
+        }
+      ]
+    }
+  },
+  "steps": [
+    {
+      "id": "repeated-approval",
+      "actor": "Northbank",
+      "action": "approve-financing",
+      "open": "laboratory.html?story=workflow-rejected&step=0",
+      "illustration": "already-approved",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "This approval attempt was refused."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "An existing approval cannot be exercised again."
+        }
+      ],
+      "diagram": {},
+      "observation": {
+        "actor": "Northbank",
+        "action": "repeated approval",
+        "outcome": "rejected"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 1,
+          "application": "approved",
+          "consumed": false,
+          "id": "repeated-approval",
+          "outcome": "rejected",
+          "reason": "application-rejected",
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/0/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "refused"
+        ],
+        "previous": "laboratory.html?story=workflow-approved&step=1",
+        "next": "coverage.html"
+      }
+    }
+  ],
+  "recording": {
+    "file": "book/edition-0.2/recordings/workflow-rejected.json",
+    "sha256": "7824eb00ef35ae1e9518b056ce9d7494455cf35193eeb846699ae65b0faf7da8",
+    "provenance": {
+      "actual_sha256": "371608ffb7e04f67f9e0fd3510c0be703871c8c4609f066493a6824b1164525f",
+      "configured_sdk": "3.4.11",
+      "dar_sha256": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e",
+      "dars": {
+        "harness/ledger/tests/.daml/dist/harmonia-tests-0.1.0.dar": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e"
+      },
+      "expected_sha256": "7742a247ebfa2aacf12bb5f235075913378acaa9182c18affed835c1485bd12d",
+      "input_sha256": "779ad4c89dadd5d6c7f9fff42fa7ba45e8404c731796775a3c2b848fa213b4ef",
+      "java": "17.0.19+10",
+      "matched": true,
+      "mode": "live-canton",
+      "observation_sha256": "4e97b8253e7933f408c45fe8469a0d0b514737b05a296484751b0db0937e8b02",
+      "recorded_at": "2026-09-11T05:09:43.245829Z",
+      "revision": "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+      "story_format": 1,
+      "topology": "one participant, one synchronizer, separate party identities",
+      "worktree_dirty": false
+    },
+    "evidence": {
+      "input.md": {
+        "file": "book/edition-0.2/recordings/evidence/workflow-rejected/input.md",
+        "sha256": "779ad4c89dadd5d6c7f9fff42fa7ba45e8404c731796775a3c2b848fa213b4ef"
+      },
+      "expected.md": {
+        "file": "book/edition-0.2/recordings/evidence/workflow-rejected/expected.md",
+        "sha256": "7742a247ebfa2aacf12bb5f235075913378acaa9182c18affed835c1485bd12d"
+      },
+      "actual.md": {
+        "file": "book/edition-0.2/recordings/evidence/workflow-rejected/actual.md",
+        "sha256": "371608ffb7e04f67f9e0fd3510c0be703871c8c4609f066493a6824b1164525f"
+      },
+      "observation.json": {
+        "file": "book/edition-0.2/recordings/evidence/workflow-rejected/observation.json",
+        "sha256": "4e97b8253e7933f408c45fe8469a0d0b514737b05a296484751b0db0937e8b02"
+      }
+    }
+  },
+  "operation": {
+    "file": "product/ledger/applications/financing/daml/Financing.daml",
+    "sha256": "a334ab41c9624fe9ccf427c70438372c1d968ac3bf59b8a58337ac177ccbd2f3"
+  }
+}

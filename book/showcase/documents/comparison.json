@@ -1,0 +1,125 @@
+{
+  "question": "Why do these two workflows show the same approval illustration?",
+  "illustration": {
+    "id": "approval-signed",
+    "file": "product/scene/site/assets/moments-v3/approval-signed.png",
+    "sha256": "d472b9586a5da85bfd5f720b27f62b69114e0c8c41e80710dd3df85f9659112b",
+    "description": "An older silver-haired Northbank adviser in navy signs one approval sheet and slides it toward Alice, dark bob hair, blue sweater.",
+    "width": 1536,
+    "height": 1024
+  },
+  "explanation": "Both recorded actions approve financing. The standalone example demonstrates who may approve; the purchase uses the result to continue into a property proposal. They are separate executions.",
+  "examples": [
+    {
+      "workflow": "financing-approved",
+      "document": "financing-approved.json",
+      "purpose": "Alice needs a bank approval before she can continue with a purchase. She first tries to approve her own application; Northbank then acts.",
+      "selected_step": "bank-approval",
+      "open": "laboratory.html?story=financing-approved&step=1",
+      "action": "approve-financing",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "The application is now approved."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "The approval is recorded."
+        }
+      ],
+      "observed": {
+        "active_contracts": 1,
+        "application": "approved",
+        "consumed": true,
+        "id": "bank-approval",
+        "outcome": "committed",
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ]
+      },
+      "next": "laboratory.html?story=generated-approved&step=0",
+      "remaining_steps": []
+    },
+    {
+      "workflow": "purchase-approved",
+      "document": "purchase-approved.json",
+      "purpose": "Alice's documents are shared with Northbank. Ben owns the buyer-side offer application; Sofia receives proposals through the seller-side continuation. The evidence selection is explicit so invalid-certificate experiments stay visible.",
+      "selected_step": "bank-assessment",
+      "open": "laboratory.html?story=purchase-approved&step=1",
+      "action": "assess-financing",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "Your financing is approved."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "The next application must check the result."
+        }
+      ],
+      "observed": {
+        "active_contracts": 1,
+        "application": "approved",
+        "completed": [
+          "assessment"
+        ],
+        "consumed": true,
+        "evidence_available": true,
+        "id": "bank-assessment",
+        "offer": "not-opened",
+        "outcome": "committed",
+        "proposal": "none",
+        "proposals": 0,
+        "visible_to": [
+          "Alice",
+          "Northbank"
+        ],
+        "workflow": "waiting"
+      },
+      "next": "laboratory.html?story=purchase-approved&step=2",
+      "remaining_steps": [
+        {
+          "id": "cannot-forge-proposal",
+          "action": "forge-proposal",
+          "illustration": "generated-rejected",
+          "outcome": "rejected"
+        },
+        {
+          "id": "open-offer",
+          "action": "open-offer",
+          "illustration": "offer-opened",
+          "outcome": "committed"
+        },
+        {
+          "id": "make-proposal",
+          "action": "make-proposal",
+          "illustration": "proposal-prepared",
+          "outcome": "committed"
+        },
+        {
+          "id": "receipt-must-wait",
+          "action": "receive-proposal",
+          "illustration": "continuation-waiting",
+          "outcome": "rejected"
+        },
+        {
+          "id": "buyer-agent-relays",
+          "action": "relay-proposal",
+          "illustration": "proposal-relayed",
+          "outcome": "committed"
+        },
+        {
+          "id": "seller-agent-receives",
+          "action": "receive-proposal",
+          "illustration": "proposal-received",
+          "outcome": "committed"
+        }
+      ]
+    }
+  ]
+}

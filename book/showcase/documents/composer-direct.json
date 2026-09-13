@@ -1,0 +1,833 @@
+{
+  "format": "harmonia-showcase/1",
+  "id": "composer-direct",
+  "title": "Propose, consent, then act",
+  "purpose": "The bank proposes an approval followed by the buyer's review. No source application exists until the buyer accepts the exact plan. The core then rejects an early review and an action attempted by the wrong party.",
+  "kind": "Composition",
+  "diagram": {
+    "renderer": "diagram",
+    "shared": {}
+  },
+  "steps": [
+    {
+      "id": "proposal",
+      "actor": "bank",
+      "action": "propose",
+      "open": "laboratory.html?story=composer-direct&step=0",
+      "illustration": "composer-direct",
+      "dialogue": [
+        {
+          "speaker": "Bank",
+          "portrait": "bank",
+          "text": "I’ve proposed these exact actions."
+        },
+        {
+          "speaker": "Buyer",
+          "portrait": "alice",
+          "text": "Nothing starts before my consent."
+        }
+      ],
+      "diagram": {
+        "title": "bank · propose",
+        "caption": "not-started",
+        "nodes": [
+          {
+            "id": "proposal",
+            "label": "Propose the plan",
+            "detail": "The bank proposes these exact actions.",
+            "actor": "Bank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "consent",
+            "label": "Accept the plan",
+            "detail": "Sources are created only after partner consent.",
+            "actor": "Buyer",
+            "state": "current",
+            "conversation": null
+          },
+          {
+            "id": "action-approval",
+            "label": "approval",
+            "detail": "No source observed",
+            "actor": "bank · lender",
+            "state": "pending",
+            "conversation": null
+          },
+          {
+            "id": "action-review",
+            "label": "review",
+            "detail": "No source observed",
+            "actor": "buyer · reviewer",
+            "state": "pending",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "proposal",
+            "to": "consent",
+            "state": "pending"
+          },
+          {
+            "from": "consent",
+            "to": "action-approval",
+            "state": "pending"
+          },
+          {
+            "from": "action-approval",
+            "to": "action-review",
+            "state": "pending"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "bank",
+        "action": "proposal",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "completed": [],
+          "drafts": 1,
+          "enabled": [],
+          "id": "proposal",
+          "instances": 0,
+          "outcome": "committed",
+          "sources": {},
+          "workflow": "not-started"
+        },
+        "expected_pointer": "/presentation/units/0/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "current",
+          "refused",
+          "pending",
+          "refused",
+          "pending",
+          "refused",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=branch-declined&step=3",
+        "next": "laboratory.html?story=composer-direct&step=1"
+      }
+    },
+    {
+      "id": "partner-consent-required",
+      "actor": "bank",
+      "action": "accept",
+      "open": "laboratory.html?story=composer-direct&step=1",
+      "illustration": "buyer-authority",
+      "dialogue": [
+        {
+          "speaker": "Bank",
+          "portrait": "bank",
+          "text": "I proposed this plan."
+        },
+        {
+          "speaker": "Buyer",
+          "portrait": "alice",
+          "text": "Only the buyer can consent to it."
+        }
+      ],
+      "diagram": {
+        "title": "bank · accept",
+        "caption": "not-started",
+        "nodes": [
+          {
+            "id": "proposal",
+            "label": "Propose the plan",
+            "detail": "The bank proposes these exact actions.",
+            "actor": "Bank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "consent",
+            "label": "Accept the plan",
+            "detail": "Sources are created only after partner consent.",
+            "actor": "Buyer",
+            "state": "current",
+            "conversation": null
+          },
+          {
+            "id": "action-approval",
+            "label": "approval",
+            "detail": "No source observed",
+            "actor": "bank · lender",
+            "state": "pending",
+            "conversation": null
+          },
+          {
+            "id": "action-review",
+            "label": "review",
+            "detail": "No source observed",
+            "actor": "buyer · reviewer",
+            "state": "pending",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "proposal",
+            "to": "consent",
+            "state": "pending"
+          },
+          {
+            "from": "consent",
+            "to": "action-approval",
+            "state": "pending"
+          },
+          {
+            "from": "action-approval",
+            "to": "action-review",
+            "state": "pending"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "bank",
+        "action": "partner consent required",
+        "outcome": "rejected"
+      },
+      "evidence": {
+        "observed": {
+          "completed": [],
+          "drafts": 1,
+          "enabled": [],
+          "id": "partner-consent-required",
+          "instances": 0,
+          "outcome": "rejected",
+          "reason": "ledger-rejected",
+          "sources": {},
+          "workflow": "not-started"
+        },
+        "expected_pointer": "/presentation/units/1/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "refused",
+          "pending",
+          "refused",
+          "pending",
+          "refused",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=composer-direct&step=0",
+        "next": "laboratory.html?story=composer-direct&step=2"
+      }
+    },
+    {
+      "id": "acceptance",
+      "actor": "buyer",
+      "action": "accept",
+      "open": "laboratory.html?story=composer-direct&step=2",
+      "illustration": "plan-accepted",
+      "dialogue": [
+        {
+          "speaker": "Bank",
+          "portrait": "bank",
+          "text": "The plan now has its source contracts."
+        },
+        {
+          "speaker": "Buyer",
+          "portrait": "alice",
+          "text": "I’ve accepted the proposed actions."
+        }
+      ],
+      "diagram": {
+        "title": "buyer · accept",
+        "caption": "waiting",
+        "nodes": [
+          {
+            "id": "proposal",
+            "label": "Propose the plan",
+            "detail": "The bank proposes these exact actions.",
+            "actor": "Bank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "consent",
+            "label": "Accept the plan",
+            "detail": "Sources are created only after partner consent.",
+            "actor": "Buyer",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "action-approval",
+            "label": "approval",
+            "detail": "pending",
+            "actor": "bank · lender",
+            "state": "current",
+            "conversation": null
+          },
+          {
+            "id": "action-review",
+            "label": "review",
+            "detail": "pending",
+            "actor": "buyer · reviewer",
+            "state": "pending",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "proposal",
+            "to": "consent",
+            "state": "complete"
+          },
+          {
+            "from": "consent",
+            "to": "action-approval",
+            "state": "pending"
+          },
+          {
+            "from": "action-approval",
+            "to": "action-review",
+            "state": "pending"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "buyer",
+        "action": "acceptance",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "completed": [],
+          "drafts": 0,
+          "enabled": [
+            "approval"
+          ],
+          "id": "acceptance",
+          "instances": 1,
+          "outcome": "committed",
+          "sources": {
+            "approval": "pending",
+            "review": "pending"
+          },
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/2/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "refused",
+          "current",
+          "refused",
+          "pending",
+          "refused",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=composer-direct&step=1",
+        "next": "laboratory.html?story=composer-direct&step=3"
+      }
+    },
+    {
+      "id": "review-too-early",
+      "actor": "buyer",
+      "action": "advance",
+      "open": "laboratory.html?story=composer-direct&step=3",
+      "illustration": "join-waiting",
+      "dialogue": [
+        {
+          "speaker": "Developer",
+          "portrait": "developer",
+          "text": "This action was refused."
+        },
+        {
+          "speaker": "Reviewer",
+          "portrait": "reviewer",
+          "text": "Both its order and actor must be valid."
+        }
+      ],
+      "diagram": {
+        "title": "buyer · advance",
+        "caption": "waiting",
+        "nodes": [
+          {
+            "id": "proposal",
+            "label": "Propose the plan",
+            "detail": "The bank proposes these exact actions.",
+            "actor": "Bank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "consent",
+            "label": "Accept the plan",
+            "detail": "Sources are created only after partner consent.",
+            "actor": "Buyer",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "action-approval",
+            "label": "approval",
+            "detail": "pending",
+            "actor": "bank · lender",
+            "state": "current",
+            "conversation": null
+          },
+          {
+            "id": "action-review",
+            "label": "review",
+            "detail": "pending",
+            "actor": "buyer · reviewer",
+            "state": "pending",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "proposal",
+            "to": "consent",
+            "state": "complete"
+          },
+          {
+            "from": "consent",
+            "to": "action-approval",
+            "state": "pending"
+          },
+          {
+            "from": "action-approval",
+            "to": "action-review",
+            "state": "pending"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "buyer",
+        "action": "review too early",
+        "outcome": "rejected"
+      },
+      "evidence": {
+        "observed": {
+          "completed": [],
+          "drafts": 0,
+          "enabled": [
+            "approval"
+          ],
+          "id": "review-too-early",
+          "instances": 1,
+          "outcome": "rejected",
+          "reason": "ledger-rejected",
+          "sources": {
+            "approval": "pending",
+            "review": "pending"
+          },
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/3/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "refused",
+          "complete",
+          "refused",
+          "pending",
+          "refused",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=composer-direct&step=2",
+        "next": "laboratory.html?story=composer-direct&step=4"
+      }
+    },
+    {
+      "id": "approval",
+      "actor": "bank",
+      "action": "advance",
+      "open": "laboratory.html?story=composer-direct&step=4",
+      "illustration": "approval-signed",
+      "dialogue": [
+        {
+          "speaker": "Developer",
+          "portrait": "developer",
+          "text": "approval was completed."
+        },
+        {
+          "speaker": "Reviewer",
+          "portrait": "reviewer",
+          "text": "The next assigned action is enabled."
+        }
+      ],
+      "diagram": {
+        "title": "bank · advance",
+        "caption": "waiting",
+        "nodes": [
+          {
+            "id": "proposal",
+            "label": "Propose the plan",
+            "detail": "The bank proposes these exact actions.",
+            "actor": "Bank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "consent",
+            "label": "Accept the plan",
+            "detail": "Sources are created only after partner consent.",
+            "actor": "Buyer",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "action-approval",
+            "label": "approval",
+            "detail": "approved",
+            "actor": "bank · lender",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "action-review",
+            "label": "review",
+            "detail": "pending",
+            "actor": "buyer · reviewer",
+            "state": "current",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "proposal",
+            "to": "consent",
+            "state": "complete"
+          },
+          {
+            "from": "consent",
+            "to": "action-approval",
+            "state": "complete"
+          },
+          {
+            "from": "action-approval",
+            "to": "action-review",
+            "state": "pending"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "bank",
+        "action": "approval",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "completed": [
+            "approval"
+          ],
+          "drafts": 0,
+          "enabled": [
+            "review"
+          ],
+          "id": "approval",
+          "instances": 1,
+          "outcome": "committed",
+          "sources": {
+            "approval": "approved",
+            "review": "pending"
+          },
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/4/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "refused",
+          "complete",
+          "refused",
+          "current",
+          "refused",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=composer-direct&step=3",
+        "next": "laboratory.html?story=composer-direct&step=5"
+      }
+    },
+    {
+      "id": "wrong-reviewer",
+      "actor": "bank",
+      "action": "advance",
+      "open": "laboratory.html?story=composer-direct&step=5",
+      "illustration": "buyer-authority",
+      "dialogue": [
+        {
+          "speaker": "Developer",
+          "portrait": "developer",
+          "text": "This action was refused."
+        },
+        {
+          "speaker": "Reviewer",
+          "portrait": "reviewer",
+          "text": "Both its order and actor must be valid."
+        }
+      ],
+      "diagram": {
+        "title": "bank · advance",
+        "caption": "waiting",
+        "nodes": [
+          {
+            "id": "proposal",
+            "label": "Propose the plan",
+            "detail": "The bank proposes these exact actions.",
+            "actor": "Bank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "consent",
+            "label": "Accept the plan",
+            "detail": "Sources are created only after partner consent.",
+            "actor": "Buyer",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "action-approval",
+            "label": "approval",
+            "detail": "approved",
+            "actor": "bank · lender",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "action-review",
+            "label": "review",
+            "detail": "pending",
+            "actor": "buyer · reviewer",
+            "state": "current",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "proposal",
+            "to": "consent",
+            "state": "complete"
+          },
+          {
+            "from": "consent",
+            "to": "action-approval",
+            "state": "complete"
+          },
+          {
+            "from": "action-approval",
+            "to": "action-review",
+            "state": "pending"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "bank",
+        "action": "wrong reviewer",
+        "outcome": "rejected"
+      },
+      "evidence": {
+        "observed": {
+          "completed": [
+            "approval"
+          ],
+          "drafts": 0,
+          "enabled": [
+            "review"
+          ],
+          "id": "wrong-reviewer",
+          "instances": 1,
+          "outcome": "rejected",
+          "reason": "ledger-rejected",
+          "sources": {
+            "approval": "approved",
+            "review": "pending"
+          },
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/5/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "refused",
+          "complete",
+          "refused",
+          "complete",
+          "refused",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=composer-direct&step=4",
+        "next": "laboratory.html?story=composer-direct&step=6"
+      }
+    },
+    {
+      "id": "review",
+      "actor": "buyer",
+      "action": "advance",
+      "open": "laboratory.html?story=composer-direct&step=6",
+      "illustration": "review-complete",
+      "dialogue": [
+        {
+          "speaker": "Developer",
+          "portrait": "developer",
+          "text": "review was completed."
+        },
+        {
+          "speaker": "Reviewer",
+          "portrait": "reviewer",
+          "text": "The composed workflow is complete."
+        }
+      ],
+      "diagram": {
+        "title": "buyer · advance",
+        "caption": "complete",
+        "nodes": [
+          {
+            "id": "proposal",
+            "label": "Propose the plan",
+            "detail": "The bank proposes these exact actions.",
+            "actor": "Bank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "consent",
+            "label": "Accept the plan",
+            "detail": "Sources are created only after partner consent.",
+            "actor": "Buyer",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "action-approval",
+            "label": "approval",
+            "detail": "approved",
+            "actor": "bank · lender",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "action-review",
+            "label": "review",
+            "detail": "confirmed",
+            "actor": "buyer · reviewer",
+            "state": "complete",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "proposal",
+            "to": "consent",
+            "state": "complete"
+          },
+          {
+            "from": "consent",
+            "to": "action-approval",
+            "state": "complete"
+          },
+          {
+            "from": "action-approval",
+            "to": "action-review",
+            "state": "complete"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "buyer",
+        "action": "review",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "completed": [
+            "approval",
+            "review"
+          ],
+          "drafts": 0,
+          "enabled": [],
+          "id": "review",
+          "instances": 1,
+          "outcome": "committed",
+          "sources": {
+            "approval": "approved",
+            "review": "confirmed"
+          },
+          "workflow": "complete"
+        },
+        "expected_pointer": "/presentation/units/6/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "refused",
+          "complete",
+          "refused",
+          "complete",
+          "refused",
+          "current"
+        ],
+        "previous": "laboratory.html?story=composer-direct&step=5",
+        "next": "laboratory.html?story=composer-generated&step=0"
+      }
+    }
+  ],
+  "recording": {
+    "file": "book/edition-0.2/recordings/composer-direct.json",
+    "sha256": "0c4999a5b2ded9a0d6471772797a2902047f04ef3104856ced4f70176d901898",
+    "provenance": {
+      "actual_sha256": "17b5a3341946db0f7e2a079e7729f6ce2e3f1756b4762a3ced35ec406af285e2",
+      "configured_sdk": "3.4.11",
+      "dar_sha256": "9e5397148dda311e6bad483f97cfef2949e1c51315d52f02a0a7a2881336e25b",
+      "dars": {
+        "harness/ledger/demo/.daml/dist/harmonia-demo-0.1.0.dar": "9e5397148dda311e6bad483f97cfef2949e1c51315d52f02a0a7a2881336e25b"
+      },
+      "expected_sha256": "8b11e8bf8989bb0d60b03e411c34bf9d183142d8b0fd84a7db476d5dac9bae5f",
+      "input_sha256": "de40f51592f1b5f58a154b6e13d05d891ede226e2000d14a3b9177180f109777",
+      "java": "17.0.19+10",
+      "matched": true,
+      "mode": "live-canton",
+      "observation_sha256": "eae6188cbd30bc79e30740db3307dac15e25a39212738e5e541c093fe500db59",
+      "recorded_at": "2026-09-11T05:15:24.634712Z",
+      "revision": "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+      "story_format": 1,
+      "topology": "three authenticated participants; bank proposal and buyer consent; core-managed source actions",
+      "worktree_dirty": false
+    },
+    "evidence": {
+      "input.md": {
+        "file": "book/edition-0.2/recordings/evidence/composer-direct/input.md",
+        "sha256": "de40f51592f1b5f58a154b6e13d05d891ede226e2000d14a3b9177180f109777"
+      },
+      "expected.md": {
+        "file": "book/edition-0.2/recordings/evidence/composer-direct/expected.md",
+        "sha256": "8b11e8bf8989bb0d60b03e411c34bf9d183142d8b0fd84a7db476d5dac9bae5f"
+      },
+      "actual.md": {
+        "file": "book/edition-0.2/recordings/evidence/composer-direct/actual.md",
+        "sha256": "17b5a3341946db0f7e2a079e7729f6ce2e3f1756b4762a3ced35ec406af285e2"
+      },
+      "observation.json": {
+        "file": "book/edition-0.2/recordings/evidence/composer-direct/observation.json",
+        "sha256": "eae6188cbd30bc79e30740db3307dac15e25a39212738e5e541c093fe500db59"
+      }
+    }
+  },
+  "operation": {
+    "file": "product/ledger/composition/daml/Composer.daml",
+    "sha256": "6910026b9ec788e102f7a4d255e2c5d61b3b338b3dea89faafdf70357a942162"
+  }
+}

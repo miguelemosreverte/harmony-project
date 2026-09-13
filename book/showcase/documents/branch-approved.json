@@ -1,0 +1,1529 @@
+{
+  "format": "harmonia-showcase/1",
+  "id": "branch-approved",
+  "title": "The approved branch waits for both applications",
+  "purpose": "The bank selects one path. The join waits for every required action in that path. Unselected application contracts remain unchanged.",
+  "kind": "Progression",
+  "diagram": {
+    "renderer": "diagram",
+    "shared": {}
+  },
+  "steps": [
+    {
+      "id": "join-before-decision",
+      "actor": "Alice",
+      "action": "complete-join",
+      "open": "laboratory.html?story=branch-approved&step=0",
+      "illustration": "join-waiting",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "The join attempt was refused."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "The selected path must finish first."
+        }
+      ],
+      "diagram": {
+        "title": "Alice · complete join",
+        "caption": "pending",
+        "nodes": [
+          {
+            "id": "decision",
+            "label": "Choose a route",
+            "detail": "undecided",
+            "actor": "Northbank",
+            "state": "current",
+            "conversation": null
+          },
+          {
+            "id": "financing",
+            "label": "Approve financing",
+            "detail": "pending",
+            "actor": "Northbank",
+            "state": "pending",
+            "conversation": null
+          },
+          {
+            "id": "review",
+            "label": "Confirm the review",
+            "detail": "pending",
+            "actor": "Alice",
+            "state": "pending",
+            "conversation": null
+          },
+          {
+            "id": "closure",
+            "label": "Record the decline",
+            "detail": "pending",
+            "actor": "Northbank",
+            "state": "pending",
+            "conversation": null
+          },
+          {
+            "id": "join",
+            "label": "Complete the selected path",
+            "detail": "waiting",
+            "actor": "Alice",
+            "state": "pending",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "decision",
+            "to": "financing",
+            "state": "pending"
+          },
+          {
+            "from": "decision",
+            "to": "review",
+            "state": "pending"
+          },
+          {
+            "from": "decision",
+            "to": "closure",
+            "state": "pending"
+          },
+          {
+            "from": "financing",
+            "to": "join",
+            "state": "pending"
+          },
+          {
+            "from": "review",
+            "to": "join",
+            "state": "pending"
+          },
+          {
+            "from": "closure",
+            "to": "join",
+            "state": "pending"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Alice",
+        "action": "join before decision",
+        "outcome": "rejected"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 3,
+          "application": "pending",
+          "branch": "undecided",
+          "closure": "pending",
+          "completed": [],
+          "consumed": false,
+          "enabled": [
+            "decision"
+          ],
+          "id": "join-before-decision",
+          "outcome": "rejected",
+          "reason": "application-rejected",
+          "review": "pending",
+          "skipped": [],
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/0/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "refused",
+          "pending",
+          "refused",
+          "refused",
+          "pending",
+          "refused",
+          "pending",
+          "pending",
+          "pending",
+          "refused"
+        ],
+        "previous": "laboratory.html?story=already-approved&step=0",
+        "next": "laboratory.html?story=branch-approved&step=1"
+      }
+    },
+    {
+      "id": "choose-approval",
+      "actor": "Northbank",
+      "action": "choose-approve",
+      "open": "laboratory.html?story=branch-approved&step=1",
+      "illustration": "branch-approved",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "I’ve chosen the approval path."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "Financing and review can now proceed."
+        }
+      ],
+      "diagram": {
+        "title": "Northbank · choose approve",
+        "caption": "pending",
+        "nodes": [
+          {
+            "id": "decision",
+            "label": "Choose a route",
+            "detail": "approve",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "financing",
+            "label": "Approve financing",
+            "detail": "pending",
+            "actor": "Northbank",
+            "state": "current",
+            "conversation": null
+          },
+          {
+            "id": "review",
+            "label": "Confirm the review",
+            "detail": "pending",
+            "actor": "Alice",
+            "state": "current",
+            "conversation": null
+          },
+          {
+            "id": "closure",
+            "label": "Record the decline",
+            "detail": "pending",
+            "actor": "Northbank",
+            "state": "skipped",
+            "conversation": null
+          },
+          {
+            "id": "join",
+            "label": "Complete the selected path",
+            "detail": "waiting",
+            "actor": "Alice",
+            "state": "pending",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "decision",
+            "to": "financing",
+            "state": "pending"
+          },
+          {
+            "from": "decision",
+            "to": "review",
+            "state": "pending"
+          },
+          {
+            "from": "decision",
+            "to": "closure",
+            "state": "skipped"
+          },
+          {
+            "from": "financing",
+            "to": "join",
+            "state": "pending"
+          },
+          {
+            "from": "review",
+            "to": "join",
+            "state": "pending"
+          },
+          {
+            "from": "closure",
+            "to": "join",
+            "state": "skipped"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Northbank",
+        "action": "choose approval",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 3,
+          "application": "pending",
+          "branch": "approve",
+          "closure": "pending",
+          "completed": [
+            "decision"
+          ],
+          "consumed": false,
+          "enabled": [
+            "financing",
+            "review"
+          ],
+          "id": "choose-approval",
+          "outcome": "committed",
+          "review": "pending",
+          "skipped": [
+            "closure"
+          ],
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/1/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "refused",
+          "current",
+          "refused",
+          "refused",
+          "pending",
+          "refused",
+          "pending",
+          "pending",
+          "pending",
+          "refused"
+        ],
+        "previous": "laboratory.html?story=branch-approved&step=0",
+        "next": "laboratory.html?story=branch-approved&step=2"
+      }
+    },
+    {
+      "id": "cannot-change-decision",
+      "actor": "Northbank",
+      "action": "choose-decline",
+      "open": "laboratory.html?story=branch-approved&step=2",
+      "illustration": "path-fixed",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "The branch cannot be changed now."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "We follow the recorded decision."
+        }
+      ],
+      "diagram": {
+        "title": "Northbank · choose decline",
+        "caption": "pending",
+        "nodes": [
+          {
+            "id": "decision",
+            "label": "Choose a route",
+            "detail": "approve",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "financing",
+            "label": "Approve financing",
+            "detail": "pending",
+            "actor": "Northbank",
+            "state": "current",
+            "conversation": null
+          },
+          {
+            "id": "review",
+            "label": "Confirm the review",
+            "detail": "pending",
+            "actor": "Alice",
+            "state": "current",
+            "conversation": null
+          },
+          {
+            "id": "closure",
+            "label": "Record the decline",
+            "detail": "pending",
+            "actor": "Northbank",
+            "state": "skipped",
+            "conversation": null
+          },
+          {
+            "id": "join",
+            "label": "Complete the selected path",
+            "detail": "waiting",
+            "actor": "Alice",
+            "state": "pending",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "decision",
+            "to": "financing",
+            "state": "pending"
+          },
+          {
+            "from": "decision",
+            "to": "review",
+            "state": "pending"
+          },
+          {
+            "from": "decision",
+            "to": "closure",
+            "state": "skipped"
+          },
+          {
+            "from": "financing",
+            "to": "join",
+            "state": "pending"
+          },
+          {
+            "from": "review",
+            "to": "join",
+            "state": "pending"
+          },
+          {
+            "from": "closure",
+            "to": "join",
+            "state": "skipped"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Northbank",
+        "action": "cannot change decision",
+        "outcome": "rejected"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 3,
+          "application": "pending",
+          "branch": "approve",
+          "closure": "pending",
+          "completed": [
+            "decision"
+          ],
+          "consumed": false,
+          "enabled": [
+            "financing",
+            "review"
+          ],
+          "id": "cannot-change-decision",
+          "outcome": "rejected",
+          "reason": "application-rejected",
+          "review": "pending",
+          "skipped": [
+            "closure"
+          ],
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/2/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "refused",
+          "complete",
+          "refused",
+          "refused",
+          "pending",
+          "refused",
+          "pending",
+          "pending",
+          "pending",
+          "refused"
+        ],
+        "previous": "laboratory.html?story=branch-approved&step=1",
+        "next": "laboratory.html?story=branch-approved&step=3"
+      }
+    },
+    {
+      "id": "unselected-closure",
+      "actor": "Northbank",
+      "action": "close-application",
+      "open": "laboratory.html?story=branch-approved&step=3",
+      "illustration": "unselected-closure",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "Closure belongs to the other branch."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "We follow the approval path."
+        }
+      ],
+      "diagram": {
+        "title": "Northbank · close application",
+        "caption": "pending",
+        "nodes": [
+          {
+            "id": "decision",
+            "label": "Choose a route",
+            "detail": "approve",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "financing",
+            "label": "Approve financing",
+            "detail": "pending",
+            "actor": "Northbank",
+            "state": "current",
+            "conversation": null
+          },
+          {
+            "id": "review",
+            "label": "Confirm the review",
+            "detail": "pending",
+            "actor": "Alice",
+            "state": "current",
+            "conversation": null
+          },
+          {
+            "id": "closure",
+            "label": "Record the decline",
+            "detail": "pending",
+            "actor": "Northbank",
+            "state": "skipped",
+            "conversation": null
+          },
+          {
+            "id": "join",
+            "label": "Complete the selected path",
+            "detail": "waiting",
+            "actor": "Alice",
+            "state": "pending",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "decision",
+            "to": "financing",
+            "state": "pending"
+          },
+          {
+            "from": "decision",
+            "to": "review",
+            "state": "pending"
+          },
+          {
+            "from": "decision",
+            "to": "closure",
+            "state": "skipped"
+          },
+          {
+            "from": "financing",
+            "to": "join",
+            "state": "pending"
+          },
+          {
+            "from": "review",
+            "to": "join",
+            "state": "pending"
+          },
+          {
+            "from": "closure",
+            "to": "join",
+            "state": "skipped"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Northbank",
+        "action": "unselected closure",
+        "outcome": "rejected"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 3,
+          "application": "pending",
+          "branch": "approve",
+          "closure": "pending",
+          "completed": [
+            "decision"
+          ],
+          "consumed": false,
+          "enabled": [
+            "financing",
+            "review"
+          ],
+          "id": "unselected-closure",
+          "outcome": "rejected",
+          "reason": "application-rejected",
+          "review": "pending",
+          "skipped": [
+            "closure"
+          ],
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/3/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "refused",
+          "complete",
+          "refused",
+          "refused",
+          "pending",
+          "refused",
+          "pending",
+          "pending",
+          "pending",
+          "refused"
+        ],
+        "previous": "laboratory.html?story=branch-approved&step=2",
+        "next": "laboratory.html?story=branch-approved&step=4"
+      }
+    },
+    {
+      "id": "bank-approval",
+      "actor": "Northbank",
+      "action": "approve-financing",
+      "open": "laboratory.html?story=branch-approved&step=4",
+      "illustration": "approval-signed",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "The application is now approved."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "The approval is recorded."
+        }
+      ],
+      "diagram": {
+        "title": "Northbank · approve financing",
+        "caption": "approved",
+        "nodes": [
+          {
+            "id": "decision",
+            "label": "Choose a route",
+            "detail": "approve",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "financing",
+            "label": "Approve financing",
+            "detail": "approved",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "review",
+            "label": "Confirm the review",
+            "detail": "pending",
+            "actor": "Alice",
+            "state": "current",
+            "conversation": null
+          },
+          {
+            "id": "closure",
+            "label": "Record the decline",
+            "detail": "pending",
+            "actor": "Northbank",
+            "state": "skipped",
+            "conversation": null
+          },
+          {
+            "id": "join",
+            "label": "Complete the selected path",
+            "detail": "waiting",
+            "actor": "Alice",
+            "state": "pending",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "decision",
+            "to": "financing",
+            "state": "complete"
+          },
+          {
+            "from": "decision",
+            "to": "review",
+            "state": "pending"
+          },
+          {
+            "from": "decision",
+            "to": "closure",
+            "state": "skipped"
+          },
+          {
+            "from": "financing",
+            "to": "join",
+            "state": "pending"
+          },
+          {
+            "from": "review",
+            "to": "join",
+            "state": "pending"
+          },
+          {
+            "from": "closure",
+            "to": "join",
+            "state": "skipped"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Northbank",
+        "action": "bank approval",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 3,
+          "application": "approved",
+          "branch": "approve",
+          "closure": "pending",
+          "completed": [
+            "decision",
+            "financing"
+          ],
+          "consumed": true,
+          "enabled": [
+            "review"
+          ],
+          "id": "bank-approval",
+          "outcome": "committed",
+          "review": "pending",
+          "skipped": [
+            "closure"
+          ],
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/4/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "refused",
+          "complete",
+          "refused",
+          "refused",
+          "current",
+          "refused",
+          "pending",
+          "pending",
+          "pending",
+          "refused"
+        ],
+        "previous": "laboratory.html?story=branch-approved&step=3",
+        "next": "laboratory.html?story=branch-approved&step=5"
+      }
+    },
+    {
+      "id": "join-still-waits",
+      "actor": "Alice",
+      "action": "complete-join",
+      "open": "laboratory.html?story=branch-approved&step=5",
+      "illustration": "join-waiting",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "The join attempt was refused."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "The selected path must finish first."
+        }
+      ],
+      "diagram": {
+        "title": "Alice · complete join",
+        "caption": "approved",
+        "nodes": [
+          {
+            "id": "decision",
+            "label": "Choose a route",
+            "detail": "approve",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "financing",
+            "label": "Approve financing",
+            "detail": "approved",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "review",
+            "label": "Confirm the review",
+            "detail": "pending",
+            "actor": "Alice",
+            "state": "current",
+            "conversation": null
+          },
+          {
+            "id": "closure",
+            "label": "Record the decline",
+            "detail": "pending",
+            "actor": "Northbank",
+            "state": "skipped",
+            "conversation": null
+          },
+          {
+            "id": "join",
+            "label": "Complete the selected path",
+            "detail": "waiting",
+            "actor": "Alice",
+            "state": "pending",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "decision",
+            "to": "financing",
+            "state": "complete"
+          },
+          {
+            "from": "decision",
+            "to": "review",
+            "state": "pending"
+          },
+          {
+            "from": "decision",
+            "to": "closure",
+            "state": "skipped"
+          },
+          {
+            "from": "financing",
+            "to": "join",
+            "state": "pending"
+          },
+          {
+            "from": "review",
+            "to": "join",
+            "state": "pending"
+          },
+          {
+            "from": "closure",
+            "to": "join",
+            "state": "skipped"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Alice",
+        "action": "join still waits",
+        "outcome": "rejected"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 3,
+          "application": "approved",
+          "branch": "approve",
+          "closure": "pending",
+          "completed": [
+            "decision",
+            "financing"
+          ],
+          "consumed": false,
+          "enabled": [
+            "review"
+          ],
+          "id": "join-still-waits",
+          "outcome": "rejected",
+          "reason": "application-rejected",
+          "review": "pending",
+          "skipped": [
+            "closure"
+          ],
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/5/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "refused",
+          "complete",
+          "refused",
+          "refused",
+          "complete",
+          "refused",
+          "pending",
+          "pending",
+          "pending",
+          "refused"
+        ],
+        "previous": "laboratory.html?story=branch-approved&step=4",
+        "next": "laboratory.html?story=branch-approved&step=6"
+      }
+    },
+    {
+      "id": "buyer-review",
+      "actor": "Alice",
+      "action": "confirm-review",
+      "open": "laboratory.html?story=branch-approved&step=6",
+      "illustration": "review-complete",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "Your review is confirmed."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "The selected path is ready to join."
+        }
+      ],
+      "diagram": {
+        "title": "Alice · confirm review",
+        "caption": "approved",
+        "nodes": [
+          {
+            "id": "decision",
+            "label": "Choose a route",
+            "detail": "approve",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "financing",
+            "label": "Approve financing",
+            "detail": "approved",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "review",
+            "label": "Confirm the review",
+            "detail": "confirmed",
+            "actor": "Alice",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "closure",
+            "label": "Record the decline",
+            "detail": "pending",
+            "actor": "Northbank",
+            "state": "skipped",
+            "conversation": null
+          },
+          {
+            "id": "join",
+            "label": "Complete the selected path",
+            "detail": "waiting",
+            "actor": "Alice",
+            "state": "current",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "decision",
+            "to": "financing",
+            "state": "complete"
+          },
+          {
+            "from": "decision",
+            "to": "review",
+            "state": "complete"
+          },
+          {
+            "from": "decision",
+            "to": "closure",
+            "state": "skipped"
+          },
+          {
+            "from": "financing",
+            "to": "join",
+            "state": "pending"
+          },
+          {
+            "from": "review",
+            "to": "join",
+            "state": "pending"
+          },
+          {
+            "from": "closure",
+            "to": "join",
+            "state": "skipped"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Alice",
+        "action": "buyer review",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 3,
+          "application": "approved",
+          "branch": "approve",
+          "closure": "pending",
+          "completed": [
+            "decision",
+            "financing",
+            "review"
+          ],
+          "consumed": false,
+          "enabled": [
+            "join"
+          ],
+          "id": "buyer-review",
+          "outcome": "committed",
+          "review": "confirmed",
+          "skipped": [
+            "closure"
+          ],
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/6/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "refused",
+          "complete",
+          "refused",
+          "refused",
+          "complete",
+          "refused",
+          "current",
+          "pending",
+          "pending",
+          "refused"
+        ],
+        "previous": "laboratory.html?story=branch-approved&step=5",
+        "next": "laboratory.html?story=branch-approved&step=7"
+      }
+    },
+    {
+      "id": "join-completes",
+      "actor": "Alice",
+      "action": "complete-join",
+      "open": "laboratory.html?story=branch-approved&step=7",
+      "illustration": "join-complete",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "The selected path has joined."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "This workflow is complete."
+        }
+      ],
+      "diagram": {
+        "title": "Alice · complete join",
+        "caption": "approved",
+        "nodes": [
+          {
+            "id": "decision",
+            "label": "Choose a route",
+            "detail": "approve",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "financing",
+            "label": "Approve financing",
+            "detail": "approved",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "review",
+            "label": "Confirm the review",
+            "detail": "confirmed",
+            "actor": "Alice",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "closure",
+            "label": "Record the decline",
+            "detail": "pending",
+            "actor": "Northbank",
+            "state": "skipped",
+            "conversation": null
+          },
+          {
+            "id": "join",
+            "label": "Complete the selected path",
+            "detail": "complete",
+            "actor": "Alice",
+            "state": "complete",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "decision",
+            "to": "financing",
+            "state": "complete"
+          },
+          {
+            "from": "decision",
+            "to": "review",
+            "state": "complete"
+          },
+          {
+            "from": "decision",
+            "to": "closure",
+            "state": "skipped"
+          },
+          {
+            "from": "financing",
+            "to": "join",
+            "state": "complete"
+          },
+          {
+            "from": "review",
+            "to": "join",
+            "state": "complete"
+          },
+          {
+            "from": "closure",
+            "to": "join",
+            "state": "skipped"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Alice",
+        "action": "join completes",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 3,
+          "application": "approved",
+          "branch": "approve",
+          "closure": "pending",
+          "completed": [
+            "decision",
+            "financing",
+            "review",
+            "join"
+          ],
+          "consumed": false,
+          "enabled": [],
+          "id": "join-completes",
+          "outcome": "committed",
+          "review": "confirmed",
+          "skipped": [
+            "closure"
+          ],
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "complete"
+        },
+        "expected_pointer": "/presentation/units/7/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "refused",
+          "complete",
+          "refused",
+          "refused",
+          "complete",
+          "refused",
+          "complete",
+          "current",
+          "pending",
+          "refused"
+        ],
+        "previous": "laboratory.html?story=branch-approved&step=6",
+        "next": "laboratory.html?story=branch-approved&step=8"
+      }
+    },
+    {
+      "id": "join-retry",
+      "actor": "Alice",
+      "action": "complete-join",
+      "open": "laboratory.html?story=branch-approved&step=8",
+      "illustration": "retry-record",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "This request was already recorded."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "The retry did not execute it again."
+        }
+      ],
+      "diagram": {
+        "title": "Alice · complete join",
+        "caption": "approved",
+        "nodes": [
+          {
+            "id": "decision",
+            "label": "Choose a route",
+            "detail": "approve",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "financing",
+            "label": "Approve financing",
+            "detail": "approved",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "review",
+            "label": "Confirm the review",
+            "detail": "confirmed",
+            "actor": "Alice",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "closure",
+            "label": "Record the decline",
+            "detail": "pending",
+            "actor": "Northbank",
+            "state": "skipped",
+            "conversation": null
+          },
+          {
+            "id": "join",
+            "label": "Complete the selected path",
+            "detail": "complete",
+            "actor": "Alice",
+            "state": "complete",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "decision",
+            "to": "financing",
+            "state": "complete"
+          },
+          {
+            "from": "decision",
+            "to": "review",
+            "state": "complete"
+          },
+          {
+            "from": "decision",
+            "to": "closure",
+            "state": "skipped"
+          },
+          {
+            "from": "financing",
+            "to": "join",
+            "state": "complete"
+          },
+          {
+            "from": "review",
+            "to": "join",
+            "state": "complete"
+          },
+          {
+            "from": "closure",
+            "to": "join",
+            "state": "skipped"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Alice",
+        "action": "join retry",
+        "outcome": "duplicate"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 3,
+          "application": "approved",
+          "branch": "approve",
+          "closure": "pending",
+          "completed": [
+            "decision",
+            "financing",
+            "review",
+            "join"
+          ],
+          "consumed": false,
+          "enabled": [],
+          "id": "join-retry",
+          "outcome": "duplicate",
+          "review": "confirmed",
+          "skipped": [
+            "closure"
+          ],
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "complete"
+        },
+        "expected_pointer": "/presentation/units/8/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "refused",
+          "complete",
+          "refused",
+          "refused",
+          "complete",
+          "refused",
+          "complete",
+          "complete",
+          "current",
+          "refused"
+        ],
+        "previous": "laboratory.html?story=branch-approved&step=7",
+        "next": "laboratory.html?story=branch-approved&step=9"
+      }
+    },
+    {
+      "id": "new-join-request",
+      "actor": "Alice",
+      "action": "complete-join",
+      "open": "laboratory.html?story=branch-approved&step=9",
+      "illustration": "already-approved",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "The join attempt was refused."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "This workflow is already complete."
+        }
+      ],
+      "diagram": {
+        "title": "Alice · complete join",
+        "caption": "approved",
+        "nodes": [
+          {
+            "id": "decision",
+            "label": "Choose a route",
+            "detail": "approve",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "financing",
+            "label": "Approve financing",
+            "detail": "approved",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "review",
+            "label": "Confirm the review",
+            "detail": "confirmed",
+            "actor": "Alice",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "closure",
+            "label": "Record the decline",
+            "detail": "pending",
+            "actor": "Northbank",
+            "state": "skipped",
+            "conversation": null
+          },
+          {
+            "id": "join",
+            "label": "Complete the selected path",
+            "detail": "complete",
+            "actor": "Alice",
+            "state": "complete",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "decision",
+            "to": "financing",
+            "state": "complete"
+          },
+          {
+            "from": "decision",
+            "to": "review",
+            "state": "complete"
+          },
+          {
+            "from": "decision",
+            "to": "closure",
+            "state": "skipped"
+          },
+          {
+            "from": "financing",
+            "to": "join",
+            "state": "complete"
+          },
+          {
+            "from": "review",
+            "to": "join",
+            "state": "complete"
+          },
+          {
+            "from": "closure",
+            "to": "join",
+            "state": "skipped"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Alice",
+        "action": "new join request",
+        "outcome": "rejected"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 3,
+          "application": "approved",
+          "branch": "approve",
+          "closure": "pending",
+          "completed": [
+            "decision",
+            "financing",
+            "review",
+            "join"
+          ],
+          "consumed": false,
+          "enabled": [],
+          "id": "new-join-request",
+          "outcome": "rejected",
+          "reason": "application-rejected",
+          "review": "confirmed",
+          "skipped": [
+            "closure"
+          ],
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "complete"
+        },
+        "expected_pointer": "/presentation/units/9/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "refused",
+          "complete",
+          "refused",
+          "refused",
+          "complete",
+          "refused",
+          "complete",
+          "complete",
+          "complete",
+          "refused"
+        ],
+        "previous": "laboratory.html?story=branch-approved&step=8",
+        "next": "laboratory.html?story=branch-declined&step=0"
+      }
+    }
+  ],
+  "recording": {
+    "file": "book/edition-0.2/recordings/branch-approved.json",
+    "sha256": "978931c8af8420101cacb535b509f2131ecbbd72d12f53c3099c0fc4ae01659e",
+    "provenance": {
+      "actual_sha256": "faf4ab7eba2405de62f40c9939394628b5d1f550c331c2ca1d47aea3b85cbcaa",
+      "configured_sdk": "3.4.11",
+      "dar_sha256": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e",
+      "dars": {
+        "harness/ledger/tests/.daml/dist/harmonia-tests-0.1.0.dar": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e"
+      },
+      "expected_sha256": "14117de9fae8dce16708d2ca772e13505bfcad3d2a338c00bdbbe80f102b6f19",
+      "input_sha256": "6b35a1b3782804f2deb9885681459fae86370ac6ffee069f417f4fe0e46d2d4d",
+      "java": "17.0.19+10",
+      "matched": true,
+      "mode": "live-canton",
+      "observation_sha256": "67f3f687216e5e82757a42f0dc6673a1577c9bcaa6333def69698aef0cc19d17",
+      "recorded_at": "2026-09-11T05:10:31.900778Z",
+      "revision": "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+      "story_format": 1,
+      "topology": "one participant, one synchronizer, separate party identities",
+      "worktree_dirty": false
+    },
+    "evidence": {
+      "input.md": {
+        "file": "book/edition-0.2/recordings/evidence/branch-approved/input.md",
+        "sha256": "6b35a1b3782804f2deb9885681459fae86370ac6ffee069f417f4fe0e46d2d4d"
+      },
+      "expected.md": {
+        "file": "book/edition-0.2/recordings/evidence/branch-approved/expected.md",
+        "sha256": "14117de9fae8dce16708d2ca772e13505bfcad3d2a338c00bdbbe80f102b6f19"
+      },
+      "actual.md": {
+        "file": "book/edition-0.2/recordings/evidence/branch-approved/actual.md",
+        "sha256": "faf4ab7eba2405de62f40c9939394628b5d1f550c331c2ca1d47aea3b85cbcaa"
+      },
+      "observation.json": {
+        "file": "book/edition-0.2/recordings/evidence/branch-approved/observation.json",
+        "sha256": "67f3f687216e5e82757a42f0dc6673a1577c9bcaa6333def69698aef0cc19d17"
+      }
+    }
+  },
+  "operation": {
+    "file": "product/ledger/core/daml/Harmonia/Process/Engine.daml",
+    "sha256": "6dd2309e6845f2e44966debddf25fe129afcad91ba8ea5a90fda3a610e5862ac"
+  }
+}

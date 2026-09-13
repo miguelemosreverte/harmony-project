@@ -1,0 +1,294 @@
+{
+  "format": "harmonia-showcase/1",
+  "id": "transfer-missing-lock",
+  "title": "Transfer: missing lock",
+  "purpose": "The source cannot confirm an unlocked position; settlement preserves the available balance.",
+  "kind": "Transfer",
+  "diagram": {
+    "renderer": "scene",
+    "shared": {
+      "kind": "transfer",
+      "people": [
+        {
+          "id": "Seller",
+          "name": "Seller",
+          "role": "Owns the position",
+          "icon": "person"
+        },
+        {
+          "id": "Source",
+          "name": "Source",
+          "role": "Source custodian",
+          "icon": "bank"
+        },
+        {
+          "id": "Alice",
+          "name": "Alice",
+          "role": "Receives the asset",
+          "icon": "person"
+        },
+        {
+          "id": "Destination",
+          "name": "Destination",
+          "role": "Destination custodian",
+          "icon": "bank"
+        }
+      ],
+      "phase": 1,
+      "artifact": "Available · 10 TEST",
+      "amounts": [
+        {
+          "label": "Available at source",
+          "value": "10 TEST",
+          "fraction": 1
+        },
+        {
+          "label": "Locked at source",
+          "value": "0 TEST",
+          "fraction": 0
+        },
+        {
+          "label": "Received at destination",
+          "value": "0 TEST",
+          "fraction": 0
+        }
+      ],
+      "approval": null
+    }
+  },
+  "steps": [
+    {
+      "id": "seller-agrees",
+      "actor": "Seller",
+      "action": "agree-trade",
+      "open": "laboratory.html?story=transfer-missing-lock&step=0",
+      "illustration": "trade-agreed",
+      "dialogue": [
+        {
+          "speaker": "Source",
+          "portrait": "bank",
+          "text": "The seller has agreed to the trade."
+        },
+        {
+          "speaker": "Destination",
+          "portrait": "bank",
+          "text": "The assets have not moved yet."
+        }
+      ],
+      "diagram": {
+        "title": "The seller agrees.",
+        "caption": "Seller accepts the trade. No assets have moved.",
+        "focus": "Seller",
+        "refused": false
+      },
+      "observation": {
+        "actor": "Seller",
+        "action": "seller agrees",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "active_workflows": 0,
+          "destination": "0",
+          "id": "seller-agrees",
+          "outcome": "committed",
+          "releases": 0,
+          "source": {
+            "available": "10",
+            "locked": "0"
+          },
+          "trade": "agreed",
+          "visible_to": [
+            "Alice",
+            "Destination",
+            "Seller",
+            "Source"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/0/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "current",
+          "refused",
+          "refused"
+        ],
+        "previous": "laboratory.html?story=transfer-missing-agreement&step=2",
+        "next": "laboratory.html?story=transfer-missing-lock&step=1"
+      }
+    },
+    {
+      "id": "source-without-lock",
+      "actor": "Source",
+      "action": "confirm-source",
+      "open": "laboratory.html?story=transfer-missing-lock&step=1",
+      "illustration": "transfer-missing-lock",
+      "dialogue": [
+        {
+          "speaker": "Source",
+          "portrait": "bank",
+          "text": "This attempt was refused."
+        },
+        {
+          "speaker": "Destination",
+          "portrait": "bank",
+          "text": "The source has not confirmed readiness."
+        }
+      ],
+      "diagram": {
+        "title": "This attempt is refused.",
+        "caption": "The application refused this attempt under its rules.",
+        "focus": "Source",
+        "refused": true
+      },
+      "observation": {
+        "actor": "Source",
+        "action": "source without lock",
+        "outcome": "rejected"
+      },
+      "evidence": {
+        "observed": {
+          "active_workflows": 0,
+          "destination": "0",
+          "id": "source-without-lock",
+          "outcome": "rejected",
+          "reason": "application-rejected",
+          "releases": 0,
+          "source": {
+            "available": "10",
+            "locked": "0"
+          },
+          "trade": "agreed",
+          "visible_to": [
+            "Alice",
+            "Destination",
+            "Seller",
+            "Source"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/1/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "refused",
+          "refused"
+        ],
+        "previous": "laboratory.html?story=transfer-missing-lock&step=0",
+        "next": "laboratory.html?story=transfer-missing-lock&step=2"
+      }
+    },
+    {
+      "id": "settle",
+      "actor": "Alice",
+      "action": "settle",
+      "open": "laboratory.html?story=transfer-missing-lock&step=2",
+      "illustration": "settlement-waiting",
+      "dialogue": [
+        {
+          "speaker": "Source",
+          "portrait": "bank",
+          "text": "This attempt was refused."
+        },
+        {
+          "speaker": "Destination",
+          "portrait": "bank",
+          "text": "The source has not confirmed readiness."
+        }
+      ],
+      "diagram": {
+        "title": "This attempt is refused.",
+        "caption": "The application refused this attempt under its rules.",
+        "focus": "Alice",
+        "refused": true
+      },
+      "observation": {
+        "actor": "Alice",
+        "action": "settle",
+        "outcome": "rejected"
+      },
+      "evidence": {
+        "observed": {
+          "active_workflows": 0,
+          "destination": "0",
+          "id": "settle",
+          "outcome": "rejected",
+          "reason": "application-rejected",
+          "releases": 0,
+          "source": {
+            "available": "10",
+            "locked": "0"
+          },
+          "trade": "agreed",
+          "visible_to": [
+            "Alice",
+            "Destination",
+            "Seller",
+            "Source"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/2/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "refused",
+          "refused"
+        ],
+        "previous": "laboratory.html?story=transfer-missing-lock&step=1",
+        "next": "laboratory.html?story=transfer-missing-readiness&step=0"
+      }
+    }
+  ],
+  "recording": {
+    "file": "book/edition-0.2/recordings/transfer-missing-lock.json",
+    "sha256": "d8ec6159f4290aa8feaa44b46f8f6bccb4da917f8db6d7dbde3ec0b967fdf5eb",
+    "provenance": {
+      "actual_sha256": "284f360b0c95b82b5090d3875cb7fffa5035d300a4cdf197c32f4d7801a5af3c",
+      "configured_sdk": "3.4.11",
+      "dar_sha256": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e",
+      "dars": {
+        "harness/ledger/tests/.daml/dist/harmonia-tests-0.1.0.dar": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e"
+      },
+      "expected_sha256": "2825cf26461e17ea15ea7c8b4cc5667275e8dcdeb6fcfdd2d00c031fa028baa7",
+      "input_sha256": "cd195ea7c5a2f214518b11f41c51f4a5511c4dc23ad33aaa2d7c9fe4de3f2c04",
+      "java": "17.0.19+10",
+      "matched": true,
+      "mode": "live-canton",
+      "observation_sha256": "c8a6c8c62f0044e4c213d275c09164d88f418003c3d4fdd05e2a8e785ae6fe6b",
+      "recorded_at": "2026-09-11T05:14:15.572889Z",
+      "revision": "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+      "story_format": 1,
+      "topology": "four independent participant nodes, one local JVM, one common synchronizer",
+      "worktree_dirty": false
+    },
+    "evidence": {
+      "input.md": {
+        "file": "book/edition-0.2/recordings/evidence/transfer-missing-lock/input.md",
+        "sha256": "cd195ea7c5a2f214518b11f41c51f4a5511c4dc23ad33aaa2d7c9fe4de3f2c04"
+      },
+      "expected.md": {
+        "file": "book/edition-0.2/recordings/evidence/transfer-missing-lock/expected.md",
+        "sha256": "2825cf26461e17ea15ea7c8b4cc5667275e8dcdeb6fcfdd2d00c031fa028baa7"
+      },
+      "actual.md": {
+        "file": "book/edition-0.2/recordings/evidence/transfer-missing-lock/actual.md",
+        "sha256": "284f360b0c95b82b5090d3875cb7fffa5035d300a4cdf197c32f4d7801a5af3c"
+      },
+      "observation.json": {
+        "file": "book/edition-0.2/recordings/evidence/transfer-missing-lock/observation.json",
+        "sha256": "c8a6c8c62f0044e4c213d275c09164d88f418003c3d4fdd05e2a8e785ae6fe6b"
+      }
+    }
+  },
+  "operation": {
+    "file": "product/ledger/applications/transfer/daml/AtomicTransfer.daml",
+    "sha256": "59f682248da3d8a0e59e08f9ba667a31ba585eb7be42c3f3e69e8ad3a28ee724"
+  }
+}

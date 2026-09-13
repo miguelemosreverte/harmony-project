@@ -1,0 +1,213 @@
+{
+  "format": "harmonia-showcase/1",
+  "id": "adapter-approved",
+  "title": "Adapted workflow approval",
+  "purpose": "Alice needs a bank approval before she can continue with a purchase. She first tries to approve her own application; Northbank then acts.",
+  "kind": "Adapter",
+  "diagram": {
+    "renderer": "diagram",
+    "shared": {}
+  },
+  "steps": [
+    {
+      "id": "buyer-attempt",
+      "actor": "Alice",
+      "action": "approve-financing",
+      "open": "laboratory.html?story=adapter-approved&step=0",
+      "illustration": "workflow-rejected",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "Only the bank can approve financing."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "My attempt did not change the application."
+        }
+      ],
+      "diagram": {
+        "title": "Alice · approve financing",
+        "caption": "pending",
+        "nodes": [
+          {
+            "id": "application",
+            "label": "Application: pending",
+            "detail": "The application retains its choice authority.",
+            "actor": "Northbank",
+            "state": "pending",
+            "conversation": null
+          },
+          {
+            "id": "workflow",
+            "label": "Shared progress",
+            "detail": "waiting",
+            "actor": "Alice",
+            "state": "pending",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "application",
+            "to": "workflow",
+            "state": "pending"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Alice",
+        "action": "buyer attempt",
+        "outcome": "rejected"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 1,
+          "application": "pending",
+          "consumed": false,
+          "id": "buyer-attempt",
+          "outcome": "rejected",
+          "reason": "unauthorized",
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/0/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "refused",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=transfer-final-leg-rejected&step=5",
+        "next": "laboratory.html?story=adapter-approved&step=1"
+      }
+    },
+    {
+      "id": "bank-approval",
+      "actor": "Northbank",
+      "action": "approve-financing",
+      "open": "laboratory.html?story=adapter-approved&step=1",
+      "illustration": "approval-signed",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "The application is now approved."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "The shared workflow is complete."
+        }
+      ],
+      "diagram": {
+        "title": "Northbank · approve financing",
+        "caption": "approved",
+        "nodes": [
+          {
+            "id": "application",
+            "label": "Application: approved",
+            "detail": "The application retains its choice authority.",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "workflow",
+            "label": "Shared progress",
+            "detail": "complete",
+            "actor": "Alice",
+            "state": "complete",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "application",
+            "to": "workflow",
+            "state": "complete"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Northbank",
+        "action": "bank approval",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 1,
+          "application": "approved",
+          "consumed": true,
+          "id": "bank-approval",
+          "outcome": "committed",
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "complete"
+        },
+        "expected_pointer": "/presentation/units/1/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "refused",
+          "current"
+        ],
+        "previous": "laboratory.html?story=adapter-approved&step=0",
+        "next": "laboratory.html?story=adapter-rejected&step=0"
+      }
+    }
+  ],
+  "recording": {
+    "file": "book/edition-0.2/recordings/adapter-approved.json",
+    "sha256": "65476d2bb92974758458c9b637ab3a116de0bd914830a84705f8dcee648e832c",
+    "provenance": {
+      "actual_sha256": "7deba54dce6313904b1785910b9f49a8edba2564874c44db113c437e3892866f",
+      "configured_sdk": "3.4.11",
+      "dar_sha256": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e",
+      "dars": {
+        "harness/ledger/tests/.daml/dist/harmonia-tests-0.1.0.dar": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e"
+      },
+      "expected_sha256": "98688ac1ca49099105adb6417401f9d8178383e45679220e84bb7bc0a8aafc28",
+      "input_sha256": "dc6b68d0a1bf1300fc13799e26c93b6053b88f70c58aadd573cda72396996405",
+      "java": "17.0.19+10",
+      "matched": true,
+      "mode": "live-canton",
+      "observation_sha256": "a05eb22997dc6fdc0cc3d463dfa7f616ada78aa656384bc22da5f471d6d2b992",
+      "recorded_at": "2026-09-11T05:09:48.500968Z",
+      "revision": "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+      "story_format": 1,
+      "topology": "one participant, one synchronizer, separate party identities",
+      "worktree_dirty": false
+    },
+    "evidence": {
+      "input.md": {
+        "file": "book/edition-0.2/recordings/evidence/adapter-approved/input.md",
+        "sha256": "dc6b68d0a1bf1300fc13799e26c93b6053b88f70c58aadd573cda72396996405"
+      },
+      "expected.md": {
+        "file": "book/edition-0.2/recordings/evidence/adapter-approved/expected.md",
+        "sha256": "98688ac1ca49099105adb6417401f9d8178383e45679220e84bb7bc0a8aafc28"
+      },
+      "actual.md": {
+        "file": "book/edition-0.2/recordings/evidence/adapter-approved/actual.md",
+        "sha256": "7deba54dce6313904b1785910b9f49a8edba2564874c44db113c437e3892866f"
+      },
+      "observation.json": {
+        "file": "book/edition-0.2/recordings/evidence/adapter-approved/observation.json",
+        "sha256": "a05eb22997dc6fdc0cc3d463dfa7f616ada78aa656384bc22da5f471d6d2b992"
+      }
+    }
+  },
+  "operation": {
+    "file": "product/ledger/bindings/daml/FinancingBinding.daml",
+    "sha256": "a2dfab56bed7651b20327379cc92cfeb6dc06cc5d663b0d8b9a72e4222da80f5"
+  }
+}

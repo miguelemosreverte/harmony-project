@@ -1,0 +1,277 @@
+{
+  "format": "harmonia-showcase/1",
+  "id": "purchase-wrong-buyer",
+  "title": "The offer rejects wrong buyer evidence",
+  "purpose": "Alice's documents are shared with Northbank. Ben owns the buyer-side offer application; Sofia receives proposals through the seller-side continuation. The evidence selection is explicit so invalid-certificate experiments stay visible.",
+  "kind": "Purchase",
+  "diagram": {
+    "renderer": "scene",
+    "shared": {
+      "kind": "purchase",
+      "people": [
+        {
+          "id": "Northbank",
+          "name": "Northbank",
+          "role": "Financing",
+          "icon": "bank"
+        },
+        {
+          "id": "Alice",
+          "name": "Alice",
+          "role": "Buyer",
+          "icon": "person"
+        },
+        {
+          "id": "Ben",
+          "name": "Ben",
+          "role": "Buyer’s agent",
+          "icon": "person"
+        },
+        {
+          "id": "Sofia",
+          "name": "Sofia",
+          "role": "Seller’s agent",
+          "icon": "person"
+        }
+      ],
+      "phase": 1,
+      "artifact": "Financing · approved",
+      "amounts": [],
+      "approval": "complete"
+    }
+  },
+  "steps": [
+    {
+      "id": "bank-assessment",
+      "actor": "Northbank",
+      "action": "assess-financing",
+      "open": "laboratory.html?story=purchase-wrong-buyer&step=0",
+      "illustration": "approval-signed",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "Your financing is approved."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "The next application must check the result."
+        }
+      ],
+      "diagram": {
+        "title": "Northbank approves. Alice can make her proposal.",
+        "caption": "A verified result is available to Alice. Her financing documents stay within the financing application.",
+        "focus": "Northbank",
+        "refused": false
+      },
+      "observation": {
+        "actor": "Northbank",
+        "action": "bank assessment",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 1,
+          "application": "approved",
+          "completed": [
+            "assessment"
+          ],
+          "consumed": true,
+          "evidence_available": true,
+          "id": "bank-assessment",
+          "offer": "not-opened",
+          "outcome": "committed",
+          "proposal": "none",
+          "proposals": 0,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/0/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "current",
+          "pending",
+          "refused"
+        ],
+        "previous": "laboratory.html?story=purchase-reused-proof&step=4",
+        "next": "laboratory.html?story=purchase-wrong-buyer&step=1"
+      }
+    },
+    {
+      "id": "open-offer",
+      "actor": "Alice",
+      "action": "open-offer",
+      "open": "laboratory.html?story=purchase-wrong-buyer&step=1",
+      "illustration": "offer-opened",
+      "dialogue": [
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "My offer is open."
+        },
+        {
+          "speaker": "Ben",
+          "portrait": "ben",
+          "text": "We still need a valid financing result."
+        }
+      ],
+      "diagram": {
+        "title": "Alice prepares the offer.",
+        "caption": "The property application is ready to check her financing result.",
+        "focus": "Alice",
+        "refused": false
+      },
+      "observation": {
+        "actor": "Alice",
+        "action": "open offer",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 2,
+          "application": "approved",
+          "completed": [
+            "assessment"
+          ],
+          "consumed": false,
+          "evidence_available": true,
+          "id": "open-offer",
+          "offer": "waiting",
+          "outcome": "committed",
+          "proposal": "none",
+          "proposals": 0,
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/1/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "current",
+          "refused"
+        ],
+        "previous": "laboratory.html?story=purchase-wrong-buyer&step=0",
+        "next": "laboratory.html?story=purchase-wrong-buyer&step=2"
+      }
+    },
+    {
+      "id": "invalid-evidence",
+      "actor": "Alice",
+      "action": "make-proposal",
+      "open": "laboratory.html?story=purchase-wrong-buyer&step=2",
+      "illustration": "purchase-wrong-buyer",
+      "dialogue": [
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "My proposal was refused."
+        },
+        {
+          "speaker": "Ben",
+          "portrait": "ben",
+          "text": "The result does not match this offer."
+        }
+      ],
+      "diagram": {
+        "title": "This attempt is refused.",
+        "caption": "The application refused this attempt under its rules.",
+        "focus": "Alice",
+        "refused": true
+      },
+      "observation": {
+        "actor": "Alice",
+        "action": "invalid evidence",
+        "outcome": "rejected"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 2,
+          "application": "approved",
+          "completed": [
+            "assessment"
+          ],
+          "consumed": false,
+          "evidence_available": true,
+          "id": "invalid-evidence",
+          "offer": "waiting",
+          "outcome": "rejected",
+          "proposal": "none",
+          "proposals": 0,
+          "reason": "application-rejected",
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/2/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "complete",
+          "refused"
+        ],
+        "previous": "laboratory.html?story=purchase-wrong-buyer&step=1",
+        "next": "laboratory.html?story=purchase-wrong-continuation&step=0"
+      }
+    }
+  ],
+  "recording": {
+    "file": "book/edition-0.2/recordings/purchase-wrong-buyer.json",
+    "sha256": "d53e260fb2e809d8f1d4a67af8254572fb9f391b91bfc245343eaf4f2c2ddc0c",
+    "provenance": {
+      "actual_sha256": "3f94092939eedb89b63700691147c2c3a3d9ba92edc00b7cc6c59da6df568606",
+      "configured_sdk": "3.4.11",
+      "dar_sha256": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e",
+      "dars": {
+        "harness/ledger/tests/.daml/dist/harmonia-tests-0.1.0.dar": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e"
+      },
+      "expected_sha256": "0986ad75461e987863684cd80e2fa3612e0b1968cff02676e7f46786ab1dd279",
+      "input_sha256": "37c3c960b9841a5761f0be550b7e2765a26c44afe272f703fbf9cb59c458b0e6",
+      "java": "17.0.19+10",
+      "matched": true,
+      "mode": "live-canton",
+      "observation_sha256": "05f2203db6c554b071bd1aea1dea57bb6ea97a456ff3e308dd88c91fb6aea86d",
+      "recorded_at": "2026-09-11T05:13:04.137014Z",
+      "revision": "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+      "story_format": 1,
+      "topology": "four independent participant nodes, one local JVM, one common synchronizer",
+      "worktree_dirty": false
+    },
+    "evidence": {
+      "input.md": {
+        "file": "book/edition-0.2/recordings/evidence/purchase-wrong-buyer/input.md",
+        "sha256": "37c3c960b9841a5761f0be550b7e2765a26c44afe272f703fbf9cb59c458b0e6"
+      },
+      "expected.md": {
+        "file": "book/edition-0.2/recordings/evidence/purchase-wrong-buyer/expected.md",
+        "sha256": "0986ad75461e987863684cd80e2fa3612e0b1968cff02676e7f46786ab1dd279"
+      },
+      "actual.md": {
+        "file": "book/edition-0.2/recordings/evidence/purchase-wrong-buyer/actual.md",
+        "sha256": "3f94092939eedb89b63700691147c2c3a3d9ba92edc00b7cc6c59da6df568606"
+      },
+      "observation.json": {
+        "file": "book/edition-0.2/recordings/evidence/purchase-wrong-buyer/observation.json",
+        "sha256": "05f2203db6c554b071bd1aea1dea57bb6ea97a456ff3e308dd88c91fb6aea86d"
+      }
+    }
+  },
+  "operation": {
+    "file": "product/ledger/applications/property-offer/daml/PropertyOffer.daml",
+    "sha256": "a26fbd886a8bec4e218df1596409caf363744ad1b01283a355d3230168055179"
+  }
+}

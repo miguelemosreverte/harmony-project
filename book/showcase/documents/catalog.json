@@ -1,0 +1,1857 @@
+{
+  "format": "harmonia-showcase/1",
+  "scope": "Recorded workflow laboratory. Authored chapter introductions and live workspaces are separate surfaces.",
+  "paths": "File paths start at the repository root. Open/previous/next URLs start at the selected book directory.",
+  "reader": "design/0.2/laboratory.html",
+  "totals": {
+    "workflows": 32,
+    "steps": 130,
+    "illustrations": 55
+  },
+  "comparison": {
+    "illustration": "approval-signed",
+    "occurrences": [
+      {
+        "story": "financing-approved",
+        "step": "bank-approval"
+      },
+      {
+        "story": "purchase-approved",
+        "step": "bank-assessment"
+      }
+    ]
+  },
+  "workflows": [
+    {
+      "id": "purchase-approved",
+      "title": "A bank result becomes an independently owned offer",
+      "document": "purchase-approved.json",
+      "steps": 8
+    },
+    {
+      "id": "purchase-rejected",
+      "title": "A bank rejection cannot authorize a proposal",
+      "document": "purchase-rejected.json",
+      "steps": 3
+    },
+    {
+      "id": "transfer-approved",
+      "title": "Transfer: approved",
+      "document": "transfer-approved.json",
+      "steps": 9
+    },
+    {
+      "id": "transfer-final-leg-rejected",
+      "title": "Transfer: final leg rejected",
+      "document": "transfer-final-leg-rejected.json",
+      "steps": 6
+    },
+    {
+      "id": "adapter-approved",
+      "title": "Adapted workflow approval",
+      "document": "adapter-approved.json",
+      "steps": 2
+    },
+    {
+      "id": "adapter-rejected",
+      "title": "Adapted workflow rollback",
+      "document": "adapter-rejected.json",
+      "steps": 1
+    },
+    {
+      "id": "already-approved",
+      "title": "Approval is a transition",
+      "document": "already-approved.json",
+      "steps": 1
+    },
+    {
+      "id": "branch-approved",
+      "title": "The approved branch waits for both applications",
+      "document": "branch-approved.json",
+      "steps": 10
+    },
+    {
+      "id": "branch-declined",
+      "title": "The declined branch records closure",
+      "document": "branch-declined.json",
+      "steps": 4
+    },
+    {
+      "id": "composer-direct",
+      "title": "Propose, consent, then act",
+      "document": "composer-direct.json",
+      "steps": 7
+    },
+    {
+      "id": "composer-generated",
+      "title": "Change the order and use an unchanged application",
+      "document": "composer-generated.json",
+      "steps": 4
+    },
+    {
+      "id": "execution-boundaries",
+      "title": "Execute the supported limits and compete for one step",
+      "document": "execution-boundaries.json",
+      "steps": 2
+    },
+    {
+      "id": "financing-approved",
+      "title": "Financing approved",
+      "document": "financing-approved.json",
+      "steps": 2
+    },
+    {
+      "id": "generated-approved",
+      "title": "Generated workflow approval",
+      "document": "generated-approved.json",
+      "steps": 2
+    },
+    {
+      "id": "generated-rejected",
+      "title": "Generated workflow rollback",
+      "document": "generated-rejected.json",
+      "steps": 1
+    },
+    {
+      "id": "live-handoff",
+      "title": "Approve privately, continue in another session",
+      "document": "live-handoff.json",
+      "steps": 4
+    },
+    {
+      "id": "package-builder",
+      "title": "Bring a compiled application",
+      "document": "package-builder.json",
+      "steps": 8
+    },
+    {
+      "id": "private-approval",
+      "title": "A private approval, a shared next step",
+      "document": "private-approval.json",
+      "steps": 6
+    },
+    {
+      "id": "purchase-missing",
+      "title": "The offer rejects missing evidence",
+      "document": "purchase-missing.json",
+      "steps": 3
+    },
+    {
+      "id": "purchase-reused-proof",
+      "title": "A consumed result cannot authorize a second proposal",
+      "document": "purchase-reused-proof.json",
+      "steps": 5
+    },
+    {
+      "id": "purchase-wrong-buyer",
+      "title": "The offer rejects wrong buyer evidence",
+      "document": "purchase-wrong-buyer.json",
+      "steps": 3
+    },
+    {
+      "id": "purchase-wrong-continuation",
+      "title": "The offer rejects wrong continuation evidence",
+      "document": "purchase-wrong-continuation.json",
+      "steps": 3
+    },
+    {
+      "id": "purchase-wrong-issuer",
+      "title": "The offer rejects wrong issuer evidence",
+      "document": "purchase-wrong-issuer.json",
+      "steps": 3
+    },
+    {
+      "id": "purchase-wrong-subject",
+      "title": "The offer rejects wrong subject evidence",
+      "document": "purchase-wrong-subject.json",
+      "steps": 3
+    },
+    {
+      "id": "sequence-complete",
+      "title": "Approval followed by review",
+      "document": "sequence-complete.json",
+      "steps": 2
+    },
+    {
+      "id": "sequence-resumed",
+      "title": "A workflow survives retries and a restart",
+      "document": "sequence-resumed.json",
+      "steps": 8
+    },
+    {
+      "id": "transfer-missing-agreement",
+      "title": "Transfer: missing agreement",
+      "document": "transfer-missing-agreement.json",
+      "steps": 3
+    },
+    {
+      "id": "transfer-missing-lock",
+      "title": "Transfer: missing lock",
+      "document": "transfer-missing-lock.json",
+      "steps": 3
+    },
+    {
+      "id": "transfer-missing-readiness",
+      "title": "Transfer: missing readiness",
+      "document": "transfer-missing-readiness.json",
+      "steps": 5
+    },
+    {
+      "id": "transfer-source-settler",
+      "title": "Transfer: source settler",
+      "document": "transfer-source-settler.json",
+      "steps": 6
+    },
+    {
+      "id": "workflow-approved",
+      "title": "Workflow approval",
+      "document": "workflow-approved.json",
+      "steps": 2
+    },
+    {
+      "id": "workflow-rejected",
+      "title": "Workflow rollback",
+      "document": "workflow-rejected.json",
+      "steps": 1
+    }
+  ],
+  "illustrations": {
+    "already-approved": {
+      "file": "product/scene/site/assets/stories-v2/already-approved.png",
+      "sha256": "090910fb0152e26371c812ed0af82adc0e09fa4a9fdf4d768c3da751a507bb2e",
+      "description": "An archivist returns one existing financing folder to its shelf.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "adapter-rejected",
+          "step": "repeated-approval"
+        },
+        {
+          "story": "already-approved",
+          "step": "repeated-approval"
+        },
+        {
+          "story": "branch-approved",
+          "step": "new-join-request"
+        },
+        {
+          "story": "generated-rejected",
+          "step": "repeated-approval"
+        },
+        {
+          "story": "sequence-resumed",
+          "step": "completed-step-again"
+        },
+        {
+          "story": "workflow-rejected",
+          "step": "repeated-approval"
+        }
+      ]
+    },
+    "already-settled": {
+      "file": "product/scene/site/assets/moments-v3/already-settled.png",
+      "sha256": "1b21f551be3c7e50a208410315f417761048f03ae7fa1b2b1562686c8b78350d",
+      "description": "The destination custodian points to the token case already in her receiving tray while declining a second transfer request slip.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "transfer-approved",
+          "step": "settle-again"
+        }
+      ]
+    },
+    "approval-signed": {
+      "file": "product/scene/site/assets/moments-v3/approval-signed.png",
+      "sha256": "d472b9586a5da85bfd5f720b27f62b69114e0c8c41e80710dd3df85f9659112b",
+      "description": "An older silver-haired Northbank adviser in navy signs one approval sheet and slides it toward Alice, dark bob hair, blue sweater.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "purchase-approved",
+          "step": "bank-assessment"
+        },
+        {
+          "story": "adapter-approved",
+          "step": "bank-approval"
+        },
+        {
+          "story": "branch-approved",
+          "step": "bank-approval"
+        },
+        {
+          "story": "composer-direct",
+          "step": "approval"
+        },
+        {
+          "story": "composer-generated",
+          "step": "financing"
+        },
+        {
+          "story": "financing-approved",
+          "step": "bank-approval"
+        },
+        {
+          "story": "generated-approved",
+          "step": "bank-approval"
+        },
+        {
+          "story": "live-handoff",
+          "step": "bank-approval"
+        },
+        {
+          "story": "private-approval",
+          "step": "bank-approval"
+        },
+        {
+          "story": "purchase-missing",
+          "step": "bank-assessment"
+        },
+        {
+          "story": "purchase-reused-proof",
+          "step": "bank-assessment"
+        },
+        {
+          "story": "purchase-wrong-buyer",
+          "step": "bank-assessment"
+        },
+        {
+          "story": "purchase-wrong-continuation",
+          "step": "bank-assessment"
+        },
+        {
+          "story": "purchase-wrong-issuer",
+          "step": "bank-assessment"
+        },
+        {
+          "story": "purchase-wrong-subject",
+          "step": "bank-assessment"
+        },
+        {
+          "story": "sequence-complete",
+          "step": "bank-approval"
+        },
+        {
+          "story": "sequence-resumed",
+          "step": "bank-approval"
+        },
+        {
+          "story": "workflow-approved",
+          "step": "bank-approval"
+        }
+      ]
+    },
+    "branch-approved": {
+      "file": "product/scene/site/assets/stories-v2/branch-approved.png",
+      "sha256": "9192486ba9a46307dd54d751dbf0ac1597815a69723d1645739e886bb56097c3",
+      "description": "Two workstations share a selected path through the consultation room.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "branch-approved",
+          "step": "choose-approval"
+        }
+      ]
+    },
+    "branch-declined": {
+      "file": "product/scene/site/assets/stories-v2/branch-declined.png",
+      "sha256": "2787e5a85aec536d7dfd455f5550ac37370b0f8bfa52c6243c907e87b031ea61",
+      "description": "A banker files the closure as the buyer prepares to leave.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "branch-declined",
+          "step": "record-closure"
+        }
+      ]
+    },
+    "buyer-authority": {
+      "file": "product/scene/site/assets/moments-v3/buyer-authority.png",
+      "sha256": "4752b30da6cbb121a50237eea5918134709fc1b3af0fdab8200b851c5b1df1f9",
+      "description": "Alice retains the right to consent and perform her assigned review.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "composer-direct",
+          "step": "partner-consent-required"
+        },
+        {
+          "story": "composer-direct",
+          "step": "wrong-reviewer"
+        }
+      ]
+    },
+    "compilation-refused": {
+      "file": "product/scene/site/assets/moments-v3/compilation-refused.png",
+      "sha256": "c3747f9b591e53f4d64994aa209a05866769b0db93934e306fac0f12ffd5e0a4",
+      "description": "Incompatible parts are set aside; no adapter has been built.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "package-builder",
+          "step": "unsupported"
+        }
+      ]
+    },
+    "compiled-adapter": {
+      "file": "product/scene/site/assets/moments-v3/compiled-adapter.png",
+      "sha256": "cef0cc8cbddf8ad2ce1fddef9d999181cb2559219ed8bf1b987129c9f719e77b",
+      "description": "In a small bright workshop an engineer has assembled a finished blue connector that bridges a legacy application terminal and a new interface.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "package-builder",
+          "step": "compile"
+        }
+      ]
+    },
+    "composer-direct": {
+      "file": "product/scene/site/assets/stories-v2/composer-direct.png",
+      "sha256": "bc283704315d6fdd7aa68d7eec051708a17ab715a097a7c9ddf1402b28aec7d9",
+      "description": "Banker and buyer arrange the proposed actions before signing.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "composer-direct",
+          "step": "proposal"
+        },
+        {
+          "story": "composer-generated",
+          "step": "proposal"
+        }
+      ]
+    },
+    "continuation-waiting": {
+      "file": "product/scene/site/assets/moments-v3/continuation-waiting.png",
+      "sha256": "47325c1661f59cc6b3cef35141f00e705e97939e17afb6ece066b6deb3079a2c",
+      "description": "Alice waits at a property-office counter beside an empty approval-card tray.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "purchase-approved",
+          "step": "receipt-must-wait"
+        },
+        {
+          "story": "live-handoff",
+          "step": "approval-required"
+        },
+        {
+          "story": "private-approval",
+          "step": "approval-is-required"
+        }
+      ]
+    },
+    "destination-ready": {
+      "file": "product/scene/site/assets/moments-v3/destination-ready.png",
+      "sha256": "2f218ea02fa67a1a629af181d429781560a581cd00a8031e3c2f7c3133f23d1d",
+      "description": "A female destination custodian places a prepared receipt permit in front of her empty receiving tray and signals readiness across the custody counter.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "transfer-approved",
+          "step": "destination-confirms"
+        },
+        {
+          "story": "transfer-final-leg-rejected",
+          "step": "destination-confirms"
+        },
+        {
+          "story": "transfer-source-settler",
+          "step": "destination-confirms"
+        }
+      ]
+    },
+    "execution-boundaries": {
+      "file": "product/scene/site/assets/stories-v2/execution-boundaries.png",
+      "sha256": "7cdf7b96b267aafedec9081ba3c8e269352e3b01a11f42270e0117b1c93674c6",
+      "description": "Two requests approach one available receiving slot.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "execution-boundaries",
+          "step": "race"
+        }
+      ]
+    },
+    "generated-approved": {
+      "file": "product/scene/site/assets/stories-v2/generated-approved.png",
+      "sha256": "f23c456c5e7d9733a3b78c31157e31f287520eb57313f88ab3739855fce14042",
+      "description": "A developer fits an adapter to a reviewed template.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "package-builder",
+          "step": "participant"
+        }
+      ]
+    },
+    "generated-rejected": {
+      "file": "product/scene/site/assets/stories-v2/generated-rejected.png",
+      "sha256": "4c44bde49e00d862cb042182e46a9fd78fe099f6a73b8c31aab5f8b32abc7dbf",
+      "description": "A generated housing leaves the original application lock intact.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "purchase-approved",
+          "step": "cannot-forge-proposal"
+        },
+        {
+          "story": "private-approval",
+          "step": "cannot-forge-completion"
+        },
+        {
+          "story": "sequence-resumed",
+          "step": "forged-completion"
+        }
+      ]
+    },
+    "input-invalid": {
+      "file": "product/scene/site/assets/moments-v3/input-invalid.png",
+      "sha256": "e123ea756aad7559a831ef385641710745725a28083d6c4b9618f3bb428d9320",
+      "description": "Overhead application-inspection desk: a developer lifts a visibly broken incomplete package module from its box, with an open inspection tray beside it.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "package-builder",
+          "step": "malformed"
+        }
+      ]
+    },
+    "input-oversized": {
+      "file": "product/scene/site/assets/moments-v3/input-oversized.png",
+      "sha256": "95eb4ef8e63e7f163fe9cfcb600e1cc7e9906ec69c79a85c4dae1cedf53060dd",
+      "description": "A developer holds an oversized but intact application package beside a small inspection opening; the package clearly cannot fit.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "package-builder",
+          "step": "oversized"
+        }
+      ]
+    },
+    "join-complete": {
+      "file": "product/scene/site/assets/moments-v3/join-complete.png",
+      "sha256": "1d73db3233b3ab3fcab7de96f5cd9425f8a8432c411843850672f0133bce1873",
+      "description": "An overhead view of two completed work folders being gathered by two different hands into one common archive sleeve.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "branch-approved",
+          "step": "join-completes"
+        },
+        {
+          "story": "branch-declined",
+          "step": "join-completes"
+        }
+      ]
+    },
+    "join-waiting": {
+      "file": "product/scene/site/assets/moments-v3/join-waiting.png",
+      "sha256": "02fdd4e587525d71c14d2d6f1c97601d333220b1aa6013a43a4384c685cb679a",
+      "description": "Two colleagues at a shared desk: one finished blue folder lies ready, the other workstation has an empty chair and an open unfinished folder.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "branch-approved",
+          "step": "join-before-decision"
+        },
+        {
+          "story": "branch-approved",
+          "step": "join-still-waits"
+        },
+        {
+          "story": "composer-direct",
+          "step": "review-too-early"
+        }
+      ]
+    },
+    "limits-checked": {
+      "file": "product/scene/site/assets/moments-v3/limits-checked.png",
+      "sha256": "8d2834d0f90462fe3fa947b973ce9a06bda0557434c7813bec9856ec74e9b65f",
+      "description": "An engineer measures an orderly row of small workflow modules against a physical ruler boundary.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "execution-boundaries",
+          "step": "core"
+        }
+      ]
+    },
+    "mapping-missing": {
+      "file": "product/scene/site/assets/moments-v3/mapping-missing.png",
+      "sha256": "69b55174f0a5e989144d8ac88a9c709d159532c27ecc946b047edabac4be8669",
+      "description": "An engineer opens an unfamiliar application module on the workbench and compares its unusual socket against the empty matching space in a set of reviewed adapter templates.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "package-builder",
+          "step": "metadata"
+        }
+      ]
+    },
+    "offer-opened": {
+      "file": "product/scene/site/assets/moments-v3/offer-opened.png",
+      "sha256": "cdfd6f036a79c2c15a304b3fdb7794483dda2a62b64d974b4903badd2cf6a13d",
+      "description": "Alice and Ben, a dark-haired male agent in a white shirt, open a fresh empty property offer folder on the riverside house terrace.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "purchase-approved",
+          "step": "open-offer"
+        },
+        {
+          "story": "purchase-rejected",
+          "step": "open-offer"
+        },
+        {
+          "story": "purchase-missing",
+          "step": "open-offer"
+        },
+        {
+          "story": "purchase-reused-proof",
+          "step": "open-offer"
+        },
+        {
+          "story": "purchase-wrong-buyer",
+          "step": "open-offer"
+        },
+        {
+          "story": "purchase-wrong-continuation",
+          "step": "open-offer"
+        },
+        {
+          "story": "purchase-wrong-issuer",
+          "step": "open-offer"
+        },
+        {
+          "story": "purchase-wrong-subject",
+          "step": "open-offer"
+        }
+      ]
+    },
+    "package-builder": {
+      "file": "product/scene/site/assets/stories-v2/package-builder.png",
+      "sha256": "34e17ac86312ddcaac824ef1747cbbff5214ad5ef356447475fe0c9f8b2198b7",
+      "description": "A developer unpacks an application for inspection.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "package-builder",
+          "step": "local"
+        }
+      ]
+    },
+    "path-fixed": {
+      "file": "product/scene/site/assets/moments-v3/path-fixed.png",
+      "sha256": "936b53b7339b01e0ef8602ae4050338c3dd203258f2c3cfe7166527525d05560",
+      "description": "Close view of a hand reaching toward a closed unused work folder while another hand gently points back to the already selected open folder.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "branch-approved",
+          "step": "cannot-change-decision"
+        },
+        {
+          "story": "branch-declined",
+          "step": "unselected-financing"
+        }
+      ]
+    },
+    "plan-accepted": {
+      "file": "product/scene/site/assets/moments-v3/plan-accepted.png",
+      "sha256": "6ddf101a07b4ccd627757f93e0f57fa1ce6b1f0eeaa19883b1e0b512e0998c6c",
+      "description": "Overhead intimate desk scene: Alice signs the exact two-action plan offered by the older bank adviser.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "composer-direct",
+          "step": "acceptance"
+        },
+        {
+          "story": "composer-generated",
+          "step": "acceptance"
+        }
+      ]
+    },
+    "position-locked": {
+      "file": "product/scene/site/assets/moments-v3/position-locked.png",
+      "sha256": "9f0d0d93fdb76bb4313446013ebd588e3df965a5b7492d1aef1ad17dc5ba0ec4",
+      "description": "Close three-quarter view of a source custodian placing a transparent case of blue asset tokens into a fitted reservation cradle and closing a small padlock.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "transfer-approved",
+          "step": "seller-locks"
+        },
+        {
+          "story": "transfer-final-leg-rejected",
+          "step": "seller-locks"
+        },
+        {
+          "story": "transfer-missing-agreement",
+          "step": "seller-locks"
+        },
+        {
+          "story": "transfer-missing-readiness",
+          "step": "seller-locks"
+        },
+        {
+          "story": "transfer-source-settler",
+          "step": "seller-locks"
+        }
+      ]
+    },
+    "private-approval": {
+      "file": "product/scene/site/assets/stories-v2/private-approval.png",
+      "sha256": "e9cfdf55867dadb9d6bf5f41347a7582ae43f103945eb80c2d20aa4b402861a0",
+      "description": "Private documents remain behind the bank office partition.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "purchase-approved",
+          "step": "wrong-assessor"
+        },
+        {
+          "story": "private-approval",
+          "step": "buyer-cannot-read-or-approve"
+        }
+      ]
+    },
+    "proposal-prepared": {
+      "file": "product/scene/site/assets/moments-v3/proposal-prepared.png",
+      "sha256": "6812e97197167eb03eb21fcb6cdc67c19a2eed66708ec1c06877d17ff2b0b049",
+      "description": "Alice hands Ben a prepared blue property proposal folder with one signed financing sheet tucked inside.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "purchase-approved",
+          "step": "make-proposal"
+        },
+        {
+          "story": "purchase-reused-proof",
+          "step": "make-proposal"
+        }
+      ]
+    },
+    "proposal-received": {
+      "file": "product/scene/site/assets/moments-v3/proposal-received.png",
+      "sha256": "bc8e4dd8de0e77c0bb680fa175e52ea52f28f55c1c5208c5a4a5edfca9f5a1f7",
+      "description": "Sofia, short-haired woman in a navy blazer, has received the blue proposal folder and places it carefully in her property office receiving tray.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "purchase-approved",
+          "step": "seller-agent-receives"
+        }
+      ]
+    },
+    "proposal-refused": {
+      "file": "product/scene/site/assets/moments-v3/proposal-refused.png",
+      "sha256": "82017c6bee5f727256612d0a0322dc05ac096736f874b30a4fff048ca4d95453",
+      "description": "Ben returns the closed proposal folder to Alice; the property handoff cannot proceed.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "purchase-rejected",
+          "step": "rejected-financing"
+        }
+      ]
+    },
+    "proposal-relayed": {
+      "file": "product/scene/site/assets/moments-v3/proposal-relayed.png",
+      "sha256": "fcfb9213dc97f62ca16323c500c6a8758db3b29343a5a31a902a561c0293c939",
+      "description": "Ben, dark-haired agent in white shirt, sends a single blue proposal envelope through an elegant property-office service hatch toward Sofia, a short-haired woman in a navy blazer.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "purchase-approved",
+          "step": "buyer-agent-relays"
+        }
+      ]
+    },
+    "purchase-approved": {
+      "file": "product/scene/site/assets/stories-v2/purchase-approved.png",
+      "sha256": "bfb2b7616d0e0e4bf0e4a503ace62517768a859a452a205f0dc08e1673c4bedd",
+      "description": "Alice prepares an offer during a property visit.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "purchase-reused-proof",
+          "step": "open-second-offer"
+        }
+      ]
+    },
+    "purchase-missing": {
+      "file": "product/scene/site/assets/stories-v2/purchase-missing.png",
+      "sha256": "8feb67dd19de7115caf74f09b3ec84927a6c6a823884c6c676d07bed4a2c6575",
+      "description": "An empty document sleeve waits in the offer folder.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "purchase-missing",
+          "step": "invalid-evidence"
+        }
+      ]
+    },
+    "purchase-rejected": {
+      "file": "product/scene/site/assets/stories-v2/purchase-rejected.png",
+      "sha256": "e8f4d042c08a33cf50cac2c85a9a249641c6e1d79e5d8cd55485bf38df9e03f2",
+      "description": "Alice pauses outside the bank with her closed laptop.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "purchase-rejected",
+          "step": "bank-assessment"
+        },
+        {
+          "story": "branch-declined",
+          "step": "choose-decline"
+        }
+      ]
+    },
+    "purchase-reused-proof": {
+      "file": "product/scene/site/assets/stories-v2/purchase-reused-proof.png",
+      "sha256": "9000c6e08d089358c73be2fcfa5be446bbb2ff24b229b116d0ab991479b1c172",
+      "description": "One filed result and a second offer wait on the agent’s desk.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "purchase-reused-proof",
+          "step": "reuse-consumed-result"
+        }
+      ]
+    },
+    "purchase-wrong-buyer": {
+      "file": "product/scene/site/assets/stories-v2/purchase-wrong-buyer.png",
+      "sha256": "e9a753dabfd1c5cd09bff260ed594447229cf9deefdf15ccce33bf0e799a0f20",
+      "description": "An agent compares two different buyer identities.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "purchase-wrong-buyer",
+          "step": "invalid-evidence"
+        }
+      ]
+    },
+    "purchase-wrong-continuation": {
+      "file": "product/scene/site/assets/stories-v2/purchase-wrong-continuation.png",
+      "sha256": "9a3b8b2b0363c4d1b9fc3c8b76f85edfbee636e5c427dae3c709dbbe7ba12731",
+      "description": "A clerk compares the intended next actions.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "purchase-wrong-continuation",
+          "step": "invalid-evidence"
+        }
+      ]
+    },
+    "purchase-wrong-issuer": {
+      "file": "product/scene/site/assets/stories-v2/purchase-wrong-issuer.png",
+      "sha256": "943166064e7583b6059306b4478de083180b64a6c7040cdf61ddb79868c3aa2b",
+      "description": "A document seal is compared with its issuing bank.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "purchase-wrong-issuer",
+          "step": "invalid-evidence"
+        }
+      ]
+    },
+    "purchase-wrong-subject": {
+      "file": "product/scene/site/assets/stories-v2/purchase-wrong-subject.png",
+      "sha256": "d4aef55a65655fbade7975ede6439ae3238b640dd1b373c40706ef020c33e47a",
+      "description": "Alice and Sofia compare two different property models.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "purchase-wrong-subject",
+          "step": "invalid-evidence"
+        }
+      ]
+    },
+    "result-published": {
+      "file": "product/scene/site/assets/moments-v3/result-published.png",
+      "sha256": "337aa75c93b5256308f9b8741e8a75e63456ef80f91bfe471e0574518443c898",
+      "description": "Alice places a single signed approval card into a shared tray outside a frosted bank office partition.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "live-handoff",
+          "step": "buyer-continuation"
+        },
+        {
+          "story": "private-approval",
+          "step": "buyer-continuation"
+        }
+      ]
+    },
+    "retry-record": {
+      "file": "product/scene/site/assets/moments-v3/retry-record.png",
+      "sha256": "9c413bf2c6a97cc8c3f429b377c9a0d495bc15a52269430ec9f7ff90264535e6",
+      "description": "An archivist compares a newly arrived request slip against the single filed original request in a drawer, then places the new slip beside it.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "branch-approved",
+          "step": "join-retry"
+        },
+        {
+          "story": "sequence-resumed",
+          "step": "same-request-again"
+        }
+      ]
+    },
+    "review-complete": {
+      "file": "product/scene/site/assets/moments-v3/review-complete.png",
+      "sha256": "f7aa6623250f4aa04c96182eaee752c86dafbfa2ad316161630a047d37411708",
+      "description": "Alice closes the reviewed blue folder with a calm satisfied expression at her window seat.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "branch-approved",
+          "step": "buyer-review"
+        },
+        {
+          "story": "composer-direct",
+          "step": "review"
+        },
+        {
+          "story": "sequence-complete",
+          "step": "buyer-review"
+        },
+        {
+          "story": "sequence-resumed",
+          "step": "buyer-review"
+        }
+      ]
+    },
+    "review-waiting": {
+      "file": "product/scene/site/assets/moments-v3/review-waiting.png",
+      "sha256": "fdcbc014a20ae6ce92d019c2e1152a69acc4e4d2f658ef37f6a09845472a54f7",
+      "description": "An empty window seat with Alice's open laptop and blue review folder awaiting her return, afternoon light, cup of tea untouched, quiet anticipation.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "sequence-resumed",
+          "step": "premature-review"
+        },
+        {
+          "story": "sequence-resumed",
+          "step": "waiting-for-alice"
+        }
+      ]
+    },
+    "sequence-complete": {
+      "file": "product/scene/site/assets/stories-v2/sequence-complete.png",
+      "sha256": "852ce6e18b5061354ab8283e9d2fdcabf638005f6f6da31aa1dbae1063a18dbc",
+      "description": "Alice reviews the next document at a quiet window seat.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "composer-generated",
+          "step": "inspection"
+        }
+      ]
+    },
+    "sequence-resumed": {
+      "file": "product/scene/site/assets/stories-v2/sequence-resumed.png",
+      "sha256": "0e3441bdfd45d5c3b475a0f316a68862dcff6d92faa3b0acf41c2b7ea4bab49f",
+      "description": "Alice returns to her laptop and a bookmarked page.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "sequence-resumed",
+          "step": "fresh-client"
+        }
+      ]
+    },
+    "settlement-waiting": {
+      "file": "product/scene/site/assets/moments-v3/settlement-waiting.png",
+      "sha256": "eea01f6b1629c8300d1d275168e41520241bd083ea93390170bff9490b6ecfe0",
+      "description": "A coordinator looks across two custody stations with an incomplete receipt-permit folder on the desk.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "transfer-approved",
+          "step": "wrong-settler"
+        },
+        {
+          "story": "transfer-missing-agreement",
+          "step": "settle"
+        },
+        {
+          "story": "transfer-missing-lock",
+          "step": "settle"
+        },
+        {
+          "story": "transfer-missing-readiness",
+          "step": "settle"
+        }
+      ]
+    },
+    "source-ready": {
+      "file": "product/scene/site/assets/moments-v3/source-ready.png",
+      "sha256": "55532a1576d5d4dedf1537e9105e87c8f437afffbc583867efedeae67dc9ae43",
+      "description": "A male source custodian stands beside the locked blue token case and raises a small confirmation card toward a female destination custodian across the counter.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "transfer-approved",
+          "step": "source-confirms"
+        },
+        {
+          "story": "transfer-final-leg-rejected",
+          "step": "source-confirms"
+        },
+        {
+          "story": "transfer-missing-readiness",
+          "step": "source-confirms"
+        },
+        {
+          "story": "transfer-source-settler",
+          "step": "source-confirms"
+        }
+      ]
+    },
+    "trade-agreed": {
+      "file": "product/scene/site/assets/moments-v3/trade-agreed.png",
+      "sha256": "aae20d136a5c7777914bf815c9420983030a1e1c27ecc4f4ea7d2769ffa606c7",
+      "description": "At a quiet custody desk the seller signs a transfer agreement while the source custodian watches.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "transfer-approved",
+          "step": "seller-agrees"
+        },
+        {
+          "story": "transfer-final-leg-rejected",
+          "step": "seller-agrees"
+        },
+        {
+          "story": "transfer-missing-lock",
+          "step": "seller-agrees"
+        },
+        {
+          "story": "transfer-missing-readiness",
+          "step": "seller-agrees"
+        },
+        {
+          "story": "transfer-source-settler",
+          "step": "seller-agrees"
+        }
+      ]
+    },
+    "transfer-approved": {
+      "file": "product/scene/site/assets/stories-v2/transfer-approved.png",
+      "sha256": "b63e38039497e958ba528e952b5e87435a0fcffe8eeceef645d724610f594c64",
+      "description": "Two custodians prepare a single secured position for transfer.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "transfer-approved",
+          "step": "bypass-coordinator"
+        }
+      ]
+    },
+    "transfer-final-leg-rejected": {
+      "file": "product/scene/site/assets/stories-v2/transfer-final-leg-rejected.png",
+      "sha256": "6a84bc54558ac6990aa770bc2f5aef08176951ea441e0abdbc08ce6f03df7cb8",
+      "description": "The locked position remains at the source beside a closed destination.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "transfer-final-leg-rejected",
+          "step": "settle"
+        }
+      ]
+    },
+    "transfer-missing-agreement": {
+      "file": "product/scene/site/assets/stories-v2/transfer-missing-agreement.png",
+      "sha256": "c5dd5f5e6c7bb1f1708feb5b3b117dba7358721e05dc3539923c5a48dbb83fea",
+      "description": "Seller and custodian wait over an unsigned agreement.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "transfer-missing-agreement",
+          "step": "source-too-early"
+        }
+      ]
+    },
+    "transfer-missing-lock": {
+      "file": "product/scene/site/assets/stories-v2/transfer-missing-lock.png",
+      "sha256": "b9f479114248f767d27cc9ffd9a241605f9cba8606c6125328ca20056f4d8de0",
+      "description": "A token box has not yet been placed in its reservation cradle.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "transfer-missing-lock",
+          "step": "source-without-lock"
+        }
+      ]
+    },
+    "transfer-missing-readiness": {
+      "file": "product/scene/site/assets/stories-v2/transfer-missing-readiness.png",
+      "sha256": "4aac25ca473edbca626c063ef244fe5e803f784e2cff8cdbab1d008c0355051e",
+      "description": "The destination custodian prepares the receiving space.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "transfer-approved",
+          "step": "destination-prepares"
+        },
+        {
+          "story": "transfer-final-leg-rejected",
+          "step": "destination-prepares"
+        },
+        {
+          "story": "transfer-missing-readiness",
+          "step": "destination-without-permit"
+        },
+        {
+          "story": "transfer-source-settler",
+          "step": "destination-prepares"
+        }
+      ]
+    },
+    "transfer-settled": {
+      "file": "product/scene/site/assets/moments-v3/transfer-settled.png",
+      "sha256": "df36a1465f74f3fac43dca365bd105a4c785acbd0335188f708f4a9349e1252b",
+      "description": "The same two custodians after a coordinated transfer: left source cradle clearly empty and unlocked, right destination tray now contains the one transparent blue token case.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "transfer-approved",
+          "step": "settle"
+        },
+        {
+          "story": "transfer-source-settler",
+          "step": "settle"
+        }
+      ]
+    },
+    "unselected-closure": {
+      "file": "product/scene/site/assets/moments-v3/unselected-closure.png",
+      "sha256": "b5ad196d09044a758b9cf1753f32a4294c13aa8043cd2d3613a5d03017845082",
+      "description": "The unused archive path is closed; the work folder remains outside.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "branch-approved",
+          "step": "unselected-closure"
+        }
+      ]
+    },
+    "workflow-rejected": {
+      "file": "product/scene/site/assets/stories-v2/workflow-rejected.png",
+      "sha256": "b51bce49590e6af6fab496c9cded4b31cb7bebf3db8027d68b306602a061204b",
+      "description": "The application stays on the bank’s side of the counter.",
+      "width": 1536,
+      "height": 1024,
+      "used_by": [
+        {
+          "story": "adapter-approved",
+          "step": "buyer-attempt"
+        },
+        {
+          "story": "financing-approved",
+          "step": "buyer-attempt"
+        },
+        {
+          "story": "generated-approved",
+          "step": "buyer-attempt"
+        },
+        {
+          "story": "live-handoff",
+          "step": "observer-cannot-continue"
+        },
+        {
+          "story": "package-builder",
+          "step": "wrong-party"
+        },
+        {
+          "story": "private-approval",
+          "step": "reviewer-cannot-continue"
+        },
+        {
+          "story": "workflow-approved",
+          "step": "buyer-attempt"
+        }
+      ]
+    }
+  },
+  "original_documents": {
+    "proposal": {
+      "path": "docs/proposal/harmonia.md",
+      "sha256": "9e33ac476c841151fc4c0bf4b853412d6542e63cec0d27ab36e9171126a1dd27"
+    },
+    "architecture": {
+      "path": "docs/proposal/harmonia-architecture.html",
+      "sha256": "b80f0c65a19e24739b2fef3dd16a406b3bf9a309a0a1db19f1cc62ef9229a8a7"
+    }
+  },
+  "passages": [
+    {
+      "id": "proposal-1",
+      "source": "proposal",
+      "lines": [
+        1,
+        10
+      ],
+      "title": "Proposal identity and attribution",
+      "chapter": "09-proposal-context",
+      "open": "author.html?source=proposal&passage=proposal-1"
+    },
+    {
+      "id": "proposal-11",
+      "source": "proposal",
+      "lines": [
+        11,
+        32
+      ],
+      "title": "Abstract and objective",
+      "chapter": "01-product",
+      "open": "author.html?source=proposal&passage=proposal-11"
+    },
+    {
+      "id": "proposal-33",
+      "source": "proposal",
+      "lines": [
+        33,
+        52
+      ],
+      "title": "Supported mechanics and component boundaries",
+      "chapter": "07-evidence-and-boundaries",
+      "open": "author.html?source=proposal&passage=proposal-33"
+    },
+    {
+      "id": "proposal-53",
+      "source": "proposal",
+      "lines": [
+        53,
+        75
+      ],
+      "title": "Core execution and authority",
+      "chapter": "02-roles-and-trust",
+      "open": "author.html?source=proposal&passage=proposal-53"
+    },
+    {
+      "id": "proposal-76",
+      "source": "proposal",
+      "lines": [
+        76,
+        89
+      ],
+      "title": "The viewer and composer promise",
+      "chapter": "06-compose-a-workflow",
+      "open": "author.html?source=proposal&passage=proposal-76"
+    },
+    {
+      "id": "proposal-90",
+      "source": "proposal",
+      "lines": [
+        90,
+        117
+      ],
+      "title": "References and both integration paths",
+      "chapter": "05-bring-an-application",
+      "open": "author.html?source=proposal&passage=proposal-90"
+    },
+    {
+      "id": "proposal-118",
+      "source": "proposal",
+      "lines": [
+        118,
+        132
+      ],
+      "title": "Transfer use case and original asset references",
+      "chapter": "04-four-party-transfer",
+      "open": "author.html?source=proposal&passage=proposal-118"
+    },
+    {
+      "id": "proposal-133",
+      "source": "proposal",
+      "lines": [
+        133,
+        144
+      ],
+      "title": "Financing and offer use case",
+      "chapter": "03-financing-to-offer",
+      "open": "author.html?source=proposal&passage=proposal-133"
+    },
+    {
+      "id": "proposal-145",
+      "source": "proposal",
+      "lines": [
+        145,
+        159
+      ],
+      "title": "External boundaries and decentralized coordination",
+      "chapter": "02-roles-and-trust",
+      "open": "author.html?source=proposal&passage=proposal-145"
+    },
+    {
+      "id": "proposal-160",
+      "source": "proposal",
+      "lines": [
+        160,
+        285
+      ],
+      "title": "System context, components, diagrams, and catalogs",
+      "chapter": "01-product",
+      "open": "author.html?source=proposal&passage=proposal-160"
+    },
+    {
+      "id": "proposal-286",
+      "source": "proposal",
+      "lines": [
+        286,
+        291
+      ],
+      "title": "Backward compatibility",
+      "chapter": "07-evidence-and-boundaries",
+      "open": "author.html?source=proposal&passage=proposal-286"
+    },
+    {
+      "id": "proposal-292",
+      "source": "proposal",
+      "lines": [
+        292,
+        391
+      ],
+      "title": "All eight milestones and their delivery context",
+      "chapter": "08-release-and-adoption",
+      "open": "author.html?source=proposal&passage=proposal-292"
+    },
+    {
+      "id": "proposal-392",
+      "source": "proposal",
+      "lines": [
+        392,
+        425
+      ],
+      "title": "All acceptance criteria",
+      "chapter": "07-evidence-and-boundaries",
+      "open": "author.html?source=proposal&passage=proposal-392"
+    },
+    {
+      "id": "proposal-426",
+      "source": "proposal",
+      "lines": [
+        426,
+        465
+      ],
+      "title": "Funding, timing, and commercial conditions",
+      "chapter": "09-proposal-context",
+      "open": "author.html?source=proposal&passage=proposal-426"
+    },
+    {
+      "id": "proposal-466",
+      "source": "proposal",
+      "lines": [
+        466,
+        483
+      ],
+      "title": "Co-marketing and knowledge transfer",
+      "chapter": "08-release-and-adoption",
+      "open": "author.html?source=proposal&passage=proposal-466"
+    },
+    {
+      "id": "proposal-484",
+      "source": "proposal",
+      "lines": [
+        484,
+        501
+      ],
+      "title": "Motivation and the adoption problem",
+      "chapter": "01-product",
+      "open": "author.html?source=proposal&passage=proposal-484"
+    },
+    {
+      "id": "proposal-502",
+      "source": "proposal",
+      "lines": [
+        502,
+        548
+      ],
+      "title": "Rationale, research, and related projects",
+      "chapter": "10-context-and-references",
+      "open": "author.html?source=proposal&passage=proposal-502"
+    },
+    {
+      "id": "proposal-549",
+      "source": "proposal",
+      "lines": [
+        549,
+        551
+      ],
+      "title": "Maintenance commitment",
+      "chapter": "08-release-and-adoption",
+      "open": "author.html?source=proposal&passage=proposal-549"
+    },
+    {
+      "id": "architecture-1",
+      "source": "architecture",
+      "lines": [
+        1,
+        87
+      ],
+      "title": "Architecture identity and attribution",
+      "chapter": "01-product",
+      "open": "author.html?source=architecture&passage=architecture-1"
+    },
+    {
+      "id": "architecture-88",
+      "source": "architecture",
+      "lines": [
+        88,
+        317
+      ],
+      "title": "Off-ledger and on-ledger component map",
+      "chapter": "01-product",
+      "open": "author.html?source=architecture&passage=architecture-88"
+    },
+    {
+      "id": "architecture-318",
+      "source": "architecture",
+      "lines": [
+        318,
+        487
+      ],
+      "title": "Illustrative contracts, interfaces, and data",
+      "chapter": "02-roles-and-trust",
+      "open": "author.html?source=architecture&passage=architecture-318"
+    },
+    {
+      "id": "architecture-488",
+      "source": "architecture",
+      "lines": [
+        488,
+        504
+      ],
+      "title": "Component catalog",
+      "chapter": "01-product",
+      "open": "author.html?source=architecture&passage=architecture-488"
+    },
+    {
+      "id": "architecture-505",
+      "source": "architecture",
+      "lines": [
+        505,
+        520
+      ],
+      "title": "Transfer participants and domains",
+      "chapter": "04-four-party-transfer",
+      "open": "author.html?source=architecture&passage=architecture-505"
+    },
+    {
+      "id": "architecture-521",
+      "source": "architecture",
+      "lines": [
+        521,
+        535
+      ],
+      "title": "Financing and offer participants",
+      "chapter": "03-financing-to-offer",
+      "open": "author.html?source=architecture&passage=architecture-521"
+    },
+    {
+      "id": "architecture-536",
+      "source": "architecture",
+      "lines": [
+        536,
+        564
+      ],
+      "title": "Supported subset and excluded features",
+      "chapter": "07-evidence-and-boundaries",
+      "open": "author.html?source=architecture&passage=architecture-536"
+    },
+    {
+      "id": "architecture-565",
+      "source": "architecture",
+      "lines": [
+        565,
+        581
+      ],
+      "title": "Open design points",
+      "chapter": "05-bring-an-application",
+      "open": "author.html?source=architecture&passage=architecture-565"
+    }
+  ],
+  "quotation_scope": "Existing chapter-level source associations; no new claim that a quotation proves a particular step.",
+  "rendering": {
+    "reconstruction": "Combine diagram.shared with the selected step.diagram; each step overrides the shared fields independently.",
+    "dependencies": [
+      {
+        "file": "book/browser/target/scala-3.3.6/harmonia-reader-fastopt/main.js",
+        "sha256": "afe889cecc9dba76634283588a19e73edc9ff61064f4d87e6272567deb2fb1c3"
+      },
+      {
+        "file": "book/site/print.css",
+        "sha256": "3a0883c315e0a115b52f0f13dd197226098d5f5bf272a4fb59ace931272dfd62"
+      },
+      {
+        "file": "design/0.2/book.js",
+        "sha256": "1ad9c55b3ce5630b28ebc2558df789810c361551ff3cf307e18c7daea1594386"
+      },
+      {
+        "file": "design/0.2/context.js",
+        "sha256": "9d72abb0ca9744b55e38db3ec75f76c655788afa0ad435b2c6a6c96b016f3bd1",
+        "served_sha256": "98b130930886c21f055bed72579d0404344955df9ca5881f24a448726e0ff688",
+        "role": "Session binding; the selected recording is preserved in each workflow document."
+      },
+      {
+        "file": "design/0.2/navigation.js",
+        "sha256": "f7a96113313b7220ca92127a6e9028f7ad348c954c4ad6f70c264e01e2714d3c"
+      },
+      {
+        "file": "design/0.2/quiet.css",
+        "sha256": "113fc805b4da0ea0744424994ffec132c676be6ed6a50522ec786ec195c52eab"
+      },
+      {
+        "file": "design/0.2/reader/author.js",
+        "sha256": "6701094a7ce507be834386bddd74af2c3850e8fbd7694ab0fa0e6287d9c22367"
+      },
+      {
+        "file": "design/0.2/reader/catalog.js",
+        "sha256": "c49ec58c189b9f4797b1c193ff492e1653c8d87e98959b88ee4b920ebfce5594"
+      },
+      {
+        "file": "design/0.2/reader/code.js",
+        "sha256": "bc6c6df697447f94ea29794b82ce9b68104243f0f71ae4b74f077293df3dc23d"
+      },
+      {
+        "file": "design/0.2/reader/common.js",
+        "sha256": "b39da72467767e827d9afc3d1e5886ebe268d931e0350ed9ad96604b39e6d5c4"
+      },
+      {
+        "file": "design/0.2/reader/presentation.js",
+        "sha256": "eaf12c9ce329a83025a87f3604b0cd32250aaac420ef538d3fe3039220337d65"
+      },
+      {
+        "file": "design/0.2/reader/reviewer.js",
+        "sha256": "40654f1e303ab45047500d29c40e5df6a205d623ac56a232528124abc1b205f6"
+      },
+      {
+        "file": "design/0.2/reader/routes.js",
+        "sha256": "88d08d9235bfacbee4f79ffec3626fd71dc742248e69eb9e0c06f386c71c435d"
+      },
+      {
+        "file": "design/0.2/recordings.js",
+        "sha256": "39d4d13b082f35ee96783f5e3e41d7b6500969da246842df653640e1f16a9b3b"
+      },
+      {
+        "file": "design/0.2/run-recordings.js",
+        "sha256": "9bbf4f5166b893604ed46c1131db418fa8a67d1bf1285a017b7c7afbc4ef7dbc",
+        "served_sha256": "eed2e24761b6e2a77405bcfc14cf96d92a4a38d8c3e0db4684db47a4ec568661",
+        "role": "Session binding; the selected recording is preserved in each workflow document."
+      },
+      {
+        "file": "design/0.2/state.js",
+        "sha256": "0b6ce2631099a4b9d2116eebb74b4b0238d31dda81bedb565e744bed48ab791a"
+      },
+      {
+        "file": "product/scene/site/assets/illustrations.png",
+        "sha256": "8333ab967fcd3ad73ad074deff3b03bdeedb33a9b172ffe39b9b13f8a999aea0"
+      },
+      {
+        "file": "product/scene/site/assets/moments-v3/already-settled.png",
+        "sha256": "1b21f551be3c7e50a208410315f417761048f03ae7fa1b2b1562686c8b78350d"
+      },
+      {
+        "file": "product/scene/site/assets/moments-v3/approval-signed.png",
+        "sha256": "d472b9586a5da85bfd5f720b27f62b69114e0c8c41e80710dd3df85f9659112b"
+      },
+      {
+        "file": "product/scene/site/assets/moments-v3/buyer-authority.png",
+        "sha256": "4752b30da6cbb121a50237eea5918134709fc1b3af0fdab8200b851c5b1df1f9"
+      },
+      {
+        "file": "product/scene/site/assets/moments-v3/compilation-refused.png",
+        "sha256": "c3747f9b591e53f4d64994aa209a05866769b0db93934e306fac0f12ffd5e0a4"
+      },
+      {
+        "file": "product/scene/site/assets/moments-v3/compiled-adapter.png",
+        "sha256": "cef0cc8cbddf8ad2ce1fddef9d999181cb2559219ed8bf1b987129c9f719e77b"
+      },
+      {
+        "file": "product/scene/site/assets/moments-v3/continuation-waiting.png",
+        "sha256": "47325c1661f59cc6b3cef35141f00e705e97939e17afb6ece066b6deb3079a2c"
+      },
+      {
+        "file": "product/scene/site/assets/moments-v3/destination-ready.png",
+        "sha256": "2f218ea02fa67a1a629af181d429781560a581cd00a8031e3c2f7c3133f23d1d"
+      },
+      {
+        "file": "product/scene/site/assets/moments-v3/input-invalid.png",
+        "sha256": "e123ea756aad7559a831ef385641710745725a28083d6c4b9618f3bb428d9320"
+      },
+      {
+        "file": "product/scene/site/assets/moments-v3/input-oversized.png",
+        "sha256": "95eb4ef8e63e7f163fe9cfcb600e1cc7e9906ec69c79a85c4dae1cedf53060dd"
+      },
+      {
+        "file": "product/scene/site/assets/moments-v3/join-complete.png",
+        "sha256": "1d73db3233b3ab3fcab7de96f5cd9425f8a8432c411843850672f0133bce1873"
+      },
+      {
+        "file": "product/scene/site/assets/moments-v3/join-waiting.png",
+        "sha256": "02fdd4e587525d71c14d2d6f1c97601d333220b1aa6013a43a4384c685cb679a"
+      },
+      {
+        "file": "product/scene/site/assets/moments-v3/limits-checked.png",
+        "sha256": "8d2834d0f90462fe3fa947b973ce9a06bda0557434c7813bec9856ec74e9b65f"
+      },
+      {
+        "file": "product/scene/site/assets/moments-v3/mapping-missing.png",
+        "sha256": "69b55174f0a5e989144d8ac88a9c709d159532c27ecc946b047edabac4be8669"
+      },
+      {
+        "file": "product/scene/site/assets/moments-v3/offer-opened.png",
+        "sha256": "cdfd6f036a79c2c15a304b3fdb7794483dda2a62b64d974b4903badd2cf6a13d"
+      },
+      {
+        "file": "product/scene/site/assets/moments-v3/path-fixed.png",
+        "sha256": "936b53b7339b01e0ef8602ae4050338c3dd203258f2c3cfe7166527525d05560"
+      },
+      {
+        "file": "product/scene/site/assets/moments-v3/plan-accepted.png",
+        "sha256": "6ddf101a07b4ccd627757f93e0f57fa1ce6b1f0eeaa19883b1e0b512e0998c6c"
+      },
+      {
+        "file": "product/scene/site/assets/moments-v3/position-locked.png",
+        "sha256": "9f0d0d93fdb76bb4313446013ebd588e3df965a5b7492d1aef1ad17dc5ba0ec4"
+      },
+      {
+        "file": "product/scene/site/assets/moments-v3/proposal-prepared.png",
+        "sha256": "6812e97197167eb03eb21fcb6cdc67c19a2eed66708ec1c06877d17ff2b0b049"
+      },
+      {
+        "file": "product/scene/site/assets/moments-v3/proposal-received.png",
+        "sha256": "bc8e4dd8de0e77c0bb680fa175e52ea52f28f55c1c5208c5a4a5edfca9f5a1f7"
+      },
+      {
+        "file": "product/scene/site/assets/moments-v3/proposal-refused.png",
+        "sha256": "82017c6bee5f727256612d0a0322dc05ac096736f874b30a4fff048ca4d95453"
+      },
+      {
+        "file": "product/scene/site/assets/moments-v3/proposal-relayed.png",
+        "sha256": "fcfb9213dc97f62ca16323c500c6a8758db3b29343a5a31a902a561c0293c939"
+      },
+      {
+        "file": "product/scene/site/assets/moments-v3/result-published.png",
+        "sha256": "337aa75c93b5256308f9b8741e8a75e63456ef80f91bfe471e0574518443c898"
+      },
+      {
+        "file": "product/scene/site/assets/moments-v3/retry-record.png",
+        "sha256": "9c413bf2c6a97cc8c3f429b377c9a0d495bc15a52269430ec9f7ff90264535e6"
+      },
+      {
+        "file": "product/scene/site/assets/moments-v3/review-complete.png",
+        "sha256": "f7aa6623250f4aa04c96182eaee752c86dafbfa2ad316161630a047d37411708"
+      },
+      {
+        "file": "product/scene/site/assets/moments-v3/review-waiting.png",
+        "sha256": "fdcbc014a20ae6ce92d019c2e1152a69acc4e4d2f658ef37f6a09845472a54f7"
+      },
+      {
+        "file": "product/scene/site/assets/moments-v3/settlement-waiting.png",
+        "sha256": "eea01f6b1629c8300d1d275168e41520241bd083ea93390170bff9490b6ecfe0"
+      },
+      {
+        "file": "product/scene/site/assets/moments-v3/source-ready.png",
+        "sha256": "55532a1576d5d4dedf1537e9105e87c8f437afffbc583867efedeae67dc9ae43"
+      },
+      {
+        "file": "product/scene/site/assets/moments-v3/trade-agreed.png",
+        "sha256": "aae20d136a5c7777914bf815c9420983030a1e1c27ecc4f4ea7d2769ffa606c7"
+      },
+      {
+        "file": "product/scene/site/assets/moments-v3/transfer-settled.png",
+        "sha256": "df36a1465f74f3fac43dca365bd105a4c785acbd0335188f708f4a9349e1252b"
+      },
+      {
+        "file": "product/scene/site/assets/moments-v3/unselected-closure.png",
+        "sha256": "b5ad196d09044a758b9cf1753f32a4294c13aa8043cd2d3613a5d03017845082"
+      },
+      {
+        "file": "product/scene/site/assets/stories-v2/already-approved.png",
+        "sha256": "090910fb0152e26371c812ed0af82adc0e09fa4a9fdf4d768c3da751a507bb2e"
+      },
+      {
+        "file": "product/scene/site/assets/stories-v2/branch-approved.png",
+        "sha256": "9192486ba9a46307dd54d751dbf0ac1597815a69723d1645739e886bb56097c3"
+      },
+      {
+        "file": "product/scene/site/assets/stories-v2/branch-declined.png",
+        "sha256": "2787e5a85aec536d7dfd455f5550ac37370b0f8bfa52c6243c907e87b031ea61"
+      },
+      {
+        "file": "product/scene/site/assets/stories-v2/composer-direct.png",
+        "sha256": "bc283704315d6fdd7aa68d7eec051708a17ab715a097a7c9ddf1402b28aec7d9"
+      },
+      {
+        "file": "product/scene/site/assets/stories-v2/execution-boundaries.png",
+        "sha256": "7cdf7b96b267aafedec9081ba3c8e269352e3b01a11f42270e0117b1c93674c6"
+      },
+      {
+        "file": "product/scene/site/assets/stories-v2/generated-approved.png",
+        "sha256": "f23c456c5e7d9733a3b78c31157e31f287520eb57313f88ab3739855fce14042"
+      },
+      {
+        "file": "product/scene/site/assets/stories-v2/generated-rejected.png",
+        "sha256": "4c44bde49e00d862cb042182e46a9fd78fe099f6a73b8c31aab5f8b32abc7dbf"
+      },
+      {
+        "file": "product/scene/site/assets/stories-v2/package-builder.png",
+        "sha256": "34e17ac86312ddcaac824ef1747cbbff5214ad5ef356447475fe0c9f8b2198b7"
+      },
+      {
+        "file": "product/scene/site/assets/stories-v2/private-approval.png",
+        "sha256": "e9cfdf55867dadb9d6bf5f41347a7582ae43f103945eb80c2d20aa4b402861a0"
+      },
+      {
+        "file": "product/scene/site/assets/stories-v2/purchase-approved.png",
+        "sha256": "bfb2b7616d0e0e4bf0e4a503ace62517768a859a452a205f0dc08e1673c4bedd"
+      },
+      {
+        "file": "product/scene/site/assets/stories-v2/purchase-missing.png",
+        "sha256": "8feb67dd19de7115caf74f09b3ec84927a6c6a823884c6c676d07bed4a2c6575"
+      },
+      {
+        "file": "product/scene/site/assets/stories-v2/purchase-rejected.png",
+        "sha256": "e8f4d042c08a33cf50cac2c85a9a249641c6e1d79e5d8cd55485bf38df9e03f2"
+      },
+      {
+        "file": "product/scene/site/assets/stories-v2/purchase-reused-proof.png",
+        "sha256": "9000c6e08d089358c73be2fcfa5be446bbb2ff24b229b116d0ab991479b1c172"
+      },
+      {
+        "file": "product/scene/site/assets/stories-v2/purchase-wrong-buyer.png",
+        "sha256": "e9a753dabfd1c5cd09bff260ed594447229cf9deefdf15ccce33bf0e799a0f20"
+      },
+      {
+        "file": "product/scene/site/assets/stories-v2/purchase-wrong-continuation.png",
+        "sha256": "9a3b8b2b0363c4d1b9fc3c8b76f85edfbee636e5c427dae3c709dbbe7ba12731"
+      },
+      {
+        "file": "product/scene/site/assets/stories-v2/purchase-wrong-issuer.png",
+        "sha256": "943166064e7583b6059306b4478de083180b64a6c7040cdf61ddb79868c3aa2b"
+      },
+      {
+        "file": "product/scene/site/assets/stories-v2/purchase-wrong-subject.png",
+        "sha256": "d4aef55a65655fbade7975ede6439ae3238b640dd1b373c40706ef020c33e47a"
+      },
+      {
+        "file": "product/scene/site/assets/stories-v2/sequence-complete.png",
+        "sha256": "852ce6e18b5061354ab8283e9d2fdcabf638005f6f6da31aa1dbae1063a18dbc"
+      },
+      {
+        "file": "product/scene/site/assets/stories-v2/sequence-resumed.png",
+        "sha256": "0e3441bdfd45d5c3b475a0f316a68862dcff6d92faa3b0acf41c2b7ea4bab49f"
+      },
+      {
+        "file": "product/scene/site/assets/stories-v2/transfer-approved.png",
+        "sha256": "b63e38039497e958ba528e952b5e87435a0fcffe8eeceef645d724610f594c64"
+      },
+      {
+        "file": "product/scene/site/assets/stories-v2/transfer-final-leg-rejected.png",
+        "sha256": "6a84bc54558ac6990aa770bc2f5aef08176951ea441e0abdbc08ce6f03df7cb8"
+      },
+      {
+        "file": "product/scene/site/assets/stories-v2/transfer-missing-agreement.png",
+        "sha256": "c5dd5f5e6c7bb1f1708feb5b3b117dba7358721e05dc3539923c5a48dbb83fea"
+      },
+      {
+        "file": "product/scene/site/assets/stories-v2/transfer-missing-lock.png",
+        "sha256": "b9f479114248f767d27cc9ffd9a241605f9cba8606c6125328ca20056f4d8de0"
+      },
+      {
+        "file": "product/scene/site/assets/stories-v2/transfer-missing-readiness.png",
+        "sha256": "4aac25ca473edbca626c063ef244fe5e803f784e2cff8cdbab1d008c0355051e"
+      },
+      {
+        "file": "product/scene/site/assets/stories-v2/workflow-rejected.png",
+        "sha256": "b51bce49590e6af6fab496c9cded4b31cb7bebf3db8027d68b306602a061204b"
+      },
+      {
+        "file": "product/scene/site/scene.css",
+        "sha256": "a24a559ad86979104738583947854632c1a232999a2bf99b670fda0c161ab9fd"
+      },
+      {
+        "file": "product/scene/site/surface.css",
+        "sha256": "d262afba73a0a8f6cd279634bb311f199fc92237a68887d620b366a189891e36"
+      }
+    ],
+    "projectors": [
+      {
+        "file": "book/browser/src/main/scala/harmonia/book/diagram/RecordedScene.scala",
+        "sha256": "ff035321b5781104680f2747d8da0fbc852011ceb8dcdb96f90473ff67306fd2"
+      },
+      {
+        "file": "book/browser/src/main/scala/harmonia/book/diagram/StoryDiagram.scala",
+        "sha256": "3e84693a2d8a938624d14d8b21cdfe92f830d82de04206c09577c650a6a3f32d"
+      },
+      {
+        "file": "book/browser/src/main/scala/harmonia/book/narrative/RecordedConversation.scala",
+        "sha256": "6f8af084510ae0202276d172c5fb424e650ae3ca46de98e767d8da5ef4d34837"
+      },
+      {
+        "file": "book/browser/src/main/scala/harmonia/book/narrative/RecordedIllustrations.scala",
+        "sha256": "73cc70fa954cd50b7660e056976bfc505c0e845ad2af7e35680e0bc0bee3aebf"
+      }
+    ]
+  }
+}

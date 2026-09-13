@@ -1,0 +1,488 @@
+{
+  "format": "harmonia-showcase/1",
+  "id": "composer-generated",
+  "title": "Change the order and use an unchanged application",
+  "purpose": "The buyer reviews first. The bank then approves through a generated adapter against the unchanged legacy application. A reader chooses these actions and their order; no generated Daml needs editing.",
+  "kind": "Composition",
+  "diagram": {
+    "renderer": "diagram",
+    "shared": {}
+  },
+  "steps": [
+    {
+      "id": "proposal",
+      "actor": "bank",
+      "action": "propose",
+      "open": "laboratory.html?story=composer-generated&step=0",
+      "illustration": "composer-direct",
+      "dialogue": [
+        {
+          "speaker": "Bank",
+          "portrait": "bank",
+          "text": "I’ve proposed these exact actions."
+        },
+        {
+          "speaker": "Buyer",
+          "portrait": "alice",
+          "text": "Nothing starts before my consent."
+        }
+      ],
+      "diagram": {
+        "title": "bank · propose",
+        "caption": "not-started",
+        "nodes": [
+          {
+            "id": "proposal",
+            "label": "Propose the plan",
+            "detail": "The bank proposes these exact actions.",
+            "actor": "Bank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "consent",
+            "label": "Accept the plan",
+            "detail": "Sources are created only after partner consent.",
+            "actor": "Buyer",
+            "state": "current",
+            "conversation": null
+          },
+          {
+            "id": "action-inspection",
+            "label": "inspection",
+            "detail": "No source observed",
+            "actor": "buyer · inspector",
+            "state": "pending",
+            "conversation": null
+          },
+          {
+            "id": "action-financing",
+            "label": "financing",
+            "detail": "No source observed",
+            "actor": "bank · lender",
+            "state": "pending",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "proposal",
+            "to": "consent",
+            "state": "pending"
+          },
+          {
+            "from": "consent",
+            "to": "action-inspection",
+            "state": "pending"
+          },
+          {
+            "from": "action-inspection",
+            "to": "action-financing",
+            "state": "pending"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "bank",
+        "action": "proposal",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "completed": [],
+          "drafts": 1,
+          "enabled": [],
+          "id": "proposal",
+          "instances": 0,
+          "outcome": "committed",
+          "sources": {},
+          "workflow": "not-started"
+        },
+        "expected_pointer": "/presentation/units/0/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "current",
+          "pending",
+          "pending",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=composer-direct&step=6",
+        "next": "laboratory.html?story=composer-generated&step=1"
+      }
+    },
+    {
+      "id": "acceptance",
+      "actor": "buyer",
+      "action": "accept",
+      "open": "laboratory.html?story=composer-generated&step=1",
+      "illustration": "plan-accepted",
+      "dialogue": [
+        {
+          "speaker": "Bank",
+          "portrait": "bank",
+          "text": "The plan now has its source contracts."
+        },
+        {
+          "speaker": "Buyer",
+          "portrait": "alice",
+          "text": "I’ve accepted the proposed actions."
+        }
+      ],
+      "diagram": {
+        "title": "buyer · accept",
+        "caption": "waiting",
+        "nodes": [
+          {
+            "id": "proposal",
+            "label": "Propose the plan",
+            "detail": "The bank proposes these exact actions.",
+            "actor": "Bank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "consent",
+            "label": "Accept the plan",
+            "detail": "Sources are created only after partner consent.",
+            "actor": "Buyer",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "action-inspection",
+            "label": "inspection",
+            "detail": "pending",
+            "actor": "buyer · inspector",
+            "state": "current",
+            "conversation": null
+          },
+          {
+            "id": "action-financing",
+            "label": "financing",
+            "detail": "pending",
+            "actor": "bank · lender",
+            "state": "pending",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "proposal",
+            "to": "consent",
+            "state": "complete"
+          },
+          {
+            "from": "consent",
+            "to": "action-inspection",
+            "state": "pending"
+          },
+          {
+            "from": "action-inspection",
+            "to": "action-financing",
+            "state": "pending"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "buyer",
+        "action": "acceptance",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "completed": [],
+          "drafts": 0,
+          "enabled": [
+            "inspection"
+          ],
+          "id": "acceptance",
+          "instances": 1,
+          "outcome": "committed",
+          "sources": {
+            "financing": "pending",
+            "inspection": "pending"
+          },
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/1/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "current",
+          "pending",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=composer-generated&step=0",
+        "next": "laboratory.html?story=composer-generated&step=2"
+      }
+    },
+    {
+      "id": "inspection",
+      "actor": "buyer",
+      "action": "advance",
+      "open": "laboratory.html?story=composer-generated&step=2",
+      "illustration": "sequence-complete",
+      "dialogue": [
+        {
+          "speaker": "Developer",
+          "portrait": "developer",
+          "text": "inspection was completed."
+        },
+        {
+          "speaker": "Reviewer",
+          "portrait": "reviewer",
+          "text": "The next assigned action is enabled."
+        }
+      ],
+      "diagram": {
+        "title": "buyer · advance",
+        "caption": "waiting",
+        "nodes": [
+          {
+            "id": "proposal",
+            "label": "Propose the plan",
+            "detail": "The bank proposes these exact actions.",
+            "actor": "Bank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "consent",
+            "label": "Accept the plan",
+            "detail": "Sources are created only after partner consent.",
+            "actor": "Buyer",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "action-inspection",
+            "label": "inspection",
+            "detail": "confirmed",
+            "actor": "buyer · inspector",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "action-financing",
+            "label": "financing",
+            "detail": "pending",
+            "actor": "bank · lender",
+            "state": "current",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "proposal",
+            "to": "consent",
+            "state": "complete"
+          },
+          {
+            "from": "consent",
+            "to": "action-inspection",
+            "state": "complete"
+          },
+          {
+            "from": "action-inspection",
+            "to": "action-financing",
+            "state": "pending"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "buyer",
+        "action": "inspection",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "completed": [
+            "inspection"
+          ],
+          "drafts": 0,
+          "enabled": [
+            "financing"
+          ],
+          "id": "inspection",
+          "instances": 1,
+          "outcome": "committed",
+          "sources": {
+            "financing": "pending",
+            "inspection": "confirmed"
+          },
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/2/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "complete",
+          "current",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=composer-generated&step=1",
+        "next": "laboratory.html?story=composer-generated&step=3"
+      }
+    },
+    {
+      "id": "financing",
+      "actor": "bank",
+      "action": "advance",
+      "open": "laboratory.html?story=composer-generated&step=3",
+      "illustration": "approval-signed",
+      "dialogue": [
+        {
+          "speaker": "Developer",
+          "portrait": "developer",
+          "text": "financing was completed."
+        },
+        {
+          "speaker": "Reviewer",
+          "portrait": "reviewer",
+          "text": "The composed workflow is complete."
+        }
+      ],
+      "diagram": {
+        "title": "bank · advance",
+        "caption": "complete",
+        "nodes": [
+          {
+            "id": "proposal",
+            "label": "Propose the plan",
+            "detail": "The bank proposes these exact actions.",
+            "actor": "Bank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "consent",
+            "label": "Accept the plan",
+            "detail": "Sources are created only after partner consent.",
+            "actor": "Buyer",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "action-inspection",
+            "label": "inspection",
+            "detail": "confirmed",
+            "actor": "buyer · inspector",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "action-financing",
+            "label": "financing",
+            "detail": "approved",
+            "actor": "bank · lender",
+            "state": "complete",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "proposal",
+            "to": "consent",
+            "state": "complete"
+          },
+          {
+            "from": "consent",
+            "to": "action-inspection",
+            "state": "complete"
+          },
+          {
+            "from": "action-inspection",
+            "to": "action-financing",
+            "state": "complete"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "bank",
+        "action": "financing",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "completed": [
+            "inspection",
+            "financing"
+          ],
+          "drafts": 0,
+          "enabled": [],
+          "id": "financing",
+          "instances": 1,
+          "outcome": "committed",
+          "sources": {
+            "financing": "approved",
+            "inspection": "confirmed"
+          },
+          "workflow": "complete"
+        },
+        "expected_pointer": "/presentation/units/3/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "complete",
+          "complete",
+          "current"
+        ],
+        "previous": "laboratory.html?story=composer-generated&step=2",
+        "next": "laboratory.html?story=execution-boundaries&step=0"
+      }
+    }
+  ],
+  "recording": {
+    "file": "book/edition-0.2/recordings/composer-generated.json",
+    "sha256": "642e837f408015d02b4ce1dedf684b9d5ebcd376b2ac2ca2d4ae7cbe81552d73",
+    "provenance": {
+      "actual_sha256": "b31c6a50acc165ee810fad451457796783e2925781e6cc97e2fa905aa5728238",
+      "configured_sdk": "3.4.11",
+      "dar_sha256": "9e5397148dda311e6bad483f97cfef2949e1c51315d52f02a0a7a2881336e25b",
+      "dars": {
+        "harness/ledger/demo/.daml/dist/harmonia-demo-0.1.0.dar": "9e5397148dda311e6bad483f97cfef2949e1c51315d52f02a0a7a2881336e25b"
+      },
+      "expected_sha256": "51f1f1e59264fe8531b8f3e0e68338ad711133fa72d054693309d2cfdbe2f37d",
+      "input_sha256": "fd7a4abbf217b77db334e158302c7874553c3eea0c1af4f333be6b86810f44d8",
+      "java": "17.0.19+10",
+      "matched": true,
+      "mode": "live-canton",
+      "observation_sha256": "a75004613c5819ddc7f0bec7ed2accb434d363c3b11fc1f1eecbcd3762a5108d",
+      "recorded_at": "2026-09-11T05:15:50.342666Z",
+      "revision": "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+      "story_format": 1,
+      "topology": "three authenticated participants; bank proposal and buyer consent; core-managed source actions",
+      "worktree_dirty": false
+    },
+    "evidence": {
+      "input.md": {
+        "file": "book/edition-0.2/recordings/evidence/composer-generated/input.md",
+        "sha256": "fd7a4abbf217b77db334e158302c7874553c3eea0c1af4f333be6b86810f44d8"
+      },
+      "expected.md": {
+        "file": "book/edition-0.2/recordings/evidence/composer-generated/expected.md",
+        "sha256": "51f1f1e59264fe8531b8f3e0e68338ad711133fa72d054693309d2cfdbe2f37d"
+      },
+      "actual.md": {
+        "file": "book/edition-0.2/recordings/evidence/composer-generated/actual.md",
+        "sha256": "b31c6a50acc165ee810fad451457796783e2925781e6cc97e2fa905aa5728238"
+      },
+      "observation.json": {
+        "file": "book/edition-0.2/recordings/evidence/composer-generated/observation.json",
+        "sha256": "a75004613c5819ddc7f0bec7ed2accb434d363c3b11fc1f1eecbcd3762a5108d"
+      }
+    }
+  },
+  "operation": {
+    "file": "product/ledger/composition/daml/Composer.daml",
+    "sha256": "6910026b9ec788e102f7a4d255e2c5d61b3b338b3dea89faafdf70357a942162"
+  }
+}

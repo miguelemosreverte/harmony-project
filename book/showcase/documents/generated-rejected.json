@@ -1,0 +1,135 @@
+{
+  "format": "harmonia-showcase/1",
+  "id": "generated-rejected",
+  "title": "Generated workflow rollback",
+  "purpose": "An approved application cannot be approved again. Even the bank must respect the application's current state.",
+  "kind": "Generated",
+  "diagram": {
+    "renderer": "diagram",
+    "shared": {
+      "title": "Northbank · approve financing",
+      "caption": "approved",
+      "nodes": [
+        {
+          "id": "application",
+          "label": "Application: approved",
+          "detail": "The application retains its choice authority.",
+          "actor": "Northbank",
+          "state": "complete",
+          "conversation": null
+        },
+        {
+          "id": "workflow",
+          "label": "Shared progress",
+          "detail": "waiting",
+          "actor": "Alice",
+          "state": "pending",
+          "conversation": null
+        }
+      ],
+      "edges": [
+        {
+          "from": "application",
+          "to": "workflow",
+          "state": "pending"
+        }
+      ]
+    }
+  },
+  "steps": [
+    {
+      "id": "repeated-approval",
+      "actor": "Northbank",
+      "action": "approve-financing",
+      "open": "laboratory.html?story=generated-rejected&step=0",
+      "illustration": "already-approved",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "This approval attempt was refused."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "An existing approval cannot be exercised again."
+        }
+      ],
+      "diagram": {},
+      "observation": {
+        "actor": "Northbank",
+        "action": "repeated approval",
+        "outcome": "rejected"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 1,
+          "application": "approved",
+          "consumed": false,
+          "id": "repeated-approval",
+          "outcome": "rejected",
+          "reason": "application-rejected",
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/0/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "refused"
+        ],
+        "previous": "laboratory.html?story=generated-approved&step=1",
+        "next": "laboratory.html?story=live-handoff&step=0"
+      }
+    }
+  ],
+  "recording": {
+    "file": "book/edition-0.2/recordings/generated-rejected.json",
+    "sha256": "4d1413e07ca76e16e0977cc472cdf195ab2680eda07839611d0643c901146bca",
+    "provenance": {
+      "actual_sha256": "ccd99901be2471b9cc782d2f7f034c1e5b04c65fc899b1fda9144f0c0b36dc73",
+      "configured_sdk": "3.4.11",
+      "dar_sha256": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e",
+      "dars": {
+        "harness/ledger/tests/.daml/dist/harmonia-tests-0.1.0.dar": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e"
+      },
+      "expected_sha256": "fe8ba01df161c0b510931f69e64d33275849e37693326f6c896442bedc668f8f",
+      "input_sha256": "6427dc69a4547c233e36ba04f1f6a05e78149ed5d40c15df4cf137316953a3c9",
+      "java": "17.0.19+10",
+      "matched": true,
+      "mode": "live-canton",
+      "observation_sha256": "0d9a88a6560246925d3a4bc38df885f386b169de4c8bcdaf974a09705934c12c",
+      "recorded_at": "2026-09-11T05:11:44.166488Z",
+      "revision": "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+      "story_format": 1,
+      "topology": "one participant, one synchronizer, separate party identities",
+      "worktree_dirty": false
+    },
+    "evidence": {
+      "input.md": {
+        "file": "book/edition-0.2/recordings/evidence/generated-rejected/input.md",
+        "sha256": "6427dc69a4547c233e36ba04f1f6a05e78149ed5d40c15df4cf137316953a3c9"
+      },
+      "expected.md": {
+        "file": "book/edition-0.2/recordings/evidence/generated-rejected/expected.md",
+        "sha256": "fe8ba01df161c0b510931f69e64d33275849e37693326f6c896442bedc668f8f"
+      },
+      "actual.md": {
+        "file": "book/edition-0.2/recordings/evidence/generated-rejected/actual.md",
+        "sha256": "ccd99901be2471b9cc782d2f7f034c1e5b04c65fc899b1fda9144f0c0b36dc73"
+      },
+      "observation.json": {
+        "file": "book/edition-0.2/recordings/evidence/generated-rejected/observation.json",
+        "sha256": "0d9a88a6560246925d3a4bc38df885f386b169de4c8bcdaf974a09705934c12c"
+      }
+    }
+  },
+  "operation": {
+    "file": "product/server/src/main/scala/harmonia/bindings/generate/GenerateSources.scala",
+    "sha256": "de69a616002143866d37ba5cf2c3d916616af658aeb57a834afea1ae0d939cdd"
+  }
+}

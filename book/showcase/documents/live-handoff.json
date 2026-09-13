@@ -1,0 +1,424 @@
+{
+  "format": "harmonia-showcase/1",
+  "id": "live-handoff",
+  "title": "Approve privately, continue in another session",
+  "purpose": "The bank, buyer, and Olivia each connect with credentials restricted to their own party on a separate participant. The browser cannot select another identity. The live viewer loads this setup; the acceptance runner also performs these actions.",
+  "kind": "Private",
+  "diagram": {
+    "renderer": "diagram",
+    "shared": {}
+  },
+  "steps": [
+    {
+      "id": "approval-required",
+      "actor": "Alice",
+      "action": "publish-approval",
+      "open": "laboratory.html?story=live-handoff&step=0",
+      "illustration": "continuation-waiting",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "The continuation was refused."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "The bank must approve first."
+        }
+      ],
+      "diagram": {
+        "title": "Alice · publish approval",
+        "caption": "pending",
+        "nodes": [
+          {
+            "id": "application",
+            "label": "Application: pending",
+            "detail": "The application retains its choice authority.",
+            "actor": "Northbank",
+            "state": "pending",
+            "conversation": null
+          },
+          {
+            "id": "result",
+            "label": "Scoped application result",
+            "detail": "Evidence available: Not observed",
+            "actor": "Application boundary",
+            "state": "pending",
+            "conversation": null
+          },
+          {
+            "id": "workflow",
+            "label": "Shared progress",
+            "detail": "waiting",
+            "actor": "Alice",
+            "state": "pending",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "application",
+            "to": "result",
+            "state": "pending"
+          },
+          {
+            "from": "result",
+            "to": "workflow",
+            "state": "pending"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Alice",
+        "action": "approval required",
+        "outcome": "rejected"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 1,
+          "application": "pending",
+          "consumed": false,
+          "id": "approval-required",
+          "outcome": "rejected",
+          "reason": "ledger-rejected",
+          "visible_to": [
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/0/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "refused",
+          "pending",
+          "refused",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=generated-rejected&step=0",
+        "next": "laboratory.html?story=live-handoff&step=1"
+      }
+    },
+    {
+      "id": "bank-approval",
+      "actor": "Northbank",
+      "action": "approve-financing",
+      "open": "laboratory.html?story=live-handoff&step=1",
+      "illustration": "approval-signed",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "The application is now approved."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "I can now publish the scoped result."
+        }
+      ],
+      "diagram": {
+        "title": "Northbank · approve financing",
+        "caption": "approved",
+        "nodes": [
+          {
+            "id": "application",
+            "label": "Application: approved",
+            "detail": "The application retains its choice authority.",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "result",
+            "label": "Scoped application result",
+            "detail": "Evidence available: Not observed",
+            "actor": "Application boundary",
+            "state": "pending",
+            "conversation": null
+          },
+          {
+            "id": "workflow",
+            "label": "Shared progress",
+            "detail": "waiting",
+            "actor": "Alice",
+            "state": "pending",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "application",
+            "to": "result",
+            "state": "pending"
+          },
+          {
+            "from": "result",
+            "to": "workflow",
+            "state": "pending"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Northbank",
+        "action": "bank approval",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 1,
+          "application": "approved",
+          "consumed": true,
+          "id": "bank-approval",
+          "outcome": "committed",
+          "visible_to": [
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/1/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "refused",
+          "current",
+          "refused",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=live-handoff&step=0",
+        "next": "laboratory.html?story=live-handoff&step=2"
+      }
+    },
+    {
+      "id": "observer-cannot-continue",
+      "actor": "Olivia",
+      "action": "publish-approval",
+      "open": "laboratory.html?story=live-handoff&step=2",
+      "illustration": "workflow-rejected",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "The continuation was refused."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "Only the buyer may continue."
+        }
+      ],
+      "diagram": {
+        "title": "Olivia · publish approval",
+        "caption": "approved",
+        "nodes": [
+          {
+            "id": "application",
+            "label": "Application: approved",
+            "detail": "The application retains its choice authority.",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "result",
+            "label": "Scoped application result",
+            "detail": "Evidence available: Not observed",
+            "actor": "Application boundary",
+            "state": "pending",
+            "conversation": null
+          },
+          {
+            "id": "workflow",
+            "label": "Shared progress",
+            "detail": "waiting",
+            "actor": "Alice",
+            "state": "pending",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "application",
+            "to": "result",
+            "state": "pending"
+          },
+          {
+            "from": "result",
+            "to": "workflow",
+            "state": "pending"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Olivia",
+        "action": "observer cannot continue",
+        "outcome": "rejected"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 1,
+          "application": "approved",
+          "consumed": false,
+          "id": "observer-cannot-continue",
+          "outcome": "rejected",
+          "reason": "ledger-rejected",
+          "visible_to": [
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/2/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "refused",
+          "complete",
+          "refused",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=live-handoff&step=1",
+        "next": "laboratory.html?story=live-handoff&step=3"
+      }
+    },
+    {
+      "id": "buyer-continuation",
+      "actor": "Alice",
+      "action": "publish-approval",
+      "open": "laboratory.html?story=live-handoff&step=3",
+      "illustration": "result-published",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "The financing documents stay private."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "I’ve shared the scoped approval result."
+        }
+      ],
+      "diagram": {
+        "title": "Alice · publish approval",
+        "caption": "approved",
+        "nodes": [
+          {
+            "id": "application",
+            "label": "Application: approved",
+            "detail": "The application retains its choice authority.",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "result",
+            "label": "Scoped application result",
+            "detail": "Evidence available: Not observed",
+            "actor": "Application boundary",
+            "state": "pending",
+            "conversation": null
+          },
+          {
+            "id": "workflow",
+            "label": "Shared progress",
+            "detail": "complete",
+            "actor": "Alice",
+            "state": "complete",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "application",
+            "to": "result",
+            "state": "pending"
+          },
+          {
+            "from": "result",
+            "to": "workflow",
+            "state": "complete"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Alice",
+        "action": "buyer continuation",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 1,
+          "application": "approved",
+          "consumed": false,
+          "id": "buyer-continuation",
+          "outcome": "committed",
+          "visible_to": [
+            "Northbank"
+          ],
+          "workflow": "complete"
+        },
+        "expected_pointer": "/presentation/units/3/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "refused",
+          "complete",
+          "refused",
+          "current"
+        ],
+        "previous": "laboratory.html?story=live-handoff&step=2",
+        "next": "laboratory.html?story=package-builder&step=0"
+      }
+    }
+  ],
+  "recording": {
+    "file": "book/edition-0.2/recordings/live-handoff.json",
+    "sha256": "6073082781c70d9a49115d4240e57520575872c52d63d10173c7da3bc1843541",
+    "provenance": {
+      "actual_sha256": "55f2ef6d0877a9141222135d643775e720d430e7cddb26c3e5087d20b867259f",
+      "configured_sdk": "3.4.11",
+      "dar_sha256": "9e5397148dda311e6bad483f97cfef2949e1c51315d52f02a0a7a2881336e25b",
+      "dars": {
+        "harness/ledger/demo/.daml/dist/harmonia-demo-0.1.0.dar": "9e5397148dda311e6bad483f97cfef2949e1c51315d52f02a0a7a2881336e25b"
+      },
+      "expected_sha256": "efbbbce23928d80252d7a7c1f9bb1a0bc504b7f9448d0a1f60aa079bd8fed8e1",
+      "input_sha256": "8f5afd901018009e5c6d8748642be58de7422a1b87a5ee609e60e08faa9bdf6a",
+      "java": "17.0.19+10",
+      "matched": true,
+      "mode": "live-canton",
+      "observation_sha256": "4f110b96e8bab79c6cc4e87895b573bfd0a455adf01935dfe8da782404681272",
+      "recorded_at": "2026-09-11T05:14:59.131854Z",
+      "revision": "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+      "story_format": 1,
+      "topology": "three independent participants; restricted JWT users; independent HTTP sessions; one common synchronizer",
+      "worktree_dirty": false
+    },
+    "evidence": {
+      "input.md": {
+        "file": "book/edition-0.2/recordings/evidence/live-handoff/input.md",
+        "sha256": "8f5afd901018009e5c6d8748642be58de7422a1b87a5ee609e60e08faa9bdf6a"
+      },
+      "expected.md": {
+        "file": "book/edition-0.2/recordings/evidence/live-handoff/expected.md",
+        "sha256": "efbbbce23928d80252d7a7c1f9bb1a0bc504b7f9448d0a1f60aa079bd8fed8e1"
+      },
+      "actual.md": {
+        "file": "book/edition-0.2/recordings/evidence/live-handoff/actual.md",
+        "sha256": "55f2ef6d0877a9141222135d643775e720d430e7cddb26c3e5087d20b867259f"
+      },
+      "observation.json": {
+        "file": "book/edition-0.2/recordings/evidence/live-handoff/observation.json",
+        "sha256": "4f110b96e8bab79c6cc4e87895b573bfd0a455adf01935dfe8da782404681272"
+      }
+    }
+  },
+  "operation": {
+    "file": "product/server/src/main/scala/harmonia/financing/Financing.scala",
+    "sha256": "0887693f6d333e473069d90d7d66486ae695d5b49c54b3540a7847adbe7e911a"
+  }
+}

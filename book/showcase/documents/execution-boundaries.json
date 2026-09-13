@@ -1,0 +1,229 @@
+{
+  "format": "harmonia-showcase/1",
+  "id": "execution-boundaries",
+  "title": "Execute the supported limits and compete for one step",
+  "purpose": "The ledger script exercises the actual core and composer bounds. A separate authenticated network then submits two distinct commands against the same observed process contract. Both requests use the bank's own credentials.",
+  "kind": "Boundaries",
+  "diagram": {
+    "renderer": "diagram",
+    "shared": {
+      "edges": [
+        {
+          "from": "actor",
+          "to": "action",
+          "state": "pending"
+        },
+        {
+          "from": "action",
+          "to": "observation",
+          "state": "complete"
+        }
+      ]
+    }
+  },
+  "steps": [
+    {
+      "id": "core",
+      "actor": "Ledger script",
+      "action": "Exercise supported limits",
+      "open": "laboratory.html?story=execution-boundaries&step=0",
+      "illustration": "limits-checked",
+      "dialogue": [
+        {
+          "speaker": "Developer",
+          "portrait": "developer",
+          "text": "The run exercised 16 workflow steps."
+        },
+        {
+          "speaker": "Reviewer",
+          "portrait": "reviewer",
+          "text": "The oversized graph was refused."
+        }
+      ],
+      "diagram": {
+        "title": "Ledger script · Exercise supported limits",
+        "caption": "14 observations",
+        "nodes": [
+          {
+            "id": "actor",
+            "label": "Ledger script",
+            "detail": "Actor or verification owner named in the recording.",
+            "actor": "Recorded actor",
+            "state": "pending",
+            "conversation": null
+          },
+          {
+            "id": "action",
+            "label": "Exercise supported limits",
+            "detail": "core",
+            "actor": "Recorded operation",
+            "state": "current",
+            "conversation": null
+          },
+          {
+            "id": "observation",
+            "label": "Verification phase",
+            "detail": "14 observations",
+            "actor": "Observed response",
+            "state": "complete",
+            "conversation": null
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Ledger script",
+        "action": "core",
+        "outcome": "Verification phase"
+      },
+      "evidence": {
+        "observed": {
+          "approved_sources": 16,
+          "composition_approved_sources": 4,
+          "composition_overflow_rejected": true,
+          "duplicate_kept_identity": true,
+          "graph_overflow_rejected": true,
+          "join_complete": true,
+          "maximum_composer_steps": 4,
+          "maximum_join_prerequisites": 14,
+          "maximum_proposals": 8,
+          "maximum_steps": 16,
+          "missing_disclosure_rejected": true,
+          "proposal_overflow_rejected": true,
+          "request_collision_rejected": true,
+          "stale_contract_rejected": true
+        },
+        "expected_pointer": "/presentation/units/0/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "current",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=composer-generated&step=3",
+        "next": "laboratory.html?story=execution-boundaries&step=1"
+      }
+    },
+    {
+      "id": "race",
+      "actor": "Bank",
+      "action": "Compete for one step",
+      "open": "laboratory.html?story=execution-boundaries&step=1",
+      "illustration": "execution-boundaries",
+      "dialogue": [
+        {
+          "speaker": "Developer",
+          "portrait": "developer",
+          "text": "1 request committed; 1 conflicted."
+        },
+        {
+          "speaker": "Reviewer",
+          "portrait": "reviewer",
+          "text": "1 approval was recorded."
+        }
+      ],
+      "diagram": {
+        "title": "Bank · Compete for one step",
+        "caption": "7 observations",
+        "nodes": [
+          {
+            "id": "actor",
+            "label": "Bank",
+            "detail": "Actor or verification owner named in the recording.",
+            "actor": "Recorded actor",
+            "state": "pending",
+            "conversation": null
+          },
+          {
+            "id": "action",
+            "label": "Compete for one step",
+            "detail": "race",
+            "actor": "Recorded operation",
+            "state": "current",
+            "conversation": null
+          },
+          {
+            "id": "observation",
+            "label": "Verification phase",
+            "detail": "7 observations",
+            "actor": "Observed response",
+            "state": "complete",
+            "conversation": null
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Bank",
+        "action": "race",
+        "outcome": "Verification phase"
+      },
+      "evidence": {
+        "observed": {
+          "active_processes": 1,
+          "approved_sources": 1,
+          "committed": 1,
+          "committed_transactions": 1,
+          "completed_steps": 1,
+          "conflicting": 1,
+          "original_source_archived": true
+        },
+        "expected_pointer": "/presentation/units/1/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "current"
+        ],
+        "previous": "laboratory.html?story=execution-boundaries&step=0",
+        "next": "laboratory.html?story=financing-approved&step=0"
+      }
+    }
+  ],
+  "recording": {
+    "file": "book/edition-0.2/recordings/execution-boundaries.json",
+    "sha256": "eed9d8b5ecfd0af6a5cd9a80a52952f3b5c53dfdba4e1e0f3a44e601439c5997",
+    "provenance": {
+      "actual_sha256": "6997f0e739416d204888e220717e88418598f1e06e99724371644079ff4b758d",
+      "configured_sdk": "3.4.11",
+      "dar_sha256": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e",
+      "dars": {
+        "harness/ledger/demo/.daml/dist/harmonia-demo-0.1.0.dar": "9e5397148dda311e6bad483f97cfef2949e1c51315d52f02a0a7a2881336e25b",
+        "harness/ledger/tests/.daml/dist/harmonia-tests-0.1.0.dar": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e"
+      },
+      "expected_sha256": "670801f22b0f86b629b1ea5692a53b9b01d17da3b5b2d3350901b00aecac19b3",
+      "input_sha256": "9479228510678c3b686e667f9096efa97200be232322fb8aa354c4cfb52d5712",
+      "java": "17.0.19+10",
+      "matched": true,
+      "mode": "live-canton",
+      "observation_sha256": "100d358a79d4a27c10e0b97dac4892abb6bd63446ee3f3a5df0e142b4c46e5a8",
+      "recorded_at": "2026-09-11T05:17:35.677873Z",
+      "revision": "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+      "story_format": 1,
+      "topology": "real ledger boundary script; two concurrent authenticated Ledger API commands against one process contract",
+      "worktree_dirty": false
+    },
+    "evidence": {
+      "input.md": {
+        "file": "book/edition-0.2/recordings/evidence/execution-boundaries/input.md",
+        "sha256": "9479228510678c3b686e667f9096efa97200be232322fb8aa354c4cfb52d5712"
+      },
+      "expected.md": {
+        "file": "book/edition-0.2/recordings/evidence/execution-boundaries/expected.md",
+        "sha256": "670801f22b0f86b629b1ea5692a53b9b01d17da3b5b2d3350901b00aecac19b3"
+      },
+      "actual.md": {
+        "file": "book/edition-0.2/recordings/evidence/execution-boundaries/actual.md",
+        "sha256": "6997f0e739416d204888e220717e88418598f1e06e99724371644079ff4b758d"
+      },
+      "observation.json": {
+        "file": "book/edition-0.2/recordings/evidence/execution-boundaries/observation.json",
+        "sha256": "100d358a79d4a27c10e0b97dac4892abb6bd63446ee3f3a5df0e142b4c46e5a8"
+      }
+    }
+  },
+  "operation": {
+    "file": "harness/ledger/tests/daml/Boundaries.daml",
+    "sha256": "4a06ed9e64d5dc72869c918a70c3665e5a68c07f96caf7055224946f9dae7f83"
+  }
+}

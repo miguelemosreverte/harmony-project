@@ -1,0 +1,622 @@
+{
+  "format": "harmonia-showcase/1",
+  "id": "branch-declined",
+  "title": "The declined branch records closure",
+  "purpose": "The bank selects one path. The join waits for every required action in that path. Unselected application contracts remain unchanged.",
+  "kind": "Progression",
+  "diagram": {
+    "renderer": "diagram",
+    "shared": {
+      "caption": "pending"
+    }
+  },
+  "steps": [
+    {
+      "id": "choose-decline",
+      "actor": "Northbank",
+      "action": "choose-decline",
+      "open": "laboratory.html?story=branch-declined&step=0",
+      "illustration": "purchase-rejected",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "I’ve chosen the decline path."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "We record closure instead of approval."
+        }
+      ],
+      "diagram": {
+        "title": "Northbank · choose decline",
+        "nodes": [
+          {
+            "id": "decision",
+            "label": "Choose a route",
+            "detail": "decline",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "financing",
+            "label": "Approve financing",
+            "detail": "pending",
+            "actor": "Northbank",
+            "state": "skipped",
+            "conversation": null
+          },
+          {
+            "id": "review",
+            "label": "Confirm the review",
+            "detail": "pending",
+            "actor": "Alice",
+            "state": "skipped",
+            "conversation": null
+          },
+          {
+            "id": "closure",
+            "label": "Record the decline",
+            "detail": "pending",
+            "actor": "Northbank",
+            "state": "current",
+            "conversation": null
+          },
+          {
+            "id": "join",
+            "label": "Complete the selected path",
+            "detail": "waiting",
+            "actor": "Alice",
+            "state": "pending",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "decision",
+            "to": "financing",
+            "state": "skipped"
+          },
+          {
+            "from": "decision",
+            "to": "review",
+            "state": "skipped"
+          },
+          {
+            "from": "decision",
+            "to": "closure",
+            "state": "pending"
+          },
+          {
+            "from": "financing",
+            "to": "join",
+            "state": "skipped"
+          },
+          {
+            "from": "review",
+            "to": "join",
+            "state": "skipped"
+          },
+          {
+            "from": "closure",
+            "to": "join",
+            "state": "pending"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Northbank",
+        "action": "choose decline",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 3,
+          "application": "pending",
+          "branch": "decline",
+          "closure": "pending",
+          "completed": [
+            "decision"
+          ],
+          "consumed": false,
+          "enabled": [
+            "closure"
+          ],
+          "id": "choose-decline",
+          "outcome": "committed",
+          "review": "pending",
+          "skipped": [
+            "financing",
+            "review"
+          ],
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/0/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "current",
+          "refused",
+          "pending",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=branch-approved&step=9",
+        "next": "laboratory.html?story=branch-declined&step=1"
+      }
+    },
+    {
+      "id": "unselected-financing",
+      "actor": "Northbank",
+      "action": "approve-financing",
+      "open": "laboratory.html?story=branch-declined&step=1",
+      "illustration": "path-fixed",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "Financing belongs to the other branch."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "We follow the decline path."
+        }
+      ],
+      "diagram": {
+        "title": "Northbank · approve financing",
+        "nodes": [
+          {
+            "id": "decision",
+            "label": "Choose a route",
+            "detail": "decline",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "financing",
+            "label": "Approve financing",
+            "detail": "pending",
+            "actor": "Northbank",
+            "state": "skipped",
+            "conversation": null
+          },
+          {
+            "id": "review",
+            "label": "Confirm the review",
+            "detail": "pending",
+            "actor": "Alice",
+            "state": "skipped",
+            "conversation": null
+          },
+          {
+            "id": "closure",
+            "label": "Record the decline",
+            "detail": "pending",
+            "actor": "Northbank",
+            "state": "current",
+            "conversation": null
+          },
+          {
+            "id": "join",
+            "label": "Complete the selected path",
+            "detail": "waiting",
+            "actor": "Alice",
+            "state": "pending",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "decision",
+            "to": "financing",
+            "state": "skipped"
+          },
+          {
+            "from": "decision",
+            "to": "review",
+            "state": "skipped"
+          },
+          {
+            "from": "decision",
+            "to": "closure",
+            "state": "pending"
+          },
+          {
+            "from": "financing",
+            "to": "join",
+            "state": "skipped"
+          },
+          {
+            "from": "review",
+            "to": "join",
+            "state": "skipped"
+          },
+          {
+            "from": "closure",
+            "to": "join",
+            "state": "pending"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Northbank",
+        "action": "unselected financing",
+        "outcome": "rejected"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 3,
+          "application": "pending",
+          "branch": "decline",
+          "closure": "pending",
+          "completed": [
+            "decision"
+          ],
+          "consumed": false,
+          "enabled": [
+            "closure"
+          ],
+          "id": "unselected-financing",
+          "outcome": "rejected",
+          "reason": "application-rejected",
+          "review": "pending",
+          "skipped": [
+            "financing",
+            "review"
+          ],
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/1/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "refused",
+          "pending",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=branch-declined&step=0",
+        "next": "laboratory.html?story=branch-declined&step=2"
+      }
+    },
+    {
+      "id": "record-closure",
+      "actor": "Northbank",
+      "action": "close-application",
+      "open": "laboratory.html?story=branch-declined&step=2",
+      "illustration": "branch-declined",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "The closure is recorded."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "The selected branch can now join."
+        }
+      ],
+      "diagram": {
+        "title": "Northbank · close application",
+        "nodes": [
+          {
+            "id": "decision",
+            "label": "Choose a route",
+            "detail": "decline",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "financing",
+            "label": "Approve financing",
+            "detail": "pending",
+            "actor": "Northbank",
+            "state": "skipped",
+            "conversation": null
+          },
+          {
+            "id": "review",
+            "label": "Confirm the review",
+            "detail": "pending",
+            "actor": "Alice",
+            "state": "skipped",
+            "conversation": null
+          },
+          {
+            "id": "closure",
+            "label": "Record the decline",
+            "detail": "confirmed",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "join",
+            "label": "Complete the selected path",
+            "detail": "waiting",
+            "actor": "Alice",
+            "state": "current",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "decision",
+            "to": "financing",
+            "state": "skipped"
+          },
+          {
+            "from": "decision",
+            "to": "review",
+            "state": "skipped"
+          },
+          {
+            "from": "decision",
+            "to": "closure",
+            "state": "complete"
+          },
+          {
+            "from": "financing",
+            "to": "join",
+            "state": "skipped"
+          },
+          {
+            "from": "review",
+            "to": "join",
+            "state": "skipped"
+          },
+          {
+            "from": "closure",
+            "to": "join",
+            "state": "pending"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Northbank",
+        "action": "record closure",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 3,
+          "application": "pending",
+          "branch": "decline",
+          "closure": "confirmed",
+          "completed": [
+            "decision",
+            "closure"
+          ],
+          "consumed": false,
+          "enabled": [
+            "join"
+          ],
+          "id": "record-closure",
+          "outcome": "committed",
+          "review": "pending",
+          "skipped": [
+            "financing",
+            "review"
+          ],
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "waiting"
+        },
+        "expected_pointer": "/presentation/units/2/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "refused",
+          "current",
+          "pending"
+        ],
+        "previous": "laboratory.html?story=branch-declined&step=1",
+        "next": "laboratory.html?story=branch-declined&step=3"
+      }
+    },
+    {
+      "id": "join-completes",
+      "actor": "Alice",
+      "action": "complete-join",
+      "open": "laboratory.html?story=branch-declined&step=3",
+      "illustration": "join-complete",
+      "dialogue": [
+        {
+          "speaker": "Northbank",
+          "portrait": "bank",
+          "text": "The selected path has joined."
+        },
+        {
+          "speaker": "Alice",
+          "portrait": "alice",
+          "text": "This workflow is complete."
+        }
+      ],
+      "diagram": {
+        "title": "Alice · complete join",
+        "nodes": [
+          {
+            "id": "decision",
+            "label": "Choose a route",
+            "detail": "decline",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "financing",
+            "label": "Approve financing",
+            "detail": "pending",
+            "actor": "Northbank",
+            "state": "skipped",
+            "conversation": null
+          },
+          {
+            "id": "review",
+            "label": "Confirm the review",
+            "detail": "pending",
+            "actor": "Alice",
+            "state": "skipped",
+            "conversation": null
+          },
+          {
+            "id": "closure",
+            "label": "Record the decline",
+            "detail": "confirmed",
+            "actor": "Northbank",
+            "state": "complete",
+            "conversation": null
+          },
+          {
+            "id": "join",
+            "label": "Complete the selected path",
+            "detail": "complete",
+            "actor": "Alice",
+            "state": "complete",
+            "conversation": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "decision",
+            "to": "financing",
+            "state": "skipped"
+          },
+          {
+            "from": "decision",
+            "to": "review",
+            "state": "skipped"
+          },
+          {
+            "from": "decision",
+            "to": "closure",
+            "state": "complete"
+          },
+          {
+            "from": "financing",
+            "to": "join",
+            "state": "skipped"
+          },
+          {
+            "from": "review",
+            "to": "join",
+            "state": "skipped"
+          },
+          {
+            "from": "closure",
+            "to": "join",
+            "state": "complete"
+          }
+        ]
+      },
+      "observation": {
+        "actor": "Alice",
+        "action": "join completes",
+        "outcome": "committed"
+      },
+      "evidence": {
+        "observed": {
+          "active_contracts": 3,
+          "application": "pending",
+          "branch": "decline",
+          "closure": "confirmed",
+          "completed": [
+            "decision",
+            "closure",
+            "join"
+          ],
+          "consumed": false,
+          "enabled": [],
+          "id": "join-completes",
+          "outcome": "committed",
+          "review": "pending",
+          "skipped": [
+            "financing",
+            "review"
+          ],
+          "visible_to": [
+            "Alice",
+            "Northbank"
+          ],
+          "workflow": "complete"
+        },
+        "expected_pointer": "/presentation/units/3/expected",
+        "matches_expectation": true
+      },
+      "navigation": {
+        "progress": [
+          "complete",
+          "refused",
+          "complete",
+          "current"
+        ],
+        "previous": "laboratory.html?story=branch-declined&step=2",
+        "next": "laboratory.html?story=composer-direct&step=0"
+      }
+    }
+  ],
+  "recording": {
+    "file": "book/edition-0.2/recordings/branch-declined.json",
+    "sha256": "cb33de651e2d80a8ad056b874c4ee3a34482ed7be02ec356c9257343faf6f497",
+    "provenance": {
+      "actual_sha256": "2b299b0d6eacb85aaff07f89c141a7ddd0e0ec92a2474fb70afdd56cca149d0d",
+      "configured_sdk": "3.4.11",
+      "dar_sha256": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e",
+      "dars": {
+        "harness/ledger/tests/.daml/dist/harmonia-tests-0.1.0.dar": "d14be4ec618fcadfbc4c7dc4cb3a976c6ee976c9f6a12149049da9403a905a5e"
+      },
+      "expected_sha256": "edf1c3ef329d5b97c262077b14ace090c8ee58a5501526585dbaa10a5c819a41",
+      "input_sha256": "b84ab7dac9ccdd3940dc1012bede74f5e261c44265c1640583019ff9fce11866",
+      "java": "17.0.19+10",
+      "matched": true,
+      "mode": "live-canton",
+      "observation_sha256": "8a0dc80cf0bea9d3d4cdd4560c7983dd5cbdd77f076f97ec91a8b077b3c37b81",
+      "recorded_at": "2026-09-11T05:10:50.800904Z",
+      "revision": "0014c0d7a3eb8a31f16a2ac4ee81b1ef320d5948",
+      "story_format": 1,
+      "topology": "one participant, one synchronizer, separate party identities",
+      "worktree_dirty": false
+    },
+    "evidence": {
+      "input.md": {
+        "file": "book/edition-0.2/recordings/evidence/branch-declined/input.md",
+        "sha256": "b84ab7dac9ccdd3940dc1012bede74f5e261c44265c1640583019ff9fce11866"
+      },
+      "expected.md": {
+        "file": "book/edition-0.2/recordings/evidence/branch-declined/expected.md",
+        "sha256": "edf1c3ef329d5b97c262077b14ace090c8ee58a5501526585dbaa10a5c819a41"
+      },
+      "actual.md": {
+        "file": "book/edition-0.2/recordings/evidence/branch-declined/actual.md",
+        "sha256": "2b299b0d6eacb85aaff07f89c141a7ddd0e0ec92a2474fb70afdd56cca149d0d"
+      },
+      "observation.json": {
+        "file": "book/edition-0.2/recordings/evidence/branch-declined/observation.json",
+        "sha256": "8a0dc80cf0bea9d3d4cdd4560c7983dd5cbdd77f076f97ec91a8b077b3c37b81"
+      }
+    }
+  },
+  "operation": {
+    "file": "product/ledger/core/daml/Harmonia/Process/Engine.daml",
+    "sha256": "6dd2309e6845f2e44966debddf25fe129afcad91ba8ea5a90fda3a610e5862ac"
+  }
+}
