@@ -1,0 +1,2088 @@
+{
+  "checks": [
+    {
+      "name": "readers-1280-01-product",
+      "w": 1280,
+      "h": 900,
+      "height": 900,
+      "width": 1280,
+      "y": 0,
+      "stage": {
+        "x": 105,
+        "y": 116.078125,
+        "width": 900,
+        "height": 699.921875,
+        "top": 116.078125,
+        "right": 1005,
+        "bottom": 816,
+        "left": 105
+      },
+      "art": {
+        "x": 105,
+        "y": 470.078125,
+        "width": 504.375,
+        "height": 345.921875,
+        "top": 470.078125,
+        "right": 609.375,
+        "bottom": 816,
+        "left": 105
+      },
+      "support": {
+        "x": 105,
+        "y": 470.078125,
+        "width": 900,
+        "height": 345.921875,
+        "top": 470.078125,
+        "right": 1005,
+        "bottom": 816,
+        "left": 105
+      },
+      "nav": {
+        "x": 129,
+        "y": 836,
+        "width": 1022,
+        "height": 56,
+        "top": 836,
+        "right": 1151,
+        "bottom": 892,
+        "left": 129
+      },
+      "canvas": "true",
+      "illustration": "purchase-approved"
+    },
+    {
+      "name": "readers-1280-02-roles-and-trust",
+      "w": 1280,
+      "h": 900,
+      "height": 900,
+      "width": 1280,
+      "y": 0,
+      "stage": {
+        "x": 105,
+        "y": 116.078125,
+        "width": 900,
+        "height": 699.921875,
+        "top": 116.078125,
+        "right": 1005,
+        "bottom": 816,
+        "left": 105
+      },
+      "art": {
+        "x": 105,
+        "y": 470.078125,
+        "width": 504.375,
+        "height": 345.921875,
+        "top": 470.078125,
+        "right": 609.375,
+        "bottom": 816,
+        "left": 105
+      },
+      "support": {
+        "x": 105,
+        "y": 470.078125,
+        "width": 900,
+        "height": 345.921875,
+        "top": 470.078125,
+        "right": 1005,
+        "bottom": 816,
+        "left": 105
+      },
+      "nav": {
+        "x": 129,
+        "y": 836,
+        "width": 1022,
+        "height": 56,
+        "top": 836,
+        "right": 1151,
+        "bottom": 892,
+        "left": 129
+      },
+      "canvas": "true",
+      "illustration": "workflow-rejected"
+    },
+    {
+      "name": "readers-1280-05-bring-an-application",
+      "w": 1280,
+      "h": 900,
+      "height": 900,
+      "width": 1280,
+      "y": 0,
+      "stage": {
+        "x": 105,
+        "y": 116.078125,
+        "width": 900,
+        "height": 699.921875,
+        "top": 116.078125,
+        "right": 1005,
+        "bottom": 816,
+        "left": 105
+      },
+      "art": {
+        "x": 105,
+        "y": 470.078125,
+        "width": 504.375,
+        "height": 345.921875,
+        "top": 470.078125,
+        "right": 609.375,
+        "bottom": 816,
+        "left": 105
+      },
+      "support": {
+        "x": 105,
+        "y": 470.078125,
+        "width": 900,
+        "height": 345.921875,
+        "top": 470.078125,
+        "right": 1005,
+        "bottom": 816,
+        "left": 105
+      },
+      "nav": {
+        "x": 129,
+        "y": 836,
+        "width": 1022,
+        "height": 56,
+        "top": 836,
+        "right": 1151,
+        "bottom": 892,
+        "left": 129
+      },
+      "canvas": "true",
+      "illustration": "package-builder"
+    },
+    {
+      "name": "readers-1280-06-compose-a-workflow",
+      "w": 1280,
+      "h": 900,
+      "height": 900,
+      "width": 1280,
+      "y": 0,
+      "stage": {
+        "x": 105,
+        "y": 116.078125,
+        "width": 900,
+        "height": 699.921875,
+        "top": 116.078125,
+        "right": 1005,
+        "bottom": 816,
+        "left": 105
+      },
+      "art": {
+        "x": 105,
+        "y": 470.078125,
+        "width": 504.375,
+        "height": 345.921875,
+        "top": 470.078125,
+        "right": 609.375,
+        "bottom": 816,
+        "left": 105
+      },
+      "support": {
+        "x": 105,
+        "y": 470.078125,
+        "width": 900,
+        "height": 345.921875,
+        "top": 470.078125,
+        "right": 1005,
+        "bottom": 816,
+        "left": 105
+      },
+      "nav": {
+        "x": 129,
+        "y": 836,
+        "width": 1022,
+        "height": 56,
+        "top": 836,
+        "right": 1151,
+        "bottom": 892,
+        "left": 129
+      },
+      "canvas": "true",
+      "illustration": "composer-direct"
+    },
+    {
+      "name": "readers-1280-07-evidence-and-boundaries",
+      "w": 1280,
+      "h": 900,
+      "height": 900,
+      "width": 1280,
+      "y": 0,
+      "stage": {
+        "x": 105,
+        "y": 116.078125,
+        "width": 900,
+        "height": 699.921875,
+        "top": 116.078125,
+        "right": 1005,
+        "bottom": 816,
+        "left": 105
+      },
+      "art": {
+        "x": 105,
+        "y": 470.078125,
+        "width": 504.375,
+        "height": 345.921875,
+        "top": 470.078125,
+        "right": 609.375,
+        "bottom": 816,
+        "left": 105
+      },
+      "support": {
+        "x": 105,
+        "y": 470.078125,
+        "width": 900,
+        "height": 345.921875,
+        "top": 470.078125,
+        "right": 1005,
+        "bottom": 816,
+        "left": 105
+      },
+      "nav": {
+        "x": 129,
+        "y": 836,
+        "width": 1022,
+        "height": 56,
+        "top": 836,
+        "right": 1151,
+        "bottom": 892,
+        "left": 129
+      },
+      "canvas": "true",
+      "illustration": "evidence-review"
+    },
+    {
+      "name": "readers-1280-08-release-and-adoption",
+      "w": 1280,
+      "h": 900,
+      "height": 900,
+      "width": 1280,
+      "y": 0,
+      "stage": {
+        "x": 105,
+        "y": 116.078125,
+        "width": 900,
+        "height": 699.921875,
+        "top": 116.078125,
+        "right": 1005,
+        "bottom": 816,
+        "left": 105
+      },
+      "art": {
+        "x": 105,
+        "y": 470.078125,
+        "width": 504.375,
+        "height": 345.921875,
+        "top": 470.078125,
+        "right": 609.375,
+        "bottom": 816,
+        "left": 105
+      },
+      "support": {
+        "x": 105,
+        "y": 470.078125,
+        "width": 900,
+        "height": 345.921875,
+        "top": 470.078125,
+        "right": 1005,
+        "bottom": 816,
+        "left": 105
+      },
+      "nav": {
+        "x": 129,
+        "y": 836,
+        "width": 1022,
+        "height": 56,
+        "top": 836,
+        "right": 1151,
+        "bottom": 892,
+        "left": 129
+      },
+      "canvas": "true",
+      "illustration": "release-preparation"
+    },
+    {
+      "name": "readers-1280-09-proposal-context",
+      "w": 1280,
+      "h": 900,
+      "height": 900,
+      "width": 1280,
+      "y": 0,
+      "stage": {
+        "x": 105,
+        "y": 116.078125,
+        "width": 900,
+        "height": 699.921875,
+        "top": 116.078125,
+        "right": 1005,
+        "bottom": 816,
+        "left": 105
+      },
+      "art": {
+        "x": 105,
+        "y": 470.078125,
+        "width": 504.375,
+        "height": 345.921875,
+        "top": 470.078125,
+        "right": 609.375,
+        "bottom": 816,
+        "left": 105
+      },
+      "support": {
+        "x": 105,
+        "y": 470.078125,
+        "width": 900,
+        "height": 345.921875,
+        "top": 470.078125,
+        "right": 1005,
+        "bottom": 816,
+        "left": 105
+      },
+      "nav": {
+        "x": 129,
+        "y": 836,
+        "width": 1022,
+        "height": 56,
+        "top": 836,
+        "right": 1151,
+        "bottom": 892,
+        "left": 129
+      },
+      "canvas": "true",
+      "illustration": "original-reading"
+    },
+    {
+      "name": "readers-1280-10-context-and-references",
+      "w": 1280,
+      "h": 900,
+      "height": 900,
+      "width": 1280,
+      "y": 0,
+      "stage": {
+        "x": 105,
+        "y": 116.078125,
+        "width": 900,
+        "height": 699.921875,
+        "top": 116.078125,
+        "right": 1005,
+        "bottom": 816,
+        "left": 105
+      },
+      "art": {
+        "x": 105,
+        "y": 470.078125,
+        "width": 504.375,
+        "height": 345.921875,
+        "top": 470.078125,
+        "right": 609.375,
+        "bottom": 816,
+        "left": 105
+      },
+      "support": {
+        "x": 105,
+        "y": 470.078125,
+        "width": 900,
+        "height": 345.921875,
+        "top": 470.078125,
+        "right": 1005,
+        "bottom": 816,
+        "left": 105
+      },
+      "nav": {
+        "x": 129,
+        "y": 836,
+        "width": 1022,
+        "height": 56,
+        "top": 836,
+        "right": 1151,
+        "bottom": 892,
+        "left": 129
+      },
+      "canvas": "true",
+      "illustration": "original-reading"
+    },
+    {
+      "name": "readers-1280-reviewer",
+      "w": 1280,
+      "h": 900,
+      "height": 900,
+      "width": 1280,
+      "y": 0,
+      "stage": {
+        "x": 105,
+        "y": 117.6875,
+        "width": 1070,
+        "height": 698.3125,
+        "top": 117.6875,
+        "right": 1175,
+        "bottom": 816,
+        "left": 105
+      },
+      "art": {
+        "x": 180,
+        "y": 471.6875,
+        "width": 515.859375,
+        "height": 344.3125,
+        "top": 471.6875,
+        "right": 695.859375,
+        "bottom": 816,
+        "left": 180
+      },
+      "support": {
+        "x": 180,
+        "y": 471.6875,
+        "width": 920,
+        "height": 344.3125,
+        "top": 471.6875,
+        "right": 1100,
+        "bottom": 816,
+        "left": 180
+      },
+      "nav": {
+        "x": 129,
+        "y": 836,
+        "width": 1022,
+        "height": 56,
+        "top": 836,
+        "right": 1151,
+        "bottom": 892,
+        "left": 129
+      },
+      "canvas": "true",
+      "illustration": "workflow-approved"
+    },
+    {
+      "name": "readers-1280-code",
+      "w": 1280,
+      "h": 900,
+      "height": 1706,
+      "width": 1280,
+      "y": 0,
+      "stage": {
+        "x": 420.03125,
+        "y": 1006.046875,
+        "width": 752.96875,
+        "height": 432.78125,
+        "top": 1006.046875,
+        "right": 1173,
+        "bottom": 1438.828125,
+        "left": 420.03125
+      },
+      "art": {
+        "x": 420.03125,
+        "y": 1148.828125,
+        "width": 419.90625,
+        "height": 290,
+        "top": 1148.828125,
+        "right": 839.9375,
+        "bottom": 1438.828125,
+        "left": 420.03125
+      },
+      "support": {
+        "x": 420.03125,
+        "y": 1148.828125,
+        "width": 752.96875,
+        "height": 290,
+        "top": 1148.828125,
+        "right": 1173,
+        "bottom": 1438.828125,
+        "left": 420.03125
+      },
+      "canvas": "false",
+      "illustration": "composer-direct"
+    },
+    {
+      "name": "readers-1280-author",
+      "w": 1280,
+      "h": 900,
+      "height": 1139,
+      "width": 1280,
+      "y": 0,
+      "stage": {
+        "x": 652,
+        "y": 463.15625,
+        "width": 515,
+        "height": 646,
+        "top": 463.15625,
+        "right": 1167,
+        "bottom": 1109.15625,
+        "left": 652
+      },
+      "art": {
+        "x": 652,
+        "y": 819.15625,
+        "width": 283.203125,
+        "height": 290,
+        "top": 819.15625,
+        "right": 935.203125,
+        "bottom": 1109.15625,
+        "left": 652
+      },
+      "support": {
+        "x": 652,
+        "y": 819.15625,
+        "width": 515,
+        "height": 290,
+        "top": 819.15625,
+        "right": 1167,
+        "bottom": 1109.15625,
+        "left": 652
+      },
+      "nav": {
+        "x": 129,
+        "y": 784,
+        "width": 1022,
+        "height": 100,
+        "top": 784,
+        "right": 1151,
+        "bottom": 884,
+        "left": 129
+      },
+      "canvas": "false",
+      "illustration": "source-workbench"
+    },
+    {
+      "name": "export-1280-branch-approved",
+      "w": 1280,
+      "h": 900,
+      "height": 900,
+      "width": 1280,
+      "y": 0,
+      "stage": {
+        "x": 105,
+        "y": 120.078125,
+        "width": 1070,
+        "height": 695.921875,
+        "top": 120.078125,
+        "right": 1175,
+        "bottom": 816,
+        "left": 105
+      },
+      "art": {
+        "x": 180,
+        "y": 474.078125,
+        "width": 515.859375,
+        "height": 341.921875,
+        "top": 474.078125,
+        "right": 695.859375,
+        "bottom": 816,
+        "left": 180
+      },
+      "support": {
+        "x": 180,
+        "y": 474.078125,
+        "width": 920,
+        "height": 341.921875,
+        "top": 474.078125,
+        "right": 1100,
+        "bottom": 816,
+        "left": 180
+      },
+      "nav": {
+        "x": 129,
+        "y": 836,
+        "width": 1022,
+        "height": 56,
+        "top": 836,
+        "right": 1151,
+        "bottom": 892,
+        "left": 129
+      },
+      "canvas": "true",
+      "illustration": "branch-approved"
+    },
+    {
+      "name": "export-1280-purchase-approved",
+      "w": 1280,
+      "h": 900,
+      "height": 900,
+      "width": 1280,
+      "y": 0,
+      "stage": {
+        "x": 105,
+        "y": 120.078125,
+        "width": 1070,
+        "height": 695.921875,
+        "top": 120.078125,
+        "right": 1175,
+        "bottom": 816,
+        "left": 105
+      },
+      "art": {
+        "x": 180,
+        "y": 474.078125,
+        "width": 515.859375,
+        "height": 341.921875,
+        "top": 474.078125,
+        "right": 695.859375,
+        "bottom": 816,
+        "left": 180
+      },
+      "support": {
+        "x": 180,
+        "y": 474.078125,
+        "width": 920,
+        "height": 341.921875,
+        "top": 474.078125,
+        "right": 1100,
+        "bottom": 816,
+        "left": 180
+      },
+      "nav": {
+        "x": 129,
+        "y": 836,
+        "width": 1022,
+        "height": 56,
+        "top": 836,
+        "right": 1151,
+        "bottom": 892,
+        "left": 129
+      },
+      "canvas": "true",
+      "illustration": "approval-signed"
+    },
+    {
+      "name": "export-1280-transfer-approved",
+      "w": 1280,
+      "h": 900,
+      "height": 900,
+      "width": 1280,
+      "y": 0,
+      "stage": {
+        "x": 105,
+        "y": 120.078125,
+        "width": 1070,
+        "height": 695.921875,
+        "top": 120.078125,
+        "right": 1175,
+        "bottom": 816,
+        "left": 105
+      },
+      "art": {
+        "x": 180,
+        "y": 474.078125,
+        "width": 515.859375,
+        "height": 341.921875,
+        "top": 474.078125,
+        "right": 695.859375,
+        "bottom": 816,
+        "left": 180
+      },
+      "support": {
+        "x": 180,
+        "y": 474.078125,
+        "width": 920,
+        "height": 341.921875,
+        "top": 474.078125,
+        "right": 1100,
+        "bottom": 816,
+        "left": 180
+      },
+      "nav": {
+        "x": 129,
+        "y": 836,
+        "width": 1022,
+        "height": 56,
+        "top": 836,
+        "right": 1151,
+        "bottom": 892,
+        "left": 129
+      },
+      "canvas": "true",
+      "illustration": "position-locked"
+    },
+    {
+      "name": "export-1280-evidence",
+      "passed": true
+    },
+    {
+      "name": "readers-390-01-product",
+      "w": 390,
+      "h": 844,
+      "height": 844,
+      "width": 390,
+      "y": 0,
+      "stage": {
+        "x": 14,
+        "y": 102.28125,
+        "width": 362,
+        "height": 653.71875,
+        "top": 102.28125,
+        "right": 376,
+        "bottom": 756,
+        "left": 14
+      },
+      "art": {
+        "x": 14,
+        "y": 355.03125,
+        "width": 362,
+        "height": 352.375,
+        "top": 355.03125,
+        "right": 376,
+        "bottom": 707.40625,
+        "left": 14
+      },
+      "support": {
+        "x": 14,
+        "y": 355.03125,
+        "width": 362,
+        "height": 400.96875,
+        "top": 355.03125,
+        "right": 376,
+        "bottom": 756,
+        "left": 14
+      },
+      "nav": {
+        "x": 12,
+        "y": 780,
+        "width": 366,
+        "height": 56,
+        "top": 780,
+        "right": 378,
+        "bottom": 836,
+        "left": 12
+      },
+      "canvas": "true",
+      "illustration": "purchase-approved"
+    },
+    {
+      "name": "readers-390-02-roles-and-trust",
+      "w": 390,
+      "h": 844,
+      "height": 844,
+      "width": 390,
+      "y": 0,
+      "stage": {
+        "x": 14,
+        "y": 102.28125,
+        "width": 362,
+        "height": 653.71875,
+        "top": 102.28125,
+        "right": 376,
+        "bottom": 756,
+        "left": 14
+      },
+      "art": {
+        "x": 14,
+        "y": 355.03125,
+        "width": 362,
+        "height": 352.375,
+        "top": 355.03125,
+        "right": 376,
+        "bottom": 707.40625,
+        "left": 14
+      },
+      "support": {
+        "x": 14,
+        "y": 355.03125,
+        "width": 362,
+        "height": 400.96875,
+        "top": 355.03125,
+        "right": 376,
+        "bottom": 756,
+        "left": 14
+      },
+      "nav": {
+        "x": 12,
+        "y": 780,
+        "width": 366,
+        "height": 56,
+        "top": 780,
+        "right": 378,
+        "bottom": 836,
+        "left": 12
+      },
+      "canvas": "true",
+      "illustration": "workflow-rejected"
+    },
+    {
+      "name": "readers-390-05-bring-an-application",
+      "w": 390,
+      "h": 844,
+      "height": 844,
+      "width": 390,
+      "y": 0,
+      "stage": {
+        "x": 14,
+        "y": 102.28125,
+        "width": 362,
+        "height": 653.71875,
+        "top": 102.28125,
+        "right": 376,
+        "bottom": 756,
+        "left": 14
+      },
+      "art": {
+        "x": 14,
+        "y": 355.03125,
+        "width": 362,
+        "height": 352.375,
+        "top": 355.03125,
+        "right": 376,
+        "bottom": 707.40625,
+        "left": 14
+      },
+      "support": {
+        "x": 14,
+        "y": 355.03125,
+        "width": 362,
+        "height": 400.96875,
+        "top": 355.03125,
+        "right": 376,
+        "bottom": 756,
+        "left": 14
+      },
+      "nav": {
+        "x": 12,
+        "y": 780,
+        "width": 366,
+        "height": 56,
+        "top": 780,
+        "right": 378,
+        "bottom": 836,
+        "left": 12
+      },
+      "canvas": "true",
+      "illustration": "package-builder"
+    },
+    {
+      "name": "readers-390-06-compose-a-workflow",
+      "w": 390,
+      "h": 844,
+      "height": 844,
+      "width": 390,
+      "y": 0,
+      "stage": {
+        "x": 14,
+        "y": 102.28125,
+        "width": 362,
+        "height": 653.71875,
+        "top": 102.28125,
+        "right": 376,
+        "bottom": 756,
+        "left": 14
+      },
+      "art": {
+        "x": 14,
+        "y": 355.03125,
+        "width": 362,
+        "height": 352.375,
+        "top": 355.03125,
+        "right": 376,
+        "bottom": 707.40625,
+        "left": 14
+      },
+      "support": {
+        "x": 14,
+        "y": 355.03125,
+        "width": 362,
+        "height": 400.96875,
+        "top": 355.03125,
+        "right": 376,
+        "bottom": 756,
+        "left": 14
+      },
+      "nav": {
+        "x": 12,
+        "y": 780,
+        "width": 366,
+        "height": 56,
+        "top": 780,
+        "right": 378,
+        "bottom": 836,
+        "left": 12
+      },
+      "canvas": "true",
+      "illustration": "composer-direct"
+    },
+    {
+      "name": "readers-390-07-evidence-and-boundaries",
+      "w": 390,
+      "h": 844,
+      "height": 844,
+      "width": 390,
+      "y": 0,
+      "stage": {
+        "x": 14,
+        "y": 102.28125,
+        "width": 362,
+        "height": 653.71875,
+        "top": 102.28125,
+        "right": 376,
+        "bottom": 756,
+        "left": 14
+      },
+      "art": {
+        "x": 14,
+        "y": 355.03125,
+        "width": 362,
+        "height": 334.796875,
+        "top": 355.03125,
+        "right": 376,
+        "bottom": 689.828125,
+        "left": 14
+      },
+      "support": {
+        "x": 14,
+        "y": 355.03125,
+        "width": 362,
+        "height": 400.96875,
+        "top": 355.03125,
+        "right": 376,
+        "bottom": 756,
+        "left": 14
+      },
+      "nav": {
+        "x": 12,
+        "y": 780,
+        "width": 366,
+        "height": 56,
+        "top": 780,
+        "right": 378,
+        "bottom": 836,
+        "left": 12
+      },
+      "canvas": "true",
+      "illustration": "evidence-review"
+    },
+    {
+      "name": "readers-390-08-release-and-adoption",
+      "w": 390,
+      "h": 844,
+      "height": 844,
+      "width": 390,
+      "y": 0,
+      "stage": {
+        "x": 14,
+        "y": 102.28125,
+        "width": 362,
+        "height": 653.71875,
+        "top": 102.28125,
+        "right": 376,
+        "bottom": 756,
+        "left": 14
+      },
+      "art": {
+        "x": 14,
+        "y": 355.03125,
+        "width": 362,
+        "height": 352.375,
+        "top": 355.03125,
+        "right": 376,
+        "bottom": 707.40625,
+        "left": 14
+      },
+      "support": {
+        "x": 14,
+        "y": 355.03125,
+        "width": 362,
+        "height": 400.96875,
+        "top": 355.03125,
+        "right": 376,
+        "bottom": 756,
+        "left": 14
+      },
+      "nav": {
+        "x": 12,
+        "y": 780,
+        "width": 366,
+        "height": 56,
+        "top": 780,
+        "right": 378,
+        "bottom": 836,
+        "left": 12
+      },
+      "canvas": "true",
+      "illustration": "release-preparation"
+    },
+    {
+      "name": "readers-390-09-proposal-context",
+      "w": 390,
+      "h": 844,
+      "height": 844,
+      "width": 390,
+      "y": 0,
+      "stage": {
+        "x": 14,
+        "y": 102.28125,
+        "width": 362,
+        "height": 653.71875,
+        "top": 102.28125,
+        "right": 376,
+        "bottom": 756,
+        "left": 14
+      },
+      "art": {
+        "x": 14,
+        "y": 355.03125,
+        "width": 362,
+        "height": 334.796875,
+        "top": 355.03125,
+        "right": 376,
+        "bottom": 689.828125,
+        "left": 14
+      },
+      "support": {
+        "x": 14,
+        "y": 355.03125,
+        "width": 362,
+        "height": 400.96875,
+        "top": 355.03125,
+        "right": 376,
+        "bottom": 756,
+        "left": 14
+      },
+      "nav": {
+        "x": 12,
+        "y": 780,
+        "width": 366,
+        "height": 56,
+        "top": 780,
+        "right": 378,
+        "bottom": 836,
+        "left": 12
+      },
+      "canvas": "true",
+      "illustration": "original-reading"
+    },
+    {
+      "name": "readers-390-10-context-and-references",
+      "w": 390,
+      "h": 844,
+      "height": 844,
+      "width": 390,
+      "y": 0,
+      "stage": {
+        "x": 14,
+        "y": 102.28125,
+        "width": 362,
+        "height": 653.71875,
+        "top": 102.28125,
+        "right": 376,
+        "bottom": 756,
+        "left": 14
+      },
+      "art": {
+        "x": 14,
+        "y": 355.03125,
+        "width": 362,
+        "height": 352.375,
+        "top": 355.03125,
+        "right": 376,
+        "bottom": 707.40625,
+        "left": 14
+      },
+      "support": {
+        "x": 14,
+        "y": 355.03125,
+        "width": 362,
+        "height": 400.96875,
+        "top": 355.03125,
+        "right": 376,
+        "bottom": 756,
+        "left": 14
+      },
+      "nav": {
+        "x": 12,
+        "y": 780,
+        "width": 366,
+        "height": 56,
+        "top": 780,
+        "right": 378,
+        "bottom": 836,
+        "left": 12
+      },
+      "canvas": "true",
+      "illustration": "original-reading"
+    },
+    {
+      "name": "readers-390-reviewer",
+      "w": 390,
+      "h": 844,
+      "height": 844,
+      "width": 390,
+      "y": 0,
+      "stage": {
+        "x": 14,
+        "y": 107.6875,
+        "width": 362,
+        "height": 648.3125,
+        "top": 107.6875,
+        "right": 376,
+        "bottom": 756,
+        "left": 14
+      },
+      "art": {
+        "x": 14,
+        "y": 360.4375,
+        "width": 362,
+        "height": 346.96875,
+        "top": 360.4375,
+        "right": 376,
+        "bottom": 707.40625,
+        "left": 14
+      },
+      "support": {
+        "x": 14,
+        "y": 360.4375,
+        "width": 362,
+        "height": 395.5625,
+        "top": 360.4375,
+        "right": 376,
+        "bottom": 756,
+        "left": 14
+      },
+      "nav": {
+        "x": 12,
+        "y": 780,
+        "width": 366,
+        "height": 56,
+        "top": 780,
+        "right": 378,
+        "bottom": 836,
+        "left": 12
+      },
+      "canvas": "true",
+      "illustration": "workflow-approved"
+    },
+    {
+      "name": "readers-390-code",
+      "w": 390,
+      "h": 844,
+      "height": 2024,
+      "width": 390,
+      "y": 0,
+      "stage": {
+        "x": 22,
+        "y": 1303.3125,
+        "width": 346,
+        "height": 467.65625,
+        "top": 1303.3125,
+        "right": 368,
+        "bottom": 1770.96875,
+        "left": 22
+      },
+      "art": {
+        "x": 22,
+        "y": 1480.96875,
+        "width": 346,
+        "height": 241.40625,
+        "top": 1480.96875,
+        "right": 368,
+        "bottom": 1722.375,
+        "left": 22
+      },
+      "support": {
+        "x": 22,
+        "y": 1480.96875,
+        "width": 346,
+        "height": 290,
+        "top": 1480.96875,
+        "right": 368,
+        "bottom": 1770.96875,
+        "left": 22
+      },
+      "canvas": "false",
+      "illustration": "composer-direct"
+    },
+    {
+      "name": "readers-390-author",
+      "w": 390,
+      "h": 844,
+      "height": 1129,
+      "width": 390,
+      "y": 0,
+      "stage": {
+        "x": 16,
+        "y": 698.890625,
+        "width": 358,
+        "height": 722,
+        "top": 698.890625,
+        "right": 374,
+        "bottom": 1420.890625,
+        "left": 16
+      },
+      "art": {
+        "x": 16,
+        "y": 1130.890625,
+        "width": 358,
+        "height": 241.40625,
+        "top": 1130.890625,
+        "right": 374,
+        "bottom": 1372.296875,
+        "left": 16
+      },
+      "support": {
+        "x": 16,
+        "y": 1130.890625,
+        "width": 358,
+        "height": 290,
+        "top": 1130.890625,
+        "right": 374,
+        "bottom": 1420.890625,
+        "left": 16
+      },
+      "nav": {
+        "x": 12,
+        "y": 728,
+        "width": 366,
+        "height": 100,
+        "top": 728,
+        "right": 378,
+        "bottom": 828,
+        "left": 12
+      },
+      "canvas": "false",
+      "illustration": "source-workbench"
+    },
+    {
+      "name": "export-390-branch-approved",
+      "w": 390,
+      "h": 844,
+      "height": 844,
+      "width": 390,
+      "y": 0,
+      "stage": {
+        "x": 14,
+        "y": 126.875,
+        "width": 362,
+        "height": 629.125,
+        "top": 126.875,
+        "right": 376,
+        "bottom": 756,
+        "left": 14
+      },
+      "art": {
+        "x": 14,
+        "y": 379.625,
+        "width": 362,
+        "height": 327.78125,
+        "top": 379.625,
+        "right": 376,
+        "bottom": 707.40625,
+        "left": 14
+      },
+      "support": {
+        "x": 14,
+        "y": 379.625,
+        "width": 362,
+        "height": 376.375,
+        "top": 379.625,
+        "right": 376,
+        "bottom": 756,
+        "left": 14
+      },
+      "nav": {
+        "x": 12,
+        "y": 780,
+        "width": 366,
+        "height": 56,
+        "top": 780,
+        "right": 378,
+        "bottom": 836,
+        "left": 12
+      },
+      "canvas": "true",
+      "illustration": "branch-approved"
+    },
+    {
+      "name": "export-390-purchase-approved",
+      "w": 390,
+      "h": 844,
+      "height": 844,
+      "width": 390,
+      "y": 0,
+      "stage": {
+        "x": 14,
+        "y": 126.875,
+        "width": 362,
+        "height": 629.125,
+        "top": 126.875,
+        "right": 376,
+        "bottom": 756,
+        "left": 14
+      },
+      "art": {
+        "x": 14,
+        "y": 379.625,
+        "width": 362,
+        "height": 327.78125,
+        "top": 379.625,
+        "right": 376,
+        "bottom": 707.40625,
+        "left": 14
+      },
+      "support": {
+        "x": 14,
+        "y": 379.625,
+        "width": 362,
+        "height": 376.375,
+        "top": 379.625,
+        "right": 376,
+        "bottom": 756,
+        "left": 14
+      },
+      "nav": {
+        "x": 12,
+        "y": 780,
+        "width": 366,
+        "height": 56,
+        "top": 780,
+        "right": 378,
+        "bottom": 836,
+        "left": 12
+      },
+      "canvas": "true",
+      "illustration": "approval-signed"
+    },
+    {
+      "name": "export-390-transfer-approved",
+      "w": 390,
+      "h": 844,
+      "height": 844,
+      "width": 390,
+      "y": 0,
+      "stage": {
+        "x": 14,
+        "y": 105.28125,
+        "width": 362,
+        "height": 650.71875,
+        "top": 105.28125,
+        "right": 376,
+        "bottom": 756,
+        "left": 14
+      },
+      "art": {
+        "x": 14,
+        "y": 358.03125,
+        "width": 362,
+        "height": 349.375,
+        "top": 358.03125,
+        "right": 376,
+        "bottom": 707.40625,
+        "left": 14
+      },
+      "support": {
+        "x": 14,
+        "y": 358.03125,
+        "width": 362,
+        "height": 397.96875,
+        "top": 358.03125,
+        "right": 376,
+        "bottom": 756,
+        "left": 14
+      },
+      "nav": {
+        "x": 12,
+        "y": 780,
+        "width": 366,
+        "height": 56,
+        "top": 780,
+        "right": 378,
+        "bottom": 836,
+        "left": 12
+      },
+      "canvas": "true",
+      "illustration": "position-locked"
+    },
+    {
+      "name": "export-390-evidence",
+      "passed": true
+    },
+    {
+      "name": "readers-320-01-product",
+      "w": 320,
+      "h": 568,
+      "height": 568,
+      "width": 320,
+      "y": 0,
+      "stage": {
+        "x": 14,
+        "y": 102.28125,
+        "width": 292,
+        "height": 377.71875,
+        "top": 102.28125,
+        "right": 306,
+        "bottom": 480,
+        "left": 14
+      },
+      "art": {
+        "x": 14,
+        "y": 280.28125,
+        "width": 292,
+        "height": 115.96875,
+        "top": 280.28125,
+        "right": 306,
+        "bottom": 396.25,
+        "left": 14
+      },
+      "support": {
+        "x": 14,
+        "y": 280.28125,
+        "width": 292,
+        "height": 199.71875,
+        "top": 280.28125,
+        "right": 306,
+        "bottom": 480,
+        "left": 14
+      },
+      "nav": {
+        "x": 12,
+        "y": 504,
+        "width": 296,
+        "height": 56,
+        "top": 504,
+        "right": 308,
+        "bottom": 560,
+        "left": 12
+      },
+      "canvas": "true",
+      "illustration": "purchase-approved"
+    },
+    {
+      "name": "readers-320-02-roles-and-trust",
+      "w": 320,
+      "h": 568,
+      "height": 568,
+      "width": 320,
+      "y": 0,
+      "stage": {
+        "x": 14,
+        "y": 102.28125,
+        "width": 292,
+        "height": 377.71875,
+        "top": 102.28125,
+        "right": 306,
+        "bottom": 480,
+        "left": 14
+      },
+      "art": {
+        "x": 14,
+        "y": 280.28125,
+        "width": 292,
+        "height": 115.96875,
+        "top": 280.28125,
+        "right": 306,
+        "bottom": 396.25,
+        "left": 14
+      },
+      "support": {
+        "x": 14,
+        "y": 280.28125,
+        "width": 292,
+        "height": 199.71875,
+        "top": 280.28125,
+        "right": 306,
+        "bottom": 480,
+        "left": 14
+      },
+      "nav": {
+        "x": 12,
+        "y": 504,
+        "width": 296,
+        "height": 56,
+        "top": 504,
+        "right": 308,
+        "bottom": 560,
+        "left": 12
+      },
+      "canvas": "true",
+      "illustration": "workflow-rejected"
+    },
+    {
+      "name": "readers-320-05-bring-an-application",
+      "w": 320,
+      "h": 568,
+      "height": 568,
+      "width": 320,
+      "y": 0,
+      "stage": {
+        "x": 14,
+        "y": 102.28125,
+        "width": 292,
+        "height": 377.71875,
+        "top": 102.28125,
+        "right": 306,
+        "bottom": 480,
+        "left": 14
+      },
+      "art": {
+        "x": 14,
+        "y": 280.28125,
+        "width": 292,
+        "height": 115.96875,
+        "top": 280.28125,
+        "right": 306,
+        "bottom": 396.25,
+        "left": 14
+      },
+      "support": {
+        "x": 14,
+        "y": 280.28125,
+        "width": 292,
+        "height": 199.71875,
+        "top": 280.28125,
+        "right": 306,
+        "bottom": 480,
+        "left": 14
+      },
+      "nav": {
+        "x": 12,
+        "y": 504,
+        "width": 296,
+        "height": 56,
+        "top": 504,
+        "right": 308,
+        "bottom": 560,
+        "left": 12
+      },
+      "canvas": "true",
+      "illustration": "package-builder"
+    },
+    {
+      "name": "readers-320-06-compose-a-workflow",
+      "w": 320,
+      "h": 568,
+      "height": 568,
+      "width": 320,
+      "y": 0,
+      "stage": {
+        "x": 14,
+        "y": 102.28125,
+        "width": 292,
+        "height": 377.71875,
+        "top": 102.28125,
+        "right": 306,
+        "bottom": 480,
+        "left": 14
+      },
+      "art": {
+        "x": 14,
+        "y": 280.28125,
+        "width": 292,
+        "height": 115.96875,
+        "top": 280.28125,
+        "right": 306,
+        "bottom": 396.25,
+        "left": 14
+      },
+      "support": {
+        "x": 14,
+        "y": 280.28125,
+        "width": 292,
+        "height": 199.71875,
+        "top": 280.28125,
+        "right": 306,
+        "bottom": 480,
+        "left": 14
+      },
+      "nav": {
+        "x": 12,
+        "y": 504,
+        "width": 296,
+        "height": 56,
+        "top": 504,
+        "right": 308,
+        "bottom": 560,
+        "left": 12
+      },
+      "canvas": "true",
+      "illustration": "composer-direct"
+    },
+    {
+      "name": "readers-320-07-evidence-and-boundaries",
+      "w": 320,
+      "h": 568,
+      "height": 568,
+      "width": 320,
+      "y": 0,
+      "stage": {
+        "x": 14,
+        "y": 102.28125,
+        "width": 292,
+        "height": 377.71875,
+        "top": 102.28125,
+        "right": 306,
+        "bottom": 480,
+        "left": 14
+      },
+      "art": {
+        "x": 14,
+        "y": 280.28125,
+        "width": 292,
+        "height": 115.96875,
+        "top": 280.28125,
+        "right": 306,
+        "bottom": 396.25,
+        "left": 14
+      },
+      "support": {
+        "x": 14,
+        "y": 280.28125,
+        "width": 292,
+        "height": 199.71875,
+        "top": 280.28125,
+        "right": 306,
+        "bottom": 480,
+        "left": 14
+      },
+      "nav": {
+        "x": 12,
+        "y": 504,
+        "width": 296,
+        "height": 56,
+        "top": 504,
+        "right": 308,
+        "bottom": 560,
+        "left": 12
+      },
+      "canvas": "true",
+      "illustration": "evidence-review"
+    },
+    {
+      "name": "readers-320-08-release-and-adoption",
+      "w": 320,
+      "h": 568,
+      "height": 568,
+      "width": 320,
+      "y": 0,
+      "stage": {
+        "x": 14,
+        "y": 102.28125,
+        "width": 292,
+        "height": 377.71875,
+        "top": 102.28125,
+        "right": 306,
+        "bottom": 480,
+        "left": 14
+      },
+      "art": {
+        "x": 14,
+        "y": 280.28125,
+        "width": 292,
+        "height": 115.96875,
+        "top": 280.28125,
+        "right": 306,
+        "bottom": 396.25,
+        "left": 14
+      },
+      "support": {
+        "x": 14,
+        "y": 280.28125,
+        "width": 292,
+        "height": 199.71875,
+        "top": 280.28125,
+        "right": 306,
+        "bottom": 480,
+        "left": 14
+      },
+      "nav": {
+        "x": 12,
+        "y": 504,
+        "width": 296,
+        "height": 56,
+        "top": 504,
+        "right": 308,
+        "bottom": 560,
+        "left": 12
+      },
+      "canvas": "true",
+      "illustration": "release-preparation"
+    },
+    {
+      "name": "readers-320-09-proposal-context",
+      "w": 320,
+      "h": 568,
+      "height": 568,
+      "width": 320,
+      "y": 0,
+      "stage": {
+        "x": 14,
+        "y": 102.28125,
+        "width": 292,
+        "height": 377.71875,
+        "top": 102.28125,
+        "right": 306,
+        "bottom": 480,
+        "left": 14
+      },
+      "art": {
+        "x": 14,
+        "y": 280.28125,
+        "width": 292,
+        "height": 115.96875,
+        "top": 280.28125,
+        "right": 306,
+        "bottom": 396.25,
+        "left": 14
+      },
+      "support": {
+        "x": 14,
+        "y": 280.28125,
+        "width": 292,
+        "height": 199.71875,
+        "top": 280.28125,
+        "right": 306,
+        "bottom": 480,
+        "left": 14
+      },
+      "nav": {
+        "x": 12,
+        "y": 504,
+        "width": 296,
+        "height": 56,
+        "top": 504,
+        "right": 308,
+        "bottom": 560,
+        "left": 12
+      },
+      "canvas": "true",
+      "illustration": "original-reading"
+    },
+    {
+      "name": "readers-320-10-context-and-references",
+      "w": 320,
+      "h": 568,
+      "height": 568,
+      "width": 320,
+      "y": 0,
+      "stage": {
+        "x": 14,
+        "y": 102.28125,
+        "width": 292,
+        "height": 377.71875,
+        "top": 102.28125,
+        "right": 306,
+        "bottom": 480,
+        "left": 14
+      },
+      "art": {
+        "x": 14,
+        "y": 280.28125,
+        "width": 292,
+        "height": 115.96875,
+        "top": 280.28125,
+        "right": 306,
+        "bottom": 396.25,
+        "left": 14
+      },
+      "support": {
+        "x": 14,
+        "y": 280.28125,
+        "width": 292,
+        "height": 199.71875,
+        "top": 280.28125,
+        "right": 306,
+        "bottom": 480,
+        "left": 14
+      },
+      "nav": {
+        "x": 12,
+        "y": 504,
+        "width": 296,
+        "height": 56,
+        "top": 504,
+        "right": 308,
+        "bottom": 560,
+        "left": 12
+      },
+      "canvas": "true",
+      "illustration": "original-reading"
+    },
+    {
+      "name": "readers-320-reviewer",
+      "w": 320,
+      "h": 568,
+      "height": 568,
+      "width": 320,
+      "y": 0,
+      "stage": {
+        "x": 14,
+        "y": 131.6875,
+        "width": 292,
+        "height": 348.3125,
+        "top": 131.6875,
+        "right": 306,
+        "bottom": 480,
+        "left": 14
+      },
+      "art": {
+        "x": 14,
+        "y": 309.6875,
+        "width": 292,
+        "height": 86.5625,
+        "top": 309.6875,
+        "right": 306,
+        "bottom": 396.25,
+        "left": 14
+      },
+      "support": {
+        "x": 14,
+        "y": 309.6875,
+        "width": 292,
+        "height": 170.3125,
+        "top": 309.6875,
+        "right": 306,
+        "bottom": 480,
+        "left": 14
+      },
+      "nav": {
+        "x": 12,
+        "y": 504,
+        "width": 296,
+        "height": 56,
+        "top": 504,
+        "right": 308,
+        "bottom": 560,
+        "left": 12
+      },
+      "canvas": "true",
+      "illustration": "workflow-approved"
+    },
+    {
+      "name": "readers-320-code",
+      "w": 320,
+      "h": 568,
+      "height": 1783,
+      "width": 320,
+      "y": 0,
+      "stage": {
+        "x": 22,
+        "y": 1062.359375,
+        "width": 276,
+        "height": 467.65625,
+        "top": 1062.359375,
+        "right": 298,
+        "bottom": 1530.015625,
+        "left": 22
+      },
+      "art": {
+        "x": 22,
+        "y": 1240.015625,
+        "width": 276,
+        "height": 206.25,
+        "top": 1240.015625,
+        "right": 298,
+        "bottom": 1446.265625,
+        "left": 22
+      },
+      "support": {
+        "x": 22,
+        "y": 1240.015625,
+        "width": 276,
+        "height": 290,
+        "top": 1240.015625,
+        "right": 298,
+        "bottom": 1530.015625,
+        "left": 22
+      },
+      "canvas": "false",
+      "illustration": "composer-direct"
+    },
+    {
+      "name": "readers-320-author",
+      "w": 320,
+      "h": 568,
+      "height": 927,
+      "width": 320,
+      "y": 0,
+      "stage": {
+        "x": 16,
+        "y": 643.0625,
+        "width": 288,
+        "height": 722,
+        "top": 643.0625,
+        "right": 304,
+        "bottom": 1365.0625,
+        "left": 16
+      },
+      "art": {
+        "x": 16,
+        "y": 1075.0625,
+        "width": 288,
+        "height": 206.25,
+        "top": 1075.0625,
+        "right": 304,
+        "bottom": 1281.3125,
+        "left": 16
+      },
+      "support": {
+        "x": 16,
+        "y": 1075.0625,
+        "width": 288,
+        "height": 290,
+        "top": 1075.0625,
+        "right": 304,
+        "bottom": 1365.0625,
+        "left": 16
+      },
+      "nav": {
+        "x": 12,
+        "y": 452,
+        "width": 296,
+        "height": 100,
+        "top": 452,
+        "right": 308,
+        "bottom": 552,
+        "left": 12
+      },
+      "canvas": "false",
+      "illustration": "source-workbench"
+    },
+    {
+      "name": "export-320-branch-approved",
+      "w": 320,
+      "h": 568,
+      "height": 568,
+      "width": 320,
+      "y": 0,
+      "stage": {
+        "x": 14,
+        "y": 122.0625,
+        "width": 292,
+        "height": 357.9375,
+        "top": 122.0625,
+        "right": 306,
+        "bottom": 480,
+        "left": 14
+      },
+      "art": {
+        "x": 14,
+        "y": 310.0625,
+        "width": 292,
+        "height": 121.34375,
+        "top": 310.0625,
+        "right": 306,
+        "bottom": 431.40625,
+        "left": 14
+      },
+      "support": {
+        "x": 14,
+        "y": 310.0625,
+        "width": 292,
+        "height": 169.9375,
+        "top": 310.0625,
+        "right": 306,
+        "bottom": 480,
+        "left": 14
+      },
+      "nav": {
+        "x": 12,
+        "y": 504,
+        "width": 296,
+        "height": 56,
+        "top": 504,
+        "right": 308,
+        "bottom": 560,
+        "left": 12
+      },
+      "canvas": "true",
+      "illustration": "branch-approved"
+    },
+    {
+      "name": "export-320-purchase-approved",
+      "w": 320,
+      "h": 568,
+      "height": 568,
+      "width": 320,
+      "y": 0,
+      "stage": {
+        "x": 14,
+        "y": 122.0625,
+        "width": 292,
+        "height": 357.9375,
+        "top": 122.0625,
+        "right": 306,
+        "bottom": 480,
+        "left": 14
+      },
+      "art": {
+        "x": 14,
+        "y": 310.0625,
+        "width": 292,
+        "height": 103.765625,
+        "top": 310.0625,
+        "right": 306,
+        "bottom": 413.828125,
+        "left": 14
+      },
+      "support": {
+        "x": 14,
+        "y": 310.0625,
+        "width": 292,
+        "height": 169.9375,
+        "top": 310.0625,
+        "right": 306,
+        "bottom": 480,
+        "left": 14
+      },
+      "nav": {
+        "x": 12,
+        "y": 504,
+        "width": 296,
+        "height": 56,
+        "top": 504,
+        "right": 308,
+        "bottom": 560,
+        "left": 12
+      },
+      "canvas": "true",
+      "illustration": "approval-signed"
+    },
+    {
+      "name": "export-320-transfer-approved",
+      "w": 320,
+      "h": 568,
+      "height": 568,
+      "width": 320,
+      "y": 0,
+      "stage": {
+        "x": 14,
+        "y": 102.875,
+        "width": 292,
+        "height": 377.125,
+        "top": 102.875,
+        "right": 306,
+        "bottom": 480,
+        "left": 14
+      },
+      "art": {
+        "x": 14,
+        "y": 290.875,
+        "width": 292,
+        "height": 140.53125,
+        "top": 290.875,
+        "right": 306,
+        "bottom": 431.40625,
+        "left": 14
+      },
+      "support": {
+        "x": 14,
+        "y": 290.875,
+        "width": 292,
+        "height": 189.125,
+        "top": 290.875,
+        "right": 306,
+        "bottom": 480,
+        "left": 14
+      },
+      "nav": {
+        "x": 12,
+        "y": 504,
+        "width": 296,
+        "height": 56,
+        "top": 504,
+        "right": 308,
+        "bottom": 560,
+        "left": 12
+      },
+      "canvas": "true",
+      "illustration": "position-locked"
+    },
+    {
+      "name": "export-320-evidence",
+      "passed": true
+    }
+  ],
+  "failures": [],
+  "errors": []
+}

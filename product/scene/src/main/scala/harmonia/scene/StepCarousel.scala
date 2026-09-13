@@ -12,6 +12,7 @@ final class StepCarousel(root: dom.HTMLElement):
   private val answers = element("div", "carousel-answers")
   private val svg = dom.document.createElementNS("http://www.w3.org/2000/svg", "svg")
   svg.setAttribute("class", "carousel-lines"); svg.setAttribute("aria-hidden", "true")
+  svg.setAttribute("preserveAspectRatio", "none")
   root.classList.add("step-carousel")
   graph.appendChild(svg); track.appendChild(graph)
   root.appendChild(track); root.appendChild(answers); root.appendChild(hint)
@@ -37,7 +38,12 @@ final class StepCarousel(root: dom.HTMLElement):
     buttons = buttons.filter((id, _) => ids(id))
     val columns = layout.points.map(_.column).max + 1
     val rows = layout.points.map(_.row).max + 1
-    graph.style.width = s"min(100%, ${columns * 48}px)"; graph.style.height = s"${rows * 44}px"
+    // Long linear reading trails keep distinct targets in a sliding rail.
+    // Workflow branches remain visible together in the available width.
+    graph.style.width =
+      if columns > 10 && rows == 1 then s"${columns * 32}px"
+      else s"min(100%, ${columns * 48}px)"
+    graph.style.height = s"${rows * 44}px"
     svg.setAttribute("viewBox", s"0 0 ${columns * 48} ${rows * 44}")
     val indexed = layout.points.map(p => p.step.id -> p).toMap
     val edgeIds = layout.links.map(e => e.from -> e.to).toSet

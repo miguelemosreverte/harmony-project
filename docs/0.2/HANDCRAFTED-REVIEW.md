@@ -1,5 +1,8 @@
 # Entry and illustrated stories: reader.8
 
+This is the historical reader.8 review. The [moment review](MOMENT-REVIEW.md)
+supersedes its fixed-image and scroll-based presentation checks.
+
 The home screen no longer asks anyone to obtain or paste a participant link.
 The local sandbox offers Alice's workspace and Northbank's workspace. Selecting
 one opens that character's view; it does not submit a ledger command. Returning

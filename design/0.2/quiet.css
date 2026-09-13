@@ -102,3 +102,10 @@ body:has(.has-carousel){padding-bottom:140px}
 }
 @media screen{html[data-canvas=true] #laboratory-stage{flex:1;min-height:0}html[data-canvas=true] #review-diagram{flex:1;min-height:0;margin:0}html[data-canvas=true] :is(#review-question,#review-status,#review-evidence){display:none}html[data-canvas=true] #review-title{font-size:20px;line-height:1.2;margin:0}}
 @media screen{html:not([data-canvas=true]) .reference-shell .presentation-stage .support-conversation{min-height:290px}html:not([data-canvas=true]) .reference-shell .presentation-stage .support-art{min-height:180px}}
+/* Written chapter diagrams and reviewer trails have one row of stops. */
+@media screen{
+ html[data-canvas=true] :is(body.atlas-review,body.chapter:has(#chapter-read:not([hidden]))) .quiet-content{height:calc(100dvh - 122px)}
+ html[data-canvas=true] :is(body.atlas-review,body.chapter:has(#chapter-read:not([hidden]))) .quiet-paging.has-carousel{height:56px}
+ html[data-canvas=true] :is(body.atlas-review,body.chapter:has(#chapter-read:not([hidden]))) .quiet-paging.has-carousel::before{height:76px}
+ @media(max-height:650px) and (max-width:850px){html[data-canvas=true] :is(body.atlas-review,body.chapter:has(#chapter-read:not([hidden]))) .presentation-stage{--diagram-height:170px}}
+}

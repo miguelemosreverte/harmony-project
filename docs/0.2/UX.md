@@ -55,6 +55,15 @@ A deep link opens its selected material directly.
 
 ## Visual and responsive rules
 
+Workflow playback fits the available viewport: header, diagram, illustrated
+consequence, and dock stay visible together. See [Story frames](STORY-FRAMES.md).
+The illustration uses `contain`; never crop a character or hide overflow to make
+the layout pass. A selected observation chooses an image from its recorded action
+and outcome. Preparation, delivery, refusal and completion need different scenes.
+Reuse a scene across stories when the action means the same thing. Keep the
+infographic mounted and its controls in place. Detailed prose and exact evidence
+have a header link; large accessibility text and print retain document flow.
+
 Use the approved bank, document, house and character assets, quiet neutral panels,
 blue progression, generous gaps, and measured arrows. Blue emphasizes the selected
 stop and completed marks identify preceding observations. Refused, skipped and
