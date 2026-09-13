@@ -6,5 +6,5 @@ enum ConnectionState:
   def label: String = this match
     case Connecting            => "Connecting"
     case Connected             => "Connected"
-    case SessionRequired       => "Open a current participant link"
+    case SessionRequired       => "Reopen your workspace"
     case Disconnected(message) => message

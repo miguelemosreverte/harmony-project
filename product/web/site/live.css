@@ -148,3 +148,11 @@ body:has(.workflow-dock){padding-bottom:200px}
 .composition-editor .carousel-answers{grid-row:2}
 
 body:has(.composition-editor){padding-bottom:270px}.live-main:has(.composition-editor)::after{height:260px}
+/* Entry presents the story and two ordinary sandbox workspaces. */
+.session-entry-content{max-width:900px!important;margin:36px auto!important;text-align:center}
+.session-entry-content h1{font-size:clamp(1.5rem,4vw,2.3rem);line-height:1.2}
+.entry-illustration{width:100%;height:340px;background:url('assets/stories-v2/live-handoff.png') center/contain no-repeat;margin:18px auto}
+.entry-choices{display:flex;justify-content:center;gap:20px}
+.entry-choices a{display:block;padding:18px 22px;border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--accent);text-decoration:none;font-weight:600}
+.entry-choices a:hover{background:var(--pale);border-color:var(--accent)}
+@media(max-width:700px){.session-entry-content{margin:20px auto!important}.entry-illustration{height:230px}.entry-choices{gap:12px}.entry-choices a{padding:14px 12px;flex:1;font-size:.9rem}}

@@ -1,0 +1,30 @@
+{
+  "origin": "http://127.0.0.1:49617/",
+  "checks": [
+    "1280: two workspace choices, no input",
+    "1280: no credential instruction",
+    "1280: no horizontal overflow",
+    "390: two workspace choices, no input",
+    "390: no credential instruction",
+    "390: no horizontal overflow",
+    "bank: proper identity",
+    "bank: credentials remain outside the URL",
+    "bank: task links preserve character",
+    "bank: no ledger command on entry",
+    "buyer: proper identity",
+    "buyer: credentials remain outside the URL",
+    "buyer: task links preserve character",
+    "buyer: no ledger command on entry",
+    "reviewer: proper identity",
+    "reviewer: credentials remain outside the URL",
+    "reviewer: task links preserve character",
+    "reviewer: no ledger command on entry",
+    "Shared composer address selects its task",
+    "Expired access stops polling",
+    "One click recovers access",
+    "Home remains a home screen after using a workspace",
+    "No unexpected browser errors"
+  ],
+  "errors": [],
+  "expected": "One expired credential deliberately returns HTTP 401; no ledger commands submitted."
+}

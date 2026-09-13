@@ -37,14 +37,14 @@ From the repository root, `scripts/build-product` builds product contracts, serv
 }
 ```
 
-Ports refer to the supported local Ledger API connections. Token files supply existing participant credentials. The catalog DAR must contain the supported application packages; package exports contain the verified legacy DAR used by package retrieval. Paths resolve from the repository root. The optional state directory controls where the service writes its local state; otherwise it creates a fresh run directory. The service prints its address and the private file containing browser session links.
+Ports refer to the supported local Ledger API connections. Token files supply existing participant credentials. The catalog DAR must contain the supported application packages; package exports contain the verified legacy DAR used by package retrieval. Paths resolve from the repository root. The optional state directory controls where the service writes its local state; otherwise it creates a fresh run directory. The service prints its address and the private file containing internal browser credentials. Configured services leave sandbox entry disabled by default. Setting `"sandbox": true` explicitly enables local demonstration roles: the home screen opens Alice’s or Northbank’s workspace without pasted credentials. This mode is for a local sandbox, not an identity provider for a deployment.
 
 The separate harness command `scripts/demo live` provisions the demonstrated local network. The book and full verification instructions are outside this product directory.
 
 Public case classes use `JsonCodec` to derive the established snake-case HTTP fields. Special envelopes, such as the flattened workspace response, remain explicit. Composition validation operates on the typed plan and is shared by the editor and HTTP boundary.
 
 The live browser keeps the task and appearance in query parameters (`view`,
-`theme`, `text`). A composition draft and its current question, selected workflow,
+`theme`, `text`, and the sandbox `actor`). A composition draft and its current question, selected workflow,
 and selected package input also have durable query addresses. A shared URL opens the recipient's own authenticated view of the
 current ledger; it cannot freeze mutable ledger state. Session capabilities are
 removed from the address after entry and never included in ordinary navigation.

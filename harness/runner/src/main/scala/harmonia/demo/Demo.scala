@@ -93,7 +93,7 @@ object Demo:
       }
       configured <- Resource.eval(participants.traverse { (name, ledger) =>
         val tokenFile = artifacts.resolve(name + ".token")
-        normal(name)
+        normal(name).save(artifacts.resolve(name + ".credential")) *> normal(name)
           .token(name)
           .flatMap(LocalCredentials.privateWrite(tokenFile, _))
           .as(
@@ -111,17 +111,54 @@ object Demo:
           ServerConfig(
             dar.toString,
             artifacts.resolve("downloaded").toString,
-            configured.toMap
+            configured.toMap,
+            sandbox = Some(true)
           ).asJson.spaces2
         )
       )
     yield Connections(participants.toMap, artifacts.resolve("downloaded"), catalog)
 
+  /** Reuse a running sandbox with renewed short-lived tokens; no participant is started or reset.
+    */
+  def reconnect(
+      root: Path,
+      source: Path,
+      output: Path
+  ): Resource[IO, harmonia.app.http.LiveServer] = for
+    config <- Resource.eval(
+      ArtifactFiles
+        .read(source.resolve("service.json"))
+        .flatMap(text => IO.fromEither(io.circe.parser.decode[ServerConfig](text)))
+    )
+    catalog <- Resource.eval(
+      TemplateCatalog.load(root, root.resolve(config.catalogDar), output.resolve("catalog"))
+    )
+    participants <- config.participants.toVector.traverse { (name, participant) =>
+      Resource.eval(DemoCredentials.read(source.resolve(name + ".credential"))).flatMap {
+        credentials =>
+          LiveLedger
+            .resource(
+              participant.port,
+              participant.party,
+              participant.user,
+              credentials.token(participant.user)
+            )
+            .map(name -> _)
+      }
+    }
+    server <- harmonia.app.http.LiveServer.resource(
+      root,
+      output,
+      Connections(participants.toMap, root.resolve(config.packageExports), catalog),
+      sandbox = true
+    )
+  yield server
+
   def viewer(root: Path): Resource[IO, (Path, harmonia.app.http.LiveServer)] = for
     artifacts <- Resource.eval(ArtifactFiles.createRun(root, "live"))
     story <- Resource.eval(readInput(root))
     runtime <- resource(root, artifacts, story)
-    server <- harmonia.app.http.LiveServer.resource(root, artifacts, runtime)
+    server <- harmonia.app.http.LiveServer.resource(root, artifacts, runtime, sandbox = true)
   yield artifacts -> server
 
   def readInput(root: Path): IO[FinancingStory] =

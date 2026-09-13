@@ -9,7 +9,7 @@ import scala.concurrent.duration.*
 
 final case class LiveHttpFailure(code: Int, detail: Option[String] = None)
     extends RuntimeException(
-      if code == 401 then "Session unavailable — open your provisioned session link"
+      if code == 401 then "Workspace access expired — reopen your workspace"
       else detail.getOrElse(s"Request unavailable (HTTP $code) — reconnect to recover state")
     )
 

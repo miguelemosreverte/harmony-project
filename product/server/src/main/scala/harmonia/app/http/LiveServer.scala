@@ -23,7 +23,8 @@ object LiveServer:
   def resource(
       root: Path,
       artifacts: Path,
-      runtime: Connections
+      runtime: Connections,
+      sandbox: Boolean = false
   ): Resource[IO, LiveServer] = for
     actions <- Workspace.resource(runtime)
     builder <- Resource.eval(
@@ -44,7 +45,7 @@ object LiveServer:
         "/",
         (exchange: HttpExchange) =>
           dispatcher.unsafeRunAndForget(
-            respond(root, http.getAddress.getPort, sessions, actions, builder, exchange)
+            respond(root, http.getAddress.getPort, sessions, actions, builder, sandbox, exchange)
               .handleErrorWith { error =>
                 val code = if error.isInstanceOf[IllegalArgumentException] then 400 else 503
                 // A browser may cancel an illustration after its response has started.
@@ -91,6 +92,7 @@ object LiveServer:
       sessions: Map[String, String],
       actions: Workspace,
       builder: harmonia.packages.workspace.PackageBuilder,
+      sandbox: Boolean,
       exchange: HttpExchange
   ): IO[Unit] =
     val path = exchange.getRequestURI.getPath
@@ -100,6 +102,32 @@ object LiveServer:
     val originValid = Option(exchange.getRequestHeaders.getFirst("Origin")).forall(_ == origin)
     if !hostValid || !originValid then
       send(exchange, 403, "text/plain", "Origin denied".getBytes(UTF_8))
+    else if path == "/api/entry" && method == "GET" then
+      send(
+        exchange,
+        200,
+        "application/json",
+        Json.obj("sandbox" -> Json.fromBoolean(sandbox)).noSpaces.getBytes(UTF_8)
+      )
+    else if path.startsWith("/api/sandbox/entry/") then
+      val actor = path.stripPrefix("/api/sandbox/entry/")
+      val sameOrigin = Option(exchange.getRequestHeaders.getFirst("Origin")).contains(origin)
+      val jsonRequest =
+        Option(exchange.getRequestHeaders.getFirst("Content-Type")).contains("application/json")
+      if !sandbox then send(exchange, 404, "text/plain", Array.emptyByteArray)
+      else if method != "POST" then send(exchange, 405, "text/plain", Array.emptyByteArray)
+      else if !sameOrigin || !jsonRequest then
+        send(exchange, 403, "text/plain", Array.emptyByteArray)
+      else
+        sessions.get(actor).filter(_ => Set("bank", "buyer", "reviewer").contains(actor)) match
+          case None => send(exchange, 400, "text/plain", Array.emptyByteArray)
+          case Some(capability) =>
+            send(
+              exchange,
+              200,
+              "application/json",
+              Json.obj("capability" -> Json.fromString(capability)).noSpaces.getBytes(UTF_8)
+            )
     else if path.startsWith("/api/") then
       val bearer = Option(exchange.getRequestHeaders.getFirst("Authorization"))
         .getOrElse("")
@@ -110,7 +138,7 @@ object LiveServer:
             exchange,
             401,
             "text/plain",
-            "Open the session provisioned by the local operator".getBytes(UTF_8)
+            "Workspace access is unavailable".getBytes(UTF_8)
           )
         case Some((actor, _)) =>
           if path.startsWith("/api/builder") && actor != "bank" then

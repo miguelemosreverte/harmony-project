@@ -3,6 +3,13 @@ set -euo pipefail
 source "$(dirname "${BASH_SOURCE[0]}")/environment"
 case "${1:-}" in
   live) exec "$HARMONIA_ROOT/scripts/harmonia" live ;;
+  attach)
+    if [[ "$#" -ne 3 ]]; then
+      printf 'Usage: scripts/demo attach EXISTING_SANDBOX_DIRECTORY OUTPUT_DIRECTORY\n' >&2
+      exit 2
+    fi
+    exec "$HARMONIA_ROOT/scripts/harmonia" live-attach "$2" "$3"
+    ;;
   book)
     if [[ "$#" -ne 2 ]]; then
       printf 'Usage: scripts/demo book EXPORTED_BOOK_DIRECTORY\n' >&2
@@ -10,5 +17,5 @@ case "${1:-}" in
     fi
     exec "$HARMONIA_ROOT/scripts/harmonia" serve-book "$2"
     ;;
-  *) printf 'Usage: scripts/demo live | book EXPORTED_BOOK_DIRECTORY\n' >&2; exit 2 ;;
+  *) printf 'Usage: scripts/demo live | attach EXISTING_SANDBOX_DIRECTORY OUTPUT_DIRECTORY | book EXPORTED_BOOK_DIRECTORY\n' >&2; exit 2 ;;
 esac

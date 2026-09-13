@@ -45,7 +45,8 @@ final class LiveView:
   ): Unit =
     if !mounted then
       mounted = true
-      append(header, element("span", "reference-brand", "Harmonia"), identity)
+      val home = link("Harmonia", "/"); home.className = "reference-brand"
+      append(header, home, identity)
       append(main, header, feedback)
       finance.id = "financing"
       append(composition, draft, composed)
@@ -86,7 +87,7 @@ final class LiveView:
     recovering = connection != ConnectionState.Connected || unconfirmed
     snapshot match
       case None =>
-        identity.textContent = "Open the participant link supplied by the local operator."
+        identity.textContent = "Opening your workspace…"
       case Some(state) =>
         val actor = state.financing.actor
         identity.textContent = "Authenticated as " + Map(

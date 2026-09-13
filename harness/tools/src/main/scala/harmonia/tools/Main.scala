@@ -27,7 +27,14 @@ object Main extends IOApp:
         harmonia.packages.verify.CheckBuilder.run(root).as(ExitCode.Success)
       case List("composer-check") =>
         harmonia.composition.verify.CheckComposer.run(root).as(ExitCode.Success)
-      case List("live")       => harmonia.tools.ReaderSandbox.run(root).as(ExitCode.Success)
+      case List("live") => harmonia.tools.ReaderSandbox.run(root).as(ExitCode.Success)
+      case List("live-attach", source, output) =>
+        harmonia.demo.Demo
+          .reconnect(root, root.resolve(source), root.resolve(output))
+          .use { server =>
+            IO.println(s"Product: http://127.0.0.1:${server.port}/") *> IO.never
+          }
+          .as(ExitCode.Success)
       case List("live-check") => harmonia.live.verify.CheckLive.run(root).as(ExitCode.Success)
       case List("bindings-check") =>
         harmonia.bindings.verify.CheckBindings.run(root).as(ExitCode.Success)

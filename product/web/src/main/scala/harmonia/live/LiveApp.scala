@@ -21,10 +21,13 @@ private final case class ClientState(
 object LiveApp:
   def run: IO[Unit] = Dispatcher.parallel[IO].use { dispatcher =>
     for
-      capability <- IO {
+      explicit <- IO(dom.window.location.hash.matches("#session=[A-Za-z0-9_-]{43}"))
+      home <- IO(SessionEntry.home)
+      stored <- IO {
         val fragment = dom.window.location.hash.stripPrefix("#session=")
         if fragment.matches("[A-Za-z0-9_-]{43}") then
           dom.window.sessionStorage.setItem("harmonia-live", fragment)
+          dom.window.sessionStorage.removeItem("harmonia-actor")
           dom.window.history.replaceState(
             null,
             "",
@@ -32,6 +35,10 @@ object LiveApp:
           )
         Option(dom.window.sessionStorage.getItem("harmonia-live")).getOrElse("")
       }
+      capability <-
+        if !explicit && (home || stored.isEmpty || SessionEntry.changedRole) then
+          SessionEntry.access
+        else IO.pure(stored)
       remembered <- IO(
         Option(dom.window.sessionStorage.getItem("harmonia-request-" + capability))
           .flatMap(io.circe.parser.parse(_).toOption)
@@ -45,10 +52,8 @@ object LiveApp:
           IO(dom.window.removeEventListener("hashchange", listener))
         )
         .use { _ =>
-          if capability.isEmpty then IO(SessionEntry.render(expired = false)) *> IO.never
-          else
-            val session = new BrowserSession(capability, state, dispatcher)
-            (session.refresh *> IO.sleep(1.second)).foreverM
+          val session = new BrowserSession(capability, state, dispatcher)
+          (session.refresh *> IO.sleep(1.second)).foreverM
         }
     yield ()
   }
@@ -150,8 +155,7 @@ private final class BrowserSession(
       }
 
   private def draw: IO[Unit] = state.get.flatMap { current =>
-    if current.connection == ConnectionState.SessionRequired then
-      IO(SessionEntry.render(expired = true))
+    if current.connection == ConnectionState.SessionRequired then SessionEntry.expired
     else
       IO {
         view.render(

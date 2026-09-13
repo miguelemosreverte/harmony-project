@@ -10,6 +10,7 @@ import io.circe.Json
 
 /** Disposable loopback evaluation credentials. Never included in recorded evidence. */
 final class DemoCredentials private (secret: String):
+  def save(path: java.nio.file.Path): IO[Unit] = LocalCredentials.privateWrite(path, secret)
   def token(user: String): IO[String] = IO {
     val now = Instant.now().getEpochSecond
     val header = DemoCredentials.encode("""{"alg":"HS256","typ":"JWT"}""".getBytes(UTF_8))
@@ -36,3 +37,9 @@ object DemoCredentials:
   private def encode(bytes: Array[Byte]): String =
     Base64.getUrlEncoder.withoutPadding().encodeToString(bytes)
   def create: IO[DemoCredentials] = LocalCredentials.random.map(new DemoCredentials(_))
+  def read(path: java.nio.file.Path): IO[DemoCredentials] =
+    harmonia.files.ArtifactFiles.read(path).flatMap { secret =>
+      IO.raiseUnless(secret.trim.matches("[A-Za-z0-9_-]{43}"))(
+        IllegalArgumentException("Invalid local sandbox credential")
+      ).as(new DemoCredentials(secret.trim))
+    }

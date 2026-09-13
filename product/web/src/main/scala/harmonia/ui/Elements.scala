@@ -13,7 +13,15 @@ private[harmonia] object Elements:
 
   def link(label: String, href: String): dom.HTMLElement =
     val node = element("a", text = label)
-    node.setAttribute("href", href)
+    // Task links retain the sandbox character when copied or opened in a new tab.
+    val destination = new dom.URL(href, dom.window.location.href)
+    if href.startsWith("?") && destination.searchParams.has("view") then
+      Option(new dom.URLSearchParams(dom.window.location.search).get("actor"))
+        .foreach(actor =>
+          if !destination.searchParams.has("actor") then
+            destination.searchParams.set("actor", actor)
+        )
+    node.setAttribute("href", if href.startsWith("?") then destination.search else href)
     node
 
   def button(label: String, css: String, id: String)(action: => Unit): dom.html.Button =

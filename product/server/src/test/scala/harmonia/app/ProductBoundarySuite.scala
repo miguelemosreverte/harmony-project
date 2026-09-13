@@ -24,6 +24,14 @@ class ProductBoundarySuite extends FunSuite:
     val configured =
       s"""{"catalog_dar":"application.dar","package_exports":"exports","participants":{"bank":$participant,"buyer":$participant,"reviewer":$participant}}"""
     assert(io.circe.parser.decode[ServerConfig](configured).isRight)
+    assertEquals(io.circe.parser.decode[ServerConfig](configured).toOption.flatMap(_.sandbox), None)
+    assertEquals(
+      io.circe.parser
+        .decode[ServerConfig](configured.dropRight(1) + ",\"sandbox\":true}")
+        .toOption
+        .flatMap(_.sandbox),
+      Some(true)
+    )
     assert(io.circe.parser.decode[ServerConfig](configured.replace("5001", "0")).isLeft)
     assert(io.circe.parser.decode[ServerConfig](configured.replace("reviewer", "unknown")).isLeft)
   }
