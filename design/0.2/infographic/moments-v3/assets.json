@@ -1,0 +1,287 @@
+{
+  "generator": "image_gen.imagegen",
+  "promptFile": "prompts.json",
+  "assets": [
+    {
+      "id": "approval-signed",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-301935dc-6c9f-4482-95ef-ce884ef03c97.png",
+      "asset": "product/scene/site/assets/moments-v3/approval-signed.png",
+      "sha256": "d472b9586a5da85bfd5f720b27f62b69114e0c8c41e80710dd3df85f9659112b",
+      "bytes": 1672528,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "proposal-prepared",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-d916ea24-adfe-4f49-b23e-2c013b5c429d.png",
+      "asset": "product/scene/site/assets/moments-v3/proposal-prepared.png",
+      "sha256": "6812e97197167eb03eb21fcb6cdc67c19a2eed66708ec1c06877d17ff2b0b049",
+      "bytes": 1734550,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "proposal-relayed",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-5efdff38-8b29-42ef-9fd6-cb7bf3d794cf.png",
+      "asset": "product/scene/site/assets/moments-v3/proposal-relayed.png",
+      "sha256": "fcfb9213dc97f62ca16323c500c6a8758db3b29343a5a31a902a561c0293c939",
+      "bytes": 1586855,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "offer-opened",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-6bc4c692-3a2b-42e6-81e9-2d84d061e544.png",
+      "asset": "product/scene/site/assets/moments-v3/offer-opened.png",
+      "sha256": "cdfd6f036a79c2c15a304b3fdb7794483dda2a62b64d974b4903badd2cf6a13d",
+      "bytes": 1625284,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "proposal-received",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-5041bacc-2a67-4802-92c9-a7d7ae63db93.png",
+      "asset": "product/scene/site/assets/moments-v3/proposal-received.png",
+      "sha256": "bc8e4dd8de0e77c0bb680fa175e52ea52f28f55c1c5208c5a4a5edfca9f5a1f7",
+      "bytes": 1618040,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "result-published",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-031a16cf-5b94-439f-b662-bc737b73ec26.png",
+      "asset": "product/scene/site/assets/moments-v3/result-published.png",
+      "sha256": "337aa75c93b5256308f9b8741e8a75e63456ef80f91bfe471e0574518443c898",
+      "bytes": 1530492,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "trade-agreed",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-c677e1cb-da05-4614-856e-70c7ae22cf85.png",
+      "asset": "product/scene/site/assets/moments-v3/trade-agreed.png",
+      "sha256": "aae20d136a5c7777914bf815c9420983030a1e1c27ecc4f4ea7d2769ffa606c7",
+      "bytes": 1581979,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "position-locked",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-7f6e79f2-2282-42cc-80d2-ae8c14a01304.png",
+      "asset": "product/scene/site/assets/moments-v3/position-locked.png",
+      "sha256": "9f0d0d93fdb76bb4313446013ebd588e3df965a5b7492d1aef1ad17dc5ba0ec4",
+      "bytes": 1610470,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "source-ready",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-ff991d1c-a880-4f6c-b083-b9ee39197132.png",
+      "asset": "product/scene/site/assets/moments-v3/source-ready.png",
+      "sha256": "55532a1576d5d4dedf1537e9105e87c8f437afffbc583867efedeae67dc9ae43",
+      "bytes": 1353425,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "destination-ready",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-3368aa60-7867-4e44-b67b-2592a29fa8fd.png",
+      "asset": "product/scene/site/assets/moments-v3/destination-ready.png",
+      "sha256": "2f218ea02fa67a1a629af181d429781560a581cd00a8031e3c2f7c3133f23d1d",
+      "bytes": 1599375,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "transfer-settled",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-f5cc7dce-b456-4843-b247-f96c5da83eb4.png",
+      "asset": "product/scene/site/assets/moments-v3/transfer-settled.png",
+      "supersedes": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-55978a13-cf17-4e00-9ada-6c0469b12720.png",
+      "sha256": "df36a1465f74f3fac43dca365bd105a4c785acbd0335188f708f4a9349e1252b",
+      "bytes": 1499926,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "plan-accepted",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-aa908d35-6d2d-4fe7-9993-bb1a7d5cd69c.png",
+      "asset": "product/scene/site/assets/moments-v3/plan-accepted.png",
+      "sha256": "6ddf101a07b4ccd627757f93e0f57fa1ce6b1f0eeaa19883b1e0b512e0998c6c",
+      "bytes": 1621937,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "review-complete",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-53a1b60d-ce28-44fa-a811-5dc98ee23cf1.png",
+      "asset": "product/scene/site/assets/moments-v3/review-complete.png",
+      "sha256": "f7aa6623250f4aa04c96182eaee752c86dafbfa2ad316161630a047d37411708",
+      "bytes": 1622438,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "join-complete",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-bb1825ad-f390-4521-a48f-8c8aa80ec880.png",
+      "asset": "product/scene/site/assets/moments-v3/join-complete.png",
+      "sha256": "1d73db3233b3ab3fcab7de96f5cd9425f8a8432c411843850672f0133bce1873",
+      "bytes": 1654343,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "join-waiting",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-a067bc0f-ed3a-464c-ac93-fe980d1b8aa5.png",
+      "asset": "product/scene/site/assets/moments-v3/join-waiting.png",
+      "sha256": "02fdd4e587525d71c14d2d6f1c97601d333220b1aa6013a43a4384c685cb679a",
+      "bytes": 1613460,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "path-fixed",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-fa291bc0-afe6-460c-9527-f1f6259ea590.png",
+      "asset": "product/scene/site/assets/moments-v3/path-fixed.png",
+      "sha256": "936b53b7339b01e0ef8602ae4050338c3dd203258f2c3cfe7166527525d05560",
+      "bytes": 1631126,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "retry-record",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-3e58e275-c752-4a44-ab59-4496b4d7945b.png",
+      "asset": "product/scene/site/assets/moments-v3/retry-record.png",
+      "sha256": "9c413bf2c6a97cc8c3f429b377c9a0d495bc15a52269430ec9f7ff90264535e6",
+      "bytes": 1494882,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "review-waiting",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-a8ac4356-542f-4d49-b542-afe1f6c3a314.png",
+      "asset": "product/scene/site/assets/moments-v3/review-waiting.png",
+      "sha256": "fdcbc014a20ae6ce92d019c2e1152a69acc4e4d2f658ef37f6a09845472a54f7",
+      "bytes": 1744692,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "compiled-adapter",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-b2944352-f102-49dc-bfad-487cc1444d23.png",
+      "asset": "product/scene/site/assets/moments-v3/compiled-adapter.png",
+      "sha256": "cef0cc8cbddf8ad2ce1fddef9d999181cb2559219ed8bf1b987129c9f719e77b",
+      "bytes": 1428398,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "input-invalid",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-f2afb597-6a9a-4df6-a5f8-8cb65de9df8e.png",
+      "asset": "product/scene/site/assets/moments-v3/input-invalid.png",
+      "sha256": "e123ea756aad7559a831ef385641710745725a28083d6c4b9618f3bb428d9320",
+      "bytes": 1577347,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "mapping-missing",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-1e389598-2756-4b04-92d9-1a9e9871d311.png",
+      "asset": "product/scene/site/assets/moments-v3/mapping-missing.png",
+      "sha256": "69b55174f0a5e989144d8ac88a9c709d159532c27ecc946b047edabac4be8669",
+      "bytes": 1531716,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "limits-checked",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-6d7bc78f-7015-454b-b15d-0c548fba331c.png",
+      "asset": "product/scene/site/assets/moments-v3/limits-checked.png",
+      "sha256": "8d2834d0f90462fe3fa947b973ce9a06bda0557434c7813bec9856ec74e9b65f",
+      "bytes": 1454250,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "input-oversized",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-4d34c3cf-76c2-40b5-a6b2-987c4f98206f.png",
+      "asset": "product/scene/site/assets/moments-v3/input-oversized.png",
+      "sha256": "95eb4ef8e63e7f163fe9cfcb600e1cc7e9906ec69c79a85c4dae1cedf53060dd",
+      "bytes": 1656143,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "continuation-waiting",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-5690b284-d013-49d4-babc-e8afae104759.png",
+      "asset": "product/scene/site/assets/moments-v3/continuation-waiting.png",
+      "sha256": "47325c1661f59cc6b3cef35141f00e705e97939e17afb6ece066b6deb3079a2c",
+      "bytes": 1585685,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "already-settled",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-c10cd04d-1297-4f80-96f8-36036f299648.png",
+      "asset": "product/scene/site/assets/moments-v3/already-settled.png",
+      "supersedes": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-439eb148-4a8f-4aa2-a327-ea34055c8273.png",
+      "sha256": "1b21f551be3c7e50a208410315f417761048f03ae7fa1b2b1562686c8b78350d",
+      "bytes": 1456012,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "settlement-waiting",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-aeed91fa-e521-4765-b4dc-501a4ed6c472.png",
+      "asset": "product/scene/site/assets/moments-v3/settlement-waiting.png",
+      "sha256": "eea01f6b1629c8300d1d275168e41520241bd083ea93390170bff9490b6ecfe0",
+      "bytes": 1360995,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "result-ready",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-159c6709-28c3-455b-9437-9f02bcdd4037.png",
+      "asset": "product/scene/site/assets/moments-v3/result-ready.png",
+      "sha256": "44019483aceebf1b60daa92c6daceebbf517737f56b704754fdb10638a9d524c",
+      "bytes": 1696226,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "unselected-closure",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-67a5db11-2891-4b28-9275-94d3aedc9d76.png",
+      "asset": "product/scene/site/assets/moments-v3/unselected-closure.png",
+      "sha256": "b5ad196d09044a758b9cf1753f32a4294c13aa8043cd2d3613a5d03017845082",
+      "bytes": 1540662,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "buyer-authority",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-6e7c481c-4d3e-48d0-b748-7f54e97d024b.png",
+      "asset": "product/scene/site/assets/moments-v3/buyer-authority.png",
+      "sha256": "4752b30da6cbb121a50237eea5918134709fc1b3af0fdab8200b851c5b1df1f9",
+      "bytes": 1595479,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "compilation-refused",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-6835d8fc-fa5f-47ec-b3f4-27ec91b6a890.png",
+      "asset": "product/scene/site/assets/moments-v3/compilation-refused.png",
+      "sha256": "c3747f9b591e53f4d64994aa209a05866769b0db93934e306fac0f12ffd5e0a4",
+      "bytes": 1452161,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "proposal-refused",
+      "master": "/Users/miguel_lemos/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-d0541280-7779-4f2e-bd44-e594ecf04b22.png",
+      "asset": "product/scene/site/assets/moments-v3/proposal-refused.png",
+      "sha256": "82017c6bee5f727256612d0a0322dc05ac096736f874b30a4fff048ca4d95453",
+      "bytes": 1547784,
+      "width": 1536,
+      "height": 1024
+    }
+  ]
+}

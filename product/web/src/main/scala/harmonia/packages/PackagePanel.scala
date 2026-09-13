@@ -310,7 +310,15 @@ final class PackagePanel(capability: String, dispatcher: Dispatcher[IO]):
       Conversation(
         Speech(Portrait.Developer, "Developer", lines._1),
         Speech(Portrait.Reviewer, "Reviewer", lines._2),
-        Some(StoryIllustration.ApplicationWorkshop)
+        Some(node.id match
+          case "input" => StoryIllustration.ApplicationWorkshop
+          case "mapping" =>
+            if value.exists(_.matchedSource.nonEmpty) then StoryIllustration.AdapterTemplate
+            else StoryIllustration.MappingMissing
+          case "compile" =>
+            if value.exists(_.compiled) then StoryIllustration.CompiledAdapter
+            else StoryIllustration.AdapterWorkshop
+          case _ => StoryIllustration.ReleasePreparation)
       )
     val illustrated = nodes.map(n => n.copy(conversation = Some(conversation(n))))
     diagram.render(

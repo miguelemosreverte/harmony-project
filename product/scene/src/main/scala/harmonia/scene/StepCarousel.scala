@@ -37,7 +37,7 @@ final class StepCarousel(root: dom.HTMLElement):
     buttons = buttons.filter((id, _) => ids(id))
     val columns = layout.points.map(_.column).max + 1
     val rows = layout.points.map(_.row).max + 1
-    graph.style.width = s"${columns * 48}px"; graph.style.height = s"${rows * 44}px"
+    graph.style.width = s"min(100%, ${columns * 48}px)"; graph.style.height = s"${rows * 44}px"
     svg.setAttribute("viewBox", s"0 0 ${columns * 48} ${rows * 44}")
     val indexed = layout.points.map(p => p.step.id -> p).toMap
     val edgeIds = layout.links.map(e => e.from -> e.to).toSet
@@ -67,7 +67,10 @@ final class StepCarousel(root: dom.HTMLElement):
           graph.appendChild(fresh); buttons += step.id -> fresh; fresh
         }
       )
-      button.style.left = s"${point.column * 48 + 2}px"; button.style.top = s"${point.row * 44}px"
+      button.style.left = s"${(point.column + .5) * 100 / columns}%"
+      button.style.width = s"min(44px, ${100.0 / columns}%)"
+      button.style.transform = "translateX(-50%)"
+      button.style.top = s"${point.row * 44}px"
       button.setAttribute("data-state", step.state.toString.toLowerCase)
       button.setAttribute("aria-current", if step.id == layout.selected then "step" else "false")
       button.setAttribute("aria-label", step.label)

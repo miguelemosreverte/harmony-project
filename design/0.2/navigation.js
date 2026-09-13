@@ -15,6 +15,16 @@
     for(const panel of document.querySelectorAll('[data-mode]'))panel.hidden=panel.dataset.mode!==s.view;
     document.querySelector('.quiet-location').textContent=document.getElementById('story-scene')&&s.view==='try'?'Recorded example':'The field guide';
     const heading=document.querySelector('.chapter-heading');if(heading)heading.hidden=s.view==='try';
+    const lab=document.getElementById('laboratory-stage');
+    const review=document.getElementById('review-diagram');
+    const illustrated=document.querySelector('#chapter-read [data-chapter-diagram]');
+    const canvas=(!s.embed&&s.text!=='large'&&s.detail!=='text')&&
+      ((document.getElementById('story-scene')&&s.view==='try')||(lab&&s.view!=='evidence')||(illustrated&&s.view==='read')||review);
+    document.documentElement.dataset.canvas=String(!!canvas);
+    if(lab){lab.hidden=s.view==='evidence';document.getElementById('laboratory-observation').hidden=s.view!=='evidence';}
+    let reading=document.getElementById('reading-detail');
+    if((lab||illustrated||review)&&!reading){reading=document.createElement('a');reading.id='reading-detail';document.querySelector('.reference-header').append(reading);}
+    if(reading){reading.hidden=!(lab||illustrated||review);reading.textContent=lab?(s.view==='evidence'?'Story':'Evidence'):(s.detail==='text'?'Illustration':'Read');const u=new URL(location.href);if(lab)u.searchParams.set('view',s.view==='evidence'?'try':'evidence');else if(s.detail==='text')u.searchParams.delete('detail');else u.searchParams.set('detail','text');if(document.getElementById('story-scene')&&!lab){u.searchParams.set('view',s.detail==='text'?'try':'read');}reading.href=u.href;}
     for(const nav of document.querySelectorAll('.quiet-paging')){
       nav.setAttribute('aria-label','Story carousel');
       [...nav.querySelectorAll(':scope > a,:scope > button')].forEach((control,i)=>{

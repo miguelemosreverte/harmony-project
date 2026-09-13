@@ -272,3 +272,112 @@ input:not([type=file]):not([type=checkbox]):not([type=radio]){cursor:text}input:
 .support-art[data-illustration="release-preparation"]{background-image:url('assets/stories-v2/release-preparation.png')}
 .support-art[data-illustration="original-reading"]{background-image:url('assets/stories-v2/original-reading.png')}
 .support-art[data-illustration="source-workbench"]{background-image:url('assets/stories-v2/source-workbench.png')}
+
+.support-art[data-illustration="approval-signed"]{background-image:url('assets/moments-v3/approval-signed.png')}
+.support-art[data-illustration="offer-opened"]{background-image:url('assets/moments-v3/offer-opened.png')}
+.support-art[data-illustration="proposal-prepared"]{background-image:url('assets/moments-v3/proposal-prepared.png')}
+.support-art[data-illustration="proposal-relayed"]{background-image:url('assets/moments-v3/proposal-relayed.png')}
+.support-art[data-illustration="proposal-received"]{background-image:url('assets/moments-v3/proposal-received.png')}
+.support-art[data-illustration="result-published"]{background-image:url('assets/moments-v3/result-published.png')}
+.support-art[data-illustration="trade-agreed"]{background-image:url('assets/moments-v3/trade-agreed.png')}
+.support-art[data-illustration="position-locked"]{background-image:url('assets/moments-v3/position-locked.png')}
+.support-art[data-illustration="source-ready"]{background-image:url('assets/moments-v3/source-ready.png')}
+.support-art[data-illustration="destination-ready"]{background-image:url('assets/moments-v3/destination-ready.png')}
+.support-art[data-illustration="transfer-settled"]{background-image:url('assets/moments-v3/transfer-settled.png')}
+.support-art[data-illustration="plan-accepted"]{background-image:url('assets/moments-v3/plan-accepted.png')}
+.support-art[data-illustration="review-complete"]{background-image:url('assets/moments-v3/review-complete.png')}
+.support-art[data-illustration="join-complete"]{background-image:url('assets/moments-v3/join-complete.png')}
+.support-art[data-illustration="join-waiting"]{background-image:url('assets/moments-v3/join-waiting.png')}
+.support-art[data-illustration="path-fixed"]{background-image:url('assets/moments-v3/path-fixed.png')}
+.support-art[data-illustration="retry-record"]{background-image:url('assets/moments-v3/retry-record.png')}
+.support-art[data-illustration="review-waiting"]{background-image:url('assets/moments-v3/review-waiting.png')}
+.support-art[data-illustration="compiled-adapter"]{background-image:url('assets/moments-v3/compiled-adapter.png')}
+.support-art[data-illustration="mapping-missing"]{background-image:url('assets/moments-v3/mapping-missing.png')}
+.support-art[data-illustration="input-invalid"]{background-image:url('assets/moments-v3/input-invalid.png')}
+.support-art[data-illustration="input-oversized"]{background-image:url('assets/moments-v3/input-oversized.png')}
+.support-art[data-illustration="limits-checked"]{background-image:url('assets/moments-v3/limits-checked.png')}
+.support-art[data-illustration="continuation-waiting"]{background-image:url('assets/moments-v3/continuation-waiting.png')}
+.support-art[data-illustration="settlement-waiting"]{background-image:url('assets/moments-v3/settlement-waiting.png')}
+.support-art[data-illustration="already-settled"]{background-image:url('assets/moments-v3/already-settled.png')}
+
+/* A presentation gives the diagram and the current moment explicit space. */
+@media screen {
+ .presentation-stage{display:grid;grid-template-rows:var(--diagram-height,auto) minmax(0,1fr);height:var(--stage-height,auto);gap:12px;min-height:0;min-width:0}
+ .presentation-stage>.harmonia-scene,.presentation-stage>.workflow-diagram{min-height:0;align-self:start}
+ .presentation-stage .scene-caption,.presentation-stage .scene-observation{display:none}
+ .presentation-stage>.workflow-support{width:100%;min-height:0;margin:0 auto;align-self:stretch}
+ .presentation-stage .support-conversation{height:100%;min-height:0;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:22px}
+ .presentation-stage .support-art{height:100%;min-height:0;background-size:contain;mix-blend-mode:normal}
+ .presentation-stage .support-dialogue{min-height:0;gap:12px}
+ .presentation-stage .support-speech{min-height:0;font-size:16px;padding:10px 14px;line-height:1.35}
+ .presentation-stage .support-name{font-size:11px;margin-bottom:3px}
+ .presentation-stage .scene-map{height:var(--diagram-height,330px)}
+ .presentation-stage .workflow-map{height:var(--diagram-height,auto);box-sizing:border-box;gap:24px;grid-template-columns:repeat(var(--columns),minmax(0,1fr));padding:8px 0}
+ .presentation-stage .workflow-node{min-height:0;max-width:none;grid-column:var(--column);grid-row:var(--row);padding:12px 10px;gap:6px;line-height:1.2;font-size:14px}
+ .presentation-stage .workflow-symbol{width:30px;height:30px;font-size:16px;flex-shrink:0}
+ .presentation-stage .workflow-actor{font-size:11px}
+ .presentation-stage .workflow-title,.presentation-stage .workflow-caption{display:none!important}
+}
+@media screen and (max-width:1100px) {
+ .presentation-stage .support-conversation{grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) auto;gap:6px}
+ .presentation-stage .support-dialogue{gap:5px}
+ .presentation-stage .support-speaker{display:flex;align-items:baseline;gap:6px}
+ .presentation-stage .support-name{display:inline;flex-shrink:0;margin:0;font-size:12px}
+ .presentation-stage .support-speech{border:0;background:transparent!important;border-radius:0;padding:0;font-size:14px;line-height:1.3}
+ .presentation-stage .workflow-map{grid-template-columns:repeat(var(--compact-columns),minmax(0,1fr));gap:20px 16px;padding:6px 0}
+ .presentation-stage .workflow-node{grid-column:var(--compact-column);grid-row:var(--compact-row);padding:7px 4px;font-size:12px;gap:4px;overflow-wrap:anywhere}
+ .presentation-stage .workflow-actor{font-size:10px}
+ .presentation-stage .workflow-symbol{width:24px;height:24px;font-size:13px}
+ /* Same objects, two compact lanes. The shared handoff reads left to right. */
+ .presentation-stage :is([data-kind=purchase],[data-kind=financing]) .scene-private{height:48%;width:100%}
+ .presentation-stage :is([data-kind=purchase],[data-kind=financing]) .scene-shared{left:0;right:0;top:52%;bottom:0}
+ .presentation-stage .scene-zone-label{top:9px;left:38px;font-size:13px;line-height:18px}
+ .presentation-stage .scene-zone>.scene-mark{width:18px;height:19px;top:8px;left:12px}
+ .presentation-stage .scene-shared .scene-zone-label{left:38px;top:9px}
+ .presentation-stage :is([data-kind=purchase],[data-kind=financing]) .scene-person[data-position="0"]{left:18%;top:26px;width:76px;transform:translateX(-50%) scale(.8);transform-origin:top center}
+ .presentation-stage .scene-documents{left:46%;top:29px;transform:scale(.5);transform-origin:top left}
+ .presentation-stage :is([data-kind=purchase],[data-kind=financing]) .scene-approval{left:79%;top:46px;transform:translateX(-50%);flex-direction:column;gap:2px}
+ .presentation-stage .document-sheet{width:29px;height:35px;padding:6px;gap:3px}
+ .presentation-stage .document-sheet>i{width:16px;height:2px}.presentation-stage .document-sheet>i:nth-child(even){width:10px}
+ .presentation-stage .document-check{width:17px;height:17px;font-size:10px;bottom:1px;right:-5px}
+ .presentation-stage .artifact-label{font-size:10px;line-height:14px;margin:0}
+ .presentation-stage :is([data-kind=purchase],[data-kind=financing]) .scene-person:not([data-position="0"]){top:calc(52% + 31px);transform:translateX(-50%) scale(.74);transform-origin:top center;width:70px}
+ .presentation-stage [data-kind=purchase] .scene-person[data-position="1"]{left:12%}
+ .presentation-stage [data-kind=purchase] .scene-person[data-position="2"]{left:62%}
+ .presentation-stage [data-kind=purchase] .scene-person[data-position="3"]{left:87%}
+ .presentation-stage [data-kind=financing] .scene-person[data-position="1"]{left:18%}
+ .presentation-stage [data-kind=financing] .scene-person[data-position="2"]{left:82%}
+ .presentation-stage :is([data-kind=purchase],[data-kind=financing]) .scene-artifact{left:36%;top:calc(52% + 40px);transform:translateX(-50%);flex-direction:column;gap:3px}
+ .presentation-stage [data-kind=financing] .scene-artifact{left:50%}
+ .presentation-stage .scene-map>.illustration-house{left:auto;right:4px;top:53%;transform:scale(.25);transform-origin:top right}
+ .presentation-stage [data-kind=transfer] .scene-map{height:var(--diagram-height,220px)}
+ .presentation-stage [data-kind=transfer] .scene-person{transform:translateX(-50%) scale(.75);transform-origin:top center}
+ .presentation-stage [data-kind=transfer] .scene-person[data-position="0"],.presentation-stage [data-kind=transfer] .scene-person[data-position="2"]{top:30px}
+ .presentation-stage [data-kind=transfer] .scene-person[data-position="1"],.presentation-stage [data-kind=transfer] .scene-person[data-position="3"]{top:62%}
+ .presentation-stage [data-kind=transfer] .scene-artifact{top:44%}
+ .presentation-stage .scene-amounts{position:absolute;left:0;right:0;bottom:0;margin:0}
+}
+@media screen {
+ .presentation-stage>.harmonia-scene{position:relative;height:var(--diagram-height,330px)}
+ .presentation-stage [data-kind=transfer] .scene-map{height:calc(var(--diagram-height,330px) - 32px)}
+ .presentation-stage [data-kind=transfer] .scene-artifact{top:55%}
+ .presentation-stage [data-kind=transfer] .scene-amounts{position:absolute;bottom:0;left:0;right:0;margin:0;gap:12px}
+ .presentation-stage .scene-amount{gap:2px}.presentation-stage .scene-amount strong{font-size:13px}.presentation-stage .scene-amount small{font-size:10px}.presentation-stage .scene-amount meter{height:6px}
+}
+.support-art[data-illustration="result-ready"]{background-image:url('assets/moments-v3/result-ready.png')}
+.support-art[data-illustration="unselected-closure"]{background-image:url('assets/moments-v3/unselected-closure.png')}
+.support-art[data-illustration="buyer-authority"]{background-image:url('assets/moments-v3/buyer-authority.png')}
+
+@media screen {
+ .presentation-stage .workflow-map{align-content:center;grid-auto-rows:minmax(0,1fr)}
+ .presentation-stage .workflow-node{max-height:140px;align-self:center;height:100%;box-sizing:border-box}
+ @media(max-width:1100px){
+  .presentation-stage .workflow-node{padding:13px 5px 5px;gap:2px;line-height:1.12;font-size:11px;justify-content:center;align-self:stretch;height:auto}
+  .presentation-stage .workflow-symbol{position:absolute;left:8px;top:-8px;width:19px;height:19px;font-size:11px}
+  .presentation-stage .workflow-actor{font-size:9px;line-height:1.1}
+  .presentation-stage .workflow-map{gap:16px 12px}
+ }
+}
+
+.support-art[data-illustration="compilation-refused"]{background-image:url('assets/moments-v3/compilation-refused.png')}
+.support-art[data-illustration="proposal-refused"]{background-image:url('assets/moments-v3/proposal-refused.png')}

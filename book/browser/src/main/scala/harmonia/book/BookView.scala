@@ -16,11 +16,27 @@ final class BookView(
   private val root = dom.document.getElementById("app")
   private val main = element("main", "quiet-content"); main.id = "main"
   private val header = element("header", "reference-header")
+  private val mode = element("a", "quiet-location")
   private var wasChapter = false
   root.textContent = ""; root.setAttribute("class", "reference-shell")
-  append(header, element("span", "reference-brand", "Harmonia"))
+  append(header, element("span", "reference-brand", "Harmonia"), mode)
   append(root, header, main)
   def render(state: ViewState): IO[Unit] = IO {
+    dom.document.body.classList.toggle("laboratory", state.chapter.isEmpty)
+    dom.document.documentElement.setAttribute(
+      "data-canvas",
+      (state.chapter.isEmpty && !state.evidence && !state.embed && state.text != "large").toString
+    )
+    if state.chapter.nonEmpty || state.embed then mode.setAttribute("hidden", "")
+    else mode.removeAttribute("hidden")
+    mode.textContent = if state.evidence then "Story" else "Evidence"
+    mode.setAttribute(
+      "href",
+      BookNavigation.address(state.copy(evidence = !state.evidence), stories, chapters)
+    )
+    mode.onclick = event =>
+      event.preventDefault()
+      navigate(state.copy(evidence = !state.evidence))
     if state.chapter.nonEmpty || wasChapter then main.textContent = ""
     wasChapter = state.chapter.nonEmpty
     state.chapter match

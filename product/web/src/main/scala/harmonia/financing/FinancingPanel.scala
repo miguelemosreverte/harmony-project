@@ -7,7 +7,9 @@ import org.scalajs.dom
 /** The scene stays mounted while polling updates its observed state. */
 final class FinancingPanel:
   val root = element("section", "financing-scene")
-  private val scene = new SceneView(root)
+  private val canvas = element("div", "financing-stage")
+  private val scene = new SceneView(canvas)
+  append(root, canvas)
   private val dock = element("nav", "workflow-dock")
   private val rail = element("div")
   private val carousel = new StepCarousel(rail)
@@ -49,6 +51,8 @@ final class FinancingPanel:
       append(detailBody, element("p", text = "Status: " + value.wire))
     )
     state.privateDetails.foreach(value => append(detailBody, element("p", text = value)))
+
+  def privateApplication: dom.HTMLElement = details
 
   private def drawScene(): Unit = observed.foreach { state =>
     val frame = FinancingScene(state)

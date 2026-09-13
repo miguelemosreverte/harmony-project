@@ -6,6 +6,7 @@ import scala.scalajs.js.annotation.JSExportTopLevel
 
 /** Stable HTML objects make changes of state visible without replacing the whole scene. */
 final class SceneView(root: dom.HTMLElement):
+  root.classList.add("presentation-stage")
   private val figure = element("figure", "harmonia-scene")
   private val observation = new ObservationView(figure)
   private val map = element("div", "scene-map")

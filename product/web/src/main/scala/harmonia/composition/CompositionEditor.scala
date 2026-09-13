@@ -80,7 +80,16 @@ final class CompositionEditor(propose: Either[String, Composition] => Unit):
     Conversation(
       Speech(Portrait.Bank, "Bank", first),
       Speech(Portrait.Alice, "Buyer", second),
-      Some(StoryIllustration.AgreeThePlan)
+      Some(field match
+        case Name           => StoryIllustration.AgreeThePlan
+        case Reference      => StoryIllustration.ReturnToWork
+        case Count          => StoryIllustration.LimitsChecked
+        case Id(_)          => StoryIllustration.AdapterTemplate
+        case Role(_)        => StoryIllustration.SharedPlan
+        case Actor(_)       => StoryIllustration.SeparateWorkspaces
+        case Action(_)      => StoryIllustration.BuyerReview
+        case Integration(_) => StoryIllustration.AdapterWorkshop
+        case Review         => StoryIllustration.AgreeThePlan)
     )
 
   private def fields: Vector[Field] =

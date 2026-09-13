@@ -59,15 +59,46 @@ body:has(.has-carousel){padding-bottom:140px}
 @media(max-width:700px){.route-dock{gap:8px;padding:8px}.route-option{font-size:.75rem;padding:6px;min-height:54px}.route-dock>.carousel-path-label{max-width:46px}}
 @media print{.route-dock{display:none}}
 .story-carousel .scene-caption{display:none}
-@media(max-width:700px){
- .story-carousel [data-kind=purchase] .scene-map{height:610px}
- .story-carousel [data-kind=purchase] .scene-private{height:200px}
- .story-carousel [data-kind=purchase] .scene-shared{top:216px}
- .story-carousel [data-kind=purchase] .scene-person[data-position="1"]{top:261px}
- .story-carousel [data-kind=purchase] .scene-artifact{top:367px}
- .story-carousel [data-kind=purchase] .scene-person[data-position="2"]{top:430px}
- .story-carousel [data-kind=purchase] .scene-person[data-position="3"]{top:536px}
- .story-carousel [data-kind=purchase] .scene-map>.illustration-house{top:507px}
-}
+
 @media(max-width:700px){.quiet-content:has(#story-scene){padding-top:16px}}
 #laboratory-stage .workflow-title{display:none}#laboratory-stage .workflow-caption{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:3.2em}
+
+/* A story is a viewport, not a document followed by an image below the fold. */
+@media screen {
+ html[data-canvas=true]{scrollbar-gutter:auto}
+ html[data-canvas=true] body{padding:0}
+ html[data-canvas=true] .reference-shell{height:100dvh;min-height:0;margin:0 auto;border-radius:0;box-shadow:none;overflow:visible;display:flex;flex-direction:column}
+ html[data-canvas=true] .reference-header{height:50px;min-height:50px;padding:10px 24px;box-sizing:border-box}
+ html[data-canvas=true] .quiet-content{height:calc(100dvh - 130px);min-height:0;padding:12px 24px;display:flex;flex-direction:column;gap:8px}
+ html[data-canvas=true] :is(#chapter-try,.story-carousel,#chapter-read){flex:1;min-height:0;height:100%;margin:0}
+ html[data-canvas=true] #chapter-read{display:flex;flex-direction:column}
+ html[data-canvas=true] #chapter-read>:not([data-chapter-diagram]):not(nav){display:none}
+ html[data-canvas=true] [data-chapter-diagram]{flex:1;min-height:0;margin:0}
+ html[data-canvas=true] .presentation-stage{--stage-height:100%;--diagram-height:clamp(240px,38dvh,350px);flex:1;min-height:0}
+ html[data-canvas=true] :is(.chapter-heading h1,#laboratory-title){font-size:22px;line-height:1.2;min-height:0;margin:0;font-weight:650}
+ html[data-canvas=true] .eyebrow{margin:0 0 4px;font-size:9px;line-height:1.3}
+ html[data-canvas=true] .chapter-heading{margin:0 0 4px}
+ html[data-canvas=true] #recording-provenance{display:none}
+ html[data-canvas=true] .quiet-paging.has-carousel{bottom:8px;height:56px;align-items:center}
+ html[data-canvas=true] .quiet-paging.has-carousel::before{height:76px;bottom:-8px}
+ html[data-canvas=true] .quiet-paging.has-carousel>.step-carousel{align-self:center;padding:0}
+ #reading-detail{font-size:12px;text-decoration:none;margin-left:18px;white-space:nowrap}
+ @media(max-width:850px){
+  html[data-canvas=true] .reference-header{height:44px;min-height:44px;padding:8px 14px}
+  html[data-canvas=true] .reference-brand{font-size:20px}
+  html[data-canvas=true] .quiet-location{font-size:11px}
+  html[data-canvas=true] .quiet-content{height:calc(100dvh - 116px);padding:10px 14px;gap:7px}
+  html[data-canvas=true] :is(.chapter-heading h1,#laboratory-title){font-size:18px;line-height:1.2}
+  html[data-canvas=true] .presentation-stage{--diagram-height:clamp(196px,29dvh,270px);gap:8px}
+ }
+}
+
+@media screen{html[data-canvas=true] .quiet-paging.has-carousel{height:106px;grid-template-rows:minmax(0,1fr);align-items:center}html[data-canvas=true] .quiet-paging.has-carousel::before{height:122px}html[data-canvas=true] .quiet-content{height:calc(100dvh - 174px)}html[data-canvas=true] .quiet-paging.has-carousel>a,html[data-canvas=true] .quiet-paging.has-carousel>button{align-self:center} @media(max-width:850px){html[data-canvas=true] .quiet-content{height:calc(100dvh - 166px)}}}
+@media screen {
+ html[data-canvas=true] body.laboratory .quiet-content{height:calc(100dvh - 122px)}
+ html[data-canvas=true] body.laboratory .quiet-paging.has-carousel{height:56px}
+ html[data-canvas=true] body.laboratory .quiet-paging.has-carousel::before{height:76px}
+ @media(max-height:650px) and (max-width:850px){html[data-canvas=true] body.laboratory .presentation-stage{--diagram-height:180px}html[data-canvas=true] #laboratory-title{font-size:16px}}
+}
+@media screen{html[data-canvas=true] #laboratory-stage{flex:1;min-height:0}html[data-canvas=true] #review-diagram{flex:1;min-height:0;margin:0}html[data-canvas=true] :is(#review-question,#review-status,#review-evidence){display:none}html[data-canvas=true] #review-title{font-size:20px;line-height:1.2;margin:0}}
+@media screen{html:not([data-canvas=true]) .reference-shell .presentation-stage .support-conversation{min-height:290px}html:not([data-canvas=true]) .reference-shell .presentation-stage .support-art{min-height:180px}}

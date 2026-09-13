@@ -23,6 +23,7 @@
     s.source=choose(input.source,['proposal','architecture'],'proposal');
     s.passage=choose(input.passage,atlas.passages.map(p=>p.id),atlas.passages.find(p=>p.source===s.source).id);s.source=atlas.passages.find(p=>p.id===s.passage).source;
     s.task=choose(input.task,['financing','composer','packages'],'financing');
+    s.detail=choose(input.detail,['','text'],'');
     return s;
   };
 

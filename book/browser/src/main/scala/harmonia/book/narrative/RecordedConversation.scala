@@ -20,7 +20,7 @@ object RecordedConversation:
       Conversation(
         Speech(a, name, line),
         Speech(b, other, reply),
-        RecordedIllustrations.stories.get(story.id)
+        Some(RecordedIllustrations(story, index))
       )
     def financing(line: String, reply: String) =
       pair(Portrait.Bank, bank, line, Portrait.Alice, buyer, reply)

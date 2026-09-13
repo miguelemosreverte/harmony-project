@@ -47,6 +47,10 @@ final class StoryLaboratory(
 
   def render(main: dom.HTMLElement, state: ViewState): Unit =
     current = state
+    if state.evidence then
+      graph.setAttribute("hidden", ""); detail.removeAttribute("hidden")
+    else
+      graph.removeAttribute("hidden"); detail.setAttribute("hidden", "")
     val story = stories(state.story)
     if graph.parentNode != main then append(main, position, title, graph, paging, detail)
     position.textContent =

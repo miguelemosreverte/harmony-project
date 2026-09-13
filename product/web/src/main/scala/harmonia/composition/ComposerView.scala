@@ -179,7 +179,13 @@ object ComposerView:
                     else if step.enabled then "It is ready for its authorized participant."
                     else "It must wait for the earlier actions."
                   ),
-                  Some(StoryIllustration.AgreeThePlan)
+                  Some(
+                    if step.completed then
+                      if step.actor == "bank" then StoryIllustration.ApprovalSigned
+                      else StoryIllustration.ReviewComplete
+                    else if step.enabled then StoryIllustration.PlanAccepted
+                    else StoryIllustration.JoinWaiting
+                  )
                 )
               )
             )

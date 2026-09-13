@@ -15,6 +15,7 @@ import scala.scalajs.js.annotation.JSExportTopLevel
 
 /** A diagram presents observed state without introducing navigation controls. */
 final class WorkflowDiagramView(root: dom.HTMLElement):
+  root.classList.add("presentation-stage")
   private val figure = node("figure", "workflow-diagram")
   private val observation = new ObservationView(figure)
   private val map = node("div", "workflow-map")
@@ -47,6 +48,7 @@ final class WorkflowDiagramView(root: dom.HTMLElement):
         .filterNot(card => documentation.contains(card.getAttribute("data-node")))
         .foreach(_.remove())
       val rows = scala.collection.mutable.Map.empty[Int, Int]
+      val rowCount = value.nodes.groupBy(n => layers(n.id)).values.map(_.size).max
       cards = value.nodes.sortBy(item => layers(item.id)).map { item =>
         val card = existing.getOrElse(
           item.id, {
@@ -68,6 +70,8 @@ final class WorkflowDiagramView(root: dom.HTMLElement):
         val row = rows.getOrElse(layer, 0) + 1; rows.update(layer, row)
         card.style.setProperty("--column", (layer + 1).toString)
         card.style.setProperty("--row", row.toString)
+        card.style.setProperty("--compact-column", (layer % 3 + 1).toString)
+        card.style.setProperty("--compact-row", (layer / 3 * rowCount + row).toString)
         val badge = card.querySelector(".workflow-symbol")
         badge.textContent =
           if item.state == DiagramState.Complete then "✓"
@@ -79,6 +83,7 @@ final class WorkflowDiagramView(root: dom.HTMLElement):
       }
       cards.foreach(map.appendChild)
       map.style.setProperty("--columns", (layers.values.max + 1).toString)
+      map.style.setProperty("--compact-columns", math.min(3, layers.values.max + 1).toString)
       map.classList.toggle("workflow-wide", layers.values.max > 3)
       val indexed = cards.map(card => card.getAttribute("data-node") -> card).toMap
       connections.render(

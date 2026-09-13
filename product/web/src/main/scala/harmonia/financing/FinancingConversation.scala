@@ -27,5 +27,15 @@ object FinancingConversation:
     Conversation(
       Speech(Portrait.Bank, "Bank", first),
       Speech(Portrait.Alice, "Buyer", second),
-      Some(StoryIllustration.SeparateWorkspaces)
+      Some(
+        handoff match
+          case "application" =>
+            if approved then StoryIllustration.ApprovalSigned else StoryIllustration.PrivateReview
+          case "approval" =>
+            if complete then StoryIllustration.ResultPublished
+            else if approved then StoryIllustration.ResultReady
+            else StoryIllustration.ContinuationWaiting
+          case _ =>
+            if complete then StoryIllustration.JoinComplete else StoryIllustration.JoinWaiting
+      )
     )

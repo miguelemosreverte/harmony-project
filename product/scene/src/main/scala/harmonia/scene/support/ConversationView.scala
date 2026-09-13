@@ -2,13 +2,15 @@ package harmonia.scene.support
 
 import org.scalajs.dom
 
-/** The illustration stays put; only the observed exchange changes as a step advances. */
+/** Retains the stage and the previous bitmap until the next moment's image is available. */
 final class ConversationView(parent: dom.HTMLElement):
   private val root = node("div", "workflow-support")
   root.setAttribute("role", "group")
   root.setAttribute("aria-label", "The moment explained")
   private val exchange = node("div", "support-conversation")
   private val art = node("div", "support-art")
+  private var artwork = Option.empty[StoryIllustration]
+  private var previousImage = "none"
   art.setAttribute("role", "img")
   private val dialogue = node("div", "support-dialogue")
   exchange.appendChild(art); exchange.appendChild(dialogue); root.appendChild(exchange)
@@ -28,7 +30,14 @@ final class ConversationView(parent: dom.HTMLElement):
     value.foreach { conversation =>
       hide(art, conversation.illustration.isEmpty)
       conversation.illustration.foreach { image =>
-        art.setAttribute("data-illustration", image.asset)
+        if !artwork.contains(image) then
+          art.style.removeProperty("background-image")
+          art.setAttribute("data-illustration", image.asset)
+          val nextImage = dom.window.getComputedStyle(art).backgroundImage
+          if nextImage.nonEmpty && nextImage != "none" then
+            art.style.backgroundImage = nextImage + ", " + previousImage
+            previousImage = nextImage
+          artwork = Some(image)
         art.setAttribute("aria-label", image.description)
       }
       Vector(conversation.first, conversation.second).zip(speakers).foreach {

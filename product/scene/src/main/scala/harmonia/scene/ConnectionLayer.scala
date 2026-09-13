@@ -55,7 +55,8 @@ final class ConnectionLayer(root: dom.HTMLElement):
         val gap = 10.0
         val x1 = (if vertical then a.left + a.width / 2 else a.right + gap) - bounds.left
         val y1 = (if vertical then a.bottom + gap else a.top + a.height / 2) - bounds.top
-        val x2 = (if vertical then b.left + b.width / 2 else b.left - gap) - bounds.left
+        val x2 =
+          math.max(4.0, (if vertical then b.left + b.width / 2 else b.left - gap) - bounds.left)
         val y2 = (if vertical then b.top - gap else b.top + b.height / 2) - bounds.top
         val obstacles = root.querySelectorAll(".workflow-node")
         val detour = vertical && (0 until obstacles.length).exists { i =>

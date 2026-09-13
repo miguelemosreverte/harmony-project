@@ -51,7 +51,7 @@ final class LiveView:
       finance.id = "financing"
       append(composition, draft, composed)
       append(history, element("h2", text = "Visible ledger history"), historyBody)
-      append(evidence, jobs, history)
+      append(evidence, financing.privateApplication, jobs, history)
       append(main, finance, composition, packageArea, evidence)
       val root = dom.document.getElementById("app"); root.textContent = ""; append(root, main)
       new WorkspaceNavigation(() => selectPage())

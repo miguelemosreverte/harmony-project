@@ -4,7 +4,8 @@ import munit.FunSuite
 import harmonia.book.diagram.{RecordedScene, StoryDiagram, ChapterDiagram}
 import harmonia.examples.{Examples, ExampleKind}
 import harmonia.scene.DiagramState
-import harmonia.book.narrative.RecordedConversation
+import harmonia.book.narrative.{RecordedConversation, RecordedIllustrations}
+import harmonia.scene.support.StoryIllustration.*
 import io.circe.Json
 import scala.scalajs.js
 
@@ -113,6 +114,30 @@ class DiagramSuite extends FunSuite:
       transfer.presentation.copy(units = transfer.units.map(_.copy(actual = Json.Null)))
     )
     assert(RecordedScene(absent, 1).amounts.forall(_.value.startsWith("Not observed")))
+  }
+
+  test("the purchase pictures follow preparation, relay and receipt") {
+    val story = recording("purchase-approved")
+    assertEquals(RecordedIllustrations(story, 1), ApprovalSigned)
+    assertEquals(RecordedIllustrations(story, 4), ProposalPrepared)
+    assertEquals(RecordedIllustrations(story, 6), ProposalRelayed)
+    assertEquals(RecordedIllustrations(story, 7), ProposalReceived)
+    assertEquals(RecordedIllustrations(story, 5), ContinuationWaiting)
+  }
+
+  test("settlement, rollback and duplicate requests have different visual consequences") {
+    assertEquals(RecordedIllustrations(recording("transfer-approved"), 7), TransferSettled)
+    assertEquals(RecordedIllustrations(recording("transfer-approved"), 8), AlreadySettled)
+    assertEquals(
+      RecordedIllustrations(recording("transfer-final-leg-rejected"), 5),
+      ClosedDestination
+    )
+    assertEquals(RecordedIllustrations(recording("sequence-resumed"), 3), RetryRecord)
+    val story = recording("purchase-approved")
+    val absent = story.copy(presentation =
+      story.presentation.copy(units = story.units.map(_.copy(actual = Json.Null)))
+    )
+    assertEquals(RecordedIllustrations(absent, 7), EvidenceReview)
   }
 
   test("current chapters use supported diagrams and unsupported programs remain source") {

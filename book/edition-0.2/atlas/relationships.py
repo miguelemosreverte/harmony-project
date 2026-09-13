@@ -56,6 +56,8 @@ def build(root, files, slices):
             ready={n for n in ids-placed if all(a in placed for a,b in graph['edges'] if b==n)}
             if not ready:raise ValueError('Cyclic relationship diagram')
             placed|=ready
-    for graph in maps.values(): graph['conversation'] = RELATIONSHIPS['dependencies']
-    for graph in runtime.values(): graph['conversation'] = RELATIONSHIPS['execution']
+    art = {'financing':'private-approval','process':'branch-approved','transfer':'transfer-approved',
+           'composition':'composer-direct','packages':'package-builder','book':'evidence-review'}
+    for key, graph in maps.items(): graph['conversation'] = dict(RELATIONSHIPS['dependencies'], illustration=art[key])
+    for key, graph in runtime.items(): graph['conversation'] = dict(RELATIONSHIPS['execution'], illustration=art[key])
     return dict(dependencies=maps,execution=runtime)

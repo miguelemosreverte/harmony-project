@@ -156,3 +156,45 @@ body:has(.composition-editor){padding-bottom:270px}.live-main:has(.composition-e
 .entry-choices a{display:block;padding:18px 22px;border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--accent);text-decoration:none;font-weight:600}
 .entry-choices a:hover{background:var(--pale);border-color:var(--accent)}
 @media(max-width:700px){.session-entry-content{margin:20px auto!important}.entry-illustration{height:230px}.entry-choices{gap:12px}.entry-choices a{padding:14px 12px;flex:1;font-size:.9rem}}
+
+/* The diagram, moment and action dock share the available viewport. */
+@media screen {
+ body:has(.presentation-stage){padding:0}
+ .live-main:has(.presentation-stage){height:100dvh;min-height:0;margin:0 auto;border-radius:0;box-shadow:none;border:0}
+ .live-main:has(.presentation-stage)>.reference-header{height:50px;padding:10px 24px}
+ .live-main:has(.presentation-stage) .reference-header .live-identity{font-size:11px;margin:0}
+ .live-main:has(.presentation-stage)>#financing{height:calc(100dvh - 178px);padding:12px 24px;display:flex;flex-direction:column;gap:10px}
+ #financing>.presentation-stage{--stage-height:100%;--diagram-height:clamp(240px,37dvh,350px);flex:1;min-height:0}
+ .live-main:has(.presentation-stage) .workflow-dock{height:56px;bottom:64px;align-items:center}
+ .live-main:has(.presentation-stage) .workflow-dock>.step-carousel{width:100%}
+ .live-main:has(.presentation-stage)::after{height:128px}
+ .live-main:has(.presentation-stage) :is(.financing-action>button,.live-destination>a,.composition-editor>button,.composition-record>button,#composition-observations>a,#package-builder>button,.package-actions>button,.package-actions>a,.editor-fields>button){height:44px;bottom:10px}
+ .live-main:has(.presentation-stage) :is(#composer,#package-builder){margin:0;border:0;border-radius:0;padding:12px 24px}
+ .live-main:has(.presentation-stage) .composition-record{border:0;padding:0;margin:0}
+ .live-main:has(.presentation-stage) .composition-record>.workflow-title{display:none}
+ .live-main:has(.presentation-stage) .composition-record>h2{font-size:20px;margin:0 0 6px}
+ .live-main:has(.presentation-stage) .composition-record>p{font-size:11px;margin:0 0 8px}
+ .live-main:has(.presentation-stage) .composition-record .presentation-stage{--stage-height:calc(100dvh - 270px);--diagram-height:clamp(140px,24dvh,240px)}
+ .live-main:has(.presentation-stage) .package-stage{--stage-height:calc(100dvh - 280px);--diagram-height:clamp(190px,32dvh,290px)}
+ .live-main:has(.presentation-stage) #package-builder>h1{font-size:20px;margin:8px 0}
+ .live-main:has(.presentation-stage) #package-builder>.eyebrow,.live-main:has(.presentation-stage) #package-builder>p:not(#builder-status){display:none}
+ .live-main:has(.presentation-stage) #builder-status:empty{display:none}
+ .live-main:has(.presentation-stage) .editor-stage{--stage-height:calc(100dvh - 370px);--diagram-height:clamp(130px,22dvh,220px);margin:0}
+ .live-main:has(.presentation-stage) .editor-fields h1{min-height:0;font-size:18px;margin:10px 0}
+ .live-main:has(.presentation-stage) .editor-fields>input{min-height:40px;height:40px;padding:8px}
+ .live-main:has(.presentation-stage) .composition-editor .workflow-dock{height:112px}
+ .live-main:has(.presentation-stage) .composition-editor .step-carousel{grid-template-rows:48px 48px}
+ @media(max-width:850px){
+  .live-main:has(.presentation-stage)>.reference-header{height:44px;padding:8px 14px}
+  .live-main:has(.presentation-stage)>#financing{height:calc(100dvh - 174px);padding:10px 14px}
+  #financing>.presentation-stage{--diagram-height:clamp(196px,29dvh,270px)}
+  .live-main:has(.presentation-stage) :is(#composer,#package-builder){padding:10px 14px}
+ }
+}
+@media screen{.live-main:has(.session-entry-content){height:100dvh;min-height:0;margin:0 auto}.session-entry-content{height:calc(100dvh - 110px);display:flex;flex-direction:column;margin:0 auto!important;padding:16px!important}.session-entry-content .entry-illustration{flex:1;min-height:80px;height:auto;margin:12px auto}.session-entry-content .entry-choices{flex-shrink:0}.session-entry-content>p{margin:6px 0;font-size:.92rem}.session-entry-content h1{margin:8px 0}}
+@media screen {
+ .live-main:has(.presentation-stage) .editor-stage{--stage-height:calc(100dvh - 330px);--diagram-height:clamp(100px,16dvh,165px)}
+ .live-main:has(.presentation-stage) .package-stage{--stage-height:calc(100dvh - 248px);--diagram-height:clamp(140px,23dvh,220px)}
+ .live-main:has(.presentation-stage) .composition-record>h3{font-size:18px;line-height:1.2;margin:0 0 6px}
+ .live-main:has(#financing):has(.workflow-dock)::after{height:128px}
+}
