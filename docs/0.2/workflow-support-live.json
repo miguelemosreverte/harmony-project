@@ -1,0 +1,196 @@
+{
+  "scope": "Real commands through the Scala UI, service, Canton and Daml compiler on one disposable local network",
+  "checks": [
+    "financing-pending 1280: exactly two short lines",
+    "financing-pending 1280: page fits",
+    "financing-pending 390: exactly two short lines",
+    "financing-pending 390: page fits",
+    "Bank approval becomes observed approval",
+    "financing-approved 1280: exactly two short lines",
+    "financing-approved 1280: page fits",
+    "financing-approved 390: exactly two short lines",
+    "financing-approved 390: page fits",
+    "Buyer continuation completes the handoff",
+    "financing-complete 1280: exactly two short lines",
+    "financing-complete 1280: page fits",
+    "financing-complete 390: exactly two short lines",
+    "financing-complete 390: page fits",
+    "Branch choices preserve the intended typed plan",
+    "Proposed plan is recorded without bypassing consent",
+    "proposed 1280: exactly two short lines",
+    "proposed 1280: page fits",
+    "proposed 390: exactly two short lines",
+    "proposed 390: page fits",
+    "consented 1280: exactly two short lines",
+    "consented 1280: page fits",
+    "consented 390: exactly two short lines",
+    "consented 390: page fits",
+    "first-action 1280: exactly two short lines",
+    "first-action 1280: page fits",
+    "first-action 390: exactly two short lines",
+    "first-action 390: page fits",
+    "Both assigned actions complete after participant consent",
+    "composition-complete 1280: exactly two short lines",
+    "composition-complete 1280: page fits",
+    "composition-complete 390: exactly two short lines",
+    "composition-complete 390: page fits",
+    "package-inspected 1280: exactly two short lines",
+    "package-inspected 1280: page fits",
+    "package-inspected 390: exactly two short lines",
+    "package-inspected 390: page fits",
+    "Compiler result retains the package infographic",
+    "Compilation is observed separately from registration",
+    "package-compiled 1280: exactly two short lines",
+    "package-compiled 1280: page fits",
+    "package-compiled 390: exactly two short lines",
+    "package-compiled 390: page fits",
+    "No browser errors"
+  ],
+  "screenshots": [
+    {
+      "name": "financing-pending",
+      "width": 1280,
+      "lines": [
+        "The financing case awaits my decision.",
+        "I’m waiting for the signed result."
+      ]
+    },
+    {
+      "name": "financing-pending",
+      "width": 390,
+      "lines": [
+        "The financing case awaits my decision.",
+        "I’m waiting for the signed result."
+      ]
+    },
+    {
+      "name": "financing-approved",
+      "width": 1280,
+      "lines": [
+        "The signed result is ready.",
+        "I can continue with this approval."
+      ]
+    },
+    {
+      "name": "financing-approved",
+      "width": 390,
+      "lines": [
+        "The signed result is ready.",
+        "I can continue with this approval."
+      ]
+    },
+    {
+      "name": "financing-complete",
+      "width": 1280,
+      "lines": [
+        "The private documents stayed with the bank.",
+        "The shared workflow is complete."
+      ]
+    },
+    {
+      "name": "financing-complete",
+      "width": 390,
+      "lines": [
+        "The private documents stayed with the bank.",
+        "The shared workflow is complete."
+      ]
+    },
+    {
+      "name": "proposed",
+      "width": 1280,
+      "lines": [
+        "I propose approval for bank.",
+        "My consent is still required before it runs."
+      ]
+    },
+    {
+      "name": "proposed",
+      "width": 390,
+      "lines": [
+        "I propose approval for bank.",
+        "My consent is still required before it runs."
+      ]
+    },
+    {
+      "name": "consented",
+      "width": 1280,
+      "lines": [
+        "approval belongs to bank.",
+        "It is ready for its authorized participant."
+      ]
+    },
+    {
+      "name": "consented",
+      "width": 390,
+      "lines": [
+        "approval belongs to bank.",
+        "It is ready for its authorized participant."
+      ]
+    },
+    {
+      "name": "first-action",
+      "width": 1280,
+      "lines": [
+        "review belongs to buyer.",
+        "It is ready for its authorized participant."
+      ]
+    },
+    {
+      "name": "first-action",
+      "width": 390,
+      "lines": [
+        "review belongs to buyer.",
+        "It is ready for its authorized participant."
+      ]
+    },
+    {
+      "name": "composition-complete",
+      "width": 1280,
+      "lines": [
+        "approval belongs to bank.",
+        "Its completion is recorded."
+      ]
+    },
+    {
+      "name": "composition-complete",
+      "width": 390,
+      "lines": [
+        "approval belongs to bank.",
+        "Its completion is recorded."
+      ]
+    },
+    {
+      "name": "package-inspected",
+      "width": 1280,
+      "lines": [
+        "This mapping is ready to compile.",
+        "A compiled project is a portable artifact."
+      ]
+    },
+    {
+      "name": "package-inspected",
+      "width": 390,
+      "lines": [
+        "This mapping is ready to compile.",
+        "A compiled project is a portable artifact."
+      ]
+    },
+    {
+      "name": "package-compiled",
+      "width": 1280,
+      "lines": [
+        "This DAR has been inspected.",
+        "Inspection reads its package identity."
+      ]
+    },
+    {
+      "name": "package-compiled",
+      "width": 390,
+      "lines": [
+        "This DAR has been inspected.",
+        "Inspection reads its package identity."
+      ]
+    }
+  ],
+  "errors": []
+}

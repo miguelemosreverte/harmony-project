@@ -164,7 +164,7 @@
         "related": [
           {
             "file": "product/web/src/main/scala/harmonia/composition/ComposerView.scala",
-            "sha256": "67bcb0aa8f9d9b10490370f28d7da4b0ee23697c47e50fbc23554bef72bc8429"
+            "sha256": "fa41f32beba05cf1f0ef65b522506b1c6bf7ad16695ed5b93167e3865a58129e"
           }
         ]
       }
@@ -237,7 +237,7 @@
         "detail": "The browser exposes the inspected mapping, generation result and registration boundary. Package availability does not grant choice authority.",
         "actor": "Operator browser",
         "file": "product/web/src/main/scala/harmonia/packages/PackagePanel.scala",
-        "sha256": "983adf19f1b46ecce766ca624f7f071237419bb52c43ae59177a31c064450f0b",
+        "sha256": "df349ef31dd82f1b804cd153d0da62bc6dae8d172050fff6c3a6473dc4985add",
         "related": []
       }
     ],

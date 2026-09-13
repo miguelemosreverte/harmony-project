@@ -33,14 +33,7 @@ object RecordedConversation:
       pair(Portrait.Bank, "Source", line, Portrait.Bank, "Destination", reply)
     if unit.isEmpty then
       if transfer then
-        pair(
-          Portrait.Ben,
-          "Seller",
-          s"I want to transfer $amount.",
-          Portrait.Alice,
-          "Alice",
-          "Both custodians must be ready."
-        )
+        custodians(s"The seller proposes a transfer of $amount.", "Both of us must be ready.")
       else financing("Your financing application is pending.", "I’d like to make an offer.")
     else if actual.isNull then
       review("This attempt has no recorded result.", "We cannot tell what happened.")
@@ -177,14 +170,7 @@ object RecordedConversation:
         case "receive-proposal" =>
           agents("Alice’s proposal has reached you.", "Received — this handoff is complete.")
         case "agree-trade" =>
-          pair(
-            Portrait.Ben,
-            "Seller",
-            "I’ve agreed to the trade.",
-            Portrait.Alice,
-            "Alice",
-            "The assets have not moved yet."
-          )
+          custodians("The seller has agreed to the trade.", "The assets have not moved yet.")
         case "lock-position" =>
           custodians(s"$amount is reserved here.", "Nothing has arrived here yet.")
         case "confirm-source" =>

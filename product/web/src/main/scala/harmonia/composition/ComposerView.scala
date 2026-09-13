@@ -74,6 +74,7 @@ object ComposerView:
       nodes
         .find(n => requested.contains(n.id))
         .orElse(nodes.find(_.state == DiagramState.Current))
+        .orElse(nodes.reverse.find(_.state == DiagramState.Complete))
         .getOrElse(nodes.head)
         .id
     )
@@ -87,14 +88,6 @@ object ComposerView:
     val root = element("div"); root.id = "composition-observations"
     if !state.available then
       append(root, element("p", text = "Your session has no access to the composition workspace."))
-    else if !state.canPropose then
-      append(
-        root,
-        element(
-          "p",
-          text = "The bank proposes; the buyer consents. Each action belongs to its assigned party."
-        )
-      )
     val query = new dom.URLSearchParams(dom.window.location.search)
     val requested = Option(query.get("workflow"))
     val reference = requested
@@ -125,7 +118,7 @@ object ComposerView:
               DiagramState.Pending,
               Some(
                 Conversation(
-                  Speech(Portrait.Bank, "Bank", s"I propose ${step.id} for ${step.actor.wire}."),
+                  Speech(Portrait.Bank, "Bank", s"I’m proposing the “${step.id}” action."),
                   Speech(Portrait.Alice, "Buyer", "My consent is still required before it runs.")
                 )
               )
@@ -177,7 +170,7 @@ object ComposerView:
               else DiagramState.Pending,
               Some(
                 Conversation(
-                  Speech(Portrait.Bank, "Bank", s"${step.id} belongs to ${step.actor}."),
+                  Speech(Portrait.Bank, "Bank", s"The ${step.actor} owns “${step.id}”."),
                   Speech(
                     Portrait.Alice,
                     "Buyer",

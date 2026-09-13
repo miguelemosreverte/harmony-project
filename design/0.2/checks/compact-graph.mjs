@@ -1,4 +1,4 @@
-// A summary stays in the scene; the rail supplies position and accessible names.
+// A short illustrated exchange stays below the scene; the rail supplies position and accessible names.
 import fs from 'node:fs/promises';
 import assert from 'node:assert/strict';
 import {browser} from './cdp.mjs';
@@ -18,10 +18,10 @@ try{
    const ids=await b.evaluate('[...document.querySelectorAll(".carousel-step")].map(n=>n.dataset.stop)');
    for(const id of ids){
     await click(id);await b.wait(40);
-    check(width+' '+id+': short badge stays inside scene and clear of labels',await b.evaluate(`(()=>{
-     const badge=document.querySelector('.scene-badge:not([hidden])'),r=badge.getBoundingClientRect(),scene=document.querySelector('.scene-map').getBoundingClientRect();
-     const obstacles=[...document.querySelectorAll('.person-icon,.scene-person strong,.scene-zone-label,.document-sheet,.artifact-label,.scene-documents')].filter(n=>n.getClientRects().length);
-     return badge.textContent.split(' ').length<=3&&r.left>=scene.left&&r.right<=scene.right&&r.top>=scene.top&&r.bottom<=scene.bottom&&obstacles.every(n=>{const q=n.getBoundingClientRect();return r.right<=q.left||r.left>=q.right||r.bottom<=q.top||r.top>=q.bottom});
+    check(width+' '+id+': two short lines stay below the untouched infographic',await b.evaluate(`(()=>{
+     const support=[...document.querySelectorAll('.workflow-support')].find(n=>n.getClientRects().length),r=support.getBoundingClientRect(),scene=document.querySelector('#story-scene .scene-map').getBoundingClientRect();
+     const speech=[...support.querySelectorAll('.support-speech')];
+     return !document.querySelector('.scene-badge')&&r.top>=scene.bottom&&r.left>=0&&r.right<=innerWidth&&speech.length===2&&speech.every(n=>n.textContent.length<=90&&n.scrollHeight<=n.clientHeight+1);
     })()`));
    }
    check(width+' '+chapter+': no page overflow',await b.evaluate('document.documentElement.scrollWidth<=innerWidth+1'));

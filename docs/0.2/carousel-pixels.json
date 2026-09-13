@@ -6,183 +6,183 @@
       "from": "purchase-approved:0",
       "to": "purchase-approved:2",
       "width": 1056,
-      "changed_pixels": 3162,
-      "changed_percent": 0.657
+      "changed_pixels": 6115,
+      "changed_percent": 0.883
     },
     {
       "from": "purchase-approved:2",
       "to": "purchase-approved:5",
       "width": 1056,
-      "changed_pixels": 10517,
-      "changed_percent": 2.184
+      "changed_pixels": 46655,
+      "changed_percent": 6.735
     },
     {
       "from": "purchase-approved:5",
       "to": "purchase-approved:7",
       "width": 1056,
-      "changed_pixels": 8907,
-      "changed_percent": 1.85
+      "changed_pixels": 38503,
+      "changed_percent": 5.558
     },
     {
       "from": "purchase-approved:7",
       "to": "purchase-approved:8",
       "width": 1056,
-      "changed_pixels": 8895,
-      "changed_percent": 1.847
+      "changed_pixels": 11538,
+      "changed_percent": 1.666
     },
     {
       "from": "purchase-approved:8",
       "to": "purchase-rejected:1",
       "width": 1056,
-      "changed_pixels": 12882,
-      "changed_percent": 2.675
+      "changed_pixels": 41334,
+      "changed_percent": 5.967
     },
     {
       "from": "purchase-rejected:1",
       "to": "purchase-rejected:3",
       "width": 1056,
-      "changed_pixels": 12020,
-      "changed_percent": 2.496
+      "changed_pixels": 45311,
+      "changed_percent": 6.541
     },
     {
       "from": "transfer-approved:0",
       "to": "transfer-approved:1",
       "width": 1056,
-      "changed_pixels": 1906,
-      "changed_percent": 0.325
+      "changed_pixels": 6051,
+      "changed_percent": 0.759
     },
     {
       "from": "transfer-approved:1",
       "to": "transfer-approved:2",
       "width": 1056,
-      "changed_pixels": 4468,
-      "changed_percent": 0.762
+      "changed_pixels": 28293,
+      "changed_percent": 3.549
     },
     {
       "from": "transfer-approved:2",
       "to": "transfer-approved:3",
       "width": 1056,
-      "changed_pixels": 8792,
-      "changed_percent": 1.5
+      "changed_pixels": 14430,
+      "changed_percent": 1.81
     },
     {
       "from": "transfer-approved:3",
       "to": "transfer-approved:4",
       "width": 1056,
-      "changed_pixels": 12300,
-      "changed_percent": 2.099
+      "changed_pixels": 17256,
+      "changed_percent": 2.164
     },
     {
       "from": "transfer-approved:4",
       "to": "transfer-approved:5",
       "width": 1056,
-      "changed_pixels": 949,
-      "changed_percent": 0.162
+      "changed_pixels": 6209,
+      "changed_percent": 0.779
     },
     {
       "from": "transfer-approved:5",
       "to": "transfer-approved:8",
       "width": 1056,
-      "changed_pixels": 15609,
-      "changed_percent": 2.663
+      "changed_pixels": 21278,
+      "changed_percent": 2.669
     },
     {
       "from": "transfer-approved:8",
       "to": "transfer-final-leg-rejected:6",
       "width": 1056,
-      "changed_pixels": 8756,
-      "changed_percent": 1.494
+      "changed_pixels": 13148,
+      "changed_percent": 1.649
     },
     {
       "from": "purchase-approved:0",
       "to": "purchase-approved:2",
       "width": 366,
-      "changed_pixels": 2735,
-      "changed_percent": 1.225
+      "changed_pixels": 4007,
+      "changed_percent": 1.27
     },
     {
       "from": "purchase-approved:2",
       "to": "purchase-approved:5",
       "width": 366,
-      "changed_pixels": 8770,
-      "changed_percent": 3.928
+      "changed_pixels": 17878,
+      "changed_percent": 5.667
     },
     {
       "from": "purchase-approved:5",
       "to": "purchase-approved:7",
       "width": 366,
-      "changed_pixels": 7758,
-      "changed_percent": 3.475
+      "changed_pixels": 15023,
+      "changed_percent": 4.762
     },
     {
       "from": "purchase-approved:7",
       "to": "purchase-approved:8",
       "width": 366,
-      "changed_pixels": 7575,
-      "changed_percent": 3.393
+      "changed_pixels": 9462,
+      "changed_percent": 2.999
     },
     {
       "from": "purchase-approved:8",
       "to": "purchase-rejected:1",
       "width": 366,
-      "changed_pixels": 10245,
-      "changed_percent": 4.589
+      "changed_pixels": 18629,
+      "changed_percent": 5.905
     },
     {
       "from": "purchase-rejected:1",
       "to": "purchase-rejected:3",
       "width": 366,
-      "changed_pixels": 10031,
-      "changed_percent": 4.493
+      "changed_pixels": 17209,
+      "changed_percent": 5.455
     },
     {
       "from": "transfer-approved:0",
       "to": "transfer-approved:1",
       "width": 366,
-      "changed_pixels": 1893,
-      "changed_percent": 1.154
+      "changed_pixels": 3160,
+      "changed_percent": 1.233
     },
     {
       "from": "transfer-approved:1",
       "to": "transfer-approved:2",
       "width": 366,
-      "changed_pixels": 2434,
-      "changed_percent": 1.484
+      "changed_pixels": 16842,
+      "changed_percent": 6.574
     },
     {
       "from": "transfer-approved:2",
       "to": "transfer-approved:3",
       "width": 366,
-      "changed_pixels": 7564,
-      "changed_percent": 4.613
+      "changed_pixels": 10365,
+      "changed_percent": 4.046
     },
     {
       "from": "transfer-approved:3",
       "to": "transfer-approved:4",
       "width": 366,
-      "changed_pixels": 11254,
-      "changed_percent": 6.864
+      "changed_pixels": 12336,
+      "changed_percent": 4.815
     },
     {
       "from": "transfer-approved:4",
       "to": "transfer-approved:5",
       "width": 366,
-      "changed_pixels": 1267,
-      "changed_percent": 0.773
+      "changed_pixels": 3587,
+      "changed_percent": 1.4
     },
     {
       "from": "transfer-approved:5",
       "to": "transfer-approved:8",
       "width": 366,
-      "changed_pixels": 11805,
-      "changed_percent": 7.2
+      "changed_pixels": 13621,
+      "changed_percent": 5.317
     },
     {
       "from": "transfer-approved:8",
       "to": "transfer-final-leg-rejected:6",
       "width": 366,
-      "changed_pixels": 6216,
-      "changed_percent": 3.791
+      "changed_pixels": 8538,
+      "changed_percent": 3.333
     }
   ]
 }

@@ -43,12 +43,12 @@ The previously added actor badges were vetoed and must be removed.
   - [x] Cover every registered observation without using expected values.
   - [x] Keep missing observations, refusal, waiting, and completion distinct.
   - [x] Keep source explanations and chapter narration owned by the book.
-- [ ] 5. Review the rendered experience.
-  - [ ] Traverse every recording and live inspection; retain deterministic URLs.
-  - [ ] Save and inspect desktop and mobile screenshots for every workflow family.
-  - [ ] Verify image loading, readable text, spacing, retained nodes, and no overflow.
-  - [ ] Check source fingerprints, original quotations, goldens, and export delivery.
-- [ ] 6. Refresh the running guide, publish the review paths, commit and push.
+- [x] 5. Review the rendered experience.
+  - [x] Traverse every recording and live inspection; retain deterministic URLs.
+  - [x] Save and inspect desktop and mobile screenshots for every workflow family.
+  - [x] Verify image loading, readable text, spacing, retained nodes, and no overflow.
+  - [x] Check source fingerprints, original quotations, goldens, and export delivery.
+- [x] 6. Refresh the running guide, publish the review paths, commit and push.
 
 Builds run sequentially with bounded heaps. Reuse the existing sandbox; avoid
 creating another ledger network or bulk duplicate exports.

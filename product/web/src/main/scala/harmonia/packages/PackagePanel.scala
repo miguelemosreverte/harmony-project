@@ -353,6 +353,7 @@ final class PackagePanel(capability: String, dispatcher: Dispatcher[IO]):
       nodes
         .find(n => requested.contains(n.id))
         .orElse(nodes.find(_.state == DiagramState.Current))
+        .orElse(nodes.reverse.find(_.state == DiagramState.Complete))
         .getOrElse(nodes.head)
         .id
     )

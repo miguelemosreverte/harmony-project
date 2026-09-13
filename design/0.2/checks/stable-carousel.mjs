@@ -30,7 +30,7 @@ try{
     check(`${width} ${id}: landmarks within 50px`,drift<=50);
     check(`${width} ${id}: fixed arrow targets`,JSON.stringify(edges)===JSON.stringify(await controls()));
     check(`${width} ${id}: selected stop visible in its track`,await b.evaluate('(()=>{const n=document.querySelector("[aria-current=step]"),r=n.getBoundingClientRect(),t=n.closest(".carousel-track").getBoundingClientRect();return r.left>=t.left-1&&r.right<=t.right+1})()'));
-    const file=`${width}-${prefix}-${i}`;const clip=await capture(file,'#story-scene .harmonia-scene');frames.push({file,group:width+'-'+prefix,id,drift,clip});
+    const file=`${width}-${prefix}-${i}`;const clip=await capture(file,'#story-scene');frames.push({file,group:width+'-'+prefix,id,drift,clip});
     if(id.endsWith(':7')&&prefix==='purchase')check('Ben relay turns blue',await b.evaluate('document.querySelector("[data-connection=relay]")?.getAttribute("data-status")==="complete"||[...document.querySelectorAll(".measured-connections [data-status=complete]")].length>=6'));
    }
    await b.evaluate('sampling=false');check(`${width} ${prefix}: no empty animation frame`,await b.evaluate('emptyFrames.every(v=>!v)'));
@@ -46,7 +46,7 @@ try{
   await b.evaluate(`HarmoniaView.update({story:${JSON.stringify(story)},step:0})`);
   const steps=await b.evaluate('[...document.querySelectorAll(".carousel-step")].map(n=>n.dataset.stop)');
   let previous='';
-  for(const id of steps){await click(`[data-stop="${id}"]`);const observation=await b.evaluate('(()=>{const scene=document.querySelector("#laboratory-stage .harmonia-scene");return scene?scene.getAttribute("aria-label")+scene.querySelector(".scene-focus").dataset.person+scene.querySelector(".scene-badge:not([hidden])").textContent:document.querySelector("#laboratory-stage .scene-observation").textContent})()');check(story+'/'+id+': identifies a different observed attempt',observation!==previous);previous=observation;observations++;check(story+'/'+id+': diagram is present',await b.evaluate('!!document.querySelector("#laboratory-stage .scene-map,#laboratory-stage .workflow-map")'));}
+  for(const id of steps){await click(`[data-stop="${id}"]`);const observation=await b.evaluate('(()=>{const scene=document.querySelector("#laboratory-stage .harmonia-scene");return scene?scene.getAttribute("aria-label")+scene.querySelector(".scene-focus").dataset.person+document.querySelector("#laboratory-stage .workflow-support:not([hidden])").textContent:document.querySelector("#laboratory-stage .workflow-support:not([hidden])").textContent})()');check(story+'/'+id+': identifies a different observed attempt',observation!==previous);previous=observation;observations++;check(story+'/'+id+': diagram is present',await b.evaluate('!!document.querySelector("#laboratory-stage .scene-map,#laboratory-stage .workflow-map")'));}
  }
  check('Every recorded observation remains directly accessible',observations===130);
  for(const page of ['reviewer.html','author.html','chapters/01-product.html']){await load(page);const count=await b.evaluate('document.querySelectorAll(".carousel-step").length');check(page+': direct reading stops',count>1);await b.screenshot(directory+'/'+page.replace('.html','').replaceAll('/','-')+'.png');}
