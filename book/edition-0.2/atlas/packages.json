@@ -272,6 +272,15 @@
     "summary": "Generate the four reader entrances, exact quotations, source catalog, and workflow library. Authored explanations are checked against existing paths, source hashes, and the preserved recording inventory."
   },
   {
+    "id": "book-showcase",
+    "title": "Workflow presentation documents",
+    "paths": [
+      "book/showcase"
+    ],
+    "slice": "book",
+    "summary": "Export the recorded reader into inspectable JSON: ordered actions, shared artwork, diagram state, dialogue, navigation and evidence. The export uses the existing Scala projections."
+  },
+  {
     "id": "book-chapters",
     "title": "Authored implementation guide",
     "paths": [

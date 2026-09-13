@@ -28,6 +28,10 @@ image files. It uses one temporary browser tab and needs no additional JVM.
 | `documents/comparison.json` | The two approval examples, including their different next steps |
 | `documents/<story>.json` | One complete ordered scenario |
 
+The source explorer groups this exporter under **Workflow presentation documents**.
+Generated JSON is excluded from the source-code catalog, just as recorded evidence
+is: cataloguing its own dependency hashes would create a circular build.
+
 ## JSON conventions
 
 `purpose` is the current recording's description, preserved verbatim. It is not
@@ -141,11 +145,18 @@ promise that visiting its URL replays an earlier ledger transaction.
   - [x] Reference images once by identity, path and hash; list every use.
   - [x] Link recording provenance, independent expectations and original sources.
   - [x] Record renderer dependencies needed to reproduce the presentation.
-- [ ] Verify the complete export and publish the two comparison links.
-  - [ ] Reconstruct every diagram and compare it with the existing projector.
-  - [ ] Check all image, source, evidence and navigation references.
-  - [ ] Repeat the export and require identical JSON.
-  - [ ] Commit and push the documents and exporter.
+- [x] Verify the complete export and publish the two comparison links.
+  - [x] Reconstruct every diagram and compare it with the existing projector.
+  - [x] Check all image, source, evidence and navigation references.
+  - [x] Repeat the export and require identical JSON.
+  - [x] Commit and push the documents and exporter.
+
+Verified on 2026-09-13: all 130 projected frames matched their reconstruction;
+all 130 visible image/dialogue selections agreed; all 55 illustration hashes
+matched the served files; a repeated export produced identical JSON. All 34 JSON
+documents also matched byte-for-byte when requested from the running book server.
+The edition's 28 source, quotation, recording and rendering checks also passed
+after adding the exporter to the source explorer.
 
 ## Boundaries
 

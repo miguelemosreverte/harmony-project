@@ -14,6 +14,7 @@ from pygments.token import Comment, Keyword, String, Number, Name, Operator
 SCOPES = {'product': 'Production', 'harness': 'Verification harness', 'book': 'Book', 'examples': 'Golden stories', 'scripts': 'Build and run', 'project': 'Build configuration'}
 SUFFIXES = {'.html', '.scala', '.daml', '.md', '.json', '.yaml', '.yml', '.sbt', '.py', '.js', '.mjs', '.css', '.sh', '.properties'}
 EXCLUDED = {'target', '.daml', '.git', '.artifacts', '__pycache__', 'recordings', 'history'}
+GENERATED = (Path('book/showcase/documents'),)
 LANGUAGES = {'.html':'html', '.scala':'scala', '.sbt':'scala', '.daml':'daml', '.md':'markdown', '.yaml':'yaml', '.yml':'yaml', '.json':'json', '.py':'python', '.js':'javascript', '.mjs':'javascript', '.css':'css', '.sh':'bash'}
 
 
@@ -23,6 +24,8 @@ def source_paths(root):
         candidates.extend((root/scope).rglob('*'))
     for path in sorted(set(candidates)):
         relative = path.relative_to(root)
+        if any(directory == relative or directory in relative.parents for directory in GENERATED):
+            continue
         if path.is_symlink() or not path.is_file() or any(part in EXCLUDED for part in relative.parts):
             continue
         if path.suffix not in SUFFIXES and not (relative.parts[0]=='scripts' and not path.suffix):

@@ -1,3 +1,6 @@
+// @book.slice book
+// @book.role Document the visual story
+// @book.summary Export ordered workflow steps with shared illustrations, diagram values, evidence and navigation.
 // node book/showcase/export.mjs <local-CDP-endpoint> <laboratory-URL> [output] [--check]
 import fs from 'node:fs/promises';
 import path from 'node:path';

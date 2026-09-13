@@ -1,3 +1,6 @@
+// @book.slice book
+// @book.role Read the displayed story
+// @book.summary Compare each visible illustration and dialogue with the existing typed scene projection.
 import assert from 'node:assert/strict';
 
 // Own one temporary tab. Existing reader tabs and the live ledger are untouched.
