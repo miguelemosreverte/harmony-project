@@ -128,6 +128,10 @@ Input image: `01-structure.png` from this directory, style reference only.
 The design and exact prompt were committed before generation at
 [f652746](https://github.com/miguelemosreverte/harmony-project/commit/f652746).
 
+The image, paired page, rendered Markdown and inspection record were first
+committed at [9306cf8](https://github.com/miguelemosreverte/harmony-project/commit/9306cf8e25a153c3e5c23377c3250f495a532cb5),
+2026-09-14 06:17:03 UTC, and pushed to `design/architecture-clarity-v2`.
+
 ### What was removed
 
 | Measure | Version 2 | Version 3 |

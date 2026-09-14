@@ -29,7 +29,11 @@ Current example: [Complete architecture](architecture-whole/design.md).
 Scope correction: [Application authority](application-authority/design.md).
 Earlier exploration: [Architecture overview and execution](architecture-v2/README.md).
 
-Latest direction: [Architecture structure](architecture-structure/design.md).
+Latest review: [Architecture version 3](architecture-structure/v3.html), with
+[formatted prose](architecture-structure/read-v3.md) beside the image and a
+[source-to-image design record](architecture-structure/design-v3.md).
+
+Direction: [Architecture structure](architecture-structure/design.md).
 The complete architectural presentation follows the original component and
 contract views. Concrete financing and transfer walkthroughs belong to the user
 branch. The design record develops the content in sections separated by horizontal
