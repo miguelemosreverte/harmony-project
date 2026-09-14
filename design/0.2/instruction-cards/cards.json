@@ -1,0 +1,50 @@
+{
+  "product": {
+    "label": "Product",
+    "title": "One workflow. Independent owners.",
+    "context": "How Harmonia works",
+    "finish": "Independent applications coordinate without giving up their authority.",
+    "steps": [
+      {"id":"owners","title":"Keep your application","caption":"Each owner keeps its rules and private data.","drawing":"owners","source":"docs/proposal/harmonia.md","lines":[13,17]},
+      {"id":"plan","title":"Agree on the work","caption":"The participants follow one agreed plan.","drawing":"plan","source":"product/ledger/core/daml/Harmonia/SharedProgress.daml"},
+      {"id":"authority","title":"Let the owner decide","caption":"A workflow cannot bypass the application's authority.","drawing":"authority","source":"product/ledger/applications/financing/daml/Financing.daml"},
+      {"id":"resume","title":"Pick up where you left off","caption":"Committed progress survives closing the browser.","drawing":"resume","source":"book/edition-0.2/recordings/sequence-resumed.json"}
+    ]
+  },
+  "workflow": {
+    "label": "Workflow",
+    "title": "An approval becomes a proposal.",
+    "context": "Recorded purchase example",
+    "finish": "Sofia receives the proposal. The private financing papers stay at Northbank.",
+    "steps": [
+      {"id":"approve","title":"Northbank approves","caption":"The bank releases a scoped financing result.","drawing":"approve","source":"book/showcase/documents/purchase-approved.json","observation":"bank-assessment"},
+      {"id":"propose","title":"Alice makes her proposal","caption":"The offer checks and uses her financing result.","drawing":"propose","source":"book/showcase/documents/purchase-approved.json","observation":"make-proposal"},
+      {"id":"relay","title":"Ben passes it on","caption":"The buyer's agent relays the property proposal.","drawing":"relay","source":"book/showcase/documents/purchase-approved.json","observation":"buyer-agent-relays"},
+      {"id":"receive","title":"Sofia receives it","caption":"The proposal arrives. The bank's papers stay private.","drawing":"receive","source":"book/showcase/documents/purchase-approved.json","observation":"seller-agent-receives"}
+    ]
+  },
+  "architecture": {
+    "label": "Architecture",
+    "title": "Follow one command.",
+    "context": "Scala off-ledger · Daml on-ledger",
+    "finish": "The browser requests. The ledger authorizes. The observed state comes back.",
+    "steps": [
+      {"id":"request","title":"Request an action","caption":"The browser sends the participant's request.","drawing":"request","source":"product/web/src/main/scala/harmonia/financing/FinancingPanel.scala"},
+      {"id":"submit","title":"Submit the choice","caption":"Scala maps the action to a ledger command.","drawing":"submit","source":"product/server/src/main/scala/harmonia/financing/Financing.scala"},
+      {"id":"authorize","title":"Check the authority","caption":"The application's Daml choice controls who may act.","drawing":"authorize","source":"product/ledger/applications/financing/daml/Financing.daml"},
+      {"id":"observe","title":"Show what committed","caption":"The screen changes from observed ledger state.","drawing":"observe","source":"product/server/src/main/scala/harmonia/financing/FinancingObservation.scala"}
+    ]
+  },
+  "code": {
+    "label": "Code",
+    "title": "Read one feature end to end.",
+    "context": "A guide to the actual repository",
+    "finish": "A feature has a screen, shared types, a service, an authorized choice and a golden story.",
+    "steps": [
+      {"id":"feature","title":"Start with the feature","caption":"Find financing inside the product's vertical slices.","drawing":"feature","source":"product/server/src/main/scala/harmonia/financing/Financing.scala"},
+      {"id":"types","title":"Follow the typed request","caption":"Browser and service share the same API types.","drawing":"types","source":"product/api/src/main/scala"},
+      {"id":"choice","title":"Read the ledger choice","caption":"Here, controller bank decides who may approve.","drawing":"choice","source":"product/ledger/applications/financing/daml/Financing.daml"},
+      {"id":"golden","title":"Check the golden story","caption":"Compare the recorded result with the committed expectation.","drawing":"golden","source":"book/edition-0.2/recordings/evidence/financing-approved/expected.md"}
+    ]
+  }
+}
