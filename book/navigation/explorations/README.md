@@ -31,7 +31,7 @@ Earlier exploration: [Architecture overview and execution](architecture-v2/READM
 
 Current approach: [Architecture in prose](architecture-structure/architecture.html)
 ([Markdown source](architecture-structure/architecture.md)),
-a short chapter establishing meaning before choosing diagrams. The
+a short illustrated chapter moving from Canton to application integration and workflow execution. The
 [review note](architecture-structure/text-review.md) records this change of approach.
 Previous diagram: [Architecture version 7](architecture-structure/v7.html), with
 [formatted prose](architecture-structure/read-v7.md) and a [design record](architecture-structure/design-v7.md).

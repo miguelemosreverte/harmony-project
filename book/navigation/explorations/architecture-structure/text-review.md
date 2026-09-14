@@ -58,6 +58,53 @@ no horizontal overflow, missing sections or browser errors were found. Evidence
 is in `.artifacts/architecture-text-second-review/`. The revised chapter was
 opened with `open` at `architecture.html?revision=2`.
 
+## Third text draft — begin with Canton
+
+Miguel proposed a friendlier textbook sequence: Canton and banks, the problem of
+coordinating different contracts, then the shared interface and the architecture
+that uses it. He explicitly invited inline image generation for this revision.
+The chapter now follows that sequence and uses a single illustration to support
+the opening. Its prompt, provenance and review are in
+[textbook-illustration.md](textbook-illustration.md).
+
+The chapter is 478 words including headings, caption and project-source note
+(rendered text, counting word tokens and excluding image alt text). It retains
+the existing reading layout. Desktop and mobile screenshots, image loading and
+aspect ratio, section presence, overflow and browser errors were checked under
+`.artifacts/architecture-textbook-review/`. Production code is unchanged.
+
+### External source audit, checked 2026-09-14
+
+- [Canton documentation](https://docs.canton.network/overview/understand/what-is-canton):
+  selective disclosure, Daml authorization and visibility, and participant nodes
+  retaining relevant contract data. The illustration is not a node topology.
+- [Lloyds announcement, 20 January 2026](https://www.lloydsbankinggroup.com/media/press-releases/2026/lloyds/lloyds-tokenisation.html):
+  a government-bond purchase with tokenised deposits on Canton. The bank calls it
+  a pilot. The chapter preserves that qualification and makes no Harmonia
+  adoption or endorsement claim.
+- [Digital Asset's Canton launch announcement, 9 May 2023](https://blog.digitalasset.com/press-release/new-global-blockchain-network-of-networks-for-financial-market-participants-and-institutional-assets):
+  independently developed Daml applications can interoperate and exchange assets
+  in atomic transactions. Canton already provides the transaction foundation.
+
+### Original proposal and implementation
+
+The proposal's Abstract describes applications participating in a workflow
+"without bespoke pairwise integration". Section 2, Core Layer, calls for
+"workflow state that can be queried and inspected" and
+"explicit identification of the actor that may execute each step".
+These are the reasons for the interface and engine in the chapter, rather than
+a claim that multiple contracts are inherently a Canton defect.
+
+`Harmonia/Action.daml` verifies the exact StepAction view and ExecuteAction call.
+`Harmonia/Process/Engine.daml` verifies actor/subject/step checks and the atomic
+application action plus workflow-progress update. `FinancingBinding.daml`
+verifies the separate adapter path. Builder's supported-shape restriction remains
+explicit. The second draft's source table records the runtime and handoff sources.
+
+The reading page has two near-claim primary-source links. This audit retains the
+broader provenance without adding more interactions to the chapter. Review of
+the revised teaching sequence is pending.
+
 ## Browser edition
 
 The user subsequently asked to read the chapter in the browser. [architecture.html](architecture.html)

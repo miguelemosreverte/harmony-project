@@ -1,43 +1,49 @@
 # Harmonia architecture
 
-## 1. What the system adds
+## Start with Canton
 
-Harmonia coordinates a process across applications owned by different organizations. Each application performs its own business actions. Harmonia keeps track of their order, the required participants and the progress between them.
+Banks need to agree on transactions without exposing every customer's records. [Canton](https://docs.canton.network/overview/understand/what-is-canton) is a blockchain network designed for that combination: shared transactions with selective visibility.
 
-These applications use smart contracts: code that controls changes to their records. The contracts run on Canton, a ledger that validates those changes and stores the results. Their rules are written in Daml.
+Applications on Canton use **Daml** smart contracts to describe their records, permitted changes and required authorizations. Banks are using this technology: Lloyds reported a [pilot purchase of a government bond using tokenised deposits](https://www.lloydsbankinggroup.com/media/press-releases/2026/lloyds/lloyds-tokenisation.html) on Canton.
 
-Harmonia puts its coordination rules on that same ledger. **The ledger enforces both process rules and application rules**, while each application retains control of its data and permissions.
+![A bank and a custodian keep separate ledger books while sharing a transaction on Canton.](08-canton-textbook.png)
 
-## 2. Three parts at runtime
+*Separate records; agreement on a shared transaction.*
 
-The **browser** shows the process and accepts requests. It communicates over HTTP with a Scala service.
+## A shared network, different applications
 
-The **Scala service** reads the relevant contracts, translates requests into supported ledger commands, and submits them through the requesting participant's configured connection. It also tracks requests awaiting confirmation and turns ledger state into responses the browser can display.
+A bank's application might approve financing; a custodian's might release an asset. Each has its own contracts, operations and permissions.
 
-The **Daml contracts** make the authoritative decisions. Harmonia Core's contracts store the permitted steps, assignments and progress. Application contracts enforce the business rules for each action. The service needs both sets of rules to permit the requested change.
+Canton already supports transactions across applications. The developer still has to specify the larger process: which action comes next, who must perform it, and which result permits work to continue.
 
-## 3. Follow one request
+**Harmonia makes those coordination rules reusable.** Its workflow contracts record the permitted sequence, assigned participants and progress. They run on Canton alongside the application contracts.
 
-Suppose a user asks to advance a process. The service submits that request to Canton. Core checks it against the stored process: the step must be available, the requester must be assigned, and the target action must match the process.
+## Give each action the same calling convention
 
-Core then invokes the application action. The application's authorization requirements still apply. For this supported execution path, **the action and the progress update commit in one transaction**. If either fails, neither change is committed.
+For a workflow to invoke different applications, they expose a small Daml interface called **StepAction**. It presents two pieces of information: **actor**, the party required to authorize the call, and **subject**, the business reference the action concerns.
 
-The service reads the confirmed ledger state to refresh the browser. If a connection drops before the outcome is known, it reconciles the request against ledger commits. A missing response does not establish that the action failed.
+It also exposes **ExecuteAction**. Calling it runs the application's implementation and returns a contract reference for the resulting action state.
 
-## 4. Connecting an application
+Harmonia can therefore check the actor and subject, then invoke the action without importing that application's implementation. The application continues to enforce its own business rules and authorization requirements.
 
-Core calls a small, shared Daml interface. An application can implement that interface directly. Alternatively, an adapter can translate the call into an existing application's operation. Core therefore needs the shared interface, without importing each application's implementation.
+An application can implement StepAction directly. An existing application can instead use an **adapter**: a separate contract that implements StepAction and calls a specific operation in that application. For supported application shapes, Builder generates this adapter from a developer's reviewed mapping; it is compiled and deployed before use.
 
-The adapter must connect a workflow action to specific application code. A developer supplies that mapping. Builder checks the reviewed mapping against the compiled application and generates an adapter project for the supported application shape.
+## Keep the action and its progress together
 
-The adapter is compiled and deployed before use. Builder performs development work; the deployed adapter performs the translation during execution. The existing application's code stays unchanged.
+Harmonia's workflow engine, **Core**, checks that the requested step is available, the requester is assigned, and the actor and subject match the target action.
 
-## 5. Passing work between processes
+Core then calls ExecuteAction and records the step's completion. **That application action and its workflow progress commit in one ledger transaction.** If either fails, neither change is committed. A process involving later decisions advances through further transactions.
 
-One process can produce a result needed by another, separately owned process. The receiving process checks who issued that result, whom it was intended for, and what it authorizes before continuing.
+When one process supplies a result to another, the receiving process checks its issuer, intended recipient and permitted continuation before advancing.
 
-This shares a result under explicit access rules. Each process keeps its own participants, progress and authority.
+## Where the browser and Scala fit
+
+The browser displays the process and sends requests over HTTP to a **Scala service**. The service reads the relevant ledger state and submits supported commands through the participant's Canton connection.
+
+The Daml contracts enforce the changes. The service reads the confirmed result to update the browser. If a submission's outcome is uncertain, it checks ledger commits before reporting completion.
+
+Workflow authority and progress therefore live on the ledger. The browser and Scala service provide access to them.
 
 ---
 
-Sources: [original proposal](../../../../docs/proposal/harmonia.md) and [product implementation guide](../../../../docs/fourth-draft/reading-guide.md).
+Project basis: *Development Fund Proposal*, Abstract and §2, checked against the current implementation.
