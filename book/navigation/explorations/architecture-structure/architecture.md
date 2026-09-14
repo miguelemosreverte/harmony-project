@@ -1,49 +1,43 @@
 # Harmonia architecture
 
-*The proposed architecture, based on the original documents.*
+## 1. What the system adds
 
-## 1. The purpose
+Harmonia coordinates a process across applications owned by different organizations. Each application performs its own business actions. Harmonia keeps track of their order, the required participants and the progress between them.
 
-Harmonia coordinates processes that span independently developed smart-contract applications. It records **what has happened, what may happen next, and who may act**. Application teams can reuse that coordination model across products.
+These applications use smart contracts: code that controls changes to their records. The contracts run on Canton, a ledger that validates those changes and stores the results. Their rules are written in Daml.
 
-The central decision is to keep workflow state and execution rules **on Canton**, using Daml smart contracts. Each participating application keeps its own contracts, permissions and visibility rules.
+Harmonia puts its coordination rules on that same ledger. **The ledger enforces both process rules and application rules**, while each application retains control of its data and permissions.
 
-## 2. Where the work happens
+## 2. Three parts at runtime
 
-**On the ledger:** Harmonia Core stores workflow definitions and running workflows. Application contracts provide the actions those workflows use. Canton validates and commits their transactions.
+The **browser** shows the process and accepts requests. It communicates over HTTP with a Scala service.
 
-**Outside the ledger:** the Dapp lets people define workflows, inspect progress and submit actions. The UI requests transitions; ledger contracts enforce the rules. A running workflow's recorded state survives the browser closing.
+The **Scala service** reads the relevant contracts, translates requests into supported ledger commands, and submits them through the requesting participant's configured connection. It also tracks requests awaiting confirmation and turns ledger state into responses the browser can display.
 
-**Before deployment:** application developers or Builder prepare the code that connects an application's actions to Harmonia's workflow model.
+The **Daml contracts** make the authoritative decisions. Harmonia Core's contracts store the permitted steps, assignments and progress. Application contracts enforce the business rules for each action. The service needs both sets of rules to permit the requested change.
 
-## 3. What happens during execution
+## 3. Follow one request
 
-A **workflow definition** describes the permitted steps and paths. Starting it creates a **workflow instance**: one running process, with its own progress and participants. Roles resolve to concrete ledger identities, called **parties**.
+Suppose a user asks to advance a process. The service submits that request to Canton. Core checks it against the stored process: the step must be available, the requester must be assigned, and the target action must match the process.
 
-For a step that invokes an application, Harmonia needs two things: the party assigned to act and the contract action to execute. In Daml, that action is called a **choice**.
+Core then invokes the application action. The application's authorization requirements still apply. For this supported execution path, **the action and the progress update commit in one transaction**. If either fails, neither change is committed.
 
-A **binding declaration** records which application contract template and choice fulfil a particular workflow step kind and role. This gives the shared workflow model a declared connection to the application's actual code.
+The service reads the confirmed ledger state to refresh the browser. If a connection drops before the outcome is known, it reconciles the request against ledger commits. A missing response does not establish that the action failed.
 
-Execution must satisfy both the workflow's rules and the application's authorization requirements. **Assigning a step does not grant additional permission.** Successful execution records the resulting workflow progress and outputs.
+## 4. Connecting an application
 
-The next step may involve another application or party. Core preserves the process state between those actions.
+Core calls a small, shared Daml interface. An application can implement that interface directly. Alternatively, an adapter can translate the call into an existing application's operation. Core therefore needs the shared interface, without importing each application's implementation.
 
-## 4. How applications join
+The adapter must connect a workflow action to specific application code. A developer supplies that mapping. Builder checks the reviewed mapping against the compiled application and generates an adapter project for the supported application shape.
 
-Daml code is distributed in archives called **DARs**. A **Binding DAR** packages the declarations used to connect application actions to Harmonia.
+The adapter is compiled and deployed before use. Builder performs development work; the deployed adapter performs the translation during execution. The existing application's code stays unchanged.
 
-An application team can supply this integration itself. For supported existing applications, **Builder** generates the binding package and supporting code. Both routes participate in the same Core workflow model.
+## 5. Passing work between processes
 
-Builder runs during development. The deployed Daml contracts govern execution.
+One process can produce a result needed by another, separately owned process. The receiving process checks who issued that result, whom it was intended for, and what it authorizes before continuing.
 
-## 5. How processes compose
-
-A **continuation** carries one workflow's outputs to another workflow definition. This lets separately owned processes connect while retaining their own participants and access rules.
-
-Where the workflow structure and required authorizations permit it, several steps can execute **atomically**: all succeed together or none do. Otherwise, coordination proceeds through separately authorized stages.
-
-The first release supports a bounded set of steps, branching, joins and continuations. The original proposal leaves detailed binding mechanics and package relationships for technical design.
+This shares a result under explicit access rules. Each process keeps its own participants, progress and authority.
 
 ---
 
-Sources: [original proposal](../../../../docs/proposal/harmonia.md), especially the Objective, Core, Dapp and Builder sections; [original architecture](../../../../docs/proposal/harmonia-architecture.html), especially the contract model and open design points.
+Sources: [original proposal](../../../../docs/proposal/harmonia.md) and [product implementation guide](../../../../docs/fourth-draft/reading-guide.md).

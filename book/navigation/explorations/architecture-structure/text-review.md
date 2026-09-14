@@ -14,11 +14,49 @@ Technical names are introduced after their meaning. It describes the architectur
 proposed by the original documents; it does not claim that current implementation
 coverage has been audited. The original documents were reread for this draft.
 
-Length: 442 words including headings, 463 including source references. Counts
+First draft length: 442 words including headings, 463 including source references. Counts
 use rendered Markdown text, excluding standalone punctuation. Source links and
 Markdown formatting were checked. No diagrams were added.
 
-User review: pending.
+## Second text draft
+
+Miguel rejected the first draft's sequence of terminology definitions: it had
+the visual structure of a textbook without using its definitions to explain the
+system. He asked for a substantive explanation that builds from high-level
+structure to lower-level behavior, at a similar length.
+
+The rewrite follows actual responsibilities and one request through the browser,
+Scala service and Daml execution. Unlike the first draft, it explains the
+service's role, the atomic relationship between a supported application step and
+its recorded completion, recovery from an uncertain submission, and why a shared
+interface keeps Core independent of application implementations. Integration
+setup precedes runtime use conceptually; their distinct roles are explicit.
+Terms such as DAR, choice and workflow instance are omitted from the introduction
+because their names are unnecessary to explain those relationships.
+
+The original proposal and actual product source were both read. This chapter
+describes the inspected execution path, not every proposed feature or a fresh
+runtime verification of the whole product. The single-step transaction claim is
+about Core's application-step execution, not arbitrary multi-step workflows.
+
+| Claim | Inspected source |
+| --- | --- |
+| Browser → HTTP → Scala service → ledger | `product/README.md`; `product/server/src/main/scala/harmonia/app/http/LiveServer.scala`; `harmonia/app/workspace/Workspace.scala` |
+| Request reconciliation and unconfirmed outcome | `Workspace.state`; `harmonia/ledger/client/SubmitChoice.scala` |
+| Core checks actor, enabled step and application subject | `product/ledger/core/daml/Harmonia/Process/Engine.daml`, `checkRequest` and `AdvanceStep` |
+| Application action and progress recorded in one Daml update | `Engine.daml`, `AdvanceStep` and `record`; `product/ledger/core/daml/Harmonia/Workflow.daml`, `Advance` |
+| Shared interface, direct implementation or adapter | `product/ledger/interfaces/daml/Harmonia/Action.daml`; `product/ledger/bindings/daml/FinancingBinding.daml` |
+| Reviewed mapping, metadata checks, compiled adapter, unchanged source | `product/server/src/main/scala/harmonia/bindings/generate/GenerateBinding.scala` |
+| Result issuer, consumer and authority checked at handoff | `product/ledger/core/daml/Harmonia/SharedProgress.daml`, `Continue` |
+
+No diagrams or new interface controls are added. The browser typography and layout
+are retained. Review of the rewritten content is pending.
+
+The browser edition was checked at desktop and mobile sizes, including the
+execution section and both source links. Screenshots were visually inspected;
+no horizontal overflow, missing sections or browser errors were found. Evidence
+is in `.artifacts/architecture-text-second-review/`. The revised chapter was
+opened with `open` at `architecture.html?revision=2`.
 
 ## Browser edition
 
