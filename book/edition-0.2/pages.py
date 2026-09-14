@@ -1,6 +1,8 @@
 """Authored reading routes. Workflow decisions live in the bottom carousel."""
 from html import escape
 import json
+import hashlib
+from pathlib import Path
 from render import markdown, html_fragment, diagram, passive
 
 CHAPTERS = {
@@ -26,6 +28,8 @@ def shell(title, body, slug='', prefix='', kind='chapter', stories=None):
         body=body.replace(f'data-mode="{mode}"',f'data-mode="{mode}" hidden')
     config=dict(slug=slug,kind=kind,base=prefix or './',journeys=JOURNEYS,chapters=CHAPTERS,stories=list(stories or {}))
     scripts=['recordings.js','run-recordings.js','context.js','../../book/browser/target/scala-3.3.6/harmonia-reader-fastopt/main.js','reader/catalog.js','state.js','reader/common.js','book.js','reader/code.js','reader/reviewer.js','reader/author.js','reader/presentation.js','reader/routes.js','navigation.js']
+    version=hashlib.sha256((Path(__file__).resolve().parents[2] / 'design/0.2/navigation.js').read_bytes()).hexdigest()[:12]
+    scripts[-1]+='?v='+version
     includes=''.join(f'<script defer src="{prefix}{name}"></script>' for name in scripts)
     return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{escape(title)} · Harmonia</title><link rel="icon" href="{prefix}../../product/web/site/favicon.svg"><link rel="stylesheet" href="{prefix}../../product/scene/site/scene.css"><link rel="stylesheet" href="{prefix}../../product/scene/site/surface.css"><link rel="stylesheet" href="{prefix}quiet.css"><link rel="stylesheet" href="{prefix}../../book/site/print.css"><script id="view-config" type="application/json">{json_script(config)}</script>{includes}</head><body class="{kind}"><div class="reference-shell"><header class="reference-header"><span class="reference-brand">Harmonia</span><span class="quiet-location">The field guide</span></header>{body}<noscript><p class="quiet-note">The written chapters and quotations remain readable. The source tree and recorded scenes need JavaScript.</p></noscript></div></body></html>'''
 

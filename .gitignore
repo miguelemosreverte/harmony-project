@@ -12,3 +12,6 @@
 **/node_modules/
 *.log
 *.pid
+
+# Prepared from the committed, hash-verified Canton demo package.
+book/investor/recorded/

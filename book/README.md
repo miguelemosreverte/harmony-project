@@ -1,5 +1,9 @@
 # The Harmonia book
 
+Start at [the shared entrance](index.html): User, Investor / Canton demos,
+Architecture, or Implementation. Each path has its own reader and a header link
+back to the selected cover. See [website setup and UX](home/README.md).
+
 The [Canton demonstration reader](investor/README.md) provides five technical demos,
 original milestone mapping, and portable event-log replay. Unzip its linked package
 and open `index.html`; it works without a repository or running backend.

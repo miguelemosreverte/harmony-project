@@ -1,0 +1,4 @@
+.reference-header .reference-brand[data-home]{font-size:26px;text-decoration:none;color:var(--ink);border-radius:6px}
+.reference-header .reference-brand[data-home]:hover{color:var(--accent)}
+.reference-header .reference-brand[data-home]:focus-visible{outline:2px solid var(--accent);outline-offset:5px}
+@media(max-width:700px){.reference-header .reference-brand[data-home]{font-size:20px}}

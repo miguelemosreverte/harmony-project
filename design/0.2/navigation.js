@@ -101,4 +101,7 @@
   addEventListener('popstate',()=>navigate(location.href,{historyMove:true}));
   addEventListener('hashchange',()=>view.read());
   view.mount(initial);
+  const home=document.createElement('script');
+  home.src=new URL('../../book/home/return.js',base).href;
+  document.head.appendChild(home);
 })();

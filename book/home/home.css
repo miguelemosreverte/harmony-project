@@ -1,0 +1,25 @@
+/* One choice surface and one action, using the existing book shell and carousel. */
+html{scrollbar-gutter:auto}body.home-reader{padding:0}.home-reader .reference-shell{height:calc(100dvh - 110px);min-height:0;margin:20px auto 0;display:grid;grid-template-rows:60px minmax(0,1fr)}
+.home-reader .reference-header{height:60px;padding:0 32px;justify-content:space-between}.home-reader .reference-brand{font-size:26px}
+.home-reader main{padding:28px 36px 30px;min-height:0;display:grid;grid-template-rows:96px minmax(0,1fr) 54px;gap:16px;overflow-y:auto}
+.home-heading p{font-size:13px;color:var(--muted);margin:0 0 9px}.home-heading h1{margin:0;font-size:32px;line-height:1.18;letter-spacing:-.04em;font-weight:650}
+#path-stage{display:grid;min-height:0;touch-action:pan-y pinch-zoom}.path-cover{grid-area:1/1;display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);align-items:center;gap:26px;min-height:0;visibility:hidden}.path-cover[data-current=true]{visibility:visible}
+.path-copy{align-self:center}.path-number{font-size:12px;letter-spacing:.08em;color:var(--muted);margin:0 0 18px}.path-copy h2{font-size:34px;line-height:1.12;letter-spacing:-.035em;margin:0 0 22px;max-width:380px}.path-copy>p:not(.path-number){font-size:18px;line-height:1.5;max-width:350px;margin:0 0 24px}.path-note{font-size:12px;line-height:1.5;color:var(--muted);display:block;max-width:350px}
+.path-cover figure{height:100%;min-height:0;margin:0;position:relative}.path-cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;border-radius:12px}
+.path-action{display:flex;align-items:center}.path-action>a{display:flex;align-items:center;justify-content:space-between;width:270px;height:52px;border-radius:13px;background:var(--accent);color:#fff;padding:0 20px;font-size:15px;font-weight:550;text-decoration:none}.path-action>a:hover{background:#164bd1;color:#fff;box-shadow:0 3px 12px #275ee333}.path-action>a:active{box-shadow:inset 0 0 0 2px white;filter:brightness(.94)}
+.home-reader .quiet-paging.has-carousel{height:56px;grid-template-rows:56px;bottom:14px;align-items:center}.home-reader .quiet-paging.has-carousel>button,.home-reader .quiet-paging.has-carousel>.step-carousel{align-self:center}.home-reader .quiet-paging.has-carousel::before{height:84px;bottom:-14px}.home-reader .quiet-paging.has-carousel>button{max-width:none}.home-reader .quiet-paging button:disabled{opacity:.3;cursor:default}
+.visually-hidden{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+@media(max-width:700px){
+ .home-reader .reference-shell{height:calc(100dvh - 76px);margin:0;border-radius:0;grid-template-rows:46px minmax(0,1fr)}.home-reader .reference-header{height:46px;padding:0 18px}.home-reader .reference-brand{font-size:20px}
+ .home-reader main{padding:18px 22px;grid-template-rows:88px minmax(0,1fr) 52px;gap:12px}.home-heading p{font-size:12px}.home-heading h1{font-size:25px;max-width:310px}
+ .path-cover{grid-template-columns:minmax(0,1fr);grid-template-rows:210px minmax(0,1fr);gap:8px;align-items:start}.path-copy{align-self:start}.path-number{margin:0 0 9px;font-size:11px}.path-copy h2{font-size:29px;max-width:300px;margin-bottom:14px}.path-copy>p:not(.path-number){font-size:16px;line-height:1.4;margin-bottom:14px}.path-note{font-size:11px}.path-action>a{width:100%;height:50px}.home-reader .quiet-paging.has-carousel{grid-template-columns:44px minmax(0,1fr) 44px}.home-reader .quiet-paging.has-carousel>button{width:44px;height:44px;border-radius:50%;padding:0}
+}
+@media print{.home-reader .reference-shell{height:auto;display:block}.home-reader main{display:block}.path-cover{visibility:visible;display:block;break-inside:avoid;margin:30px 0}.path-cover figure{height:250px}.path-action,.quiet-paging{display:none}}
+/* Keep the complete choice and its action in view on compact phones. */
+@media(max-width:700px) and (max-height:680px){
+ .home-reader main{padding:12px 16px;grid-template-rows:58px minmax(0,1fr) 44px;gap:8px}
+ .home-heading p{display:none}.home-heading h1{font-size:23px}
+ .path-cover{grid-template-rows:160px minmax(0,1fr);gap:4px}.path-number{margin-bottom:6px}
+ .path-copy h2{font-size:24px;margin-bottom:10px}.path-copy>p:not(.path-number){font-size:14px;line-height:1.4;margin-bottom:0}.path-note{display:none}
+ .path-action>a{height:44px;font-size:14px}
+}

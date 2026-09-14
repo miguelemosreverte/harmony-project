@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Choose your path · Harmonia</title>
+  <link rel="icon" href="../product/web/site/favicon.svg">
+  <link rel="stylesheet" href="../product/scene/site/scene.css">
+  <link rel="stylesheet" href="../product/scene/site/surface.css">
+  <link rel="stylesheet" href="../design/0.2/quiet.css">
+  <link rel="stylesheet" href="home/home.css">
+  <script defer src="../product/scene/target/scala-3.3.6/harmonia-scene-fastopt/main.js"></script>
+  <script defer src="home/home.js"></script>
+</head>
+<body class="home-reader">
+  <div class="reference-shell">
+    <header class="reference-header"><span class="reference-brand">Harmonia</span><span class="quiet-location">The field guide</span></header>
+    <main>
+      <header class="home-heading"><p>One project. Four perspectives.</p><h1>Where would you like to begin?</h1></header>
+      <div id="path-stage" aria-label="Choose a reading path">
+        <section class="path-cover" data-branch="user" data-title="User" data-current="true">
+          <div class="path-copy"><p class="path-number">01 / 04</p><h2>Use the product.</h2><p>Follow Alice from a bank decision to a property proposal. See who acts and what changes.</p><span class="path-note">Illustrated stories · interactive workflows</span></div>
+          <figure><img src="../product/scene/site/assets/moments-v3/proposal-prepared.png" alt="Alice prepares her property proposal with her agent." width="1536" height="1024"></figure>
+        </section>
+        <section class="path-cover" data-branch="investor" data-title="Investor · Canton demos">
+          <div class="path-copy"><p class="path-number">02 / 04 · Investor</p><h2>See it work on Canton.</h2><p>Explore composition, privacy and settlement through real recorded runs, matched to the original milestones.</p><span class="path-note">Technical demos · reproducible event logs</span></div>
+          <figure><img src="home/assets/investor.png" alt="The recorded settlement demo shows zero TEST locked at source and ten received at destination."></figure>
+        </section>
+        <section class="path-cover" data-branch="architecture" data-title="Architecture">
+          <div class="path-copy"><p class="path-number">03 / 04</p><h2>Understand the architecture.</h2><p>Start with Canton contracts. See how a shared interface connects applications and where execution belongs.</p><span class="path-note">Three illustrated passages · source citations</span></div>
+          <figure><img src="navigation/explorations/architecture-structure/09-contract-composition.png" alt="Independent financing and custody contracts participate through the shared StepAction interface." width="1254" height="1254"></figure>
+        </section>
+        <section class="path-cover" data-branch="implementation" data-title="Implementation">
+          <div class="path-copy"><p class="path-number">04 / 04</p><h2>Read the implementation.</h2><p>Explore the production file tree, annotated source and the connections within each vertical slice.</p><span class="path-note">Actual code · production files only</span></div>
+          <figure><img src="home/assets/implementation.png" alt="The existing production source explorer, with the Daml interface open beside its file tree."></figure>
+        </section>
+      </div>
+      <div class="path-action"><a id="open-path" href="../design/0.2/chapters/03-financing-to-offer.html?view=try&story=purchase-approved&step=0">Open the user path <span aria-hidden="true">→</span></a></div>
+    </main>
+  </div>
+  <nav class="quiet-paging has-carousel" aria-label="Four reading paths">
+    <button id="path-previous" aria-label="Previous reading path" type="button">‹</button>
+    <div id="path-progress"></div>
+    <button id="path-next" aria-label="Next reading path" type="button">›</button>
+  </nav>
+  <p id="path-announcement" class="visually-hidden" role="status" aria-live="polite"></p>
+  <noscript><p>Open a path: <a href="../design/0.2/chapters/03-financing-to-offer.html">User</a> · <a href="investor/index.html">Canton demos</a> · <a href="architecture/index.html">Architecture</a> · <a href="../design/0.2/code.html">Implementation</a>.</p></noscript>
+</body>
+</html>
