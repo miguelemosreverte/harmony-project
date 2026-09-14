@@ -169,6 +169,37 @@ Miguel's review of the complete candidate is pending. Assistant inspection is no
 user approval. Append actual feedback here and revise the entire presentation
 while keeping its context available.
 
+## Artifact register
+
+All images are 1448 × 1086. Exact generation prompts are linked in their round
+entries. The built-in image generation tool produced all three; the HTML displays
+the third image unchanged. All times below are UTC.
+
+| Round | Returned | First committed | Commit |
+| --- | --- | --- | --- |
+| [01-complete.png](01-complete.png) | 2026-09-14 05:17:37 | 2026-09-14 05:18:06 | [74a1aa4](https://github.com/miguelemosreverte/harmony-project/commit/74a1aa486009666a71b92e83eae8601763cecfd2) |
+| [02-complete.png](02-complete.png) | 2026-09-14 05:19:58 | 2026-09-14 05:20:25 | [9fcdb35](https://github.com/miguelemosreverte/harmony-project/commit/9fcdb35a69c98c2ea66fee4dd62022bbbc55446d) |
+| [03-complete.png](03-complete.png) | 2026-09-14 05:22:25 | 2026-09-14 05:24:49 | [da784c2](https://github.com/miguelemosreverte/harmony-project/commit/da784c2077380a72be50c56fe3ec8b2f93c31371) |
+
+The complete scope, source evidence and initial prompt were committed before
+generation at [a29af11](https://github.com/miguelemosreverte/harmony-project/commit/a29af11e7fba032466c7387b143b0fd758ab9ade).
+The review HTML was first committed with round 3 at `da784c2`.
+
+SHA-256 identities:
+
+```text
+cf56f6a10005cac0a31500a99204da5f7978b70790a339ff94c847dcd9e0bedf  01-complete.png
+ab5f1541f7c261ec7628f3ceec0061e7cb345350b7f794a6db92b1549eecd4c7  02-complete.png
+719a19bd4534af178eb1e00a94cf0db9ffa0d32bcfdbb484c957564199774fd8  03-complete.png
+```
+
+Original outputs remain under
+`~/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/`:
+
+- Round 1: `exec-1fa4682a-a6db-4183-af87-edebe13987d6.png`.
+- Round 2: `exec-9bc95a0f-4ed2-42f2-b8d5-000b73897c64.png`.
+- Round 3: `exec-da2f3d62-cd0a-45e2-9e9b-e497cb30a254.png`.
+
 ## Browser validation
 
 Reviewed the actual desktop and mobile screenshots on 2026-09-14. The desktop
