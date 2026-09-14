@@ -103,28 +103,26 @@ Visual references:
 
 Exact prompt sent to the built-in image generation tool:
 
-```text
-Use case: infographic-diagram.
-Create one landscape architecture illustration, about 1600 by 1000, for the Harmonia book. The reader is a senior engineer with little time. Explain one fact: assigning a workflow step does not supply the application authority required to execute it.
-
-References: image 1 is the approved visual language: white and pale blue surfaces, navy type, soft dimensional document and bank pictograms, restrained blue connectors and generous space. Image 2 is the original contract diagram and is the factual reference. Preserve its authority relationship, not its exhaustive schema. This is a new explanatory composition, not a color edit. Do not copy browser chrome, characters, navigation or a completed workflow from image 1.
-
-Main headline, exact: "An assigned step still needs application authority."
-Small context label: "Harmonia · financing example"
-
-Build one wide pale blue enclosure labeled "Canton · Daml". Inside, two clearly separated responsibility areas, arranged left to right:
-LEFT, title "Harmonia Core": one small three-node workflow motif and one large white document pictogram labeled "Assigned step". Its only explanatory line is "Assess financing".
-RIGHT, title "Financing application": a softly dimensional bank pictogram, a choice document labeled "Approve financing", and a clearly visible key beside the choice labeled "Bank authority". The key and choice must both be INSIDE this application's enclosing border. A fine short connector from the key to the choice means required authorization, not a transfer of ownership.
-
-Connect Assigned step to the application choice with one calm blue path through a small socket pictogram labeled "Step interface". The line must enter the application boundary and reach the choice, with generous clearance around labels. The binding is supporting explanation: below the socket place a SMALL folded declaration note titled "Binding DAR", with one line "Step kind ↔ application choice". A fine dashed annotation line connects this note to the socket. It is packaged participation information, not a third runtime service or a gateway box. No arrows claim package import direction.
-
-Keep a locked document pictogram INSIDE the Financing application area, away from the connection path, labeled "Private evidence". It must never appear on a connector leaving that area. One small footer within the application area reads "Own rules · ownership · visibility".
-
-Exact small source credit at the bottom: "Original architecture §2 · Financing example from the proposal"
-No other visible words beyond those specified. The original specifies actor, target choice and authority required from the app; its exact template names and binding mechanism are illustrative or open. These display labels are explanatory, not names of implemented API calls.
-
-Show a neutral explanation of requirements: no success ticks, progress completion, confirmed transaction, rejected outcome, token amounts, new workflow branches, return loops, server or authority delegated by Core. This is one financing step, not the whole purchase process. Avoid dense UML panels, legends, duplicated sentences, hover cues, buttons and decorative avatars. The bank's ownership of the authority must be visually obvious even before reading the supporting text.
-```
+> Use case: infographic-diagram.
+> Create one landscape architecture illustration, about 1600 by 1000, for the Harmonia book. The reader is a senior engineer with little time. Explain one fact: assigning a workflow step does not supply the application authority required to execute it.
+>
+> References: image 1 is the approved visual language: white and pale blue surfaces, navy type, soft dimensional document and bank pictograms, restrained blue connectors and generous space. Image 2 is the original contract diagram and is the factual reference. Preserve its authority relationship, not its exhaustive schema. This is a new explanatory composition, not a color edit. Do not copy browser chrome, characters, navigation or a completed workflow from image 1.
+>
+> Main headline, exact: "An assigned step still needs application authority."
+> Small context label: "Harmonia · financing example"
+>
+> Build one wide pale blue enclosure labeled "Canton · Daml". Inside, two clearly separated responsibility areas, arranged left to right:
+> LEFT, title "Harmonia Core": one small three-node workflow motif and one large white document pictogram labeled "Assigned step". Its only explanatory line is "Assess financing".
+> RIGHT, title "Financing application": a softly dimensional bank pictogram, a choice document labeled "Approve financing", and a clearly visible key beside the choice labeled "Bank authority". The key and choice must both be INSIDE this application's enclosing border. A fine short connector from the key to the choice means required authorization, not a transfer of ownership.
+>
+> Connect Assigned step to the application choice with one calm blue path through a small socket pictogram labeled "Step interface". The line must enter the application boundary and reach the choice, with generous clearance around labels. The binding is supporting explanation: below the socket place a SMALL folded declaration note titled "Binding DAR", with one line "Step kind ↔ application choice". A fine dashed annotation line connects this note to the socket. It is packaged participation information, not a third runtime service or a gateway box. No arrows claim package import direction.
+>
+> Keep a locked document pictogram INSIDE the Financing application area, away from the connection path, labeled "Private evidence". It must never appear on a connector leaving that area. One small footer within the application area reads "Own rules · ownership · visibility".
+>
+> Exact small source credit at the bottom: "Original architecture §2 · Financing example from the proposal"
+> No other visible words beyond those specified. The original specifies actor, target choice and authority required from the app; its exact template names and binding mechanism are illustrative or open. These display labels are explanatory, not names of implemented API calls.
+>
+> Show a neutral explanation of requirements: no success ticks, progress completion, confirmed transaction, rejected outcome, token amounts, new workflow branches, return loops, server or authority delegated by Core. This is one financing step, not the whole purchase process. Avoid dense UML panels, legends, duplicated sentences, hover cues, buttons and decorative avatars. The bank's ownership of the authority must be visually obvious even before reading the supporting text.
 
 ## Image iterations
 
@@ -157,17 +155,15 @@ labeled requirement connection. This is not a user approval.
 
 Edit target: `01-authority.png`. Exact prompt:
 
-```text
-Edit this image to strengthen the hierarchy of the SAME authority explanation. Preserve its palette, typography, headline, all main panel boundaries, the Assigned step and Approve financing documents, Step interface, Binding DAR note, private evidence, source credit, and the horizontal workflow arrow.
-
-Two supporting decorations currently compete with the central message. Remove the large bank building from inside the Financing application panel; keep the small bank icon beside that panel heading. Remove the unlabeled three-stop progress row inside Harmonia Core; keep its small workflow icon beside the heading.
-
-Use the space vacated by the large bank building for the blue key. Place that key directly ABOVE the Approve financing document, comfortably INSIDE the Financing application panel. Put its exact label "Bank authority" just above or beside it. Connect the key DOWNWARD to the top of the Approve financing document with one fine navy arrow labeled "required". The connector is a requirement relationship, not an observed authorization event. Leave generous clearance around the word "required" and the key label.
-Remove the old key and its old horizontal dotted connector at the right of the choice. Do not leave a duplicate key.
-The existing blue workflow arrow must still arrive from the LEFT of the Approve financing document through the Step interface. It must not point at the key. Visually separate workflow assignment from authority that belongs inside the application.
-
-No other new words. No success ticks, lock-opening animation, completed states, transaction results, new cards, controls or additional arrows. Keep private evidence entirely inside the application's boundary. Make the bank's authority the dominant detail on the application side; private evidence and the binding note remain supporting details. Everything must remain readable and uncropped.
-```
+> Edit this image to strengthen the hierarchy of the SAME authority explanation. Preserve its palette, typography, headline, all main panel boundaries, the Assigned step and Approve financing documents, Step interface, Binding DAR note, private evidence, source credit, and the horizontal workflow arrow.
+>
+> Two supporting decorations currently compete with the central message. Remove the large bank building from inside the Financing application panel; keep the small bank icon beside that panel heading. Remove the unlabeled three-stop progress row inside Harmonia Core; keep its small workflow icon beside the heading.
+>
+> Use the space vacated by the large bank building for the blue key. Place that key directly ABOVE the Approve financing document, comfortably INSIDE the Financing application panel. Put its exact label "Bank authority" just above or beside it. Connect the key DOWNWARD to the top of the Approve financing document with one fine navy arrow labeled "required". The connector is a requirement relationship, not an observed authorization event. Leave generous clearance around the word "required" and the key label.
+> Remove the old key and its old horizontal dotted connector at the right of the choice. Do not leave a duplicate key.
+> The existing blue workflow arrow must still arrive from the LEFT of the Approve financing document through the Step interface. It must not point at the key. Visually separate workflow assignment from authority that belongs inside the application.
+>
+> No other new words. No success ticks, lock-opening animation, completed states, transaction results, new cards, controls or additional arrows. Keep private evidence entirely inside the application's boundary. Make the bank's authority the dominant detail on the application side; private evidence and the binding note remain supporting details. Everything must remain readable and uncropped.
 
 - Tool: built-in image generation, editing `01-authority.png`.
 - Started: 2026-09-14 03:50:28 UTC.
@@ -198,7 +194,25 @@ visually inspected, not tested as a responsive HTML implementation.
 **Decision:** present round 2 for Miguel's review. Keep round 1 and its critique.
 No further generation or change to the published book in this review cycle.
 
+## Artifact register
 
+All times below are UTC. Generation times come from the tool calls above;
+commit times come from Git. Both PNG files are 1586 × 992 pixels.
+
+| Artifact | Generated | First committed | Commit |
+| --- | --- | --- | --- |
+| [01-authority.png](01-authority.png) | 2026-09-14 03:49:26 | 2026-09-14 03:50:13 | [c1d1d02](https://github.com/miguelemosreverte/harmony-project/commit/c1d1d0216dfb378e959832258a9eb072a32c0086) |
+| [02-authority.png](02-authority.png) — review candidate | 2026-09-14 03:51:09 | 2026-09-14 03:51:43 | [56a2b50](https://github.com/miguelemosreverte/harmony-project/commit/56a2b50276104c4b7ba3bba664298fd784776ad6) |
+
+The source evidence, four design passes and initial prompt were committed before
+generation at [3eb08e7](https://github.com/miguelemosreverte/harmony-project/commit/3eb08e7506cdf4d559bc92e2b491af78066549b0).
+
+SHA-256 identities:
+
+```text
+093abcd55e97e03b1a8f18f517967d5e2d34534210539883fb05b74075ebf3c3  01-authority.png
+561f39a5d8351bad1cbad9ea45bd59b75ce0548aef73b0817aa957ae7b3f7168  02-authority.png
+```
 
 ## Miguel's review
 
