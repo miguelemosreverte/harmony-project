@@ -29,7 +29,8 @@ Current example: [Complete architecture](architecture-whole/design.md).
 Scope correction: [Application authority](application-authority/design.md).
 Earlier exploration: [Architecture overview and execution](architecture-v2/README.md).
 
-Current approach: [Architecture in prose](architecture-structure/architecture.md),
+Current approach: [Architecture in prose](architecture-structure/architecture.html)
+([Markdown source](architecture-structure/architecture.md)),
 a short chapter establishing meaning before choosing diagrams. The
 [review note](architecture-structure/text-review.md) records this change of approach.
 Previous diagram: [Architecture version 7](architecture-structure/v7.html), with

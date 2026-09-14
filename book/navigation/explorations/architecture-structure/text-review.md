@@ -19,3 +19,20 @@ use rendered Markdown text, excluding standalone punctuation. Source links and
 Markdown formatting were checked. No diagrams were added.
 
 User review: pending.
+
+## Browser edition
+
+The user subsequently asked to read the chapter in the browser. [architecture.html](architecture.html)
+renders the same Markdown in a single reading column, preserving the established
+white/navy palette. It adds no diagrams, navigation menus or extra content.
+The source citations remain the only two links. Rebuild and open with:
+
+```sh
+.artifacts/book-tools/bin/python book/navigation/explorations/architecture-structure/render-text.py
+open 'http://127.0.0.1:56202/book/navigation/explorations/architecture-structure/architecture.html'
+```
+
+Checked desktop and mobile: all five sections render, both source links resolve,
+the final paragraph is reachable, and there is no horizontal overflow or browser
+error. Desktop screenshot visually inspected. Screenshots and checks are saved
+under `.artifacts/architecture-text-review/`. Reading uses ordinary page scrolling.
