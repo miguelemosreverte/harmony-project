@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1080" viewBox="0 0 1440 1080" role="img" aria-labelledby="map-title map-description">
+  <title id="map-title">From workflow step to contract action</title>
+  <desc id="map-description">Three parts of the proposed on-ledger contract model. The workflow identifies the current step and assigned party. The binding declaration maps a step kind and role to an application contract template and action. The application action retains its required authorization. Solid arrows show execution and the result updating workflow progress. Dotted lines connect the declaration to the two sides it maps. Action means a Daml choice.</desc>
+  <defs>
+    <linearGradient id="ledger-fill" x2="0" y2="1">
+      <stop stop-color="#f6faff"/>
+      <stop offset="1" stop-color="#eaf5ff"/>
+    </linearGradient>
+    <linearGradient id="card-fill" x2="0" y2="1">
+      <stop stop-color="#fff"/>
+      <stop offset="1" stop-color="#f9fcff"/>
+    </linearGradient>
+    <filter id="card-shadow" x="-15%" y="-20%" width="130%" height="145%">
+      <feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#3978bc" flood-opacity=".09"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M1 1 9 5 1 9Z" fill="#167cf0"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; fill: #132c50; }
+    .headline { font-size: 40px; font-weight: 650; letter-spacing: -.8px; }
+    .label { font-size: 32px; font-weight: 620; letter-spacing: -.4px; }
+    .detail { font-size: 28px; fill: #45607e; }
+    .card { fill: url(#card-fill); stroke: #c2ddf9; stroke-width: 1.5; filter: url(#card-shadow); }
+    .edge { fill: none; stroke: #167cf0; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrow); }
+    .mapping { fill: none; stroke: #6d9fcc; stroke-width: 2.5; stroke-dasharray: 5 8; stroke-linecap: round; stroke-linejoin: round; }
+  </style>
+  <rect width="1440" height="1080" fill="#fff"/>
+  <text class="headline" x="64" y="100">From workflow step to contract action</text>
+  <rect id="ledger-boundary" x="50" y="172" width="1340" height="800" rx="24" fill="url(#ledger-fill)" stroke="#9fcaff" stroke-width="1.5"/>
+  <text class="label" x="84" y="232">Canton · Daml</text>
+
+  <path id="workflow-mapping" class="mapping" d="M495 430H335Q315 430 315 450V588"/>
+  <path id="application-mapping" class="mapping" d="M945 430H1105Q1125 430 1125 450V588"/>
+  <g id="binding" data-node="binding">
+    <rect class="card" x="495" y="286" width="450" height="220" rx="20"/>
+    <text class="label" x="525" y="334">Binding declaration</text>
+    <text class="detail" x="525" y="387">Step kind + role</text>
+    <text class="detail" x="720" y="423" text-anchor="middle">↕</text>
+    <text class="detail" x="525" y="470">Contract template + action</text>
+  </g>
+
+  <g id="workflow-contract" data-node="workflow-contract">
+    <rect class="card" x="100" y="590" width="430" height="216" rx="20"/>
+    <text class="label" x="130" y="638">Workflow contract</text>
+    <text class="detail" x="130" y="698">Current step</text>
+    <text class="detail" x="130" y="758">Assigned party</text>
+  </g>
+  <g id="application-contract" data-node="application-contract">
+    <rect class="card" x="910" y="590" width="430" height="216" rx="20"/>
+    <text class="label" x="940" y="638">Application contract</text>
+    <text class="detail" x="940" y="698">Action</text>
+    <text class="detail" x="940" y="758">Required authorization</text>
+  </g>
+
+  <path id="execute-edge" class="edge" d="M532 700H907"/>
+  <text class="detail" x="720" y="676" text-anchor="middle">Execute</text>
+  <path id="result-edge" class="edge" d="M1125 808V875Q1125 895 1105 895H335Q315 895 315 875V809"/>
+  <text class="detail" x="720" y="875" text-anchor="middle">Update progress</text>
+</svg>

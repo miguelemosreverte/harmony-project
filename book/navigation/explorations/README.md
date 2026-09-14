@@ -29,9 +29,11 @@ Current example: [Complete architecture](architecture-whole/design.md).
 Scope correction: [Application authority](application-authority/design.md).
 Earlier exploration: [Architecture overview and execution](architecture-v2/README.md).
 
-Latest review: [Architecture version 6](architecture-structure/v6.html), the
-composition mechanism with simpler labels and less text, with [formatted prose](architecture-structure/read-v6.md)
-and an [edit and review record](architecture-structure/design-v6.md).
+Latest review: [Architecture version 7](architecture-structure/v7.html), the
+three-part contract map proposed in the conversation, with [formatted prose](architecture-structure/read-v7.md)
+and a [design record](architecture-structure/design-v7.md).
+[Version 6](architecture-structure/v6.html) retains the broader diagram with UI,
+build tooling and continuation.
 The [version 5 design record](architecture-structure/design-v5.md) contains the
 underlying architectural citations.
 The [version 4 review](architecture-structure/design-v4.md) records the rejection
