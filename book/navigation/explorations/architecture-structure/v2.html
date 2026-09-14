@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Harmonia — architecture structure, version 2</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; color: #11264b; background: #f4f8fd; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    header, footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0 20px; color: #566a89; font-size: 12px; }
+    header { height: 42px; border-bottom: 1px solid #dce6f2; }
+    header strong { font-weight: 550; color: #213b62; }
+    footer { height: 30px; position: fixed; bottom: 0; width: 100%; }
+    #viewport { position: fixed; inset: 42px 0 30px; overflow: hidden; touch-action: none; cursor: grab; outline: none; }
+    #viewport:focus-visible { box-shadow: inset 0 0 0 2px #1678ef; }
+    #viewport[data-dragging="true"] { cursor: grabbing; }
+    #paper { margin: 0; width: 1536px; position: absolute; left: 0; top: 0; transform-origin: 0 0; background: white; box-shadow: 0 2px 20px #2440640b; }
+    #paper img { display: block; width: 1536px; height: 1024px; user-select: none; -webkit-user-drag: none; }
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+    .touch-hint { display: none; }
+    @media (pointer: coarse) { .desktop-hint { display: none; } .touch-hint { display: inline; } }
+    @media (max-width: 550px) { header, footer { padding-inline: 12px; font-size: 11px; gap: 8px; } }
+    @media print {
+      @page { size: A3 landscape; margin: 10mm; }
+      html, body { height: auto; background: white; }
+      header, footer { display: none; }
+      #viewport { position: static; overflow: visible; box-shadow: none !important; }
+      #paper { position: static; width: 100%; transform: none !important; box-shadow: none; }
+      #paper img { width: 100%; height: auto; max-height: 275mm; object-fit: contain; }
+    }
+  </style>
+</head>
+<body>
+  <header><strong>Architecture · structure version 2</strong><span>Concept for review</span></header>
+  <main id="viewport" tabindex="0" aria-label="Architecture structure sheet. Pan and zoom to inspect." aria-describedby="navigation-help">
+    <figure id="paper">
+      <img src="02-structure.png?v=dd4db806fe2a8" width="1536" height="1024" draggable="false"
+        alt="Harmonia architecture. A dominant component map shows Dapp, Builder, the Canton ledger boundary, Core, Binding DAR and two application participation paths. Beneath it is a contract model with state ownership, assignments, application authority and continuation."
+        aria-describedby="architecture-description">
+      <figcaption id="architecture-description" class="sr-only">
+        <h1>Harmonia architecture</h1>
+        <h2>Components and boundaries</h2>
+        <p>The Dapp inspects, composes and submits through the Ledger API. Builder is build-time tooling that produces a Binding DAR and generated code. Inputs can come from DAR upload, Package Manager or Validator. The Canton Validator or Super Validator hosts the on-ledger Daml packages. Core owns workflow state and step rules. Bounded atomic execution requires suitable workflow structure and authorizations.</p>
+        <p>The smaller Binding DAR declaration has two independent connections to vertically arranged application packages. Direct integration uses a new application DAR implementing the interfaces. Generated integration binds an existing unchanged application DAR. The packages are not connected to each other. Each application keeps its authority, ownership and visibility. The references package demonstrates the model. Source: original architecture, section 1.</p>
+        <h2>Contract relationships</h2>
+        <p>A definition creates instances. An instance contains state, outputs and role-to-party bindings, and assigns steps to actors. For a choice-exercise step, the step interface reaches an application choice with the application's own authority and observers. Applicability relates step kind, choice and role. Instance outputs can continue to a next definition. Both Continuation and Next definition appear inside the Core workflow model boundary. The two applicability relations are labeled qualifies and selects choice. Source: original architecture, section 2; contract names are illustrative.</p>
+        <p>This revised architecture overview is a generated prototype for joint review. Package imports, binding mechanism and interface placement remain open in the proposal. Source citations, the exact edit prompt, inspection and review history are recorded in design-v2.md.</p>
+      </figcaption>
+    </figure>
+  </main>
+  <footer>
+    <span id="navigation-help"><span class="desktop-hint">Drag to pan · pinch / Ctrl + wheel to zoom · Home to fit</span><span class="touch-hint">Drag to pan · pinch to zoom</span></span>
+    <span id="zoom" aria-label="Zoom level"></span>
+  </footer>
+  <script src="../../sheet.js?v=f68aa956f65c"></script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 # Harmonia architecture — version 2
 
-Status: preparing a correction to version 1 for joint review.
+Status: version 2 selected after architectural and browser inspection; ready for Miguel's review.
 Recorded: 2026-09-14 UTC.
 Branch: `design/architecture-clarity-v2`.
 Input: [01-structure.png](01-structure.png), first committed at `eca791d`.
@@ -92,10 +92,60 @@ Preserve the two original source credits and the bottom line "Still open: packag
 
 ## 5. Generated artifacts and inspection
 
-Pending. Record actual generation times, saved artifacts, exact prompts, visual
-inspection and any further correction. A successful tool call does not establish
-that the relationships are right. Inspect both views before selecting the version
-to open for review.
+### Generation
+
+- Tool: built-in image generation, editing version 1; one edit call.
+- Exact prompt: section 4, extracted verbatim from its fenced block.
+- Input: `01-structure.png`.
+- Started: 2026-09-14 05:54:51 UTC.
+- Returned: 2026-09-14 05:55:35 UTC.
+- Output: [02-structure.png](02-structure.png), 1536 × 1024, 1,488,757 bytes.
+- SHA-256: `dd4db806fe2a8aa352deffcd8dcdd72ab6bf9cbbf5923115df0e6e32990af8c3`.
+- Original output: `~/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-99a73410-ab49-4581-814d-0b5a17beee0d.png`.
+- Browser page: [v2.html](v2.html). The version 1 [page](index.html) is preserved.
+
+The correction plan and exact edit prompt were committed before generation at
+[1808805](https://github.com/miguelemosreverte/harmony-project/commit/1808805).
+
+### Assistant inspection
+
+| Review point | What the generated image actually shows |
+| --- | --- |
+| Independent application paths | Two distinct connectors start at Binding DAR and reach the two vertically arranged packages. Neither passes through the other package. There is no Direct-to-Generated connector. |
+| Declaration versus service | Binding DAR is now a much smaller document with a title. It retains a light card treatment consistent with the other glyphs, rather than the prompt's entirely flat treatment. Core and applications have the dominant enclosures and responsibility text. |
+| Meaningful labels | Node labels identify new versus existing DARs. Relation labels identify interface implementation and generated binding. The former duplicate participation subtitle is gone. |
+| Build-time boundary | Builder stays outside the ledger. Its dashed generation arrow reaches the declaration. The Dapp's separate bidirectional Ledger API line reaches Core. |
+| Atomicity | The Core text includes bounded blocks and the requirement for compatible flow plus authority. |
+| Contract ownership | Definition, Instance, Assigned step, Continuation and Next definition all sit inside the Core workflow model boundary. Instance-to-Continuation remains an uninterrupted arrow. |
+| Application authority | The execution arrow reaches the choice; required authority and signatories/observers stay inside the application boundary. |
+| Applicability | The dotted relations are labeled “qualifies” and “selects choice”. The selection line reaches the choice edge and stays clear of the key. |
+| Consistency | Assigned step now uses a document glyph. The whole two-view composition, palette and original source credits remain. |
+
+**Assessment:** I am satisfied with this as a concise architectural overview of
+the proposal. The specific relationship and ownership issues identified in
+version 1 have been addressed. I can explain the purpose of each retained node,
+boundary and connector from the original diagrams.
+
+This is still an overview: it does not establish final package import direction,
+resolve interface placement or binding implementation, or prove code coverage.
+Those limitations are also stated by the source. Its smaller labels are raster
+text, so browser zoom aids inspection without creating additional image detail.
+Miguel retains the content and artistic review; this assessment is the assistant's.
+
+### Browser inspection
+
+On 2026-09-14, inspected the saved desktop and mobile screenshots. The complete
+sheet fits without cropping. On a phone, the initial view is an overview; reading
+the small labels requires pinch/zoom. The existing viewer passed checks for one
+interaction surface, no document overflow, stable DOM during pan/zoom, deterministic
+camera URLs, Home-to-fit, touch pinch and single-page printing. There were no
+browser exceptions or failed resource loads.
+
+Evidence in `.artifacts/architecture-structure-v2-review/`: `desktop-complete.png`,
+`desktop-shared-camera.png`, `mobile-complete.png`, `mobile-execution-detail.png`,
+`complete.pdf` and `checks.json`. The existing Chrome process and static server
+were reused. These checks verify presentation behavior; the table above records
+the separate architectural inspection.
 
 ---
 
