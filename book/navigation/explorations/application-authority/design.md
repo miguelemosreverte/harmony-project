@@ -1,6 +1,6 @@
 # Application authority: design record
 
-Status: drafting an image for Miguel's review.
+Status: round 2 ready for Miguel's review.
 Started: 2026-09-14 03:45:59 UTC.
 Baseline: `4022a3a88525047a5616b96e7cab5b9d4bd9a132`.
 Branch: `design/architecture-clarity-v2`.
@@ -169,7 +169,35 @@ The existing blue workflow arrow must still arrive from the LEFT of the Approve 
 No other new words. No success ticks, lock-opening animation, completed states, transaction results, new cards, controls or additional arrows. Keep private evidence entirely inside the application's boundary. Make the bank's authority the dominant detail on the application side; private evidence and the binding note remain supporting details. Everything must remain readable and uncropped.
 ```
 
-Generation and review pending.
+- Tool: built-in image generation, editing `01-authority.png`.
+- Started: 2026-09-14 03:50:28 UTC.
+- Returned: 2026-09-14 03:51:09 UTC.
+- Artifact: [02-authority.png](02-authority.png).
+- Commit and SHA-256: recorded in the artifact register below.
+
+![Refined authority requirement](02-authority.png)
+
+**Assistant review:** the key now has an explicit “required” connection to the
+application choice. Both ends are inside the application boundary, while the
+workflow connection arrives from outside. The building and redundant progress
+row are gone. This makes the authority relationship more prominent. The image
+retains the binding declaration as a small note and private evidence inside the
+application. Text and connectors appear uncropped in the generated image.
+
+**Remaining questions for Miguel:** does the key communicate permission clearly?
+Does the interface and binding note help at this point, or compete with the main
+message? There is substantial empty space above the assigned step; moving the
+whole path upward could tighten the composition, but that needs to be judged
+against the current breathing room.
+
+**Semantic qualification:** the key is a metaphor for required authorization,
+not a proposed cryptographic key-custody design. The arrows explain relationships;
+they do not prove execution or show an observed approval. This candidate has been
+visually inspected, not tested as a responsive HTML implementation.
+
+**Decision:** present round 2 for Miguel's review. Keep round 1 and its critique.
+No further generation or change to the published book in this review cycle.
+
 
 
 ## Miguel's review
