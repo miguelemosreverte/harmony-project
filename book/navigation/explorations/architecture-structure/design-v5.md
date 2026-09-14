@@ -1,6 +1,6 @@
 # Architecture version 5 — show the composition mechanism
 
-Status: implementation and browser review in progress.
+Status: rendered and inspected; user review pending.
 Recorded: 2026-09-14 UTC. Baseline: `65a712c`.
 
 ---
@@ -73,9 +73,62 @@ questions remain open in the input documents.
 
 ## 4. Implementation and inspection
 
-Pending. The source diagram will be `05-architecture.svg`, displayed inline in
-`v5.html`. Version 4 remains available for comparison. Browser opening uses the
-macOS `open` command.
+The source is [05-architecture.svg](05-architecture.svg), authored directly and
+displayed inline in [v5.html](v5.html). No image-generation tool or raster asset
+is involved. The original component and contract diagrams were reread before
+the composition was written. Source data is summarized, not copied as a field
+catalog. The assignment inset represents the instance's assigned work; it is not
+a claim that the source's separate StepAssignment template is an embedded field.
+
+The browser page reuses the established paired review layout and pan/zoom code.
+`review-v5.css` sets the vector sheet's dimensions and print sizing. The existing
+renderer now accepts an SVG source, retaining support for the earlier image
+reviews. The left column is rendered from `read-v5.md` with actual Markdown
+headings, emphasis and quotations.
+
+```sh
+.artifacts/book-tools/bin/python book/navigation/explorations/architecture-structure/render-review.py 5
+open 'http://127.0.0.1:56202/book/navigation/explorations/architecture-structure/v5.html'
+```
+
+### Visual review
+
+Inspected the actual browser screenshots, including 1440 × 900 desktop and
+390 × 844 mobile. The desktop view fits the complete diagram and prose. Text and
+connector hierarchy are visible; the declaration's dashed attachment no longer
+crosses the action label. Application choice, instance result and continuation
+are connected, with no repeated generic application map. Supporting labels use
+24 SVG pixels, approximately 17.5 screen pixels at the inspected laptop fit.
+
+Mobile provides a whole-sheet overview with pinch/zoom for details. The vector
+text remains sharp when enlarged, but the full sheet's text is too small to read
+at mobile fit. A separate mobile detail capture shows the application contract
+and its controller requirement. This is a pan/zoom review canvas, not a completed
+mobile presentation or a working backend demonstration.
+
+### Checks
+
+The browser run verified desktop and mobile fit, two interaction surfaces,
+formatted Markdown, no body overflow, stable diagram DOM while panning, shared
+camera restoration within 0.05 pixels, restored prose scroll, touch pinch,
+Home-to-fit and one uncropped PDF page. No failed requests or browser exceptions
+were recorded. SVG checks found no overlapping text bounds, no text outside the
+sheet, and confirmed all 24 labels associated with a component remain inside
+that component. Continuation is inside Core, and Choice is inside the source
+application. There are no raster elements in the diagram.
+
+Evidence is saved in `.artifacts/architecture-structure-v5-review/`:
+`desktop-complete.png`, `laptop-complete.png`, `desktop-shared-camera.png`,
+`mobile-complete.png`, `mobile-choice-detail.png`, `complete.pdf`, `checks.json`
+and `native-geometry.json`. Existing Chrome and Python were reused.
+
+Assistant assessment: this candidate explains the eligibility/authority
+distinction and the state/continuation relationships that the previous generic
+maps omitted. It still abstracts the complete contract catalog, package imports,
+interface visibility and binding implementation. Its usefulness to the reader
+remains a user-review question; rendering checks alone do not establish it.
+
+The design and source citations were first committed and pushed at `972ff11`.
 
 ---
 

@@ -21,10 +21,15 @@ values = {
         (folder / f"read-v{version}.md").read_text()
     ),
     "css_hash": fingerprint("review.css"),
-    "image_hash": fingerprint(f"{version:02}-structure.png"),
     "script_hash": fingerprint("../../sheet.js"),
     "review_hash": fingerprint("review.js"),
 }
+diagram = folder / f"{version:02}-architecture.svg"
+if diagram.exists():
+    values["diagram"] = diagram.read_text()
+    values["native_css_hash"] = fingerprint(f"review-v{version}.css")
+else:
+    values["image_hash"] = fingerprint(f"{version:02}-structure.png")
 page = (folder / f"v{version}.template.html").read_text()
 for key, value in values.items():
     page = page.replace("{{" + key + "}}", value)

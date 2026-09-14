@@ -29,10 +29,12 @@ Current example: [Complete architecture](architecture-whole/design.md).
 Scope correction: [Application authority](application-authority/design.md).
 Earlier exploration: [Architecture overview and execution](architecture-v2/README.md).
 
-Latest review: [Architecture version 4](architecture-structure/v4.html), three
-complementary views of one system, with [formatted prose](architecture-structure/read-v4.md)
-beside the image and a [source-to-image design record](architecture-structure/design-v4.md).
-The previous [version 3](architecture-structure/v3.html) remains available.
+Latest review: [Architecture version 5](architecture-structure/v5.html), an
+authored SVG of the composition mechanism, with [formatted prose](architecture-structure/read-v5.md)
+and a [source-to-diagram design record](architecture-structure/design-v5.md).
+The [version 4 review](architecture-structure/design-v4.md) records the rejection
+of repeated generic component maps and the switch away from image generation.
+Earlier pages remain available for comparison.
 
 Direction: [Architecture structure](architecture-structure/design.md).
 The complete architectural presentation follows the original component and
