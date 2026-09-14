@@ -72,6 +72,11 @@
     const a=document.createElement('a');a.href=url;a.download='harmonia-event-log.json';a.click();
     setTimeout(()=>URL.revokeObjectURL(url),1000);
   });
+  document.getElementById('demo-evidence').addEventListener('click',e=>{
+    const back=location.href.replaceAll('&','&amp;').replaceAll('"','&quot;');
+    const html=log.presentation.evidence_html.replace('href="index.html"',`href="${back}"`);
+    e.currentTarget.href=URL.createObjectURL(new Blob([html],{type:'text/html'}))+'#'+demo.id;
+  });
   addEventListener('beforeprint',()=>slides.forEach(s=>{s.inert=false;s.removeAttribute('aria-hidden');}));
   addEventListener('afterprint',read);
   read();history.scrollRestoration='manual';

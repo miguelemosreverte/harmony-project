@@ -25,7 +25,7 @@ function coordinated(frame, joining) {
   const approval = joining ? a.application : a.sources.approval;
   const review = joining ? a.review : a.sources.review;
   return card('Northbank · financing application', 'Financing', label(approval), joining ? 'Approval branch selected' : 'First step · StepAction', 'bank', approval === 'approved' ? 'complete' : 'pending')
-    + connection(a.workflow === 'complete' ? 'complete' : 'pending', 'Application progress is recorded in the workflow')
+    + connection(approval === 'approved' ? 'complete' : 'pending', 'Application progress is recorded in the workflow')
     + card(joining ? 'Harmonia · requires both actions' : 'Harmonia · consented plan', joining ? 'Join' : 'Workflow', label(a.workflow), `Next: ${a.enabled.join(', ') || 'none'}`, 'workflow', a.workflow === 'complete' ? 'complete' : a.outcome === 'rejected' ? 'refused' : 'pending')
     + connection(review === 'confirmed' ? 'complete' : 'pending', 'The independent review contributes to the same workflow')
     + card('Alice · review application', 'Review', label(review), joining ? 'Required before the join' : 'Second step · StepAction', 'contract', review === 'confirmed' ? 'complete' : 'pending');
@@ -36,7 +36,7 @@ function privacy(frame) {
   const approved = a.application === 'approved', complete = a.workflow === 'complete';
   return card('Northbank · bank only', 'Private application', label(a.application), `Visible to ${a.visible_to.join(', ')}`, 'bank', approved ? 'complete' : 'pending')
     + connection(approved ? 'complete' : 'pending', 'Approval authorizes a scoped result')
-    + card('Shared handoff', 'Approval for Alice', approved ? 'Approved' : 'Waiting', 'Private bank papers stay at Northbank', 'contract', approved ? 'complete' : 'pending')
+    + card('Shared handoff', 'Approval for Alice', complete ? 'Used' : approved ? 'Available' : 'Not issued', complete ? 'Consumed by the continuation' : 'Private bank papers stay at Northbank', 'contract', approved ? 'complete' : 'pending')
     + connection(complete ? 'complete' : 'pending', 'Alice uses the approval to continue')
     + card('Alice · her action', 'Next workflow step', label(a.workflow), complete ? 'Continuation recorded' : 'Alice has not continued', 'workflow', complete ? 'complete' : 'pending');
 }

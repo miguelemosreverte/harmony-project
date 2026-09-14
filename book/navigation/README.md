@@ -2,7 +2,9 @@
 
 The current [architecture reader](../architecture/index.html?step=0) presents the
 three reviewed illustrated passages in the shared carousel format. The unfolded
-sheet below preserves the earlier content proposal for all four paths.
+sheet below preserves the earlier content proposal for all four paths. The current
+[Canton demonstrations](../investor/README.md) provide the investor path as a
+carousel with exportable event logs and an offline delivery package.
 
 [plan.json](plan.json) defines four independent reading regions on one unfolded
 sheet. [index.html](index.html) is generated from that plan. Drag or scroll to pan;

@@ -1,5 +1,9 @@
 # The Harmonia book
 
+The [Canton demonstration reader](investor/README.md) provides five technical demos,
+original milestone mapping, and portable event-log replay. Unzip its linked package
+and open `index.html`; it works without a repository or running backend.
+
 The [source-cited field guide](../design/0.2/book-overview.html) is the default
 export entry. Its ten destinations include infographic stories, original quotations,
 and a live sandbox entry. The detailed Scala.js laboratory remains in the export

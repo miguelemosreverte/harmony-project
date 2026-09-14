@@ -5,6 +5,7 @@ import {fileURLToPath} from 'node:url';
 import {diagram, escape} from './diagrams.mjs';
 import {recordings, hash, json} from './recordings.mjs';
 import {evidence} from './evidence.mjs';
+import {playerHTML, openerHTML} from './portable.mjs';
 
 const folder=path.dirname(fileURLToPath(import.meta.url)),root=path.resolve(folder,'../..');
 const args=process.argv.slice(2),exports=[];
@@ -17,6 +18,7 @@ for(let i=0;i<args.length;i++){
   else throw Error('Usage: node book/investor/build.mjs [--out DIR] [--recordings evidence.json ...] [--replay events.json] [--check]');
 }
 const read=rel=>fs.readFile(path.join(root,rel),'utf8');
+assert(!(replay && exports.length),'Choose either a saved log or fresh recording exports');
 const parse=async rel=>JSON.parse(await read(rel));
 const asset=async file=>({file,contents:await read(file)});
 const dataURL=async(file,mime)=>`data:${mime};base64,${(await fs.readFile(path.join(root,file))).toString('base64')}`;
@@ -52,24 +54,30 @@ async function capture(){
     '../navigation/assets/daml.png':await dataURL('book/navigation/assets/daml.png','image/png')
   };
   let body=shell(scenes.map(s=>s.html).join('\n'));
-  for(const [name,data] of Object.entries(images))body=body.replaceAll(name,data);
+  for(const name of Object.keys(images))body=body.replaceAll(`src="${name}"`,`data-image="${name}"`);
   const styles=await Promise.all(['product/scene/site/scene.css','product/scene/site/surface.css','design/0.2/quiet.css','book/investor/player.css'].map(asset));
   const scripts=await Promise.all(['product/scene/target/scala-3.3.6/harmonia-scene-fastopt/main.js','book/investor/player.js'].map(asset));
   const first=plan.demos[0],route=first.paths[0];
   const log={format:'harmonia-event-log/1',mode:'recorded',cursor:{demo:first.id,path:route.id,step:route.steps[0].id},
     scope:'Selected moments from independent local Canton runs. Complete ordered observations are retained per run. No ledger commands execute during replay.',
     demos:plan.demos,runs,scenes,milestones,proposal:{file:'docs/proposal/harmonia.md',sha256:hash(proposal),contents:proposal},
-    presentation:{shell:body,styles,scripts,evidence_url:'evidence.html'}
+    presentation:{shell:body,styles,scripts,images,evidence_url:'evidence.html'}
   };
   for(const a of [...styles,...scripts])a.sha256=hash(a.contents);
   log.presentation.sha256=hash(body);
+  log.presentation.evidence_html=evidence(log);
+  log.presentation.evidence_sha256=hash(log.presentation.evidence_html);
+  log.content_sha256=hash(json({...log,cursor:null,content_sha256:null}));
   return log;
 }
 
 function validate(log){
   assert.equal(log.format,'harmonia-event-log/1');assert.equal(log.mode,'recorded');
+  assert.equal(hash(json({...log,cursor:null,content_sha256:null})),log.content_sha256,'Saved event log changed');
+  assert(log.scenes.some(s=>s.key===[log.cursor.demo,log.cursor.path,log.cursor.step].join('/')),'Invalid saved selection');
   assert.equal(hash(log.proposal.contents),log.proposal.sha256);
   assert.equal(hash(log.presentation.shell),log.presentation.sha256,'Presentation changed');
+  assert.equal(hash(log.presentation.evidence_html),log.presentation.evidence_sha256,'Evidence document changed');
   for(const a of [...log.presentation.styles,...log.presentation.scripts])assert.equal(hash(a.contents),a.sha256,`Asset changed: ${a.file}`);
   for(const r of Object.values(log.runs)){
     assert.deepEqual(r.actual,r.expected,`Golden mismatch: ${r.id}`);
@@ -79,14 +87,9 @@ function validate(log){
   for(const s of log.scenes)assert(log.runs[s.recording].events[s.event],`Missing scene event: ${s.key}`);
 }
 
-function playerHTML(log){
-  const payload=json(log).replaceAll('<','\\u003c');
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'"><title>Harmonia Canton demonstrations</title></head><body><noscript>This interactive recording requires JavaScript. Read <a href="evidence.html">the complete static evidence</a> instead.</noscript><script id="event-log" type="application/json">${payload}</script><script>(()=>{const log=JSON.parse(document.getElementById('event-log').textContent);for(const a of log.presentation.styles){const style=document.createElement('style');style.textContent=a.contents;document.head.appendChild(style);}document.body.insertAdjacentHTML('beforeend',log.presentation.shell);for(const a of log.presentation.scripts){const script=document.createElement('script');script.textContent=a.contents;document.body.appendChild(script);}})();</script></body></html>\n`;
-}
-
 const log=replay?JSON.parse(await fs.readFile(replay,'utf8')):await capture();
 validate(log);
-const outputs={'events.json':json(log),'index.html':playerHTML(log),'evidence.html':evidence(log)};
+const outputs={'events.json':json(log),'index.html':playerHTML(log),'evidence.html':log.presentation.evidence_html,'open.html':openerHTML()};
 await fs.mkdir(output,{recursive:true});
 for(const [name,contents] of Object.entries(outputs)){
   if(checking)assert.equal(await fs.readFile(path.join(output,name),'utf8'),contents,`Stale output: ${name}`);

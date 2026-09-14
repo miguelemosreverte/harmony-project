@@ -1,0 +1,30 @@
+{
+  "checks": [
+    {
+      "viewport": "desktop",
+      "scenes": 18,
+      "stableGeometry": true
+    },
+    {
+      "viewport": "phone",
+      "scenes": 18,
+      "stableGeometry": true
+    },
+    {
+      "viewport": "small",
+      "scenes": 18,
+      "stableGeometry": true
+    },
+    {
+      "exportAndImport": "same selected state and identical screenshot pixels",
+      "offline": true
+    }
+  ],
+  "errors": [],
+  "reviewed_at": "2026-09-14",
+  "recording_mode": "preserved local Canton runs",
+  "fresh_ledger_run": false,
+  "event_log_sha256": "559056f1d7d776263b13bfbefeabc41587a9b39f50c2b0fee3a66f57da8d3928",
+  "archive_sha256": "13899afdc34dd42c4aabab339e022623dac326d70ee934893a8cffd0b5156009",
+  "archive_bytes": 959354
+}

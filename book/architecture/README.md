@@ -21,8 +21,9 @@ the passage scrolls within its stage while the dock stays fixed; the picture
 keeps a useful minimum size instead of shrinking its labels to fit.
 
 The four paths are User, Investor / Canton ecosystem, Architecture, and
-Implementation. The investor path remains the next content/design discussion;
-this change does not certify completion of all four paths.
+Implementation. The [investor path](../investor/README.md) now provides recorded
+Canton demonstrations with portable event logs. Neither reader certifies full
+milestone acceptance or completion of every path's implementation scope.
 
 Build with the existing Python environment:
 

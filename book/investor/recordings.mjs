@@ -63,6 +63,7 @@ export async function recordings(root, ids, exports = []) {
       return {sequence, id:unit.id, input:request, observed:actual, expected};
     });
     assert.equal(new Set(events.map(e => e.id)).size, events.length);
+    assert.equal(events.length,actions.length,'Every requested action needs a persisted observation');
     results[id] = {id, provenance:p, input:record.input, actual:record.actual,
       expected:record.expected, events, artifacts};
   }
