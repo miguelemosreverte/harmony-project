@@ -1,7 +1,10 @@
 # Image design records
 
-Each new diagram gets a Markdown record beside its versioned images. The purpose
-is to make the message, visual decisions and review history easy to inspect.
+Each complete presentation gets a Markdown record beside its versioned images.
+The purpose is to make the message, visual decisions and review history easy to
+inspect. For architecture, the unit of review is the whole architecture story.
+Regions within it may answer specific questions; never require the reader to
+approve isolated fragments before they can see how the whole works.
 
 1. **Establish the message.** Name the reader's question and the intended
    understanding. Cite short, exact passages from the original model. Keep source
@@ -12,13 +15,16 @@ is to make the message, visual decisions and review history easy to inspect.
 3. **Generate and critique.** Usually make two or three image iterations, each
    addressing an observed weakness. Save the exact prompt, input references,
    output filename, tool name, UTC times and commit. Preserve prior versions.
-4. **Present for review.** Explain what works, what remains uncertain and which
-   candidate is proposed. Assistant inspection is separate from user approval.
+4. **Present the whole candidate in one browser page.** Make the complete story
+   visible together, with pan and zoom for detail. Explain what works, what remains
+   uncertain and which candidate is proposed. Assistant inspection is separate
+   from user approval. Every round preserves this complete context.
 5. **Append the user's review.** Record the actual words, image and commit reviewed,
    date recorded and resulting decisions. Update the book after that review.
 
 The main measure is how readily a reader forms a correct mental model. Extra
 words, extra variants and successful rendering checks do not establish that.
 
-Current example: [Application authority](application-authority/design.md).
+Current example: [Complete architecture](architecture-whole/design.md).
+Scope correction: [Application authority](application-authority/design.md).
 Earlier exploration: [Architecture overview and execution](architecture-v2/README.md).

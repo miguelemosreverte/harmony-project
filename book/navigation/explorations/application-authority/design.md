@@ -1,6 +1,6 @@
 # Application authority: design record
 
-Status: round 2 ready for Miguel's review.
+Status: retained as an exploration; Miguel requested a complete architecture candidate for review.
 Started: 2026-09-14 03:45:59 UTC.
 Baseline: `4022a3a88525047a5616b96e7cab5b9d4bd9a132`.
 Branch: `design/architecture-clarity-v2`.
@@ -220,8 +220,14 @@ Earlier feedback guiding this attempt, quoted from the conversation:
 
 > I think I like the overall language. The colors and so on, I like, but yes, there may be room to think about what it is that we actually want to say.
 
-**Review of this candidate: pending.**
+### Scope correction — recorded 2026-09-14
 
-When Miguel reviews it, append his actual words, the candidate filename and
-commit he saw, when the review was recorded, and the resulting decisions.
-Assistant critiques and user decisions stay explicitly attributed.
+Candidate shown: `02-authority.png`, committed at `56a2b50`.
+
+> But why do I need to focus on just one thing? Let's try to have broader iterations, okay? L.C. is difficult for me to evaluate. I need the entire architecture thing, whatever you want to show me.
+
+**Decision:** review the complete architecture presentation in every iteration.
+Individual regions can have a clear purpose, but an isolated region is not the
+review deliverable. Keep this experiment and its evidence; carry the authority
+relationship into the [complete architecture record](../architecture-whole/design.md).
+This feedback concerns the scope of review and does not approve this image.
