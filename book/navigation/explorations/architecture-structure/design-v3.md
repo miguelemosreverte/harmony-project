@@ -211,5 +211,16 @@ readability observations above are explicitly assistant judgments.
 
 ## 6. User review
 
-Pending. Append actual feedback with the artifact and commit reviewed. The previous
-approval to generate is not approval of the new image or side-by-side presentation.
+Recorded 2026-09-14, reviewing `03-structure.png` at `9306cf8`:
+
+> "Question: Don't all systems have interfaces?"
+
+> "Some blue arrows, some electrical sockets. I don't know. I feel that it lacks a little bit of intuition about how I need to read this."
+
+> "Maybe you will write one diagram, then another diagram, then another diagram, and find how they compose."
+
+Miguel questioned the meaning of the plug metaphor and whether the horizontal
+chain implied one-way execution. He requested concise discussion. We agreed to
+try three connected architectural views, visible together: location,
+responsibility, and application participation. This is a request for another
+prototype, not approval of version 3. See [version 4](design-v4.md).
