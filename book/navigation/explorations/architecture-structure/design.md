@@ -1,6 +1,6 @@
 # Harmonia architecture — structure before detail
 
-Status: one generated candidate prepared for joint review; known connector ambiguity recorded below.
+Status: retained as version 1; version 2 authorized after discussion of the issues below.
 Recorded: 2026-09-14 UTC.
 Baseline: `3590bee` on `design/architecture-clarity-v2`.
 
@@ -219,6 +219,18 @@ server and Chrome instance were reused; no JVM or new browser process was launch
 
 ## 8. Miguel's review
 
-Pending review of this candidate. Append Miguel's actual feedback, the image and
-commit reviewed, date recorded, and the resulting content decisions. Assistant
-inspection and previous feedback do not constitute approval of this new image.
+### Review recorded 2026-09-14
+
+Candidate discussed: `01-structure.png` / `eca791d`.
+Miguel asked whether the assistant liked this very much. The assistant stated
+that it was not satisfied with the architectural explanation: Binding DAR had
+too much visual weight, the application paths were connected misleadingly, and
+some relationship meanings remained implicit.
+
+Miguel then authorized a new version:
+
+> Yes, substantive issues? What about it? Do you want to make a new version then on top of this one that you will open in a new tab? It is fine for me. Just make sure that whatever you do, you are happy and you comment everything. I will be able to see it with you, alongside you.
+
+**Decision:** preserve this version and its browser page. Develop and inspect a
+second version in [design-v2.md](design-v2.md), then open its separate page in a
+new tab. This authorizes revision; it does not approve version 1 or version 2.
