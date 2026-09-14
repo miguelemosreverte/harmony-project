@@ -132,7 +132,45 @@ Each actual tool call gets an entry with its prompt, references, UTC times,
 artifact name, SHA-256, eventual commit, visual critique and decision. Preserve
 earlier images. A refinement should address a specific observed weakness.
 
-No image generated for this record yet.
+### Round 1 — establish the composition
+
+- Tool: built-in image generation; exact prompt in session 4 above.
+- References: approved workflow image, then original contract diagram.
+- Started: 2026-09-14 03:48:43 UTC.
+- Returned: 2026-09-14 03:49:26 UTC.
+- Artifact: [01-authority.png](01-authority.png).
+- Commit and SHA-256: recorded in the artifact register below.
+
+![First authority composition](01-authority.png)
+
+**Assistant review:** the two boundaries and the small binding declaration help.
+The bank's key remains inside its application and private evidence is not placed
+on the inter-application connector. However, the large bank building competes
+with the key, and the unlabeled progress row repeats the Core heading icon.
+The dotted key-to-choice relation also leaves “required authority” too implicit.
+
+**Decision:** keep this candidate as evidence. Refine the hierarchy: remove the
+two redundant decorations and place the key above the choice with a clearly
+labeled requirement connection. This is not a user approval.
+
+### Round 2 — make the requirement visible
+
+Edit target: `01-authority.png`. Exact prompt:
+
+```text
+Edit this image to strengthen the hierarchy of the SAME authority explanation. Preserve its palette, typography, headline, all main panel boundaries, the Assigned step and Approve financing documents, Step interface, Binding DAR note, private evidence, source credit, and the horizontal workflow arrow.
+
+Two supporting decorations currently compete with the central message. Remove the large bank building from inside the Financing application panel; keep the small bank icon beside that panel heading. Remove the unlabeled three-stop progress row inside Harmonia Core; keep its small workflow icon beside the heading.
+
+Use the space vacated by the large bank building for the blue key. Place that key directly ABOVE the Approve financing document, comfortably INSIDE the Financing application panel. Put its exact label "Bank authority" just above or beside it. Connect the key DOWNWARD to the top of the Approve financing document with one fine navy arrow labeled "required". The connector is a requirement relationship, not an observed authorization event. Leave generous clearance around the word "required" and the key label.
+Remove the old key and its old horizontal dotted connector at the right of the choice. Do not leave a duplicate key.
+The existing blue workflow arrow must still arrive from the LEFT of the Approve financing document through the Step interface. It must not point at the key. Visually separate workflow assignment from authority that belongs inside the application.
+
+No other new words. No success ticks, lock-opening animation, completed states, transaction results, new cards, controls or additional arrows. Keep private evidence entirely inside the application's boundary. Make the bank's authority the dominant detail on the application side; private evidence and the binding note remain supporting details. Everything must remain readable and uncropped.
+```
+
+Generation and review pending.
+
 
 ## Miguel's review
 
@@ -145,4 +183,3 @@ Earlier feedback guiding this attempt, quoted from the conversation:
 When Miguel reviews it, append his actual words, the candidate filename and
 commit he saw, when the review was recorded, and the resulting decisions.
 Assistant critiques and user decisions stay explicitly attributed.
-
