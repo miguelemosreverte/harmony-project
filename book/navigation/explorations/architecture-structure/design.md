@@ -172,7 +172,9 @@ Reference paths, in input order:
 
 The source evidence and exact prompt were committed before generation at
 [d2a24e7](https://github.com/miguelemosreverte/harmony-project/commit/d2a24e7).
-The first artifact commit will be recorded after committing this candidate.
+The image, browser presentation and assistant inspection were first committed at
+[eca791d](https://github.com/miguelemosreverte/harmony-project/commit/eca791d4e93df0d19873d8ceaab5df40892c80f5),
+2026-09-14 05:49:36 UTC, and pushed to `design/architecture-clarity-v2`.
 
 ---
 
