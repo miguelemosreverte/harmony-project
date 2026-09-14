@@ -29,9 +29,11 @@ Current example: [Complete architecture](architecture-whole/design.md).
 Scope correction: [Application authority](application-authority/design.md).
 Earlier exploration: [Architecture overview and execution](architecture-v2/README.md).
 
-Latest review: [Architecture version 7](architecture-structure/v7.html), the
-three-part contract map proposed in the conversation, with [formatted prose](architecture-structure/read-v7.md)
-and a [design record](architecture-structure/design-v7.md).
+Current approach: [Architecture in prose](architecture-structure/architecture.md),
+a short chapter establishing meaning before choosing diagrams. The
+[review note](architecture-structure/text-review.md) records this change of approach.
+Previous diagram: [Architecture version 7](architecture-structure/v7.html), with
+[formatted prose](architecture-structure/read-v7.md) and a [design record](architecture-structure/design-v7.md).
 [Version 6](architecture-structure/v6.html) retains the broader diagram with UI,
 build tooling and continuation.
 The [version 5 design record](architecture-structure/design-v5.md) contains the
