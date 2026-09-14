@@ -1,0 +1,54 @@
+Harmonia architecture
+Components & boundaries
+Dapp
+Inspect · compose · submit
+Builder
+Build time only
+DAR sources: upload · Package Manager · Validator
+Ledger API
+Transactions / state
+Generates binding + code
+On-ledger · Daml
+Canton Validator / Super Validator
+Harmonia Core
+Workflow state · step rules
+Bounded atomic blocks
+Require compatible flow + authority
+declares participation
+Binding DAR
+implements interfaces
+bound by generated code
+Application DARs
+Own authority · ownership · visibility
+Direct
+New application DAR
+Generated
+Existing DAR · unchanged
+harmonia-references · reference packages
+Original architecture §1
+Contract relationships
+Core workflow model
+Definition
+Flow rules
+creates
+Instance
+State · outputs
+Role → Party
+assigns
+Assigned step
+Actor · target
+exercises via
+Step interface
+Application
+Application choice
+App authority required
+Own signatories · observers
+Continuation
+Next definition
+qualifies
+selects choice
+Applicability
+Step kind · choice · role
+Binding DAR
+Original architecture §2 · illustrative contract model
+Still open: package imports · binding mechanism · interface placement

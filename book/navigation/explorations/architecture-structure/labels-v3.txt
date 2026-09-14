@@ -1,0 +1,22 @@
+Canton · Daml
+Dapp
+Core
+State · rules
+Application DARs
+Direct
+or
+Generated
+Builder
+Build time
+Binding DAR
+Contracts
+Core
+Definition
+Instance
+Roles · parties
+Assigned step
+Application
+Choice
+Own authority
+Continuation
+Next definition

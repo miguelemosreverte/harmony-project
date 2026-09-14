@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Harmonia — architecture, version 3</title>
+  <link rel="stylesheet" href="review.css?v={{css_hash}}">
+</head>
+<body>
+  <header><strong>Harmonia · Architecture</strong><span>Version 3</span></header>
+  <main class="review">
+    <article id="reading" tabindex="0" aria-label="What the diagram communicates">
+{{markdown}}
+    </article>
+    <section class="illustration" aria-label="Architecture diagram">
+      <div id="viewport" tabindex="0" aria-label="Pan and zoom the complete architecture diagram" aria-describedby="navigation-help">
+        <figure id="paper">
+          <img src="03-structure.png?v={{image_hash}}" width="1536" height="1024" draggable="false"
+            alt="Dapp connects to Core and applications inside Canton. Builder generates a Binding DAR below that main relationship. Direct and generated integration are alternatives. Below, Core contains definition, instance, assignment and continuation contracts; the application contains its choice and own authority.">
+          <figcaption class="sr-only">The adjacent Markdown explains this architectural overview and its source qualifications. Blue socket glyphs represent the interface relationship. Connectors have no text labels.</figcaption>
+        </figure>
+      </div>
+      <div class="canvas-help"><span id="navigation-help"><span class="desktop-hint">Drag to pan · pinch to zoom · Home to fit</span><span class="touch-hint">Drag to pan · pinch to zoom</span></span><span id="zoom" aria-label="Zoom level"></span></div>
+    </section>
+  </main>
+  <script src="../../sheet.js?v={{script_hash}}"></script>
+  <script src="review.js?v={{review_hash}}"></script>
+</body>
+</html>

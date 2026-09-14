@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Harmonia — architecture, version 3</title>
+  <link rel="stylesheet" href="review.css?v=8950e45d7faa">
+</head>
+<body>
+  <header><strong>Harmonia · Architecture</strong><span>Version 3</span></header>
+  <main class="review">
+    <article id="reading" tabindex="0" aria-label="What the diagram communicates">
+<h1>State and authority</h1>
+<p>The <strong>Dapp</strong> submits work to <strong>Core</strong>. Core holds workflow state on Canton; applications retain their contracts and authority.</p>
+<p>At build time, <strong>Builder</strong> generates a <strong>Binding DAR</strong> for an existing application. The DAR declares eligible participation. Applications can also participate directly.</p>
+<h2>Read the contracts</h2>
+<p>Definitions create instances with party bindings and assigned steps. Daml interfaces connect choice-exercise steps to application choices. Outputs can continue to another definition.</p>
+<p>Atomic blocks require compatible workflow structure and authority.</p>
+<h2>Why draw it?</h2>
+<p>The enclosure shows <strong>where execution lives</strong>. Grouping shows <strong>who owns what</strong>. Alignment reveals their relationships together.</p>
+<blockquote>
+<p>“composition state stays on-ledger”</p>
+<p>“authority : required from app”</p>
+</blockquote>
+<p><em>Original architecture, §1–2.</em> Imports, interface placement and the binding mechanism remain open.</p>
+
+    </article>
+    <section class="illustration" aria-label="Architecture diagram">
+      <div id="viewport" tabindex="0" aria-label="Pan and zoom the complete architecture diagram" aria-describedby="navigation-help">
+        <figure id="paper">
+          <img src="03-structure.png?v=e62ce064a598" width="1536" height="1024" draggable="false"
+            alt="Dapp connects to Core and applications inside Canton. Builder generates a Binding DAR below that main relationship. Direct and generated integration are alternatives. Below, Core contains definition, instance, assignment and continuation contracts; the application contains its choice and own authority.">
+          <figcaption class="sr-only">The adjacent Markdown explains this architectural overview and its source qualifications. Blue socket glyphs represent the interface relationship. Connectors have no text labels.</figcaption>
+        </figure>
+      </div>
+      <div class="canvas-help"><span id="navigation-help"><span class="desktop-hint">Drag to pan · pinch to zoom · Home to fit</span><span class="touch-hint">Drag to pan · pinch to zoom</span></span><span id="zoom" aria-label="Zoom level"></span></div>
+    </section>
+  </main>
+  <script src="../../sheet.js?v=f68aa956f65c"></script>
+  <script src="review.js?v=d47a7b0231a9"></script>
+</body>
+</html>

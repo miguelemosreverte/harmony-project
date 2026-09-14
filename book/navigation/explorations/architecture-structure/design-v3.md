@@ -1,6 +1,6 @@
 # Harmonia architecture — version 3
 
-Status: preparing an image and a side-by-side Markdown review.
+Status: version 3 inspected as a paired Markdown/image review; ready for Miguel.
 Recorded: 2026-09-14 UTC.
 Baseline: `b01d5ff`, branch `design/architecture-clarity-v2`.
 Previous image and review: [version 2](design-v2.md).
@@ -114,10 +114,94 @@ Input image: `01-structure.png` from this directory, style reference only.
 
 ## 5. Artifact, text reduction and inspection
 
-Pending generation and browser inspection. Record actual text seen in the image,
-not merely prompt instructions. The visible Markdown remains a separate text
-budget: removing words from the image does not mean removing their architectural
-meaning from the complete review.
+### Generation
+
+- Tool: built-in image generation; one call using version 1 as a style reference.
+- Exact prompt: section 4, extracted verbatim from the fenced block.
+- Started: 2026-09-14 06:09:59 UTC.
+- Returned: 2026-09-14 06:10:45 UTC.
+- Image: [03-structure.png](03-structure.png), 1536 × 1024, 1,339,809 bytes.
+- SHA-256: `e62ce064a598372ff31133663bb3272d113186815af4f04d5356d0daee49dea7`.
+- Original output: `~/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-64a28250-2dd5-4492-84a5-097ea970a3dc.png`.
+- Review page: [v3.html](v3.html).
+
+The design and exact prompt were committed before generation at
+[f652746](https://github.com/miguelemosreverte/harmony-project/commit/f652746).
+
+### What was removed
+
+| Measure | Version 2 | Version 3 |
+| --- | ---: | ---: |
+| Visible words in the image | 131 | 31 |
+| Nonempty lines in the label transcription | 54 | 22 |
+| Text annotations on connectors | 11 | 0 |
+
+This is 100 fewer image words, about 76% less. The counts use manual transcriptions
+of the actual rendered images: [labels-v2.txt](labels-v2.txt) and
+[labels-v3.txt](labels-v3.txt). A word is a whitespace-separated token containing
+at least one letter; punctuation-only tokens and section numbers are excluded.
+The transcription lines count text entries, not the image's physical line wrapping.
+
+The adjacent Markdown is **115 words**, including headings and source quotations,
+counted using the same rule. This is an image-text reduction, not a claim that the
+entire new page has fewer words. The user expressly requested the prose alongside
+the picture so the architectural meaning can be reviewed directly.
+
+### Assistant inspection
+
+The Dapp, Core and application area form a horizontal main relationship. Dapp
+and Builder are outside Canton; Core, applications and the binding declaration
+are inside. Direct and generated participation appear as alternatives without a
+connector between them. The main path bypasses the declaration; Builder produces
+it on the lower build-time path. The socket is the interface relationship.
+
+The contract row keeps definition, instance, assignment and continuation in
+Core, with choice and authority in the application boundary. The continuation
+branch remains visible. There are no connector labels, tiny source credits or
+use-case narratives in the image. The role/party label stays inside Instance.
+
+I prefer this presentation for the requested reading: the enclosure and placement
+carry more of the meaning, and the main relationship can be followed continuously.
+The adjacent prose explains the precise interpretation instead of adding more
+words to the lines. Whether the pairing is sufficiently intuitive remains the
+subject of Miguel's review. This overview still omits the full contract schema
+and cannot resolve the source's open packaging choices.
+
+### Rendered Markdown and browser behavior
+
+`read-v3.md` is rendered by the existing installed `markdown-it-py` package into
+`v3.template.html`. The generated `v3.html` preserves headings, emphasis, paragraphs
+and quotations. No hand-written duplicate prose is maintained in HTML.
+
+Rebuild from the repository root:
+
+```sh
+.artifacts/book-tools/bin/python book/navigation/explorations/architecture-structure/render-v3.py
+```
+
+`review.css` supplies the paired layout. The existing `sheet.js` supplies image
+pan/zoom, preserving its mounted DOM and deterministic `x`, `y`, `z` camera values.
+`review.js` also preserves the prose scroll position through the `read` query
+parameter. The body has two interaction surfaces: the prose and the diagram.
+There are no added buttons, selectors or body links.
+
+Inspected final screenshots at 1600 × 1050 and 1440 × 900: Markdown is on the left,
+the complete diagram is on the right, and neither requires scrolling at those
+sizes. Prose remains 16 CSS pixels. At 390 × 844, the two areas stack; prose can
+scroll within its area and the image supports pinch/zoom. The mobile fit view is
+an overview, not a claim that every raster label is readable at that scale.
+
+Browser checks passed for formatted Markdown, full-image fit, both interaction
+surfaces, no document overflow, persistent image DOM, shared camera and prose
+position, touch pinch, Home-to-fit and a single uncropped printed page. No browser
+exceptions or failed resources were recorded. Existing Chrome and Python were
+reused; no JVM or new browser process was started.
+
+Local evidence in `.artifacts/architecture-structure-v3-review/`:
+`desktop-complete.png`, `laptop-paired.png`, `mobile-complete.png`,
+`desktop-shared-camera.png`, `mobile-execution-detail.png`, `complete.pdf` and
+`checks.json`. These checks establish rendering behavior; the architectural and
+readability observations above are explicitly assistant judgments.
 
 ---
 
