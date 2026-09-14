@@ -1,20 +1,20 @@
 {
   "format": "harmonia-navigation/1",
-  "status": "Content proposal — navigation is not implemented",
+  "status": "Content proposal · four reading regions",
   "title": "Four readers. Four independent paths.",
   "intent": "Keep the approved UI. Organize the content around the question each reader brings.",
   "navigation": {
-    "entry": "Choose User, Investor, Architecture or Implementation once.",
-    "order": "Read each path from top to bottom. Workflow outcomes stay in that path's existing carousel.",
-    "ending": "Stop at the end of the chosen path. Returning to the entrance is an explicit action.",
+    "entry": "All four audience regions are visible on one sheet.",
+    "order": "Read the numbered content within a region. Pan and zoom to inspect it; no page turns or hidden sections.",
+    "ending": "Each region has its own conclusion. Moving the view never opens another page.",
     "cross_branch_links": [],
-    "proposed_address": "?branch={branch}&page={page}&step={step}"
+    "address": "The sheet URL preserves its center (x, y) and zoom (z)."
   },
   "shared": {
-    "appearance": "Keep the approved infographic, characters, illustrations, spacing and fixed carousel. The images in this overview are existing UI references, not new mockups.",
+    "appearance": "Keep the approved infographic, characters, illustrations and colors. Unfold existing UI references and source excerpts onto one sheet.",
     "evidence": "Cite original passages beside the relevant claim. Distinguish recorded outcomes, live actions and proposed capabilities; quotation coverage is not implementation coverage.",
     "reuse": "Reuse a diagram or recording when it answers the reader's question. Select the relevant moments; do not send the reader through the full regression laboratory.",
-    "scope": "These are proposed page purposes and content summaries, not final screen copy or a claim that every route already exists."
+    "scope": "All twelve proposed page summaries are visible. Existing screenshots are reference material; they do not imply that the proposed pages are already implemented."
   },
   "sources": {
     "proposal": "docs/proposal/harmonia.md",
@@ -35,35 +35,101 @@
     "core": "product/ledger/core/daml/Harmonia/Process/Engine.daml",
     "golden": "book/edition-0.2/recordings/evidence/financing-approved/expected.md"
   },
+  "images": {
+    "purchase-start": "design/0.2/moment-review/1280-03-financing-to-offer-purchase-approved-0.png",
+    "bank-approval": "design/0.2/moment-review/1280-03-financing-to-offer-purchase-approved-2.png",
+    "proposal": "design/0.2/moment-review/1280-03-financing-to-offer-purchase-approved-5.png",
+    "relay": "design/0.2/moment-review/1280-03-financing-to-offer-purchase-approved-7.png",
+    "received": "design/0.2/moment-review/1280-03-financing-to-offer-purchase-approved-8.png",
+    "declined": "design/0.2/moment-review/1280-03-financing-to-offer-purchase-rejected-3.png",
+    "private-bank": "design/0.2/moment-review/1280-private-approval-3.png",
+    "private-continuation": "design/0.2/moment-review/1280-private-approval-5.png",
+    "integration": "design/0.2/moment-review/readers-1280-05-bring-an-application.png",
+    "readiness": "design/0.2/moment-review/readers-1280-08-release-and-adoption.png",
+    "authority": "design/0.2/moment-review/readers-1280-reviewer.png",
+    "settlement": "design/0.2/moment-review/1280-transfer-approved-8.png",
+    "reconnection": "design/0.2/moment-review/1280-sequence-resumed-7.png",
+    "source-tree": "design/0.2/moment-review/readers-1280-code.png",
+    "golden-approval": "design/0.2/moment-review/1280-financing-approved-1.png"
+  },
   "branches": [
     {
       "id": "user",
       "title": "User",
       "question": "What does this let me do?",
       "perspective": "Alice wants to make a property proposal with her bank's approval.",
-      "visual_reference": "design/0.2/moment-review/1280-03-financing-to-offer-purchase-approved-0.png",
       "pages": [
         {
           "id": "purpose",
           "title": "Start with Alice's goal",
           "show": "The existing bank-to-property infographic: Alice, Northbank, Ben and Sofia, each with a clear role.",
           "message": "A bank decision can enable a property proposal without sharing the bank's private papers.",
-          "sources": ["purchase", "proposal"]
+          "sources": [
+            "purchase",
+            "proposal"
+          ],
+          "frames": [
+            {
+              "image": "purchase-start",
+              "label": "Alice's starting point"
+            }
+          ]
         },
         {
           "id": "handoff",
           "title": "Follow the proposal",
           "show": "Northbank approves → Alice proposes → Ben relays → Sofia receives. Each stop shows its consequence below the stable infographic.",
           "message": "See who acts now, what changed and what happens next.",
-          "moments": {"source": "purchase", "steps": ["bank-assessment", "make-proposal", "buyer-agent-relays", "seller-agent-receives"]},
-          "sources": ["purchase"]
+          "moments": {
+            "source": "purchase",
+            "steps": [
+              "bank-assessment",
+              "make-proposal",
+              "buyer-agent-relays",
+              "seller-agent-receives"
+            ]
+          },
+          "sources": [
+            "purchase"
+          ],
+          "frames": [
+            {
+              "image": "bank-approval",
+              "label": "Northbank approves"
+            },
+            {
+              "image": "proposal",
+              "label": "Alice proposes"
+            },
+            {
+              "image": "relay",
+              "label": "Ben relays"
+            },
+            {
+              "image": "received",
+              "label": "Sofia receives"
+            }
+          ]
         },
         {
           "id": "outcome",
           "title": "Understand the ending",
           "show": "The same purchase has two explicit endings in its carousel: proposal received, or financing declined and the proposal blocked.",
           "message": "An approval enables the next action; a refusal cannot be treated as an approval.",
-          "sources": ["purchase", "purchase-declined"]
+          "sources": [
+            "purchase",
+            "purchase-declined"
+          ],
+          "frames": [
+            {
+              "image": "received",
+              "label": "Proposal received"
+            },
+            {
+              "image": "declined",
+              "label": "Financing declined"
+            }
+          ]
         }
       ],
       "finish": "I understand the journey and can recognize its outcome."
@@ -73,28 +139,60 @@
       "title": "Investor",
       "question": "Why does this work, and what is proven?",
       "perspective": "A technical evaluator wants the mechanism behind the product promise.",
-      "visual_reference": "design/0.2/moment-review/1280-private-approval-0.png",
       "pages": [
         {
           "id": "authority",
           "title": "Understand Daml and Canton",
           "show": "Northbank's authorized Daml choice, separate participant views, and the scoped result that permits Alice to continue.",
           "message": "Daml choices enforce who may act; the multi-participant example shows private details staying separate from shared progress.",
-          "sources": ["private-approval", "ledger-choice", "proposal"]
+          "sources": [
+            "private-approval",
+            "ledger-choice",
+            "proposal"
+          ],
+          "frames": [
+            {
+              "image": "private-bank",
+              "label": "Bank acts privately"
+            },
+            {
+              "image": "private-continuation",
+              "label": "Buyer continues from the result"
+            }
+          ]
         },
         {
           "id": "integration",
           "title": "Connect independent applications",
           "show": "Two supported paths into the same workflow core: implement its interface, or compile an adapter for an eligible existing DAR.",
           "message": "The repository demonstrates reusable integration for bounded examples. The source application keeps its authority.",
-          "sources": ["adapter", "packages", "claims"]
+          "sources": [
+            "adapter",
+            "packages",
+            "claims"
+          ],
+          "frames": [
+            {
+              "image": "integration",
+              "label": "Existing adapter walkthrough"
+            }
+          ]
         },
         {
           "id": "proof",
           "title": "Separate proof from ambition",
           "show": "Local workflow evidence beside the remaining product questions: broader integration, independent adoption and release readiness.",
           "message": "Working local examples are evidence; external adoption and unresolved guarantees still need their own proof.",
-          "sources": ["claims", "proposal"]
+          "sources": [
+            "claims",
+            "proposal"
+          ],
+          "frames": [
+            {
+              "image": "readiness",
+              "label": "Current readiness explanation"
+            }
+          ]
         }
       ],
       "finish": "I can explain the mechanism, the demonstrated scope and the remaining risks."
@@ -104,28 +202,67 @@
       "title": "Architecture",
       "question": "How is the system designed?",
       "perspective": "A reviewer wants to test whether the design satisfies the original intent.",
-      "visual_reference": "design/0.2/moment-review/readers-1280-reviewer.png",
       "pages": [
         {
           "id": "boundaries",
           "title": "Locate each responsibility",
           "show": "A diagram of browser, off-ledger Scala service, bindings, on-ledger Daml core and application contracts; show ownership and participant boundaries.",
           "message": "Separate orchestration from authorization, and shared progress from private application state.",
-          "sources": ["architecture-original", "proposal", "feature", "core", "ledger-choice"]
+          "sources": [
+            "architecture-original",
+            "proposal",
+            "feature",
+            "core",
+            "ledger-choice"
+          ],
+          "frames": [
+            {
+              "image": "authority",
+              "label": "Existing authority diagram"
+            }
+          ]
         },
         {
           "id": "execution",
           "title": "Trace one command",
           "show": "Request → typed service → ledger choice → observed state. A refused action stays visibly refused along that same route.",
           "message": "A submitted request is not a committed result; the UI follows the state that was actually observed.",
-          "sources": ["screen", "feature", "ledger-choice", "observation", "private-approval"]
+          "sources": [
+            "screen",
+            "feature",
+            "ledger-choice",
+            "observation",
+            "private-approval"
+          ],
+          "frames": [
+            {
+              "image": "private-bank",
+              "label": "A committed bank action"
+            }
+          ]
         },
         {
           "id": "invariants",
           "title": "Challenge the guarantees",
           "show": "Three focused diagram stops: a refused authority bypass, an eligible atomic settlement, and progress recovered after reconnection. Pair each with its original claim and evidence.",
           "message": "State exactly what each example proves. A staged workflow is not one atomic transaction, and a quoted requirement is not a passing test.",
-          "sources": ["private-approval", "transfer", "resume", "claims", "proposal"]
+          "sources": [
+            "private-approval",
+            "transfer",
+            "resume",
+            "claims",
+            "proposal"
+          ],
+          "frames": [
+            {
+              "image": "settlement",
+              "label": "Settlement reference"
+            },
+            {
+              "image": "reconnection",
+              "label": "Recovery reference"
+            }
+          ]
         }
       ],
       "finish": "I can identify boundaries, trace execution and challenge a claim with evidence."
@@ -135,28 +272,78 @@
       "title": "Implementation",
       "question": "Where do I read and verify the code?",
       "perspective": "A senior developer wants one understandable route through a real feature.",
-      "visual_reference": "design/0.2/moment-review/readers-1280-code.png",
       "pages": [
         {
           "id": "map",
           "title": "Find the feature",
           "show": "The existing file tree and colored source view, with a concise explanation of the financing slice and its place in the repository.",
           "message": "Product runtime, ledger contracts and book tooling have distinct homes; begin with one feature rather than the entire repository.",
-          "sources": ["feature", "screen", "core"]
+          "sources": [
+            "feature",
+            "screen",
+            "core"
+          ],
+          "frames": [
+            {
+              "image": "source-tree",
+              "label": "Existing source explorer"
+            }
+          ]
         },
         {
           "id": "types",
           "title": "Read the typed path",
           "show": "The financing screen, shared API, Scala service, Daml choice and observation code, with purpose annotations beside the real source.",
           "message": "Follow the actual types and functions that carry one action from the browser to an observed result.",
-          "sources": ["screen", "api", "feature", "ledger-choice", "observation"]
+          "sources": [
+            "screen",
+            "api",
+            "feature",
+            "ledger-choice",
+            "observation"
+          ],
+          "frames": [],
+          "excerpts": [
+            {
+              "source": "feature",
+              "lines": [
+                5,
+                19
+              ]
+            },
+            {
+              "source": "ledger-choice",
+              "lines": [
+                22,
+                26
+              ]
+            }
+          ]
         },
         {
           "id": "golden",
           "title": "Verify the golden story",
           "show": "Input → execution → actual result beside the committed expectation; connect the result to the same recorded infographic.",
           "message": "A golden expectation is the regression baseline. A mismatch fails; an illustration alone does not establish correctness.",
-          "sources": ["golden", "feature"]
+          "sources": [
+            "golden",
+            "feature"
+          ],
+          "frames": [
+            {
+              "image": "golden-approval",
+              "label": "Recorded bank approval"
+            }
+          ],
+          "excerpts": [
+            {
+              "source": "golden",
+              "lines": [
+                9,
+                22
+              ]
+            }
+          ]
         }
       ],
       "finish": "I know where to read, what owns each behavior and how it is verified."

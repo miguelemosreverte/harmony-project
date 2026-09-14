@@ -1,0 +1,67 @@
+/* A movable document surface; approved product styles and images stay intact. */
+body { padding: 0; }
+.reference-header { height: 60px; padding: 10px 24px; border-radius: 0; }
+.quiet-location { font-size: 12px; }
+.paper { width: 3600px; padding: 64px; background: var(--surface); }
+.paper-heading { padding: 0 16px 48px; }
+.paper-heading h1 { margin: 0 0 16px; font-size: 76px; letter-spacing: -.04em; }
+.paper-heading p { margin: 0 0 12px; font-size: 30px; color: var(--muted); }
+.paper-heading .sheet-note { font-size: 23px; }
+.regions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px; }
+.region { min-width: 0; padding: 36px; border: 2px solid var(--line); border-radius: 22px; }
+.region-heading { min-height: 218px; }
+.region-heading h2 { margin: 0 0 12px; font-size: 68px; line-height: 1.1; color: var(--accent); }
+.question { margin: 0 0 8px; font-size: 34px; font-weight: 600; }
+.perspective { margin: 0; font-size: 23px; color: var(--muted); }
+.pages { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; align-items: start; }
+.page { min-width: 0; }
+.page-heading { min-height: 82px; display: flex; align-items: start; gap: 12px; }
+.number { color: var(--accent); font-weight: 650; font-size: 28px; line-height: 1.3; }
+h3 { margin: 0; font-size: 28px; line-height: 1.3; }
+.message { min-height: 166px; margin: 0 0 22px; font-size: 22px; line-height: 1.55; color: var(--ink); }
+.frames { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; align-items: start; }
+.frames[data-count="0"] { display: none; }
+.frames[data-count="1"] { grid-template-columns: 1fr; }
+figure { margin: 0; min-width: 0; }
+figure img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: 10px; -webkit-user-drag: none; }
+figcaption { margin: 8px 0 18px; font-size: 17px; line-height: 1.4; color: var(--muted); }
+.show { margin: 22px 0 12px; font-size: 21px; line-height: 1.55; }
+.sources { margin: 18px 0 0; font-size: 16px; line-height: 1.5; color: var(--muted); }
+.excerpt { margin: 0 0 18px; }
+.excerpt figcaption { margin-bottom: 8px; }
+.excerpt pre { margin: 0; padding: 16px 12px; font-size: 14px; line-height: 1.65; border: 1px solid var(--line); white-space: pre-wrap; overflow-wrap: anywhere; }
+.excerpt code { display: block; white-space: pre-wrap; overflow-wrap: anywhere; }
+.excerpt-line { display: block; min-height: 1.65em; padding-left: 32px; position: relative; white-space: pre-wrap; overflow-wrap: anywhere; }
+.excerpt-number { color: var(--muted); position: absolute; left: 0; font-size: 11px; }
+.finish { margin: 30px 0 0; padding-top: 20px; border-top: 1px solid var(--line); font-size: 23px; }
+.finish strong { color: var(--accent); }
+.paper-notes { margin: 50px 16px 0; font-size: 24px; color: var(--muted); }
+.paper-notes p { margin: 0 0 12px; }
+.paper-notes dl { margin: 30px 0 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px 38px; }
+.paper-notes dt { font-size: 18px; font-weight: 650; color: var(--ink); }
+.paper-notes dd { margin: 4px 0 0; font-size: 16px; overflow-wrap: anywhere; line-height: 1.4; }
+.viewer-footer { display: none; }
+
+/* Without JavaScript the complete document remains natively scrollable. */
+html[data-sheet="interactive"] { overflow: hidden; scrollbar-gutter: auto; }
+html[data-sheet="interactive"] body { height: 100dvh; display: grid; grid-template-rows: 60px minmax(0, 1fr) 36px; overflow: hidden; }
+html[data-sheet="interactive"] #viewport { position: relative; min-height: 0; overflow: hidden; touch-action: none; cursor: grab; user-select: none; outline-offset: -4px; overscroll-behavior: none; }
+html[data-sheet="interactive"] #viewport[data-dragging="true"] { cursor: grabbing; }
+html[data-sheet="interactive"] .paper { position: absolute; left: 0; top: 0; transform-origin: 0 0; box-shadow: 0 8px 70px #182d4120; }
+html[data-sheet="interactive"] .viewer-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 24px; background: var(--surface); border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+#zoom { font-variant-numeric: tabular-nums; min-width: 40px; text-align: right; }
+@media (max-width: 600px) {
+  .reference-header { padding: 10px 14px; }
+  .reference-brand { font-size: 24px; }
+  .quiet-location { max-width: 170px; text-align: right; font-size: 10px; }
+  html[data-sheet="interactive"] .viewer-footer { padding: 0 12px; font-size: 9px; }
+}
+@media print {
+  @page { margin: 0; }
+  html, html[data-sheet="interactive"] { overflow: visible; }
+  html[data-sheet="interactive"] body { display: block; height: auto; overflow: visible; }
+  .reference-header, .viewer-footer { display: none !important; }
+  html[data-sheet="interactive"] #viewport { overflow: visible; position: static; }
+  html[data-sheet="interactive"] .paper { transform: none !important; position: static; box-shadow: none; }
+  .region { break-inside: avoid; }
+}
