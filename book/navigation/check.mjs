@@ -66,6 +66,15 @@ try {
   await navigate(address);
   const initial = await inspect();
   assert.equal(initial.controls, 0); assert.equal(initial.regions, 4); assert.equal(initial.pages, 12);
+  const audiences = await evaluate(`({
+    investorDemos:document.querySelectorAll('[data-branch=investor] .demo').length,
+    architectureDiagrams:document.querySelectorAll('[data-branch=architecture] svg').length,
+    technicalScreenshots:document.querySelectorAll('.region:not([data-branch=user]) img').length,
+    productionFiles:[...document.querySelectorAll('[data-production-source]')].map(n=>n.dataset.productionSource)
+  })`);
+  assert.equal(audiences.investorDemos,3); assert.equal(audiences.architectureDiagrams,6);
+  assert.equal(audiences.technicalScreenshots,0); assert.equal(audiences.productionFiles.length,6);
+  assert(audiences.productionFiles.every(file=>file.startsWith('product/') && !file.includes('/src/test/')));
   assert.equal(initial.scrollHeight, 1000); assert.equal(initial.scrollWidth, 1440);
   assert(initial.paper.x >= initial.viewport.x && initial.paper.y >= initial.viewport.y);
   assert(initial.paper.x + initial.paper.width <= initial.viewport.x + initial.viewport.width + 1);
@@ -76,6 +85,12 @@ try {
     return [...range.getClientRects()].filter(r => r.right > bounds.right + 1 || r.left < bounds.left - 1).map(() => element.textContent);
   })`);
   assert.deepEqual(textOverflow, [], 'Text must remain inside its page');
+  const diagramOverflow = await evaluate(`[...document.querySelectorAll('.diagram-node')].flatMap(node => {
+    const box=node.querySelector('rect').getBoundingClientRect();
+    return [...node.querySelectorAll('text')].filter(text=>{const r=text.getBoundingClientRect();return r.left<box.left-1||r.right>box.right+1||r.top<box.top||r.bottom>box.bottom+1}).map(text=>text.textContent);
+  })`);
+  assert.deepEqual(diagramOverflow, [], 'Diagram labels must fit their nodes');
+  checks.push({check:'Canton demos, six architecture diagrams and production-only files',...audiences});
   checks.push({check: 'All regions fit on entry', ...initial});
   await screenshot('whole-sheet');
   await evaluate('window.originalPaper = document.querySelector("#paper")');
@@ -84,7 +99,7 @@ try {
   const pointer = {x: 650, y: 450};
   const anchor = worldAt(initial, pointer.x, pointer.y);
   await call('Input.dispatchMouseEvent', {type: 'mouseWheel', ...pointer, deltaX: 0, deltaY: -160, modifiers: 2});
-  await until('Number(document.querySelector("#zoom").value.replace("%", "")) > 40');
+  await until(`new DOMMatrix(getComputedStyle(document.querySelector('#paper')).transform).a > ${initial.z*1.2}`);
   const zoomed = await inspect(), nextAnchor = worldAt(zoomed, pointer.x, pointer.y);
   assert(zoomed.z > initial.z); close(anchor.x, nextAnchor.x); close(anchor.y, nextAnchor.y);
   await call('Input.dispatchMouseEvent', {type: 'mousePressed', x: 700, y: 500, button: 'left', clickCount: 1});
@@ -116,7 +131,7 @@ try {
   close((await inspect()).z, initial.z);
   checks.push({check: 'URL reload and browser history restore the camera'});
 
-  await key('+'); await key('+'); await key('+');
+  for(let i=0;i<10 && (await inspect()).paper.width <= initial.width+200;i++) await key('+');
   const enlarged = await inspect(); assert(enlarged.z > initial.z);
   await key('ArrowRight'); assert((await inspect()).x > enlarged.x);
   await key('Home'); close((await inspect()).z, initial.z);
@@ -132,6 +147,16 @@ try {
     const url = new URL(address);
     for (const [key, value] of Object.entries({x: region.x, y: region.y, z: Math.min(1360 / region.width, 850 / region.height)})) url.searchParams.set(key, value);
     await navigate(url.href); await screenshot(region.id);
+  }
+  for (const [name, selector] of [['investor-detail','[data-figure="participants-demo"]'], ['architecture-detail','[data-figure="deployment"]']]) {
+    const focus = await evaluate(`(() => {
+      const p=document.querySelector('#paper').getBoundingClientRect(), r=document.querySelector(${JSON.stringify(selector)}).getBoundingClientRect();
+      const z=new DOMMatrix(getComputedStyle(document.querySelector('#paper')).transform).a;
+      return {x:(r.x-p.x+r.width/2)/z,y:(r.y-p.y+r.height/2)/z,z:Math.min(2,850/(r.height/z))};
+    })()`);
+    const url=new URL(address);
+    for(const [key,value] of Object.entries(focus)) url.searchParams.set(key,value);
+    await navigate(url.href); await screenshot(name);
   }
 
   // A real CDP two-finger gesture exercises the pointer/pinch handlers.
@@ -160,7 +185,7 @@ try {
   checks.push({check: 'Print includes all pages without a camera transform'});
   assert.deepEqual(errors, []);
   await fs.writeFile(path.join(output, 'checks.json'), JSON.stringify({checks, errors}, null, 2) + '\n');
-  console.log(JSON.stringify({checks: checks.length, screenshots: 7, errors: errors.length, output}));
+  console.log(JSON.stringify({checks: checks.length, screenshots: 9, errors: errors.length, output}));
 } finally {
   socket.close(); await fetch(new URL('/json/close/' + target.id, endpoint));
 }

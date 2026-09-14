@@ -27,6 +27,41 @@ figure img { display: block; width: 100%; height: auto; border: 1px solid var(--
 figcaption { margin: 8px 0 18px; font-size: 17px; line-height: 1.4; color: var(--muted); }
 .show { margin: 22px 0 12px; font-size: 21px; line-height: 1.55; }
 .sources { margin: 18px 0 0; font-size: 16px; line-height: 1.5; color: var(--muted); }
+.engineering-figure { margin: 0 0 28px; }
+.engineering-figure > figcaption { color: var(--ink); font-weight: 650; font-size: 23px; margin: 0 0 14px; }
+.engineering-figure svg { display: block; width: 100%; height: auto; font-family: Arial, Helvetica, sans-serif; }
+.diagram-zone rect { fill: #f4f9fd; stroke: #dce8f1; stroke-width: 1.5; }
+.diagram-zone text { fill: #536579; font-size: 17px; }
+.diagram-node rect, .diagram-lane rect { fill: #fff; stroke: #d3e2ef; stroke-width: 1.8; }
+.diagram-node[data-tone="accent"] rect { fill: #e8f5ff; stroke: #87bfff; }
+.diagram-node[data-tone="refused"] rect { fill: #fff7ed; stroke: #dfbf92; }
+.diagram-node text, .diagram-lane text { fill: #091c40; text-anchor: middle; }
+.diagram-node-title { font-size: 20px; font-weight: 600; }
+.diagram-detail { font-size: 15px; }
+.diagram-edge line, .diagram-edge polyline { fill: none; stroke: #0079ff; stroke-width: 2; stroke-linejoin: round; }
+.diagram-edge text { font-size: 15px; fill: #536579; text-anchor: middle; paint-order: stroke; stroke: white; stroke-width: 6px; stroke-linejoin: round; }
+.diagram-lane text { font-size: 21px; font-weight: 600; }
+.diagram-lane line { stroke: #d3e2ef; stroke-width: 1.5; stroke-dasharray: 5 5; }
+.diagram-caption { color: var(--muted); font-size: 17px; line-height: 1.5; margin: 12px 0 0; }
+.demo-environment { padding: 14px 16px; background: var(--pale); border-radius: 12px; font-size: 18px; line-height: 1.5; }
+.demo-environment strong { display: block; margin-bottom: 6px; color: var(--accent); }
+.demo-model, .demo-explain { font-size: 21px; line-height: 1.5; }
+.demo-beats { list-style: none; padding: 0; margin: 20px 0; }
+.demo-beats li { padding: 16px 0; border-top: 1px solid var(--line); }
+.demo-beats h4 { font-size: 21px; margin: 0 0 12px; line-height: 1.5; }
+.demo-outcome { display: inline-block; font-size: 16px; color: #0070db; font-weight: 500; }
+.demo-outcome[data-outcome="rejected"] { color: #9a6227; }
+.demo-beats dl { display: flex; gap: 28px; margin: 0; }
+.demo-beats dt { font-size: 16px; color: var(--muted); }
+.demo-beats dd { font-size: 25px; margin: 5px 0 0; color: var(--ink); font-weight: 600; }
+.visibility { font-size: 16px; margin: 18px 0; }
+.visibility caption { text-align: left; font-size: 18px; margin-bottom: 10px; color: var(--muted); }
+.visibility th, .visibility td { padding: 12px 7px; }
+.production-files section { padding: 18px 0; border-top: 1px solid var(--line); }
+.production-files h4 { font-size: 23px; color: var(--accent); margin: 0 0 6px; }
+.production-files p { font-size: 20px; line-height: 1.5; margin: 0 0 8px; }
+.production-files .production-path { font-size: 15px; color: var(--muted); overflow-wrap: anywhere; }
+.region:not([data-branch="user"]) .message { min-height: 0; margin-bottom: 28px; }
 .excerpt { margin: 0 0 18px; }
 .excerpt figcaption { margin-bottom: 8px; }
 .excerpt pre { margin: 0; padding: 16px 12px; font-size: 14px; line-height: 1.65; border: 1px solid var(--line); white-space: pre-wrap; overflow-wrap: anywhere; }

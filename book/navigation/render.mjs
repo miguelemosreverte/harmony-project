@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {figureView} from './figures.mjs';
 
 const folder = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(folder, '../..');
@@ -28,8 +29,40 @@ async function excerptView(excerpt) {
     <pre><code>${selected.map((line, i) => `<span class="excerpt-line"><span class="excerpt-number" aria-hidden="true">${start + i}</span>${escape(line)}</span>`).join('')}</code></pre></figure>`;
 }
 
-async function pageView(page, index) {
+async function demoView(demo) {
+  const record = JSON.parse(await fs.readFile(path.join(root, plan.sources[demo.recording]), 'utf8'));
+  assert.equal(record.provenance.mode, 'live-canton');
+  assert.deepEqual(record.actual, record.expected, 'Demo must match the committed expectation');
+  const valueAt = (value, field) => {
+    const result = field.split('.').reduce((value, key) => value?.[key], value);
+    assert(result !== undefined, `Missing recorded value: ${field}`);
+    return Array.isArray(result) ? result.join(', ') : String(result);
+  };
+  const beats = demo.steps.map((step, index) => {
+    const actual = record.actual.actions.find(action => action.id === step.id);
+    assert(actual, `Missing demo action: ${step.id}`);
+    return `<li data-demo-step="${escape(step.id)}"><h4>${index+1}. ${escape(step.label)} <span class="demo-outcome" data-outcome="${escape(actual.outcome)}">${escape(actual.outcome)}</span></h4><dl>${demo.fields.map(field => `<div><dt>${escape(field.label)}</dt><dd>${escape(valueAt(actual,field.path))}</dd></div>`).join('')}</dl></li>`;
+  }).join('');
+  const visibility = demo.visibility ? `<table class="visibility"><caption>Recorded participant views after continuation</caption><thead><tr><th>Party</th><th>Private application</th><th>Shared progress</th></tr></thead><tbody>${Object.entries(record.actual.visibility).map(([actor,view]) => `<tr><th>${escape(actor)}</th><td>${view.application ? 'visible' : 'not visible'}</td><td>${view.progress ? 'visible' : 'not visible'}</td></tr>`).join('')}</tbody></table>` : '';
+  return `<section class="demo" data-recording="${escape(demo.recording)}"><p class="demo-environment"><strong>Recorded Canton environment</strong>${escape(record.provenance.topology)}</p><p class="demo-model">${escape(demo.model)}</p><ol class="demo-beats">${beats}</ol>${visibility}<p class="demo-explain">${escape(demo.explain)}</p></section>`;
+}
+
+function productionFiles(files) {
+  return `<div class="production-files">${files.map(file => {
+    const source = plan.sources[file.source];
+    return `<section data-production-source="${escape(source)}"><h4>${escape(path.basename(source))}</h4><p class="production-path">${escape(path.dirname(source))}/</p><p>${escape(file.purpose)}</p></section>`;
+  }).join('')}</div>`;
+}
+
+async function pageView(page, index, branch) {
   for (const ref of page.sources) assert(plan.sources[ref], `Unknown source: ${ref}`);
+  if (branch.production_only) {
+    assert.equal(page.frames.length, 0, 'Implementation must not show screenshots containing harness code');
+    for (const ref of [...page.sources, ...(page.excerpts || []).map(e => e.source), ...(page.files || []).map(f => f.source)]) {
+      const source = plan.sources[ref];
+      assert(source?.startsWith('product/') && !source.includes('/src/test/') && /\.(scala|daml)$/.test(source), `Non-production source in Implementation: ${source}`);
+    }
+  }
   if (page.moments) {
     const story = JSON.parse(await fs.readFile(path.join(root, plan.sources[page.moments.source]), 'utf8'));
     for (const id of page.moments.steps) assert(story.steps.some(step => step.id === id), `Missing recorded step: ${id}`);
@@ -40,12 +73,17 @@ async function pageView(page, index) {
     return `<figure data-image="${escape(frame.image)}"><img src="../../${escape(file)}" alt="${escape(frame.label)} — existing UI reference" width="1280" height="900" draggable="false"><figcaption>${escape(frame.label)}</figcaption></figure>`;
   }).join('');
   const excerpts = await Promise.all((page.excerpts || []).map(excerptView));
+  const diagrams = (page.diagrams || []).map(figureView).join('');
+  const demo = page.demo ? await demoView(page.demo) : '';
   return `<article class="page" data-page="${escape(page.id)}">
     <header class="page-heading"><span class="number">${index + 1}</span><h3>${escape(page.title)}</h3></header>
     <p class="message">${escape(page.message)}</p>
     <div class="frames" data-count="${page.frames.length}">${frames}</div>
+${diagrams}
+${demo}
+${page.files ? productionFiles(page.files) : ''}
 ${excerpts.join('')}
-    <p class="show">${escape(page.show)}</p>
+${page.demo ? '' : `    <p class="show">${escape(page.show)}</p>`}
     <p class="sources">Sources: ${page.sources.map(escape).join(' · ')}</p>
   </article>`;
 }
@@ -53,7 +91,7 @@ ${excerpts.join('')}
 const regions = await Promise.all(plan.branches.map(async branch => {
   assert.equal(new Set(branch.pages.map(page => page.id)).size, branch.pages.length);
   assert(branch.finish);
-  const pages = await Promise.all(branch.pages.map(pageView));
+  const pages = await Promise.all(branch.pages.map((page,index) => pageView(page,index,branch)));
   return `<section class="region" aria-labelledby="${escape(branch.id)}" data-branch="${escape(branch.id)}">
     <header class="region-heading"><h2 id="${escape(branch.id)}">${escape(branch.title)}</h2>
     <p class="question">${escape(branch.question)}</p><p class="perspective">${escape(branch.perspective)}</p></header>
@@ -79,6 +117,7 @@ const html = `<!doctype html>
     <div class="regions">${regions.join('')}</div>
     <footer class="paper-notes"><p>${escape(plan.shared.scope)}</p><p>${escape(plan.shared.evidence)}</p>
       <dl>${Object.entries(plan.sources).map(([key, file]) => `<div><dt>${escape(key)}</dt><dd>${escape(file)}</dd></div>`).join('')}</dl>
+      <dl>${Object.values(plan.references || {}).map(ref => `<div><dt>${escape(ref.title)}</dt><dd>${escape(ref.url)}</dd></div>`).join('')}</dl>
     </footer>
   </div>
 </main>

@@ -11,10 +11,10 @@
     "address": "The sheet URL preserves its center (x, y) and zoom (z)."
   },
   "shared": {
-    "appearance": "Keep the approved infographic, characters, illustrations and colors. Unfold existing UI references and source excerpts onto one sheet.",
+    "appearance": "Keep the approved visual language. User: illustrated journeys. Investor: Canton demo storyboards. Architecture: engineering diagrams. Implementation: production source only.",
     "evidence": "Cite original passages beside the relevant claim. Distinguish recorded outcomes, live actions and proposed capabilities; quotation coverage is not implementation coverage.",
     "reuse": "Reuse a diagram or recording when it answers the reader's question. Select the relevant moments; do not send the reader through the full regression laboratory.",
-    "scope": "All twelve proposed page summaries are visible. Existing screenshots are reference material; they do not imply that the proposed pages are already implemented."
+    "scope": "The sheet unfolds the content proposal. Demo values come from preserved Canton runs; diagrams describe the cited production code and protocol. No ledger command runs when viewing this sheet."
   },
   "sources": {
     "proposal": "docs/proposal/harmonia.md",
@@ -30,10 +30,24 @@
     "feature": "product/server/src/main/scala/harmonia/financing/Financing.scala",
     "observation": "product/server/src/main/scala/harmonia/financing/FinancingObservation.scala",
     "screen": "product/web/src/main/scala/harmonia/financing/FinancingPanel.scala",
-    "api": "product/api/src/main/scala",
-    "ledger-choice": "product/ledger/applications/financing/daml/Financing.daml",
+    "api": "product/api/src/main/scala/harmonia/financing/FinancingState.scala",
+    "ledger-choice": "product/ledger/applications/private-financing/daml/PrivateFinancing.daml",
     "core": "product/ledger/core/daml/Harmonia/Process/Engine.daml",
-    "golden": "book/edition-0.2/recordings/evidence/financing-approved/expected.md"
+    "shared-progress": "product/ledger/core/daml/Harmonia/SharedProgress.daml",
+    "result": "product/ledger/interfaces/daml/Harmonia/Result.daml",
+    "action-interface": "product/ledger/interfaces/daml/Harmonia/Action.daml",
+    "workflow": "product/ledger/core/daml/Harmonia/Workflow.daml",
+    "binding": "product/ledger/bindings/daml/FinancingBinding.daml",
+    "native-application": "product/ledger/applications/financing/daml/Financing.daml",
+    "legacy-application": "product/ledger/applications/legacy-financing/daml/LegacyFinancing.daml",
+    "settlement": "product/ledger/applications/transfer/daml/AtomicTransfer.daml",
+    "http": "product/server/src/main/scala/harmonia/app/http/LiveServer.scala",
+    "workspace": "product/server/src/main/scala/harmonia/app/workspace/Workspace.scala",
+    "submit": "product/server/src/main/scala/harmonia/ledger/client/SubmitChoice.scala",
+    "ledger-client": "product/server/src/main/scala/harmonia/ledger/client/LiveLedger.scala",
+    "private-recording": "book/edition-0.2/recordings/private-approval.json",
+    "adapter-recording": "book/edition-0.2/recordings/generated-approved.json",
+    "transfer-recording": "book/edition-0.2/recordings/transfer-approved.json"
   },
   "images": {
     "purchase-start": "design/0.2/moment-review/1280-03-financing-to-offer-purchase-approved-0.png",
@@ -41,16 +55,7 @@
     "proposal": "design/0.2/moment-review/1280-03-financing-to-offer-purchase-approved-5.png",
     "relay": "design/0.2/moment-review/1280-03-financing-to-offer-purchase-approved-7.png",
     "received": "design/0.2/moment-review/1280-03-financing-to-offer-purchase-approved-8.png",
-    "declined": "design/0.2/moment-review/1280-03-financing-to-offer-purchase-rejected-3.png",
-    "private-bank": "design/0.2/moment-review/1280-private-approval-3.png",
-    "private-continuation": "design/0.2/moment-review/1280-private-approval-5.png",
-    "integration": "design/0.2/moment-review/readers-1280-05-bring-an-application.png",
-    "readiness": "design/0.2/moment-review/readers-1280-08-release-and-adoption.png",
-    "authority": "design/0.2/moment-review/readers-1280-reviewer.png",
-    "settlement": "design/0.2/moment-review/1280-transfer-approved-8.png",
-    "reconnection": "design/0.2/moment-review/1280-sequence-resumed-7.png",
-    "source-tree": "design/0.2/moment-review/readers-1280-code.png",
-    "golden-approval": "design/0.2/moment-review/1280-financing-approved-1.png"
+    "declined": "design/0.2/moment-review/1280-03-financing-to-offer-purchase-rejected-3.png"
   },
   "branches": [
     {
@@ -137,170 +142,286 @@
     {
       "id": "investor",
       "title": "Investor",
-      "question": "Why does this work, and what is proven?",
-      "perspective": "A technical evaluator wants the mechanism behind the product promise.",
+      "question": "Show me what Harmonia makes possible on Canton.",
+      "perspective": "For Canton ecosystem builders and technical investors: a Keynote-style demonstration, with one model, action and observable consequence per scene.",
       "pages": [
         {
-          "id": "authority",
-          "title": "Understand Daml and Canton",
-          "show": "Northbank's authorized Daml choice, separate participant views, and the scoped result that permits Alice to continue.",
-          "message": "Daml choices enforce who may act; the multi-participant example shows private details staying separate from shared progress.",
+          "id": "privacy",
+          "title": "A private decision. A shared next step.",
+          "message": "Can Alice continue without receiving Northbank’s private application?",
+          "show": "Establish three participant nodes on one local synchronizer. Try the buyer’s forbidden action, approve as the bank, then continue as Alice. Inspect each party’s view.",
           "sources": [
-            "private-approval",
+            "private-recording",
             "ledger-choice",
-            "proposal"
+            "shared-progress",
+            "result"
           ],
-          "frames": [
-            {
-              "image": "private-bank",
-              "label": "Bank acts privately"
-            },
-            {
-              "image": "private-continuation",
-              "label": "Buyer continues from the result"
-            }
-          ]
+          "frames": [],
+          "diagrams": [
+            "participants-demo"
+          ],
+          "demo": {
+            "recording": "private-recording",
+            "model": "Northbank, Alice and Olivia are distinct parties, each on its own participant. Shared progress begins waiting.",
+            "steps": [
+              {
+                "id": "buyer-cannot-read-or-approve",
+                "label": "Alice tries to approve"
+              },
+              {
+                "id": "bank-approval",
+                "label": "Northbank approves"
+              },
+              {
+                "id": "buyer-continuation",
+                "label": "Alice continues"
+              }
+            ],
+            "fields": [
+              {
+                "path": "application",
+                "label": "Application"
+              },
+              {
+                "path": "workflow",
+                "label": "Progress"
+              }
+            ],
+            "visibility": true,
+            "explain": "The private application stays with Northbank. Daml restricts approval to the bank and continuation to the owner; a scoped result bridges those actions."
+          }
         },
         {
-          "id": "integration",
-          "title": "Connect independent applications",
-          "show": "Two supported paths into the same workflow core: implement its interface, or compile an adapter for an eligible existing DAR.",
-          "message": "The repository demonstrates reusable integration for bounded examples. The source application keeps its authority.",
+          "id": "adapter",
+          "title": "An existing application. The same core.",
+          "message": "Can an unchanged Daml application join the workflow through a compiled adapter?",
+          "show": "Show the source package, its generated binding and the common StepAction interface. Compare Alice’s refused attempt with the bank’s successful action through the binding.",
           "sources": [
-            "adapter",
-            "packages",
-            "claims"
+            "adapter-recording",
+            "workflow",
+            "binding",
+            "action-interface",
+            "legacy-application"
           ],
-          "frames": [
-            {
-              "image": "integration",
-              "label": "Existing adapter walkthrough"
-            }
-          ]
+          "frames": [],
+          "diagrams": [
+            "adapter-demo"
+          ],
+          "demo": {
+            "recording": "adapter-recording",
+            "model": "One participant hosts separate party identities. A compiled adapter wraps the source application; the workflow holds a StepAction contract.",
+            "steps": [
+              {
+                "id": "buyer-attempt",
+                "label": "Alice attempts the action"
+              },
+              {
+                "id": "bank-approval",
+                "label": "Bank acts through the binding"
+              }
+            ],
+            "fields": [
+              {
+                "path": "application",
+                "label": "Application"
+              },
+              {
+                "path": "workflow",
+                "label": "Workflow"
+              }
+            ],
+            "explain": "The source choice still enforces its authority. This is the recorded generated-adapter example, not a claim that every DAR can be integrated."
+          }
         },
         {
-          "id": "proof",
-          "title": "Separate proof from ambition",
-          "show": "Local workflow evidence beside the remaining product questions: broader integration, independent adoption and release readiness.",
-          "message": "Working local examples are evidence; external adoption and unresolved guarantees still need their own proof.",
+          "id": "settlement",
+          "title": "Four parties. One final settlement.",
+          "message": "What commits together after all four parties are ready?",
+          "show": "Establish seller, buyer and two custodians on four participants. Inspect the ready state, submit settlement, then attempt it again. Keep locked and received quantities visible.",
           "sources": [
-            "claims",
-            "proposal"
+            "transfer-recording",
+            "settlement"
           ],
-          "frames": [
-            {
-              "image": "readiness",
-              "label": "Current readiness explanation"
-            }
-          ]
+          "frames": [],
+          "diagrams": [
+            "settlement-demo"
+          ],
+          "demo": {
+            "recording": "transfer-recording",
+            "model": "Four participant nodes share one local synchronizer. The source has locked 10 TEST and the destination has prepared its receiving permit.",
+            "steps": [
+              {
+                "id": "destination-confirms",
+                "label": "Both sides become ready"
+              },
+              {
+                "id": "settle",
+                "label": "Alice settles"
+              },
+              {
+                "id": "settle-again",
+                "label": "Try settlement again"
+              }
+            ],
+            "fields": [
+              {
+                "path": "source.locked",
+                "label": "Locked TEST"
+              },
+              {
+                "path": "destination",
+                "label": "Received TEST"
+              }
+            ],
+            "explain": "The eligible Settle choice performs withdrawal, receipt and trade replacement in one update. Earlier consent and preparation were separate transactions."
+          }
         }
       ],
-      "finish": "I can explain the mechanism, the demonstrated scope and the remaining risks."
+      "finish": "I can explain and demonstrate the Canton mechanism, including its authority and transaction boundaries.",
+      "presentation": {
+        "format": "Keynote demo storyboard",
+        "beats": [
+          "Establish the environment",
+          "Predict the outcome",
+          "Perform the action",
+          "Inspect what changed"
+        ],
+        "engagement": "Ask the audience to predict the outcome before revealing each recorded result. Keep the model visible."
+      }
     },
     {
       "id": "architecture",
       "title": "Architecture",
-      "question": "How is the system designed?",
-      "perspective": "A reviewer wants to test whether the design satisfies the original intent.",
+      "question": "Which boundaries, dependencies and invariants make this work?",
+      "perspective": "For senior engineers: six inspectable diagrams, with explicit meanings for nodes, arrows and transaction boundaries.",
       "pages": [
         {
-          "id": "boundaries",
-          "title": "Locate each responsibility",
-          "show": "A diagram of browser, off-ledger Scala service, bindings, on-ledger Daml core and application contracts; show ownership and participant boundaries.",
-          "message": "Separate orchestration from authorization, and shared progress from private application state.",
+          "id": "structure",
+          "title": "Deployment and dependencies",
+          "message": "Runtime connections and compile-time imports are different relationships.",
+          "show": "First locate the Scala service, participant nodes and synchronizer components. Then inspect the Daml package imports; arrows point toward dependencies.",
           "sources": [
-            "architecture-original",
-            "proposal",
-            "feature",
+            "http",
+            "workspace",
+            "ledger-client",
+            "workflow",
             "core",
-            "ledger-choice"
+            "action-interface",
+            "binding",
+            "native-application",
+            "legacy-application"
           ],
-          "frames": [
-            {
-              "image": "authority",
-              "label": "Existing authority diagram"
-            }
+          "frames": [],
+          "diagrams": [
+            "deployment",
+            "packages"
           ]
         },
         {
           "id": "execution",
-          "title": "Trace one command",
-          "show": "Request → typed service → ledger choice → observed state. A refused action stays visibly refused along that same route.",
-          "message": "A submitted request is not a committed result; the UI follows the state that was actually observed.",
+          "title": "Submission and observation",
+          "message": "Follow one request through the Ledger API, then distinguish commitment, rejection and an unconfirmed result.",
+          "show": "The sequence shows HTTP acceptance separately from ledger completion. The state diagram explains why a transport failure requires reconciliation rather than an assumed rejection.",
           "sources": [
-            "screen",
-            "feature",
-            "ledger-choice",
-            "observation",
-            "private-approval"
+            "http",
+            "workspace",
+            "submit",
+            "ledger-client",
+            "observation"
           ],
-          "frames": [
-            {
-              "image": "private-bank",
-              "label": "A committed bank action"
-            }
+          "frames": [],
+          "diagrams": [
+            "command",
+            "results"
           ]
         },
         {
-          "id": "invariants",
-          "title": "Challenge the guarantees",
-          "show": "Three focused diagram stops: a refused authority bypass, an eligible atomic settlement, and progress recovered after reconnection. Pair each with its original claim and evidence.",
-          "message": "State exactly what each example proves. A staged workflow is not one atomic transaction, and a quoted requirement is not a passing test.",
+          "id": "contracts",
+          "title": "Privacy and atomicity",
+          "message": "A scoped result connects two authorized updates; one final settlement encloses its custody operations.",
+          "show": "Trace issuer, consumer and continuation checks through proof consumption. Separately inspect the exact Settle transaction boundary after staged consent.",
           "sources": [
-            "private-approval",
-            "transfer",
-            "resume",
-            "claims",
-            "proposal"
+            "ledger-choice",
+            "result",
+            "shared-progress",
+            "settlement"
           ],
-          "frames": [
-            {
-              "image": "settlement",
-              "label": "Settlement reference"
-            },
-            {
-              "image": "reconnection",
-              "label": "Recovery reference"
-            }
+          "frames": [],
+          "diagrams": [
+            "proof",
+            "atomic"
           ]
         }
       ],
-      "finish": "I can identify boundaries, trace execution and challenge a claim with evidence."
+      "finish": "I can trace deployment, imports, execution, visibility and atomicity back to their production owners.",
+      "presentation": {
+        "format": "Engineering diagrams",
+        "focus": [
+          "Deployment topology",
+          "Package dependencies",
+          "Command sequence",
+          "Submission outcomes",
+          "Proof lifecycle",
+          "Atomic update"
+        ],
+        "imagery": "Native vector diagrams are the primary material; no decorative scenes or UI screenshots."
+      }
     },
     {
       "id": "implementation",
       "title": "Implementation",
-      "question": "Where do I read and verify the code?",
-      "perspective": "A senior developer wants one understandable route through a real feature.",
+      "question": "Does the production code make sense?",
+      "perspective": "For Miguel’s code review: production files, their responsibilities and the real execution path.",
       "pages": [
         {
           "id": "map",
-          "title": "Find the feature",
-          "show": "The existing file tree and colored source view, with a concise explanation of the financing slice and its place in the repository.",
-          "message": "Product runtime, ledger contracts and book tooling have distinct homes; begin with one feature rather than the entire repository.",
+          "title": "Find the production owners",
+          "message": "One financing slice: screen, shared types, service and ledger contracts.",
+          "show": "Read each file’s responsibility, then follow the financing slice into its types, application choice and observed result.",
           "sources": [
-            "feature",
             "screen",
-            "core"
+            "api",
+            "feature",
+            "workspace",
+            "ledger-choice",
+            "shared-progress"
           ],
-          "frames": [
+          "frames": [],
+          "files": [
             {
-              "image": "source-tree",
-              "label": "Existing source explorer"
+              "source": "screen",
+              "purpose": "Render the financing workspace."
+            },
+            {
+              "source": "api",
+              "purpose": "Define the shared actions and state."
+            },
+            {
+              "source": "feature",
+              "purpose": "Select the application choice."
+            },
+            {
+              "source": "workspace",
+              "purpose": "Compose IO submission and observation."
+            },
+            {
+              "source": "ledger-choice",
+              "purpose": "Authorize the bank and create its result."
+            },
+            {
+              "source": "shared-progress",
+              "purpose": "Consume matching evidence and continue."
             }
           ]
         },
         {
           "id": "types",
-          "title": "Read the typed path",
-          "show": "The financing screen, shared API, Scala service, Daml choice and observation code, with purpose annotations beside the real source.",
-          "message": "Follow the actual types and functions that carry one action from the browser to an observed result.",
+          "title": "Read the action and its authority",
+          "message": "Scala selects the operation; the private Daml application owns approval.",
+          "show": "Read the production Financing.select function beside the matching PrivateFinancing.Approve choice. Both excerpts are taken directly from the repository.",
           "sources": [
-            "screen",
-            "api",
             "feature",
-            "ledger-choice",
-            "observation"
+            "ledger-choice"
           ],
           "frames": [],
           "excerpts": [
@@ -314,39 +435,63 @@
             {
               "source": "ledger-choice",
               "lines": [
-                22,
+                19,
                 26
               ]
             }
           ]
         },
         {
-          "id": "golden",
-          "title": "Verify the golden story",
-          "show": "Input → execution → actual result beside the committed expectation; connect the result to the same recorded infographic.",
-          "message": "A golden expectation is the regression baseline. A mismatch fails; an illustration alone does not establish correctness.",
+          "id": "result",
+          "title": "Read the IO boundary and the result",
+          "message": "The service preserves uncertainty and exposes only observed participant state.",
+          "show": "Inspect SubmitChoice’s IO result classification, followed by the projection that derives eligible actions and displayed state from visible contracts.",
           "sources": [
-            "golden",
-            "feature"
+            "submit",
+            "observation"
           ],
-          "frames": [
-            {
-              "image": "golden-approval",
-              "label": "Recorded bank approval"
-            }
-          ],
+          "frames": [],
           "excerpts": [
             {
-              "source": "golden",
+              "source": "submit",
               "lines": [
-                9,
-                22
+                20,
+                43
+              ]
+            },
+            {
+              "source": "observation",
+              "lines": [
+                32,
+                52
               ]
             }
           ]
         }
       ],
-      "finish": "I know where to read, what owns each behavior and how it is verified."
+      "finish": "I can review the production feature from its typed input to Daml authority and observed output.",
+      "production_only": true,
+      "presentation": {
+        "format": "Production code review",
+        "include": "Only product source needed to understand the feature.",
+        "exclude": [
+          "Book code",
+          "Documentation generators",
+          "Scripts",
+          "Test harnesses",
+          "Golden fixtures"
+        ]
+      }
     }
-  ]
+  ],
+  "references": {
+    "canton-synchronizer": {
+      "title": "Digital Asset · Synchronizer (3.4)",
+      "url": "https://archived.docs.digitalasset.com/subnet/3.4/overview/index.html"
+    },
+    "canton-protocol": {
+      "title": "Digital Asset · Protocols on One Synchronizer (3.4)",
+      "url": "https://archived.docs.digitalasset.com/overview/3.4/explanations/canton/protocol.html"
+    }
+  }
 }

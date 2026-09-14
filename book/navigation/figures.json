@@ -1,0 +1,1278 @@
+{
+  "participants-demo": {
+    "title": "The private-approval environment",
+    "size": [
+      680,
+      370
+    ],
+    "nodes": [
+      {
+        "id": "bank",
+        "box": [
+          25,
+          25,
+          195,
+          110
+        ],
+        "title": "Northbank",
+        "detail": [
+          "Bank participant",
+          "Private Application"
+        ],
+        "tone": "accent"
+      },
+      {
+        "id": "buyer",
+        "box": [
+          243,
+          25,
+          195,
+          110
+        ],
+        "title": "Alice",
+        "detail": [
+          "Buyer participant",
+          "Shared progress"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "reviewer",
+        "box": [
+          460,
+          25,
+          195,
+          110
+        ],
+        "title": "Olivia",
+        "detail": [
+          "Reviewer participant",
+          "Shared progress"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "sync",
+        "box": [
+          100,
+          230,
+          480,
+          100
+        ],
+        "title": "Local synchronizer",
+        "detail": [
+          "Sequencing and mediation",
+          "Three participants; one local JVM"
+        ],
+        "tone": "normal"
+      }
+    ],
+    "edges": [
+      {
+        "source": "bank",
+        "target": "sync",
+        "ports": [
+          "bottom",
+          "top"
+        ],
+        "via": [
+          [
+            122.5,
+            185
+          ],
+          [
+            340,
+            185
+          ]
+        ]
+      },
+      {
+        "source": "buyer",
+        "target": "sync",
+        "ports": [
+          "bottom",
+          "top"
+        ]
+      },
+      {
+        "source": "reviewer",
+        "target": "sync",
+        "ports": [
+          "bottom",
+          "top"
+        ],
+        "via": [
+          [
+            557.5,
+            165
+          ],
+          [
+            340,
+            165
+          ]
+        ]
+      }
+    ],
+    "zones": [],
+    "caption": "Parties are hosted by participant nodes. This recording uses a local synchronizer, not the Global Synchronizer."
+  },
+  "adapter-demo": {
+    "title": "The generated integration path",
+    "size": [
+      680,
+      480
+    ],
+    "nodes": [
+      {
+        "id": "core",
+        "box": [
+          165,
+          20,
+          350,
+          85
+        ],
+        "title": "WorkflowInstance.Advance",
+        "detail": [
+          "Check assignee and subject"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "adapter",
+        "box": [
+          165,
+          190,
+          350,
+          100
+        ],
+        "title": "Generated StepAction binding",
+        "detail": [
+          "Execute the source choice",
+          "Keep the original application package"
+        ],
+        "tone": "accent"
+      },
+      {
+        "id": "source",
+        "box": [
+          165,
+          375,
+          350,
+          80
+        ],
+        "title": "LegacyFinancing.Approve",
+        "detail": [
+          "Source application authority"
+        ],
+        "tone": "normal"
+      }
+    ],
+    "edges": [
+      {
+        "source": "core",
+        "target": "adapter",
+        "ports": [
+          "bottom",
+          "top"
+        ],
+        "label": "ExecuteAction",
+        "label_at": [
+          340,
+          155
+        ]
+      },
+      {
+        "source": "adapter",
+        "target": "source",
+        "ports": [
+          "bottom",
+          "top"
+        ],
+        "label": "Source.Approve",
+        "label_at": [
+          340,
+          340
+        ]
+      }
+    ],
+    "zones": [],
+    "caption": "The reusable core exercises an interface. The compiled binding reaches the existing application choice."
+  },
+  "settlement-demo": {
+    "title": "Consent first; settle together",
+    "size": [
+      680,
+      460
+    ],
+    "nodes": [
+      {
+        "id": "seller",
+        "box": [
+          20,
+          25,
+          150,
+          80
+        ],
+        "title": "Seller",
+        "detail": [
+          "Owns the asset"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "source",
+        "box": [
+          185,
+          25,
+          150,
+          80
+        ],
+        "title": "Source",
+        "detail": [
+          "Custodian"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "buyer",
+        "box": [
+          350,
+          25,
+          150,
+          80
+        ],
+        "title": "Alice",
+        "detail": [
+          "Buyer / settler"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "dest",
+        "box": [
+          515,
+          25,
+          150,
+          80
+        ],
+        "title": "Destination",
+        "detail": [
+          "Custodian"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "withdraw",
+        "box": [
+          50,
+          225,
+          250,
+          95
+        ],
+        "title": "Withdraw",
+        "detail": [
+          "Locked position: 10 TEST"
+        ],
+        "tone": "accent"
+      },
+      {
+        "id": "receive",
+        "box": [
+          380,
+          225,
+          250,
+          95
+        ],
+        "title": "Receive",
+        "detail": [
+          "Destination: 10 TEST"
+        ],
+        "tone": "accent"
+      }
+    ],
+    "edges": [
+      {
+        "source": "source",
+        "target": "withdraw",
+        "ports": [
+          "bottom",
+          "top"
+        ]
+      },
+      {
+        "source": "dest",
+        "target": "receive",
+        "ports": [
+          "bottom",
+          "top"
+        ]
+      },
+      {
+        "source": "withdraw",
+        "target": "receive",
+        "ports": [
+          "right",
+          "left"
+        ],
+        "label": "release",
+        "label_at": [
+          340,
+          260
+        ]
+      }
+    ],
+    "zones": [
+      {
+        "box": [
+          20,
+          170,
+          640,
+          240
+        ],
+        "label": "One final Settle update",
+        "label_at": [
+          340,
+          195
+        ],
+        "anchor": "middle"
+      }
+    ],
+    "caption": "The local recording uses four participant nodes and one common synchronizer. Preparation is outside the final transaction."
+  },
+  "deployment": {
+    "title": "Runtime topology and trust boundaries",
+    "size": [
+      680,
+      680
+    ],
+    "nodes": [
+      {
+        "id": "browser",
+        "box": [
+          120,
+          20,
+          440,
+          70
+        ],
+        "title": "Browser workspace",
+        "detail": [
+          "Bank, buyer or reviewer session"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "service",
+        "box": [
+          155,
+          150,
+          370,
+          80
+        ],
+        "title": "Scala Workspace",
+        "detail": [
+          "Actor-bound participant connection"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "bank",
+        "box": [
+          25,
+          315,
+          195,
+          100
+        ],
+        "title": "Bank participant",
+        "detail": [
+          "Daml + visible contracts"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "buyer",
+        "box": [
+          243,
+          315,
+          195,
+          100
+        ],
+        "title": "Buyer participant",
+        "detail": [
+          "Daml + visible contracts"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "reviewer",
+        "box": [
+          460,
+          315,
+          195,
+          100
+        ],
+        "title": "Reviewer node",
+        "detail": [
+          "Daml + visible contracts"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "sequencer",
+        "box": [
+          80,
+          535,
+          245,
+          85
+        ],
+        "title": "Sequencer",
+        "detail": [
+          "Orders encrypted messages"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "mediator",
+        "box": [
+          380,
+          535,
+          225,
+          85
+        ],
+        "title": "Mediator",
+        "detail": [
+          "Coordinates confirmations"
+        ],
+        "tone": "normal"
+      }
+    ],
+    "edges": [
+      {
+        "source": "browser",
+        "target": "service",
+        "ports": [
+          "bottom",
+          "top"
+        ]
+      },
+      {
+        "source": "service",
+        "target": "bank",
+        "ports": [
+          "bottom",
+          "top"
+        ],
+        "via": [
+          [
+            340,
+            265
+          ],
+          [
+            122.5,
+            265
+          ]
+        ]
+      },
+      {
+        "source": "service",
+        "target": "buyer",
+        "ports": [
+          "bottom",
+          "top"
+        ]
+      },
+      {
+        "source": "service",
+        "target": "reviewer",
+        "ports": [
+          "bottom",
+          "top"
+        ],
+        "via": [
+          [
+            340,
+            280
+          ],
+          [
+            557.5,
+            280
+          ]
+        ]
+      },
+      {
+        "source": "bank",
+        "target": "sequencer",
+        "ports": [
+          "bottom",
+          "top"
+        ],
+        "via": [
+          [
+            122.5,
+            465
+          ],
+          [
+            202.5,
+            465
+          ]
+        ]
+      },
+      {
+        "source": "buyer",
+        "target": "sequencer",
+        "ports": [
+          "bottom",
+          "top"
+        ],
+        "via": [
+          [
+            340,
+            445
+          ],
+          [
+            202.5,
+            445
+          ]
+        ]
+      },
+      {
+        "source": "reviewer",
+        "target": "sequencer",
+        "ports": [
+          "bottom",
+          "top"
+        ],
+        "via": [
+          [
+            557.5,
+            480
+          ],
+          [
+            202.5,
+            480
+          ]
+        ]
+      },
+      {
+        "source": "mediator",
+        "target": "sequencer",
+        "ports": [
+          "left",
+          "right"
+        ],
+        "dashed": true
+      }
+    ],
+    "zones": [
+      {
+        "box": [
+          25,
+          495,
+          630,
+          160
+        ],
+        "label": "Common synchronizer",
+        "label_at": [
+          492,
+          520
+        ],
+        "anchor": "middle"
+      }
+    ],
+    "caption": "Runtime connections. Participant nodes validate Daml; sequencer and mediator handle synchronization. Protocol roles follow Digital Asset’s 3.4 documentation."
+  },
+  "packages": {
+    "title": "Daml imports point toward dependencies",
+    "size": [
+      680,
+      480
+    ],
+    "nodes": [
+      {
+        "id": "core",
+        "box": [
+          25,
+          25,
+          195,
+          90
+        ],
+        "title": "Workflow / Process",
+        "detail": [
+          "Reusable core"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "native",
+        "box": [
+          243,
+          25,
+          195,
+          90
+        ],
+        "title": "Native application",
+        "detail": [
+          "Implements StepAction"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "binding",
+        "box": [
+          460,
+          25,
+          195,
+          90
+        ],
+        "title": "Typed binding",
+        "detail": [
+          "Wraps source contract"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "legacy",
+        "box": [
+          460,
+          200,
+          195,
+          80
+        ],
+        "title": "Legacy application",
+        "detail": [
+          "Original source package"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "interface",
+        "box": [
+          170,
+          355,
+          340,
+          90
+        ],
+        "title": "Harmonia.Action",
+        "detail": [
+          "StepAction interface"
+        ],
+        "tone": "accent"
+      }
+    ],
+    "edges": [
+      {
+        "source": "core",
+        "target": "interface",
+        "ports": [
+          "bottom",
+          "top"
+        ],
+        "via": [
+          [
+            122.5,
+            310
+          ],
+          [
+            340,
+            310
+          ]
+        ]
+      },
+      {
+        "source": "native",
+        "target": "interface",
+        "ports": [
+          "bottom",
+          "top"
+        ]
+      },
+      {
+        "source": "binding",
+        "target": "interface",
+        "ports": [
+          "bottom",
+          "top"
+        ],
+        "via": [
+          [
+            557.5,
+            150
+          ],
+          [
+            420,
+            150
+          ],
+          [
+            420,
+            325
+          ],
+          [
+            340,
+            325
+          ]
+        ]
+      },
+      {
+        "source": "binding",
+        "target": "legacy",
+        "ports": [
+          "bottom",
+          "top"
+        ]
+      }
+    ],
+    "zones": [],
+    "caption": "Compile-time imports, not transaction flow. The shared interface does not import the application packages."
+  },
+  "command": {
+    "title": "One command and its observed state",
+    "kind": "sequence",
+    "size": [
+      680,
+      650
+    ],
+    "lanes": [
+      {
+        "id": "browser",
+        "x": 95,
+        "label": "Browser"
+      },
+      {
+        "id": "scala",
+        "x": 340,
+        "label": "Scala"
+      },
+      {
+        "id": "ledger",
+        "x": 585,
+        "label": "Participant"
+      }
+    ],
+    "messages": [
+      {
+        "from": "browser",
+        "to": "scala",
+        "y": 115,
+        "label": "POST /api/actions"
+      },
+      {
+        "from": "scala",
+        "to": "browser",
+        "y": 180,
+        "label": "202: accepted",
+        "return": true
+      },
+      {
+        "from": "scala",
+        "to": "ledger",
+        "y": 260,
+        "label": "Exercise Daml choice"
+      },
+      {
+        "from": "ledger",
+        "to": "scala",
+        "y": 340,
+        "label": "Commit / reject",
+        "return": true
+      },
+      {
+        "from": "scala",
+        "to": "ledger",
+        "y": 420,
+        "label": "Read visible contracts"
+      },
+      {
+        "from": "ledger",
+        "to": "scala",
+        "y": 500,
+        "label": "Participant snapshot",
+        "return": true
+      },
+      {
+        "from": "scala",
+        "to": "browser",
+        "y": 580,
+        "label": "GET /api/state result",
+        "return": true
+      }
+    ],
+    "caption": "HTTP acceptance is not ledger commitment. The later state request reads participant-visible contracts; submission errors are classified separately."
+  },
+  "results": {
+    "title": "Submission uncertainty remains explicit",
+    "size": [
+      680,
+      460
+    ],
+    "nodes": [
+      {
+        "id": "submitted",
+        "box": [
+          205,
+          25,
+          270,
+          75
+        ],
+        "title": "Submitted",
+        "detail": [
+          "IO at the Ledger API"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "committed",
+        "box": [
+          20,
+          190,
+          195,
+          90
+        ],
+        "title": "Committed",
+        "detail": [
+          "Transaction returned"
+        ],
+        "tone": "accent"
+      },
+      {
+        "id": "rejected",
+        "box": [
+          243,
+          190,
+          195,
+          90
+        ],
+        "title": "Rejected",
+        "detail": [
+          "Definitive ledger error"
+        ],
+        "tone": "refused"
+      },
+      {
+        "id": "unknown",
+        "box": [
+          465,
+          190,
+          195,
+          90
+        ],
+        "title": "Unconfirmed",
+        "detail": [
+          "No definitive response"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "reconcile",
+        "box": [
+          465,
+          350,
+          195,
+          80
+        ],
+        "title": "Reconcile",
+        "detail": [
+          "Read observed commits"
+        ],
+        "tone": "normal"
+      }
+    ],
+    "edges": [
+      {
+        "source": "submitted",
+        "target": "committed",
+        "ports": [
+          "bottom",
+          "top"
+        ],
+        "via": [
+          [
+            340,
+            140
+          ],
+          [
+            117.5,
+            140
+          ]
+        ]
+      },
+      {
+        "source": "submitted",
+        "target": "rejected",
+        "ports": [
+          "bottom",
+          "top"
+        ]
+      },
+      {
+        "source": "submitted",
+        "target": "unknown",
+        "ports": [
+          "bottom",
+          "top"
+        ],
+        "via": [
+          [
+            340,
+            155
+          ],
+          [
+            562.5,
+            155
+          ]
+        ]
+      },
+      {
+        "source": "unknown",
+        "target": "reconcile",
+        "ports": [
+          "bottom",
+          "top"
+        ]
+      }
+    ],
+    "zones": [],
+    "caption": "SubmitChoice and Workspace preserve uncertainty. Reconciliation checks ledger observations; a transport failure is not classified as a rejection."
+  },
+  "proof": {
+    "title": "A scoped proof between two updates",
+    "size": [
+      680,
+      620
+    ],
+    "nodes": [
+      {
+        "id": "approve",
+        "box": [
+          190,
+          55,
+          300,
+          80
+        ],
+        "title": "Approve",
+        "detail": [
+          "Controller: bank"
+        ],
+        "tone": "accent"
+      },
+      {
+        "id": "application",
+        "box": [
+          40,
+          190,
+          270,
+          85
+        ],
+        "title": "Private Application",
+        "detail": [
+          "Replacement: approved"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "proof",
+        "box": [
+          370,
+          190,
+          270,
+          85
+        ],
+        "title": "VerifiedResult",
+        "detail": [
+          "Issuer, consumer, subject",
+          "Decision + continuation"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "waiting",
+        "box": [
+          40,
+          365,
+          270,
+          80
+        ],
+        "title": "SharedProgress",
+        "detail": [
+          "Waiting; owner + issuer"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "consume",
+        "box": [
+          370,
+          365,
+          270,
+          80
+        ],
+        "title": "Check the result",
+        "detail": [
+          "Match all scoped fields"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "complete",
+        "box": [
+          180,
+          510,
+          320,
+          80
+        ],
+        "title": "Continue",
+        "detail": [
+          "Owner consumes proof",
+          "Replace progress: complete"
+        ],
+        "tone": "accent"
+      }
+    ],
+    "edges": [
+      {
+        "source": "approve",
+        "target": "application",
+        "ports": [
+          "bottom",
+          "top"
+        ],
+        "via": [
+          [
+            340,
+            160
+          ],
+          [
+            175,
+            160
+          ]
+        ]
+      },
+      {
+        "source": "approve",
+        "target": "proof",
+        "ports": [
+          "bottom",
+          "top"
+        ],
+        "via": [
+          [
+            340,
+            175
+          ],
+          [
+            505,
+            175
+          ]
+        ]
+      },
+      {
+        "source": "proof",
+        "target": "consume",
+        "ports": [
+          "bottom",
+          "top"
+        ]
+      },
+      {
+        "source": "waiting",
+        "target": "complete",
+        "ports": [
+          "bottom",
+          "top"
+        ],
+        "via": [
+          [
+            175,
+            475
+          ],
+          [
+            340,
+            475
+          ]
+        ]
+      },
+      {
+        "source": "consume",
+        "target": "complete",
+        "ports": [
+          "bottom",
+          "top"
+        ],
+        "via": [
+          [
+            505,
+            490
+          ],
+          [
+            340,
+            490
+          ]
+        ]
+      }
+    ],
+    "zones": [
+      {
+        "box": [
+          20,
+          20,
+          640,
+          275
+        ],
+        "label": "Update 1: the bank’s private decision"
+      },
+      {
+        "box": [
+          20,
+          320,
+          640,
+          290
+        ],
+        "label": "Update 2: the owner’s authorized continuation"
+      }
+    ],
+    "caption": "Production contract design. Approve and Continue are distinct updates. VerifiedResult is consumed, not reused as an unbounded permission."
+  },
+  "atomic": {
+    "title": "The final transaction boundary",
+    "size": [
+      680,
+      560
+    ],
+    "nodes": [
+      {
+        "id": "locked",
+        "box": [
+          40,
+          35,
+          250,
+          90
+        ],
+        "title": "LockedPosition",
+        "detail": [
+          "Source custody"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "permit",
+        "box": [
+          390,
+          35,
+          250,
+          90
+        ],
+        "title": "ReceivingPermit",
+        "detail": [
+          "Destination readiness"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "withdraw",
+        "box": [
+          55,
+          250,
+          250,
+          85
+        ],
+        "title": "Withdraw",
+        "detail": [
+          "Create release"
+        ],
+        "tone": "accent"
+      },
+      {
+        "id": "receive",
+        "box": [
+          375,
+          250,
+          250,
+          85
+        ],
+        "title": "Receive",
+        "detail": [
+          "Consume release"
+        ],
+        "tone": "accent"
+      },
+      {
+        "id": "trade",
+        "box": [
+          200,
+          430,
+          280,
+          80
+        ],
+        "title": "Trade replacement",
+        "detail": [
+          "settled = True"
+        ],
+        "tone": "accent"
+      }
+    ],
+    "edges": [
+      {
+        "source": "locked",
+        "target": "withdraw",
+        "ports": [
+          "bottom",
+          "top"
+        ]
+      },
+      {
+        "source": "permit",
+        "target": "receive",
+        "ports": [
+          "bottom",
+          "top"
+        ]
+      },
+      {
+        "source": "withdraw",
+        "target": "receive",
+        "ports": [
+          "right",
+          "left"
+        ],
+        "label": "release",
+        "label_at": [
+          340,
+          277
+        ]
+      },
+      {
+        "source": "receive",
+        "target": "trade",
+        "ports": [
+          "bottom",
+          "top"
+        ],
+        "via": [
+          [
+            500,
+            385
+          ],
+          [
+            340,
+            385
+          ]
+        ]
+      }
+    ],
+    "zones": [
+      {
+        "box": [
+          20,
+          190,
+          640,
+          350
+        ],
+        "label": "Settle: one atomic update",
+        "label_at": [
+          340,
+          215
+        ],
+        "anchor": "middle"
+      }
+    ],
+    "caption": "Consent, source locking and destination preparation precede this boundary. Failure within this final update rolls back its custody operations together."
+  }
+}
