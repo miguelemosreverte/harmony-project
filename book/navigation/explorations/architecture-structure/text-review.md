@@ -105,6 +105,34 @@ The reading page has two near-claim primary-source links. This audit retains the
 broader provenance without adding more interactions to the chapter. Review of
 the revised teaching sequence is pending.
 
+## Fourth text draft — composition through the shared interface
+
+Miguel accepted the friendlier direction and asked to center the architecture on
+the interface, contract composition and the on-ledger/off-ledger boundary. A
+tour of Scala and browser components is unnecessary for this reader.
+
+The revised chapter explains how a workflow holds references to contracts through
+StepAction, calls eligible actions and commits each action with its progress.
+The off-ledger section explains adapter preparation, requests and confirmed reads.
+The generated adapter executes on-ledger; Builder prepares it off-ledger. The
+chapter keeps both participation paths and the supported-application restriction.
+
+`Action.daml`, `Workflow.daml`, `Process/Engine.daml`, `SharedProgress.daml` and
+`GenerateBinding.scala` were reread against these claims. The external Canton and
+Lloyds claims are unchanged from the third draft's primary-source audit.
+
+The replacement illustration uses the actual approved workflow reference,
+`design/0.2/infographic/narrative-v1/desktop-reference.png`, rather than a later
+architecture exploration. Its panels, document pictograms and dotted blue
+connectors follow that reference. The complete prompt and revision record are
+in [textbook-composition.md](textbook-composition.md).
+
+The chapter is 406 words including headings, caption and source note, using the
+same rendered-text counting method as revision 3. Desktop/mobile screenshots and
+browser checks passed; the illustration is shown whole and the four sections
+remain in normal reading order. Evidence: `.artifacts/architecture-composition-review/`.
+Review of the new composition illustration and chapter remains pending.
+
 ## Browser edition
 
 The user subsequently asked to read the chapter in the browser. [architecture.html](architecture.html)

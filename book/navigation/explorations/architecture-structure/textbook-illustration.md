@@ -88,4 +88,7 @@ Desktop and mobile screenshots were inspected. Evidence is in
 its natural aspect ratio, and no horizontal overflow or browser errors were found.
 The chapter contains two citation links and no buttons or selectors.
 
-User review remains pending.
+Miguel's review, 2026-09-14: the textbook direction is getting better; images
+should follow the previously approved infographics. The architecture should
+focus on the shared interface, composition and on-ledger/off-ledger division.
+The next revision is documented in `textbook-composition.md`.

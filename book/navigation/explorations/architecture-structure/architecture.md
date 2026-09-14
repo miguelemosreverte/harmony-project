@@ -6,43 +6,35 @@ Banks need to agree on transactions without exposing every customer's records. [
 
 Applications on Canton use **Daml** smart contracts to describe their records, permitted changes and required authorizations. Banks are using this technology: Lloyds reported a [pilot purchase of a government bond using tokenised deposits](https://www.lloydsbankinggroup.com/media/press-releases/2026/lloyds/lloyds-tokenisation.html) on Canton.
 
-![A bank and a custodian keep separate ledger books while sharing a transaction on Canton.](08-canton-textbook.png)
+## An interface the contracts share
 
-*Separate records; agreement on a shared transaction.*
+A bank's contract might approve financing; a custodian's might release an asset. Canton already lets applications transact together. Harmonia supplies a reusable way to coordinate their actions into a larger process.
 
-## A shared network, different applications
+Each participating contract exposes **StepAction**, a small Daml interface. Its **actor** identifies the party required to authorize the call; its **subject** identifies the business reference the action concerns.
 
-A bank's application might approve financing; a custodian's might release an asset. Each has its own contracts, operations and permissions.
+The interface's **ExecuteAction** operation runs the application's implementation and returns a contract reference for subsequent use. A workflow can therefore hold references to different application contracts and invoke them through the same interface. Each application keeps its own business rules and permissions.
 
-Canton already supports transactions across applications. The developer still has to specify the larger process: which action comes next, who must perform it, and which result permits work to continue.
+## Compose the actions on-ledger
 
-**Harmonia makes those coordination rules reusable.** Its workflow contracts record the permitted sequence, assigned participants and progress. They run on Canton alongside the application contracts.
+Harmonia's workflow engine, **Core**, is itself written as Daml contracts. A workflow records its steps, assigned parties, application-contract references and progress on the ledger.
 
-## Give each action the same calling convention
+To advance, Core checks that the step is available, the requester is assigned, and the target action's actor and subject match the workflow. It then invokes ExecuteAction and records completion.
 
-For a workflow to invoke different applications, they expose a small Daml interface called **StepAction**. It presents two pieces of information: **actor**, the party required to authorize the call, and **subject**, the business reference the action concerns.
+**The application action and that step's progress commit in one transaction.** If either fails, neither change is committed. Later decisions can advance through separate transactions.
 
-It also exposes **ExecuteAction**. Calling it runs the application's implementation and returns a contract reference for the resulting action state.
+![A workflow contract calls financing and custody application contracts through their matching StepAction interfaces.](09-contract-composition.png)
 
-Harmonia can therefore check the actor and subject, then invoke the action without importing that application's implementation. The application continues to enforce its own business rules and authorization requirements.
+*One calling convention across independently owned application contracts.*
 
-An application can implement StepAction directly. An existing application can instead use an **adapter**: a separate contract that implements StepAction and calls a specific operation in that application. For supported application shapes, Builder generates this adapter from a developer's reviewed mapping; it is compiled and deployed before use.
+Processes can also compose through results: a receiving process checks the result's issuer, intended recipient, subject and permitted continuation before proceeding. Each process retains its own progress and authority.
 
-## Keep the action and its progress together
+## Prepare and request work off-ledger
 
-Harmonia's workflow engine, **Core**, checks that the requested step is available, the requester is assigned, and the actor and subject match the target action.
+An application can implement StepAction directly. To connect an existing application, a developer can supply an **adapter**: a separate Daml contract that implements StepAction and calls the selected application operation.
 
-Core then calls ExecuteAction and records the step's completion. **That application action and its workflow progress commit in one ledger transaction.** If either fails, neither change is committed. A process involving later decisions advances through further transactions.
+**Builder works off-ledger.** For supported application shapes, it checks a developer's reviewed mapping against the compiled application and generates the adapter project. The adapter is compiled and deployed on-ledger alongside the existing application, whose code stays unchanged.
 
-When one process supplies a result to another, the receiving process checks its issuer, intended recipient and permitted continuation before advancing.
-
-## Where the browser and Scala fit
-
-The browser displays the process and sends requests over HTTP to a **Scala service**. The service reads the relevant ledger state and submits supported commands through the participant's Canton connection.
-
-The Daml contracts enforce the changes. The service reads the confirmed result to update the browser. If a submission's outcome is uncertain, it checks ledger commits before reporting completion.
-
-Workflow authority and progress therefore live on the ledger. The browser and Scala service provide access to them.
+During use, off-ledger software submits authorized requests and reads confirmed results. It checks ledger commits when a submission's outcome is uncertain. **The on-ledger contracts enforce the rules and record progress.**
 
 ---
 
