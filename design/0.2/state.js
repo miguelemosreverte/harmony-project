@@ -16,7 +16,7 @@
     s.view=choose(input.view,['read','try','sources','source','evidence'],defaults.view);
     s.story=choose(input.story,Object.keys(config.stories),defaults.story);
     s.step=number(input.step,0,config.stories[s.story]?.presentation.units.length||0,0);
-    s.file=choose(input.file,Object.keys(atlas.files),defaults.file);s.line=number(input.line,1,atlas.files[s.file].lines,1);
+    s.file=choose(input.file,Object.keys(atlas.files).filter(path=>config.kind!=='atlas-code'||(path.startsWith('product/')&&!path.includes('/src/test/'))),defaults.file);s.line=number(input.line,1,atlas.files[s.file].lines,1);
     s.slice=choose(input.slice,Object.keys(atlas.slices),'financing');
     s.relationship=choose(input.relationship,['reading',...Object.keys(atlas.relationships).filter(k=>atlas.relationships[k][s.slice])],'reading');
     const graph=s.relationship==='reading'?atlas.slices[s.slice]:atlas.relationships[s.relationship][s.slice];s.node=choose(input.node,graph.nodes.map(n=>n.id),'');

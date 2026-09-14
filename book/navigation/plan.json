@@ -5,16 +5,16 @@
   "intent": "Keep the approved UI. Organize the content around the question each reader brings.",
   "navigation": {
     "entry": "All four audience regions are visible on one sheet.",
-    "order": "Read the numbered content within a region. Pan and zoom to inspect it; no page turns or hidden sections.",
+    "order": "Pan and zoom across the unfolded regions. The production file tree is the sole content-selection surface.",
     "ending": "Each region has its own conclusion. Moving the view never opens another page.",
     "cross_branch_links": [],
-    "address": "The sheet URL preserves its center (x, y) and zoom (z)."
+    "address": "The sheet URL preserves center (x, y), zoom (z), selected production file and line."
   },
   "shared": {
-    "appearance": "Keep the approved visual language. User: illustrated journeys. Investor: Canton demo storyboards. Architecture: engineering diagrams. Implementation: production source only.",
+    "appearance": "Quiet typography for passive labels. Blue belongs to diagram relationships and the active file selection, not to headings that resemble links.",
     "evidence": "Cite original passages beside the relevant claim. Distinguish recorded outcomes, live actions and proposed capabilities; quotation coverage is not implementation coverage.",
     "reuse": "Reuse a diagram or recording when it answers the reader's question. Select the relevant moments; do not send the reader through the full regression laboratory.",
-    "scope": "The sheet unfolds the content proposal. Demo values come from preserved Canton runs; diagrams describe the cited production code and protocol. No ledger command runs when viewing this sheet."
+    "scope": "Original proposals, current implementation choices and recorded outcomes are labeled separately. No ledger command runs when viewing this sheet."
   },
   "sources": {
     "proposal": "docs/proposal/harmonia.md",
@@ -147,10 +147,12 @@
       "pages": [
         {
           "id": "privacy",
-          "title": "A private decision. A shared next step.",
-          "message": "Can Alice continue without receiving Northbank’s private application?",
+          "title": "Compose applications on Canton.",
+          "message": "Independent Daml applications. Shared workflow state. Each application keeps its authority.",
           "show": "Establish three participant nodes on one local synchronizer. Try the buyer’s forbidden action, approve as the bank, then continue as Alice. Inspect each party’s view.",
           "sources": [
+            "proposal",
+            "architecture-original",
             "private-recording",
             "ledger-choice",
             "shared-progress",
@@ -158,11 +160,11 @@
           ],
           "frames": [],
           "diagrams": [
-            "participants-demo"
+            "ecosystem"
           ],
           "demo": {
             "recording": "private-recording",
-            "model": "Northbank, Alice and Olivia are distinct parties, each on its own participant. Shared progress begins waiting.",
+            "model": "Demo: a private bank decision enables Alice’s next step.",
             "steps": [
               {
                 "id": "buyer-cannot-read-or-approve",
@@ -193,10 +195,12 @@
         },
         {
           "id": "adapter",
-          "title": "An existing application. The same core.",
-          "message": "Can an unchanged Daml application join the workflow through a compiled adapter?",
+          "title": "Two participation paths.",
+          "message": "Implement the interface in a new app, or bind an existing DAR at build time.",
           "show": "Show the source package, its generated binding and the common StepAction interface. Compare Alice’s refused attempt with the bank’s successful action through the binding.",
           "sources": [
+            "proposal",
+            "architecture-original",
             "adapter-recording",
             "workflow",
             "binding",
@@ -205,11 +209,11 @@
           ],
           "frames": [],
           "diagrams": [
-            "adapter-demo"
+            "participation"
           ],
           "demo": {
             "recording": "adapter-recording",
-            "model": "One participant hosts separate party identities. A compiled adapter wraps the source application; the workflow holds a StepAction contract.",
+            "model": "Demo: the existing application is called through its compiled binding.",
             "steps": [
               {
                 "id": "buyer-attempt",
@@ -248,7 +252,7 @@
           ],
           "demo": {
             "recording": "transfer-recording",
-            "model": "Four participant nodes share one local synchronizer. The source has locked 10 TEST and the destination has prepared its receiving permit.",
+            "model": "Demo: 10 TEST is locked; the receiving permit is ready.",
             "steps": [
               {
                 "id": "destination-confirms",
@@ -293,14 +297,16 @@
       "id": "architecture",
       "title": "Architecture",
       "question": "Which boundaries, dependencies and invariants make this work?",
-      "perspective": "For senior engineers: six inspectable diagrams, with explicit meanings for nodes, arrows and transaction boundaries.",
+      "perspective": "For senior engineers: the original component and contract models, their implemented counterparts, and the boundaries demonstrated by the code.",
       "pages": [
         {
           "id": "structure",
-          "title": "Deployment and dependencies",
-          "message": "Runtime connections and compile-time imports are different relationships.",
-          "show": "First locate the Scala service, participant nodes and synchronizer components. Then inspect the Daml package imports; arrows point toward dependencies.",
+          "title": "Components and participation",
+          "message": "Start with the original off-ledger / on-ledger split.",
+          "show": "The proposal groups interfaces with Core. This checkout separates a shared interface DAR from Core and application bindings; the imports below show that decision.",
           "sources": [
+            "architecture-original",
+            "proposal",
             "http",
             "workspace",
             "ledger-client",
@@ -313,26 +319,27 @@
           ],
           "frames": [],
           "diagrams": [
-            "deployment",
+            "component-map",
             "packages"
           ]
         },
         {
           "id": "execution",
-          "title": "Submission and observation",
-          "message": "Follow one request through the Ledger API, then distinguish commitment, rejection and an unconfirmed result.",
-          "show": "The sequence shows HTTP acceptance separately from ledger completion. The state diagram explains why a transport failure requires reconciliation rather than an assumed rejection.",
+          "title": "Proposed model → implemented model",
+          "message": "Compare the original entities and relationships with the concrete types and contracts.",
+          "show": "Conceptual names are preserved on the left. The mapping records actual implementation choices; it does not imply a generic realization of every proposed construct.",
           "sources": [
-            "http",
-            "workspace",
-            "submit",
-            "ledger-client",
-            "observation"
+            "architecture-original",
+            "core",
+            "action-interface",
+            "shared-progress",
+            "result",
+            "binding"
           ],
           "frames": [],
           "diagrams": [
-            "command",
-            "results"
+            "contract-model",
+            "model-mapping"
           ]
         },
         {
@@ -341,6 +348,7 @@
           "message": "A scoped result connects two authorized updates; one final settlement encloses its custody operations.",
           "show": "Trace issuer, consumer and continuation checks through proof consumption. Separately inspect the exact Settle transaction boundary after staged consent.",
           "sources": [
+            "proposal",
             "ledger-choice",
             "result",
             "shared-progress",
@@ -357,12 +365,12 @@
       "presentation": {
         "format": "Engineering diagrams",
         "focus": [
-          "Deployment topology",
-          "Package dependencies",
-          "Command sequence",
-          "Submission outcomes",
-          "Proof lifecycle",
-          "Atomic update"
+          "Original component map",
+          "Actual package dependencies",
+          "Original contract model",
+          "Concept-to-code mapping",
+          "Scoped continuation",
+          "Bounded atomic settlement"
         ],
         "imagery": "Native vector diagrams are the primary material; no decorative scenes or UI screenshots."
       }
@@ -374,105 +382,28 @@
       "perspective": "For Miguel’s code review: production files, their responsibilities and the real execution path.",
       "pages": [
         {
-          "id": "map",
-          "title": "Find the production owners",
-          "message": "One financing slice: screen, shared types, service and ledger contracts.",
-          "show": "Read each file’s responsibility, then follow the financing slice into its types, application choice and observed result.",
-          "sources": [
-            "screen",
-            "api",
-            "feature",
-            "workspace",
-            "ledger-choice",
-            "shared-progress"
-          ],
-          "frames": [],
-          "files": [
-            {
-              "source": "screen",
-              "purpose": "Render the financing workspace."
-            },
-            {
-              "source": "api",
-              "purpose": "Define the shared actions and state."
-            },
-            {
-              "source": "feature",
-              "purpose": "Select the application choice."
-            },
-            {
-              "source": "workspace",
-              "purpose": "Compose IO submission and observation."
-            },
-            {
-              "source": "ledger-choice",
-              "purpose": "Authorize the bank and create its result."
-            },
-            {
-              "source": "shared-progress",
-              "purpose": "Consume matching evidence and continue."
-            }
-          ]
-        },
-        {
-          "id": "types",
-          "title": "Read the action and its authority",
-          "message": "Scala selects the operation; the private Daml application owns approval.",
-          "show": "Read the production Financing.select function beside the matching PrivateFinancing.Approve choice. Both excerpts are taken directly from the repository.",
+          "id": "explore",
+          "title": "Explore the production application",
+          "message": "Choose a file. Read its highlighted source, annotations and place in the vertical slice.",
+          "show": "The existing source explorer, filtered to production. Start with Scala financing; Daml contracts and the other production slices stay in the same tree.",
           "sources": [
             "feature",
-            "ledger-choice"
+            "observation",
+            "core"
           ],
           "frames": [],
-          "excerpts": [
-            {
-              "source": "feature",
-              "lines": [
-                5,
-                19
-              ]
-            },
-            {
-              "source": "ledger-choice",
-              "lines": [
-                19,
-                26
-              ]
-            }
-          ]
-        },
-        {
-          "id": "result",
-          "title": "Read the IO boundary and the result",
-          "message": "The service preserves uncertainty and exposes only observed participant state.",
-          "show": "Inspect SubmitChoice’s IO result classification, followed by the projection that derives eligible actions and displayed state from visible contracts.",
-          "sources": [
-            "submit",
-            "observation"
-          ],
-          "frames": [],
-          "excerpts": [
-            {
-              "source": "submit",
-              "lines": [
-                20,
-                43
-              ]
-            },
-            {
-              "source": "observation",
-              "lines": [
-                32,
-                52
-              ]
-            }
-          ]
+          "explorer": {
+            "entry": "design/0.2/code.html",
+            "file": "product/server/src/main/scala/harmonia/financing/FinancingObservation.scala",
+            "line": 1,
+            "scope": "product/"
+          }
         }
       ],
-      "finish": "I can review the production feature from its typed input to Daml authority and observed output.",
+      "finish": "I can inspect the production files in their original folders, with syntax colors and explanations from source comments.",
       "production_only": true,
       "presentation": {
-        "format": "Production code review",
+        "format": "Existing annotated source explorer",
         "include": "Only product source needed to understand the feature.",
         "exclude": [
           "Book code",

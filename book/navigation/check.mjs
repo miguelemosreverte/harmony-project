@@ -35,8 +35,10 @@ const until = async expression => {
   throw Error('Did not settle: ' + expression);
 };
 const navigate = async url => {
+  await evaluate("document.documentElement.dataset.reviewNavigating='true'");
   await call('Page.navigate', {url});
-  await until(`location.href === ${JSON.stringify(url)} && document.documentElement.dataset.sheet === 'interactive' && [...document.images].every(i => i.complete && i.naturalWidth > 0)`);
+  await until(`document.documentElement.dataset.reviewNavigating !== 'true' && location.pathname === ${JSON.stringify(new URL(url).pathname)} && ['x','y','z'].every(k=>new URL(location.href).searchParams.get(k)===new URL(${JSON.stringify(url)}).searchParams.get(k)) && document.documentElement.dataset.sheet === 'interactive' && [...document.images].every(i => i.complete && i.naturalWidth > 0)`);
+  await until("document.querySelector('iframe')?.contentDocument?.querySelector('#source-counts')?.textContent.startsWith('122 production') && document.querySelector('iframe').contentDocument.querySelector('#source-code')?.children.length > 0 && !document.querySelector('iframe').contentDocument.querySelector('#source-code').hasAttribute('aria-busy')");
 };
 const inspect = () => evaluate(`(() => {
   const paper = document.querySelector('#paper'), viewport = document.querySelector('#viewport');
@@ -61,25 +63,24 @@ const worldAt = (state, x, y) => ({
 });
 
 try {
-  await call('Page.enable'); await call('Runtime.enable');
+  await call('Page.enable'); await call('Runtime.enable'); await call('Network.setCacheDisabled',{cacheDisabled:true});
   await call('Emulation.setDeviceMetricsOverride', {width: 1440, height: 1000, deviceScaleFactor: 1, mobile: false});
   await navigate(address);
   const initial = await inspect();
-  assert.equal(initial.controls, 0); assert.equal(initial.regions, 4); assert.equal(initial.pages, 12);
+  assert.equal(initial.controls, 0); assert.equal(initial.regions, 4); assert.equal(initial.pages, 10);
   const audiences = await evaluate(`({
     investorDemos:document.querySelectorAll('[data-branch=investor] .demo').length,
     architectureDiagrams:document.querySelectorAll('[data-branch=architecture] svg').length,
     technicalScreenshots:document.querySelectorAll('.region:not([data-branch=user]) img').length,
-    productionFiles:[...document.querySelectorAll('[data-production-source]')].map(n=>n.dataset.productionSource)
+    originalModels:document.querySelectorAll('[data-figure=component-map],[data-figure=contract-model]').length,brands:document.querySelectorAll('[data-brand]').length
   })`);
   assert.equal(audiences.investorDemos,3); assert.equal(audiences.architectureDiagrams,6);
-  assert.equal(audiences.technicalScreenshots,0); assert.equal(audiences.productionFiles.length,6);
-  assert(audiences.productionFiles.every(file=>file.startsWith('product/') && !file.includes('/src/test/')));
+  assert.equal(audiences.technicalScreenshots,0); assert.equal(audiences.originalModels,2); assert.equal(audiences.brands,5);
   assert.equal(initial.scrollHeight, 1000); assert.equal(initial.scrollWidth, 1440);
   assert(initial.paper.x >= initial.viewport.x && initial.paper.y >= initial.viewport.y);
   assert(initial.paper.x + initial.paper.width <= initial.viewport.x + initial.viewport.width + 1);
   assert(initial.paper.y + initial.paper.height <= initial.viewport.y + initial.viewport.height + 1);
-  const textOverflow = await evaluate(`[...document.querySelectorAll('.page .excerpt-line, .page p')].flatMap(element => {
+  const textOverflow = await evaluate(`[...document.querySelectorAll('.page p')].flatMap(element => {
     const range = document.createRange(); range.selectNodeContents(element);
     const bounds = element.closest('.page').getBoundingClientRect();
     return [...range.getClientRects()].filter(r => r.right > bounds.right + 1 || r.left < bounds.left - 1).map(() => element.textContent);
@@ -90,7 +91,7 @@ try {
     return [...node.querySelectorAll('text')].filter(text=>{const r=text.getBoundingClientRect();return r.left<box.left-1||r.right>box.right+1||r.top<box.top||r.bottom>box.bottom+1}).map(text=>text.textContent);
   })`);
   assert.deepEqual(diagramOverflow, [], 'Diagram labels must fit their nodes');
-  checks.push({check:'Canton demos, six architecture diagrams and production-only files',...audiences});
+  checks.push({check:'Canton infographics and original architecture models',...audiences});
   checks.push({check: 'All regions fit on entry', ...initial});
   await screenshot('whole-sheet');
   await evaluate('window.originalPaper = document.querySelector("#paper")');
@@ -127,7 +128,7 @@ try {
   await until(`location.href === ${JSON.stringify(shared.url)}`);
   for (const field of ['x', 'y', 'z']) close(shared[field], (await inspect())[field], field === 'z' ? 0.00002 : 0.1);
   await evaluate('history.forward()');
-  await until('location.search === ""');
+  await until('!new URL(location.href).searchParams.has("x")');
   close((await inspect()).z, initial.z);
   checks.push({check: 'URL reload and browser history restore the camera'});
 
@@ -148,7 +149,7 @@ try {
     for (const [key, value] of Object.entries({x: region.x, y: region.y, z: Math.min(1360 / region.width, 850 / region.height)})) url.searchParams.set(key, value);
     await navigate(url.href); await screenshot(region.id);
   }
-  for (const [name, selector] of [['investor-detail','[data-figure="participants-demo"]'], ['architecture-detail','[data-figure="deployment"]']]) {
+  for (const [name, selector] of [['investor-detail','[data-figure="ecosystem"]'], ['architecture-detail','[data-figure="component-map"]']]) {
     const focus = await evaluate(`(() => {
       const p=document.querySelector('#paper').getBoundingClientRect(), r=document.querySelector(${JSON.stringify(selector)}).getBoundingClientRect();
       const z=new DOMMatrix(getComputedStyle(document.querySelector('#paper')).transform).a;
@@ -158,6 +159,36 @@ try {
     for(const [key,value] of Object.entries(focus)) url.searchParams.set(key,value);
     await navigate(url.href); await screenshot(name);
   }
+
+  await navigate(address);
+  await until("document.querySelector('iframe')?.contentDocument?.querySelector('#source-counts')?.textContent.startsWith('122 production')");
+  const sourceInfo = await evaluate(`(() => {
+    const f=document.querySelector('iframe'),d=f.contentDocument;
+    window.originalExplorer=f.contentWindow;
+    return {files:[...d.querySelectorAll('[data-file]')].map(a=>a.dataset.file),purpose:d.querySelector('.source-purpose').textContent,colors:d.querySelectorAll('#source-code .token-keyword').length,headings:[...document.querySelectorAll('.region-heading h2')].map(h=>getComputedStyle(h).color)};
+  })()`);
+  assert.equal(sourceInfo.files.length,122);
+  assert(sourceInfo.files.every(file=>file.startsWith('product/')&&!file.includes('/src/test/')));
+  assert(sourceInfo.purpose.includes('Participant-visible contracts')); assert(sourceInfo.colors>0);
+  assert(sourceInfo.headings.every(color=>color!=='rgb(0, 121, 255)'&&color!=='rgb(43, 91, 238)'));
+  const selectedFile='product/ledger/interfaces/daml/Harmonia/Action.daml';
+  await evaluate(`document.querySelector('iframe').contentDocument.querySelector('[data-file="${selectedFile}"]').click()`);
+  await until(`new URL(location.href).searchParams.get('file')===${JSON.stringify(selectedFile)}`);
+  assert(await evaluate("document.querySelector('iframe').contentWindow === window.originalExplorer"));
+  await evaluate(`document.querySelector('iframe').contentWindow.HarmoniaView.update({line:6})`);
+  await until("new URL(location.href).searchParams.get('line')==='6'");
+  const selectedUrl=await evaluate('location.href');
+  await navigate(selectedUrl);
+  await until(`document.querySelector('iframe')?.contentWindow?.HarmoniaView?.state.file===${JSON.stringify(selectedFile)} && document.querySelector('iframe').contentWindow.HarmoniaView.state.line===6 && document.querySelector('iframe').contentDocument.querySelector('#source-code .selected-line')?.dataset.line==='6'`);
+  // A stale or malicious non-production deep link cannot reintroduce harness files.
+  const forbidden=new URL(address); forbidden.searchParams.set('file','book/edition-0.2/build.py');
+  await navigate(forbidden.href);
+  await until("document.querySelector('iframe')?.contentWindow?.HarmoniaView?.state.file?.startsWith('product/') && document.querySelector('iframe').contentDocument.querySelector('#source-counts')?.textContent.startsWith('122 production')");
+  // The transfer slice formerly included its golden test as a node.
+  await evaluate(`document.querySelector('iframe').contentWindow.HarmoniaView.update({file:'product/ledger/applications/transfer/daml/AtomicTransfer.daml'})`);
+  await until("document.querySelector('iframe').contentDocument.querySelector('#source-name').textContent==='AtomicTransfer.daml'");
+  assert.equal(await evaluate("document.querySelector('iframe').contentDocument.querySelectorAll('[data-node=golden]').length"),0);
+  checks.push({check:'Existing source explorer: production filter, annotations, colors, selection URL and no harness nodes',files:sourceInfo.files.length});
 
   // A real CDP two-finger gesture exercises the pointer/pinch handlers.
   await call('Emulation.setDeviceMetricsOverride', {width: 390, height: 844, deviceScaleFactor: 1, mobile: true});
@@ -181,7 +212,7 @@ try {
   // Printing unfolds the actual DOM, independent of the current camera.
   await call('Emulation.setEmulatedMedia', {media: 'print'});
   const printed = await evaluate(`({transform:getComputedStyle(document.querySelector('#paper')).transform,visible:[...document.querySelectorAll('.page')].filter(p=>p.getClientRects().length).length})`);
-  assert.equal(printed.transform, 'none'); assert.equal(printed.visible, 12);
+  assert.equal(printed.transform, 'none'); assert.equal(printed.visible, 10);
   checks.push({check: 'Print includes all pages without a camera transform'});
   assert.deepEqual(errors, []);
   await fs.writeFile(path.join(output, 'checks.json'), JSON.stringify({checks, errors}, null, 2) + '\n');

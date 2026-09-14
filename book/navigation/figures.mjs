@@ -3,6 +3,13 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 
 const figures = JSON.parse(await fs.readFile(new URL('./figures.json', import.meta.url), 'utf8'));
+for (const figure of Object.values(figures)) {
+  if (figure.source) {
+    const lines = (await fs.readFile(new URL('../../' + figure.source.file, import.meta.url), 'utf8')).split('\n');
+    const [start,end] = figure.source.lines;
+    assert(start > 0 && end >= start && end <= lines.length, 'Invalid original source citation');
+  }
+}
 const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let sequence = 0;
 
@@ -23,7 +30,7 @@ function graph(figure, marker) {
   }).join('');
   const edges = figure.edges.map(edge => {
     assert(nodes.has(edge.source) && nodes.has(edge.target), 'Diagram edge has an unknown node');
-    const points = [point(nodes.get(edge.source), edge.ports[0]), ...(edge.via || []), point(nodes.get(edge.target), edge.ports[1])];
+    const points = [edge.start || point(nodes.get(edge.source), edge.ports[0]), ...(edge.via || []), edge.end || point(nodes.get(edge.target), edge.ports[1])];
     return `<g class="diagram-edge"><polyline points="${points.map(p => p.join(',')).join(' ')}" marker-end="url(#${marker})" ${edge.dashed ? 'stroke-dasharray="6 5"' : ''}/>${edge.label ? `<text x="${edge.label_at[0]}" y="${edge.label_at[1]}">${esc(edge.label)}</text>` : ''}</g>`;
   }).join('');
   const boxes = figure.nodes.map(node => {
@@ -34,21 +41,17 @@ function graph(figure, marker) {
   return zones + edges + boxes;
 }
 
-function sequenceDiagram(figure, marker) {
-  const lanes = new Map(figure.lanes.map(lane => [lane.id, lane]));
-  return figure.lanes.map(lane => `<g class="diagram-lane"><rect x="${lane.x-80}" y="15" width="160" height="55" rx="12"/><text x="${lane.x}" y="49">${esc(lane.label)}</text><line x1="${lane.x}" y1="80" x2="${lane.x}" y2="${figure.size[1]-15}"/></g>`).join('') +
-    figure.messages.map(message => {
-      assert(lanes.has(message.from) && lanes.has(message.to));
-      const from=lanes.get(message.from).x, to=lanes.get(message.to).x;
-      return `<g class="diagram-edge"><line x1="${from}" y1="${message.y}" x2="${to+(from<to?-5:5)}" y2="${message.y}" marker-end="url(#${marker})" ${message.return ? 'stroke-dasharray="6 5"' : ''}/><text x="${(from+to)/2}" y="${message.y-12}">${esc(message.label)}</text></g>`;
-    }).join('');
-}
-
 export function figureView(id) {
   const figure = figures[id];
   assert(figure, `Unknown figure: ${id}`);
   const unique = `figure-${++sequence}`, marker = unique+'-arrow';
+  const brands = (figure.brands || []).map(brand => {
+    assert(['canton','daml'].includes(brand.name));
+    const [x,y,width,height] = brand.box;
+    return `<image data-brand="${brand.name}" href="assets/${brand.name}.${brand.name === 'daml' ? 'png' : 'svg'}" x="${x}" y="${y}" width="${width}" height="${height}" preserveAspectRatio="xMidYMid meet"/>`;
+  }).join('');
+  const citation = figure.source ? `<p class="figure-source">${esc(figure.source.label)} · ${esc(figure.source.file.split('/').at(-1))} · lines ${figure.source.lines.join('–')}</p>` : '';
   return `<figure class="engineering-figure" data-figure="${esc(id)}"><figcaption>${esc(figure.title)}</figcaption>
-    <svg viewBox="0 0 ${figure.size.join(' ')}" role="img" aria-labelledby="${unique}-title"><title id="${unique}-title">${esc(figure.title)}</title><defs><marker id="${marker}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 1 1 L 9 5 L 1 9" fill="none" stroke="#0079ff" stroke-width="1.6"/></marker></defs>${figure.kind === 'sequence' ? sequenceDiagram(figure,marker) : graph(figure,marker)}</svg>
-    <p class="diagram-caption">${esc(figure.caption)}</p></figure>`;
+    <svg viewBox="0 0 ${figure.size.join(' ')}" role="img" aria-labelledby="${unique}-title"><title id="${unique}-title">${esc(figure.title)}</title><defs><marker id="${marker}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 1 1 L 9 5 L 1 9" fill="none" stroke="#0079ff" stroke-width="1.6"/></marker></defs>${graph(figure,marker)}${brands}</svg>
+    <p class="diagram-caption">${esc(figure.caption)}</p>${citation}</figure>`;
 }

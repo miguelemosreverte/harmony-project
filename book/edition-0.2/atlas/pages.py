@@ -1,12 +1,19 @@
 """Four reader intentions, each with its own small and explicit reading route."""
 from html import escape
+from hashlib import sha256
+from pathlib import Path
 import pages
 from render import markdown, html_fragment, passive
 
 
 def code():
     body='''<main id="main" class="source-workbench"><aside class="source-tree-pane"><p class="eyebrow">Developer · choose a file</p><nav id="file-tree" data-file-tree aria-label="Repository files"></nav></aside><section class="source-reading"><header><p class="eyebrow">Actual source from this checkout</p><h1 id="source-name"></h1><p id="source-location" class="citation"></p></header><div id="source-notes"></div><div id="source-code" class="colored-source" aria-label="Source code"></div><section class="source-context"><h2>This file in its vertical slice</h2><div id="source-diagram"></div></section><p id="source-counts" class="quiet-note"></p><a class="quiet-return" href="book-overview.html">Return to the reading paths →</a></section></main>'''
-    return pages.shell('Explore the actual code',body,slug='code',kind='atlas-code')
+    html=pages.shell('Explore the actual code',body,slug='code',kind='atlas-code')
+    site=Path(__file__).resolve().parents[3]/'design/0.2'
+    for name in ['quiet.css','state.js','reader/code.js']:
+        digest=sha256((site/name).read_bytes()).hexdigest()[:12]
+        html=html.replace(f'"{name}"',f'"{name}?v={digest}"')
+    return html
 
 
 def reviewer():

@@ -3,11 +3,14 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {createHash} from 'node:crypto';
 import {figureView} from './figures.mjs';
 
 const folder = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(folder, '../..');
 const plan = JSON.parse(await fs.readFile(path.join(folder, 'plan.json'), 'utf8'));
+const revision = async file => createHash('sha256').update(await fs.readFile(file)).digest('hex').slice(0,12);
+const versions = Object.fromEntries(await Promise.all(['sheet.css','sheet.js'].map(async file => [file,await revision(path.join(folder,file))])));
 const escape = value => String(value).replace(/[&<>"']/g, c => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
 })[c]);
@@ -16,17 +19,6 @@ assert.deepEqual(plan.branches.map(branch => branch.id), ['user', 'investor', 'a
 assert.deepEqual(plan.navigation.cross_branch_links, []);
 for (const file of [...Object.values(plan.sources), ...Object.values(plan.images)]) {
   await fs.access(path.join(root, file));
-}
-
-async function excerptView(excerpt) {
-  const source = plan.sources[excerpt.source];
-  assert(source, `Unknown excerpt source: ${excerpt.source}`);
-  const lines = (await fs.readFile(path.join(root, source), 'utf8')).trimEnd().split('\n');
-  const [start, end] = excerpt.lines;
-  assert(start > 0 && end >= start && end <= lines.length, `Invalid lines in ${source}`);
-  const selected = lines.slice(start - 1, end);
-  return `<figure class="excerpt"><figcaption>${escape(path.basename(source))} · lines ${start}–${end}</figcaption>
-    <pre><code>${selected.map((line, i) => `<span class="excerpt-line"><span class="excerpt-number" aria-hidden="true">${start + i}</span>${escape(line)}</span>`).join('')}</code></pre></figure>`;
 }
 
 async function demoView(demo) {
@@ -47,18 +39,18 @@ async function demoView(demo) {
   return `<section class="demo" data-recording="${escape(demo.recording)}"><p class="demo-environment"><strong>Recorded Canton environment</strong>${escape(record.provenance.topology)}</p><p class="demo-model">${escape(demo.model)}</p><ol class="demo-beats">${beats}</ol>${visibility}<p class="demo-explain">${escape(demo.explain)}</p></section>`;
 }
 
-function productionFiles(files) {
-  return `<div class="production-files">${files.map(file => {
-    const source = plan.sources[file.source];
-    return `<section data-production-source="${escape(source)}"><h4>${escape(path.basename(source))}</h4><p class="production-path">${escape(path.dirname(source))}/</p><p>${escape(file.purpose)}</p></section>`;
-  }).join('')}</div>`;
+async function explorerView(explorer) {
+  assert.equal(explorer.entry, 'design/0.2/code.html');
+  assert(explorer.file.startsWith('product/') && !explorer.file.includes('/src/test/'));
+  const url = `../../${explorer.entry}?v=${await revision(path.join(root,explorer.entry))}&file=${encodeURIComponent(explorer.file)}&line=${explorer.line}`;
+  return `<iframe data-source-explorer src="${url}" title="Production source explorer" class="source-explorer"></iframe>`;
 }
 
 async function pageView(page, index, branch) {
   for (const ref of page.sources) assert(plan.sources[ref], `Unknown source: ${ref}`);
   if (branch.production_only) {
     assert.equal(page.frames.length, 0, 'Implementation must not show screenshots containing harness code');
-    for (const ref of [...page.sources, ...(page.excerpts || []).map(e => e.source), ...(page.files || []).map(f => f.source)]) {
+    for (const ref of page.sources) {
       const source = plan.sources[ref];
       assert(source?.startsWith('product/') && !source.includes('/src/test/') && /\.(scala|daml)$/.test(source), `Non-production source in Implementation: ${source}`);
     }
@@ -72,7 +64,6 @@ async function pageView(page, index, branch) {
     assert(file, `Unknown image: ${frame.image}`);
     return `<figure data-image="${escape(frame.image)}"><img src="../../${escape(file)}" alt="${escape(frame.label)} — existing UI reference" width="1280" height="900" draggable="false"><figcaption>${escape(frame.label)}</figcaption></figure>`;
   }).join('');
-  const excerpts = await Promise.all((page.excerpts || []).map(excerptView));
   const diagrams = (page.diagrams || []).map(figureView).join('');
   const demo = page.demo ? await demoView(page.demo) : '';
   return `<article class="page" data-page="${escape(page.id)}">
@@ -81,8 +72,7 @@ async function pageView(page, index, branch) {
     <div class="frames" data-count="${page.frames.length}">${frames}</div>
 ${diagrams}
 ${demo}
-${page.files ? productionFiles(page.files) : ''}
-${excerpts.join('')}
+${page.explorer ? await explorerView(page.explorer) : ''}
 ${page.demo ? '' : `    <p class="show">${escape(page.show)}</p>`}
     <p class="sources">Sources: ${page.sources.map(escape).join(' · ')}</p>
   </article>`;
@@ -107,13 +97,13 @@ const html = `<!doctype html>
 <link rel="icon" href="../../product/web/site/favicon.svg">
 <link rel="stylesheet" href="../../product/scene/site/surface.css">
 <link rel="stylesheet" href="../../design/0.2/quiet.css">
-<link rel="stylesheet" href="sheet.css">
-<script type="module" src="sheet.js"></script>
+<link rel="stylesheet" href="sheet.css?v=${versions['sheet.css']}">
+<script type="module" src="sheet.js?v=${versions['sheet.js']}"></script>
 </head><body>
 <header class="reference-header"><span class="reference-brand">Harmonia</span><span class="quiet-location">${escape(plan.status)}</span></header>
 <main id="viewport" tabindex="0" aria-label="Content sheet. Drag or use arrow keys to pan. Pinch, Control plus scroll, or plus and minus keys to zoom. Home fits the whole sheet." aria-describedby="gestures">
   <div id="paper" class="paper">
-    <header class="paper-heading"><h1>${escape(plan.title)}</h1><p>${escape(plan.intent)}</p><p class="sheet-note">All twelve page summaries and their selected references are unfolded here. Read each region left to right.</p></header>
+    <header class="paper-heading"><h1>${escape(plan.title)}</h1><p>${escape(plan.intent)}</p><p class="sheet-note">All four regions are unfolded here. Pan and zoom; choose production files in the existing source explorer.</p></header>
     <div class="regions">${regions.join('')}</div>
     <footer class="paper-notes"><p>${escape(plan.shared.scope)}</p><p>${escape(plan.shared.evidence)}</p>
       <dl>${Object.entries(plan.sources).map(([key, file]) => `<div><dt>${escape(key)}</dt><dd>${escape(file)}</dd></div>`).join('')}</dl>
@@ -128,4 +118,4 @@ const html = `<!doctype html>
 const output = path.join(folder, 'index.html');
 if (process.argv.includes('--check')) assert.equal(await fs.readFile(output, 'utf8'), html);
 else await fs.writeFile(output, html);
-console.log(`${plan.branches.length} regions; ${plan.branches.reduce((n, b) => n + b.pages.length, 0)} pages; sources, frames and excerpts verified.`);
+console.log(`${plan.branches.length} regions; ${plan.branches.reduce((n, b) => n + b.pages.length, 0)} pages; sources, frames, diagrams and production explorer verified.`);

@@ -2,6 +2,12 @@
 const viewport = document.querySelector('#viewport');
 const paper = document.querySelector('#paper');
 const zoomLabel = document.querySelector('#zoom');
+const explorer = document.querySelector('[data-source-explorer]');
+if (explorer && new URL(location.href).searchParams.has('file')) {
+  const src = new URL(explorer.src), params = new URL(location.href).searchParams;
+  for (const key of ['file','line']) if (params.has(key)) src.searchParams.set(key,params.get(key));
+  explorer.src = src.href;
+}
 document.documentElement.dataset.sheet = 'interactive';
 
 let camera = {x: 0, y: 0, z: 1};
@@ -50,6 +56,7 @@ function fit() {
 function restore() {
   clearTimeout(saveTimer);
   const params = new URL(location.href).searchParams;
+  if (explorer?.contentWindow) explorer.contentWindow.postMessage({type:'harmonia-source',file:params.get('file') || undefined,line:params.get('line') || 1},location.origin);
   const values = ['x', 'y', 'z'].map(key => params.get(key));
   if (values.some(value => value === null || value.trim() === '' || !Number.isFinite(Number(value))) || Number(values[2]) <= 0) {
     fit();
@@ -152,6 +159,17 @@ viewport.addEventListener('keydown', event => {
 });
 
 window.addEventListener('popstate', restore);
+window.addEventListener('message', event => {
+  if (event.origin !== location.origin || event.source !== explorer?.contentWindow || event.data?.type !== 'harmonia-source') return;
+  const url = new URL(location.href);
+  url.searchParams.set('file', event.data.file);
+  url.searchParams.set('line', event.data.line);
+  history.replaceState(null, '', url);
+});
+explorer?.addEventListener('load', () => {
+  const params = new URL(location.href).searchParams;
+  if (params.has('file')) explorer.contentWindow.postMessage({type:'harmonia-source',file:params.get('file'),line:params.get('line') || 1}, location.origin);
+});
 window.addEventListener('resize', () => {if (fitting) fit(); else paint();});
 restore();
 viewport.focus({preventScroll: true});

@@ -109,3 +109,14 @@ body:has(.has-carousel){padding-bottom:140px}
  html[data-canvas=true] :is(body.atlas-review,body.chapter:has(#chapter-read:not([hidden]))) .quiet-paging.has-carousel::before{height:76px}
  @media(max-height:650px) and (max-width:850px){html[data-canvas=true] :is(body.atlas-review,body.chapter:has(#chapter-read:not([hidden]))) .presentation-stage{--diagram-height:170px}}
 }
+
+/* The established explorer can sit inside the unfolded content sheet. */
+[data-source-sheet="true"] .reference-header,
+[data-source-sheet="true"] .quiet-return,
+[data-source-sheet="true"] .atlas-code::after { display:none; }
+[data-source-sheet="true"] .reference-shell { margin:0; max-width:none; border:0; border-radius:0; box-shadow:none; }
+[data-source-sheet="true"] #file-tree { max-height:1400px; }
+#file-tree a:hover, #file-tree summary:hover { background:var(--pale); color:var(--ink); }
+#file-tree a:focus-visible, #file-tree summary:focus-visible { outline:2px solid var(--accent); outline-offset:-2px; }
+[data-source-sheet="true"] body { background:var(--surface); }
+.atlas-code .workflow-actor { color:var(--muted); }

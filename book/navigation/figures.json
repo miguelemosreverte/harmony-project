@@ -1,208 +1,9 @@
 {
-  "participants-demo": {
-    "title": "The private-approval environment",
-    "size": [
-      680,
-      370
-    ],
-    "nodes": [
-      {
-        "id": "bank",
-        "box": [
-          25,
-          25,
-          195,
-          110
-        ],
-        "title": "Northbank",
-        "detail": [
-          "Bank participant",
-          "Private Application"
-        ],
-        "tone": "accent"
-      },
-      {
-        "id": "buyer",
-        "box": [
-          243,
-          25,
-          195,
-          110
-        ],
-        "title": "Alice",
-        "detail": [
-          "Buyer participant",
-          "Shared progress"
-        ],
-        "tone": "normal"
-      },
-      {
-        "id": "reviewer",
-        "box": [
-          460,
-          25,
-          195,
-          110
-        ],
-        "title": "Olivia",
-        "detail": [
-          "Reviewer participant",
-          "Shared progress"
-        ],
-        "tone": "normal"
-      },
-      {
-        "id": "sync",
-        "box": [
-          100,
-          230,
-          480,
-          100
-        ],
-        "title": "Local synchronizer",
-        "detail": [
-          "Sequencing and mediation",
-          "Three participants; one local JVM"
-        ],
-        "tone": "normal"
-      }
-    ],
-    "edges": [
-      {
-        "source": "bank",
-        "target": "sync",
-        "ports": [
-          "bottom",
-          "top"
-        ],
-        "via": [
-          [
-            122.5,
-            185
-          ],
-          [
-            340,
-            185
-          ]
-        ]
-      },
-      {
-        "source": "buyer",
-        "target": "sync",
-        "ports": [
-          "bottom",
-          "top"
-        ]
-      },
-      {
-        "source": "reviewer",
-        "target": "sync",
-        "ports": [
-          "bottom",
-          "top"
-        ],
-        "via": [
-          [
-            557.5,
-            165
-          ],
-          [
-            340,
-            165
-          ]
-        ]
-      }
-    ],
-    "zones": [],
-    "caption": "Parties are hosted by participant nodes. This recording uses a local synchronizer, not the Global Synchronizer."
-  },
-  "adapter-demo": {
-    "title": "The generated integration path",
-    "size": [
-      680,
-      480
-    ],
-    "nodes": [
-      {
-        "id": "core",
-        "box": [
-          165,
-          20,
-          350,
-          85
-        ],
-        "title": "WorkflowInstance.Advance",
-        "detail": [
-          "Check assignee and subject"
-        ],
-        "tone": "normal"
-      },
-      {
-        "id": "adapter",
-        "box": [
-          165,
-          190,
-          350,
-          100
-        ],
-        "title": "Generated StepAction binding",
-        "detail": [
-          "Execute the source choice",
-          "Keep the original application package"
-        ],
-        "tone": "accent"
-      },
-      {
-        "id": "source",
-        "box": [
-          165,
-          375,
-          350,
-          80
-        ],
-        "title": "LegacyFinancing.Approve",
-        "detail": [
-          "Source application authority"
-        ],
-        "tone": "normal"
-      }
-    ],
-    "edges": [
-      {
-        "source": "core",
-        "target": "adapter",
-        "ports": [
-          "bottom",
-          "top"
-        ],
-        "label": "ExecuteAction",
-        "label_at": [
-          340,
-          155
-        ]
-      },
-      {
-        "source": "adapter",
-        "target": "source",
-        "ports": [
-          "bottom",
-          "top"
-        ],
-        "label": "Source.Approve",
-        "label_at": [
-          340,
-          340
-        ]
-      }
-    ],
-    "zones": [],
-    "caption": "The reusable core exercises an interface. The compiled binding reaches the existing application choice."
-  },
   "settlement-demo": {
     "title": "Consent first; settle together",
     "size": [
       680,
-      460
+      495
     ],
     "nodes": [
       {
@@ -337,248 +138,35 @@
         "anchor": "middle"
       }
     ],
-    "caption": "The local recording uses four participant nodes and one common synchronizer. Preparation is outside the final transaction."
-  },
-  "deployment": {
-    "title": "Runtime topology and trust boundaries",
-    "size": [
-      680,
-      680
-    ],
-    "nodes": [
+    "caption": "The proposal’s four parties prepare separately. Their eligible final transfer commits as one Daml transaction on Canton.",
+    "brands": [
       {
-        "id": "browser",
+        "name": "canton",
         "box": [
-          120,
           20,
+          435,
+          145,
+          38
+        ]
+      },
+      {
+        "name": "daml",
+        "box": [
+          520,
           440,
-          70
-        ],
-        "title": "Browser workspace",
-        "detail": [
-          "Bank, buyer or reviewer session"
-        ],
-        "tone": "normal"
-      },
-      {
-        "id": "service",
-        "box": [
-          155,
-          150,
-          370,
-          80
-        ],
-        "title": "Scala Workspace",
-        "detail": [
-          "Actor-bound participant connection"
-        ],
-        "tone": "normal"
-      },
-      {
-        "id": "bank",
-        "box": [
-          25,
-          315,
-          195,
-          100
-        ],
-        "title": "Bank participant",
-        "detail": [
-          "Daml + visible contracts"
-        ],
-        "tone": "normal"
-      },
-      {
-        "id": "buyer",
-        "box": [
-          243,
-          315,
-          195,
-          100
-        ],
-        "title": "Buyer participant",
-        "detail": [
-          "Daml + visible contracts"
-        ],
-        "tone": "normal"
-      },
-      {
-        "id": "reviewer",
-        "box": [
-          460,
-          315,
-          195,
-          100
-        ],
-        "title": "Reviewer node",
-        "detail": [
-          "Daml + visible contracts"
-        ],
-        "tone": "normal"
-      },
-      {
-        "id": "sequencer",
-        "box": [
-          80,
-          535,
-          245,
-          85
-        ],
-        "title": "Sequencer",
-        "detail": [
-          "Orders encrypted messages"
-        ],
-        "tone": "normal"
-      },
-      {
-        "id": "mediator",
-        "box": [
-          380,
-          535,
-          225,
-          85
-        ],
-        "title": "Mediator",
-        "detail": [
-          "Coordinates confirmations"
-        ],
-        "tone": "normal"
+          115,
+          27
+        ]
       }
     ],
-    "edges": [
-      {
-        "source": "browser",
-        "target": "service",
-        "ports": [
-          "bottom",
-          "top"
-        ]
-      },
-      {
-        "source": "service",
-        "target": "bank",
-        "ports": [
-          "bottom",
-          "top"
-        ],
-        "via": [
-          [
-            340,
-            265
-          ],
-          [
-            122.5,
-            265
-          ]
-        ]
-      },
-      {
-        "source": "service",
-        "target": "buyer",
-        "ports": [
-          "bottom",
-          "top"
-        ]
-      },
-      {
-        "source": "service",
-        "target": "reviewer",
-        "ports": [
-          "bottom",
-          "top"
-        ],
-        "via": [
-          [
-            340,
-            280
-          ],
-          [
-            557.5,
-            280
-          ]
-        ]
-      },
-      {
-        "source": "bank",
-        "target": "sequencer",
-        "ports": [
-          "bottom",
-          "top"
-        ],
-        "via": [
-          [
-            122.5,
-            465
-          ],
-          [
-            202.5,
-            465
-          ]
-        ]
-      },
-      {
-        "source": "buyer",
-        "target": "sequencer",
-        "ports": [
-          "bottom",
-          "top"
-        ],
-        "via": [
-          [
-            340,
-            445
-          ],
-          [
-            202.5,
-            445
-          ]
-        ]
-      },
-      {
-        "source": "reviewer",
-        "target": "sequencer",
-        "ports": [
-          "bottom",
-          "top"
-        ],
-        "via": [
-          [
-            557.5,
-            480
-          ],
-          [
-            202.5,
-            480
-          ]
-        ]
-      },
-      {
-        "source": "mediator",
-        "target": "sequencer",
-        "ports": [
-          "left",
-          "right"
-        ],
-        "dashed": true
-      }
-    ],
-    "zones": [
-      {
-        "box": [
-          25,
-          495,
-          630,
-          160
-        ],
-        "label": "Common synchronizer",
-        "label_at": [
-          492,
-          520
-        ],
-        "anchor": "middle"
-      }
-    ],
-    "caption": "Runtime connections. Participant nodes validate Daml; sequencer and mediator handle synchronization. Protocol roles follow Digital Asset’s 3.4 documentation."
+    "source": {
+      "file": "docs/proposal/harmonia.md",
+      "lines": [
+        138,
+        147
+      ],
+      "label": "Original proposal"
+    }
   },
   "packages": {
     "title": "Daml imports point toward dependencies",
@@ -722,215 +310,6 @@
     ],
     "zones": [],
     "caption": "Compile-time imports, not transaction flow. The shared interface does not import the application packages."
-  },
-  "command": {
-    "title": "One command and its observed state",
-    "kind": "sequence",
-    "size": [
-      680,
-      650
-    ],
-    "lanes": [
-      {
-        "id": "browser",
-        "x": 95,
-        "label": "Browser"
-      },
-      {
-        "id": "scala",
-        "x": 340,
-        "label": "Scala"
-      },
-      {
-        "id": "ledger",
-        "x": 585,
-        "label": "Participant"
-      }
-    ],
-    "messages": [
-      {
-        "from": "browser",
-        "to": "scala",
-        "y": 115,
-        "label": "POST /api/actions"
-      },
-      {
-        "from": "scala",
-        "to": "browser",
-        "y": 180,
-        "label": "202: accepted",
-        "return": true
-      },
-      {
-        "from": "scala",
-        "to": "ledger",
-        "y": 260,
-        "label": "Exercise Daml choice"
-      },
-      {
-        "from": "ledger",
-        "to": "scala",
-        "y": 340,
-        "label": "Commit / reject",
-        "return": true
-      },
-      {
-        "from": "scala",
-        "to": "ledger",
-        "y": 420,
-        "label": "Read visible contracts"
-      },
-      {
-        "from": "ledger",
-        "to": "scala",
-        "y": 500,
-        "label": "Participant snapshot",
-        "return": true
-      },
-      {
-        "from": "scala",
-        "to": "browser",
-        "y": 580,
-        "label": "GET /api/state result",
-        "return": true
-      }
-    ],
-    "caption": "HTTP acceptance is not ledger commitment. The later state request reads participant-visible contracts; submission errors are classified separately."
-  },
-  "results": {
-    "title": "Submission uncertainty remains explicit",
-    "size": [
-      680,
-      460
-    ],
-    "nodes": [
-      {
-        "id": "submitted",
-        "box": [
-          205,
-          25,
-          270,
-          75
-        ],
-        "title": "Submitted",
-        "detail": [
-          "IO at the Ledger API"
-        ],
-        "tone": "normal"
-      },
-      {
-        "id": "committed",
-        "box": [
-          20,
-          190,
-          195,
-          90
-        ],
-        "title": "Committed",
-        "detail": [
-          "Transaction returned"
-        ],
-        "tone": "accent"
-      },
-      {
-        "id": "rejected",
-        "box": [
-          243,
-          190,
-          195,
-          90
-        ],
-        "title": "Rejected",
-        "detail": [
-          "Definitive ledger error"
-        ],
-        "tone": "refused"
-      },
-      {
-        "id": "unknown",
-        "box": [
-          465,
-          190,
-          195,
-          90
-        ],
-        "title": "Unconfirmed",
-        "detail": [
-          "No definitive response"
-        ],
-        "tone": "normal"
-      },
-      {
-        "id": "reconcile",
-        "box": [
-          465,
-          350,
-          195,
-          80
-        ],
-        "title": "Reconcile",
-        "detail": [
-          "Read observed commits"
-        ],
-        "tone": "normal"
-      }
-    ],
-    "edges": [
-      {
-        "source": "submitted",
-        "target": "committed",
-        "ports": [
-          "bottom",
-          "top"
-        ],
-        "via": [
-          [
-            340,
-            140
-          ],
-          [
-            117.5,
-            140
-          ]
-        ]
-      },
-      {
-        "source": "submitted",
-        "target": "rejected",
-        "ports": [
-          "bottom",
-          "top"
-        ]
-      },
-      {
-        "source": "submitted",
-        "target": "unknown",
-        "ports": [
-          "bottom",
-          "top"
-        ],
-        "via": [
-          [
-            340,
-            155
-          ],
-          [
-            562.5,
-            155
-          ]
-        ]
-      },
-      {
-        "source": "unknown",
-        "target": "reconcile",
-        "ports": [
-          "bottom",
-          "top"
-        ]
-      }
-    ],
-    "zones": [],
-    "caption": "SubmitChoice and Workspace preserve uncertainty. Reconciliation checks ledger observations; a transport failure is not classified as a rejection."
   },
   "proof": {
     "title": "A scoped proof between two updates",
@@ -1128,7 +507,15 @@
         "label": "Update 2: the owner’s authorized continuation"
       }
     ],
-    "caption": "Production contract design. Approve and Continue are distinct updates. VerifiedResult is consumed, not reused as an unbounded permission."
+    "caption": "Production contract design. Approve and Continue are distinct updates. VerifiedResult is consumed, not reused as an unbounded permission.",
+    "source": {
+      "file": "docs/proposal/harmonia.md",
+      "lines": [
+        153,
+        160
+      ],
+      "label": "Original proposal"
+    }
   },
   "atomic": {
     "title": "The final transaction boundary",
@@ -1273,6 +660,1428 @@
         "anchor": "middle"
       }
     ],
-    "caption": "Consent, source locking and destination preparation precede this boundary. Failure within this final update rolls back its custody operations together."
+    "caption": "Consent, source locking and destination preparation precede this boundary. Failure within this final update rolls back its custody operations together.",
+    "source": {
+      "file": "docs/proposal/harmonia.md",
+      "lines": [
+        138,
+        147
+      ],
+      "label": "Original proposal"
+    }
+  },
+  "ecosystem": {
+    "title": "Harmonia in the Canton ecosystem",
+    "size": [
+      680,
+      800
+    ],
+    "nodes": [
+      {
+        "id": "users",
+        "box": [
+          35,
+          20,
+          210,
+          90
+        ],
+        "title": "Users",
+        "detail": [
+          "Inspect · authorize · execute"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "dapp",
+        "box": [
+          345,
+          20,
+          300,
+          90
+        ],
+        "title": "harmonia-dapp",
+        "detail": [
+          "Viewer and composer"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "source",
+        "box": [
+          35,
+          210,
+          210,
+          105
+        ],
+        "title": "Package Manager",
+        "detail": [
+          "DARs + metadata",
+          "External; illustrative"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "builder",
+        "box": [
+          345,
+          210,
+          300,
+          105
+        ],
+        "title": "harmonia-builder",
+        "detail": [
+          "Build-time integration",
+          "Outputs a Binding DAR"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "core",
+        "box": [
+          45,
+          520,
+          260,
+          95
+        ],
+        "title": "harmonia-core",
+        "detail": [
+          "Shared workflow state"
+        ],
+        "tone": "accent"
+      },
+      {
+        "id": "apps",
+        "box": [
+          385,
+          520,
+          260,
+          95
+        ],
+        "title": "Application DARs",
+        "detail": [
+          "Own choices and authority"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "binding",
+        "box": [
+          215,
+          680,
+          250,
+          85
+        ],
+        "title": "Binding DAR",
+        "detail": [
+          "Application participation"
+        ],
+        "tone": "accent"
+      }
+    ],
+    "edges": [
+      {
+        "source": "users",
+        "target": "dapp",
+        "ports": [
+          "right",
+          "left"
+        ]
+      },
+      {
+        "source": "dapp",
+        "target": "source",
+        "ports": [
+          "bottom",
+          "top"
+        ],
+        "via": [
+          [
+            495,
+            160
+          ],
+          [
+            140,
+            160
+          ]
+        ],
+        "label": "Metadata",
+        "label_at": [
+          205,
+          151
+        ]
+      },
+      {
+        "source": "source",
+        "target": "builder",
+        "ports": [
+          "right",
+          "left"
+        ],
+        "label": "DARs",
+        "label_at": [
+          295,
+          250
+        ],
+        "dashed": true
+      },
+      {
+        "source": "dapp",
+        "target": "core",
+        "ports": [
+          "right",
+          "right"
+        ],
+        "via": [
+          [
+            665,
+            65
+          ],
+          [
+            665,
+            480
+          ],
+          [
+            325,
+            480
+          ],
+          [
+            325,
+            567.5
+          ]
+        ],
+        "label": "Ledger API",
+        "label_at": [
+          592,
+          358
+        ]
+      },
+      {
+        "source": "builder",
+        "target": "binding",
+        "ports": [
+          "bottom",
+          "right"
+        ],
+        "via": [
+          [
+            495,
+            375
+          ],
+          [
+            665,
+            375
+          ],
+          [
+            665,
+            722.5
+          ]
+        ],
+        "dashed": true
+      },
+      {
+        "source": "binding",
+        "target": "core",
+        "ports": [
+          "top",
+          "bottom"
+        ],
+        "via": [
+          [
+            340,
+            645
+          ],
+          [
+            175,
+            645
+          ]
+        ]
+      },
+      {
+        "source": "binding",
+        "target": "apps",
+        "ports": [
+          "top",
+          "bottom"
+        ],
+        "via": [
+          [
+            340,
+            645
+          ],
+          [
+            515,
+            645
+          ]
+        ]
+      }
+    ],
+    "zones": [
+      {
+        "box": [
+          20,
+          395,
+          640,
+          390
+        ],
+        "label": "Canton Validator / Super Validator",
+        "label_at": [
+          45,
+          500
+        ]
+      }
+    ],
+    "caption": "Proposed system context. Harmonia composes application workflows; the Package Manager supplies build-time inputs.",
+    "source": {
+      "file": "docs/proposal/harmonia.md",
+      "lines": [
+        178,
+        216
+      ],
+      "label": "Original proposal"
+    },
+    "brands": [
+      {
+        "name": "canton",
+        "box": [
+          45,
+          414,
+          195,
+          51
+        ]
+      },
+      {
+        "name": "daml",
+        "box": [
+          510,
+          428,
+          112,
+          28
+        ]
+      }
+    ]
+  },
+  "participation": {
+    "title": "Two ways in. One workflow model.",
+    "size": [
+      680,
+      690
+    ],
+    "nodes": [
+      {
+        "id": "native",
+        "box": [
+          30,
+          35,
+          270,
+          100
+        ],
+        "title": "New application DAR",
+        "detail": [
+          "Implements the interface"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "existing",
+        "box": [
+          380,
+          35,
+          270,
+          100
+        ],
+        "title": "Existing application DAR",
+        "detail": [
+          "Keeps its original code"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "builder",
+        "box": [
+          380,
+          225,
+          270,
+          105
+        ],
+        "title": "harmonia-builder",
+        "detail": [
+          "Generates typed binding",
+          "At build time"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "direct",
+        "box": [
+          30,
+          400,
+          270,
+          90
+        ],
+        "title": "Direct participation",
+        "detail": [
+          "Application implements action"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "binding",
+        "box": [
+          380,
+          400,
+          270,
+          90
+        ],
+        "title": "Binding DAR",
+        "detail": [
+          "Wraps the eligible choice"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "core",
+        "box": [
+          160,
+          575,
+          360,
+          95
+        ],
+        "title": "harmonia-core",
+        "detail": [
+          "One managed workflow model"
+        ],
+        "tone": "accent"
+      }
+    ],
+    "edges": [
+      {
+        "source": "native",
+        "target": "direct",
+        "ports": [
+          "bottom",
+          "top"
+        ]
+      },
+      {
+        "source": "existing",
+        "target": "builder",
+        "ports": [
+          "bottom",
+          "top"
+        ],
+        "dashed": true
+      },
+      {
+        "source": "builder",
+        "target": "binding",
+        "ports": [
+          "bottom",
+          "top"
+        ],
+        "dashed": true
+      },
+      {
+        "source": "direct",
+        "target": "core",
+        "ports": [
+          "bottom",
+          "top"
+        ],
+        "via": [
+          [
+            165,
+            530
+          ],
+          [
+            340,
+            530
+          ]
+        ]
+      },
+      {
+        "source": "binding",
+        "target": "core",
+        "ports": [
+          "bottom",
+          "top"
+        ],
+        "via": [
+          [
+            515,
+            550
+          ],
+          [
+            340,
+            550
+          ]
+        ]
+      }
+    ],
+    "zones": [],
+    "caption": "Both paths retain source-application authority. The recording below demonstrates the generated-binding path.",
+    "source": {
+      "file": "docs/proposal/harmonia.md",
+      "lines": [
+        108,
+        134
+      ],
+      "label": "Original proposal"
+    },
+    "brands": [
+      {
+        "name": "daml",
+        "box": [
+          270,
+          175,
+          140,
+          34
+        ]
+      }
+    ]
+  },
+  "component-map": {
+    "title": "Original component map · off ledger / on ledger",
+    "size": [
+      1000,
+      1100
+    ],
+    "nodes": [
+      {
+        "id": "users",
+        "box": [
+          25,
+          75,
+          210,
+          100
+        ],
+        "title": "Users",
+        "detail": [
+          "Workflow actors",
+          "DAR providers"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "dapp",
+        "box": [
+          310,
+          65,
+          300,
+          120
+        ],
+        "title": "harmonia-dapp",
+        "detail": [
+          "Viewer · composer",
+          "State · submission · DAR fetch"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "builder",
+        "box": [
+          310,
+          280,
+          300,
+          125
+        ],
+        "title": "harmonia-builder",
+        "detail": [
+          "DAR input → project + code",
+          "Build-time generation"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "manager",
+        "box": [
+          705,
+          280,
+          270,
+          125
+        ],
+        "title": "Package Manager",
+        "detail": [
+          "DARs + metadata",
+          "External; Catalyx illustrative"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "core",
+        "box": [
+          25,
+          610,
+          265,
+          245
+        ],
+        "title": "harmonia-core",
+        "detail": [
+          "Workflow state",
+          "Interfaces + applicability",
+          "Actor + authority",
+          "Steps · XOR · join",
+          "Outputs · continuation",
+          "Bounded atomic execution"
+        ],
+        "tone": "accent"
+      },
+      {
+        "id": "binding",
+        "box": [
+          430,
+          610,
+          245,
+          245
+        ],
+        "title": "Harmonia Binding DAR",
+        "detail": [
+          "Interfaces ⇄ application",
+          "Applicability declarations",
+          "Defines participation",
+          "Generated for existing DARs"
+        ],
+        "tone": "accent"
+      },
+      {
+        "id": "direct",
+        "box": [
+          710,
+          600,
+          265,
+          110
+        ],
+        "title": "Source App DAR ①",
+        "detail": [
+          "Direct interface implementation",
+          "Application owns its rules"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "existing",
+        "box": [
+          710,
+          775,
+          265,
+          100
+        ],
+        "title": "Source App DAR ②",
+        "detail": [
+          "Existing, unchanged source",
+          "Bound by generated code"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "references",
+        "box": [
+          360,
+          955,
+          500,
+          115
+        ],
+        "title": "harmonia-references",
+        "detail": [
+          "Sample DARs · two participation paths",
+          "Four-party transfer · financing → offer"
+        ],
+        "tone": "normal"
+      }
+    ],
+    "edges": [
+      {
+        "source": "users",
+        "target": "dapp",
+        "ports": [
+          "right",
+          "left"
+        ]
+      },
+      {
+        "source": "users",
+        "target": "builder",
+        "ports": [
+          "bottom",
+          "left"
+        ],
+        "via": [
+          [
+            130,
+            342.5
+          ]
+        ],
+        "dashed": true
+      },
+      {
+        "source": "dapp",
+        "target": "builder",
+        "ports": [
+          "bottom",
+          "top"
+        ],
+        "label": "Retrieved DARs",
+        "label_at": [
+          470,
+          236
+        ],
+        "dashed": true
+      },
+      {
+        "source": "builder",
+        "target": "manager",
+        "ports": [
+          "right",
+          "left"
+        ],
+        "label": "Fetch",
+        "label_at": [
+          656,
+          331
+        ],
+        "dashed": true
+      },
+      {
+        "source": "dapp",
+        "target": "manager",
+        "ports": [
+          "right",
+          "top"
+        ],
+        "via": [
+          [
+            840,
+            125
+          ]
+        ],
+        "label": "Metadata",
+        "label_at": [
+          825,
+          211
+        ]
+      },
+      {
+        "source": "dapp",
+        "target": "core",
+        "ports": [
+          "bottom",
+          "top"
+        ],
+        "via": [
+          [
+            265,
+            190
+          ],
+          [
+            265,
+            540
+          ],
+          [
+            157.5,
+            540
+          ]
+        ],
+        "label": "Transactions / state",
+        "label_at": [
+          135,
+          567
+        ]
+      },
+      {
+        "source": "builder",
+        "target": "binding",
+        "ports": [
+          "bottom",
+          "top"
+        ],
+        "via": [
+          [
+            460,
+            470
+          ],
+          [
+            497.5,
+            470
+          ]
+        ],
+        "label": "Generated project / DAR",
+        "label_at": [
+          635,
+          518
+        ],
+        "dashed": true
+      },
+      {
+        "source": "binding",
+        "target": "core",
+        "ports": [
+          "left",
+          "right"
+        ],
+        "label": "Participation",
+        "label_at": [
+          360,
+          684
+        ],
+        "start": [
+          425,
+          700
+        ],
+        "end": [
+          295,
+          700
+        ]
+      },
+      {
+        "source": "direct",
+        "target": "binding",
+        "ports": [
+          "left",
+          "right"
+        ],
+        "via": [
+          [
+            695,
+            655
+          ],
+          [
+            695,
+            732.5
+          ]
+        ]
+      },
+      {
+        "source": "binding",
+        "target": "existing",
+        "ports": [
+          "right",
+          "left"
+        ],
+        "via": [
+          [
+            695,
+            732.5
+          ],
+          [
+            695,
+            825
+          ]
+        ],
+        "dashed": true
+      },
+      {
+        "source": "references",
+        "target": "core",
+        "ports": [
+          "left",
+          "bottom"
+        ],
+        "via": [
+          [
+            157.5,
+            1012.5
+          ]
+        ],
+        "label": "Demonstrates both paths",
+        "label_at": [
+          210,
+          930
+        ]
+      },
+      {
+        "source": "core",
+        "target": "binding",
+        "ports": [
+          "right",
+          "left"
+        ],
+        "start": [
+          295,
+          795
+        ],
+        "end": [
+          425,
+          795
+        ],
+        "label": "Interfaces",
+        "label_at": [
+          360,
+          819
+        ]
+      }
+    ],
+    "zones": [
+      {
+        "box": [
+          5,
+          5,
+          990,
+          450
+        ],
+        "label": "OFF LEDGER · interaction, generation, external services"
+      },
+      {
+        "box": [
+          5,
+          475,
+          990,
+          620
+        ],
+        "label": "ON LEDGER · Daml",
+        "label_at": [
+          705,
+          505
+        ]
+      }
+    ],
+    "caption": "Canton Validator / Super Validator hosts the on-ledger packages. Redrawn from the supplied component map. Solid arrows: runtime or on-ledger relationships. Dashed arrows: build-time inputs and binding.",
+    "source": {
+      "file": "docs/proposal/harmonia-architecture.html",
+      "lines": [
+        88,
+        315
+      ],
+      "label": "Original architecture"
+    }
+  },
+  "contract-model": {
+    "title": "Original contract model · proposed entities",
+    "size": [
+      1000,
+      1030
+    ],
+    "nodes": [
+      {
+        "id": "definition",
+        "box": [
+          20,
+          30,
+          275,
+          200
+        ],
+        "title": "WorkflowDefinition",
+        "detail": [
+          "definitionId · version",
+          "steps · branches · joins",
+          "atomicBlocks · subWorkflows",
+          "Instantiate"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "instance",
+        "box": [
+          370,
+          30,
+          290,
+          200
+        ],
+        "title": "WorkflowInstance",
+        "detail": [
+          "roleBindings · currentSteps",
+          "completedSteps · outputs",
+          "AdvanceStep · Join · Continue",
+          "Bounded ExecuteAtomic"
+        ],
+        "tone": "accent"
+      },
+      {
+        "id": "assignment",
+        "box": [
+          735,
+          30,
+          245,
+          235
+        ],
+        "title": "StepAssignment",
+        "detail": [
+          "step · instance · actor",
+          "kind · target · authority",
+          "Execute → application choice",
+          "Controller: assigned actor"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "roles",
+        "box": [
+          355,
+          335,
+          255,
+          115
+        ],
+        "title": "RoleBinding",
+        "detail": [
+          "role · party · rights"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "continuation",
+        "box": [
+          355,
+          535,
+          255,
+          145
+        ],
+        "title": "Continuation",
+        "detail": [
+          "producer → consumer",
+          "outputs link owned domains"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "interface",
+        "box": [
+          725,
+          355,
+          260,
+          165
+        ],
+        "title": "HarmoniaStepAction",
+        "detail": [
+          "Interface · StepView",
+          "executeStep",
+          "Disclosure / visibility limits"
+        ],
+        "tone": "accent"
+      },
+      {
+        "id": "applies",
+        "box": [
+          350,
+          805,
+          260,
+          150
+        ],
+        "title": "AppliesTo",
+        "detail": [
+          "templateId · choice",
+          "stepKind · role",
+          "Binding declaration"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "app",
+        "box": [
+          725,
+          720,
+          260,
+          235
+        ],
+        "title": "AppTemplate",
+        "detail": [
+          "Own signatories + observers",
+          "Own eligible choices",
+          "Direct interface or binding",
+          "Ownership · authority · privacy"
+        ],
+        "tone": "normal"
+      }
+    ],
+    "edges": [
+      {
+        "source": "definition",
+        "target": "instance",
+        "ports": [
+          "right",
+          "left"
+        ],
+        "label": "Creates 1…n",
+        "label_at": [
+          330,
+          115
+        ]
+      },
+      {
+        "source": "instance",
+        "target": "assignment",
+        "ports": [
+          "right",
+          "left"
+        ],
+        "label": "Assigns 1…n",
+        "label_at": [
+          699,
+          107
+        ]
+      },
+      {
+        "source": "instance",
+        "target": "roles",
+        "ports": [
+          "bottom",
+          "top"
+        ]
+      },
+      {
+        "source": "instance",
+        "target": "continuation",
+        "ports": [
+          "right",
+          "right"
+        ],
+        "via": [
+          [
+            687,
+            130
+          ],
+          [
+            687,
+            607.5
+          ]
+        ],
+        "label": "0…n",
+        "label_at": [
+          670,
+          563
+        ]
+      },
+      {
+        "source": "continuation",
+        "target": "definition",
+        "ports": [
+          "left",
+          "bottom"
+        ],
+        "via": [
+          [
+            155,
+            607.5
+          ]
+        ],
+        "label": "Next definition",
+        "label_at": [
+          171,
+          522
+        ]
+      },
+      {
+        "source": "assignment",
+        "target": "interface",
+        "ports": [
+          "bottom",
+          "top"
+        ],
+        "label": "Exercises via",
+        "label_at": [
+          860,
+          320
+        ]
+      },
+      {
+        "source": "applies",
+        "target": "interface",
+        "ports": [
+          "right",
+          "left"
+        ],
+        "via": [
+          [
+            670,
+            880
+          ],
+          [
+            670,
+            437.5
+          ]
+        ],
+        "label": "Qualifies",
+        "label_at": [
+          670,
+          696
+        ]
+      },
+      {
+        "source": "interface",
+        "target": "app",
+        "ports": [
+          "bottom",
+          "top"
+        ],
+        "label": "Binds",
+        "label_at": [
+          868,
+          646
+        ],
+        "dashed": true
+      },
+      {
+        "source": "applies",
+        "target": "app",
+        "ports": [
+          "right",
+          "left"
+        ],
+        "via": [
+          [
+            665,
+            880
+          ],
+          [
+            665,
+            837.5
+          ]
+        ],
+        "label": "Selects choice",
+        "label_at": [
+          665,
+          823
+        ],
+        "dashed": true
+      }
+    ],
+    "zones": [],
+    "caption": "These are the original conceptual names and relations, not declarations that every proposed template exists. The adjacent mapping names the current implementation.",
+    "source": {
+      "file": "docs/proposal/harmonia-architecture.html",
+      "lines": [
+        318,
+        485
+      ],
+      "label": "Original architecture"
+    }
+  },
+  "model-mapping": {
+    "title": "Proposed names → current implementation",
+    "size": [
+      840,
+      885
+    ],
+    "nodes": [
+      {
+        "id": "p0",
+        "box": [
+          10,
+          55,
+          310,
+          100
+        ],
+        "title": "WorkflowDefinition",
+        "detail": [
+          "Proposed concept"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "c0",
+        "box": [
+          430,
+          55,
+          390,
+          100
+        ],
+        "title": "Definition +",
+        "detail": [
+          "PublishedDefinition",
+          "Current production"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "p1",
+        "box": [
+          10,
+          190,
+          310,
+          100
+        ],
+        "title": "WorkflowInstance",
+        "detail": [
+          "Proposed concept"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "c1",
+        "box": [
+          430,
+          190,
+          390,
+          100
+        ],
+        "title": "ProcessInstance",
+        "detail": [
+          "Current production"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "p2",
+        "box": [
+          10,
+          325,
+          310,
+          100
+        ],
+        "title": "RoleBinding / StepAssignment",
+        "detail": [
+          "Proposed concept"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "c2",
+        "box": [
+          430,
+          325,
+          390,
+          100
+        ],
+        "title": "Role · StepSpec ·",
+        "detail": [
+          "ActionBinding",
+          "Current production"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "p3",
+        "box": [
+          10,
+          460,
+          310,
+          100
+        ],
+        "title": "HarmoniaStepAction",
+        "detail": [
+          "Proposed concept"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "c3",
+        "box": [
+          430,
+          460,
+          390,
+          100
+        ],
+        "title": "StepAction",
+        "detail": [
+          "Current production"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "p4",
+        "box": [
+          10,
+          595,
+          310,
+          100
+        ],
+        "title": "Continuation",
+        "detail": [
+          "Proposed concept"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "c4",
+        "box": [
+          430,
+          595,
+          390,
+          100
+        ],
+        "title": "VerifiedResult +",
+        "detail": [
+          "SharedProgress",
+          "Current production"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "p5",
+        "box": [
+          10,
+          730,
+          310,
+          100
+        ],
+        "title": "AppliesTo",
+        "detail": [
+          "Proposed concept"
+        ],
+        "tone": "normal"
+      },
+      {
+        "id": "c5",
+        "box": [
+          430,
+          730,
+          390,
+          100
+        ],
+        "title": "Build-time mapping +",
+        "detail": [
+          "generated binding",
+          "Current production"
+        ],
+        "tone": "normal"
+      }
+    ],
+    "edges": [
+      {
+        "source": "p0",
+        "target": "c0",
+        "ports": [
+          "right",
+          "left"
+        ]
+      },
+      {
+        "source": "p1",
+        "target": "c1",
+        "ports": [
+          "right",
+          "left"
+        ]
+      },
+      {
+        "source": "p2",
+        "target": "c2",
+        "ports": [
+          "right",
+          "left"
+        ]
+      },
+      {
+        "source": "p3",
+        "target": "c3",
+        "ports": [
+          "right",
+          "left"
+        ]
+      },
+      {
+        "source": "p4",
+        "target": "c4",
+        "ports": [
+          "right",
+          "left"
+        ]
+      },
+      {
+        "source": "p5",
+        "target": "c5",
+        "ports": [
+          "right",
+          "left"
+        ]
+      }
+    ],
+    "zones": [],
+    "caption": "Step assignment is data in a ProcessInstance, not a standalone contract. The private-financing continuation uses a consumed result. AppliesTo is a compiled mapping, not arbitrary runtime dispatch.",
+    "source": {
+      "file": "docs/proposal/harmonia-architecture.html",
+      "lines": [
+        318,
+        485
+      ],
+      "label": "Original architecture"
+    }
   }
 }
