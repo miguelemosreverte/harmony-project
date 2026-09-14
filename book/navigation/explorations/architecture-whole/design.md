@@ -1,6 +1,6 @@
 # Harmonia architecture — complete presentation
 
-Status: complete candidate 03 ready for Miguel's review.
+Status: reviewed; content direction superseded by the architecture structure candidate.
 Started: 2026-09-14 UTC.
 Baseline: `0336a2a` on `design/architecture-clarity-v2`.
 
@@ -165,9 +165,23 @@ The four region numbers are reading order, not interactive steps or review gates
 
 ## User review
 
-Miguel's review of the complete candidate is pending. Assistant inspection is not
-user approval. Append actual feedback here and revise the entire presentation
-while keeping its context available.
+### Content correction — recorded 2026-09-14
+
+Candidate reviewed: `03-complete.png`, first committed at `da784c2`.
+
+Miguel asked:
+
+> Why should we place use case information, like the one about financing to offer for party transfer, which we already placed on the user aspect (the UI for the user)?
+
+He also distinguished visual polish from content quality:
+
+> Right now, the colors, this font size, and so on that you're using look pretty good, but that doesn't mean that the content is good.
+
+**Decision:** keep the approved visual language and the complete review context.
+Replace the four-region product explanation with the original architecture's two
+views: component structure and contract structure. Use cases remain in the user
+branch. The next [sectioned Markdown proposal](../architecture-structure/design.md)
+records the content hierarchy before a single new image generation.
 
 ## Artifact register
 

@@ -28,3 +28,9 @@ words, extra variants and successful rendering checks do not establish that.
 Current example: [Complete architecture](architecture-whole/design.md).
 Scope correction: [Application authority](application-authority/design.md).
 Earlier exploration: [Architecture overview and execution](architecture-v2/README.md).
+
+Latest direction: [Architecture structure](architecture-structure/design.md).
+The complete architectural presentation follows the original component and
+contract views. Concrete financing and transfer walkthroughs belong to the user
+branch. The design record develops the content in sections separated by horizontal
+rules, ending with the exact generation prompt and the user's subsequent review.
