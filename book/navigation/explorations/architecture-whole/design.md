@@ -1,6 +1,6 @@
 # Harmonia architecture — complete presentation
 
-Status: preparing a complete visual candidate for review.
+Status: complete candidate 03 ready for Miguel's review.
 Started: 2026-09-14 UTC.
 Baseline: `0336a2a` on `design/architecture-clarity-v2`.
 
@@ -32,8 +32,8 @@ revision; displayed names are explanatory unless the original diagram names them
 | Continuation | “If financing approval is obtained, the buyer creates a purchase proposal that enters a separate offer workflow.” [S6] | Financing outcome and buyer action precede a distinct offer domain. Rejection does not enter the offer path. |
 | Atomicity | “bounded atomic completion only where Canton authorization and workflow structure allow it.” [S7] | Four parties prepare a transfer; conditional atomic completion follows readiness. Settler is one of those four. |
 | Reference package | “at least two source-application DARs that prove the model in practice” [S8] | The two examples explain the reference package's role; it is not an integration prerequisite. |
-| Scope | “basic sequential flow”; “exclusive branching and joins”; “bounded atomic execution blocks” [S9] | State the bounded supported vocabulary once. |
-| Open design | “Package-import direction”; “TemplateId representation”; “Binding mechanism”; “Template & choice names in §2” [S10] | Put uncertainty in a small, explicit footer. Draw logical relationships without asserting final package imports or implemented identifiers. |
+| Scope | “sequential flow”; “XOR branch”; “join”; “bounded atomic block” [S9] | State the bounded supported vocabulary once. |
+| Open design | “Package-import direction”; “templateId representation”; “Binding mechanism”; “Template & choice names in §2” [S10] | Put uncertainty in a small, explicit footer. Draw logical relationships without asserting final package imports or implemented identifiers. |
 
 [S1]: https://github.com/miguelemosreverte/harmony-project/blob/0336a2a/docs/proposal/harmonia-architecture.html#L116-L132
 [S2]: https://github.com/miguelemosreverte/harmony-project/blob/0336a2a/docs/proposal/harmonia-architecture.html#L178-L179
@@ -120,8 +120,6 @@ boundary also introduces an unnecessary green accent.
 the redundant descriptions and repair the two contract relationships. Keep the
 same complete composition available in the second round.
 
-## Review
-
 ### Round 2 — reduce repetition and repair execution
 
 - Tool: built-in image generation, editing the whole `01-complete.png`.
@@ -140,8 +138,59 @@ on the continuation connector, despite the requested correction.
 binding inside the Instance as data, with an uninterrupted Instance-to-Continuation
 connection. Do not accept a misleading relationship just because the rest renders.
 
+### Round 3 — finish the complete review candidate
+
+- Tool: built-in image generation, editing the whole `02-complete.png`.
+- Exact prompt: [03-prompt.txt](03-prompt.txt).
+- Started: 2026-09-14 05:20:38 UTC.
+- Returned: 2026-09-14 05:22:25 UTC.
+- Artifact: [03-complete.png](03-complete.png).
+
+**Assistant inspection:** role binding is now inside the Instance, and a single
+uninterrupted arrow connects Instance to Continuation. The separate workflow and
+authority connections still reach the application choice. All four regions,
+participation routes, reference workflows, scope and open-design notes remain.
+
+**Assessment:** this is a useful candidate for reviewing the whole architecture's
+priority and coherence. It is not a complete schema listing. The execution region
+illustrates a choice-exercise step; the footer names the wider supported vocabulary.
+The source document's unresolved imports, interface placement and binding
+mechanism are not resolved by these pictures. The illustrations are raster images
+at 1448 × 1086, despite the larger size requested in the initial prompt.
+
+**Decision:** present the entire third candidate in [one HTML page](index.html).
+Use the book's existing pan/zoom implementation and deterministic camera query
+parameters. Provide an accessible text equivalent and an uncropped print layout.
+The four region numbers are reading order, not interactive steps or review gates.
+
 ## User review
 
 Miguel's review of the complete candidate is pending. Assistant inspection is not
 user approval. Append actual feedback here and revise the entire presentation
 while keeping its context available.
+
+## Browser validation
+
+Reviewed the actual desktop and mobile screenshots on 2026-09-14. The desktop
+opens with all four regions visible together. On a phone, the initial fit is a
+map of the whole sheet; pinch and pan are required to read details. The sheet
+does not reflow into unrelated cards. Fine raster labels remain the main visual
+limitation at high zoom; this candidate is for composition and content review.
+
+The existing Chrome instance and Python server were reused. No JVM or additional
+browser process was started. Checks passed for full-sheet fit, one interaction
+surface, no document scroll, stable DOM during pan/zoom, camera URL restoration
+within 0.05 CSS pixels, Home-to-fit, touch pinch and a single uncropped print page.
+No browser exceptions or failed resource loads were recorded.
+
+Local evidence:
+
+- `.artifacts/architecture-whole-review/desktop-complete.png`
+- `.artifacts/architecture-whole-review/desktop-shared-camera.png`
+- `.artifacts/architecture-whole-review/mobile-complete.png`
+- `.artifacts/architecture-whole-review/mobile-execution-detail.png`
+- `.artifacts/architecture-whole-review/complete.pdf`
+- `.artifacts/architecture-whole-review/checks.json`
+
+These checks establish rendering and navigation behavior, not semantic completeness
+or user approval. The earlier book and the other three audience paths are unchanged.

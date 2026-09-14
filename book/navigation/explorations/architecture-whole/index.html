@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Harmonia — complete architecture review</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; color: #11264b; background: #f4f8fd; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    header, footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0 20px; color: #566a89; font-size: 12px; }
+    header { height: 42px; border-bottom: 1px solid #dce6f2; }
+    header strong { font-weight: 550; color: #213b62; }
+    footer { height: 30px; position: fixed; bottom: 0; width: 100%; }
+    #viewport { position: fixed; inset: 42px 0 30px; overflow: hidden; touch-action: none; cursor: grab; outline: none; }
+    #viewport:focus-visible { box-shadow: inset 0 0 0 2px #1678ef; }
+    #viewport[data-dragging="true"] { cursor: grabbing; }
+    #paper { margin: 0; width: 1448px; position: absolute; left: 0; top: 0; transform-origin: 0 0; background: white; box-shadow: 0 2px 20px #2440640b; }
+    #paper img { display: block; width: 1448px; height: 1086px; user-select: none; -webkit-user-drag: none; }
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+    .touch-hint { display: none; }
+    @media (pointer: coarse) { .desktop-hint { display: none; } .touch-hint { display: inline; } }
+    @media (max-width: 550px) { header, footer { padding-inline: 12px; font-size: 11px; gap: 8px; } }
+    @media print {
+      @page { size: A3 landscape; margin: 10mm; }
+      html, body { height: auto; background: white; }
+      header, footer { display: none; }
+      #viewport { position: static; overflow: visible; box-shadow: none !important; }
+      #paper { position: static; width: 100%; transform: none !important; box-shadow: none; }
+      #paper img { width: 100%; height: auto; max-height: 275mm; object-fit: contain; }
+    }
+  </style>
+</head>
+<body>
+  <header><strong>Architecture · complete candidate 03</strong><span>Original proposal</span></header>
+  <main id="viewport" tabindex="0" aria-label="Complete architecture sheet. Pan and zoom to inspect." aria-describedby="navigation-help">
+    <figure id="paper">
+      <img src="03-complete.png?v=719a19bd4534" width="1448" height="1086" draggable="false"
+        alt="Harmonia architecture: independent applications share one on-ledger workflow. Four diagrams show where it runs, two participation paths, step execution, and cooperation across independently owned domains."
+        aria-describedby="architecture-description">
+      <figcaption id="architecture-description" class="sr-only">
+        <h1>Independent applications. One on-ledger workflow.</h1>
+        <h2>Where it runs</h2>
+        <p>The Dapp inspects, composes and submits through the Ledger API. Canton hosts the Daml packages: Harmonia Core holds workflow state and step rules; applications retain their own rules, ownership and visibility. The Binding DAR declares participation. Source: original architecture, section 1.</p>
+        <h2>Two ways to participate</h2>
+        <p>An application can implement the interfaces in a new DAR. Alternatively, the build-time Builder uses an existing unchanged application DAR and produces a Binding DAR and generated code. Both participate in one Core-managed model. DAR upload, Package Manager and Validator are possible inputs. Source: original architecture, section 1.</p>
+        <h2>From definition to application action</h2>
+        <p>A definition creates an instance with state, outputs and role-to-party bindings. The instance assigns a step with an actor and target choice. For a choice-exercise step, a step interface connects to the application choice, which still requires the application's authority. Applicability declares step kind, choice and role. Instance outputs can continue to a next definition. Source: original architecture, section 2; contract names are illustrative.</p>
+        <h2>Across independently owned domains</h2>
+        <p>In financing, a bank decides on evidence under its own rules. Rejection ends that path. Approval enables the buyer to create a proposal in a separate offer workflow, with buyer and seller agents relaying it. In the four-party transfer, Buyer and Seller agree, the source custodian validates a lock and the destination custodian confirms readiness. Bounded atomic execution requires the necessary authorizations, lock conditions and compatible workflow structure; otherwise coordination is staged. Settler is one of those four parties. Source: proposal, Illustrative Execution Flows.</p>
+        <p>Scope: sequence, exclusive branches and joins, bounded wait, continuation, bounded atomic blocks. Open design includes package imports, template identifiers, binding mechanism and interface placement. This is a presentation of the proposal, not measured implementation coverage.</p>
+      </figcaption>
+    </figure>
+  </main>
+  <footer>
+    <span id="navigation-help"><span class="desktop-hint">Drag to pan · pinch / Ctrl + wheel to zoom · Home to fit</span><span class="touch-hint">Drag to pan · pinch to zoom</span></span>
+    <span id="zoom" aria-label="Zoom level"></span>
+  </footer>
+  <script src="../../sheet.js?v=f68aa956f65c"></script>
+</body>
+</html>
