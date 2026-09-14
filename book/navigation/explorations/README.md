@@ -29,7 +29,12 @@ Current example: [Complete architecture](architecture-whole/design.md).
 Scope correction: [Application authority](application-authority/design.md).
 Earlier exploration: [Architecture overview and execution](architecture-v2/README.md).
 
-Current approach: [Architecture in prose](architecture-structure/architecture.html)
+Current presentation: [Architecture carousel](../../architecture/index.html?step=0),
+using the same connected-stop renderer as the user stories. The
+[full reading edition](architecture-structure/architecture.html) remains available
+for continuous reading and print.
+
+Content: [Architecture in prose](architecture-structure/architecture.html)
 ([Markdown source](architecture-structure/architecture.md)),
 a short illustrated chapter moving from Canton to application integration and workflow execution. The
 [review note](architecture-structure/text-review.md) records this change of approach.

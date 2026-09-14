@@ -1,5 +1,9 @@
 # The content sheet
 
+The current [architecture reader](../architecture/index.html?step=0) presents the
+three reviewed illustrated passages in the shared carousel format. The unfolded
+sheet below preserves the earlier content proposal for all four paths.
+
 [plan.json](plan.json) defines four independent reading regions on one unfolded
 sheet. [index.html](index.html) is generated from that plan. Drag or scroll to pan;
 pinch or Ctrl + scroll to zoom. Arrow keys pan, `+` / `-` zoom and `Home` fits the

@@ -152,6 +152,19 @@ and visual review are recorded in [textbook-passages.md](textbook-passages.md).
 Desktop/mobile screenshots and checks passed under
 `.artifacts/architecture-passages-review/`. Review of this new edition is pending.
 
+## Carousel edition
+
+Miguel asked to use the same slider format as the user path. The three illustrated
+passages are now rendered from this Markdown into
+[`book/architecture/index.html`](../../../architecture/index.html?step=0).
+It uses the existing shared StepCarousel renderer and styles, retains the images
+and content in the DOM, and stores the selected passage in the URL. The Read/Slides
+header links connect the carousel and complete text editions. Printing includes
+all three passages. The other reading paths remain separate.
+
+The carousel's [README](../../../architecture/README.md) records the ownership,
+build command, browser checks and short-screen scrolling behavior.
+
 ## Browser edition
 
 The user subsequently asked to read the chapter in the browser. [architecture.html](architecture.html)

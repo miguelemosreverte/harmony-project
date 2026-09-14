@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Harmonia architecture</title>
+  <link rel="icon" href="../../product/web/site/favicon.svg">
+  <link rel="stylesheet" href="{{asset:../../product/scene/site/scene.css}}">
+  <link rel="stylesheet" href="{{asset:../../product/scene/site/surface.css}}">
+  <link rel="stylesheet" href="{{asset:../../design/0.2/quiet.css}}">
+  <link rel="stylesheet" href="{{asset:carousel.css}}">
+  <script defer src="../../product/scene/target/scala-3.3.6/harmonia-scene-fastopt/main.js"></script>
+  <script defer src="{{asset:carousel.js}}"></script>
+</head>
+<body class="architecture-reader">
+  <div class="reference-shell">
+    <header class="reference-header">
+      <span class="reference-brand">Harmonia</span>
+      <span class="quiet-location">Architecture</span>
+      <a class="reading-link" href="../navigation/explorations/architecture-structure/architecture.html">Read</a>
+    </header>
+    <main id="architecture-slides" aria-label="Harmonia architecture">
+{{slides}}
+    </main>
+    <footer class="chapter-sources">{{sources}}</footer>
+  </div>
+  <nav class="quiet-paging has-carousel" aria-label="Architecture carousel" hidden>
+    <button id="slide-previous" type="button" aria-label="Previous architecture slide">‹</button>
+    <div id="architecture-progress"></div>
+    <button id="slide-next" type="button" aria-label="Next architecture slide">›</button>
+  </nav>
+  <p id="slide-announcement" class="visually-hidden" role="status" aria-live="polite"></p>
+</body>
+</html>

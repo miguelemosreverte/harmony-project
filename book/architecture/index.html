@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Harmonia architecture</title>
+  <link rel="icon" href="../../product/web/site/favicon.svg">
+  <link rel="stylesheet" href="../../product/scene/site/scene.css?v=a24a559ad869">
+  <link rel="stylesheet" href="../../product/scene/site/surface.css?v=d262afba73a0">
+  <link rel="stylesheet" href="../../design/0.2/quiet.css?v=83fa7099a5d3">
+  <link rel="stylesheet" href="carousel.css?v=ddefea1e0cdb">
+  <script defer src="../../product/scene/target/scala-3.3.6/harmonia-scene-fastopt/main.js"></script>
+  <script defer src="carousel.js?v=34d40f0f63dd"></script>
+</head>
+<body class="architecture-reader">
+  <div class="reference-shell">
+    <header class="reference-header">
+      <span class="reference-brand">Harmonia</span>
+      <span class="quiet-location">Architecture</span>
+      <a class="reading-link" href="../navigation/explorations/architecture-structure/architecture.html">Read</a>
+    </header>
+    <main id="architecture-slides" aria-label="Harmonia architecture">
+<section class="architecture-slide" data-step="0" role="group"
+      aria-roledescription="slide" aria-labelledby="slide-title-0">
+      <h2 id="slide-title-0">Contracts on Canton</h2>
+      <div class="slide-intro"><p><a href="https://docs.canton.network/overview/understand/what-is-canton">Canton</a> lets organizations transact through Daml smart contracts while controlling who can see their data. Banks are using this technology: Lloyds reported a <a href="https://www.lloydsbankinggroup.com/media/press-releases/2026/lloyds/lloyds-tokenisation.html">tokenised-deposit pilot</a> on Canton.</p>
+</div>
+      <figure><img src="../navigation/explorations/architecture-structure/10-canton-contracts.png?v=9ecbe330f280" alt="Financing and custody contracts keep their own application boundaries on Canton." width="1254" height="1254" decoding="async" draggable="false"></figure>
+      <div class="slide-explanation"><p>Here, a financing contract can approve a loan; a custody contract can release an asset. Each application controls its own rules and permissions.</p>
+</div>
+    </section>
+<section class="architecture-slide" data-step="1" role="group"
+      aria-roledescription="slide" aria-labelledby="slide-title-1">
+      <h2 id="slide-title-1">Harmonia gives them a shared interface</h2>
+      <div class="slide-intro"><p>Canton already supports transactions across applications. Harmonia gives participating contracts a common interface, <strong>StepAction</strong>, so a workflow can coordinate their actions without importing each application's implementation.</p>
+</div>
+      <figure><img src="../navigation/explorations/architecture-structure/09-contract-composition.png?v=eb6c48c766b8" alt="A workflow contract calls financing and custody contracts through the same StepAction interface." width="1254" height="1254" decoding="async" draggable="false"></figure>
+      <div class="slide-explanation"><p>The workflow selects an eligible action, checks who may execute it, and calls the shared <strong>ExecuteAction</strong> operation. The application's own permissions still apply.</p>
+</div>
+    </section>
+<section class="architecture-slide" data-step="2" role="group"
+      aria-roledescription="slide" aria-labelledby="slide-title-2">
+      <h2 id="slide-title-2">Request off-ledger, execute on-ledger</h2>
+      <div class="slide-intro"><p>Off-ledger software submits requests and reads confirmed results. On-ledger contracts enforce both the workflow and application rules.</p>
+</div>
+      <figure><img src="../navigation/explorations/architecture-structure/11-ledger-transaction.png?v=5d54ac68d5ee" alt="A request enters the ledger; the application action and workflow progress belong to one transaction, whose result returns off-ledger." width="1254" height="1254" decoding="async" draggable="false"></figure>
+      <div class="slide-explanation"><p><strong>An application action and that step's progress commit together.</strong> If either fails, neither change is recorded.</p>
+<p>An application can implement the interface directly. For supported existing applications, <strong>Builder</strong> generates an adapter off-ledger from a reviewed mapping. That adapter implements the interface and runs on-ledger, leaving the original application unchanged.</p>
+</div>
+    </section>
+    </main>
+    <footer class="chapter-sources"><p>Project basis: <em>Development Fund Proposal</em>, Abstract and §2, checked against the current implementation.</p>
+</footer>
+  </div>
+  <nav class="quiet-paging has-carousel" aria-label="Architecture carousel" hidden>
+    <button id="slide-previous" type="button" aria-label="Previous architecture slide">‹</button>
+    <div id="architecture-progress"></div>
+    <button id="slide-next" type="button" aria-label="Next architecture slide">›</button>
+  </nav>
+  <p id="slide-announcement" class="visually-hidden" role="status" aria-live="polite"></p>
+</body>
+</html>
