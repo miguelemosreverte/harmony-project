@@ -1,0 +1,8 @@
+Edit this Harmonia architecture concept, preserving its white-and-pale-blue visual language, exact three main responsibility panels, build-time strip, typography, symbols, and all their existing wording. Correct ONLY the upper tier and its connection.
+
+The existing vertical Ledger API arrow incorrectly points at Binding DAR. The user-facing Dapp's workflow interaction must point at Harmonia Core, the leftmost panel, as in the original architecture.
+Recompose the upper white area so a smaller Harmonia Dapp browser card is DIRECTLY ABOVE Harmonia Core. Draw ONE clean straight vertical arrow from that Dapp card down to the TOP CENTER of the Harmonia Core panel. Label the arrow "Ledger API". This arrow MUST NOT end at Binding DAR. Leave ample clearance around the "Canton · Daml" heading; move that grouping heading to the upper right of the blue band if necessary so the arrow never intersects any text.
+Move the big headline "The workflow lives on the ledger." into the spacious upper right, keeping it the dominant typography. Small Harmonia brand stays upper left.
+Replace the house icon inside the Dapp with a simple white miniature browser/workflow diagram icon, since this is the shared interface, not a property app.
+Remove the extra two-line prose "User-facing application. Not a runtime workflow engine." completely.
+Everything else stays the same. Maintain three clear visual levels: headline, on-ledger responsibilities, quiet build-time detail. Do not add any text, cards, paragraphs, legend, arrows or interface controls.
