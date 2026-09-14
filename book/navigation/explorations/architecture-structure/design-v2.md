@@ -107,6 +107,10 @@ Preserve the two original source credits and the bottom line "Still open: packag
 The correction plan and exact edit prompt were committed before generation at
 [1808805](https://github.com/miguelemosreverte/harmony-project/commit/1808805).
 
+The version 2 image, browser page and inspection were first committed at
+[aad0148](https://github.com/miguelemosreverte/harmony-project/commit/aad0148c51678fb53f6f1a7330e44dd1d586d9ca),
+2026-09-14 05:57:40 UTC, and pushed to `design/architecture-clarity-v2`.
+
 ### Assistant inspection
 
 | Review point | What the generated image actually shows |
