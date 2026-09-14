@@ -133,6 +133,25 @@ browser checks passed; the illustration is shown whole and the four sections
 remain in normal reading order. Evidence: `.artifacts/architecture-composition-review/`.
 Review of the new composition illustration and chapter remains pending.
 
+## Fifth text draft — images and short explanations together
+
+Miguel asked to tell the architectural story through images and concise prose
+together: contracts on Canton, Harmonia's shared interface, then composition.
+The chapter is now three illustrated passages, using the same contracts and
+pictograms as visual anchors. It preserves the distinction between Canton's
+existing interoperability and Harmonia's reusable coordination model.
+
+The text introduces the shared call, retains application permissions, explains
+the atomic application-action/progress pair and places adapter generation outside
+the ledger while the adapter itself runs on it. Field details and continuation
+validation are deferred from this opening; the prior revision and source audit
+preserve them. The backend has not changed.
+
+The middle image is retained. The two new images, exact prompts, source rationale
+and visual review are recorded in [textbook-passages.md](textbook-passages.md).
+Desktop/mobile screenshots and checks passed under
+`.artifacts/architecture-passages-review/`. Review of this new edition is pending.
+
 ## Browser edition
 
 The user subsequently asked to read the chapter in the browser. [architecture.html](architecture.html)

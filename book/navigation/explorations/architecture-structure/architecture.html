@@ -16,9 +16,8 @@
     p { margin: 0 0 16px; font-size: 18px; line-height: 1.6; }
     strong { font-weight: 620; }
     em { font-style: normal; color: #526783; }
-    p:has(> img:only-child) { margin: 22px 0 10px; }
+    p:has(> img:only-child) { margin: 22px 0; }
     img { display: block; width: 100%; max-width: 540px; height: auto; margin-inline: auto; }
-    p:has(> img:only-child) + p { color: #526783; font-size: 15px; text-align: center; margin-bottom: 28px; }
     a { color: #183254; text-decoration-thickness: 1px; text-underline-offset: 3px; }
     a:hover { color: #126ac1; }
     a:focus-visible { outline: 2px solid #167cf0; outline-offset: 3px; }
@@ -51,24 +50,19 @@
   <header>Harmonia · Reading draft</header>
   <main>
 <h1>Harmonia architecture</h1>
-<h2>Start with Canton</h2>
-<p>Banks need to agree on transactions without exposing every customer's records. <a href="https://docs.canton.network/overview/understand/what-is-canton">Canton</a> is a blockchain network designed for that combination: shared transactions with selective visibility.</p>
-<p>Applications on Canton use <strong>Daml</strong> smart contracts to describe their records, permitted changes and required authorizations. Banks are using this technology: Lloyds reported a <a href="https://www.lloydsbankinggroup.com/media/press-releases/2026/lloyds/lloyds-tokenisation.html">pilot purchase of a government bond using tokenised deposits</a> on Canton.</p>
-<h2>An interface the contracts share</h2>
-<p>A bank's contract might approve financing; a custodian's might release an asset. Canton already lets applications transact together. Harmonia supplies a reusable way to coordinate their actions into a larger process.</p>
-<p>Each participating contract exposes <strong>StepAction</strong>, a small Daml interface. Its <strong>actor</strong> identifies the party required to authorize the call; its <strong>subject</strong> identifies the business reference the action concerns.</p>
-<p>The interface's <strong>ExecuteAction</strong> operation runs the application's implementation and returns a contract reference for subsequent use. A workflow can therefore hold references to different application contracts and invoke them through the same interface. Each application keeps its own business rules and permissions.</p>
-<h2>Compose the actions on-ledger</h2>
-<p>Harmonia's workflow engine, <strong>Core</strong>, is itself written as Daml contracts. A workflow records its steps, assigned parties, application-contract references and progress on the ledger.</p>
-<p>To advance, Core checks that the step is available, the requester is assigned, and the target action's actor and subject match the workflow. It then invokes ExecuteAction and records completion.</p>
-<p><strong>The application action and that step's progress commit in one transaction.</strong> If either fails, neither change is committed. Later decisions can advance through separate transactions.</p>
-<p><img src="09-contract-composition.png" alt="A workflow contract calls financing and custody application contracts through their matching StepAction interfaces." /></p>
-<p><em>One calling convention across independently owned application contracts.</em></p>
-<p>Processes can also compose through results: a receiving process checks the result's issuer, intended recipient, subject and permitted continuation before proceeding. Each process retains its own progress and authority.</p>
-<h2>Prepare and request work off-ledger</h2>
-<p>An application can implement StepAction directly. To connect an existing application, a developer can supply an <strong>adapter</strong>: a separate Daml contract that implements StepAction and calls the selected application operation.</p>
-<p><strong>Builder works off-ledger.</strong> For supported application shapes, it checks a developer's reviewed mapping against the compiled application and generates the adapter project. The adapter is compiled and deployed on-ledger alongside the existing application, whose code stays unchanged.</p>
-<p>During use, off-ledger software submits authorized requests and reads confirmed results. It checks ledger commits when a submission's outcome is uncertain. <strong>The on-ledger contracts enforce the rules and record progress.</strong></p>
+<h2>Contracts on Canton</h2>
+<p><a href="https://docs.canton.network/overview/understand/what-is-canton">Canton</a> lets organizations transact through Daml smart contracts while controlling who can see their data. Banks are using this technology: Lloyds reported a <a href="https://www.lloydsbankinggroup.com/media/press-releases/2026/lloyds/lloyds-tokenisation.html">tokenised-deposit pilot</a> on Canton.</p>
+<p><img src="10-canton-contracts.png" alt="Financing and custody contracts keep their own application boundaries on Canton." /></p>
+<p>Here, a financing contract can approve a loan; a custody contract can release an asset. Each application controls its own rules and permissions.</p>
+<h2>Harmonia gives them a shared interface</h2>
+<p>Canton already supports transactions across applications. Harmonia gives participating contracts a common interface, <strong>StepAction</strong>, so a workflow can coordinate their actions without importing each application's implementation.</p>
+<p><img src="09-contract-composition.png" alt="A workflow contract calls financing and custody contracts through the same StepAction interface." /></p>
+<p>The workflow selects an eligible action, checks who may execute it, and calls the shared <strong>ExecuteAction</strong> operation. The application's own permissions still apply.</p>
+<h2>Request off-ledger, execute on-ledger</h2>
+<p>Off-ledger software submits requests and reads confirmed results. On-ledger contracts enforce both the workflow and application rules.</p>
+<p><img src="11-ledger-transaction.png" alt="A request enters the ledger; the application action and workflow progress belong to one transaction, whose result returns off-ledger." /></p>
+<p><strong>An application action and that step's progress commit together.</strong> If either fails, neither change is recorded.</p>
+<p>An application can implement the interface directly. For supported existing applications, <strong>Builder</strong> generates an adapter off-ledger from a reviewed mapping. That adapter implements the interface and runs on-ledger, leaving the original application unchanged.</p>
 <hr />
 <p>Project basis: <em>Development Fund Proposal</em>, Abstract and §2, checked against the current implementation.</p>
 
