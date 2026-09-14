@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Harmonia — architecture, version 6</title>
+  <link rel="stylesheet" href="review.css?v={{css_hash}}">
+  <link rel="stylesheet" href="review-v6.css?v={{native_css_hash}}">
+</head>
+<body>
+  <header><strong>Harmonia · Architecture</strong><span>Version 6</span></header>
+  <main class="review">
+    <article id="reading" tabindex="0" aria-label="What Harmonia adds">
+{{markdown}}
+    </article>
+    <section class="illustration" aria-label="The Harmonia composition mechanism">
+      <div id="viewport" tabindex="0" aria-label="Pan and zoom the architecture" aria-describedby="navigation-help">
+        <figure id="paper">
+{{diagram}}
+        </figure>
+      </div>
+      <div class="canvas-help"><span id="navigation-help"><span class="desktop-hint">Drag to pan · pinch to zoom · Home to fit</span><span class="touch-hint">Drag to pan · pinch to zoom</span></span><span id="zoom" aria-label="Zoom level"></span></div>
+    </section>
+  </main>
+  <script src="../../sheet.js?v={{script_hash}}"></script>
+  <script src="review.js?v={{review_hash}}"></script>
+</body>
+</html>

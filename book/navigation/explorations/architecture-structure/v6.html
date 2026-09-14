@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Harmonia — architecture, version 6</title>
+  <link rel="stylesheet" href="review.css?v=8950e45d7faa">
+  <link rel="stylesheet" href="review-v6.css?v=393b701509b0">
+</head>
+<body>
+  <header><strong>Harmonia · Architecture</strong><span>Version 6</span></header>
+  <main class="review">
+    <article id="reading" tabindex="0" aria-label="What Harmonia adds">
+<h1>What Harmonia adds</h1>
+<p><strong>One workflow uses actions from different Daml applications.</strong></p>
+<p>Bindings say which actions fit. Each action still needs the application's permission.</p>
+<p>Harmonia tracks progress on Canton and passes results to the next workflow.</p>
+<blockquote>
+<p>“without bespoke pairwise integration”</p>
+</blockquote>
+<p><em>Original proposal, abstract.</em></p>
+
+    </article>
+    <section class="illustration" aria-label="The Harmonia composition mechanism">
+      <div id="viewport" tabindex="0" aria-label="Pan and zoom the architecture" aria-describedby="navigation-help">
+        <figure id="paper">
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1080" viewBox="0 0 1440 1080" role="img" aria-labelledby="architecture-title architecture-description">
+  <title id="architecture-title">Compose Daml actions across applications</title>
+  <desc id="architecture-description">A workflow instance on Canton binds roles to parties and assigns an acting party and target choice. The Binding DAR declares eligible templates, choices, step kinds and roles. A source application's Daml contract retains signatories, observers and the controller required for its choice. Results update the workflow instance. A continuation in Core carries outputs to the next workflow. The Dapp and binding preparation sit outside the ledger. In the visible labels, Action means a Daml choice, Bindings means Binding DAR declarations, and Handoff means a Core continuation.</desc>
+  <defs>
+    <linearGradient id="ledger-fill" x2="0" y2="1">
+      <stop stop-color="#f5faff"/>
+      <stop offset="1" stop-color="#eaf5ff"/>
+    </linearGradient>
+    <linearGradient id="card-fill" x2="0" y2="1">
+      <stop stop-color="#fff"/>
+      <stop offset="1" stop-color="#f8fbff"/>
+    </linearGradient>
+    <filter id="card-shadow" x="-15%" y="-20%" width="130%" height="145%">
+      <feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#3978bc" flood-opacity=".09"/>
+    </filter>
+    <marker id="blue-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M1 1 9 5 1 9Z" fill="#167cf0"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; fill: #132c50; }
+    .headline { font-size: 38px; font-weight: 650; letter-spacing: -.8px; }
+    .title { font-size: 30px; font-weight: 630; letter-spacing: -.35px; }
+    .label { font-size: 28px; font-weight: 600; }
+    .detail { font-size: 24px; fill: #45607e; }
+    .boundary { fill: url(#ledger-fill); stroke: #9fcaff; stroke-width: 1.5; }
+    .scope { fill: #eff7ff; stroke: #b3d5fb; stroke-width: 1.5; }
+    .card { fill: url(#card-fill); stroke: #d3e5f8; stroke-width: 1.5; filter: url(#card-shadow); }
+    .action { fill: #fff; stroke: #77b7fc; stroke-width: 2; }
+    .edge { fill: none; stroke: #167cf0; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#blue-arrow); }
+    .declaration { fill: none; stroke: #72a9de; stroke-width: 2; stroke-dasharray: 5 7; stroke-linecap: round; }
+  </style>
+
+  <rect width="1440" height="1080" fill="#fff"/>
+  <text class="headline" x="56" y="61">Workflows across applications.</text>
+
+  <g id="dapp" data-node="dapp">
+    <rect class="card" x="56" y="142" width="540" height="108" rx="18"/>
+    <text class="label" x="82" y="183">Workflow UI</text>
+    <text class="detail" x="82" y="221">Start · follow</text>
+  </g>
+  <g id="build-time" data-node="build-time">
+    <rect class="card" x="700" y="142" width="684" height="108" rx="18"/>
+    <text class="label" x="726" y="183">Build time</text>
+    <text class="detail" x="726" y="221">App code or Builder</text>
+  </g>
+
+  <rect id="ledger-boundary" class="boundary" x="32" y="286" width="1376" height="752" rx="24"/>
+  <text class="title" x="64" y="331">Canton · Daml</text>
+
+  <g id="core" data-scope="core">
+    <rect id="core-boundary" class="scope" x="64" y="360" width="570" height="642" rx="20"/>
+    <text class="title" x="90" y="402">Harmonia Core</text>
+    <text class="detail" x="90" y="440">Allowed paths</text>
+    <path class="edge" d="M349 450V473"/>
+
+    <g id="workflow-instance" data-node="workflow-instance">
+      <rect class="card" x="88" y="476" width="522" height="256" rx="18"/>
+      <text class="label" x="114" y="517">Running workflow</text>
+      <g id="assigned-step" data-node="assigned-step">
+        <rect class="action" x="112" y="584" width="474" height="120" rx="14"/>
+        <text class="label" x="138" y="626">Assigned step</text>
+        <text class="detail" x="138" y="674">Party</text>
+        <text class="detail" x="360" y="674">Action</text>
+      </g>
+    </g>
+
+    <path id="continuation-edge" class="edge" d="M252 732V894"/>
+    <g id="continuation" data-node="continuation">
+      <rect class="card" x="88" y="898" width="522" height="82" rx="16"/>
+      <text class="label" x="114" y="932">Handoff</text>
+      <text class="detail" x="114" y="963">Pass results</text>
+    </g>
+  </g>
+
+  <g id="binding" data-node="binding">
+    <rect class="card" x="688" y="388" width="300" height="174" rx="18"/>
+    <text class="label" x="714" y="431">Bindings</text>
+    <text class="detail" x="714" y="475">Allowed actions</text>
+    <path class="declaration" d="M838 562V644"/>
+  </g>
+
+  <g id="source-application" data-scope="application">
+    <rect id="application-boundary" class="scope" x="1012" y="360" width="364" height="384" rx="20"/>
+    <text class="label" x="1038" y="402">Application</text>
+    <g id="application-contract" data-node="application-contract">
+      <rect class="card" x="1032" y="430" width="324" height="290" rx="18"/>
+      <text class="label" x="1056" y="475">Daml contract</text>
+      <g id="application-choice" data-node="application-choice">
+        <rect class="action" x="1052" y="588" width="284" height="104" rx="14"/>
+        <text class="label" x="1076" y="629">Action</text>
+        <text class="detail" x="1076" y="668">Needs permission</text>
+      </g>
+    </g>
+  </g>
+
+  <path id="interaction-edge" class="edge" d="M349 251V357" marker-start="url(#blue-arrow)"/>
+  <path id="preparation-edge" class="edge" d="M838 251V385"/>
+  <path id="choice-edge" class="edge" d="M587 644H1049"/>
+  <text class="label" text-anchor="middle" x="818" y="686">Run</text>
+
+  <path id="result-edge" class="edge" d="M1194 693V790H470V735"/>
+  <text class="detail" text-anchor="middle" x="838" y="773">Update progress</text>
+
+  <g id="next-workflow" data-node="next-workflow">
+    <rect class="card" x="982" y="898" width="394" height="82" rx="16"/>
+    <text class="label" x="1008" y="932">Next workflow</text>
+    <text class="detail" x="1008" y="963">Own permissions</text>
+  </g>
+  <path id="next-workflow-edge" class="edge" d="M611 939H979"/>
+</svg>
+
+        </figure>
+      </div>
+      <div class="canvas-help"><span id="navigation-help"><span class="desktop-hint">Drag to pan · pinch to zoom · Home to fit</span><span class="touch-hint">Drag to pan · pinch to zoom</span></span><span id="zoom" aria-label="Zoom level"></span></div>
+    </section>
+  </main>
+  <script src="../../sheet.js?v=f68aa956f65c"></script>
+  <script src="review.js?v=d47a7b0231a9"></script>
+</body>
+</html>

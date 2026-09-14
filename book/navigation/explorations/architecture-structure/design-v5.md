@@ -134,4 +134,6 @@ The design and source citations were first committed and pushed at `972ff11`.
 
 ## 5. User review
 
-Pending. Direction to implement is not approval of this candidate.
+Recorded 2026-09-14, after reviewing version 5 at `0d218ea`: Miguel asked for
+simpler words and fewer words. Version 6 keeps the mechanism and layout while
+shortening the labels and adjacent prose. This feedback is not final approval.

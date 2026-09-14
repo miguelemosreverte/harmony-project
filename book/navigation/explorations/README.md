@@ -29,9 +29,11 @@ Current example: [Complete architecture](architecture-whole/design.md).
 Scope correction: [Application authority](application-authority/design.md).
 Earlier exploration: [Architecture overview and execution](architecture-v2/README.md).
 
-Latest review: [Architecture version 5](architecture-structure/v5.html), an
-authored SVG of the composition mechanism, with [formatted prose](architecture-structure/read-v5.md)
-and a [source-to-diagram design record](architecture-structure/design-v5.md).
+Latest review: [Architecture version 6](architecture-structure/v6.html), the
+composition mechanism with simpler labels and less text, with [formatted prose](architecture-structure/read-v6.md)
+and an [edit and review record](architecture-structure/design-v6.md).
+The [version 5 design record](architecture-structure/design-v5.md) contains the
+underlying architectural citations.
 The [version 4 review](architecture-structure/design-v4.md) records the rejection
 of repeated generic component maps and the switch away from image generation.
 Earlier pages remain available for comparison.
