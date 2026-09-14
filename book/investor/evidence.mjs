@@ -1,0 +1,18 @@
+import {escape} from './diagrams.mjs';
+import {json} from './recordings.mjs';
+
+export function evidence(log) {
+  const demos=log.demos.map(d=>`<section id="${escape(d.id)}"><h2>${escape(d.title)}</h2><p>${escape(d.question)}</p><blockquote>${escape(d.source.quote)}<br>Original proposal, line ${d.source.line}.</blockquote>${d.paths.map(p=>`<h3>${escape(p.label)}</h3><ol>${p.steps.map(s=>{
+    const r=log.runs[s.recording],e=r.events[s.event];
+    return `<li><strong>${escape(s.title)}</strong> — ${escape(s.explanation)}<p>Run ${escape(r.id)} · event ${e.sequence+1} · revision ${escape(r.provenance.revision.slice(0,12))}</p><pre>${escape(json({request:e.input,observed:e.observed}))}</pre></li>`;
+  }).join('')}</ol>`).join('')}</section>`).join('');
+  const milestones=log.milestones.map(m=>`<section><h2>${escape(m.id)} · ${escape(m.original.split('\n')[0].split(': ').slice(1).join(': '))}</h2><p>${escape(m.assessment)}</p><p>Demonstrations: ${escape(m.demos.join(', ')||'External evidence required')}</p><pre>${escape(m.original)}</pre><p>${m.implementation.map(escape).join('<br>')}</p></section>`).join('');
+  const runs=Object.values(log.runs).map(r=>`<section><h2>${escape(r.id)}</h2><p>${escape(r.provenance.topology)}</p><pre>${escape(json(r.provenance))}</pre><h3>Committed input</h3><pre>${escape(r.artifacts['input.md'])}</pre><h3>Committed expectation</h3><pre>${escape(r.artifacts['expected.md'])}</pre><h3>Complete observed results</h3><pre>${escape(json(r.actual))}</pre></section>`).join('');
+  const commands=[
+    'scripts/harmonia check examples/stories/branch-approved examples/stories/private-approval examples/stories/generated-approved examples/stories/transfer-approved examples/stories/transfer-final-leg-rejected',
+    'scripts/harmonia composer-check',
+    'scripts/harmonia builder-check',
+    'node book/investor/build.mjs --recordings STORIES/evidence.json --recordings COMPOSER/evidence.json --recordings BUILDER/evidence.json --out .artifacts/canton-demo'
+  ].join('\n');
+  return `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Canton demo evidence · Harmonia</title><style>${log.presentation.styles.slice(2).map(a=>a.contents).join('\n')}</style><body class="evidence-reader"><header><a href="index.html">Demonstrations</a></header><h1>Recorded demonstrations, verifiable outcomes.</h1><p>Each selected scene comes from an actual local Canton recording. Inputs, ordered requests, observed results, goldens, quotations and renderer assets are preserved in events.json. Replaying does not submit a transaction. Independent runs are not one continuous ledger history.</p>${demos}<h1>Original milestone mapping</h1><p>All eight milestones are accounted for below. Demonstrated software behavior, documentation, release acceptance and external adoption are separate forms of evidence.</p>${milestones}<h1>Reproduce and export</h1><p>Open index.html directly for offline playback. Export log preserves the exact selection. Recreate this portable reader with:</p><pre>node book/investor/build.mjs --replay harmonia-event-log.json --out .artifacts/replayed-demo</pre><p>To record fresh observations, use the existing sequential harness, then export each printed run with scripts/harmonia export-book RUN OUTPUT. Supply all exports together; missing stories fail instead of using an old run.</p><pre>${escape(commands)}</pre><p>Run one ledger environment at a time. Fresh execution needs the pinned Java 17, Daml SDK 3.4.11 and built repository. Delivered playback needs only a browser.</p>${runs}</body></html>`;
+}

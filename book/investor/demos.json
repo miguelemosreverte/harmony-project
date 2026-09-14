@@ -1,0 +1,228 @@
+{
+  "format": "harmonia-canton-demos/1",
+  "mode": "recorded",
+  "demos": [
+    {
+      "id": "core",
+      "title": "A join waits for both applications.",
+      "environment": "1 participant · separate party identities",
+      "question": "Can the workflow finish before both required actions are complete?",
+      "source": {
+        "line": 321,
+        "quote": "Initial Core hardening, including branching and joining, persisted states, current and next steps, and workflow-execution/back-office views."
+      },
+      "paths": [
+        {
+          "id": "join",
+          "label": "Branch and join",
+          "steps": [
+            {
+              "id": "chosen",
+              "recording": "branch-approved",
+              "action": "choose-approval",
+              "title": "Choose the approval branch",
+              "explanation": "The decision enables financing and review. The alternative closure path is skipped."
+            },
+            {
+              "id": "waiting",
+              "recording": "branch-approved",
+              "action": "join-still-waits",
+              "title": "One approval is not enough",
+              "explanation": "Northbank has approved, but Alice’s review is pending. The join refuses to complete."
+            },
+            {
+              "id": "reviewed",
+              "recording": "branch-approved",
+              "action": "buyer-review",
+              "title": "Alice completes the review",
+              "explanation": "Both application actions are now recorded. The join becomes the next eligible step."
+            },
+            {
+              "id": "complete",
+              "recording": "branch-approved",
+              "action": "join-completes",
+              "title": "The join completes",
+              "explanation": "The workflow completes only after its two required application actions."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "composition",
+      "title": "Two applications. One agreed workflow.",
+      "environment": "3 participants · 1 local synchronizer",
+      "question": "Can participants agree a workflow, then execute the applications in order?",
+      "source": {
+        "line": 333,
+        "quote": "Reference composition of two sample applications through the direct final-application-DAR interface implementation path."
+      },
+      "paths": [
+        {
+          "id": "direct",
+          "label": "Direct participation",
+          "steps": [
+            {
+              "id": "accepted",
+              "recording": "composer-direct",
+              "action": "acceptance",
+              "title": "Alice accepts the plan",
+              "explanation": "Northbank proposed financing followed by review. Alice’s consent starts the workflow."
+            },
+            {
+              "id": "approved",
+              "recording": "composer-direct",
+              "action": "approval",
+              "title": "Northbank approves financing",
+              "explanation": "The financing application advances through StepAction. Review is now the enabled step."
+            },
+            {
+              "id": "reviewed",
+              "recording": "composer-direct",
+              "action": "review",
+              "title": "Alice confirms the review",
+              "explanation": "The independent review application advances through the same interface. The workflow is complete."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "privacy",
+      "title": "A private decision. A shared next step.",
+      "environment": "3 participants · 1 local synchronizer",
+      "question": "Can Alice continue without seeing the bank’s private application?",
+      "source": {
+        "line": 139,
+        "quote": "while preserving their separate ownership and execution rights."
+      },
+      "paths": [
+        {
+          "id": "approval",
+          "label": "Private approval",
+          "steps": [
+            {
+              "id": "refused",
+              "recording": "private-approval",
+              "action": "buyer-cannot-read-or-approve",
+              "title": "Alice cannot approve",
+              "explanation": "The application is visible only to Northbank. Alice’s attempted approval changes nothing."
+            },
+            {
+              "id": "approved",
+              "recording": "private-approval",
+              "action": "bank-approval",
+              "title": "Northbank approves",
+              "explanation": "Northbank approves its application. Alice’s next step still waits for her own action."
+            },
+            {
+              "id": "continued",
+              "recording": "private-approval",
+              "action": "buyer-continuation",
+              "title": "Alice continues",
+              "explanation": "Alice uses the scoped approval to complete her step. The bank’s private application stays private."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "adapter",
+      "title": "Keep the application. Add an adapter.",
+      "environment": "Build tooling, then a separate 1-participant Canton run",
+      "question": "Can an existing application participate without changing its source?",
+      "source": {
+        "line": 114,
+        "quote": "the boilerplate needed to bind the applicable application templates and their choices into the `harmonia-core` managed workflow model"
+      },
+      "paths": [
+        {
+          "id": "generated",
+          "label": "Generated adapter",
+          "steps": [
+            {
+              "id": "compiled",
+              "recording": "package-builder",
+              "action": "compile",
+              "title": "Compile the reviewed mapping",
+              "explanation": "Builder produces a typed adapter. The downloaded project preserves the original application DAR."
+            },
+            {
+              "id": "refused",
+              "recording": "generated-approved",
+              "action": "buyer-attempt",
+              "title": "The adapter grants no extra authority",
+              "explanation": "In the execution recording, Alice tries the action through the adapter. Only Northbank may approve."
+            },
+            {
+              "id": "approved",
+              "recording": "generated-approved",
+              "action": "bank-approval",
+              "title": "Northbank advances both contracts",
+              "explanation": "ExecuteAction calls the existing Approve choice. Application approval and workflow completion commit together."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "settlement",
+      "title": "One settlement. Both sides or neither.",
+      "environment": "4 participants · 1 local synchronizer · synthetic TEST units",
+      "question": "What remains on the ledger if the receiving application refuses?",
+      "source": {
+        "line": 127,
+        "quote": "the final transfer path can collapse into one bounded atomic execution rather than remaining a staged sequence."
+      },
+      "paths": [
+        {
+          "id": "accept",
+          "label": "Receipt accepts",
+          "steps": [
+            {
+              "id": "ready",
+              "recording": "transfer-approved",
+              "action": "destination-confirms",
+              "title": "The parties are ready",
+              "explanation": "Seller and buyer agree; both custodians are ready. Their preparation used separate transactions."
+            },
+            {
+              "id": "settled",
+              "recording": "transfer-approved",
+              "action": "settle",
+              "title": "Alice settles once",
+              "explanation": "Withdrawal, receipt and workflow completion appear in one observed settlement transaction."
+            },
+            {
+              "id": "repeated",
+              "recording": "transfer-approved",
+              "action": "settle-again",
+              "title": "A second settlement is refused",
+              "explanation": "The destination still holds 10 TEST. Repeating the action creates no second transfer."
+            }
+          ]
+        },
+        {
+          "id": "reject",
+          "label": "Receipt refuses · separate run",
+          "steps": [
+            {
+              "id": "ready",
+              "recording": "transfer-final-leg-rejected",
+              "action": "destination-confirms",
+              "title": "Change the receiving rule",
+              "explanation": "A separate run starts with the same 10 TEST locked, but its receiving application will reject settlement."
+            },
+            {
+              "id": "rolled-back",
+              "recording": "transfer-final-leg-rejected",
+              "action": "settle",
+              "title": "The whole settlement rolls back",
+              "explanation": "Receipt refuses. The 10 TEST remains locked at source; nothing arrives and the workflow stays waiting."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
