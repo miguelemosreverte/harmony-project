@@ -5,13 +5,12 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
 import {figureView} from './figures.mjs';
-import {originalDiagramView} from './original-diagrams.mjs';
 
 const folder = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(folder, '../..');
 const plan = JSON.parse(await fs.readFile(path.join(folder, 'plan.json'), 'utf8'));
 const revision = async file => createHash('sha256').update(await fs.readFile(file)).digest('hex').slice(0,12);
-const versions = Object.fromEntries(await Promise.all(['sheet.css','sheet.js','original-diagrams.css'].map(async file => [file,await revision(path.join(folder,file))])));
+const versions = Object.fromEntries(await Promise.all(['sheet.css','sheet.js'].map(async file => [file,await revision(path.join(folder,file))])));
 const escape = value => String(value).replace(/[&<>"']/g, c => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
 })[c]);
@@ -51,10 +50,18 @@ async function pageView(page, index, branch) {
   for (const ref of page.sources) assert(plan.sources[ref], `Unknown source: ${ref}`);
   if (branch.production_only) {
     assert.equal(page.frames.length, 0, 'Implementation must not show screenshots containing harness code');
+    assert(!page.illustration, 'Implementation uses the production source explorer');
     for (const ref of page.sources) {
       const source = plan.sources[ref];
       assert(source?.startsWith('product/') && !source.includes('/src/test/') && /\.(scala|daml)$/.test(source), `Non-production source in Implementation: ${source}`);
     }
+  }
+  if (page.illustration) {
+    const {image, width, height} = page.illustration;
+    const file = plan.images[image];
+    assert(file && width > 0 && height > 0, 'Illustrations need a source and intrinsic dimensions');
+    const src = `../../${file}?v=${await revision(path.join(root,file))}`;
+    return `<article class="page" data-page="${escape(page.id)}" aria-label="${escape(page.title)}"><figure class="architecture-illustration" data-image="${escape(image)}"><img src="${escape(src)}" width="${width}" height="${height}" alt="${escape(page.message)}" draggable="false"></figure></article>`;
   }
   if (page.moments) {
     const story = JSON.parse(await fs.readFile(path.join(root, plan.sources[page.moments.source]), 'utf8'));
@@ -72,7 +79,6 @@ async function pageView(page, index, branch) {
     <p class="message">${escape(page.message)}</p>
     <div class="frames" data-count="${page.frames.length}">${frames}</div>
 ${diagrams}
-${page.original_diagram ? originalDiagramView(page.original_diagram) : ''}
 ${demo}
 ${page.explorer ? await explorerView(page.explorer) : ''}
 ${page.demo || !page.show ? '' : `    <p class="show">${escape(page.show)}</p>`}
@@ -100,7 +106,6 @@ const html = `<!doctype html>
 <link rel="stylesheet" href="../../product/scene/site/surface.css">
 <link rel="stylesheet" href="../../design/0.2/quiet.css">
 <link rel="stylesheet" href="sheet.css?v=${versions['sheet.css']}">
-<link rel="stylesheet" href="original-diagrams.css?v=${versions['original-diagrams.css']}">
 <script type="module" src="sheet.js?v=${versions['sheet.js']}"></script>
 </head><body>
 <header class="reference-header"><span class="reference-brand">Harmonia</span><span class="quiet-location">${escape(plan.status)}</span></header>

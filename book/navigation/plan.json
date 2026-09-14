@@ -55,7 +55,9 @@
     "proposal": "design/0.2/moment-review/1280-03-financing-to-offer-purchase-approved-5.png",
     "relay": "design/0.2/moment-review/1280-03-financing-to-offer-purchase-approved-7.png",
     "received": "design/0.2/moment-review/1280-03-financing-to-offer-purchase-approved-8.png",
-    "declined": "design/0.2/moment-review/1280-03-financing-to-offer-purchase-rejected-3.png"
+    "declined": "design/0.2/moment-review/1280-03-financing-to-offer-purchase-rejected-3.png",
+    "ledger-overview": "book/navigation/explorations/architecture-v2/01-ledger-overview.png",
+    "step-execution": "book/navigation/explorations/architecture-v2/02-step-execution.png"
   },
   "branches": [
     {
@@ -296,47 +298,48 @@
     {
       "id": "architecture",
       "title": "Architecture",
-      "question": "How does Harmonia compose independently owned applications?",
-      "perspective": "The original component and contract diagrams, translated into the shared visual style.",
+      "question": "Where does the workflow live, and how does a step reach an application?",
+      "perspective": "Two views of the original architecture: responsibilities first, execution next.",
       "pages": [
         {
           "id": "components",
-          "title": "Component map — off-ledger / on-ledger split",
-          "message": "Where the components live, how applications participate, and where the ledger boundary sits.",
+          "title": "The workflow lives on the ledger.",
+          "message": "The off-ledger Harmonia Dapp submits through the Ledger API. On Canton, Harmonia Core holds workflow state and step rules; Binding DAR defines application participation; application DARs retain their own templates, choices, authorization, ownership and privacy. The Builder generates bindings at build time; applications can also implement interfaces directly.",
           "sources": [
-            "architecture-original"
+            "architecture-original",
+            "proposal"
           ],
           "frames": [],
-          "original_diagram": "component-map"
+          "illustration": {
+            "image": "ledger-overview",
+            "width": 1586,
+            "height": 992
+          }
         },
         {
           "id": "contracts",
-          "title": "On-ledger contract model — templates, interfaces and data",
-          "message": "How definitions, instances, assignments and application actions relate.",
-          "show": "The original identifies the template and choice names as illustrative; binding and package-import details remain open design points.",
+          "title": "From a workflow to an application choice.",
+          "message": "Within Harmonia Core, a workflow definition creates an instance, which assigns a step to an actor. The step reaches an application choice through HarmoniaStepAction. The application retains its own authorization. This is a focused path through the original model; contract names are illustrative.",
           "sources": [
             "architecture-original"
           ],
           "frames": [],
-          "original_diagram": "contract-model"
+          "illustration": {
+            "image": "step-execution",
+            "width": 1586,
+            "height": 992
+          }
         }
       ],
-      "finish": "I understand the architecture through the same diagrams that define the project.",
+      "finish": "The original documents remain the detailed reference.",
       "presentation": {
-        "format": "Original diagrams in the shared visual style",
+        "format": "Illustrated architecture",
         "focus": [
-          "Component boundaries and the two participation paths",
-          "Contract relationships and application authority"
+          "On-ledger responsibilities and application authority",
+          "The path from definition to application choice"
         ],
         "source": "docs/proposal/harmonia-architecture.html",
-        "preserve": [
-          "Labels",
-          "Fields",
-          "Choices",
-          "Connections",
-          "Layout",
-          "Open design points"
-        ]
+        "detail_reference": "The original diagrams retain fields, multiplicities, continuation, branching, atomicity and open design questions."
       }
     },
     {

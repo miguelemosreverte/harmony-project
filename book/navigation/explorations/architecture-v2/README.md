@@ -1,8 +1,9 @@
 # Architecture: clarity exploration
 
 The design measure is how quickly a reader forms a correct mental model.
-The existing architecture presentation is preserved at `389d133`; these images
-are concepts for discussion on `design/architecture-clarity-v2`.
+The previous architecture presentation is preserved at `389d133`. These reviewed
+images now appear in the architecture region of [the HTML sheet](../../index.html)
+on `design/architecture-clarity-v2`.
 
 ## The reading order
 
@@ -39,6 +40,10 @@ branching, joins and atomic blocks remain in the full source diagrams. They need
 their own focused explanations; they are not removed from the product scope.
 The source's open binding, interface-location and import questions remain open.
 
+Useful next explanations would each answer a separate question: direct versus
+generated participation, continuation across workflow boundaries, and the scope
+of an atomic block. They are future design work, not part of these two images.
+
 ## Reader check
 
 These are proposed acceptance criteria, not measured usability results:
@@ -57,6 +62,7 @@ are in [prompts.json](prompts.json); the overview's final edit is recorded in
 
 Both selected images were visually reviewed. The first overview candidate placed
 the Ledger API arrow over Binding DAR; the selected refinement connects it to
-Core and removes an unnecessary prose annotation. The existing website and
-production code are unchanged. This exploration does not introduce a new product
-release or replace the approved interactive diagrams.
+Core and removes an unnecessary prose annotation. The sheet embeds the selected
+images at their original aspect ratio, with accessible descriptions and without
+repeating their visible text. Production code and the other three reading regions
+are unchanged. This is a presentation change, not a new product release.

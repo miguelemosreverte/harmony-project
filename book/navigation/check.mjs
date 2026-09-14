@@ -3,6 +3,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import {createHash} from 'node:crypto';
 
 const [endpoint, address, output = '.artifacts/navigation-sheet-review'] = process.argv.slice(2);
 for (const url of [endpoint, address]) assert(['localhost', '127.0.0.1'].includes(new URL(url).hostname));
@@ -11,7 +12,7 @@ const target = await (await fetch(new URL('/json/new?about:blank', endpoint), {m
 const socket = new WebSocket(target.webSocketDebuggerUrl);
 await new Promise((resolve, reject) => {socket.onopen = resolve; socket.onerror = reject;});
 let sequence = 0;
-const pending = new Map(), errors = [], checks = [];
+const pending = new Map(), errors = [], checks = [], views = [];
 socket.onmessage = event => {
   const message = JSON.parse(event.data);
   if (message.id) {
@@ -53,6 +54,7 @@ const inspect = () => evaluate(`(() => {
 })()`);
 const close = (a, b, tolerance = 0.1) => assert(Math.abs(a - b) < tolerance, `${a} != ${b}`);
 const screenshot = async name => {
+  views.push({name,url:await evaluate('location.href')});
   const shot = await call('Page.captureScreenshot', {format: 'png'});
   await fs.writeFile(path.join(output, name + '.png'), Buffer.from(shot.data, 'base64'));
 };
@@ -70,12 +72,12 @@ try {
   assert.equal(initial.controls, 0); assert.equal(initial.regions, 4); assert.equal(initial.pages, 9);
   const audiences = await evaluate(`({
     investorDemos:document.querySelectorAll('[data-branch=investor] .demo').length,
-    architectureDiagrams:document.querySelectorAll('[data-branch=architecture] svg').length,
-    technicalScreenshots:document.querySelectorAll('.region:not([data-branch=user]) img').length,
+    architectureIllustrations:document.querySelectorAll('[data-branch=architecture] .architecture-illustration img').length,
+    otherTechnicalImages:document.querySelectorAll('[data-branch=investor] img,[data-branch=implementation] img').length,
     originalModels:document.querySelectorAll('[data-original-diagram]').length,brands:document.querySelectorAll('[data-brand]').length
   })`);
-  assert.equal(audiences.investorDemos,3); assert.equal(audiences.architectureDiagrams,2);
-  assert.equal(audiences.technicalScreenshots,0); assert.equal(audiences.originalModels,2); assert.equal(audiences.brands,5);
+  assert.equal(audiences.investorDemos,3); assert.equal(audiences.architectureIllustrations,2);
+  assert.equal(audiences.otherTechnicalImages,0); assert.equal(audiences.originalModels,0); assert.equal(audiences.brands,5);
   assert.equal(initial.scrollHeight, 1000); assert.equal(initial.scrollWidth, 1440);
   assert(initial.paper.x >= initial.viewport.x && initial.paper.y >= initial.viewport.y);
   assert(initial.paper.x + initial.paper.width <= initial.viewport.x + initial.viewport.width + 1);
@@ -91,36 +93,26 @@ try {
     return [...node.querySelectorAll('text')].filter(text=>{const r=text.getBoundingClientRect();return r.left<box.left-1||r.right>box.right+1||r.top<box.top||r.bottom>box.bottom+1}).map(text=>text.textContent);
   })`);
   assert.deepEqual(diagramOverflow, [], 'Diagram labels must fit their nodes');
-  // Compare the rendered translation with the actual supplied document.
-  const originals = await evaluate(`(async () => {
-    const html = await (await fetch('../../docs/proposal/harmonia-architecture.html')).text();
-    const source = [...new DOMParser().parseFromString(html,'text/html').querySelectorAll('svg')];
-    const translated = [...document.querySelectorAll('[data-original-diagram] svg')];
-    const geometry = svg => [...svg.querySelectorAll('rect,path,line,polyline,polygon,circle,ellipse,text')]
-      .filter(node => !node.closest('defs')).map(node => ({tag:node.tagName,
-        attrs:Object.fromEntries(['x','y','x1','y1','x2','y2','width','height','cx','cy','r','rx','ry','d','points','transform','text-anchor']
-          .filter(key=>node.hasAttribute(key)).map(key=>[key,node.getAttribute(key)]))}));
-    return translated.map((svg,index) => ({
-      name:svg.parentElement.dataset.originalDiagram,
-      labels:[...svg.querySelectorAll('text')].map(node=>node.textContent),
-      sourceLabels:[...source[index].querySelectorAll('text')].map(node=>node.textContent),
-      geometry:geometry(svg), sourceGeometry:geometry(source[index]),
-      viewBox:svg.getAttribute('viewBox'), sourceViewBox:source[index].getAttribute('viewBox'),
-      arrows:[...svg.querySelectorAll('.e,.rel,.relo')].map(edge=>{
-        const marker=getComputedStyle(edge).markerEnd;
-        const id=marker.match(/#([^\"\)]+)/)?.[1];
-        return {marker,resolved:!!id&&svg.contains(document.getElementById(id))};
-      })
-    }));
-  })()`);
-  for (const original of originals) {
-    assert.deepEqual(original.labels,original.sourceLabels,original.name+' labels');
-    assert.deepEqual(original.geometry,original.sourceGeometry,original.name+' geometry');
-    assert.equal(original.viewBox,original.sourceViewBox);
-    assert(original.arrows.length>0 && original.arrows.every(arrow=>arrow.resolved),original.name+' arrowheads');
+  // The HTML must display the reviewed images, with their full aspect ratio.
+  const illustrations = await evaluate(`Promise.all([...document.querySelectorAll('.architecture-illustration img')].map(async img => {
+    const bytes=await (await fetch(img.currentSrc)).arrayBuffer();
+    const digest=await crypto.subtle.digest('SHA-256',bytes);
+    const box=img.getBoundingClientRect();
+    return {image:img.closest('[data-image]').dataset.image,alt:img.alt,
+      width:img.naturalWidth,height:img.naturalHeight,
+      reservedWidth:Number(img.getAttribute('width')),reservedHeight:Number(img.getAttribute('height')),
+      ratio:box.width/box.height,sha256:[...new Uint8Array(digest)].map(b=>b.toString(16).padStart(2,'0')).join('')};
+  }))`);
+  for (const [index,file] of ['01-ledger-overview.png','02-step-execution.png'].entries()) {
+    const illustration=illustrations[index];
+    const expected=await fs.readFile(new URL('explorations/architecture-v2/'+file,import.meta.url));
+    assert.equal(illustration.sha256,createHash('sha256').update(expected).digest('hex'));
+    assert.equal(illustration.width,1586); assert.equal(illustration.height,992);
+    assert.equal(illustration.width,illustration.reservedWidth); assert.equal(illustration.height,illustration.reservedHeight);
+    close(illustration.ratio,1586/992,0.001); assert(illustration.alt.length>50);
   }
-  checks.push({check:'Original SVG fidelity: every label, shape, connection and arrowhead',diagrams:originals.map(o=>({name:o.name,labels:o.labels.length,shapes:o.geometry.length,arrows:o.arrows.length}))});
-  checks.push({check:'Canton infographics and original architecture models',...audiences});
+  checks.push({check:'Reviewed architecture images: exact assets, aspect ratio, reserved layout and accessible descriptions',illustrations});
+  checks.push({check:'Audience content and architecture illustrations',...audiences});
   checks.push({check: 'All regions fit on entry', ...initial});
   await screenshot('whole-sheet');
   await evaluate('window.originalPaper = document.querySelector("#paper")');
@@ -178,7 +170,7 @@ try {
     for (const [key, value] of Object.entries({x: region.x, y: region.y, z: Math.min(1360 / region.width, 850 / region.height)})) url.searchParams.set(key, value);
     await navigate(url.href); await screenshot(region.id);
   }
-  for (const [name, selector] of [['investor-detail','[data-figure="ecosystem"]'], ['architecture-detail','[data-original-diagram="component-map"]'], ['contract-detail','[data-original-diagram="contract-model"]']]) {
+  for (const [name, selector] of [['investor-detail','[data-figure="ecosystem"]'], ['architecture-detail','[data-image="ledger-overview"]'], ['contract-detail','[data-image="step-execution"]']]) {
     const focus = await evaluate(`(() => {
       const p=document.querySelector('#paper').getBoundingClientRect(), r=document.querySelector(${JSON.stringify(selector)}).getBoundingClientRect();
       const z=new DOMMatrix(getComputedStyle(document.querySelector('#paper')).transform).a;
@@ -234,6 +226,22 @@ try {
   const detail = new URL(address); detail.search = '?x=1400&y=900&z=0.9';
   await navigate(detail.href); await screenshot('phone-detail');
 
+  for (const image of ['ledger-overview','step-execution']) {
+    const focus=await evaluate(`(() => {
+      const p=document.querySelector('#paper').getBoundingClientRect(),r=document.querySelector('[data-image="${image}"]').getBoundingClientRect();
+      const z=new DOMMatrix(getComputedStyle(document.querySelector('#paper')).transform).a;
+      return {x:(r.x-p.x+r.width/2)/z,y:(r.y-p.y+r.height/2)/z,z:Math.min(358/(r.width/z),700/(r.height/z))};
+    })()`);
+    const url=new URL(address);
+    for(const [key,value] of Object.entries(focus)) url.searchParams.set(key,value);
+    await navigate(url.href);
+    assert(await evaluate(`(() => {
+      const r=document.querySelector('[data-image="${image}"]').getBoundingClientRect(),v=document.querySelector('#viewport').getBoundingClientRect();
+      return r.left>=v.left && r.right<=v.right && r.top>=v.top && r.bottom<=v.bottom;
+    })()`),'The full illustration fits the phone camera');
+    await screenshot('phone-'+image);
+  }
+
   const malformed = new URL(address); malformed.search = '?x=NaN&y=1e999&z=-5';
   await navigate(malformed.href); close((await inspect()).z, phone.z);
   checks.push({check: 'Invalid camera values recover to the whole sheet'});
@@ -244,8 +252,8 @@ try {
   assert.equal(printed.transform, 'none'); assert.equal(printed.visible, 9);
   checks.push({check: 'Print includes all pages without a camera transform'});
   assert.deepEqual(errors, []);
-  await fs.writeFile(path.join(output, 'checks.json'), JSON.stringify({checks, errors}, null, 2) + '\n');
-  console.log(JSON.stringify({checks: checks.length, screenshots: 10, errors: errors.length, output}));
+  await fs.writeFile(path.join(output, 'checks.json'), JSON.stringify({checks, errors, views}, null, 2) + '\n');
+  console.log(JSON.stringify({checks: checks.length, screenshots: views.length, errors: errors.length, output}));
 } finally {
   socket.close(); await fetch(new URL('/json/close/' + target.id, endpoint));
 }
