@@ -203,4 +203,10 @@ Evidence: `desktop-complete.png`, `laptop-complete.png`,
 
 ## 7. User review
 
-Pending. The request to generate this candidate is not approval of its result.
+Recorded 2026-09-14, reviewing `04-structure.png` at `4cfdb1a`.
+
+Miguel rejected the first two views as repetitive and generic: naming Core and
+Application A/B did not explain anything distinctive about Harmonia. He directed
+us to stop using image generation and use code to control the rendering, retaining
+the approved visual language. Version 5 must improve the architectural message,
+not merely recreate the same content in SVG. Browser opening must use `open`.
