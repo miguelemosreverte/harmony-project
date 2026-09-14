@@ -99,7 +99,26 @@ start/return time, artifact, prompt, inspection, decision and first commit below
 
 ## Image iterations
 
-Pending generation of the complete sheet.
+### Round 1 — the complete architecture in context
+
+- Tool: built-in image generation.
+- Exact prompt: [01-prompt.txt](01-prompt.txt).
+- References: the three images listed in design pass 4.
+- Started: 2026-09-14 05:15:42 UTC.
+- Returned: 2026-09-14 05:17:37 UTC.
+- Artifact: [01-complete.png](01-complete.png).
+
+**Assistant inspection:** all four regions are visible together. Both integration
+routes and both reference examples are present; the ledger boundary and build-time
+lane are distinguishable. However, the generated image added sentences beneath
+the headings, including an inaccurate claim that every step exercises a choice.
+The execution arrow arrives beside the authority key instead of the choice. The
+continuation connector appears to originate from the role binding. The offer
+boundary also introduces an unnecessary green accent.
+
+**Decision:** preserve this complete candidate and refine it as a whole. Remove
+the redundant descriptions and repair the two contract relationships. Keep the
+same complete composition available in the second round.
 
 ## Review
 
