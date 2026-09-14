@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Harmonia — architecture, version 4</title>
+  <link rel="stylesheet" href="review.css?v=8950e45d7faa">
+</head>
+<body>
+  <header><strong>Harmonia · Architecture</strong><span>Version 4</span></header>
+  <main class="review">
+    <article id="reading" tabindex="0" aria-label="What the three views communicate">
+<h1>One system, three views</h1>
+<h2>1 · Location</h2>
+<p>The Dapp submits work and reads state. <strong>Core and application contracts live on Canton.</strong></p>
+<h2>2 · Responsibility</h2>
+<p>Core holds workflow state and step rules. <strong>Each application retains its contracts and authority.</strong> Coordination must respect that authority.</p>
+<h2>3 · Participation</h2>
+<p>Applications supply their own integration, or <strong>Builder generates bindings</strong> for an existing DAR. Both join the same Core model.</p>
+<p>The views establish the boundary, open it, then explain how applications join.</p>
+<blockquote>
+<p>“composition state stays on-ledger”</p>
+<p>“own authorization + ownership”</p>
+</blockquote>
+<p><em>Original architecture, §1. Proposed logical structure; detailed binding mechanics remain open.</em></p>
+
+    </article>
+    <section class="illustration" aria-label="Three complementary architecture views">
+      <div id="viewport" tabindex="0" aria-label="Pan and zoom the complete architecture sheet" aria-describedby="navigation-help">
+        <figure id="paper">
+          <img src="04-structure.png?v=b7438b6f88ef" width="1536" height="1024" draggable="false"
+            alt="Three views of one system. First: Dapp submits and reads across the Canton boundary, which encloses Core and applications A and B. Second: Core holds workflow state and step rules; both applications retain their own contracts and authorized actions. Third: an app project supplies an authored binding, or Builder consumes an existing DAR to generate a binding. Both routes participate in the same Core model on Canton.">
+          <figcaption class="sr-only">The numbers order the architectural explanation, not runtime execution. Core and application connections are structural. Either application may use either integration route. Bindings in the last view are shown as build artifacts; detailed binding mechanics remain open in the source.</figcaption>
+        </figure>
+      </div>
+      <div class="canvas-help"><span id="navigation-help"><span class="desktop-hint">Drag to pan · pinch to zoom · Home to fit</span><span class="touch-hint">Drag to pan · pinch to zoom</span></span><span id="zoom" aria-label="Zoom level"></span></div>
+    </section>
+  </main>
+  <script src="../../sheet.js?v=f68aa956f65c"></script>
+  <script src="review.js?v=d47a7b0231a9"></script>
+</body>
+</html>

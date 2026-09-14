@@ -29,9 +29,10 @@ Current example: [Complete architecture](architecture-whole/design.md).
 Scope correction: [Application authority](application-authority/design.md).
 Earlier exploration: [Architecture overview and execution](architecture-v2/README.md).
 
-Latest review: [Architecture version 3](architecture-structure/v3.html), with
-[formatted prose](architecture-structure/read-v3.md) beside the image and a
-[source-to-image design record](architecture-structure/design-v3.md).
+Latest review: [Architecture version 4](architecture-structure/v4.html), three
+complementary views of one system, with [formatted prose](architecture-structure/read-v4.md)
+beside the image and a [source-to-image design record](architecture-structure/design-v4.md).
+The previous [version 3](architecture-structure/v3.html) remains available.
 
 Direction: [Architecture structure](architecture-structure/design.md).
 The complete architectural presentation follows the original component and

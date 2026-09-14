@@ -1,6 +1,6 @@
 # Architecture version 4 — three views of one system
 
-Status: design recorded before generation; user review pending.
+Status: generated, inspected in the browser, ready for user review.
 Recorded: 2026-09-14 UTC. Baseline: `2288af1`.
 This is an image prototype of the proposed architecture, not a code audit.
 
@@ -24,18 +24,18 @@ participating applications retain their contracts and authority.
 | View | Exact source quotation | Visual consequence |
 | --- | --- | --- |
 | Location | “composition state stays on-ledger” — [original §1, line 202][ledger] | Canton encloses Core and both application packages; Dapp remains outside. |
-| Location | “interaction surface, not orchestration layer” — [original §1, line 132][dapp] | Dapp submits and reads; two-way relationship. |
-| Responsibility | “workflow state” and “step-exec rules” — [original §1, lines 219–224][core] | Core contains state and rules rather than a generic plug icon. |
+| Location | “interaction surface · not the orchestration layer” — [original §1, line 132][dapp] | Dapp submits and reads; two-way relationship. |
+| Responsibility | “workflow state” and “step-exec rules” — [original §1, lines 215–219][core] | Core contains state and rules rather than a generic plug icon. |
 | Responsibility | “own authorization + ownership” — [original §1, line 261][app] | Both applications contain their own contracts and authority. |
 | Participation | “authored by” / “app project”, “emitted by” / “harmonia-builder” — [original §1, lines 241–248][binding] | Two alternative build routes reach the same workflow model. |
-| Participation | “existing DAR · unchanged” — [original §1, line 267][existing] | Builder consumes the existing DAR; it is not shown rewriting it. |
+| Participation | “existing DAR · unchanged” — [original §1, line 266][existing] | Builder consumes the existing DAR; it is not shown rewriting it. |
 
 [ledger]: https://github.com/miguelemosreverte/harmony-project/blob/2288af1/docs/proposal/harmonia-architecture.html#L202
 [dapp]: https://github.com/miguelemosreverte/harmony-project/blob/2288af1/docs/proposal/harmonia-architecture.html#L132
-[core]: https://github.com/miguelemosreverte/harmony-project/blob/2288af1/docs/proposal/harmonia-architecture.html#L219-L224
+[core]: https://github.com/miguelemosreverte/harmony-project/blob/2288af1/docs/proposal/harmonia-architecture.html#L215-L219
 [app]: https://github.com/miguelemosreverte/harmony-project/blob/2288af1/docs/proposal/harmonia-architecture.html#L261
 [binding]: https://github.com/miguelemosreverte/harmony-project/blob/2288af1/docs/proposal/harmonia-architecture.html#L241-L248
-[existing]: https://github.com/miguelemosreverte/harmony-project/blob/2288af1/docs/proposal/harmonia-architecture.html#L267
+[existing]: https://github.com/miguelemosreverte/harmony-project/blob/2288af1/docs/proposal/harmonia-architecture.html#L266
 
 “Application A/B” are illustrative architectural participants, not business
 scenarios. The two applications in the first views do not represent the two
@@ -105,7 +105,95 @@ user review sessions.
 
 ## 6. Generation and assistant inspection
 
-Pending generation and browser inspection.
+### First image
+
+Built-in image generation, using the section 5 prompt verbatim and version 3
+as a style reference. Started 2026-09-14 06:44:31 UTC; returned 06:45:10 UTC.
+Saved unchanged as [04a-structure.png](04a-structure.png), 1536 × 1024.
+Original output: `~/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-f6b63d47-9f77-4b56-ba10-3eab62a713d8.png`.
+
+Assistant inspection: all three views are present, the Dapp connection is
+bidirectional, and Core/application connections are structural branches. Both
+integration routes reach the same model. However, “Authorized actions” became
+a smaller connector label, repeating the readability weakness Miguel identified.
+Move that meaning into the application cards, next to the responsibility it
+describes, using the same readable supporting-text size. This is a targeted
+revision, not another change of visual direction.
+
+### Exact refinement prompt
+
+```text
+Use case: precise-object-edit.
+Edit this Harmonia architecture sheet with ONE targeted correction to VIEW 2, "Who governs what". Preserve the entire image composition, exact dimensions, pale-blue/navy/white style, all three views, all headings, every component position, boundaries, connections, and all content in views 1 and 3.
+
+In view 2 ONLY: remove the small "Authorized actions" text sitting over the middle connection. Leave that blue connection intact and completely unlabeled. Inside EACH of the two application cards in view 2, keep the existing "Application A" or "Application B" title. Replace the single "Contracts · authority" supporting line with TWO centered lines: "Own contracts" and "Authorized actions". Use clear navy-blue sans-serif supporting type at least 25px tall at this image's 1536px width, the same size as or slightly larger than Core's supporting lines. Fit the two lines comfortably inside the existing card; modestly increase the card height only if essential, preserving whitespace between the two cards and the Canton enclosure. Do not add icons, arrow labels, new words, boxes, connectors or a footer. Keep every other pixel as close to the input as possible. Output the complete uncropped 1536 × 1024 sheet.
+```
+
+Input: `04a-structure.png` as edit target, already visually inspected.
+
+### Final image and provenance
+
+The refinement used built-in image generation, started 2026-09-14 06:45:48 UTC
+and returned 06:46:30 UTC. It removed the small connector label and placed
+“Own contracts” and “Authorized actions” within each application. The rest of
+the composition remains visually consistent with the first candidate.
+
+| Artifact | Dimensions | Bytes | SHA-256 |
+| --- | --- | ---: | --- |
+| [04a-structure.png](04a-structure.png), first candidate | 1536 × 1024 | 1,476,460 | `4e7e99c890a1e48da098567deeafbc1fb5e960e5122c87fad5067befe59165b2` |
+| [04-structure.png](04-structure.png), proposed candidate | 1536 × 1024 | 1,519,222 | `b7438b6f88efb1df7bb89efaf75e8d562f36c65689e241a84c7c76fb8afac7a5` |
+
+Final original output:
+`~/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-e2ba6dd2-c5c3-48a7-bb17-15c5574cbae1.png`.
+Both files were copied unchanged into this directory; no programmatic image
+editing was used. The initial design and exact first prompt were committed and
+pushed before generation at `f6ce727`.
+
+### Assistant assessment
+
+The three headings establish specific reader questions. Shared placement makes
+the second view recognizable as a closer explanation of the first. The top
+connection visibly supports submission and reading; the other runtime connections
+have no arrowheads. The two preparation routes are separate and converge without
+passing through one another. No electrical symbols or business stories remain.
+
+The second view's empty left area could be used more effectively. The recurring
+Core motif identifies the same component but does not itself explain execution.
+The participation view deliberately abstracts deployment and concrete binding
+mechanics. These are remaining design tradeoffs, not evidence of implementation
+completeness. The user still needs to judge whether the three views add enough
+understanding to justify the repeated structure.
+
+### Browser inspection
+
+[v4.html](v4.html) renders the actual `read-v4.md` beside the generated image.
+It reuses version 3's CSS and pan/zoom code unchanged; version 3 remains intact.
+Rebuild with the existing Markdown dependency:
+
+```sh
+.artifacts/book-tools/bin/python book/navigation/explorations/architecture-structure/render-review.py 4
+```
+
+Screenshots and browser checks are saved under
+`.artifacts/architecture-structure-v4-review/`. At 1600 × 1050 and 1440 × 900,
+all three views and the complete prose fit on screen. The 1440 × 900 screenshot
+was visually inspected: typography is legible, diagram panels are uncropped,
+and the prose is rendered with headings, emphasis and quotations.
+
+At 390 × 844, the prose and image stack. The full image is a small overview;
+reading its details requires pinch/zoom. The mobile screenshot was inspected
+with that limitation explicit. Prose scrolls inside its own area. There is no
+document overflow or added navigation menu.
+
+The reused Chrome session passed checks for two interaction surfaces, stable
+image DOM during pan/zoom, camera URL restoration within 0.05 pixels, prose
+scroll restoration, touch pinch, Home-to-fit, and single-page uncropped PDF
+printing. No browser exceptions or failed resources were recorded. The existing
+Python server and Chrome were reused; no JVM or extra browser process was started.
+
+Evidence: `desktop-complete.png`, `laptop-complete.png`,
+`desktop-shared-camera.png`, `mobile-complete.png`,
+`mobile-responsibility-detail.png`, `complete.pdf`, `checks.json`.
 
 ---
 
