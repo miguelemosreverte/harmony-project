@@ -1,0 +1,9 @@
+Edit this complete four-region Harmonia architecture sheet. Return the COMPLETE sheet at the same dimensions and composition, not a cropped detail. Make ONLY the following correction in region 3 (lower left). Preserve all four regions, all wording elsewhere, palette, geometry, all other connectors, and both example workflows.
+
+The "Role → Party" tag is currently a separate small box sitting ON the vertical connector from Instance to Continuation. That falsely makes it look like an intermediate step.
+
+Remove that external tag and its dashed line entirely. Put the exact text "Role → Party" INSIDE the existing "Instance" card, as the last small line immediately under "State · outputs". Slightly increase ONLY the height of the Instance card if needed so both lines fit without clipping. Role binding is instance data, not another workflow node.
+
+Draw ONE uninterrupted solid blue arrow from the BOTTOM border of the Instance card straight DOWN to the TOP border of the Continuation card below it. The full vertical connector between the two card borders must be visible, with no tag, label, dash, box or other object placed on it. Keep Continuation → Next definition unchanged.
+
+Keep the important corrected application relationship exactly as it is: Step interface reaches Application choice from the left; Application authority has its separate required arrow downward onto that choice; both authority and choice are within the Application area. Do not revert that correction. Do not alter other regions or add prose. All text and artwork must remain uncropped.

@@ -122,6 +122,26 @@ same complete composition available in the second round.
 
 ## Review
 
+### Round 2 — reduce repetition and repair execution
+
+- Tool: built-in image generation, editing the whole `01-complete.png`.
+- Exact prompt: [02-prompt.txt](02-prompt.txt).
+- Started: 2026-09-14 05:18:15 UTC.
+- Returned: 2026-09-14 05:19:58 UTC.
+- Artifact: [02-complete.png](02-complete.png).
+
+**Assistant inspection:** the added introductory sentences are gone. The step
+interface now reaches the application choice; authority reaches it separately
+from above, within the application's boundary. The offer outline uses blue.
+All four regions and both examples remain visible. The role-binding tag is still
+on the continuation connector, despite the requested correction.
+
+**Decision:** make one final precise repair on the complete sheet. Place role
+binding inside the Instance as data, with an uninterrupted Instance-to-Continuation
+connection. Do not accept a misleading relationship just because the rest renders.
+
+## User review
+
 Miguel's review of the complete candidate is pending. Assistant inspection is not
 user approval. Append actual feedback here and revise the entire presentation
 while keeping its context available.
