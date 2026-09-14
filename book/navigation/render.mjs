@@ -5,12 +5,13 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
 import {figureView} from './figures.mjs';
+import {originalDiagramView} from './original-diagrams.mjs';
 
 const folder = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(folder, '../..');
 const plan = JSON.parse(await fs.readFile(path.join(folder, 'plan.json'), 'utf8'));
 const revision = async file => createHash('sha256').update(await fs.readFile(file)).digest('hex').slice(0,12);
-const versions = Object.fromEntries(await Promise.all(['sheet.css','sheet.js'].map(async file => [file,await revision(path.join(folder,file))])));
+const versions = Object.fromEntries(await Promise.all(['sheet.css','sheet.js','original-diagrams.css'].map(async file => [file,await revision(path.join(folder,file))])));
 const escape = value => String(value).replace(/[&<>"']/g, c => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
 })[c]);
@@ -71,9 +72,10 @@ async function pageView(page, index, branch) {
     <p class="message">${escape(page.message)}</p>
     <div class="frames" data-count="${page.frames.length}">${frames}</div>
 ${diagrams}
+${page.original_diagram ? originalDiagramView(page.original_diagram) : ''}
 ${demo}
 ${page.explorer ? await explorerView(page.explorer) : ''}
-${page.demo ? '' : `    <p class="show">${escape(page.show)}</p>`}
+${page.demo || !page.show ? '' : `    <p class="show">${escape(page.show)}</p>`}
     <p class="sources">Sources: ${page.sources.map(escape).join(' · ')}</p>
   </article>`;
 }
@@ -98,6 +100,7 @@ const html = `<!doctype html>
 <link rel="stylesheet" href="../../product/scene/site/surface.css">
 <link rel="stylesheet" href="../../design/0.2/quiet.css">
 <link rel="stylesheet" href="sheet.css?v=${versions['sheet.css']}">
+<link rel="stylesheet" href="original-diagrams.css?v=${versions['original-diagrams.css']}">
 <script type="module" src="sheet.js?v=${versions['sheet.js']}"></script>
 </head><body>
 <header class="reference-header"><span class="reference-brand">Harmonia</span><span class="quiet-location">${escape(plan.status)}</span></header>

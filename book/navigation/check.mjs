@@ -67,14 +67,14 @@ try {
   await call('Emulation.setDeviceMetricsOverride', {width: 1440, height: 1000, deviceScaleFactor: 1, mobile: false});
   await navigate(address);
   const initial = await inspect();
-  assert.equal(initial.controls, 0); assert.equal(initial.regions, 4); assert.equal(initial.pages, 10);
+  assert.equal(initial.controls, 0); assert.equal(initial.regions, 4); assert.equal(initial.pages, 9);
   const audiences = await evaluate(`({
     investorDemos:document.querySelectorAll('[data-branch=investor] .demo').length,
     architectureDiagrams:document.querySelectorAll('[data-branch=architecture] svg').length,
     technicalScreenshots:document.querySelectorAll('.region:not([data-branch=user]) img').length,
-    originalModels:document.querySelectorAll('[data-figure=component-map],[data-figure=contract-model]').length,brands:document.querySelectorAll('[data-brand]').length
+    originalModels:document.querySelectorAll('[data-original-diagram]').length,brands:document.querySelectorAll('[data-brand]').length
   })`);
-  assert.equal(audiences.investorDemos,3); assert.equal(audiences.architectureDiagrams,6);
+  assert.equal(audiences.investorDemos,3); assert.equal(audiences.architectureDiagrams,2);
   assert.equal(audiences.technicalScreenshots,0); assert.equal(audiences.originalModels,2); assert.equal(audiences.brands,5);
   assert.equal(initial.scrollHeight, 1000); assert.equal(initial.scrollWidth, 1440);
   assert(initial.paper.x >= initial.viewport.x && initial.paper.y >= initial.viewport.y);
@@ -91,6 +91,35 @@ try {
     return [...node.querySelectorAll('text')].filter(text=>{const r=text.getBoundingClientRect();return r.left<box.left-1||r.right>box.right+1||r.top<box.top||r.bottom>box.bottom+1}).map(text=>text.textContent);
   })`);
   assert.deepEqual(diagramOverflow, [], 'Diagram labels must fit their nodes');
+  // Compare the rendered translation with the actual supplied document.
+  const originals = await evaluate(`(async () => {
+    const html = await (await fetch('../../docs/proposal/harmonia-architecture.html')).text();
+    const source = [...new DOMParser().parseFromString(html,'text/html').querySelectorAll('svg')];
+    const translated = [...document.querySelectorAll('[data-original-diagram] svg')];
+    const geometry = svg => [...svg.querySelectorAll('rect,path,line,polyline,polygon,circle,ellipse,text')]
+      .filter(node => !node.closest('defs')).map(node => ({tag:node.tagName,
+        attrs:Object.fromEntries(['x','y','x1','y1','x2','y2','width','height','cx','cy','r','rx','ry','d','points','transform','text-anchor']
+          .filter(key=>node.hasAttribute(key)).map(key=>[key,node.getAttribute(key)]))}));
+    return translated.map((svg,index) => ({
+      name:svg.parentElement.dataset.originalDiagram,
+      labels:[...svg.querySelectorAll('text')].map(node=>node.textContent),
+      sourceLabels:[...source[index].querySelectorAll('text')].map(node=>node.textContent),
+      geometry:geometry(svg), sourceGeometry:geometry(source[index]),
+      viewBox:svg.getAttribute('viewBox'), sourceViewBox:source[index].getAttribute('viewBox'),
+      arrows:[...svg.querySelectorAll('.e,.rel,.relo')].map(edge=>{
+        const marker=getComputedStyle(edge).markerEnd;
+        const id=marker.match(/#([^\"\)]+)/)?.[1];
+        return {marker,resolved:!!id&&svg.contains(document.getElementById(id))};
+      })
+    }));
+  })()`);
+  for (const original of originals) {
+    assert.deepEqual(original.labels,original.sourceLabels,original.name+' labels');
+    assert.deepEqual(original.geometry,original.sourceGeometry,original.name+' geometry');
+    assert.equal(original.viewBox,original.sourceViewBox);
+    assert(original.arrows.length>0 && original.arrows.every(arrow=>arrow.resolved),original.name+' arrowheads');
+  }
+  checks.push({check:'Original SVG fidelity: every label, shape, connection and arrowhead',diagrams:originals.map(o=>({name:o.name,labels:o.labels.length,shapes:o.geometry.length,arrows:o.arrows.length}))});
   checks.push({check:'Canton infographics and original architecture models',...audiences});
   checks.push({check: 'All regions fit on entry', ...initial});
   await screenshot('whole-sheet');
@@ -99,7 +128,7 @@ try {
   // Zoom around the pointer, then drag and scroll the same mounted document.
   const pointer = {x: 650, y: 450};
   const anchor = worldAt(initial, pointer.x, pointer.y);
-  await call('Input.dispatchMouseEvent', {type: 'mouseWheel', ...pointer, deltaX: 0, deltaY: -160, modifiers: 2});
+  await call('Input.dispatchMouseEvent', {type: 'mouseWheel', ...pointer, deltaX: 0, deltaY: -240, modifiers: 2});
   await until(`new DOMMatrix(getComputedStyle(document.querySelector('#paper')).transform).a > ${initial.z*1.2}`);
   const zoomed = await inspect(), nextAnchor = worldAt(zoomed, pointer.x, pointer.y);
   assert(zoomed.z > initial.z); close(anchor.x, nextAnchor.x); close(anchor.y, nextAnchor.y);
@@ -149,11 +178,11 @@ try {
     for (const [key, value] of Object.entries({x: region.x, y: region.y, z: Math.min(1360 / region.width, 850 / region.height)})) url.searchParams.set(key, value);
     await navigate(url.href); await screenshot(region.id);
   }
-  for (const [name, selector] of [['investor-detail','[data-figure="ecosystem"]'], ['architecture-detail','[data-figure="component-map"]']]) {
+  for (const [name, selector] of [['investor-detail','[data-figure="ecosystem"]'], ['architecture-detail','[data-original-diagram="component-map"]'], ['contract-detail','[data-original-diagram="contract-model"]']]) {
     const focus = await evaluate(`(() => {
       const p=document.querySelector('#paper').getBoundingClientRect(), r=document.querySelector(${JSON.stringify(selector)}).getBoundingClientRect();
       const z=new DOMMatrix(getComputedStyle(document.querySelector('#paper')).transform).a;
-      return {x:(r.x-p.x+r.width/2)/z,y:(r.y-p.y+r.height/2)/z,z:Math.min(2,850/(r.height/z))};
+      return {x:(r.x-p.x+r.width/2)/z,y:(r.y-p.y+r.height/2)/z,z:Math.min(2,1360/(r.width/z),850/(r.height/z))};
     })()`);
     const url=new URL(address);
     for(const [key,value] of Object.entries(focus)) url.searchParams.set(key,value);
@@ -212,11 +241,11 @@ try {
   // Printing unfolds the actual DOM, independent of the current camera.
   await call('Emulation.setEmulatedMedia', {media: 'print'});
   const printed = await evaluate(`({transform:getComputedStyle(document.querySelector('#paper')).transform,visible:[...document.querySelectorAll('.page')].filter(p=>p.getClientRects().length).length})`);
-  assert.equal(printed.transform, 'none'); assert.equal(printed.visible, 10);
+  assert.equal(printed.transform, 'none'); assert.equal(printed.visible, 9);
   checks.push({check: 'Print includes all pages without a camera transform'});
   assert.deepEqual(errors, []);
   await fs.writeFile(path.join(output, 'checks.json'), JSON.stringify({checks, errors}, null, 2) + '\n');
-  console.log(JSON.stringify({checks: checks.length, screenshots: 9, errors: errors.length, output}));
+  console.log(JSON.stringify({checks: checks.length, screenshots: 10, errors: errors.length, output}));
 } finally {
   socket.close(); await fetch(new URL('/json/close/' + target.id, endpoint));
 }

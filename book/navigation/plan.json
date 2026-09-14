@@ -296,83 +296,47 @@
     {
       "id": "architecture",
       "title": "Architecture",
-      "question": "Which boundaries, dependencies and invariants make this work?",
-      "perspective": "For senior engineers: the original component and contract models, their implemented counterparts, and the boundaries demonstrated by the code.",
+      "question": "How does Harmonia compose independently owned applications?",
+      "perspective": "The original component and contract diagrams, translated into the shared visual style.",
       "pages": [
         {
-          "id": "structure",
-          "title": "Components and participation",
-          "message": "Start with the original off-ledger / on-ledger split.",
-          "show": "The proposal groups interfaces with Core. This checkout separates a shared interface DAR from Core and application bindings; the imports below show that decision.",
+          "id": "components",
+          "title": "Component map — off-ledger / on-ledger split",
+          "message": "Where the components live, how applications participate, and where the ledger boundary sits.",
           "sources": [
-            "architecture-original",
-            "proposal",
-            "http",
-            "workspace",
-            "ledger-client",
-            "workflow",
-            "core",
-            "action-interface",
-            "binding",
-            "native-application",
-            "legacy-application"
+            "architecture-original"
           ],
           "frames": [],
-          "diagrams": [
-            "component-map",
-            "packages"
-          ]
-        },
-        {
-          "id": "execution",
-          "title": "Proposed model → implemented model",
-          "message": "Compare the original entities and relationships with the concrete types and contracts.",
-          "show": "Conceptual names are preserved on the left. The mapping records actual implementation choices; it does not imply a generic realization of every proposed construct.",
-          "sources": [
-            "architecture-original",
-            "core",
-            "action-interface",
-            "shared-progress",
-            "result",
-            "binding"
-          ],
-          "frames": [],
-          "diagrams": [
-            "contract-model",
-            "model-mapping"
-          ]
+          "original_diagram": "component-map"
         },
         {
           "id": "contracts",
-          "title": "Privacy and atomicity",
-          "message": "A scoped result connects two authorized updates; one final settlement encloses its custody operations.",
-          "show": "Trace issuer, consumer and continuation checks through proof consumption. Separately inspect the exact Settle transaction boundary after staged consent.",
+          "title": "On-ledger contract model — templates, interfaces and data",
+          "message": "How definitions, instances, assignments and application actions relate.",
+          "show": "The original identifies the template and choice names as illustrative; binding and package-import details remain open design points.",
           "sources": [
-            "proposal",
-            "ledger-choice",
-            "result",
-            "shared-progress",
-            "settlement"
+            "architecture-original"
           ],
           "frames": [],
-          "diagrams": [
-            "proof",
-            "atomic"
-          ]
+          "original_diagram": "contract-model"
         }
       ],
-      "finish": "I can trace deployment, imports, execution, visibility and atomicity back to their production owners.",
+      "finish": "I understand the architecture through the same diagrams that define the project.",
       "presentation": {
-        "format": "Engineering diagrams",
+        "format": "Original diagrams in the shared visual style",
         "focus": [
-          "Original component map",
-          "Actual package dependencies",
-          "Original contract model",
-          "Concept-to-code mapping",
-          "Scoped continuation",
-          "Bounded atomic settlement"
+          "Component boundaries and the two participation paths",
+          "Contract relationships and application authority"
         ],
-        "imagery": "Native vector diagrams are the primary material; no decorative scenes or UI screenshots."
+        "source": "docs/proposal/harmonia-architecture.html",
+        "preserve": [
+          "Labels",
+          "Fields",
+          "Choices",
+          "Connections",
+          "Layout",
+          "Open design points"
+        ]
       }
     },
     {

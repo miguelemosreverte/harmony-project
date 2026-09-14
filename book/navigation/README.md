@@ -14,9 +14,8 @@ links or selectors on the sheet.
   explain direct and generated participation, then demonstrate bounded settlement.
   The infographics use the Canton and Daml marks with their original proportions.
   Concrete results below them come from preserved local Canton recordings.
-- **Architecture:** the supplied component and contract models are the starting
-  point. Six diagrams pair those proposals with actual package imports,
-  concept-to-code correspondence, scoped continuation and atomic settlement.
+- **Architecture:** the two SVGs from the supplied architecture document, with
+  their original content and layout in the shared white-and-blue style.
 - **Implementation:** the existing `design/0.2/code.html` explorer, embedded without
   its surrounding navigation. Its production tree, syntax colors, source comments
   and vertical-slice renderer are reused. No replacement excerpt viewer is built.
@@ -25,34 +24,33 @@ This is a content proposal. It runs no ledger commands. A proposed model, a
 current implementation choice and a recorded result are different kinds of
 information, labeled where they appear. The approved workflow UI is unchanged.
 
-## Original diagrams and implementation choices
+## Translating the original architecture
 
-The earlier sheet emphasized participant topology and HTTP submission. That
-omitted the logical architecture that the supplied documents actually propose.
-The new component map preserves the off-ledger / on-ledger split and the named
-Dapp, Builder, Package Manager, Core, Binding DAR, two application paths and
-References. The contract model preserves all eight proposed entities and their
-relationships. Each redraw carries its original filename and line range.
+The source is [harmonia-architecture.html](../../docs/proposal/harmonia-architecture.html):
 
-The adjacent implementation mapping explains the concrete choices:
+1. **Component map:** off-ledger / on-ledger split, build and runtime paths,
+   component responsibilities and application participation.
+2. **Contract model:** definitions, instances, assignments, bindings,
+   continuations, interfaces and application templates.
 
-| Proposed concept | Current representation |
-| --- | --- |
-| WorkflowDefinition | `Definition` data and `PublishedDefinition` contract |
-| WorkflowInstance | `ProcessInstance` for the bounded process engine |
-| RoleBinding / StepAssignment | `Role`, `StepSpec`, `ActionBinding` within the process |
-| HarmoniaStepAction | `StepAction` interface |
-| Continuation | In the private-financing example, `VerifiedResult` consumed by `SharedProgress` |
-| AppliesTo | Build-time mapping and a compiled application binding |
+[original-diagrams.mjs](original-diagrams.mjs) reads those two SVGs directly.
+It preserves every label, field, choice, connector and coordinate. It scopes
+marker IDs and replaces the original styles with
+[original-diagrams.css](original-diagrams.css): readable sans-serif text, white
+surfaces, pale-blue ledger components and blue arrows. The second diagram's
+shared arrow marker is included so it renders independently of the first.
+Both carry their original filename and section number. Pan and zoom reveal the
+full diagrams without a separate navigation interface.
 
-These are correspondences, not a claim that every conceptual template exists.
-The source leaves import direction open; the current package diagram shows the
-separate shared-interface DAR. Both are visible without switching pages.
+The source identifies the template and choice names as illustrative. Its open
+binding and package-import questions remain visible as such. These diagrams
+describe the supplied architecture; they are not a claim that every proposed
+template name exists in the checkout.
 
-The original input files are preserved under `docs/proposal/`. Diagram content and
-geometry live in [figures.json](figures.json); [figures.mjs](figures.mjs) renders
-native SVG and verifies cited source ranges. Marks and their primary-source
-provenance are recorded in [assets/README.md](assets/README.md).
+The original input files remain under `docs/proposal/`. Investor infographic
+definitions live separately in [figures.json](figures.json), rendered by
+[figures.mjs](figures.mjs). Brand provenance is in
+[assets/README.md](assets/README.md).
 
 ## Reused source explorer
 
@@ -100,12 +98,11 @@ node book/navigation/check.mjs \
   http://127.0.0.1:56202/book/navigation/index.html
 ```
 
-The checker creates and closes its own temporary tab. Nine check groups and nine
-screenshots cover the four regions, diagram close-ups, phone gestures, camera and
+The checker creates and closes its own temporary tab. Ten check groups and ten
+screenshots cover the four regions, both original diagram close-ups, phone gestures, camera and
 source URL restoration, production filtering, annotations, syntax colors, text
 bounds and print visibility. Results go to `.artifacts/navigation-sheet-review/`.
 Screenshots are inspected as well as measured. Phone testing uses Chrome
-emulation. No new browser, JVM or ledger process is needed.
-
-The existing annotation-wrapping, comment-lexing and source-coloring tests also
-passed. Production code and User content were not changed by this refinement.
+emulation. The browser compares all 200 SVG text elements and 303 geometric
+elements with the original HTML and checks all 25 arrowheads, including legend
+arrows. No new browser, JVM or ledger process is needed.

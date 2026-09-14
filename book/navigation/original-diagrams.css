@@ -1,0 +1,44 @@
+/* The original geometry, labels and relationships in the shared white/blue style. */
+.source-architecture { display:block; width:100%; height:auto; font-family:Arial,Helvetica,sans-serif; }
+.source-architecture .t { font-size:14px; font-weight:600; }
+.source-architecture .t2 { font-size:12px; font-weight:600; }
+.source-architecture .st { font-size:10.5px; }
+.source-architecture .li { font-size:11.5px; }
+.source-architecture .lo { font-size:10.5px; }
+.source-architecture .xs { font-size:9.5px; }
+.source-architecture .band { font-size:11px; font-weight:700; letter-spacing:.08em; }
+.source-architecture .num { font-size:12px; font-weight:700; }
+.source-architecture text { fill:#43566b; }
+.source-architecture .t, .source-architecture .t2, .source-architecture .band,
+.source-architecture .cn, .source-architecture .cc, .source-architecture .num { fill:#172b42; }
+.source-architecture .bandoff { fill:#f8fbfd; stroke:#d4e3ef; }
+.source-architecture .bandon { fill:#f0f8ff; stroke:#bbd8f0; }
+.source-architecture .node, .source-architecture .cls, .source-architecture .iface,
+.source-architecture .dat { fill:white; stroke:#bfd5e7; stroke-width:1.2; rx:12px; }
+.source-architecture .nodeon, .source-architecture .cls { fill:#e9f5ff; stroke:#93c2ed; }
+.source-architecture .ext, .source-architecture .dat { fill:#f8fafc; stroke:#9fb1c5; stroke-dasharray:5 4; }
+.source-architecture .sub, .source-architecture .subon { fill:white; stroke:#dce8f2; rx:5px; }
+.source-architecture rect[fill] { fill:white; stroke:#d4e3ef; }
+.source-architecture .sw { rx:3px; }
+.source-architecture .e, .source-architecture .rel, .source-architecture .relo { stroke:#50728f; stroke-width:1.4; fill:none; }
+.source-architecture .e.build, .source-architecture .relo { stroke-dasharray:6 4; }
+.source-architecture .e.on, .source-architecture .e.deploy, .source-architecture .rel { stroke:#0079ff; }
+.source-architecture .cut { stroke:#a5bfd3; stroke-width:1.4; stroke-dasharray:10 7; }
+.source-architecture marker path { fill:#0079ff; }
+[data-original-diagram="component-map"] .e { marker-end:url(#original-component-map-a); }
+[data-original-diagram="component-map"] .e.build,
+[data-original-diagram="component-map"] .e.deploy { marker-end:url(#original-component-map-ao); }
+[data-original-diagram="component-map"] .e.on { marker-end:url(#original-component-map-ag); }
+[data-original-diagram="contract-model"] .rel { marker-end:url(#original-contract-model-b); }
+[data-original-diagram="contract-model"] .relo { marker-end:url(#original-contract-model-ao); }
+#original-component-map-a path { fill:#50728f; }
+.source-architecture .cn { font-size:13px; font-weight:600; }
+.source-architecture .cs { font-size:10px; letter-spacing:.06em; }
+.source-architecture .cf, .source-architecture .cc { font-size:11px; }
+.source-architecture .sep { stroke:#bbd5e8; stroke-width:1; }
+.source-architecture .rl { font-size:10.5px; }
+.original-figure { padding:12px; border:1px solid var(--line); border-radius:16px; background:white; }
+.original-figure figcaption { margin:14px 0 0; font-size:17px; color:var(--muted); }
+.region[data-branch="architecture"] .pages { grid-template-columns:1fr; gap:48px; }
+.region[data-branch="architecture"] .page-heading { min-height:48px; }
+.region[data-branch="architecture"] .message { margin-bottom:20px; }
