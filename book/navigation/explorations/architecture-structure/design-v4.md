@@ -149,6 +149,10 @@ Both files were copied unchanged into this directory; no programmatic image
 editing was used. The initial design and exact first prompt were committed and
 pushed before generation at `f6ce727`.
 
+Both generated images, the browser page and the inspection record were committed
+at [4cfdb1a](https://github.com/miguelemosreverte/harmony-project/commit/4cfdb1abd0612e4db1ea93e018b1673694f344a6),
+2026-09-14 06:48:01 UTC, and pushed to `design/architecture-clarity-v2`.
+
 ### Assistant assessment
 
 The three headings establish specific reader questions. Shared placement makes
