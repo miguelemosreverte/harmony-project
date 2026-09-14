@@ -1,6 +1,6 @@
 # Harmonia architecture — structure before detail
 
-Status: proposal prepared for one image generation, then Miguel's review.
+Status: one generated candidate prepared for joint review; known connector ambiguity recorded below.
 Recorded: 2026-09-14 UTC.
 Baseline: `3590bee` on `design/architecture-clarity-v2`.
 
@@ -161,16 +161,57 @@ Reference paths, in input order:
 
 ## 6. Generated candidate
 
-Pending one image generation. Record actual tool times, output path, dimensions,
-SHA-256 and commit here. Preserve the image exactly as generated.
+- Tool: built-in image generation; one call, no image edits.
+- Exact prompt: section 5 above, extracted verbatim from its fenced block.
+- Started: 2026-09-14 05:46:15 UTC.
+- Returned: 2026-09-14 05:47:57 UTC.
+- Artifact: [01-structure.png](01-structure.png), 1536 × 1024, 1,465,388 bytes.
+- Browser presentation: [index.html](index.html), using the existing book pan/zoom viewer.
+- Original output: `~/.codex/generated_images/01a08cd4-eaa1-7bd2-83c1-bf9bf78e55de/exec-a504dea0-baf3-42f8-b8bb-414c8dc7577a.png`.
+- SHA-256: `32dcc1e43455a5e8ac9fd0ae3742a53a12763524499f822cc3dbe25a19ff3de5`.
+
+The source evidence and exact prompt were committed before generation at
+[d2a24e7](https://github.com/miguelemosreverte/harmony-project/commit/d2a24e7).
+The first artifact commit will be recorded after committing this candidate.
 
 ---
 
 ## 7. Assistant inspection
 
-Pending. Inspect architectural relationships and visual hierarchy before opening
-the candidate. Record observed limitations rather than treating generation or
-rendering success as proof of clarity.
+**What improved:** the component map takes priority and the contract model sits
+below it. The two source views stay visible together. The generated image has no
+financing or transfer story and no four-way product layout. Runtime and build-time
+connectors differ visibly. Instance data, continuation and the application choice
+are distinct, and the execution line reaches the choice rather than the key.
+
+**Known architectural ambiguity:** the upper connector passes through the Direct
+package before reaching the existing-DAR package. This can suggest that one route
+depends on the other. The intended relation has two branches originating at Binding
+DAR: direct implementation and generated binding. This generated connection needs
+correction before the image could be adopted as an architectural reference.
+
+**Further review points:** Binding DAR still has substantial visual weight for a
+declaration artifact. The Core atomicity caption mentions authorization but should
+also retain the proposal's condition about compatible workflow structure. The
+assigned-step glyph uses a person symbol despite the prompt's restriction; here
+it communicates actor assignment, but a document symbol would be more consistent.
+
+**Decision:** present this single generated candidate with these limitations
+recorded, as requested, for a joint review. Do not label it semantically complete
+or silently generate additional rounds before that review. The image remains a
+proposal; the existing book is unchanged.
+
+Browser verification on 2026-09-14: inspected saved desktop and mobile screenshots.
+Both views fit on the complete sheet. The phone's fitted view requires pinch/zoom
+to read the detail. The existing viewer keeps the same DOM during pan/zoom, restores
+the camera from the URL, supports touch pinch and Home-to-fit, and prints to one
+uncropped page. No failed resource loads or browser exceptions were recorded.
+These checks concern rendering and navigation, not the architectural ambiguity above.
+
+Local evidence: `.artifacts/architecture-structure-review/desktop-complete.png`,
+`mobile-complete.png`, `desktop-shared-camera.png`, `mobile-execution-detail.png`,
+`complete.pdf` and `checks.json`, all in that same directory. The existing Python
+server and Chrome instance were reused; no JVM or new browser process was launched.
 
 ---
 
