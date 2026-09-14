@@ -1,6 +1,6 @@
 # Harmonia architecture — version 2
 
-Status: version 2 selected after architectural and browser inspection; ready for Miguel's review.
+Status: reviewed; version 3 requested to improve readability and remove connector text.
 Recorded: 2026-09-14 UTC.
 Branch: `design/architecture-clarity-v2`.
 Input: [01-structure.png](01-structure.png), first committed at `eca791d`.
@@ -155,6 +155,20 @@ the separate architectural inspection.
 
 ## 6. Miguel's review of version 2
 
-Pending. Append the actual feedback, artifact and commit reviewed, date recorded
-and resulting decision. The authorization to revise version 1 is not an approval
-of this candidate.
+### Review recorded 2026-09-14
+
+Image discussed: `02-structure.png`, first committed at `aad0148`.
+
+Miguel's feedback:
+
+> Honestly, I think the first version that you made was more readable, not this one, because the first version was left-to-right and continuous. I don't think there is a lot of value in adding small fonts to arrows.
+
+> The question is different. If I want to make a question, it is how much text we can actually remove. That would be nice, and how much more intuitive we can make the diagram to express whatever we want to express.
+
+He requested a new version informed by Apple's approach to UX, with concise,
+properly rendered Markdown on the left and the image on the right. The prose
+should explain what the diagram communicates and why drawing it helps.
+
+**Decision:** revise the content hierarchy and amount of text. Do not merely
+adjust arrow-label font sizes. [Version 3](design-v3.md) preserves the architectural
+meaning using alignment, boundaries and a continuous main reading direction.
